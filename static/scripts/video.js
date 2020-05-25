@@ -8551,14 +8551,67 @@ var FWDUVPAddress = new function() {
         var d = function(e, t, s, o, i, l, n, a) {
             var r = this;
             d.prototype;
-            this.nImg_img = null, this.sImg_img = null, this.n_do, this.s_do, this.useHEX = i, this.nBC = l, this.sBC = n, this.nImgPath_str = e, this.sImgPath_str = t, this.buttonWidth = s, this.buttonHeight = o, this.showOver = a, i || (this.showOver = !1), this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.isDisabled_bl = !1, this.init = function() {
-                r.setupMainContainers(), r.setWidth(r.buttonWidth), r.setHeight(r.buttonHeight), r.setButtonMode(!0)
-            }, this.setupMainContainers = function() {
-                r.nImg = new Image, r.nImg.src = r.nImgPath_str, r.useHEX && !r.showOver ? (r.n_do = new FWDUVPTransformDisplayObject("div"), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight), r.nImg.onload = function() {
-                    r.n_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(r.nImg, r.nBC).canvas, r.n_do.screen.appendChild(r.n_do_canvas)
-                }) : (r.n_do = new FWDUVPDisplayObject("img"), r.n_do.setScreen(r.nImg), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight)), r.addChild(r.n_do), r.sImg = new Image, r.sImg.src = r.sImgPath_str, r.useHEX ? (r.s_do = new FWDUVPTransformDisplayObject("div"), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight), r.sImg.onload = function() {
-                    r.s_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(r.sImg, r.nBC).canvas, r.s_do.screen.appendChild(r.s_do_canvas)
-                }, r.showOver || r.s_do.setAlpha(0), r.addChild(r.s_do)) : (r.s_do = new FWDUVPDisplayObject("img"), r.s_do.setScreen(r.sImg), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight), r.addChild(r.s_do), r.useHEX || r.s_do.setAlpha(0)), r.showOver && r.addChild(r.s_do), r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onMouseUp), r.screen.addEventListener("pointerover", r.setSelectedState), r.screen.addEventListener("pointerout", r.setNormalState)) : r.screen.addEventListener && (r.isMbl || (r.screen.addEventListener("mouseover", r.setSelectedState), r.screen.addEventListener("mouseout", r.setNormalState), r.screen.addEventListener("mouseup", r.onMouseUp)), r.screen.addEventListener("touchend", r.onMouseUp))
+            this.nImg_img = null,
+            this.sImg_img = null,
+            this.n_do,
+            this.s_do,
+            this.useHEX = i,
+            this.nBC = l,
+            this.sBC = n,
+            this.nImgPath_str = e,
+            this.sImgPath_str = t,
+            this.buttonWidth = s,
+            this.buttonHeight = o,
+            this.showOver = a, i || (this.showOver = !1),
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.isDisabled_bl = !1,
+            this.init = function() {
+                r.setupMainContainers(),
+                r.setWidth(r.buttonWidth),
+                r.setHeight(r.buttonHeight),
+                r.setButtonMode(!0)
+            },
+            this.setupMainContainers = function() {
+                r.nImg = new Image,
+                r.nImg.src = r.nImgPath_str,
+                r.useHEX && !r.showOver ? (r.n_do = new FWDUVPTransformDisplayObject("div"),
+                                           r.n_do.setWidth(r.buttonWidth),
+                                           r.n_do.setHeight(r.buttonHeight),
+                                           r.nImg.onload = function() {
+                                             r.n_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(r.nImg, r.nBC).canvas,
+                                             r.n_do.screen.appendChild(r.n_do_canvas)
+                                           })
+                                        : (r.n_do = new FWDUVPDisplayObject("img"),
+                                           r.n_do.setScreen(r.nImg),
+                                           r.n_do.setWidth(r.buttonWidth),
+                                           r.n_do.setHeight(r.buttonHeight)),
+                r.addChild(r.n_do),
+                r.sImg = new Image,
+                r.sImg.src = r.sImgPath_str,
+                r.useHEX ? (r.s_do = new FWDUVPTransformDisplayObject("div"),
+                            r.s_do.setWidth(r.buttonWidth),
+                            r.s_do.setHeight(r.buttonHeight),
+                            r.sImg.onload = function() {
+                              r.s_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(r.sImg, r.nBC).canvas,
+                              r.s_do.screen.appendChild(r.s_do_canvas)
+                            },
+                            r.showOver || r.s_do.setAlpha(0),
+                            r.addChild(r.s_do))
+                          : (r.s_do = new FWDUVPDisplayObject("img"),
+                             r.s_do.setScreen(r.sImg),
+                             r.s_do.setWidth(r.buttonWidth),
+                             r.s_do.setHeight(r.buttonHeight),
+                             r.addChild(r.s_do),
+                             r.useHEX || r.s_do.setAlpha(0)),
+                  r.showOver && r.addChild(r.s_do),
+                  r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onMouseUp),
+                                          r.screen.addEventListener("pointerover", r.setSelectedState),
+                                          r.screen.addEventListener("pointerout", r.setNormalState))
+                                       : r.screen.addEventListener && (r.isMbl || (r.screen.addEventListener("mouseover", r.setSelectedState),
+                                                                                   r.screen.addEventListener("mouseout", r.setNormalState),
+                                                                                   r.screen.addEventListener("mouseup", r.onMouseUp)),
+                                                                       r.screen.addEventListener("touchend", r.onMouseUp))
             }, this.setNormalState = function(e) {
                 r.showOver ? (FWDAnimation.killTweensOf(r.s_do), FWDAnimation.to(r.s_do, .6, {
                     alpha: 1,
@@ -8587,21 +8640,56 @@ var FWDUVPAddress = new function() {
             d.prototype = null, d.prototype = new FWDUVPTransformDisplayObject("div", "relative")
         }, d.MOUSE_UP = "onClick", d.CLICK = "onClick", d.prototype = null, e.FWDUVPSimpleSizeButton = d
     }(window),
+
     function(l) {
         var a = function(i, e) {
             var u = this;
             a.prototype;
-            this.main_do = null, this.reader = null, this.subtitiles_ar = null, this.hasText_bl = !1, this.isLded = !1, this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.showSubtitileByDefault_bl = e.showSubtitileByDefault_bl, u.init = function() {
-                u.setOverflow("visible"), u.getStyle().pointerEvents = "none", u.getStyle().cursor = "default", u.setupTextContainer(), u.getStyle().margin = "auto", u.hide(), setTimeout(function() {
+            this.main_do = null,
+            this.reader = null,
+            this.subtitiles_ar = null,
+            this.hasText_bl = !1,
+            this.isLded = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.showSubtitileByDefault_bl = e.showSubtitileByDefault_bl,
+            u.init = function() {
+                u.setOverflow("visible"),
+                u.getStyle().pointerEvents = "none",
+                u.getStyle().cursor = "default",
+                u.setupTextContainer(),
+                u.getStyle().margin = "auto",
+                u.hide(),
+                setTimeout(function() {
                     u.setSizeOnce()
                 }, 500)
-            }, this.setSizeOnce = function() {}, u.setupTextContainer = function() {
-                this.text_do = new FWDUVPTransformDisplayObject("div"), u.text_do.getStyle().pointerEvents = "none", this.text_do.hasTransform3d_bl = !1, this.text_do.setBackfaceVisibility(), this.text_do.getStyle().transformOrigin = "50% 0%", this.text_do.getStyle().textAlign = "center", this.text_do.getStyle().fontSmoothing = "antialiased", this.text_do.getStyle().webkitFontSmoothing = "antialiased", this.text_do.getStyle().textRendering = "optimizeLegibility", this.addChild(this.text_do)
-            }, u.loadSubtitle = function(e) {
-                if (u.text_do.setX(-5e3), -1 == location.protocol.indexOf("file:")) {
-                    u.subtitiles_ar = [], u.stopToLoadSubtitle(), u.sourceURL_str = e, u.xhr = new XMLHttpRequest, u.xhr.onreadystatechange = u.onLoad, u.xhr.onerror = u.onError;
+            },
+            this.setSizeOnce = function() {},
+            u.setupTextContainer = function() {
+                this.text_do = new FWDUVPTransformDisplayObject("div"),
+                u.text_do.getStyle().pointerEvents = "none",
+                this.text_do.hasTransform3d_bl = !1,
+                this.text_do.setBackfaceVisibility(),
+                this.text_do.getStyle().transformOrigin = "50% 0%",
+                this.text_do.getStyle().textAlign = "center",
+                this.text_do.getStyle().fontSmoothing = "antialiased",
+                this.text_do.getStyle().webkitFontSmoothing = "antialiased",
+                this.text_do.getStyle().textRendering = "optimizeLegibility",
+                this.addChild(this.text_do)
+            },
+            u.loadSubtitle = function(e) {
+                if (u.text_do.setX(-5e3),
+                   -1 == location.protocol.indexOf("file:")) {
+                    u.subtitiles_ar = [],
+                    u.stopToLoadSubtitle(),
+                    u.sourceURL_str = e,
+                    u.xhr = new XMLHttpRequest,
+                    u.xhr.onreadystatechange = u.onLoad,
+                    u.xhr.onerror = u.onError;
                     try {
-                        u.xhr.open("get", u.sourceURL_str + "?rand=" + parseInt(99999999 * Math.random()), !0), u.xhr.send()
+                        u.xhr.open("get",
+                        u.sourceURL_str + "?rand=" + parseInt(99999999 * Math.random()), !0),
+                        u.xhr.send()
                     } catch (e) {
                         e && e.message && e.message
                     }
@@ -8660,12 +8748,20 @@ var FWDUVPAddress = new function() {
             }, this.position = function(e) {
                 if (u.isLded) {
                     var t;
-                    this.setWidth(i.tempVidStageWidth), this.text_do.setWidth(i.tempVidStageWidth), u.setX(Math.round((i.tempVidStageWidth - u.w) / 2));
+                    this.setWidth(i.tempVidStageWidth),
+                    this.text_do.setWidth(i.tempVidStageWidth),
+                    u.setX(Math.round((i.tempVidStageWidth - u.w) / 2));
                     var s = u.text_do.getHeight();
-                    t = i.controller_do ? i.controller_do.isShowed_bl ? parseInt(i.vidStageHeight - i.controller_do.h - s) : parseInt(i.vidStageHeight - s - 10) : parseInt(i.vidStageHeight - s), FWDAnimation.killTweensOf(u.text_do), e ? FWDAnimation.to(u.text_do, .8, {
+                    t = i.controller_do ? i.controller_do.isShowed_bl
+                                        ? parseInt(i.vidStageHeight - i.controller_do.h - s)
+                                        : parseInt(i.vidStageHeight - s - 10)
+                                        : parseInt(i.vidStageHeight - s),
+                    FWDAnimation.killTweensOf(u.text_do),
+                    e ? FWDAnimation.to(u.text_do, .8, {
                         y: t,
                         ease: Expo.easeInOut
-                    }) : u.text_do.setY(t), u.text_do.setX(0)
+                        })
+                      : u.text_do.setY(t), u.text_do.setX(0)
                 }
             }, this.show = function() {
                 u.setVisible(!0)
@@ -8678,18 +8774,67 @@ var FWDUVPAddress = new function() {
                 s = 0,
                 o = 0;
             return "0" == (t = (e = e.split(":"))[0])[0] && "0" != t[1] && (t = parseInt(t[1])), "00" == t && (t = 0), "0" == (s = e[1])[0] && "0" != s[1] && (s = parseInt(s[1])), "00" == s && (s = 0), secs = parseInt(e[2].replace(/,.*/gi, "")), "0" == secs[0] && "0" != secs[1] && (secs = parseInt(secs[1])), "00" == secs && (secs = 0), 0 != t && (o += 60 * t * 60), 0 != s && (o += 60 * s), o += secs
-        }, a.setPrototype = function() {
-            a.prototype = null, a.prototype = new FWDUVPTransformDisplayObject("div")
-        }, a.LOAD_ERROR = "error", a.LOAD_COMPLETE = "complete", a.prototype = null, l.FWDUVPSubtitle = a
+        },
+        a.setPrototype = function() {
+            a.prototype = null,
+            a.prototype = new FWDUVPTransformDisplayObject("div")
+        },
+        a.LOAD_ERROR = "error",
+        a.LOAD_COMPLETE = "complete",
+        a.prototype = null,
+        l.FWDUVPSubtitle = a
     }(window),
     function(a) {
         var r = function(e, t, s, o, i, l) {
             var n = this;
             r.prototype;
-            this.buttonRef_do = e, this.bkPath_str = t, this.pointerPath_str = s, this.text_do = null, this.pointer_do = null, this.fontColor_str = i, this.toolTipLabel_str = o, this.toolTipsButtonsHideDelay = 1e3 * l, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMbl = FWDUVPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-                n.setOverflow("visible"), n.screen.className = "UVP-tooltip-bk", n.setupMainContainers(), n.setLabel(n.toolTipLabel_str), n.hide(), n.getStyle().background = "url('" + n.bkPath_str + "')", n.getStyle().zIndex = 9999999999999
-            }, this.setupMainContainers = function() {
-                n.text_do = new FWDUVPDisplayObject("div"), n.text_do.screen.className = "UVP-tooltip-text", n.text_do.hasTransform3d_bl = !1, n.text_do.hasTransform2d_bl = !1, n.text_do.setBackfaceVisibility(), n.text_do.setDisplay("inline"), n.text_do.getStyle().fontFamily = "Arial", n.text_do.getStyle().fontSize = "12px", n.text_do.getStyle().color = n.fontColor_str, n.text_do.getStyle().whiteSpace = "nowrap", n.text_do.getStyle().fontSmoothing = "antialiased", n.text_do.getStyle().webkitFontSmoothing = "antialiased", n.text_do.getStyle().textRendering = "optimizeLegibility", n.text_do.getStyle().padding = "6px", n.text_do.getStyle().paddingTop = "4px", n.text_do.getStyle().paddingBottom = "4px", n.setLabel(), n.addChild(n.text_do), n.pointer_do = new FWDUVPDisplayObject("div"), n.pointer_do.screen.className = "UVP-tooltip-pointer", n.pointer_do.getStyle().background = "url('" + n.pointerPath_str + "')", n.pointer_do.setWidth(n.pointerWidth), n.pointer_do.setHeight(n.pointerHeight), n.addChild(n.pointer_do)
+            this.buttonRef_do = e,
+            this.bkPath_str = t,
+            this.pointerPath_str = s,
+            this.text_do = null,
+            this.pointer_do = null,
+            this.fontColor_str = i,
+            this.toolTipLabel_str = o,
+            this.toolTipsButtonsHideDelay = 1e3 * l,
+            this.pointerWidth = 7,
+            this.pointerHeight = 4,
+            this.showWithDelayId_to,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.isShowed_bl = !0,
+            this.init = function() {
+                n.setOverflow("visible"),
+                n.screen.className = "UVP-tooltip-bk",
+                n.setupMainContainers(),
+                n.setLabel(n.toolTipLabel_str),
+                n.hide(),
+                n.getStyle().background = "url('" + n.bkPath_str + "')",
+                n.getStyle().zIndex = 9999999999999
+            },
+            this.setupMainContainers = function() {
+                n.text_do = new FWDUVPDisplayObject("div"),
+                n.text_do.screen.className = "UVP-tooltip-text",
+                n.text_do.hasTransform3d_bl = !1,
+                n.text_do.hasTransform2d_bl = !1,
+                n.text_do.setBackfaceVisibility(),
+                n.text_do.setDisplay("inline"),
+                n.text_do.getStyle().fontFamily = "Arial",
+                n.text_do.getStyle().fontSize = "12px",
+                n.text_do.getStyle().color = n.fontColor_str,
+                n.text_do.getStyle().whiteSpace = "nowrap",
+                n.text_do.getStyle().fontSmoothing = "antialiased",
+                n.text_do.getStyle().webkitFontSmoothing = "antialiased",
+                n.text_do.getStyle().textRendering = "optimizeLegibility",
+                n.text_do.getStyle().padding = "6px",
+                n.text_do.getStyle().paddingTop = "4px",
+                n.text_do.getStyle().paddingBottom = "4px",
+                n.setLabel(),
+                n.addChild(n.text_do),
+                n.pointer_do = new FWDUVPDisplayObject("div"),
+                n.pointer_do.screen.className = "UVP-tooltip-pointer",
+                n.pointer_do.getStyle().background = "url('" + n.pointerPath_str + "')",
+                n.pointer_do.setWidth(n.pointerWidth),
+                n.pointer_do.setHeight(n.pointerHeight),
+                n.addChild(n.pointer_do)
             }, this.setLabel = function(e) {
                 n.text_do.setInnerHTML(o), setTimeout(function() {
                     null != n && (n.setWidth(n.text_do.getWidth()), n.setHeight(n.text_do.getHeight()), n.positionPointer())
@@ -8697,8 +8842,15 @@ var FWDUVPAddress = new function() {
             }, this.positionPointer = function(e) {
                 var t, s;
                 e = e || 0, t = parseInt((n.w - n.pointerWidth) / 2) + e, s = n.h, n.pointer_do.setX(t), n.pointer_do.setY(s)
-            }, this.show = function() {
-                n.isShowed_bl || (n.isShowed_bl = !0, FWDAnimation.killTweensOf(n), clearTimeout(n.showWithDelayId_to), n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay), a.addEventListener ? a.addEventListener("mousemove", n.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", n.moveHandler), document.attachEvent("onmousemove", n.moveHandler)))
+            },
+            this.show = function() {
+                n.isShowed_bl || (n.isShowed_bl = !0,
+                                  FWDAnimation.killTweensOf(n),
+                                  clearTimeout(n.showWithDelayId_to),
+                                  n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay),
+                                  a.addEventListener ? a.addEventListener("mousemove", n.moveHandler)
+                                                     : document.attachEvent && (document.detachEvent("onmousemove", n.moveHandler),
+                                  document.attachEvent("onmousemove", n.moveHandler)))
             }, this.showFinal = function() {
                 n.setVisible(!0), n.setAlpha(0), FWDAnimation.to(n, .4, {
                     alpha: 1,
@@ -8710,20 +8862,51 @@ var FWDUVPAddress = new function() {
             }, this.moveHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(n.buttonRef_do.screen, t.screenX, t.screenY) || n.hide()
-            }, this.hide = function() {
-                n.isShowed_bl && (clearTimeout(n.showWithDelayId_to), a.removeEventListener ? a.removeEventListener("mousemove", n.moveHandler) : document.detachEvent && document.detachEvent("onmousemove", n.moveHandler), FWDAnimation.killTweensOf(n), n.setVisible(!1), n.isShowed_bl = !1)
+            },
+            this.hide = function() {
+                n.isShowed_bl && (clearTimeout(n.showWithDelayId_to),
+                                  a.removeEventListener ? a.removeEventListener("mousemove", n.moveHandler)
+                                                        : document.detachEvent && document.detachEvent("onmousemove", n.moveHandler),
+                                  FWDAnimation.killTweensOf(n),
+                                  n.setVisible(!1),
+                                  n.isShowed_bl = !1)
             }, this.init()
         };
         r.setPrototype = function() {
             r.prototype = null, r.prototype = new FWDUVPDisplayObject("div", "fixed")
         }, r.CLICK = "onClick", r.MOUSE_DOWN = "onMouseDown", r.prototype = null, a.FWDUVPToolTip = r
-    }(window), window.FWDUVPTransformDisplayObject = function(e, t, s, o) {
+    }(window),
+
+    window.FWDUVPTransformDisplayObject = function(e, t, s, o) {
         this.listeners = {
             events_ar: []
         };
         var i = this;
         if ("div" != e && "img" != e && "canvas" != e && "iframe" != e) throw Error("Type is not valid! " + e);
-        this.type = e, this.children_ar = [], this.style, this.screen, this.numChildren, this.transform, this.position = t || "absolute", this.overflow = s || "hidden", this.display = o || "block", this.visible = !0, this.buttonMode, this.x = 0, this.y = 0, this.scale = 1, this.rotation = 0, this.w = 0, this.h = 0, this.rect, this.alpha = 1, this.innerHTML = "", this.opacityType = "", this.isHtml5_bl = !1, this.hasTransform2d_bl = FWDUVPUtils.hasTransform2d, this.init = function() {
+        this.type = e,
+        this.children_ar = [],
+        this.style,
+        this.screen,
+        this.numChildren,
+        this.transform,
+        this.position = t || "absolute",
+        this.overflow = s || "hidden",
+        this.display = o || "block",
+        this.visible = !0,
+        this.buttonMode,
+        this.x = 0,
+        this.y = 0,
+        this.scale = 1,
+        this.rotation = 0,
+        this.w = 0,
+        this.h = 0,
+        this.rect,
+        this.alpha = 1,
+        this.innerHTML = "",
+        this.opacityType = "",
+        this.isHtml5_bl = !1,
+        this.hasTransform2d_bl = FWDUVPUtils.hasTransform2d,
+        this.init = function() {
             this.setScreen()
         }, this.getTransform = function() {
             for (var e, t = ["transform", "msTransform", "WebkitTransform", "MozTransform", "OTransform"]; e = t.shift();)
@@ -8733,14 +8916,41 @@ var FWDUVPAddress = new function() {
             return void 0 !== this.screen.style.opacity ? "opacity" : "filter"
         }, this.setScreen = function(e) {
             "img" == this.type && e ? this.screen = e : this.screen = document.createElement(this.type), this.setMainProperties()
-        }, this.setMainProperties = function() {
-            this.transform = this.getTransform(), this.setPosition(this.position), this.setOverflow(this.overflow), this.opacityType = this.getOpacityType(), "opacity" == this.opacityType && (this.isHtml5_bl = !0), "filter" == i.opacityType && (i.screen.style.filter = "inherit"), this.screen.style.left = "0px", this.screen.style.top = "0px", this.screen.style.margin = "0px", this.screen.style.padding = "0px", this.screen.style.maxWidth = "none", this.screen.style.maxHeight = "none", this.screen.style.border = "none", this.screen.style.lineHeight = "1", this.screen.style.backfaceVisibility = "hidden", this.screen.style.webkitBackfaceVisibility = "hidden", this.screen.style.MozBackfaceVisibility = "hidden", this.screen.style.MozImageRendering = "optimizeSpeed", this.screen.style.WebkitImageRendering = "optimizeSpeed", "img" == e && (this.setWidth(this.screen.width), this.setHeight(this.screen.height), this.screen.onmousedown = function(e) {
+        },
+        this.setMainProperties = function() {
+            this.transform = this.getTransform(),
+            this.setPosition(this.position),
+            this.setOverflow(this.overflow),
+            this.opacityType = this.getOpacityType(),
+            "opacity" == this.opacityType && (this.isHtml5_bl = !0),
+            "filter" == i.opacityType && (i.screen.style.filter = "inherit"),
+            this.screen.style.left = "0px",
+            this.screen.style.top = "0px",
+            this.screen.style.margin = "0px",
+            this.screen.style.padding = "0px",
+            this.screen.style.maxWidth = "none",
+            this.screen.style.maxHeight = "none",
+            this.screen.style.border = "none",
+            this.screen.style.lineHeight = "1",
+            this.screen.style.backfaceVisibility = "hidden",
+            this.screen.style.webkitBackfaceVisibility = "hidden",
+            this.screen.style.MozBackfaceVisibility = "hidden",
+            this.screen.style.MozImageRendering = "optimizeSpeed",
+            this.screen.style.WebkitImageRendering = "optimizeSpeed",
+            "img" == e && (this.setWidth(this.screen.width),
+            this.setHeight(this.screen.height),
+            this.screen.onmousedown = function(e) {
                 return !1
             })
         }, i.setBackfaceVisibility = function() {
-            i.screen.style.backfaceVisibility = "visible", i.screen.style.webkitBackfaceVisibility = "visible", i.screen.style.MozBackfaceVisibility = "visible"
-        }, i.removeBackfaceVisibility = function() {
-            i.screen.style.backfaceVisibility = "hidden", i.screen.style.webkitBackfaceVisibility = "hidden", i.screen.style.MozBackfaceVisibility = "hidden"
+            i.screen.style.backfaceVisibility = "visible",
+            i.screen.style.webkitBackfaceVisibility = "visible",
+            i.screen.style.MozBackfaceVisibility = "visible"
+        },
+        i.removeBackfaceVisibility = function() {
+            i.screen.style.backfaceVisibility = "hidden",
+            i.screen.style.webkitBackfaceVisibility = "hidden",
+            i.screen.style.MozBackfaceVisibility = "hidden"
         }, this.setSelectable = function(e) {
             if (!e) {
                 try {
@@ -8796,8 +9006,11 @@ var FWDUVPAddress = new function() {
             return i.innerHTML
         }, this.getRect = function() {
             return i.screen.getBoundingClientRect()
-        }, this.setAlpha = function(e) {
-            i.alpha = e, "opacity" == i.opacityType ? i.screen.style.opacity = i.alpha : "filter" == i.opacityType && (i.screen.style.filter = "alpha(opacity=" + 100 * i.alpha + ")", i.screen.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(100 * i.alpha) + ")")
+        },
+        this.setAlpha = function(e) {
+            i.alpha = e,
+            "opacity" == i.opacityType ? i.screen.style.opacity = i.alpha
+                                       : "filter" == i.opacityType && (i.screen.style.filter = "alpha(opacity=" + 100 * i.alpha + ")", i.screen.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(100 * i.alpha) + ")")
         }, this.getAlpha = function() {
             return i.alpha
         }, this.getRect = function() {
@@ -8826,19 +9039,40 @@ var FWDUVPAddress = new function() {
             return "div" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : "img" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : 0 != i.screen.width ? i.screen.width : i._w : "canvas" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : void 0
         }, i.setHeight = function(e) {
             i.h = e, "img" == i.type && (i.screen.height = i.h), i.screen.style.height = i.h + "px"
-        }, this.getHeight = function() {
-            return "div" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : "img" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : 0 != i.screen.height ? i.screen.height : i.h : "canvas" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : void 0
+        },
+        this.getHeight = function() {
+            return "div" == i.type ? 0 != i.screen.offsetHeight
+                                   ? i.screen.offsetHeight
+                                   : i.h
+                                   : "img" == i.type
+                                   ? 0 != i.screen.offsetHeight
+                                   ? i.screen.offsetHeight
+                                   : 0 != i.screen.height
+                                   ? i.screen.height
+                                   : i.h
+                                   : "canvas" == i.type
+                                   ? 0 != i.screen.offsetHeight
+                                   ? i.screen.offsetHeight
+                                   : i.h
+                                   : void 0
         }, this.getNumChildren = function() {
             return i.children_ar.length
-        }, this.addChild = function(e) {
-            this.contains(e) && this.children_ar.splice(FWDUVPUtils.indexOfArray(this.children_ar, e), 1), this.children_ar.push(e), this.screen.appendChild(e.screen)
+        },
+        this.addChild = function(e) {
+            this.contains(e) && this.children_ar.splice(FWDUVPUtils.indexOfArray(this.children_ar, e), 1),
+            this.children_ar.push(e),
+            this.screen.appendChild(e.screen)
         }, this.removeChild = function(e) {
             if (!this.contains(e)) throw Error("##removeChild()## Child doesn't exist, it can't be removed!");
             this.children_ar.splice(FWDUVPUtils.indexOfArray(this.children_ar, e), 1), this.screen.removeChild(e.screen)
         }, this.contains = function(e) {
             return -1 != FWDUVPUtils.indexOfArray(this.children_ar, e)
-        }, this.addChildAtZero = function(e) {
-            0 == this.numChildren ? (this.children_ar.push(e), this.screen.appendChild(e.screen)) : (this.screen.insertBefore(e.screen, this.children_ar[0].screen), this.contains(e) && this.children_ar.splice(FWDUVPUtils.indexOfArray(this.children_ar, e), 1), this.children_ar.unshift(e))
+        },
+        this.addChildAtZero = function(e) {
+            0 == this.numChildren ? (this.children_ar.push(e), this.screen.appendChild(e.screen))
+                                  : (this.screen.insertBefore(e.screen, this.children_ar[0].screen),
+                                     this.contains(e) && this.children_ar.splice(FWDUVPUtils.indexOfArray(this.children_ar, e), 1),
+                                     this.children_ar.unshift(e))
         }, this.getChildAt = function(e) {
             if (e < 0 || e > this.numChildren - 1) throw Error("##getChildAt()## Index out of bounds!");
             if (0 == this.numChildren) throw Errror("##getChildAt## Child dose not exist!");
@@ -8876,43 +9110,201 @@ var FWDUVPAddress = new function() {
             try {
                 this.screen.parentNode.removeChild(this.screen)
             } catch (e) {}
-            this.screen.onselectstart = null, this.screen.ondragstart = null, this.screen.ontouchstart = null, this.screen.ontouchmove = null, this.screen.ontouchend = null, this.screen.onmouseover = null, this.screen.onmouseout = null, this.screen.onmouseup = null, this.screen.onmousedown = null, this.screen.onmousemove = null, this.screen.onclick = null, delete this.screen, delete this.style, delete this.rect, delete this.selectable, delete this.buttonMode, delete this.position, delete this.overflow, delete this.visible, delete this.innerHTML, delete this.numChildren, delete this.x, delete this.y, delete this.w, delete this.h, delete this.opacityType, delete this.isHtml5_bl, delete this.hasTransform2d_bl, this.children_ar = null, this.style = null, this.screen = null, this.numChildren = null, this.transform = null, this.position = null, this.overflow = null, this.display = null, this.visible = null, this.buttonMode = null, this.globalX = null, this.globalY = null, this.x = null, this.y = null, this.w = null, this.h = null, this.rect = null, this.alpha = null, this.innerHTML = null, this.opacityType = null, this.isHtml5_bl = null, this.hasTransform3d_bl = null, this.hasTransform2d_bl = null, i = null
-        }, this.init()
+            this.screen.onselectstart = null,
+            this.screen.ondragstart = null,
+            this.screen.ontouchstart = null,
+            this.screen.ontouchmove = null,
+            this.screen.ontouchend = null,
+            this.screen.onmouseover = null,
+            this.screen.onmouseout = null,
+            this.screen.onmouseup = null,
+            this.screen.onmousedown = null,
+            this.screen.onmousemove = null,
+            this.screen.onclick = null,
+            delete this.screen,
+            delete this.style,
+            delete this.rect,
+            delete this.selectable,
+            delete this.buttonMode,
+            delete this.position,
+            delete this.overflow,
+            delete this.visible,
+            delete this.innerHTML,
+            delete this.numChildren,
+            delete this.x,
+            delete this.y,
+            delete this.w,
+            delete this.h,
+            delete this.opacityType,
+            delete this.isHtml5_bl,
+            delete this.hasTransform2d_bl,
+            this.children_ar = null,
+            this.style = null,
+            this.screen = null,
+            this.numChildren = null,
+            this.transform = null,
+            this.position = null,
+            this.overflow = null,
+            this.display = null,
+            this.visible = null,
+            this.buttonMode = null,
+            this.globalX = null,
+            this.globalY = null,
+            this.x = null,
+            this.y = null,
+            this.w = null,
+            this.h = null,
+            this.rect = null,
+            this.alpha = null,
+            this.innerHTML = null,
+            this.opacityType = null,
+            this.isHtml5_bl = null,
+            this.hasTransform3d_bl = null,
+            this.hasTransform2d_bl = null,
+            i = null
+        },
+        this.init()
     },
     function(s) {
         var n = function(i, e) {
             var l = this;
             n.prototype;
-            this.video_el = null, this.sourcePath_str = null, this.bk_do = null, this.controllerHeight = i.data.controllerHeight, this.sW = 0, this.sH = 0, this.lastPercentPlayed = 0, this.volume = e, this.curDuration = 0, this.countNormalMp3Errors = 0, this.countShoutCastErrors = 0, this.maxShoutCastCountErrors = 5, this.maxNormalCountErrors = 1, this.disableClickForAWhileId_to, this.showErrorWithDelayId_to, this.playWithDelayId_to, this.disableClick_bl = !1, this.allowScrubing_bl = !1, this.hasError_bl = !0, this.isPlaying_bl = !1, this.isStopped_bl = !0, this.hasPlayedOnce_bl = !1, this.isStartEventDispatched_bl = !1, this.isSafeToBeControlled_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.init = function() {
+            this.video_el = null,
+            this.sourcePath_str = null,
+            this.bk_do = null,
+            this.controllerHeight = i.data.controllerHeight,
+            this.sW = 0,
+            this.sH = 0,
+            this.lastPercentPlayed = 0,
+            this.volume = e,
+            this.curDuration = 0,
+            this.countNormalMp3Errors = 0,
+            this.countShoutCastErrors = 0,
+            this.maxShoutCastCountErrors = 5,
+            this.maxNormalCountErrors = 1,
+            this.disableClickForAWhileId_to,
+            this.showErrorWithDelayId_to,
+            this.playWithDelayId_to,
+            this.disableClick_bl = !1,
+            this.allowScrubing_bl = !1,
+            this.hasError_bl = !0,
+            this.isPlaying_bl = !1,
+            this.isStopped_bl = !0,
+            this.hasPlayedOnce_bl = !1,
+            this.isStartEventDispatched_bl = !1,
+            this.isSafeToBeControlled_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.init = function() {
                 l.setBkColor(i.videoBackgroundColor_str), l.setupVideo()
-            }, this.setupVideo = function() {
-                null == l.video_el && (l.video_el = document.createElement("video"), l.screen.appendChild(l.video_el), l.video_el.controls = !1, l.video_el.volume = l.volume, i.data.playsinline && (l.video_el.WebKitPlaysInline = !0, l.video_el.playsinline = !0, l.video_el.setAttribute("playsinline", ""), l.video_el.setAttribute("webkit-playsinline", "")), i.data.aom_bl && (l.video_el.muted = !0), l.video_el.style.position = "relative", l.video_el.style.left = "0px", l.video_el.style.top = "0px", l.video_el.style.width = "100%", l.video_el.style.height = "100%", l.video_el.style.margin = "0px", l.video_el.style.padding = "0px", l.video_el.style.maxWidth = "none", l.video_el.style.maxHeight = "none", l.video_el.style.border = "none", l.video_el.style.lineHeight = "0", l.video_el.style.msTouchAction = "none", l.screen.appendChild(l.video_el)), l.video_el.addEventListener("error", l.errorHandler), l.video_el.addEventListener("progress", l.updateProgress), l.video_el.addEventListener("timeupdate", l.updateVideo), l.video_el.addEventListener("pause", l.pauseHandler), l.video_el.addEventListener("play", l.playHandler), FWDUVPUtils.isIE || l.video_el.addEventListener("waiting", l.startToBuffer), l.video_el.addEventListener("playing", l.stopToBuffer), l.video_el.addEventListener("ended", l.endedHandler), l.resizeAndPosition()
-            }, this.destroyVideo = function() {
-                clearTimeout(l.showErrorWithDelayId_to), l.video_el && (l.stopToUpdateSubtitles(), l.video_el.removeEventListener("error", l.errorHandler), l.video_el.removeEventListener("progress", l.updateProgress), l.video_el.removeEventListener("timeupdate", l.updateVideo), l.video_el.removeEventListener("pause", l.pauseHandler), l.video_el.removeEventListener("play", l.playHandler), FWDUVPUtils.isIE || l.video_el.removeEventListener("waiting", l.startToBuffer), l.video_el.removeEventListener("playing", l.stopToBuffer), l.video_el.removeEventListener("ended", l.endedHandler), l.video_el.style.visibility = "hidden", l.video_el.src = "", l.video_el.load())
+            },
+            this.setupVideo = function() {
+                null == l.video_el && (l.video_el = document.createElement("video"),
+                                       l.screen.appendChild(l.video_el),
+                                       l.video_el.controls = !1,
+                                       l.video_el.volume = l.volume,
+                                       i.data.playsinline && (l.video_el.WebKitPlaysInline = !0,
+                                                              l.video_el.playsinline = !0,
+                                                              l.video_el.setAttribute("playsinline", ""),
+                                                              l.video_el.setAttribute("webkit-playsinline", "")),
+                                       i.data.aom_bl && (l.video_el.muted = !0),
+                                       l.video_el.style.position = "relative",
+                                       l.video_el.style.left = "0px",
+                                       l.video_el.style.top = "0px",
+                                       l.video_el.style.width = "100%",
+                                       l.video_el.style.height = "100%",
+                                       l.video_el.style.margin = "0px",
+                                       l.video_el.style.padding = "0px",
+                                       l.video_el.style.maxWidth = "none",
+                                       l.video_el.style.maxHeight = "none",
+                                       l.video_el.style.border = "none",
+                                       l.video_el.style.lineHeight = "0",
+                                       l.video_el.style.msTouchAction = "none",
+                                       l.screen.appendChild(l.video_el)),
+              l.video_el.addEventListener("error", l.errorHandler),
+              l.video_el.addEventListener("progress", l.updateProgress),
+              l.video_el.addEventListener("timeupdate", l.updateVideo),
+              l.video_el.addEventListener("pause", l.pauseHandler),
+              l.video_el.addEventListener("play", l.playHandler),
+              FWDUVPUtils.isIE || l.video_el.addEventListener("waiting", l.startToBuffer),
+              l.video_el.addEventListener("playing", l.stopToBuffer),
+              l.video_el.addEventListener("ended", l.endedHandler),
+              l.resizeAndPosition()
+            },
+            this.destroyVideo = function() {
+                clearTimeout(l.showErrorWithDelayId_to),
+                l.video_el && (l.stopToUpdateSubtitles(),
+                               l.video_el.removeEventListener("error", l.errorHandler),
+                               l.video_el.removeEventListener("progress", l.updateProgress),
+                               l.video_el.removeEventListener("timeupdate", l.updateVideo),
+                               l.video_el.removeEventListener("pause", l.pauseHandler),
+                               l.video_el.removeEventListener("play", l.playHandler),
+                               FWDUVPUtils.isIE || l.video_el.removeEventListener("waiting", l.startToBuffer),
+                               l.video_el.removeEventListener("playing", l.stopToBuffer),
+                               l.video_el.removeEventListener("ended", l.endedHandler),
+                               l.video_el.style.visibility = "hidden",
+                               l.video_el.src = "",
+                               l.video_el.load())
             }, this.startToBuffer = function(e) {
                 l.dispatchEvent(n.START_TO_BUFFER)
             }, this.stopToBuffer = function() {
                 l.dispatchEvent(n.STOP_TO_BUFFER)
-            }, this.errorHandler = function(e) {
+            },
+            this.errorHandler = function(e) {
                 var t;
-                "DASH" != i.videoType_str && (l.hasError_bl = !0, t = 0 == l.video_el.networkState ? "error 'self.video_el.networkState = 0'" : 1 == l.video_el.networkState ? "error 'self.video_el.networkState = 1'" : 3 == l.video_el.networkState ? "source not found" : e, s.console && s.console.log(l.video_el.networkState), clearTimeout(l.showErrorWithDelayId_to), l.showErrorWithDelayId_to = setTimeout(function() {
-                    l.dispatchEvent(n.ERROR, {
-                        text: t
-                    })
-                }, 200))
-            }, this.resizeAndPosition = function(e, t, s, o) {
-                e && (l.sW = e, l.sH = t), l.setWidth(l.sW), l.setHeight(l.sH), l.setX(s), l.setY(o), i.is360 && l.renderer && (l.camera.aspect = l.sW / l.sH, l.camera.updateProjectionMatrix(), l.renderer.setSize(l.sW, l.sH))
-            }, this.setSource = function(e) {
-                l.stopToUpdateSubtitles(), l.sourcePath_str = e, i.is360 && l.video_el && (l.video_el.style.visibility = "hidden"), l.video_el && l.stop(), l.initVideo()
-            }, this.play = function(e) {
+                "DASH" != i.videoType_str && (l.hasError_bl = !0,
+                                              t = 0 == l.video_el.networkState ? "error 'self.video_el.networkState = 0'"
+                                                                               : 1 == l.video_el.networkState
+                                                                               ? "error 'self.video_el.networkState = 1'"
+                                                                               : 3 == l.video_el.networkState
+                                                                               ? "source not found"
+                                                                               : e,
+                                              s.console && s.console.log(l.video_el.networkState),
+                                              clearTimeout(l.showErrorWithDelayId_to),
+                                              l.showErrorWithDelayId_to = setTimeout(function() {
+                                                l.dispatchEvent(n.ERROR, {
+                                                  text: t
+                                                })
+                                              }, 200))
+            },
+            this.resizeAndPosition = function(e, t, s, o) {
+                e && (l.sW = e, l.sH = t),
+                l.setWidth(l.sW),
+                l.setHeight(l.sH),
+                l.setX(s),
+                l.setY(o),
+                i.is360 && l.renderer && (l.camera.aspect = l.sW / l.sH, l.camera.updateProjectionMatrix(), l.renderer.setSize(l.sW, l.sH))
+            },
+            this.setSource = function(e) {
+                l.stopToUpdateSubtitles(),
+                l.sourcePath_str = e,
+                i.is360 && l.video_el && (l.video_el.style.visibility = "hidden"),
+                l.video_el && l.stop(),
+                l.initVideo()
+            },
+            this.play = function(e) {
                 var t;
-                if (clearTimeout(l.playWithDelayId_to), FWDUVPlayer.curInstance = i, l.isStopped_bl) l.initVideo(), l.setVolume(), l.isMbl ? l.play() : l.playWithDelayId_to = setTimeout(l.play, 1e3), l.hasStrtLivStrm = !0, l.startToBuffer(!0), l.isPlaying_bl = !0;
+                if (clearTimeout(l.playWithDelayId_to),
+                                 FWDUVPlayer.curInstance = i,
+                                 l.isStopped_bl)
+                      l.initVideo(),
+                      l.setVolume(),
+                      l.isMbl ? l.play() : l.playWithDelayId_to = setTimeout(l.play, 1e3),
+                      l.hasStrtLivStrm = !0,
+                      l.startToBuffer(!0),
+                      l.isPlaying_bl = !0;
                 else if (!l.video_el.ended || e) try {
                     l.hasStrtLivStrm = !0, l.isPlaying_bl = !0, l.hasPlayedOnce_bl = !0, void 0 !== (t = l.video_el.play()) && t.then(function() {}, function() {}), FWDUVPUtils.isIE && l.dispatchEvent(n.PLAY)
                 } catch (e) {}
                 i.is360 && l.add360Vid()
-            }, this.initVideo = function() {
-                l.setupVideo(), l.setVolume(), l.isPlaying_bl = !1, l.hasError_bl = !1, l.allowScrubing_bl = !1, l.isStopped_bl = !1, l.video_el.src != l.sourcePath_str && (l.video_el.src = l.sourcePath_str)
+            },
+            this.initVideo = function() {
+                l.setupVideo(),
+                l.setVolume(),
+                l.isPlaying_bl = !1,
+                l.hasError_bl = !1,
+                l.allowScrubing_bl = !1,
+                l.isStopped_bl = !1,
+                l.video_el.src != l.sourcePath_str && (l.video_el.src = l.sourcePath_str)
             }, this.pause = function() {
                 if (null != l && !l.isStopped_bl && !l.hasError_bl && !l.video_el.ended) try {
                     l.video_el.pause(), l.isPlaying_bl = !1, FWDUVPUtils.isIE && l.dispatchEvent(n.PAUSE)
@@ -8923,12 +9315,32 @@ var FWDUVPAddress = new function() {
                 l.isStopped_bl || l.play()
             }, this.pauseHandler = function() {
                 l.allowScrubing_bl || l.dispatchEvent(n.PAUSE)
-            }, this.playHandler = function() {
-                l.allowScrubing_bl || (l.isStartEventDispatched_bl || (l.dispatchEvent(n.START), l.isStartEventDispatched_bl = !0), i.is360 && l.start360Render(), l.startToUpdateSubtitles(), l.dispatchEvent(n.PLAY))
-            }, this.endedHandler = function() {
-                l.stopToUpdateSubtitles(), l.dispatchEvent(n.PLAY_COMPLETE)
+            },
+            this.playHandler = function() {
+                l.allowScrubing_bl || (l.isStartEventDispatched_bl || (l.dispatchEvent(n.START),
+                                                                       l.isStartEventDispatched_bl = !0),
+                                      i.is360 && l.start360Render(),
+                                      l.startToUpdateSubtitles(),
+                                      l.dispatchEvent(n.PLAY))
+            },
+            this.endedHandler = function() {
+                l.stopToUpdateSubtitles(),
+                l.dispatchEvent(n.PLAY_COMPLETE)
             }, this.stop = function(e) {
-                (null != l && null != l.video_el && !l.isStopped_bl || e) && (clearTimeout(l.sizeId_to), l.isPlaying_bl = !1, l.isStopped_bl = !0, l.hasPlayedOnce_bl = !0, l.hasStrtLivStrm = !1, l.isSafeToBeControlled_bl = !1, l.isStartEventDispatched_bl = !1, l.stopToUpdateSubtitles(), clearTimeout(l.playWithDelayId_to), l.stop360Render(), l.destroyVideo(), l.dispatchEvent(n.LOAD_PROGRESS, {
+                (null != l && null != l.video_el
+                           && !l.isStopped_bl || e)
+                && (clearTimeout(l.sizeId_to),
+                    l.isPlaying_bl = !1,
+                    l.isStopped_bl = !0,
+                    l.hasPlayedOnce_bl = !0,
+                    l.hasStrtLivStrm = !1,
+                    l.isSafeToBeControlled_bl = !1,
+                    l.isStartEventDispatched_bl = !1,
+                    l.stopToUpdateSubtitles(),
+                    clearTimeout(l.playWithDelayId_to),
+                    l.stop360Render(),
+                    l.destroyVideo(),
+                    l.dispatchEvent(n.LOAD_PROGRESS, {
                     percent: 0
                 }), l.dispatchEvent(n.UPDATE_TIME, {
                     curTime: "00:00",
@@ -8940,7 +9352,8 @@ var FWDUVPAddress = new function() {
                 }, 1e3), i.fillEntireVideoScreen_bl ? l.sizeId_to = setTimeout(function() {
                     l.dispatchEvent(n.SAFE_TO_SCRUBB)
                 }, 500) : l.dispatchEvent(n.SAFE_TO_SCRUBB)))
-            }, this.updateProgress = function() {
+            },
+            this.updateProgress = function() {
                 if (i.videoType_str != FWDUVPlayer.HLS_JS || l.hasStrtLivStrm) {
                     var e = 0;
                     0 < l.video_el.buffered.length && (e = l.video_el.buffered.end(l.video_el.buffered.length - 1).toFixed(1) / l.video_el.duration.toFixed(1), !isNaN(e) && e || (e = 0)), 1 == e && l.video_el.removeEventListener("progress", l.updateProgress), l.dispatchEvent(n.LOAD_PROGRESS, {
@@ -8994,25 +9407,90 @@ var FWDUVPAddress = new function() {
                 null != e && (l.volume = e), l.video_el && (l.video_el.volume = l.volume, e && (l.video_el.muted = !1))
             }, this.setPlaybackRate = function(e) {
                 l.video_el && (l.video_el.defaultPlaybackRate = e, l.video_el.playbackRate = e)
-            }, this.add360Vid = function() {
+            },
+            this.add360Vid = function() {
                 l.renderer ? l.screen.appendChild(l.renderer.domElement) : null != s.THREE && (l.renderer = new THREE.WebGLRenderer({
                     antialias: !0
-                }), l.renderer.setSize(l.sW, l.sH), l.renderer.domElement.style.position = "absolute", l.renderer.domElement.style.left = "0px", l.renderer.domElement.style.top = "0px", l.renderer.domElement.style.margin = "0px", l.renderer.domElement.style.padding = "0px", l.renderer.domElement.style.maxWidth = "none", l.renderer.domElement.style.maxHeight = "none", l.renderer.domElement.style.border = "none", l.renderer.domElement.style.lineHeight = "1", l.renderer.domElement.style.backgroundColor = "transparent", l.renderer.domElement.style.backfaceVisibility = "hidden", l.renderer.domElement.style.webkitBackfaceVisibility = "hidden", l.renderer.domElement.style.MozBackfaceVisibility = "hidden", l.renderer.domElement.style.MozImageRendering = "optimizeSpeed", l.renderer.domElement.style.WebkitImageRendering = "optimizeSpeed", l.screen.appendChild(l.renderer.domElement), l.scene = new THREE.Scene, l.video_el.setAttribute("crossorigin", "anonymous"), l.canvas = document.createElement("canvas"), l.context = l.canvas.getContext("2d"), FWDUVPUtils.isFirefox ? l.videoTexture = new THREE.Texture(l.video_el) : l.videoTexture = new THREE.Texture(l.canvas), l.videoTexture.minFilter = THREE.LinearFilter, l.videoTexture.magFilter = THREE.LinearFilter, l.videoTexture.format = THREE.RGBFormat, l.cubeGeometry = new THREE.SphereGeometry(500, 60, 40), l.sphereMat = new THREE.MeshBasicMaterial({
+                }),
+                l.renderer.setSize(l.sW, l.sH),
+                l.renderer.domElement.style.position = "absolute",
+                l.renderer.domElement.style.left = "0px",
+                l.renderer.domElement.style.top = "0px",
+                l.renderer.domElement.style.margin = "0px",
+                l.renderer.domElement.style.padding = "0px",
+                l.renderer.domElement.style.maxWidth = "none",
+                l.renderer.domElement.style.maxHeight = "none",
+                l.renderer.domElement.style.border = "none",
+                l.renderer.domElement.style.lineHeight = "1",
+                l.renderer.domElement.style.backgroundColor = "transparent",
+                l.renderer.domElement.style.backfaceVisibility = "hidden",
+                l.renderer.domElement.style.webkitBackfaceVisibility = "hidden",
+                l.renderer.domElement.style.MozBackfaceVisibility = "hidden",
+                l.renderer.domElement.style.MozImageRendering = "optimizeSpeed",
+                l.renderer.domElement.style.WebkitImageRendering = "optimizeSpeed",
+                l.screen.appendChild(l.renderer.domElement),
+                l.scene = new THREE.Scene,
+                l.video_el.setAttribute("crossorigin", "anonymous"),
+                l.canvas = document.createElement("canvas"),
+                l.context = l.canvas.getContext("2d"),
+                FWDUVPUtils.isFirefox ? l.videoTexture = new THREE.Texture(l.video_el) : l.videoTexture = new THREE.Texture(l.canvas),
+                l.videoTexture.minFilter = THREE.LinearFilter,
+                l.videoTexture.magFilter = THREE.LinearFilter,
+                l.videoTexture.format = THREE.RGBFormat,
+                l.cubeGeometry = new THREE.SphereGeometry(500, 60, 40),
+                l.sphereMat = new THREE.MeshBasicMaterial({
                     map: l.videoTexture
-                }), l.sphereMat.side = THREE.BackSide, l.cube = new THREE.Mesh(l.cubeGeometry, l.sphereMat), l.scene.add(l.cube), l.camera = new THREE.PerspectiveCamera(45, l.sW / l.sH, .1, 1e4), l.camera.position.y = 0, l.camera.position.z = 500, l.camera.position.x = 0, l.scene.add(l.camera), l.controls = new THREE.OrbitControls(l.camera, i.dumyClick_do.screen), l.controls.enableDamping = !0, l.controls.enableZoom = !1, l.controls.dampingFactor = .25, l.controls.maxDistance = 500, l.controls.minDistance = 500, l.controls.rotateLeft(90 * Math.PI / 180), l.controls.enabled = !0, l.render(), setTimeout(function() {
+                }),
+                l.sphereMat.side = THREE.BackSide,
+                l.cube = new THREE.Mesh(l.cubeGeometry, l.sphereMat),
+                l.scene.add(l.cube),
+                l.camera = new THREE.PerspectiveCamera(45, l.sW / l.sH, .1, 1e4),
+                l.camera.position.y = 0,
+                l.camera.position.z = 500,
+                l.camera.position.x = 0,
+                l.scene.add(l.camera),
+                l.controls = new THREE.OrbitControls(l.camera, i.dumyClick_do.screen),
+                l.controls.enableDamping = !0,
+                l.controls.enableZoom = !1,
+                l.controls.dampingFactor = .25,
+                l.controls.maxDistance = 500,
+                l.controls.minDistance = 500,
+                l.controls.rotateLeft(90 * Math.PI / 180),
+                l.controls.enabled = !0,
+                l.render(),
+                setTimeout(function() {
                     i.preloader_do.hide(!0)
                 }, 1e3))
             }, this.start360Render = function() {
                 l.is360Rendering_bl = !0, cancelAnimationFrame(l.requestId), l.requestId = requestAnimationFrame(l.render)
-            }, this.stop360Render = function() {
+            },
+            this.stop360Render = function() {
                 if (l.is360Rendering_bl = !1, l.camera) {
-                    l.camera.position.y = 0, l.camera.position.z = 500, l.camera.position.x = 0, l.renderer.domElement.style.left = "-10000px", cancelAnimationFrame(l.requestId);
+                    l.camera.position.y = 0,
+                    l.camera.position.z = 500,
+                    l.camera.position.x = 0,
+                    l.renderer.domElement.style.left = "-10000px",
+                    cancelAnimationFrame(l.requestId);
                     try {
                         l.screen.removeChild(l.renderer.domElement)
                     } catch (e) {}
                 }
-            }, this.render = function() {
-                l.is360Rendering_bl && l.camera && i.is360 ? (l.video_el.readyState === l.video_el.HAVE_ENOUGH_DATA && (l.videoTexture.needsUpdate = !0), FWDUVPUtils.isFirefox || !l.context || l.isStopped_bl || (0 != l.video_el.videoWidth && (l.canvas.width = l.video_el.videoWidth, l.canvas.height = l.video_el.videoHeight), l.context.save(), l.context.scale(-1, 1), l.context.drawImage(l.video_el, 0, 0, -1 * l.canvas.width, l.canvas.height), l.context.restore()), l.controls.update(), l.renderer.render(l.scene, l.camera), l.requestId = requestAnimationFrame(l.render)) : cancelAnimationFrame(l.requestId)
+            },
+            this.render = function() {
+                l.is360Rendering_bl && l.camera
+                                    && i.is360 ? (l.video_el.readyState === l.video_el.HAVE_ENOUGH_DATA && (l.videoTexture.needsUpdate = !0),
+                                                  FWDUVPUtils.isFirefox || !l.context
+                                                                        || l.isStopped_bl
+                                                                        || (0 != l.video_el.videoWidth && (l.canvas.width = l.video_el.videoWidth,
+                                                                                                           l.canvas.height = l.video_el.videoHeight),
+                                                                            l.context.save(),
+                                                                            l.context.scale(-1, 1),
+                                                                            l.context.drawImage(l.video_el, 0, 0, -1 * l.canvas.width, l.canvas.height),
+                                                                            l.context.restore()),
+                                                  l.controls.update(),
+                                                  l.renderer.render(l.scene, l.camera),
+                                                  l.requestId = requestAnimationFrame(l.render))
+                                               : cancelAnimationFrame(l.requestId)
             }, this.stopToUpdateSubtitles = function() {
                 clearInterval(l.startToUpdateSubtitleId_int)
             }, this.startToUpdateSubtitles = function() {
@@ -9032,38 +9510,110 @@ var FWDUVPAddress = new function() {
         };
         n.setPrototype = function() {
             n.prototype = new FWDUVPDisplayObject("div")
-        }, n.UPDATE_SUBTITLE = "updateSubtitle", n.ERROR = "error", n.UPDATE = "update", n.UPDATE_TIME = "updateTime", n.SAFE_TO_SCRUBB = "safeToControll", n.LOAD_PROGRESS = "loadProgress", n.START = "start", n.PLAY = "play", n.PAUSE = "pause", n.STOP = "stop", n.PLAY_COMPLETE = "playComplete", n.START_TO_BUFFER = "startToBuffer", n.STOP_TO_BUFFER = "stopToBuffer", s.FWDUVPVideoScreen = n
+        },
+        n.UPDATE_SUBTITLE = "updateSubtitle",
+        n.ERROR = "error",
+        n.UPDATE = "update",
+        n.UPDATE_TIME = "updateTime",
+        n.SAFE_TO_SCRUBB = "safeToControll",
+        n.LOAD_PROGRESS = "loadProgress",
+        n.START = "start",
+        n.PLAY = "play",
+        n.PAUSE = "pause",
+        n.STOP = "stop",
+        n.PLAY_COMPLETE = "playComplete",
+        n.START_TO_BUFFER = "startToBuffer",
+        n.STOP_TO_BUFFER = "stopToBuffer",
+        s.FWDUVPVideoScreen = n
     }(window),
     function(e) {
         var i = function(s, e) {
             var o = this;
             i.prototype;
-            this.iframe_do = null, this.vimeoPlayer = null, this.lastQuality_str = "auto", this.volume = e, this.updateVideoId_int, this.updatePreloadId_int, this.controllerHeight = s.data.controllerHeight, this.hasBeenCreatedOnce_bl = !0, this.hasHours_bl = !1, this.allowScrubing_bl = !1, this.hasError_bl = !1, this.isPlaying_bl = !1, this.isStopped_bl = !0, this.isStartEventDispatched_bl = !1, this.isSafeToBeControlled_bl = !1, this.isPausedInEvent_bl = !0, this.isShowed_bl = !0, this.isCued_bl = !1, this.isVideoLoaded_bl = !1, this.isReady_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.init = function() {
-                o.hasTransform3d_bl = !1, o.hasTransform2d_bl = !1, o.setBackfaceVisibility(), s.videoHolder_do.addChildAt(o, 0), o.resizeAndPosition(), o.setupVideo(), o.setupDisableClick()
-            }, this.setupDisableClick = function() {
-                o.disableClick_do = new FWDUVPDisplayObject("div"), o.disableClick_do.setBkColor(s.backgroundColor_str), o.disableClick_do.setAlpha(1e-8), o.addChild(o.disableClick_do)
-            }, this.showDisable = function() {
-                s.tempVidStageWidth && o.disableClick_do.w != o.sW && (o.disableClick_do.setWidth(s.tempVidStageWidth), FWDUVPUtils.isIphone ? o.disableClick_do.setHeight(s.tempVidStageHeight - o.controllerHeight) : o.disableClick_do.setHeight(s.tempVidStageHeight))
+            this.iframe_do = null,
+            this.vimeoPlayer = null,
+            this.lastQuality_str = "auto",
+            this.volume = e,
+            this.updateVideoId_int,
+            this.updatePreloadId_int,
+            this.controllerHeight = s.data.controllerHeight,
+            this.hasBeenCreatedOnce_bl = !0,
+            this.hasHours_bl = !1,
+            this.allowScrubing_bl = !1,
+            this.hasError_bl = !1,
+            this.isPlaying_bl = !1,
+            this.isStopped_bl = !0,
+            this.isStartEventDispatched_bl = !1,
+            this.isSafeToBeControlled_bl = !1,
+            this.isPausedInEvent_bl = !0,
+            this.isShowed_bl = !0,
+            this.isCued_bl = !1,
+            this.isVideoLoaded_bl = !1,
+            this.isReady_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.init = function() {
+                o.hasTransform3d_bl = !1,
+                o.hasTransform2d_bl = !1,
+                o.setBackfaceVisibility(),
+                s.videoHolder_do.addChildAt(o, 0),
+                o.resizeAndPosition(),
+                o.setupVideo(),
+                o.setupDisableClick()
+            },
+            this.setupDisableClick = function() {
+                o.disableClick_do = new FWDUVPDisplayObject("div"),
+                o.disableClick_do.setBkColor(s.backgroundColor_str),
+                o.disableClick_do.setAlpha(1e-8),
+                o.addChild(o.disableClick_do)
+            },
+            this.showDisable = function() {
+                s.tempVidStageWidth && o.disableClick_do.w != o.sW
+                                    && (o.disableClick_do.setWidth(s.tempVidStageWidth),
+                                        FWDUVPUtils.isIphone ? o.disableClick_do.setHeight(s.tempVidStageHeight - o.controllerHeight)
+                                                             : o.disableClick_do.setHeight(s.tempVidStageHeight))
             }, this.hideDisable = function() {
                 0 != o.disableClick_do.w && (o.disableClick_do.setWidth(0), o.disableClick_do.setHeight(0))
-            }, this.setupVideo = function() {
-                o.vimeoPlayer || (o.iframe_do = new FWDUVPDisplayObject("IFRAME"), o.iframe_do.hasTransform3d_bl = !1, o.iframe_do.hasTransform2d_bl = !1, o.iframe_do.screen.setAttribute("id", s.instanceName_str + "vimeo"), o.isMbl && (o.iframe_do.screen.setAttribute("webkitallowfullscreen", "1"), o.iframe_do.screen.setAttribute("mozallowfullscreen", "1"), o.iframe_do.screen.setAttribute("allowfullscreen", "1")), s.data.aom_bl && o.iframe_do.screen.setAttribute("muted", "1"), o.iframe_do.screen.setAttribute("src", "https://player.vimeo.com/video/76979871?player_id=" + s.instanceName_str + "vimeo&autoplay=0&muted=1"), o.iframe_do.getStyle().width = "100%", o.iframe_do.getStyle().height = "100%", o.iframe_do.setBackfaceVisibility(), o.addChild(o.iframe_do), o.vimeoPlayer = new Vimeo.Player(o.iframe_do.screen), o.vimeoPlayer.on("play", function(e) {
-                    o.playHandler()
-                }), o.vimeoPlayer.on("pause", function(e) {
-                    o.pauseHandler()
-                }), o.vimeoPlayer.on("loadProgress", function(e) {
-                    o.loadProgressHandler()
-                }), o.vimeoPlayer.on("ended", function(e) {
-                    o.finishHandler()
-                }), o.vimeoPlayer.on("loaded", function(e) {
-                    o.loadedHandler()
-                }), o.vimeoPlayer.ready().then(function() {
-                    o.readyHandler()
-                }), o.blackOverlay_do = new FWDUVPDisplayObject("div"), o.blackOverlay_do.getStyle().backgroundColor = "#000000", o.blackOverlay_do.getStyle().width = "100%", o.blackOverlay_do.getStyle().height = "100%", o.addChild(o.blackOverlay_do))
+            },
+            this.setupVideo = function() {
+                o.vimeoPlayer || (o.iframe_do = new FWDUVPDisplayObject("IFRAME"),
+                                  o.iframe_do.hasTransform3d_bl = !1,
+                                  o.iframe_do.hasTransform2d_bl = !1,
+                                  o.iframe_do.screen.setAttribute("id", s.instanceName_str + "vimeo"),
+                                  o.isMbl && (o.iframe_do.screen.setAttribute("webkitallowfullscreen", "1"),
+                                              o.iframe_do.screen.setAttribute("mozallowfullscreen", "1"),
+                                              o.iframe_do.screen.setAttribute("allowfullscreen", "1")),
+                                  s.data.aom_bl && o.iframe_do.screen.setAttribute("muted", "1"),
+                                  o.iframe_do.screen.setAttribute("src", "https://player.vimeo.com/video/76979871?player_id=" + s.instanceName_str + "vimeo&autoplay=0&muted=1"),
+                                  o.iframe_do.getStyle().width = "100%",
+                                  o.iframe_do.getStyle().height = "100%",
+                                  o.iframe_do.setBackfaceVisibility(),
+                                  o.addChild(o.iframe_do),
+                                  o.vimeoPlayer = new Vimeo.Player(o.iframe_do.screen),
+                                  o.vimeoPlayer.on("play", function(e) {
+                                    o.playHandler()
+                                  }), o.vimeoPlayer.on("pause", function(e) {
+                                    o.pauseHandler()
+                                  }), o.vimeoPlayer.on("loadProgress", function(e) {
+                                    o.loadProgressHandler()
+                                  }), o.vimeoPlayer.on("ended", function(e) {
+                                    o.finishHandler()
+                                  }), o.vimeoPlayer.on("loaded", function(e) {
+                                    o.loadedHandler()
+                                  }), o.vimeoPlayer.ready().then(function() {
+                                    o.readyHandler()
+                                  }),
+                                  o.blackOverlay_do = new FWDUVPDisplayObject("div"),
+                                  o.blackOverlay_do.getStyle().backgroundColor = "#000000",
+                                  o.blackOverlay_do.getStyle().width = "100%",
+                                  o.blackOverlay_do.getStyle().height = "100%",
+                                  o.addChild(o.blackOverlay_do))
             }, this.resizeAndPosition = function() {
                 s.tempVidStageWidth && (o.setWidth(s.tempVidStageWidth), o.setHeight(s.tempVidStageHeight - o.controllerHeight))
-            }, this.setSource = function(e) {
-                e && (o.sourcePath_str = e), o.stopToUpdateSubtitles(), o.stop();
+            },
+            this.setSource = function(e) {
+                e && (o.sourcePath_str = e),
+                o.stopToUpdateSubtitles(),
+                o.stop();
                 var t = o.sourcePath_str.match(/[^\/]+$/i);
                 o.vimeoPlayer.loadVideo(t).then(function(e) {
                     (!s.isMbl && (s.data.autoPlay_bl || s.isThumbClick_bl || s.isAdd_bl || s.wasAdd_bl) && !s.lightBox_do || s.lightBox_do && s.lightBox_do.isShowed_bl) && s.play(), o.setVolume(s.volume)
@@ -9074,20 +9624,35 @@ var FWDUVPAddress = new function() {
                         })
                     }, 2e3), console && console.log(e)
                 })
-            }, this.readyHandler = function() {
-                if (clearTimeout(o.intitErrorId_to), o.contains(o.blackOverlay_do) && (clearTimeout(o.removeChildWithDelayId_to), o.removeChildWithDelayId_to = setTimeout(function() {
-                        o.removeChild(o.blackOverlay_do)
-                    }, 1500)), o.resizeAndPosition(), o.isReady_bl) {
+            },
+            this.readyHandler = function() {
+                if (clearTimeout(o.intitErrorId_to),
+                    o.contains(o.blackOverlay_do) && (clearTimeout(o.removeChildWithDelayId_to),
+                                                      o.removeChildWithDelayId_to = setTimeout(function() {
+                                                        o.removeChild(o.blackOverlay_do)
+                                                      }, 1500)),
+                    o.resizeAndPosition(), o.isReady_bl) {
                     try {
                         o.vimeoPlayer.api("setColor", "#FFFFFF")
                     } catch (e) {}
-                    return s.videoType_str == FWDUVPlayer.VIMEO && o.setX(0), void(s.data.autoPlay_bl && s.play())
+                    return s.videoType_str == FWDUVPlayer.VIMEO && o.setX(0),
+                    void(s.data.autoPlay_bl && s.play())
                 }
                 o.isReady_bl = !0, o.dispatchEvent(i.READY)
             }, this.loadedHandler = function() {
                 o.isVideoLoaded_bl = !0
-            }, this.playHandler = function() {
-                clearInterval(o.startToPlayWithDelayId_to), clearTimeout(o.displayErrorId_to), o.isStopped_bl = !1, o.isSafeToBeControlled_bl = !0, o.isPlaying_bl = !0, o.startToUpdateSubtitles(), o.startToUpdate(), o.dispatchEvent(i.SAFE_TO_SCRUBB), o.dispatchEvent(i.PLAY), o.hasHours_bl = 0 < Math.floor(o.getDuration() / 3600)
+            },
+            this.playHandler = function() {
+                clearInterval(o.startToPlayWithDelayId_to),
+                clearTimeout(o.displayErrorId_to),
+                o.isStopped_bl = !1,
+                o.isSafeToBeControlled_bl = !0,
+                o.isPlaying_bl = !0,
+                o.startToUpdateSubtitles(),
+                o.startToUpdate(),
+                o.dispatchEvent(i.SAFE_TO_SCRUBB),
+                o.dispatchEvent(i.PLAY),
+                o.hasHours_bl = 0 < Math.floor(o.getDuration() / 3600)
             }, this.loadProgressHandler = function(e) {
                 o.isShowed_bl || o.dispatchEvent(i.LOAD_PROGRESS, {
                     percent: e.percent
@@ -9096,9 +9661,14 @@ var FWDUVPAddress = new function() {
                 o.isPlaying_bl && (o.isPlaying_bl = !1, clearInterval(o.startToPlayWithDelayId_to), o.dispatchEvent(i.PAUSE), o.stopToUpdate())
             }, this.finishHandler = function() {
                 s.data.loop_bl && (o.stop(), setTimeout(o.play, 200)), o.dispatchEvent(i.PLAY_COMPLETE)
-            }, this.play = function(e) {
+            },
+            this.play = function(e) {
                 FWDUVPlayer.curInstance = s;
-                o.hasError_bl = !1, s.prevVideoType_str, FWDUVPlayer.VIMEO, o.vimeoPlayer.play(), o.isMbl || (o.isStopped_bl = !1)
+                o.hasError_bl = !1,
+                s.prevVideoType_str,
+                FWDUVPlayer.VIMEO,
+                o.vimeoPlayer.play(),
+                o.isMbl || (o.isStopped_bl = !1)
             }, this.pause = function() {
                 o.isStopped_bl || o.hasError_bl || (clearInterval(o.startToPlayWithDelayId_to), o.vimeoPlayer.pause(), o.stopToUpdate())
             }, this.togglePlayPause = function() {
@@ -9123,10 +9693,28 @@ var FWDUVPAddress = new function() {
                         totalTimeInSeconds: o.getCurrentTime()
                     })
                 } else stopToUpdate()
-            }, this.stop = function(e) {
-                o.isVideoLoaded_bl = !1, o.isStopped_bl || (clearInterval(o.startToPlayWithDelayId_to), clearTimeout(o.displayErrorId_to), o.stopVideo(), o.stopToUpdateSubtitles(), o.isPlaying_bl = !1, o.isStopped_bl = !0, o.isCued_bl = !1, o.allowScrubing_bl = !1, o.isSafeToBeControlled_bl = !1, o.isPausedInEvent_bl = !0, o.stopToUpdate(), e || (o.stopVideo(), o.dispatchEvent(i.STOP)))
-            }, this.destroy = function() {
-                o.iframe_do && (o.iframe_do.screen.removeAttribute("id", s.instanceName_str + "vimeo"), o.removeChild(o.iframe_do), o.iframe_do.destroy(), o.iframe_do = null), o.vimeoPlayer = null
+            },
+            this.stop = function(e) {
+                o.isVideoLoaded_bl = !1,
+                o.isStopped_bl || (clearInterval(o.startToPlayWithDelayId_to),
+                                   clearTimeout(o.displayErrorId_to),
+                                   o.stopVideo(),
+                                   o.stopToUpdateSubtitles(),
+                                   o.isPlaying_bl = !1,
+                                   o.isStopped_bl = !0,
+                                   o.isCued_bl = !1,
+                                   o.allowScrubing_bl = !1,
+                                   o.isSafeToBeControlled_bl = !1,
+                                   o.isPausedInEvent_bl = !0,
+                                   o.stopToUpdate(),
+                                   e || (o.stopVideo(), o.dispatchEvent(i.STOP)))
+            },
+            this.destroy = function() {
+                o.iframe_do && (o.iframe_do.screen.removeAttribute("id", s.instanceName_str + "vimeo"),
+                                o.removeChild(o.iframe_do),
+                                o.iframe_do.destroy(),
+                                o.iframe_do = null),
+                o.vimeoPlayer = null
             }, this.stopVideo = function() {
                 o.vimeoPlayer.unload().then(function() {}).catch(function(e) {})
             }, this.startToScrub = function() {
@@ -9147,7 +9735,8 @@ var FWDUVPAddress = new function() {
                 if (o.isSafeToBeControlled_bl) return o.vimeoPlayer.getCurrentTime().then(function(e) {
                     o.currentTime = Math.round(e)
                 }), o.currentTime
-            }, this.formatTime = function(e) {
+            },
+            this.formatTime = function(e) {
                 var t = Math.floor(e / 3600),
                     s = e % 3600,
                     o = Math.floor(s / 60),
@@ -9156,8 +9745,10 @@ var FWDUVPAddress = new function() {
                 return o = 10 <= o ? o : "0" + o, l = 10 <= l ? l : "0" + l, isNaN(l) ? "00:00" : t ? 10 <= t ? t + ":" + o + ":" + l : "0" + t + ":" + o + ":" + l : o + ":" + l
             }, this.stopToUpdateSubtitles = function() {
                 clearInterval(o.startToUpdateSubtitleId_int)
-            }, this.startToUpdateSubtitles = function() {
-                clearInterval(o.startToUpdateSubtitleId_int), o.startToUpdateSubtitleId_int = setInterval(o.updateSubtitleHandler, 10)
+            },
+            this.startToUpdateSubtitles = function() {
+                clearInterval(o.startToUpdateSubtitleId_int),
+                o.startToUpdateSubtitleId_int = setInterval(o.updateSubtitleHandler, 10)
             }, this.updateSubtitleHandler = function() {
                 o.getCurrentTime() && o.dispatchEvent(i.UPDATE_SUBTITLE, {
                     curTime: o.getCurrentTime()
@@ -9166,117 +9757,331 @@ var FWDUVPAddress = new function() {
         };
         i.setPrototype = function() {
             i.prototype = new FWDUVPDisplayObject("div")
-        }, i.UPDATE_SUBTITLE = "updateSubtitle", i.SAFE_TO_SCRUBB = "safeToScrub", i.READY = "ready", i.ERROR = "initError", i.UPDATE = "update", i.UPDATE_TIME = "updateTime", i.LOAD_PROGRESS = "loadProgress", i.PLAY = "play", i.PAUSE = "pause", i.STOP = "stop", i.PLAY_COMPLETE = "playComplete", i.CUED = "cued", i.QUALITY_CHANGE = "qualityChange", e.FWDUVPVimeoScreen = i
+        },
+        i.UPDATE_SUBTITLE = "updateSubtitle",
+        i.SAFE_TO_SCRUBB = "safeToScrub",
+        i.READY = "ready",
+        i.ERROR = "initError",
+        i.UPDATE = "update",
+        i.UPDATE_TIME = "updateTime",
+        i.LOAD_PROGRESS = "loadProgress",
+        i.PLAY = "play",
+        i.PAUSE = "pause",
+        i.STOP = "stop",
+        i.PLAY_COMPLETE = "playComplete",
+        i.CUED = "cued",
+        i.QUALITY_CHANGE = "qualityChange",
+        e.FWDUVPVimeoScreen = i
     }(window),
+
     function(e) {
         var c = function(e, t, s, o, i, l, n, a, r, d) {
             var u = this,
                 h = c.prototype;
-            this.iconCSSString1 = n, this.iconCSSString2 = a, this.nImg = e, this.sPath_str = t, this.dPath_str = s, this.n_sdo, this.s_sdo, this.d_sdo, this.toolTipLabel_str, this.nImg && (this.totalWidth = this.nImg.width, this.totalHeight = this.nImg.height), this.normalCalssName = r, this.selectedCalssName = d, this.useHEX = o, this.nBC = i, this.sBC = l, this.isSetToDisabledState_bl = !1, this.isDisabled_bl = !1, this.isSelectedFinal_bl = !1, this.isActive_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.allowToCreateSecondButton_bl = !0, this.useFontAwesome_bl = Boolean(this.iconCSSString1), u.init = function() {
-                u.setupMainContainers(), u.setNormalState(!1), u.setEnabledState()
-            }, u.setupMainContainers = function() {
-                if (u.useFontAwesome_bl) u.setOverflow("visible"), u.n_sdo = new FWDUVPTransformDisplayObject("div"), u.n_sdo.setInnerHTML(u.iconCSSString1), u.addChild(u.n_sdo), u.d_sdo = new FWDUVPTransformDisplayObject("div"), u.d_sdo.setInnerHTML(u.iconCSSString2), u.addChild(u.d_sdo), u.setFinalSize();
-                else if (u.useHEX ? (u.n_sdo = new FWDUVPTransformDisplayObject("div"), u.n_sdo.setWidth(u.totalWidth), u.n_sdo.setHeight(u.totalHeight), u.n_sdo_canvas = FWDUVPUtils.getCanvasWithModifiedColor(u.nImg, u.nBC).canvas, u.n_sdo.screen.appendChild(u.n_sdo_canvas)) : (u.n_sdo = new FWDUVPTransformDisplayObject("img"), u.n_sdo.setScreen(u.nImg)), u.addChild(u.n_sdo), u.allowToCreateSecondButton_bl) {
-                    u.img1 = new Image, u.img1.src = u.sPath_str;
+            this.iconCSSString1 = n,
+            this.iconCSSString2 = a,
+            this.nImg = e,
+            this.sPath_str = t,
+            this.dPath_str = s,
+            this.n_sdo,
+            this.s_sdo,
+            this.d_sdo,
+            this.toolTipLabel_str,
+            this.nImg && (this.totalWidth = this.nImg.width,
+                          this.totalHeight = this.nImg.height),
+            this.normalCalssName = r,
+            this.selectedCalssName = d,
+            this.useHEX = o,
+            this.nBC = i,
+            this.sBC = l,
+            this.isSetToDisabledState_bl = !1,
+            this.isDisabled_bl = !1,
+            this.isSelectedFinal_bl = !1,
+            this.isActive_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.allowToCreateSecondButton_bl = !0,
+            this.useFontAwesome_bl = Boolean(this.iconCSSString1),
+            u.init = function() {
+                u.setupMainContainers(),
+                u.setNormalState(!1),
+                u.setEnabledState()
+            },
+            u.setupMainContainers = function() {
+                if (u.useFontAwesome_bl)
+                  u.setOverflow("visible"),
+                  u.n_sdo = new FWDUVPTransformDisplayObject("div"),
+                  u.n_sdo.setInnerHTML(u.iconCSSString1),
+                  u.addChild(u.n_sdo),
+                  u.d_sdo = new FWDUVPTransformDisplayObject("div"),
+                  u.d_sdo.setInnerHTML(u.iconCSSString2),
+                  u.addChild(u.d_sdo),
+                  u.setFinalSize();
+                else if (u.useHEX ? (u.n_sdo = new FWDUVPTransformDisplayObject("div"),
+                                     u.n_sdo.setWidth(u.totalWidth),
+                                     u.n_sdo.setHeight(u.totalHeight),
+                                     u.n_sdo_canvas = FWDUVPUtils.getCanvasWithModifiedColor(u.nImg, u.nBC).canvas,
+                                     u.n_sdo.screen.appendChild(u.n_sdo_canvas))
+                                  : (u.n_sdo = new FWDUVPTransformDisplayObject("img"),
+                                     u.n_sdo.setScreen(u.nImg)),
+                  u.addChild(u.n_sdo),
+                  u.allowToCreateSecondButton_bl) {
+                    u.img1 = new Image,
+                    u.img1.src = u.sPath_str;
                     var e = new Image;
-                    u.sImg = e, u.useHEX ? (u.s_sdo = new FWDUVPTransformDisplayObject("div"), u.s_sdo.setWidth(u.totalWidth), u.s_sdo.setHeight(u.totalHeight), u.img1.onload = function() {
-                        u.s_sdo_canvas = FWDUVPUtils.getCanvasWithModifiedColor(u.img1, u.sBC).canvas, u.s_sdo.screen.appendChild(u.s_sdo_canvas)
-                    }) : (u.s_sdo = new FWDUVPDisplayObject("img"), u.s_sdo.setScreen(u.img1), u.s_sdo.setWidth(u.totalWidth), u.s_sdo.setHeight(u.totalHeight)), u.s_sdo.setAlpha(0), u.addChild(u.s_sdo), u.dPath_str && (e.src = u.dPath_str, u.d_sdo = new FWDUVPDisplayObject("img"), u.d_sdo.setScreen(e), u.d_sdo.setWidth(u.totalWidth), u.d_sdo.setHeight(u.totalHeight), u.d_sdo.setX(-100), u.addChild(u.d_sdo))
+                    u.sImg = e,
+                    u.useHEX ? (u.s_sdo = new FWDUVPTransformDisplayObject("div"),
+                                u.s_sdo.setWidth(u.totalWidth),
+                                u.s_sdo.setHeight(u.totalHeight),
+                                u.img1.onload = function() {
+                                  u.s_sdo_canvas = FWDUVPUtils.getCanvasWithModifiedColor(u.img1, u.sBC).canvas,
+                                  u.s_sdo.screen.appendChild(u.s_sdo_canvas)
+                                  })
+                              : (u.s_sdo = new FWDUVPDisplayObject("img"),
+                                 u.s_sdo.setScreen(u.img1),
+                                 u.s_sdo.setWidth(u.totalWidth),
+                                 u.s_sdo.setHeight(u.totalHeight)),
+                    u.s_sdo.setAlpha(0),
+                    u.addChild(u.s_sdo),
+                    u.dPath_str && (e.src = u.dPath_str,
+                                    u.d_sdo = new FWDUVPDisplayObject("img"),
+                                    u.d_sdo.setScreen(e),
+                                    u.d_sdo.setWidth(u.totalWidth),
+                                    u.d_sdo.setHeight(u.totalHeight),
+                                    u.d_sdo.setX(-100),
+                                    u.addChild(u.d_sdo))
                 }
-                u.setWidth(u.totalWidth), u.setHeight(u.totalHeight), u.setButtonMode(!0), u.hasPointerEvent_bl ? (u.screen.addEventListener("pointerup", u.onMouseUp), u.screen.addEventListener("pointerover", u.onMouseOver), u.screen.addEventListener("pointerout", u.onMouseOut)) : u.screen.addEventListener && (u.screen.addEventListener("mouseover", u.onMouseOver), u.screen.addEventListener("mouseout", u.onMouseOut), u.screen.addEventListener("mouseup", u.onMouseUp), u.screen.addEventListener("touchstart", u.onMouseDown), u.screen.addEventListener("touchstart", u.onMouseUp))
-            }, this.setFinalSize = function() {
-                u.setWidth(u.n_sdo.getWidth()), u.setHeight(u.n_sdo.getHeight()), u.buttonWidth = u.w, u.buttonHeight = u.h, 0 == u.w && setTimeout(function() {
+                u.setWidth(u.totalWidth),
+                u.setHeight(u.totalHeight),
+                u.setButtonMode(!0),
+                u.hasPointerEvent_bl ? (u.screen.addEventListener("pointerup", u.onMouseUp),
+                                        u.screen.addEventListener("pointerover", u.onMouseOver),
+                                        u.screen.addEventListener("pointerout", u.onMouseOut))
+                                     : u.screen.addEventListener && (u.screen.addEventListener("mouseover", u.onMouseOver),
+                                                                     u.screen.addEventListener("mouseout", u.onMouseOut),
+                                                                     u.screen.addEventListener("mouseup", u.onMouseUp),
+                                                                     u.screen.addEventListener("touchstart", u.onMouseDown),
+                                                                     u.screen.addEventListener("touchstart", u.onMouseUp))
+            },
+            this.setFinalSize = function() {
+                u.setWidth(u.n_sdo.getWidth()),
+                u.setHeight(u.n_sdo.getHeight()),
+                u.buttonWidth = u.w,
+                u.buttonHeight = u.h,
+                0 == u.w && setTimeout(function() {
                     u.setFinalSize()
                 }, 300)
-            }, this.setNormalState = function(e) {
-                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen), FWDAnimation.killTweensOf(u.d_sdo.screen), e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
-                    className: u.normalCalssName,
-                    ease: Expo.easeOut
-                }), FWDAnimation.to(u.d_sdo.screen, .8, {
-                    className: u.normalCalssName,
-                    ease: Expo.easeOut
-                })) : (u.n_sdo.screen.className = u.normalCalssName, u.d_sdo.screen.className = u.normalCalssName)) : (FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .5, {
+            },
+            this.setNormalState = function(e) {
+                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen),
+                                       FWDAnimation.killTweensOf(u.d_sdo.screen),
+                                       e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
+                                            className: u.normalCalssName,
+                                            ease: Expo.easeOut
+                                            }),
+                                            FWDAnimation.to(u.d_sdo.screen, .8, {
+                                              className: u.normalCalssName,
+                                              ease: Expo.easeOut
+                                            }))
+                                          : (u.n_sdo.screen.className = u.normalCalssName,
+                                             u.d_sdo.screen.className = u.normalCalssName))
+                                    : (FWDAnimation.killTweensOf(u.s_sdo),
+                                    FWDAnimation.to(u.s_sdo, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
-            }, this.setSelectedState = function(e) {
-                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen), FWDAnimation.killTweensOf(u.d_sdo.screen), e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
-                    className: u.selectedCalssName,
-                    ease: Expo.easeOut
-                }), FWDAnimation.to(u.d_sdo.screen, .8, {
-                    className: u.selectedCalssName,
-                    ease: Expo.easeOut
-                })) : (u.n_sdo.screen.className = u.selectedCalssName, u.d_sdo.screen.className = u.selectedCalssName)) : (FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .5, {
+            },
+            this.setSelectedState = function(e) {
+                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen),
+                                       FWDAnimation.killTweensOf(u.d_sdo.screen),
+                                       e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
+                                            className: u.selectedCalssName,
+                                            ease: Expo.easeOut
+                                            }),
+                                            FWDAnimation.to(u.d_sdo.screen, .8, {
+                                              className: u.selectedCalssName,
+                                              ease: Expo.easeOut
+                                            }))
+                                          : (u.n_sdo.screen.className = u.selectedCalssName,
+                                             u.d_sdo.screen.className = u.selectedCalssName))
+                                    : (FWDAnimation.killTweensOf(u.s_sdo),
+                                       FWDAnimation.to(u.s_sdo, .5, {
                     alpha: 1,
                     delay: .1,
                     ease: Expo.easeOut
                 }))
-            }, u.onMouseOver = function(e) {
+            },
+            u.onMouseOver = function(e) {
                 if (!e.pointerType || "mouse" == e.pointerType) {
                     if (u.isDisabled_bl || u.isSelectedFinal_bl) return;
                     u.dispatchEvent(c.MOUSE_OVER, {
                         e: e
                     }), u.setSelectedState(!0)
                 }
-            }, u.onMouseOut = function(e) {
+            },
+            u.onMouseOut = function(e) {
                 if (!e.pointerType || "mouse" == e.pointerType) {
                     if (u.isDisabled_bl || u.isSelectedFinal_bl) return;
                     u.dispatchEvent(c.MOUSE_OUT, {
                         e: e
                     }), u.setNormalState(!0)
                 }
-            }, u.onMouseDown = function(e) {
-                e.preventDefault && e.preventDefault(), u.isDisabled_bl || 2 == e.button || u.isSelectedFinal_bl || u.dispatchEvent(c.MOUSE_DOWN, {
+            },
+            u.onMouseDown = function(e) {
+                e.preventDefault && e.preventDefault(),
+                u.isDisabled_bl || 2 == e.button || u.isSelectedFinal_bl || u.dispatchEvent(c.MOUSE_DOWN, {
                     e: e
                 })
-            }, u.onMouseUp = function(e) {
-                e.preventDefault && e.preventDefault(), u.isDisabled_bl || 2 == e.button || u.isSelectedFinal_bl || u.dispatchEvent(c.MOUSE_UP, {
+            },
+            u.onMouseUp = function(e) {
+                e.preventDefault && e.preventDefault(),
+                u.isDisabled_bl || 2 == e.button || u.isSelectedFinal_bl || u.dispatchEvent(c.MOUSE_UP, {
                     e: e
                 })
-            }, u.setSelctedFinal = function() {
-                u.isSelectedFinal_bl = !0, FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .8, {
+            },
+            u.setSelctedFinal = function() {
+                u.isSelectedFinal_bl = !0,
+                FWDAnimation.killTweensOf(u.s_sdo),
+                FWDAnimation.to(u.s_sdo, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }), u.setButtonMode(!1)
-            }, u.setUnselctedFinal = function() {
-                u.isSelectedFinal_bl = !1, FWDAnimation.to(u.s_sdo, .8, {
+            },
+            u.setUnselctedFinal = function() {
+                u.isSelectedFinal_bl = !1,
+                FWDAnimation.to(u.s_sdo, .8, {
                     alpha: 0,
                     delay: .1,
                     ease: Expo.easeOut
                 }), u.setButtonMode(!0)
-            }, this.setDisabledState = function() {
-                u.isSetToDisabledState_bl = !0, u.useFontAwesome_bl ? (u.n_sdo.setX(-1e4), u.d_sdo.setX(0)) : (u.d_sdo.setX(0), FWDAnimation.killTweensOf(u.d_sdo), FWDAnimation.to(u.d_sdo, .8, {
+            },
+            this.setDisabledState = function() {
+                u.isSetToDisabledState_bl = !0,
+                u.useFontAwesome_bl ? (u.n_sdo.setX(-1e4), u.d_sdo.setX(0))
+                                    : (u.d_sdo.setX(0),
+                                       FWDAnimation.killTweensOf(u.d_sdo),
+                                       FWDAnimation.to(u.d_sdo, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }))
-            }, this.setEnabledState = function() {
-                u.isSetToDisabledState_bl = !1, u.useFontAwesome_bl ? (u.n_sdo.setX(0), u.d_sdo.setX(-1e4)) : (u.d_sdo.setX(-100), FWDAnimation.killTweensOf(u.d_sdo), FWDAnimation.to(u.d_sdo, .8, {
+            },
+            this.setEnabledState = function() {
+                u.isSetToDisabledState_bl = !1,
+                u.useFontAwesome_bl ? (u.n_sdo.setX(0), u.d_sdo.setX(-1e4))
+                                    : (u.d_sdo.setX(-100),
+                FWDAnimation.killTweensOf(u.d_sdo),
+                FWDAnimation.to(u.d_sdo, .8, {
                     alpha: 0,
                     delay: .1,
                     ease: Expo.easeOut
                 }))
-            }, this.disable = function() {
-                u.isDisabled_bl = !0, u.setButtonMode(!1)
-            }, this.enable = function() {
-                u.isDisabled_bl = !1, u.setButtonMode(!0)
-            }, u.updateHEXColors = function(e, t) {
-                FWDUVPUtils.changeCanvasHEXColor(u.nImg, u.n_sdo_canvas, e), FWDUVPUtils.changeCanvasHEXColor(u.img1, u.s_sdo_canvas, t)
-            }, u.destroy = function() {
-                u.isMbl ? u.hasPointerEvent_bl ? (u.screen.removeEventListener("pointerdown", u.onMouseUp), u.screen.removeEventListener("pointerover", u.onMouseOver), u.screen.removeEventListener("pointerout", u.onMouseOut)) : (u.screen.removeEventListener("touchstart", u.onMouseDown), u.screen.removeEventListener("touchend", u.onMouseUp)) : u.screen.removeEventListener && (u.screen.removeEventListener("mouseover", u.onMouseOver), u.screen.removeEventListener("mouseout", u.onMouseOut), u.screen.removeEventListener("mousedown", u.onMouseUp)), FWDAnimation.killTweensOf(u.s_sdo), u.n_sdo.destroy(), u.s_sdo.destroy(), u.d_sdo && (FWDAnimation.killTweensOf(u.d_sdo), u.d_sdo.destroy()), u.nImg = null, u.sImg = null, u.dImg = null, u.n_sdo = null, u.s_sdo = null, u.d_sdo = null, sImg = e = null, dImg = null, u.toolTipLabel_str = null, u.init = null, u.setupMainContainers = null, u.onMouseOver = null, u.onMouseOut = null, u.onClick = null, u.onMouseDown = null, u.setSelctedFinal = null, u.setUnselctedFinal = null, u.setInnerHTML(""), h.destroy(), h = u = null, c.prototype = null
-            }, u.init()
+            },
+            this.disable = function() {
+                u.isDisabled_bl = !0,
+                u.setButtonMode(!1)
+            },
+            this.enable = function() {
+                u.isDisabled_bl = !1,
+                u.setButtonMode(!0)
+            },
+            u.updateHEXColors = function(e, t) {
+                FWDUVPUtils.changeCanvasHEXColor(u.nImg, u.n_sdo_canvas, e),
+                FWDUVPUtils.changeCanvasHEXColor(u.img1, u.s_sdo_canvas, t)
+            },
+            u.destroy = function() {
+            u.isMbl ? u.hasPointerEvent_bl
+                    ? (u.screen.removeEventListener("pointerdown", u.onMouseUp),
+                       u.screen.removeEventListener("pointerover", u.onMouseOver),
+                       u.screen.removeEventListener("pointerout", u.onMouseOut))
+                    : (u.screen.removeEventListener("touchstart", u.onMouseDown),
+                       u.screen.removeEventListener("touchend", u.onMouseUp))
+                    : u.screen.removeEventListener && (u.screen.removeEventListener("mouseover", u.onMouseOver),
+                                                       u.screen.removeEventListener("mouseout", u.onMouseOut),
+                                                       u.screen.removeEventListener("mousedown", u.onMouseUp)),
+              FWDAnimation.killTweensOf(u.s_sdo),
+              u.n_sdo.destroy(),
+              u.s_sdo.destroy(),
+              u.d_sdo && (FWDAnimation.killTweensOf(u.d_sdo),
+                          u.d_sdo.destroy()),
+              u.nImg = null,
+              u.sImg = null,
+              u.dImg = null,
+              u.n_sdo = null,
+              u.s_sdo = null,
+              u.d_sdo = null,
+              sImg = e = null,
+              dImg = null,
+              u.toolTipLabel_str = null,
+              u.init = null,
+              u.setupMainContainers = null,
+              u.onMouseOver = null,
+              u.onMouseOut = null,
+              u.onClick = null,
+              u.onMouseDown = null,
+              u.setSelctedFinal = null,
+              u.setUnselctedFinal = null,
+              u.setInnerHTML(""),
+              h.destroy(),
+              h = u = null,
+              c.prototype = null
+            },
+            u.init()
         };
         c.setPrototype = function() {
-            c.prototype = null, c.prototype = new FWDUVPDisplayObject("div")
-        }, c.SHOW_TOOLTIP = "showTooltip", c.CLICK = "onClick", c.MOUSE_OVER = "onMouseOver", c.MOUSE_OUT = "onMouseOut", c.MOUSE_UP = "onMouseUp", c.MOUSE_DOWN = "onMouseDown", c.prototype = null, e.FWDUVPVolumeButton = c
+            c.prototype = null,
+            c.prototype = new FWDUVPDisplayObject("div")
+        },
+        c.SHOW_TOOLTIP = "showTooltip",
+        c.CLICK = "onClick",
+        c.MOUSE_OVER = "onMouseOver",
+        c.MOUSE_OUT = "onMouseOut",
+        c.MOUSE_UP = "onMouseUp",
+        c.MOUSE_DOWN = "onMouseDown",
+        c.prototype = null,
+        e.FWDUVPVolumeButton = c
     }(window),
     function(e) {
         var o = function(t, e) {
             var n = this;
             o.prototype;
-            this.videoHolder_do = null, this.ytb = null, this.lastQuality_str = "auto", this.volume = e, this.updateVideoId_int, this.updatePreloadId_int, this.controllerHeight = t.data.controllerHeight, this.hasHours_bl = !1, this.hasBeenCreatedOnce_bl = !1, this.allowScrubing_bl = !1, this.hasError_bl = !1, this.isPlaying_bl = !1, this.isStopped_bl = !0, this.isStartEventDispatched_bl = !1, this.isSafeToBeControlled_bl = !1, this.isPausedInEvent_bl = !0, this.isShowed_bl = !0, this.isQualityArrayDisapatched_bl = !1, this.playsinline = t.data.playsinline ? 1 : 0, this.isMbl = FWDUVPUtils.isMobile, this.init = function() {
-                n.hasTransform3d_bl = !1, n.hasTransform2d_bl = !1, n.setBkColor("#000"), n.setBackfaceVisibility(), t.videoHolder_do.addChildAt(n, 0), n.resizeAndPosition(), n.setupVideo()
+            this.videoHolder_do = null,
+            this.ytb = null,
+            this.lastQuality_str = "auto",
+            this.volume = e,
+            this.updateVideoId_int,
+            this.updatePreloadId_int,
+            this.controllerHeight = t.data.controllerHeight,
+            this.hasHours_bl = !1,
+            this.hasBeenCreatedOnce_bl = !1,
+            this.allowScrubing_bl = !1,
+            this.hasError_bl = !1,
+            this.isPlaying_bl = !1,
+            this.isStopped_bl = !0,
+            this.isStartEventDispatched_bl = !1,
+            this.isSafeToBeControlled_bl = !1,
+            this.isPausedInEvent_bl = !0,
+            this.isShowed_bl = !0,
+            this.isQualityArrayDisapatched_bl = !1,
+            this.playsinline = t.data.playsinline ? 1 : 0,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.init = function() {
+                n.hasTransform3d_bl = !1,
+                n.hasTransform2d_bl = !1,
+                n.setBkColor("#000"),
+                n.setBackfaceVisibility(),
+                t.videoHolder_do.addChildAt(n, 0),
+                n.resizeAndPosition(),
+                n.setupVideo()
             }, this.setupVideo = function() {
-                n.videoHolder_do = new FWDUVPDisplayObject("div"), n.videoHolder_do.hasTransform3d_bl = !1, n.videoHolder_do.hasTransform2d_bl = !1, n.videoHolder_do.screen.setAttribute("id", t.instanceName_str + "youtube"), n.videoHolder_do.getStyle().width = "100%", n.videoHolder_do.getStyle().height = "100%", n.videoHolder_do.setBackfaceVisibility(), n.addChild(n.videoHolder_do), n.ytb = new YT.Player(t.instanceName_str + "youtube", {
+                n.videoHolder_do = new FWDUVPDisplayObject("div"),
+                n.videoHolder_do.hasTransform3d_bl = !1,
+                n.videoHolder_do.hasTransform2d_bl = !1,
+                n.videoHolder_do.screen.setAttribute("id", t.instanceName_str + "youtube"),
+                n.videoHolder_do.getStyle().width = "100%",
+                n.videoHolder_do.getStyle().height = "100%",
+                n.videoHolder_do.setBackfaceVisibility(),
+                n.addChild(n.videoHolder_do),
+                n.ytb = new YT.Player(t.instanceName_str + "youtube", {
                     width: "100%",
                     height: "100%",
                     playerVars: {
@@ -9301,37 +10106,86 @@ var FWDUVPAddress = new function() {
                         onPlaybackQualityChange: n.qualityChangeHandler
                     }
                 }), n.setBkColor("#FFFFFF")
-            }, this.playerReadyHandler = function() {
-                n.resizeAndPosition(), t.data.aom_bl && n.ytb.mute(), n.dispatchEvent(o.READY), n.hasBeenCreatedOnce_bl = !0
-            }, this.stateChangeHandler = function(e) {
-                if (-1 == e.data && n.isCued_bl && n.isMbl && (n.isStopped_bl = !1, FWDUVPlayer.stopAllVideos(t)), e.data == YT.PlayerState.PLAYING) n.isSafeToBeControlled_bl || (n.isStopped_bl = !1, n.isSafeToBeControlled_bl = !0, n.isPlaying_bl = !0, n.hasHours_bl = 0 < Math.floor(n.ytb.getDuration() / 3600), n.setVolume(t.volume), n.startToUpdate(), n.startToPreload(), n.scrub(1e-5), n.isMbl || n.setQuality(n.lastQuality_str), n.ytb.getAvailableQualityLevels() && 0 != n.ytb.getAvailableQualityLevels().length && n.dispatchEvent(o.QUALITY_CHANGE, {
-                    qualityLevel: n.ytb.getPlaybackQuality(),
-                    levels: n.ytb.getAvailableQualityLevels()
-                }), n.startToUpdateSubtitles(), n.dispatchEvent(o.SAFE_TO_SCRUBB)), n.isPausedInEvent_bl && n.dispatchEvent(o.PLAY), n.isPausedInEvent_bl = !1, n.hasError_bl = !1;
+            },
+            this.playerReadyHandler = function() {
+                n.resizeAndPosition(),
+                t.data.aom_bl && n.ytb.mute(),
+                n.dispatchEvent(o.READY),
+                n.hasBeenCreatedOnce_bl = !0
+            },
+            this.stateChangeHandler = function(e) {
+                if (-1 == e.data && n.isCued_bl
+                                 && n.isMbl
+                                 && (n.isStopped_bl = !1, FWDUVPlayer.stopAllVideos(t)),
+                   e.data == YT.PlayerState.PLAYING)
+                     n.isSafeToBeControlled_bl || (n.isStopped_bl = !1,
+                                                   n.isSafeToBeControlled_bl = !0,
+                                                   n.isPlaying_bl = !0,
+                                                   n.hasHours_bl = 0 < Math.floor(n.ytb.getDuration() / 3600),
+                                                   n.setVolume(t.volume),
+                                                   n.startToUpdate(),
+                                                   n.startToPreload(),
+                                                   n.scrub(1e-5),
+                                                   n.isMbl || n.setQuality(n.lastQuality_str),
+                                                   n.ytb.getAvailableQualityLevels() && 0 != n.ytb.getAvailableQualityLevels().length && n.dispatchEvent(o.QUALITY_CHANGE, {
+                                                     qualityLevel: n.ytb.getPlaybackQuality(),
+                                                     levels: n.ytb.getAvailableQualityLevels()
+                                                   }),
+                                                   n.startToUpdateSubtitles(),
+                                                   n.dispatchEvent(o.SAFE_TO_SCRUBB)),
+                    n.isPausedInEvent_bl && n.dispatchEvent(o.PLAY),
+                    n.isPausedInEvent_bl = !1,
+                    n.hasError_bl = !1;
                 else if (e.data == YT.PlayerState.PAUSED) {
                     if (!n.isSafeToBeControlled_bl) return;
-                    n.isStopped_bl = !1, n.isPausedInEvent_bl || n.dispatchEvent(o.PAUSE), n.isPausedInEvent_bl = !0
-                } else e.data == YT.PlayerState.ENDED ? n.ytb.getCurrentTime() && 0 < n.ytb.getCurrentTime() && (n.isStopped_bl = !1, n.stopToUpdateSubtitles(), setTimeout(function() {
-                    n.dispatchEvent(o.PLAY_COMPLETE)
-                }, 100)) : e.data == YT.PlayerState.CUED && (n.isStopped_bl || n.dispatchEvent(o.CUED), n.isCued_bl = !0)
-            }, this.qualityChangeHandler = function(e) {
+                    n.isStopped_bl = !1,
+                    n.isPausedInEvent_bl || n.dispatchEvent(o.PAUSE),
+                    n.isPausedInEvent_bl = !0
+                }
+                else e.data == YT.PlayerState.ENDED ? n.ytb.getCurrentTime() && 0 < n.ytb.getCurrentTime() && (n.isStopped_bl = !1, n.stopToUpdateSubtitles(), setTimeout(function() {
+                                                        n.dispatchEvent(o.PLAY_COMPLETE)
+                                                      }, 100))
+                                                    : e.data == YT.PlayerState.CUED && (n.isStopped_bl || n.dispatchEvent(o.CUED), n.isCued_bl = !0)
+            },
+            this.qualityChangeHandler = function(e) {
                 n.ytb.getAvailableQualityLevels() && 0 != n.ytb.getAvailableQualityLevels().length && n.dispatchEvent(o.QUALITY_CHANGE, {
                     qualityLevel: n.ytb.getPlaybackQuality()
                 })
-            }, this.playerErrorHandler = function(e) {
-                if (n.isPausedInEvent_bl = !0, !n.isStopped_bl && !n.hasError_bl) {
+            },
+            this.playerErrorHandler = function(e) {
+                if (n.isPausedInEvent_bl = !0,
+                    !n.isStopped_bl && !n.hasError_bl) {
                     var t = "";
-                    n.hasError_bl = !0, 2 == e.data ? t = "The youtube id is not well formatted, make sure it has exactly 11 characters and that it dosn't contain invalid characters such as exclamation points or asterisks." : 5 == e.data ? t = "The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred." : 100 == e.data ? t = "The youtube video request was not found, probably the video ID is incorrect." : 101 != e.data && 150 != e.data || (t = "The owner of the requested video does not allow it to be played in embedded players."), n.dispatchEvent(o.ERROR, {
-                        text: t
-                    })
+                    n.hasError_bl = !0,
+                    2 == e.data ? t = "The youtube id is not well formatted, make sure it has exactly 11 characters and that it dosn't contain invalid characters such as exclamation points or asterisks."
+                                : 5 == e.data
+                                ? t = "The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred."
+                                : 100 == e.data
+                                ? t = "The youtube video request was not found, probably the video ID is incorrect."
+                                : 101 != e.data && 150 != e.data || (t = "The owner of the requested video does not allow it to be played in embedded players."), n.dispatchEvent(o.ERROR, {
+                                  text: t
+                                })
                 }
-            }, this.resizeAndPosition = function() {
-                if (n.setWidth(t.tempVidStageWidth), n.setHeight(t.tempVidStageHeight), n.videoHolder_do && (n.videoHolder_do.setWidth(t.tempVidStageWidth), n.videoHolder_do.setHeight(t.tempVidStageHeight), n.ytb && n.ytb.a)) try {
-                    n.ytb.a.width = t.tempVidStageWidth, n.ytb.a.height = t.tempVidStageHeight, n.ytb.a.style.width = t.tempVidStageWidth + "px", n.ytb.a.style.height = t.tempVidStageHeight + "px"
+            },
+            this.resizeAndPosition = function() {
+                if (n.setWidth(t.tempVidStageWidth),
+                    n.setHeight(t.tempVidStageHeight),
+                    n.videoHolder_do && (n.videoHolder_do.setWidth(t.tempVidStageWidth),
+                                         n.videoHolder_do.setHeight(t.tempVidStageHeight),
+                                         n.ytb && n.ytb.a))
+                      try {
+                    n.ytb.a.width = t.tempVidStageWidth,
+                    n.ytb.a.height = t.tempVidStageHeight,
+                    n.ytb.a.style.width = t.tempVidStageWidth + "px",
+                    n.ytb.a.style.height = t.tempVidStageHeight + "px"
                 } catch (e) {}
-            }, this.setSource = function(e) {
-                e && (n.sourcePath_str = e), clearInterval(n.setSourceId_int), n.setSourceId_int = setInterval(function() {
-                    n.ytb.cueVideoById && n.ytb.setPlaybackRate && (n.ytb.cueVideoById(n.sourcePath_str), (!t.isMbl && (t.data.autoPlay_bl || t.isThumbClick_bl || t.isAdd_bl && !t.loadAddFirstTime_bl) && !t.lightBox_do || t.lightBox_do && t.lightBox_do.isShowed_bl) && (t.videoPoster_do.hide(!0), t.lrgPlayBtn.hide(), t.play()), clearInterval(n.setSourceId_int))
+            },
+            this.setSource = function(e) {
+                e && (n.sourcePath_str = e),
+                clearInterval(n.setSourceId_int),
+                n.setSourceId_int = setInterval(function() {
+                    n.ytb.cueVideoById && n.ytb.setPlaybackRate && (n.ytb.cueVideoById(n.sourcePath_str),
+                    (!t.isMbl && (t.data.autoPlay_bl || t.isThumbClick_bl || t.isAdd_bl && !t.loadAddFirstTime_bl) && !t.lightBox_do || t.lightBox_do && t.lightBox_do.isShowed_bl) && (t.videoPoster_do.hide(!0), t.lrgPlayBtn.hide(), t.play()), clearInterval(n.setSourceId_int))
                 }, 50)
             }, this.play = function(e) {
                 FWDUVPlayer.curInstance = t, n.isPlaying_bl = !0, n.hasError_bl = !1, n.hasStarted_bl = !0;
@@ -9370,23 +10224,47 @@ var FWDUVPAddress = new function() {
                         totalTimeInSeconds: n.ytb.getDuration()
                     })
                 } else stopToUpdate()
-            }, this.startToPreload = function() {
-                clearInterval(n.preloadVideoId_int), n.updatePreloadId_int = setInterval(n.updateProgress, 500)
-            }, this.stopToPreload = function() {
+            },
+            this.startToPreload = function() {
+                clearInterval(n.preloadVideoId_int),
+                n.updatePreloadId_int = setInterval(n.updateProgress, 500)
+            },
+            this.stopToPreload = function() {
                 clearInterval(n.updatePreloadId_int)
-            }, this.updateProgress = function() {
+            },
+            this.updateProgress = function() {
                 if (n.ytb) {
                     var e = n.ytb.getVideoLoadedFraction();
                     n.dispatchEvent(o.LOAD_PROGRESS, {
                         percent: e
                     })
                 } else stopToPreload()
-            }, this.stop = function() {
-                n.isStopped_bl || (n.isPlaying_bl = !1, n.isStopped_bl = !0, n.hasStarted_bl = !1, n.isCued_bl = !1, clearInterval(n.setSourceId_int), n.allowScrubing_bl = !1, n.isSafeToBeControlled_bl = !1, n.isQualityArrayDisapatched_bl = !1, n.isPausedInEvent_bl = !0, n.stopToUpdateSubtitles(), n.stopToUpdate(), n.stopToPreload(), n.stopVideo(), n.dispatchEvent(o.STOP), n.dispatchEvent(o.LOAD_PROGRESS, {
-                    percent: 0
-                }))
-            }, this.destroyYoutube = function() {
-                n.videoHolder_do && (n.videoHolder_do.screen.removeAttribute("id", t.instanceName_str + "youtube"), n.videoHolder_do.destroy(), n.videoHolder_do = null), n.ytb && n.ytb.destroy(), n.ytb = null
+            },
+            this.stop = function() {
+                n.isStopped_bl || (n.isPlaying_bl = !1,
+                                   n.isStopped_bl = !0,
+                                   n.hasStarted_bl = !1,
+                                   n.isCued_bl = !1,
+                                   clearInterval(n.setSourceId_int),
+                                   n.allowScrubing_bl = !1,
+                                   n.isSafeToBeControlled_bl = !1,
+                                   n.isQualityArrayDisapatched_bl = !1,
+                                   n.isPausedInEvent_bl = !0,
+                                   n.stopToUpdateSubtitles(),
+                                   n.stopToUpdate(),
+                                   n.stopToPreload(),
+                                   n.stopVideo(),
+                                   n.dispatchEvent(o.STOP),
+                                   n.dispatchEvent(o.LOAD_PROGRESS, {
+                                     percent: 0
+                                   }))
+            },
+            this.destroyYoutube = function() {
+                n.videoHolder_do && (n.videoHolder_do.screen.removeAttribute("id", t.instanceName_str + "youtube"),
+                                     n.videoHolder_do.destroy(),
+                                     n.videoHolder_do = null),
+                n.ytb && n.ytb.destroy(),
+                n.ytb = null
             }, this.stopVideo = function() {
                 n.ytb.cueVideoById(n.sourcePath_str)
             }, this.setPlaybackRate = function(e) {
@@ -9422,7 +10300,21 @@ var FWDUVPAddress = new function() {
         };
         o.setPrototype = function() {
             o.prototype = new FWDUVPDisplayObject("div")
-        }, o.UPDATE_SUBTITLE = "updateSubtitle", o.READY = "ready", o.ERROR = "error", o.UPDATE = "update", o.UPDATE_TIME = "updateTime", o.SAFE_TO_SCRUBB = "safeToControll", o.LOAD_PROGRESS = "loadProgress", o.PLAY = "play", o.PAUSE = "pause", o.STOP = "stop", o.PLAY_COMPLETE = "playComplete", o.CUED = "cued", o.QUALITY_CHANGE = "qualityChange", e.FWDUVPYoutubeScreen = o
+        },
+        o.UPDATE_SUBTITLE = "updateSubtitle",
+        o.READY = "ready",
+        o.ERROR = "error",
+        o.UPDATE = "update",
+        o.UPDATE_TIME = "updateTime",
+        o.SAFE_TO_SCRUBB = "safeToControll",
+        o.LOAD_PROGRESS = "loadProgress",
+        o.PLAY = "play",
+        o.PAUSE = "pause",
+        o.STOP = "stop",
+        o.PLAY_COMPLETE = "playComplete",
+        o.CUED = "cued",
+        o.QUALITY_CHANGE = "qualityChange",
+        e.FWDUVPYoutubeScreen = o
     }(window),
     function() {
         var n = function(e, t, s, o, i) {
@@ -9430,54 +10322,113 @@ var FWDUVPAddress = new function() {
             n.prototype;
             this.text_do = null, this.hd_do = null, this.dumy_do = null, this.label_str = e, this.nBC = t, this.sBC = s, this.hdPath_str = o, this.id = i, this.totalWidth = 0, this.totalHeight = 23, this.hdWidth = 7, this.hdHeight = 5, this.hasHd_bl = l.hdPath_str, this.isMbl = FWDUVPUtils.isMobile, this.isDisabled_bl = !1, this.init = function() {
                 l.setBackfaceVisibility(), l.setupMainContainers(), l.setHeight(l.totalHeight)
-            }, this.setupMainContainers = function() {
-                if (l.text_do = new FWDUVPDisplayObject("div"), l.text_do.setBackfaceVisibility(), l.text_do.hasTransform3d_bl = !1, l.text_do.hasTransform2d_bl = !1, l.text_do.getStyle().display = "inline-block", l.text_do.getStyle().whiteSpace = "nowrap", l.text_do.getStyle().fontFamily = "Arial", l.text_do.getStyle().fontSize = "12px", l.text_do.getStyle().color = l.nBC, l.text_do.getStyle().fontSmoothing = "antialiased", l.text_do.getStyle().webkitFontSmoothing = "antialiased", l.text_do.getStyle().textRendering = "optimizeLegibility", l.text_do.setInnerHTML(l.label_str), l.addChild(l.text_do), l.hasHd_bl) {
+            },
+            this.setupMainContainers = function() {
+                if (l.text_do = new FWDUVPDisplayObject("div"),
+                    l.text_do.setBackfaceVisibility(),
+                    l.text_do.hasTransform3d_bl = !1,
+                    l.text_do.hasTransform2d_bl = !1,
+                    l.text_do.getStyle().display = "inline-block",
+                    l.text_do.getStyle().whiteSpace = "nowrap",
+                    l.text_do.getStyle().fontFamily = "Arial",
+                    l.text_do.getStyle().fontSize = "12px",
+                    l.text_do.getStyle().color = l.nBC,
+                    l.text_do.getStyle().fontSmoothing = "antialiased",
+                    l.text_do.getStyle().webkitFontSmoothing = "antialiased",
+                    l.text_do.getStyle().textRendering = "optimizeLegibility",
+                    l.text_do.setInnerHTML(l.label_str),
+                    l.addChild(l.text_do), l.hasHd_bl) {
                     var e = new Image;
-                    e.src = l.hdPath_str, l.hd_do = new FWDUVPDisplayObject("img"), l.hd_do.setScreen(e), l.hd_do.setWidth(l.hdWidth), l.hd_do.setHeight(l.hdHeight), l.addChild(l.hd_do)
+                    e.src = l.hdPath_str,
+                    l.hd_do = new FWDUVPDisplayObject("img"),
+                    l.hd_do.setScreen(e),
+                    l.hd_do.setWidth(l.hdWidth),
+                    l.hd_do.setHeight(l.hdHeight),
+                    l.addChild(l.hd_do)
                 }
-                l.dumy_do = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (l.dumy_do.setBkColor("#FF0000"), l.dumy_do.setAlpha(1e-4)), l.dumy_do.setButtonMode(!0), l.dumy_do.setHeight(l.totalHeight), l.addChild(l.dumy_do), l.hasPointerEvent_bl ? (l.screen.addEventListener("pointerup", l.onMouseUp), l.screen.addEventListener("pointerover", l.onMouseOver), l.screen.addEventListener("pointerout", l.onMouseOut)) : l.screen.addEventListener && (l.isMbl || (l.screen.addEventListener("mouseover", l.onMouseOver), l.screen.addEventListener("mouseout", l.onMouseOut), l.screen.addEventListener("mouseup", l.onMouseUp)), l.screen.addEventListener("touchend", l.onMouseUp))
-            }, this.onMouseOver = function(e) {
+                l.dumy_do = new FWDUVPDisplayObject("div"),
+                FWDUVPUtils.isIE && (l.dumy_do.setBkColor("#FF0000"), l.dumy_do.setAlpha(1e-4)),
+                l.dumy_do.setButtonMode(!0),
+                l.dumy_do.setHeight(l.totalHeight),
+                l.addChild(l.dumy_do),
+                l.hasPointerEvent_bl ? (l.screen.addEventListener("pointerup", l.onMouseUp),
+                                        l.screen.addEventListener("pointerover", l.onMouseOver),
+                                        l.screen.addEventListener("pointerout", l.onMouseOut))
+                                     : l.screen.addEventListener && (l.isMbl || (l.screen.addEventListener("mouseover", l.onMouseOver),
+                                                                                 l.screen.addEventListener("mouseout", l.onMouseOut),
+                                                                                 l.screen.addEventListener("mouseup", l.onMouseUp)),
+                                       l.screen.addEventListener("touchend", l.onMouseUp))
+            },
+            this.onMouseOver = function(e) {
                 l.isDisabled_bl || (l.setSelectedState(!0), l.dispatchEvent(n.MOUSE_OVER, {
                     e: e,
                     id: l.id
                 }))
-            }, this.onMouseOut = function(e) {
+            },
+            this.onMouseOut = function(e) {
                 l.isDisabled_bl || (l.setNormalState(!0), l.dispatchEvent(n.MOUSE_OUT, {
                     e: e,
                     id: l.id
                 }))
-            }, this.onMouseUp = function(e) {
+            },
+            this.onMouseUp = function(e) {
                 l.isDisabled_bl || 2 == e.button || (e.preventDefault && e.preventDefault(), l.dispatchEvent(n.CLICK, {
                     e: e,
                     id: l.id
                 }))
-            }, this.setFinalSize = function() {
+            },
+            this.setFinalSize = function() {
                 var e = l.text_do.getWidth() + 34,
                     t = l.text_do.getHeight();
-                l.text_do.setX(18), l.text_do.setY(parseInt((l.totalHeight - t) / 2)), l.hd_do && (l.hd_do.setX(e - 12), l.hd_do.setY(l.text_do.y + 1)), l.dumy_do.setWidth(e), l.setWidth(e)
-            }, this.updateText = function(e) {
-                this.label_str = e, this.text_do.setInnerHTML(l.label_str), l.hd_do && ("highres" == l.label_str || "hd1080" == l.label_str || "hd720" == l.label_str || "hd1440" == l.label_str || "hd2160" == l.label_str ? l.hd_do.setVisible(!0) : l.hd_do.setVisible(!1))
-            }, this.setSelectedState = function(e) {
+                l.text_do.setX(18),
+                l.text_do.setY(parseInt((l.totalHeight - t) / 2)),
+                l.hd_do && (l.hd_do.setX(e - 12), l.hd_do.setY(l.text_do.y + 1)),
+                l.dumy_do.setWidth(e), l.setWidth(e)
+            },
+            this.updateText = function(e) {
+                this.label_str = e,
+                this.text_do.setInnerHTML(l.label_str),
+                l.hd_do && ("highres" == l.label_str || "hd1080" == l.label_str
+                                                     || "hd720" == l.label_str
+                                                     || "hd1440" == l.label_str
+                                                     || "hd2160" == l.label_str ? l.hd_do.setVisible(!0) : l.hd_do.setVisible(!1))
+            },
+            this.setSelectedState = function(e) {
                 this.isSelected_bl = !0, FWDAnimation.killTweensOf(l.text_do), e ? FWDAnimation.to(l.text_do.screen, .5, {
                     css: {
                         color: l.sBC
                     },
                     ease: Expo.easeOut
                 }) : l.text_do.getStyle().color = l.sBC
-            }, this.setNormalState = function(e) {
+            },
+            this.setNormalState = function(e) {
                 this.isSelected_bl = !1, FWDAnimation.killTweensOf(l.text_do), e ? FWDAnimation.to(l.text_do.screen, .5, {
                     css: {
                         color: l.nBC
                     },
                     ease: Expo.easeOut
                 }) : l.text_do.getStyle().color = l.nBC
-            }, this.disable = function() {
-                l.isDisabled_bl = !0, FWDAnimation.killTweensOf(l.text_do), l.setSelectedState(!0), l.dumy_do.setButtonMode(!1)
-            }, this.enable = function() {
-                l.isDisabled_bl = !1, FWDAnimation.killTweensOf(l.text_do), l.setNormalState(!0), l.dumy_do.setButtonMode(!0)
-            }, l.init()
+            },
+            this.disable = function() {
+                l.isDisabled_bl = !0,
+                FWDAnimation.killTweensOf(l.text_do),
+                l.setSelectedState(!0),
+                l.dumy_do.setButtonMode(!1)
+            },
+            this.enable = function() {
+                l.isDisabled_bl = !1,
+                FWDAnimation.killTweensOf(l.text_do),
+                l.setNormalState(!0),
+                l.dumy_do.setButtonMode(!0)
+            },
+            l.init()
         };
         n.setPrototype = function() {
             n.prototype = new FWDUVPDisplayObject("div")
-        }, n.MOUSE_OVER = "onMouseOver", n.MOUSE_OUT = "onMouseOut", n.CLICK = "onClick", n.prototype = null, window.FWDUVPYTBQButton = n
+        },
+        n.MOUSE_OVER = "onMouseOver",
+        n.MOUSE_OUT = "onMouseOut",
+        n.CLICK = "onClick",
+        n.prototype = null,
+        window.FWDUVPYTBQButton = n
     }(window);
