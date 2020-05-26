@@ -7629,7 +7629,10 @@ var FWDUVPAddress = new function() {
                     }
                     a.controllerBk_do.setHeight(a.controlBarHeight), a.controllerBk_do.getStyle().width = "100%", a.controllBar_do.addChild(a.controllerBk_do), a.controllBar_do.setHeight(a.controlBarHeight), a.mainHld.addChild(a.controllBar_do)
                 }
-                a.showShuffleButton_bl && a.setupShuffleButton(), a.showLoopButton_bl && a.setupLoopButton(), a.showNextAndPrevButtons_bl && (a.setupPrevButton(), a.setupNextButton()), a.showButtonsToolTip_bl && a.setupToolTips(), a.totalButtons = a.buttons_ar.length, a.showSearchInpt && a.showController_bl && a.setupInput(), a.showController_bl && (a.removeFromThumbsHolderHeight = a.controllBar_do.h + a.spaceBetweenThumbnails), a.setupMobileScrollbar(), a.isMbl || a.setupScrollbar(), a.addMouseWheelSupport_bl && a.addMouseWheelSupport(), a.showPlaylistName_bl && (a.setupPlaylistName(), a.removeFromThumbsHolderHeight += a.controlBarHeight + a.spaceBetweenThumbnails, a.mainThumbsHolder_do.setY(a.controlBarHeight + a.spaceBetweenThumbnails), a.scrMainHolder_do && a.scrMainHolder_do.setY(a.mainThumbsHolder_do.y));
+                a.showShuffleButton_bl && a.setupShuffleButton(),
+                a.showLoopButton_bl && a.setupLoopButton(),
+                a.showNextAndPrevButtons_bl && (a.setupPrevButton(), a.setupNextButton()), 
+                a.totalButtons = a.buttons_ar.length, a.showSearchInpt && a.showController_bl && a.setupInput(), a.showController_bl && (a.removeFromThumbsHolderHeight = a.controllBar_do.h + a.spaceBetweenThumbnails), a.setupMobileScrollbar(), a.isMbl || a.setupScrollbar(), a.addMouseWheelSupport_bl && a.addMouseWheelSupport(), a.showPlaylistName_bl && (a.setupPlaylistName(), a.removeFromThumbsHolderHeight += a.controlBarHeight + a.spaceBetweenThumbnails, a.mainThumbsHolder_do.setY(a.controlBarHeight + a.spaceBetweenThumbnails), a.scrMainHolder_do && a.scrMainHolder_do.setY(a.mainThumbsHolder_do.y));
                 var t = i.ec;
                 t && (this.ec = new FWDUVPDisplayObject("div", "relative"), this.ec.setInnerHTML(t.innerHTML), this.addChild(this.ec)), a.showPlaylistByDefault_bl || a.hide()
             }, this.resizeAndPosition = function(e) {
