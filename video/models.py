@@ -123,7 +123,7 @@ class VideoAlbum(models.Model):
 class Video(models.Model):
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
-                                upload_to=self.upload_to_thumb_directory(),
+                                upload_to=Video.upload_to_thumb_directory(),
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
     created = models.DateTimeField(default=timezone.now)
