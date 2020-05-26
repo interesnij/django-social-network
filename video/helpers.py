@@ -1,12 +1,17 @@
-
 import uuid
 from os.path import splitext
 
 
-def upload_to_video_directory(user_profile, uuid):
+def upload_to_video_directory(user_profile, filename):
     creator = user_profile.creator
-    return _upload_to_user_directory(creator=creator, uuid=uuid)
+    return _upload_to_user_directory(creator=creator, filename=filename)
 
-def _upload_to_user_directory(creator, uuid):
-    path = 'users/%(user_id)s/%(image_uuid)s/' % {'user_id': str(creator.id), 'image_uuid': str(uuid)}
-    return path
+def _upload_to_user_directory(creator, filename):
+    extension = splitext(filename)[1].lower()
+    new_filename = str(uuid.uuid4()) + extension
+
+    path = 'users/%(user_uuid)s/' % {
+        'user_uuid': str(creator.id)}
+
+    return '%(path)s%(new_filename)s' % {'path': path,
+                                         'new_filename': new_filename, }
