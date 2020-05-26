@@ -8302,9 +8302,15 @@ var FWDUVPAddress = new function() {
             }, this.positionPointer = function(e) {
                 var t, s;
                 e = e || 0, t = parseInt((l.w - 8) / 2) + e, s = l.h, l.pointerHolder_do.setX(t), l.pointerHolder_do.setY(s)
-            }, this.show = function() {
-                l.isShowed_bl = !0, clearTimeout(l.hideWithDelayId_to), FWDAnimation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, l.toolTipsButtonsHideDelay)
-            }, this.showFinal = function() {
+            },
+            this.show = function() {
+                l.isShowed_bl = !0,
+                clearTimeout(l.hideWithDelayId_to),
+                FWDAnimation.killTweensOf(l),
+                clearTimeout(l.showWithDelayId_to),
+                l.showWithDelayId_to = setTimeout(l.showFinal, l.toolTipsButtonsHideDelay)
+            },
+            this.showFinal = function() {
                 l.setVisible(!0), FWDAnimation.to(l, .4, {
                     alpha: 1,
                     onComplete: function() {
@@ -8312,40 +8318,150 @@ var FWDUVPAddress = new function() {
                     },
                     ease: Quart.easeOut
                 })
-            }, this.hide = function() {
-                l.isShowed_bl && (clearTimeout(l.showWithDelayId_to), clearTimeout(l.hideWithDelayId_to), l.hideWithDelayId_to = setTimeout(function() {
-                    FWDAnimation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1, l.setAlpha(0)
-                }, 100))
-            }, this.init()
+            },
+            this.hide = function() {
+                l.isShowed_bl && (clearTimeout(l.showWithDelayId_to),
+                                  clearTimeout(l.hideWithDelayId_to),
+                                  l.hideWithDelayId_to = setTimeout(function() {
+                                    FWDAnimation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1, l.setAlpha(0)
+                                  }, 100))
+                                },
+            this.init()
         };
         n.setPrototype = function() {
-            n.prototype = null, n.prototype = new FWDUVPDisplayObject("div")
-        }, n.CLICK = "onClick", n.MOUSE_DOWN = "onMouseDown", n.prototype = null, e.FWDUVPScrubberToolip = n
+            n.prototype = null,
+            n.prototype = new FWDUVPDisplayObject("div")
+        },
+        n.CLICK = "onClick",
+        n.MOUSE_DOWN = "onMouseDown",
+        n.prototype = null,
+        e.FWDUVPScrubberToolip = n
     }(window),
+
     function(o) {
         var e = function(s, t) {
             var f = this;
             e.prototype;
-            this.embedColoseN_img = s.embedColoseN_img, this.bk_do = null, this.mainHld = null, this.clsBtn = null, this.btns_ar = [], this.embedWindowBackground_str = s.embedWindowBackground_str, this.embedWindowCloseButtonMargins = s.embedWindowCloseButtonMargins, this.totalWidth = 0, this.sW = 0, this.sH = 0, this.minMrgXSpc = 20, this.hSpace = 20, this.minHSpace = 10, this.vSpace = 15, this.isShowed_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.useVectorIcons_bl = s.useVectorIcons_bl, this.init = function() {
+            this.embedColoseN_img = s.embedColoseN_img,
+            this.bk_do = null,
+            this.mainHld = null,
+            this.clsBtn = null,
+            this.btns_ar = [],
+            this.embedWindowBackground_str = s.embedWindowBackground_str,
+            this.embedWindowCloseButtonMargins = s.embedWindowCloseButtonMargins,
+            this.totalWidth = 0,
+            this.sW = 0,
+            this.sH = 0,
+            this.minMrgXSpc = 20,
+            this.hSpace = 20,
+            this.minHSpace = 10,
+            this.vSpace = 15,
+            this.isShowed_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.useVectorIcons_bl = s.useVectorIcons_bl,
+            this.init = function() {
                 this.setupButtons()
-            }, this.stpInit = function() {
+            },
+            this.stpInit = function() {
                 if (!f.clsBtn) {
                     var e = s.sBC;
-                    o.isWhite && (e = "#000000"), f.setBackfaceVisibility(), f.mainHld = new FWDUVPDisplayObject("div"), f.mainHld.hasTransform3d_bl = !1, f.mainHld.hasTransform2d_bl = !1, f.mainHld.setBackfaceVisibility(), f.bk_do = new FWDUVPDisplayObject("div"), f.bk_do.getStyle().width = "100%", f.bk_do.getStyle().height = "100%", f.bk_do.setAlpha(.9);
+                    o.isWhite && (e = "#000000"),
+                    f.setBackfaceVisibility(),
+                    f.mainHld = new FWDUVPDisplayObject("div"),
+                    f.mainHld.hasTransform3d_bl = !1,
+                    f.mainHld.hasTransform2d_bl = !1,
+                    f.mainHld.setBackfaceVisibility(),
+                    f.bk_do = new FWDUVPDisplayObject("div"),
+                    f.bk_do.getStyle().width = "100%",
+                    f.bk_do.getStyle().height = "100%",
+                    f.bk_do.setAlpha(.9);
                     var t = f.embedWindowBackground_str;
-                    o.isWhite && (t = "content/hex_white/embed-window-background.png"), f.bk_do.getStyle().background = "url('" + t + "')", f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.clsBtn = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<div class='table-fwduvp-button'><span class='table-cell-fwduvp-button fwdicon-close'></span></div>", void 0, "UVPCloseButtonNormalState", "UVPCloseButtonSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.clsBtn = new FWDUVPSimpleButton(s.shareClooseN_img, s.embedWindowClosePathS_str, void 0, !0, s.useHEX, s.nBC, e, !1, !1, !1, !1, !0)), f.clsBtn.addListener(FWDUVPSimpleButton.MOUSE_UP, f.closeButtonOnMouseUpHandler), f.addChild(f.mainHld), f.mainHld.addChild(f.bk_do), f.mainHld.addChild(f.clsBtn)
+                    o.isWhite && (t = "content/hex_white/embed-window-background.png"),
+                    f.bk_do.getStyle().background = "url('" + t + "')",
+                    f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                           f.clsBtn = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<div class='table-fwduvp-button'><span class='table-cell-fwduvp-button fwdicon-close'></span></div>", void 0, "UVPCloseButtonNormalState", "UVPCloseButtonSelectedState"))
+                                        : (FWDUVPSimpleButton.setPrototype(),
+                                           f.clsBtn = new FWDUVPSimpleButton(s.shareClooseN_img, s.embedWindowClosePathS_str, void 0, !0, s.useHEX, s.nBC, e, !1, !1, !1, !1, !0)), f.clsBtn.addListener(FWDUVPSimpleButton.MOUSE_UP, f.closeButtonOnMouseUpHandler), f.addChild(f.mainHld), f.mainHld.addChild(f.bk_do), f.mainHld.addChild(f.clsBtn)
                 }
             }, this.closeButtonOnMouseUpHandler = function() {
                 f.isShowed_bl && f.hide()
-            }, this.positionAndResize = function() {
-                f.sW = t.sW, f.sH = t.sH, f.clsBtn.setX(f.sW - f.clsBtn.w - f.embedWindowCloseButtonMargins), f.clsBtn.setY(f.embedWindowCloseButtonMargins), f.setWidth(f.sW), f.setHeight(f.sH), f.mainHld.setWidth(f.sW), f.mainHld.setHeight(f.sH), f.positionButtons()
-            }, this.setupButtons = function() {
+            },
+            this.positionAndResize = function() {
+                f.sW = t.sW,
+                f.sH = t.sH,
+                f.clsBtn.setX(f.sW - f.clsBtn.w - f.embedWindowCloseButtonMargins),
+                f.clsBtn.setY(f.embedWindowCloseButtonMargins),
+                f.setWidth(f.sW),
+                f.setHeight(f.sH),
+                f.mainHld.setWidth(f.sW),
+                f.mainHld.setHeight(f.sH),
+                f.positionButtons()
+            },
+            this.setupButtons = function() {
                 if (!f.btsCrted) {
-                    this.stpInit(), f.btsCrted = !0;
+                    this.stpInit(),
+                    f.btsCrted = !0;
                     var e = s.sBC;
-                    o.isWhite && (e = "#000000"), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.facebookButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-facebook'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.facebookButton_do = new FWDUVPSimpleButton(s.facebookN_img, s.facebookSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.facebookButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.facebookOnMouseUpHandler), this.btns_ar.push(f.facebookButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.googleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-google-plus'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.googleButton_do = new FWDUVPSimpleButton(s.googleN_img, s.googleSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.googleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.googleOnMouseUpHandler), this.btns_ar.push(f.googleButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.twitterButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-twitter'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.twitterButton_do = new FWDUVPSimpleButton(s.twitterN_img, s.twitterSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.twitterButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.twitterOnMouseUpHandler), this.btns_ar.push(f.twitterButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.likedinButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-linkedin'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.likedinButton_do = new FWDUVPSimpleButton(s.likedInkN_img, s.likedInSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.likedinButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.likedinOnMouseUpHandler), this.btns_ar.push(f.likedinButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.bufferButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-comments'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.bufferButton_do = new FWDUVPSimpleButton(s.bufferkN_img, s.bufferSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.bufferButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.bufferOnMouseUpHandler), this.btns_ar.push(f.bufferButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.diggButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-digg'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.diggButton_do = new FWDUVPSimpleButton(s.diggN_img, s.diggSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.diggButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.diggOnMouseUpHandler), this.btns_ar.push(f.diggButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.redditButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-reddit'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.redditButton_do = new FWDUVPSimpleButton(s.redditN_img, s.redditSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.redditButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.redditOnMouseUpHandler), this.btns_ar.push(f.redditButton_do), f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), f.thumbrlButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-tumblr'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), f.thumbrlButton_do = new FWDUVPSimpleButton(s.thumbrlN_img, s.thumbrlSPath_str, void 0, !0, s.useHEX, s.nBC, e)), f.thumbrlButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.thumbrlOnMouseUpHandler), this.btns_ar.push(f.thumbrlButton_do), f.mainHld.addChild(f.facebookButton_do), f.mainHld.addChild(f.googleButton_do), f.mainHld.addChild(f.twitterButton_do), f.mainHld.addChild(f.likedinButton_do), f.mainHld.addChild(f.bufferButton_do), f.mainHld.addChild(f.diggButton_do), f.mainHld.addChild(f.redditButton_do), f.mainHld.addChild(f.thumbrlButton_do)
+                    o.isWhite && (e = "#000000"),
+                    f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                           f.facebookButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-facebook'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                        : (FWDUVPSimpleButton.setPrototype(),
+                                           f.facebookButton_do = new FWDUVPSimpleButton(s.facebookN_img, s.facebookSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.facebookButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.facebookOnMouseUpHandler),
+                                           this.btns_ar.push(f.facebookButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.googleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-google-plus'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                           f.googleButton_do = new FWDUVPSimpleButton(s.googleN_img, s.googleSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.googleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.googleOnMouseUpHandler),
+                                           this.btns_ar.push(f.googleButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.twitterButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-twitter'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.twitterButton_do = new FWDUVPSimpleButton(s.twitterN_img, s.twitterSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.twitterButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.twitterOnMouseUpHandler),
+                                           this.btns_ar.push(f.twitterButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.likedinButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-linkedin'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.likedinButton_do = new FWDUVPSimpleButton(s.likedInkN_img, s.likedInSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.likedinButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.likedinOnMouseUpHandler),
+                                           this.btns_ar.push(f.likedinButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.bufferButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-comments'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.bufferButton_do = new FWDUVPSimpleButton(s.bufferkN_img, s.bufferSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.bufferButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.bufferOnMouseUpHandler),
+                                           this.btns_ar.push(f.bufferButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.diggButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-digg'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.diggButton_do = new FWDUVPSimpleButton(s.diggN_img, s.diggSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.diggButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.diggOnMouseUpHandler),
+                                           this.btns_ar.push(f.diggButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.redditButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-reddit'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.redditButton_do = new FWDUVPSimpleButton(s.redditN_img, s.redditSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.redditButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.redditOnMouseUpHandler),
+                                           this.btns_ar.push(f.redditButton_do),
+                                           f.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.thumbrlButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='uvpicon fwdicon-tumblr'></span>", void 0, "UVPSocialMediaButtonsNormalState", "UVPSocialMediaButtonsSelectedState"))
+                                                               : (FWDUVPSimpleButton.setPrototype(),
+                                                                  f.thumbrlButton_do = new FWDUVPSimpleButton(s.thumbrlN_img, s.thumbrlSPath_str, void 0, !0, s.useHEX, s.nBC, e)),
+                                           f.thumbrlButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, f.thumbrlOnMouseUpHandler),
+                                           this.btns_ar.push(f.thumbrlButton_do),
+                                           f.mainHld.addChild(f.facebookButton_do),
+                                           f.mainHld.addChild(f.googleButton_do),
+                                           f.mainHld.addChild(f.twitterButton_do),
+                                           f.mainHld.addChild(f.likedinButton_do),
+                                           f.mainHld.addChild(f.bufferButton_do),
+                                           f.mainHld.addChild(f.diggButton_do),
+                                           f.mainHld.addChild(f.redditButton_do),
+                                           f.mainHld.addChild(f.thumbrlButton_do)
                 }
-            }, this.facebookOnMouseUpHandler = function() {
+            },
+            this.facebookOnMouseUpHandler = function() {
                 var e = "http://www.facebook.com/share.php?u=" + encodeURIComponent(location.href);
                 o.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
             }, this.googleOnMouseUpHandler = function() {
@@ -8376,8 +8492,14 @@ var FWDUVPAddress = new function() {
                     n = 0,
                     a = 0,
                     r = 0;
-                o[r] = [0], i[r] = f.btns_ar[0].totalWidth, l[r] = f.btns_ar[0].totalWidth, f.totalButtons = f.btns_ar.length;
-                for (var d = 1; d < f.totalButtons; d++) e = f.btns_ar[d], i[r] + e.totalWidth + f.minHSpace > f.sW - f.minMrgXSpc ? (o[++r] = [], o[r].push(d), i[r] = e.totalWidth, l[r] = e.totalWidth) : (o[r].push(d), i[r] += e.totalWidth + f.minHSpace, l[r] += e.totalWidth);
+                o[r] = [0],
+                i[r] = f.btns_ar[0].totalWidth,
+                l[r] = f.btns_ar[0].totalWidth,
+                f.totalButtons = f.btns_ar.length;
+                for (var d = 1; d < f.totalButtons; d++)
+                  e = f.btns_ar[d],
+                  i[r] + e.totalWidth + f.minHSpace > f.sW - f.minMrgXSpc ? (o[++r] = [], o[r].push(d), i[r] = e.totalWidth, l[r] = e.totalWidth)
+                                                                          : (o[r].push(d), i[r] += e.totalWidth + f.minHSpace, l[r] += e.totalWidth);
                 n = parseInt((f.sH - ((r + 1) * (e.totalHeight + f.vSpace) - f.vSpace)) / 2);
                 for (d = 0; d < r + 1; d++) {
                     var u, h = 0;
@@ -8390,24 +8512,50 @@ var FWDUVPAddress = new function() {
                     for (var _ = 0; _ < o[d].length; _++) e = f.btns_ar[o[d][_]], s = 0 == _ ? h : (t = f.btns_ar[o[d][_] - 1]).finalX + t.totalWidth + u, e.finalX = s, e.finalY = n, a < e.finalY && (a = e.finalY), f.buttonsBarTotalHeight = a + e.totalHeight + f.startY, e.setX(e.finalX), e.setY(e.finalY)
                 }
             }, this.show = function(e) {
-                f.isShowed_bl || (f.isShowed_bl = !0, t.main_do.addChild(f), f.init(), f.useVectorIcons_bl ? f.checkButtonsId_to = setInterval(function() {
-                    0 != f.clsBtn.w && (f.positionAndResize(), clearInterval(f.checkButtonsId_to), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.mainHld.setY(-f.sH), f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900), FWDAnimation.to(f.mainHld, .8, {
-                        y: 0,
-                        delay: .1,
-                        ease: Expo.easeInOut
-                    }))
-                }, 50) : (f.positionAndResize(), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.mainHld.setY(-f.sH), f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(f.mainHld, .8, {
-                        y: 0,
-                        delay: .1,
-                        ease: Expo.easeInOut
-                    })
-                }, 100)))
-            }, this.showCompleteHandler = function() {}, this.hide = function() {
-                f.isShowed_bl && (f.isShowed_bl = !1, (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), t.customContextMenu_do && t.customContextMenu_do.enable(), f.positionAndResize(), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.hideCompleteId_to = setTimeout(f.hideCompleteHandler, 800), FWDAnimation.killTweensOf(f.mainHld), FWDAnimation.to(f.mainHld, .8, {
-                    y: -f.sH,
-                    ease: Expo.easeInOut
-                }))
+                f.isShowed_bl || (f.isShowed_bl = !0,
+                                  t.main_do.addChild(f),
+                                  f.init(),
+                                  f.useVectorIcons_bl ? f.checkButtonsId_to = setInterval(function() {
+                                                        0 != f.clsBtn.w && (f.positionAndResize(),
+                                                        clearInterval(f.checkButtonsId_to),
+                                                        clearTimeout(f.hideCompleteId_to),
+                                                        clearTimeout(f.showCompleteId_to),
+                                                        f.mainHld.setY(-f.sH),
+                                                        f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900),
+                                                        FWDAnimation.to(f.mainHld, .8, {
+                                                          y: 0,
+                                                          delay: .1,
+                                                          ease: Expo.easeInOut
+                                                        }))
+                                                        }, 50)
+                                                      : (f.positionAndResize(),
+                                                         clearTimeout(f.hideCompleteId_to),
+                                                         clearTimeout(f.showCompleteId_to),
+                                                         f.mainHld.setY(-f.sH),
+                                                         f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900),
+                                                         setTimeout(function() {
+                                                           FWDAnimation.to(f.mainHld, .8, {
+                                                             y: 0,
+                                                             delay: .1,
+                                                             ease: Expo.easeInOut
+                                                           })
+                                                         }, 100)))
+            },
+            this.showCompleteHandler = function() {},
+            this.hide = function() {
+                f.isShowed_bl && (f.isShowed_bl = !1,
+                                  (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent)
+                                  && t.main_do.setSelectable(!1),
+                                  t.customContextMenu_do && t.customContextMenu_do.enable(),
+                                  f.positionAndResize(),
+                                  clearTimeout(f.hideCompleteId_to),
+                                  clearTimeout(f.showCompleteId_to),
+                                  f.hideCompleteId_to = setTimeout(f.hideCompleteHandler, 800),
+                                  FWDAnimation.killTweensOf(f.mainHld),
+                                  FWDAnimation.to(f.mainHld, .8, {
+                                    y: -f.sH,
+                                    ease: Expo.easeInOut
+                                  }))
             }, this.hideCompleteHandler = function() {
                 t.main_do.removeChild(f), f.dispatchEvent(e.HIDE_COMPLETE)
             }, s.useHEX && f.init()
@@ -8416,17 +8564,62 @@ var FWDUVPAddress = new function() {
             e.prototype = new FWDUVPDisplayObject("div")
         }, e.HIDE_COMPLETE = "hideComplete", e.prototype = null, o.FWDUVPShareWindow = e
     }(window),
+
     function(e) {
         var _ = function(e, t, s, o, i, l, n, a, r, d, u, h) {
             var c = this;
             _.prototype;
-            this.iconCSSString = a, this.showHDIcon = r, this.nImg = e, this.sPath_str = t, this.dPath_str = s, c.testButton = Boolean(-1 != String(c.iconCSSString).indexOf("download")), this.n_do, this.s_sdo, this.d_sdo, this.showOver = h, i || (this.showOver = !1), this.toolTipLabel_str, this.nImg && (this.totalWidth = this.nImg.width, this.totalHeight = this.nImg.height, c.buttonWidth = c.totalWidth, c.buttonHeight = c.totalHeight), this.normalCalssName = d, this.selectedCalssName = u, this.useHEX = i, this.nBC = l, this.sBC = n, this.isShowed_bl = !0, this.isSetToDisabledState_bl = !1, this.isDisabled_bl = !1, this.isDisabledForGood_bl = !1, this.isSelectedFinal_bl = !1, this.isActive_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.allowToCreateSecondButton_bl = !c.isMbl || c.hasPointerEvent_bl || o, this.useFontAwesome_bl = Boolean(this.iconCSSString), c.init = function() {
-                c.iconCSSString && c.setOverflow("visible"), c.setupMainContainers(), c.setNormalState()
-            }, c.setupMainContainers = function() {
+            this.iconCSSString = a,
+            this.showHDIcon = r,
+            this.nImg = e,
+            this.sPath_str = t,
+            this.dPath_str = s,
+            c.testButton = Boolean(-1 != String(c.iconCSSString).indexOf("download")),
+            this.n_do,
+            this.s_sdo,
+            this.d_sdo,
+            this.showOver = h,
+            i || (this.showOver = !1),
+            this.toolTipLabel_str,
+            this.nImg && (this.totalWidth = this.nImg.width,
+                          this.totalHeight = this.nImg.height,
+                          c.buttonWidth = c.totalWidth,
+                          c.buttonHeight = c.totalHeight),
+            this.normalCalssName = d,
+            this.selectedCalssName = u,
+            this.useHEX = i,
+            this.nBC = l,
+            this.sBC = n,
+            this.isShowed_bl = !0,
+            this.isSetToDisabledState_bl = !1,
+            this.isDisabled_bl = !1,
+            this.isDisabledForGood_bl = !1,
+            this.isSelectedFinal_bl = !1,
+            this.isActive_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.allowToCreateSecondButton_bl = !c.isMbl || c.hasPointerEvent_bl || o,
+            this.useFontAwesome_bl = Boolean(this.iconCSSString),
+            c.init = function() {
+                c.iconCSSString && c.setOverflow("visible"),
+                c.setupMainContainers(),
+                c.setNormalState()
+            },
+            c.setupMainContainers = function() {
                 if (c.useFontAwesome_bl) {
-                    if (c.setOverflow("visible"), c.n_do = new FWDUVPTransformDisplayObject("div"), c.n_do.setInnerHTML(c.iconCSSString), c.addChild(c.n_do), c.showHDIcon) {
+                    if (c.setOverflow("visible"),
+                        c.n_do = new FWDUVPTransformDisplayObject("div"),
+                        c.n_do.setInnerHTML(c.iconCSSString),
+                        c.addChild(c.n_do),
+                        c.showHDIcon) {
                         var e = new Image;
-                        e.src = r, c.hd_do = new FWDUVPDisplayObject("img"), c.hd_do.setScreen(e), c.hd_do.setWidth(7), c.hd_do.setHeight(5), c.setOverflow("visible"), c.addChild(c.hd_do)
+                        e.src = r,
+                        c.hd_do = new FWDUVPDisplayObject("img"),
+                        c.hd_do.setScreen(e),
+                        c.hd_do.setWidth(7),
+                        c.hd_do.setHeight(5),
+                        c.setOverflow("visible"),
+                        c.addChild(c.hd_do)
                     }
                     c.setFinalSize()
                 } else if (c.useHEX && !c.showOver ? (c.n_do = new FWDUVPTransformDisplayObject("div"), c.n_do.setWidth(c.totalWidth), c.n_do.setHeight(c.totalHeight), c.n_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(c.nImg, c.nBC).canvas, c.n_do.screen.appendChild(c.n_do_canvas)) : (c.n_do = new FWDUVPTransformDisplayObject("img"), c.n_do.setScreen(c.nImg)), c.addChild(c.n_do), c.allowToCreateSecondButton_bl) {
@@ -8441,7 +8634,15 @@ var FWDUVPAddress = new function() {
                     } else c.s_sdo = new FWDUVPDisplayObject("img"), c.s_sdo.setScreen(c.img1), c.s_sdo.setWidth(c.totalWidth), c.s_sdo.setHeight(c.totalHeight), c.useHEX || c.s_sdo.setAlpha(0), c.addChild(c.s_sdo);
                     c.dPath_str && (t.src = c.dPath_str, c.d_sdo = new FWDUVPDisplayObject("img"), c.d_sdo.setScreen(t), c.d_sdo.setWidth(c.totalWidth), c.d_sdo.setHeight(c.totalHeight), c.d_sdo.setX(-100), c.addChild(c.d_sdo)), c.setWidth(c.totalWidth), c.setHeight(c.totalHeight)
                 }
-                c.setButtonMode(!0), c.screen.style.yellowOverlayPointerEvents = "none", c.hasPointerEvent_bl ? (c.screen.addEventListener("pointerup", c.onMouseUp), c.screen.addEventListener("pointerover", c.onMouseOver), c.screen.addEventListener("pointerout", c.onMouseOut)) : c.screen.addEventListener && (c.isMbl || (c.screen.addEventListener("mouseover", c.onMouseOver), c.screen.addEventListener("mouseout", c.onMouseOut), c.screen.addEventListener("mouseup", c.onMouseUp)), c.screen.addEventListener("touchend", c.onMouseUp))
+                c.setButtonMode(!0),
+                c.screen.style.yellowOverlayPointerEvents = "none",
+                c.hasPointerEvent_bl ? (c.screen.addEventListener("pointerup", c.onMouseUp),
+                                        c.screen.addEventListener("pointerover", c.onMouseOver),
+                                        c.screen.addEventListener("pointerout", c.onMouseOut))
+                                     : c.screen.addEventListener && (c.isMbl || (c.screen.addEventListener("mouseover", c.onMouseOver),
+                                                                                 c.screen.addEventListener("mouseout", c.onMouseOut),
+                                                                                 c.screen.addEventListener("mouseup", c.onMouseUp)),
+                                                                    c.screen.addEventListener("touchend", c.onMouseUp))
             }, c.onMouseOver = function(e) {
                 if (c.dispatchEvent(_.SHOW_TOOLTIP, {
                         e: e
@@ -8462,10 +8663,28 @@ var FWDUVPAddress = new function() {
                 c.isDisabledForGood_bl || (e.preventDefault && e.preventDefault(), c.isDisabled_bl || 2 == e.button || c.dispatchEvent(_.MOUSE_UP, {
                     e: e
                 }))
-            }, c.checkCount = 0, this.setFinalSize = function(e) {
-                e && (c.checkCount = 0), clearInterval(c.checkId_int), 6 < c.checkCount || (c.lastWidth = c.n_do.screen.firstChild.offsetWidth, c.checkCount += 1, c.checkId_int = setInterval(function() {
+            },
+            c.checkCount = 0,
+            this.setFinalSize = function(e) {
+                e && (c.checkCount = 0),
+                clearInterval(c.checkId_int),
+                6 < c.checkCount ||
+                (c.lastWidth = c.n_do.screen.firstChild.offsetWidth,
+                 c.checkCount += 1,
+                 c.checkId_int = setInterval(function() {
                     c.setFinalSize()
-                }, 100), c.prevWidth != c.lastWidth && 0 != c.lastWidth && (c.setWidth(c.n_do.screen.firstChild.offsetWidth), c.setHeight(c.n_do.screen.firstChild.offsetHeight), c.n_do.setWidth(c.w), c.n_do.setHeight(c.h), c.buttonWidth = c.w, c.buttonHeight = c.h, c.totalWidth = c.w, c.totalHeight = c.h, c.hd_do && (c.hd_do.setX(c.w - c.hd_do.w + 2), c.hd_do.setY(-2)), c.prevWidth = c.lastWidth))
+                }, 100),
+                c.prevWidth != c.lastWidth && 0 != c.lastWidth && (c.setWidth(c.n_do.screen.firstChild.offsetWidth),
+                                                                   c.setHeight(c.n_do.screen.firstChild.offsetHeight),
+                                                                   c.n_do.setWidth(c.w),
+                                                                   c.n_do.setHeight(c.h),
+                                                                   c.buttonWidth = c.w,
+                                                                   c.buttonHeight = c.h,
+                                                                   c.totalWidth = c.w,
+                                                                   c.totalHeight = c.h,
+                                                                   c.hd_do && (c.hd_do.setX(c.w - c.hd_do.w + 2),
+                                                                               c.hd_do.setY(-2)),
+                                                                   c.prevWidth = c.lastWidth))
             }, c.setSelected = function() {
                 c.isSelectedFinal_bl = !0, c.s_sdo && (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .8, {
                     alpha: 1,
@@ -8539,14 +8758,26 @@ var FWDUVPAddress = new function() {
                 })))
             }, this.hide = function(e) {
                 c.isShowed_bl && (c.isShowed_bl = !1, FWDAnimation.killTweensOf(c), FWDAnimation.killTweensOf(c.n_do), c.setVisible(!1))
-            }, c.updateHEXColors = function(e, t) {
-                c.n_do_canvas && FWDUVPUtils.changeCanvasHEXColor(c.nImg, c.n_do_canvas, e), c.s_sdo_canvas && FWDUVPUtils.changeCanvasHEXColor(c.img1, c.s_sdo_canvas, t)
-            }, c.init()
+            },
+            c.updateHEXColors = function(e, t) {
+                c.n_do_canvas && FWDUVPUtils.changeCanvasHEXColor(c.nImg, c.n_do_canvas, e),
+                c.s_sdo_canvas && FWDUVPUtils.changeCanvasHEXColor(c.img1, c.s_sdo_canvas, t)
+            },
+            c.init()
         };
         _.setPrototype = function() {
-            _.prototype = null, _.prototype = new FWDUVPTransformDisplayObject("div")
-        }, _.CLICK = "onClick", _.MOUSE_OVER = "onMouseOver", _.SHOW_TOOLTIP = "showTooltip", _.MOUSE_OUT = "onMouseOut", _.MOUSE_UP = "onMouseDown", _.prototype = null, e.FWDUVPSimpleButton = _
+            _.prototype = null,
+            _.prototype = new FWDUVPTransformDisplayObject("div")
+        },
+        _.CLICK = "onClick",
+        _.MOUSE_OVER = "onMouseOver",
+        _.SHOW_TOOLTIP = "showTooltip",
+        _.MOUSE_OUT = "onMouseOut",
+        _.MOUSE_UP = "onMouseDown",
+        _.prototype = null,
+        e.FWDUVPSimpleButton = _
     }(window),
+
     function(e) {
         var d = function(e, t, s, o, i, l, n, a) {
             var r = this;

@@ -7760,17 +7760,36 @@ var FWDUVPAddress = new function() {
                     s = l.thumbnailHoverBackgroundColor_str,
                     o = l.thumbnailDisabledBackgroundColor_str;
                 n.isWhite && (t = "#FFFFFF", s = o = "#EEEEEE");
-                for (var i = 0; i < a.totalThumbs; i++) FWDUVPPlaylistThumb.setPrototype(), e = new FWDUVPPlaylistThumb(a, i, l.playlistThumbnailsBkPath_str, t, s, o, a.thumbImageW, a.thumbImageH, a.thumbInPadding, a.playlist_ar[i].title, a.playlist_ar[i].titleText, a.showThumbnail_bl), (a.thumbs_ar[i] = e).addListener(FWDUVPPlaylistThumb.MOUSE_UP, a.thumbMouseUpHandler), a.thumbsHolder_do.addChild(e)
+                for (var i = 0; i < a.totalThumbs; i++)
+                  FWDUVPPlaylistThumb.setPrototype(),
+                  e = new FWDUVPPlaylistThumb(a,
+                                              i,
+                                              l.playlistThumbnailsBkPath_str,
+                                              t,
+                                              s,
+                                              o,
+                                              a.thumbImageW,
+                                              a.thumbImageH,
+                                              a.thumbInPadding,
+                                              a.playlist_ar[i].title,
+                                              a.playlist_ar[i].titleText,
+                                              a.showThumbnail_bl),
+                                              (a.thumbs_ar[i] = e).addListener(FWDUVPPlaylistThumb.MOUSE_UP, a.thumbMouseUpHandler),
+                                              a.thumbsHolder_do.addChild(e)
             }, this.thumbMouseUpHandler = function(e) {
                 a.disableThumbs_bl || (a.disableForAWhileAfterThumbClick_bl = !0, clearTimeout(a.disableForAWhileAfterThumbClickId_to), a.disableForAWhileAfterThumbClickId_to = setTimeout(function() {
                     a.disableForAWhileAfterThumbClick_bl = !1
                 }, 50), a.dispatchEvent(t.THUMB_MOUSE_UP, {
                     id: e.id
                 }))
-            }, this.loadImages = function() {
+            },
+            this.loadImages = function() {
                 a.playlist_ar[a.countLoadedThumbs] && (a.image_img && (a.image_img.onload = null, a.image_img.onerror = null), a.image_img = new Image, a.image_img.onerror = a.onImageLoadError, a.image_img.onload = a.onImageLoadComplete, a.image_img.src = a.playlist_ar[a.countLoadedThumbs].thumbSource)
-            }, this.onImageLoadError = function(e) {}, this.onImageLoadComplete = function(e) {
-                a.thumbs_ar[a.countLoadedThumbs].setImage(a.image_img), a.countLoadedThumbs++, a.loadWithDelayId_to = setTimeout(a.loadImages, 40)
+            },
+            this.onImageLoadError = function(e) {},
+            this.onImageLoadComplete = function(e) {
+                a.thumbs_ar[a.countLoadedThumbs].setImage(a.image_img),
+                a.countLoadedThumbs++, a.loadWithDelayId_to = setTimeout(a.loadImages, 40)
             }, this.checkThumbsState = function() {
                 if (a.thumbs_ar)
                     for (var e, t = 0; t < a.totalThumbs; t++) e = a.thumbs_ar[t], t == a.curId ? e.disable() : e.enable()
@@ -7786,42 +7805,175 @@ var FWDUVPAddress = new function() {
                     for (l = 0; l < n; l++)(t = i[l]).finalW = a.sW, t.finalX = 0, t.finalY = l * (t.finalH + o), t.resizeAndPosition(e);
                     0 == n ? a.showNothingFound() : a.hideNothingFound(), t && (a.totalThumbsHeight = Math.max(0, n * (t.h + a.spaceBetweenThumbnails) - a.spaceBetweenThumbnails), a.totalThumbsHeight > a.sH - a.removeFromThumbsHolderHeight ? a.allowToScrollAndScrollBarIsActive_bl = !0 : a.allowToScrollAndScrollBarIsActive_bl = !1)
                 }
-            }, this.setupMobileScrollbar = function() {
-                a.hasPointerEvent_bl ? a.mainThumbsHolder_do.screen.addEventListener("pointerdown", a.scrollBarTouchStartHandler) : a.mainThumbsHolder_do.screen.addEventListener("touchstart", a.scrollBarTouchStartHandler), a.isMbl && (a.updateMobileScrollBarId_int = setInterval(a.updateMobileScrollBar, 16))
-            }, this.scrollBarTouchStartHandler = function(e) {
-                e.preventDefault && e.preventDefault(), a.isScrollingOnMove_bl = !1, FWDAnimation.killTweensOf(a.thumbsHolder_do);
+            },
+            this.setupMobileScrollbar = function() {
+                a.hasPointerEvent_bl ? a.mainThumbsHolder_do.screen.addEventListener("pointerdown", a.scrollBarTouchStartHandler)
+                                     : a.mainThumbsHolder_do.screen.addEventListener("touchstart", a.scrollBarTouchStartHandler),
+                a.isMbl && (a.updateMobileScrollBarId_int = setInterval(a.updateMobileScrollBar, 16))
+            },
+            this.scrollBarTouchStartHandler = function(e) {
+                e.preventDefault && e.preventDefault(),
+                a.isScrollingOnMove_bl = !1, FWDAnimation.killTweensOf(a.thumbsHolder_do);
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                a.isDragging_bl = !0, a.lastPresedY = t.screenY, a.checkLastPresedY = t.screenY, a.hasPointerEvent_bl ? (n.addEventListener("pointerup", a.scrollBarTouchEndHandler), n.addEventListener("pointermove", a.scrollBarTouchMoveHandler)) : (n.addEventListener("touchend", a.scrollBarTouchEndHandler), n.addEventListener("touchmove", a.scrollBarTouchMoveHandler)), clearInterval(a.updateMoveMobileScrollbarId_int), a.updateMoveMobileScrollbarId_int = setInterval(a.updateMoveMobileScrollbar, 20)
-            }, this.scrollBarTouchMoveHandler = function(e) {
-                if (e.preventDefault && e.preventDefault(), e.stopImmediatePropagation(), !(a.totalThumbsHeight < a.mainThumbsHolder_do.h || a.comboBox_do && a.comboBox_do.isShowed_bl)) {
-                    i.showDisable();
-                    var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                    (t.screenY >= a.checkLastPresedY + 6 || t.screenY <= a.checkLastPresedY - 6) && (a.isScrollingOnMove_bl = !0);
-                    var s = t.screenY - a.lastPresedY;
-                    if (a.thumbnailsFinalY += s, a.thumbnailsFinalY = Math.round(a.thumbnailsFinalY), a.lastPresedY = t.screenY, a.vy = 2 * s, !a.isMobile) {
-                        0 < a.thumbnailsFinalY ? a.thumbnailsFinalY = 0 : a.thumbnailsFinalY < a.mainThumbsHolder_do.h - a.totalThumbsHeight && (a.thumbnailsFinalY = a.mainThumbsHolder_do.h - a.totalThumbsHeight);
-                        var o = Math.max(0, a.thumbnailsFinalY / (a.mainThumbsHolder_do.h - a.totalThumbsHeight));
-                        a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * o), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2)))
+                a.isDragging_bl = !0,
+                a.lastPresedY = t.screenY,
+                a.checkLastPresedY = t.screenY,
+                a.hasPointerEvent_bl ? (n.addEventListener("pointerup", a.scrollBarTouchEndHandler),
+                                        n.addEventListener("pointermove", a.scrollBarTouchMoveHandler))
+                                     : (n.addEventListener("touchend", a.scrollBarTouchEndHandler),
+                                        n.addEventListener("touchmove", a.scrollBarTouchMoveHandler)),
+                clearInterval(a.updateMoveMobileScrollbarId_int),
+                a.updateMoveMobileScrollbarId_int = setInterval(a.updateMoveMobileScrollbar, 20)
+            },
+            this.scrollBarTouchMoveHandler = function(e) {
+                if (e.preventDefault && e.preventDefault(),
+                    e.stopImmediatePropagation(),
+                    !(a.totalThumbsHeight < a.mainThumbsHolder_do.h || a.comboBox_do && a.comboBox_do.isShowed_bl)) {
+                      i.showDisable();
+                      var t = FWDUVPUtils.getViewportMouseCoordinates(e);
+                      (t.screenY >= a.checkLastPresedY + 6 || t.screenY <= a.checkLastPresedY - 6) && (a.isScrollingOnMove_bl = !0);
+                      var s = t.screenY - a.lastPresedY;
+                      if (a.thumbnailsFinalY += s,
+                          a.thumbnailsFinalY = Math.round(a.thumbnailsFinalY),
+                          a.lastPresedY = t.screenY,
+                          a.vy = 2 * s,
+                          !a.isMobile) {
+                            0 < a.thumbnailsFinalY ? a.thumbnailsFinalY = 0 : a.thumbnailsFinalY < a.mainThumbsHolder_do.h - a.totalThumbsHeight && (a.thumbnailsFinalY = a.mainThumbsHolder_do.h - a.totalThumbsHeight);
+                            var o = Math.max(0, a.thumbnailsFinalY / (a.mainThumbsHolder_do.h - a.totalThumbsHeight));
+                            a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * o),
+                                                   a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0
+                                                                                : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1),
+                                                                                                                                                              FWDAnimation.killTweensOf(a.scrHandler_do),
+                                                                                                                                                              FWDAnimation.killTweensOf(a.scrHandlerLines_do),
+                                                                                                                                                              a.scrHandler_do.setY(a.scrollBarHandlerFinalY),
+                                                                                                                                                              a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2)))
                     }
                 }
-            }, this.scrollBarTouchEndHandler = function(e) {
-                a.isDragging_bl = !1, clearInterval(a.updateMoveMobileScrollbarId_int), clearTimeout(a.disableOnMoveId_to), a.disableOnMoveId_to = setTimeout(function() {
+            },
+            this.scrollBarTouchEndHandler = function(e) {
+                a.isDragging_bl = !1,
+                clearInterval(a.updateMoveMobileScrollbarId_int),
+                clearTimeout(a.disableOnMoveId_to),
+                a.disableOnMoveId_to = setTimeout(function() {
                     i.hideDisable()
-                }, 100), a.hasPointerEvent_bl ? (n.removeEventListener("pointerup", a.scrollBarTouchEndHandler), n.removeEventListener("pointermove", a.scrollBarTouchMoveHandler)) : (n.removeEventListener("touchend", a.scrollBarTouchEndHandler), n.removeEventListener("touchmove", a.scrollBarTouchMoveHandler))
+                }, 100),
+                a.hasPointerEvent_bl ? (n.removeEventListener("pointerup", a.scrollBarTouchEndHandler),
+                                        n.removeEventListener("pointermove", a.scrollBarTouchMoveHandler))
+                                     : (n.removeEventListener("touchend", a.scrollBarTouchEndHandler),
+                                        n.removeEventListener("touchmove", a.scrollBarTouchMoveHandler))
             }, this.updateMoveMobileScrollbar = function() {
                 a.thumbsHolder_do.setY(a.thumbnailsFinalY)
-            }, this.updateMobileScrollBar = function(e) {
-                a.isDragging_bl || (a.isSearched_bl && (a.thumbnailsFinalY = 0), a.totalThumbsHeight < a.mainThumbsHolder_do.h && (a.thumbnailsFinalY = .01), a.vy *= a.friction, a.thumbnailsFinalY += a.vy, 0 < a.thumbnailsFinalY ? (a.vy2 = .3 * (0 - a.thumbnailsFinalY), a.vy *= a.friction, a.thumbnailsFinalY += a.vy2) : a.thumbnailsFinalY < a.mainThumbsHolder_do.h - a.totalThumbsHeight && (a.vy2 = .3 * (a.mainThumbsHolder_do.h - a.totalThumbsHeight - a.thumbnailsFinalY), a.vy *= a.friction, a.thumbnailsFinalY += a.vy2), a.thumbsHolder_do.setY(Math.round(a.thumbnailsFinalY)))
-            }, this.setupScrollbar = function() {
-                a.scrMainHolder_do = new FWDUVPDisplayObject("div"), a.scrMainHolder_do.setWidth(a.scrWidth), a.scrTrack_do = new FWDUVPDisplayObject("div"), a.scrTrack_do.setWidth(a.scrWidth), a.scrTrackTop_do = new FWDUVPDisplayObject("img"), a.scrTrackTop_do.setScreen(a.scrBkTop_img), a.scrTrackMiddle_do = new FWDUVPDisplayObject("div"), a.scrTrackMiddle_do.getStyle().background = "url('" + l.scrBkMiddlePath_str + "')", a.scrTrackMiddle_do.setWidth(a.scrWidth), a.scrTrackMiddle_do.setY(a.scrTrackTop_do.h);
+            },
+            this.updateMobileScrollBar = function(e) {
+                a.isDragging_bl || (a.isSearched_bl && (a.thumbnailsFinalY = 0),
+                                    a.totalThumbsHeight < a.mainThumbsHolder_do.h && (a.thumbnailsFinalY = .01),
+                                    a.vy *= a.friction,
+                                    a.thumbnailsFinalY += a.vy,
+                                    0 < a.thumbnailsFinalY ? (a.vy2 = .3 * (0 - a.thumbnailsFinalY),
+                                                              a.vy *= a.friction,
+                                                              a.thumbnailsFinalY += a.vy2)
+                                                           : a.thumbnailsFinalY < a.mainThumbsHolder_do.h - a.totalThumbsHeight && (a.vy2 = .3 * (a.mainThumbsHolder_do.h - a.totalThumbsHeight - a.thumbnailsFinalY),
+                                                                                                                                    a.vy *= a.friction,
+                                                                                                                                    a.thumbnailsFinalY += a.vy2),
+                                                             a.thumbsHolder_do.setY(Math.round(a.thumbnailsFinalY)))
+            },
+            this.setupScrollbar = function() {
+                a.scrMainHolder_do = new FWDUVPDisplayObject("div"),
+                a.scrMainHolder_do.setWidth(a.scrWidth),
+                a.scrTrack_do = new FWDUVPDisplayObject("div"),
+                a.scrTrack_do.setWidth(a.scrWidth),
+                a.scrTrackTop_do = new FWDUVPDisplayObject("img"),
+                a.scrTrackTop_do.setScreen(a.scrBkTop_img),
+                a.scrTrackMiddle_do = new FWDUVPDisplayObject("div"),
+                a.scrTrackMiddle_do.getStyle().background = "url('" + l.scrBkMiddlePath_str + "')",
+                a.scrTrackMiddle_do.setWidth(a.scrWidth),
+                a.scrTrackMiddle_do.setY(a.scrTrackTop_do.h);
                 var e = new Image;
-                e.src = l.scrBkBottomPath_str, a.scrTrackBottom_do = new FWDUVPDisplayObject("img"), a.scrTrackBottom_do.setScreen(e), a.scrTrackBottom_do.setWidth(a.scrTrackTop_do.w), a.scrTrackBottom_do.setHeight(a.scrTrackTop_do.h), a.scrHandler_do = new FWDUVPDisplayObject("div"), a.scrHandler_do.setWidth(a.scrWidth), a.scrHandlerTop_do = new FWDUVPDisplayObject("img"), a.useHEX ? (a.scrHandlerTop_do = new FWDUVPDisplayObject("div"), a.scrHandlerTop_do.setWidth(a.scrDragTop_img.width), a.scrHandlerTop_do.setHeight(a.scrDragTop_img.height), a.mainScrubberDragTop_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrDragTop_img, a.nBC).canvas, a.scrHandlerTop_do.screen.appendChild(a.mainScrubberDragTop_canvas)) : (a.scrHandlerTop_do = new FWDUVPDisplayObject("img"), a.scrHandlerTop_do.setScreen(a.scrDragTop_img)), a.scrHandlerMiddle_do = new FWDUVPDisplayObject("div"), a.middleImage = new Image, a.middleImage.src = l.scrDragMiddlePath_str, a.useHEX ? a.middleImage.onload = function() {
-                    a.scrubberDragMiddle_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.middleImage, a.nBC, !0), a.scrubberDragImage_img = a.scrubberDragMiddle_canvas.image, a.scrHandlerMiddle_do.getStyle().background = "url('" + a.scrubberDragImage_img.src + "') repeat-y"
-                } : a.scrHandlerMiddle_do.getStyle().background = "url('" + l.scrDragMiddlePath_str + "')", a.scrHandlerMiddle_do.setWidth(a.scrWidth), a.scrHandlerMiddle_do.setY(a.scrHandlerTop_do.h), a.scrHandlerBottom_do = new FWDUVPDisplayObject("div"), a.bottomImage = new Image, a.bottomImage.src = l.scrDragMiddlePath_str, a.useHEX ? a.bottomImage.onload = function() {
-                    a.scrubberDragBottom_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.bottomImage, a.nBC, !0), a.scrubberDragBottomImage_img = a.scrubberDragBottom_canvas.image, a.scrHandlerBottom_do.getStyle().background = "url('" + a.scrubberDragBottomImage_img.src + "') repeat-y"
-                } : a.scrHandlerBottom_do.getStyle().background = "url('" + l.scrDragBottomPath_str + "')", a.scrHandlerBottom_do.setWidth(a.scrWidth), a.scrHandlerBottom_do.setY(a.scrHandlerTop_do.h), a.scrHandlerBottom_do.setWidth(a.scrHandlerTop_do.w), a.scrHandlerBottom_do.setHeight(a.scrHandlerTop_do.h), a.useHEX ? (a.scrHandlerLinesN_do = new FWDUVPDisplayObject("div"), a.scrHandlerLinesN_do.setWidth(a.scrLinesN_img.width), a.scrHandlerLinesN_do.setHeight(a.scrLinesN_img.height), a.mainhandlerN_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrLinesN_img, a.sBC).canvas, a.scrHandlerLinesN_do.screen.appendChild(a.mainhandlerN_canvas)) : (a.scrHandlerLinesN_do = new FWDUVPDisplayObject("img"), a.scrHandlerLinesN_do.setScreen(a.scrLinesN_img)), a.scrHandlerLinesS_img = new Image, a.scrHandlerLinesS_img.src = l.scrLinesSPath_str, a.useHEX ? (a.scrHandlerLinesS_do = new FWDUVPDisplayObject("div"), a.scrHandlerLinesS_img.onload = function() {
-                    a.scrHandlerLinesS_do.setWidth(a.scrHandlerLinesN_do.w), a.scrHandlerLinesS_do.setHeight(a.scrHandlerLinesN_do.h), a.scrubberLines_s_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrHandlerLinesS_img, a.sBC, !0), a.scrubbelinesSImage_img = a.scrubberLines_s_canvas.image, a.scrHandlerLinesS_do.getStyle().background = "url('" + a.scrubbelinesSImage_img.src + "') repeat-y"
-                }) : (a.scrHandlerLinesS_do = new FWDUVPDisplayObject("img"), a.scrHandlerLinesS_do.setScreen(a.scrHandlerLinesS_img), a.scrHandlerLinesS_do.setWidth(a.scrHandlerLinesN_do.w), a.scrHandlerLinesS_do.setHeight(a.scrHandlerLinesN_do.h)), a.scrHandlerLinesS_do.setAlpha(0), a.scrHandlerLines_do = new FWDUVPDisplayObject("div"), a.scrHandlerLines_do.setWidth(a.scrHandlerLinesN_do.w), a.scrHandlerLines_do.setHeight(a.scrHandlerLinesN_do.h), a.scrTrack_do.addChild(a.scrTrackTop_do), a.scrTrack_do.addChild(a.scrTrackMiddle_do), a.scrTrack_do.addChild(a.scrTrackBottom_do), a.scrHandler_do.addChild(a.scrHandlerTop_do), a.scrHandler_do.addChild(a.scrHandlerMiddle_do), a.scrHandler_do.addChild(a.scrHandlerBottom_do), a.scrHandlerLines_do.addChild(a.scrHandlerLinesN_do), a.scrHandlerLines_do.addChild(a.scrHandlerLinesS_do), a.scrMainHolder_do.addChild(a.scrTrack_do), a.scrMainHolder_do.addChild(a.scrHandler_do), a.scrMainHolder_do.addChild(a.scrHandlerLines_do), a.mainHld.addChild(a.scrMainHolder_do), a.scrHandler_do.screen.addEventListener("mouseover", a.scrollBarHandlerOnMouseOver), a.scrHandler_do.screen.addEventListener("mouseout", a.scrollBarHandlerOnMouseOut), a.scrHandler_do.screen.addEventListener("mousedown", a.scrollBarHandlerOnMouseDown), a.scrHandlerLines_do.screen.addEventListener("mouseover", a.scrollBarHandlerOnMouseOver), a.scrHandlerLines_do.screen.addEventListener("mouseout", a.scrollBarHandlerOnMouseOut), a.scrHandlerLines_do.screen.addEventListener("mousedown", a.scrollBarHandlerOnMouseDown), a.addScrOnMM_bl && n.addEventListener("mousemove", a.scrOnMM)
+                e.src = l.scrBkBottomPath_str,
+                a.scrTrackBottom_do = new FWDUVPDisplayObject("img"),
+                a.scrTrackBottom_do.setScreen(e),
+                a.scrTrackBottom_do.setWidth(a.scrTrackTop_do.w),
+                a.scrTrackBottom_do.setHeight(a.scrTrackTop_do.h),
+                a.scrHandler_do = new FWDUVPDisplayObject("div"),
+                a.scrHandler_do.setWidth(a.scrWidth),
+                a.scrHandlerTop_do = new FWDUVPDisplayObject("img"),
+                a.useHEX ? (a.scrHandlerTop_do = new FWDUVPDisplayObject("div"),
+                            a.scrHandlerTop_do.setWidth(a.scrDragTop_img.width),
+                            a.scrHandlerTop_do.setHeight(a.scrDragTop_img.height),
+                            a.mainScrubberDragTop_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrDragTop_img, a.nBC).canvas,
+                            a.scrHandlerTop_do.screen.appendChild(a.mainScrubberDragTop_canvas))
+                         : (a.scrHandlerTop_do = new FWDUVPDisplayObject("img"),
+                            a.scrHandlerTop_do.setScreen(a.scrDragTop_img)),
+                a.scrHandlerMiddle_do = new FWDUVPDisplayObject("div"),
+                a.middleImage = new Image,
+                a.middleImage.src = l.scrDragMiddlePath_str,
+                a.useHEX ? a.middleImage.onload = function() {
+                           a.scrubberDragMiddle_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.middleImage, a.nBC, !0),
+                           a.scrubberDragImage_img = a.scrubberDragMiddle_canvas.image,
+                           a.scrHandlerMiddle_do.getStyle().background = "url('" + a.scrubberDragImage_img.src + "') repeat-y"
+                            }
+                         : a.scrHandlerMiddle_do.getStyle().background = "url('" + l.scrDragMiddlePath_str + "')",
+                           a.scrHandlerMiddle_do.setWidth(a.scrWidth),
+                           a.scrHandlerMiddle_do.setY(a.scrHandlerTop_do.h),
+                           a.scrHandlerBottom_do = new FWDUVPDisplayObject("div"),
+                           a.bottomImage = new Image,
+                           a.bottomImage.src = l.scrDragMiddlePath_str,
+                           a.useHEX
+                         ? a.bottomImage.onload = function() {
+                           a.scrubberDragBottom_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.bottomImage, a.nBC, !0),
+                           a.scrubberDragBottomImage_img = a.scrubberDragBottom_canvas.image,
+                           a.scrHandlerBottom_do.getStyle().background = "url('" + a.scrubberDragBottomImage_img.src + "') repeat-y"
+                            }
+                         : a.scrHandlerBottom_do.getStyle().background = "url('" + l.scrDragBottomPath_str + "')",
+                           a.scrHandlerBottom_do.setWidth(a.scrWidth),
+                           a.scrHandlerBottom_do.setY(a.scrHandlerTop_do.h),
+                           a.scrHandlerBottom_do.setWidth(a.scrHandlerTop_do.w),
+                           a.scrHandlerBottom_do.setHeight(a.scrHandlerTop_do.h),
+                           a.useHEX
+                         ? (a.scrHandlerLinesN_do = new FWDUVPDisplayObject("div"),
+                            a.scrHandlerLinesN_do.setWidth(a.scrLinesN_img.width),
+                            a.scrHandlerLinesN_do.setHeight(a.scrLinesN_img.height),
+                            a.mainhandlerN_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrLinesN_img, a.sBC).canvas,
+                            a.scrHandlerLinesN_do.screen.appendChild(a.mainhandlerN_canvas))
+                         : (a.scrHandlerLinesN_do = new FWDUVPDisplayObject("img"),
+                            a.scrHandlerLinesN_do.setScreen(a.scrLinesN_img)),
+                a.scrHandlerLinesS_img = new Image,
+                a.scrHandlerLinesS_img.src = l.scrLinesSPath_str,
+                a.useHEX ? (a.scrHandlerLinesS_do = new FWDUVPDisplayObject("div"),
+                            a.scrHandlerLinesS_img.onload = function() {
+                              a.scrHandlerLinesS_do.setWidth(a.scrHandlerLinesN_do.w),
+                              a.scrHandlerLinesS_do.setHeight(a.scrHandlerLinesN_do.h),
+                              a.scrubberLines_s_canvas = FWDUVPUtils.getCanvasWithModifiedColor(a.scrHandlerLinesS_img, a.sBC, !0),
+                              a.scrubbelinesSImage_img = a.scrubberLines_s_canvas.image,
+                              a.scrHandlerLinesS_do.getStyle().background = "url('" + a.scrubbelinesSImage_img.src + "') repeat-y"
+                            })
+                          : (a.scrHandlerLinesS_do = new FWDUVPDisplayObject("img"),
+                             a.scrHandlerLinesS_do.setScreen(a.scrHandlerLinesS_img),
+                             a.scrHandlerLinesS_do.setWidth(a.scrHandlerLinesN_do.w),
+                             a.scrHandlerLinesS_do.setHeight(a.scrHandlerLinesN_do.h)),
+                 a.scrHandlerLinesS_do.setAlpha(0),
+                 a.scrHandlerLines_do = new FWDUVPDisplayObject("div"),
+                 a.scrHandlerLines_do.setWidth(a.scrHandlerLinesN_do.w),
+                 a.scrHandlerLines_do.setHeight(a.scrHandlerLinesN_do.h),
+                 a.scrTrack_do.addChild(a.scrTrackTop_do),
+                 a.scrTrack_do.addChild(a.scrTrackMiddle_do),
+                 a.scrTrack_do.addChild(a.scrTrackBottom_do),
+                 a.scrHandler_do.addChild(a.scrHandlerTop_do),
+                 a.scrHandler_do.addChild(a.scrHandlerMiddle_do),
+                 a.scrHandler_do.addChild(a.scrHandlerBottom_do),
+                 a.scrHandlerLines_do.addChild(a.scrHandlerLinesN_do),
+                 a.scrHandlerLines_do.addChild(a.scrHandlerLinesS_do),
+                 a.scrMainHolder_do.addChild(a.scrTrack_do),
+                 a.scrMainHolder_do.addChild(a.scrHandler_do),
+                 a.scrMainHolder_do.addChild(a.scrHandlerLines_do),
+                 a.mainHld.addChild(a.scrMainHolder_do),
+                 a.scrHandler_do.screen.addEventListener("mouseover", a.scrollBarHandlerOnMouseOver),
+                 a.scrHandler_do.screen.addEventListener("mouseout", a.scrollBarHandlerOnMouseOut),
+                 a.scrHandler_do.screen.addEventListener("mousedown", a.scrollBarHandlerOnMouseDown),
+                 a.scrHandlerLines_do.screen.addEventListener("mouseover", a.scrollBarHandlerOnMouseOver),
+                 a.scrHandlerLines_do.screen.addEventListener("mouseout", a.scrollBarHandlerOnMouseOut),
+                 a.scrHandlerLines_do.screen.addEventListener("mousedown", a.scrollBarHandlerOnMouseDown),
+                 a.addScrOnMM_bl && n.addEventListener("mousemove", a.scrOnMM)
             }, this.scrOnMM = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(a.mainThumbsHolder_do.screen, t.screenX, t.screenY) ? (a.isDragging_bl = !0, a.scrollBarHandlerMoveHandler(e)) : a.isDragging_bl = !1
@@ -7834,29 +7986,49 @@ var FWDUVPAddress = new function() {
                     ease: Expo.easeOut
                 }))
             }, this.scrollBarHandlerOnMouseOut = function(e) {
-                !a.isDragging_bl && a.allowToScrollAndScrollBarIsActive_bl && (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do), FWDAnimation.killTweensOf(a.scrHandlerLinesS_do), FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
+                !a.isDragging_bl && a.allowToScrollAndScrollBarIsActive_bl && (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do),
+                                                                               FWDAnimation.killTweensOf(a.scrHandlerLinesS_do),
+                                                                               FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }), FWDAnimation.to(a.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
-            }, this.scrollBarHandlerOnMouseDown = function(e) {
+            },
+            this.scrollBarHandlerOnMouseDown = function(e) {
                 if (a.allowToScrollAndScrollBarIsActive_bl && !a.addScrOnMM_bl) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                    a.isDragging_bl = !0, a.yPositionOnPress = a.scrHandler_do.y, a.lastPresedY = t.screenY, FWDAnimation.killTweensOf(a.scrHandler_do), i.showDisable(), n.addEventListener && (n.addEventListener("mousemove", a.scrollBarHandlerMoveHandler), n.addEventListener("mouseup", a.scrollBarHandlerEndHandler))
+                    a.isDragging_bl = !0,
+                    a.yPositionOnPress = a.scrHandler_do.y,
+                    a.lastPresedY = t.screenY,
+                    FWDAnimation.killTweensOf(a.scrHandler_do),
+                    i.showDisable(),
+                    n.addEventListener && (n.addEventListener("mousemove", a.scrollBarHandlerMoveHandler),
+                    n.addEventListener("mouseup", a.scrollBarHandlerEndHandler))
                 }
-            }, this.scrollBarHandlerMoveHandler = function(e) {
+            },
+            this.scrollBarHandlerMoveHandler = function(e) {
                 e.preventDefault && e.preventDefault();
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e),
                     s = a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2);
-                a.addScrOnMM_bl ? a.scrollBarHandlerFinalY = Math.round(t.screenY - a.mainThumbsHolder_do.getGlobalY() - a.scrHandler_do.h / 2) : a.scrollBarHandlerFinalY = Math.round(a.yPositionOnPress + t.screenY - a.lastPresedY), a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                a.addScrOnMM_bl ? a.scrollBarHandlerFinalY = Math.round(t.screenY - a.mainThumbsHolder_do.getGlobalY() - a.scrHandler_do.h / 2)
+                                : a.scrollBarHandlerFinalY = Math.round(a.yPositionOnPress + t.screenY - a.lastPresedY),
+                a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h
+                                                                                : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0),
+                a.scrHandler_do.setY(a.scrollBarHandlerFinalY),
+                FWDAnimation.killTweensOf(a.scrHandler_do),
+                FWDAnimation.to(a.scrHandlerLines_do, .8, {
                     y: s,
                     ease: Quart.easeOut
                 }), a.updateScrollBarHandlerAndContent(!0)
-            }, a.scrollBarHandlerEndHandler = function(e) {
+            },
+            a.scrollBarHandlerEndHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                a.isDragging_bl = !1, FWDUVPUtils.hitTest(a.scrHandler_do.screen, t.screenX, t.screenY) || (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do), FWDAnimation.killTweensOf(a.scrHandlerLinesS_do), FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
+                a.isDragging_bl = !1,
+                FWDUVPUtils.hitTest(a.scrHandler_do.screen, t.screenX, t.screenY) || (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do),
+                                                                                      FWDAnimation.killTweensOf(a.scrHandlerLinesS_do),
+                                                                                      FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }), FWDAnimation.to(a.scrHandlerLinesS_do, .8, {
@@ -7866,31 +8038,77 @@ var FWDUVPAddress = new function() {
                     y: a.scrollBarHandlerFinalY,
                     ease: Quart.easeOut
                 }), n.removeEventListener && (n.removeEventListener("mousemove", a.scrollBarHandlerMoveHandler), n.removeEventListener("mouseup", a.scrollBarHandlerEndHandler))
-            }, this.updateScrollBarSizeActiveAndDeactivate = function() {
-                a.disableForAWhileAfterThumbClick_bl || (a.allowToScrollAndScrollBarIsActive_bl ? (a.allowToScrollAndScrollBarIsActive_bl = !0, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(1), a.addScrOnMM_bl || (a.scrHandler_do.setButtonMode(!0), a.scrHandlerLines_do.setButtonMode(!0))) : (a.allowToScrollAndScrollBarIsActive_bl = !1, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(.5), a.scrHandler_do.setY(0), a.scrHandler_do.setButtonMode(!1), a.scrHandlerLines_do.setButtonMode(!1)), a.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, a.scrMainHolder_do.h / a.totalThumbsHeight) * a.scrMainHolder_do.h))), a.scrHandlerMiddle_do.setHeight(a.scrHandler_do.h - 2 * a.scrHandlerTop_do.h), a.scrHandlerBottom_do.setY(a.scrHandlerMiddle_do.y + a.scrHandlerMiddle_do.h), FWDAnimation.killTweensOf(a.scrHandlerLines_do), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2)), a.scrHandlerBottom_do.setY(a.scrHandler_do.h - a.scrHandlerBottom_do.h))
-            }, this.updateScrollBarHandlerAndContent = function(e, t) {
+            },
+            this.updateScrollBarSizeActiveAndDeactivate = function() {
+                a.disableForAWhileAfterThumbClick_bl || (a.allowToScrollAndScrollBarIsActive_bl ? (a.allowToScrollAndScrollBarIsActive_bl = !0,
+                                                                                                   a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w),
+                                                                                                   a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight),
+                                                                                                   a.scrTrack_do.setHeight(a.scrMainHolder_do.h),
+                                                                                                   a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h),
+                                                                                                   a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h),
+                                                                                                   a.scrMainHolder_do.setAlpha(1),
+                                                                                                   a.addScrOnMM_bl || (a.scrHandler_do.setButtonMode(!0),
+                                                                                                                       a.scrHandlerLines_do.setButtonMode(!0)))
+                                                                                                : (a.allowToScrollAndScrollBarIsActive_bl = !1,
+                                                                                                   a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w),
+                                                                                                   a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight),
+                                                                                                   a.scrTrack_do.setHeight(a.scrMainHolder_do.h),
+                                                                                                   a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h),
+                                                                                                   a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h),
+                                                                                                   a.scrMainHolder_do.setAlpha(.5),
+                                                                                                   a.scrHandler_do.setY(0),
+                                                                                                   a.scrHandler_do.setButtonMode(!1),
+                                                                                                   a.scrHandlerLines_do.setButtonMode(!1)),
+                                                          a.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, a.scrMainHolder_do.h / a.totalThumbsHeight) * a.scrMainHolder_do.h))),
+                                                          a.scrHandlerMiddle_do.setHeight(a.scrHandler_do.h - 2 * a.scrHandlerTop_do.h),
+                                                          a.scrHandlerBottom_do.setY(a.scrHandlerMiddle_do.y + a.scrHandlerMiddle_do.h),
+                                                          FWDAnimation.killTweensOf(a.scrHandlerLines_do),
+                                                          a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2)),
+                                                          a.scrHandlerBottom_do.setY(a.scrHandler_do.h - a.scrHandlerBottom_do.h))
+            },
+            this.updateScrollBarHandlerAndContent = function(e, t) {
                 if (!a.disableForAWhileAfterThumbClick_bl && (a.allowToScrollAndScrollBarIsActive_bl || t)) {
                     var s = 0;
-                    a.isDragging_bl && !a.isMbl ? ("Infinity" == (s = a.scrollBarHandlerFinalY / (a.scrMainHolder_do.h - a.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), a.thumbnailsFinalY = -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))) : (s = a.isSearched_bl ? a.percentScrolled = 0 : a.curId / (a.totalThumbs - 1), a.thumbnailsFinalY = Math.min(0, -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))), a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * s), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), e ? (FWDAnimation.to(a.scrHandler_do, .4, {
-                        y: a.scrollBarHandlerFinalY,
-                        ease: Quart.easeOut
-                    }), FWDAnimation.to(a.scrHandlerLines_do, .8, {
-                        y: a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2),
-                        ease: Quart.easeOut
-                    })) : (a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2))))), a.lastThumbnailFinalY != a.thumbnailsFinalY && (FWDAnimation.killTweensOf(a.thumbsHolder_do), e ? FWDAnimation.to(a.thumbsHolder_do, .5, {
-                        y: a.thumbnailsFinalY,
-                        ease: Quart.easeOut
-                    }) : a.thumbsHolder_do.setY(a.thumbnailsFinalY)), a.lastThumbnailFinalY = a.thumbnailsFinalY
+                    a.isDragging_bl && !a.isMbl ? ("Infinity" == (s = a.scrollBarHandlerFinalY / (a.scrMainHolder_do.h - a.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), a.thumbnailsFinalY = -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h)))
+                                                : (s = a.isSearched_bl ? a.percentScrolled = 0 : a.curId / (a.totalThumbs - 1),
+                                                   a.thumbnailsFinalY = Math.min(0, -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))),
+                                                   a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * s),
+                                                    a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1),
+                                                    FWDAnimation.killTweensOf(a.scrHandler_do),
+                                                    FWDAnimation.killTweensOf(a.scrHandlerLines_do), e ? (FWDAnimation.to(a.scrHandler_do, .4, {
+                                                                                                  y: a.scrollBarHandlerFinalY,
+                                                                                                  ease: Quart.easeOut
+                                                                                                }), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                                                                                                  y: a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2),
+                                                                                                  ease: Quart.easeOut
+                                                                                                }))
+                                                                                              : (a.scrHandler_do.setY(a.scrollBarHandlerFinalY),
+                                                                                                 a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2))))),
+                    a.lastThumbnailFinalY != a.thumbnailsFinalY && (FWDAnimation.killTweensOf(a.thumbsHolder_do),
+                                                                    e ? FWDAnimation.to(a.thumbsHolder_do, .5, {
+                                                                        y: a.thumbnailsFinalY,
+                                                                        ease: Quart.easeOut
+                                                                        })
+                                                                      : a.thumbsHolder_do.setY(a.thumbnailsFinalY)),
+                    a.lastThumbnailFinalY = a.thumbnailsFinalY
                 }
-            }, this.addMouseWheelSupport = function() {
-                a.screen.addEventListener && (a.screen.addEventListener("DOMMouseScroll", a.mouseWheelHandler), a.screen.addEventListener("mousewheel", a.mouseWheelHandler))
-            }, a.mouseWheelHandler = function(e) {
+            },
+            this.addMouseWheelSupport = function() {
+                a.screen.addEventListener && (a.screen.addEventListener("DOMMouseScroll", a.mouseWheelHandler),
+                a.screen.addEventListener("mousewheel", a.mouseWheelHandler))
+            },
+            a.mouseWheelHandler = function(e) {
                 if (e.preventDefault && e.preventDefault(), a.disableMouseWheel_bl || a.isDragging_bl) return !1;
                 if (!a.comboBox_do || !a.comboBox_do.isShowed_bl) {
                     var t = e.detail || e.wheelDelta;
-                    e.wheelDelta && (t *= -1), 0 < t ? a.scrollBarHandlerFinalY += Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight)) : t < 0 && (a.scrollBarHandlerFinalY -= Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight))), a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0);
+                    e.wheelDelta && (t *= -1),
+                    0 < t ? a.scrollBarHandlerFinalY += Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight))
+                          : t < 0 && (a.scrollBarHandlerFinalY -= Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight))),
+                    a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0);
                     var s = a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2);
-                    if (FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                    if (FWDAnimation.killTweensOf(a.scrHandler_do),
+                        FWDAnimation.killTweensOf(a.scrHandlerLines_do),
+                        FWDAnimation.to(a.scrHandlerLines_do, .8, {
                             y: s,
                             ease: Quart.easeOut
                         }), FWDAnimation.to(a.scrHandler_do, .5, {
@@ -7929,15 +8147,78 @@ var FWDUVPAddress = new function() {
         };
         t.setPrototype = function() {
             t.prototype = new FWDUVPDisplayObject("div", "absolute", "visible")
-        }, t.THUMB_MOUSE_UP = "thumbMouseOut", t.PLAY_PREV_VIDEO = "playPrevVideo", t.PLAY_NEXT_VIDEO = "playNextVideo", t.DISABLE_LOOP = "disableLoop", t.ENABLE_LOOP = "enableLoop", t.DISABLE_SHUFFLE = "disableShuffle", t.ENABLE_SHUFFLE = "enableShuffle", t.CHANGE_PLAYLIST = "changePlaylist", t.prototype = null, n.FWDUVPPlaylist = t
+        },
+        t.THUMB_MOUSE_UP = "thumbMouseOut",
+        t.PLAY_PREV_VIDEO = "playPrevVideo",
+        t.PLAY_NEXT_VIDEO = "playNextVideo",
+        t.DISABLE_LOOP = "disableLoop",
+        t.ENABLE_LOOP = "enableLoop",
+        t.DISABLE_SHUFFLE = "disableShuffle",
+        t.ENABLE_SHUFFLE = "enableShuffle",
+        t.CHANGE_PLAYLIST = "changePlaylist",
+        t.prototype = null,
+        n.FWDUVPPlaylist = t
     }(window),
+
     function(e) {
         var _ = function(s, e, t, o, i, l, n, a, r, d, u, h) {
             var c = this;
             _.prototype;
-            this.mainImgHld = null, this.imageHolder_do = null, this.normalImage_do = null, this.dumy_do = null, this.txt = null, this.backgroundImagePath_str = t, this.thumbnailNormalBackgroundColor_str = o, this.thumbnailHoverBackgroundColor_str = i, this.thumbnailDisabledBackgroundColor_str = l, this.htmlContent_str = d, this.htmlText_str = u.toLowerCase(), this.curStt = "none", this.id = e, this.padding = r, this.imageOriginalW, this.imageOriginalH, this.finalX, this.finalY, this.thumbImageWidth = n, this.thumbImageHeight = a, this.finalW, this.finalH = 2 * c.padding + c.thumbImageHeight, this.imageFinalX, this.imageFinalY, this.imageFinalW, this.imageFinalH, this.mouseX, this.mouseY, this.showId_to, this.disableForAWhileId_to, this.isDark = !0, -1 == t.indexOf("dark") && (this.isDark = !1), this.hasImage_bl = !1, this.isSelected_bl = !1, this.isDisabled_bl = !1, this.disableForAWhile_bl = !1, this.hasToolTipShowed_bl = !1, this.hasCanvas_bl = FWDUVPlayer.hasCanvas, this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.hasDispatchedOverEvent_bl = !1, this.showThumbnail_bl = h, this.init = function() {
-                c.setupMainContainers(), c.setButtonMode(!0), c.setNormalState(), c.hasPointerEvent_bl ? (c.screen.addEventListener("pointerover", c.onMouseOver), c.screen.addEventListener("pointerout", c.onMouseOut), c.screen.addEventListener("pointerup", c.onMouseUp)) : c.screen.addEventListener && (c.screen.addEventListener("mouseover", c.onMouseOver), c.screen.addEventListener("mouseout", c.onMouseOut), c.screen.addEventListener("mouseup", c.onMouseUp), c.screen.addEventListener("touchend", c.onMouseUp))
-            }, this.onMouseUp = function(e) {
+            this.mainImgHld = null,
+            this.imageHolder_do = null,
+            this.normalImage_do = null,
+            this.dumy_do = null,
+            this.txt = null,
+            this.backgroundImagePath_str = t,
+            this.thumbnailNormalBackgroundColor_str = o,
+            this.thumbnailHoverBackgroundColor_str = i,
+            this.thumbnailDisabledBackgroundColor_str = l,
+            this.htmlContent_str = d,
+            this.htmlText_str = u.toLowerCase(),
+            this.curStt = "none",
+            this.id = e,
+            this.padding = r,
+            this.imageOriginalW,
+            this.imageOriginalH,
+            this.finalX,
+            this.finalY,
+            this.thumbImageWidth = n,
+            this.thumbImageHeight = a,
+            this.finalW,
+            this.finalH = 2 * c.padding + c.thumbImageHeight,
+            this.imageFinalX,
+            this.imageFinalY,
+            this.imageFinalW,
+            this.imageFinalH,
+            this.mouseX,
+            this.mouseY,
+            this.showId_to,
+            this.disableForAWhileId_to,
+            this.isDark = !0,
+            -1 == t.indexOf("dark") && (this.isDark = !1),
+            this.hasImage_bl = !1,
+            this.isSelected_bl = !1,
+            this.isDisabled_bl = !1,
+            this.disableForAWhile_bl = !1,
+            this.hasToolTipShowed_bl = !1,
+            this.hasCanvas_bl = FWDUVPlayer.hasCanvas,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.hasDispatchedOverEvent_bl = !1,
+            this.showThumbnail_bl = h,
+            this.init = function() {
+                c.setupMainContainers(),
+                c.setButtonMode(!0),
+                c.setNormalState(),
+                c.hasPointerEvent_bl ? (c.screen.addEventListener("pointerover", c.onMouseOver),
+                                        c.screen.addEventListener("pointerout", c.onMouseOut),
+                                        c.screen.addEventListener("pointerup", c.onMouseUp))
+                                     : c.screen.addEventListener && (c.screen.addEventListener("mouseover", c.onMouseOver),
+                                                                     c.screen.addEventListener("mouseout", c.onMouseOut),
+                                                                     c.screen.addEventListener("mouseup", c.onMouseUp),
+                                                                     c.screen.addEventListener("touchend", c.onMouseUp))
+            },
+            this.onMouseUp = function(e) {
                 s.isScrollingOnMove_bl || c.isDisabled_bl || 2 == e.button || (e.preventDefault && e.preventDefault(), c.dispatchEvent(_.MOUSE_UP, {
                     id: c.id
                 }))
@@ -7951,17 +8232,61 @@ var FWDUVPAddress = new function() {
                     if (c.isDisabled_bl) return;
                     c.setNormalState(!0)
                 }
-            }, this.setupMainContainers = function() {
-                c.mainImgHld = new FWDUVPDisplayObject("div"), c.mainImgHld.screen.className = "fwduvp-playlist-thumbnail", c.mainImgHld.getStyle().background = "url('" + c.backgroundImagePath_str + "')", c.mainImgHld.setX(c.padding), c.mainImgHld.setY(c.padding), c.mainImgHld.setWidth(c.thumbImageWidth), c.mainImgHld.setHeight(c.thumbImageHeight), c.imageHolder_do = new FWDUVPDisplayObject("div"), c.txt = new FWDUVPDisplayObject("div");
+            },
+            this.setupMainContainers = function() {
+                c.mainImgHld = new FWDUVPDisplayObject("div"),
+                c.mainImgHld.screen.className = "fwduvp-playlist-thumbnail",
+                c.mainImgHld.getStyle().background = "url('" + c.backgroundImagePath_str + "')",
+                c.mainImgHld.setX(c.padding),
+                c.mainImgHld.setY(c.padding),
+                c.mainImgHld.setWidth(c.thumbImageWidth),
+                c.mainImgHld.setHeight(c.thumbImageHeight),
+                c.imageHolder_do = new FWDUVPDisplayObject("div"),
+                c.txt = new FWDUVPDisplayObject("div");
                 var e = "fwduvp-playlist-thumbnail-white-text";
-                c.isDark && (e = "fwduvp-playlist-thumbnail-dark-text"), c.txt.screen.className = e, c.txt.hasTransform3d_bl = !1, c.txt.hasTransform2d_bl = !1, c.txt.setHeight(c.finalH - 6), c.txt.setBackfaceVisibility(), c.txt.getStyle().fontFamily = "Arial", c.txt.getStyle().fontSize = "12px", c.txt.getStyle().color = c.fontColor_str, c.txt.getStyle().fontSmoothing = "antialiased", c.txt.getStyle().webkitFontSmoothing = "antialiased", c.txt.getStyle().textRendering = "optimizeLegibility", c.slTitle = c.txt.screen.className, c.showThumbnail_bl ? c.txt.setX(2 * c.padding + c.thumbImageWidth + 4) : c.txt.setX(2 * c.padding), c.txt.setInnerHTML(c.htmlContent_str), c.addChild(c.txt), c.dumy_do = new FWDUVPDisplayObject("div"), c.dumy_do.getStyle().width = "100%", c.dumy_do.getStyle().height = "100%", FWDUVPUtils.isIE && (c.dumy_do.setBkColor("#FF0000"), c.dumy_do.setAlpha(.01)), c.showThumbnail_bl && c.addChild(c.mainImgHld), c.mainImgHld.addChild(c.imageHolder_do), c.addChild(c.dumy_do)
+                c.isDark && (e = "fwduvp-playlist-thumbnail-dark-text"),
+                c.txt.screen.className = e,
+                c.txt.hasTransform3d_bl = !1,
+                c.txt.hasTransform2d_bl = !1,
+                c.txt.setHeight(c.finalH - 6),
+                c.txt.setBackfaceVisibility(),
+                c.txt.getStyle().fontFamily = "Arial",
+                c.txt.getStyle().fontSize = "12px",
+                c.txt.getStyle().color = c.fontColor_str,
+                c.txt.getStyle().fontSmoothing = "antialiased",
+                c.txt.getStyle().webkitFontSmoothing = "antialiased",
+                c.txt.getStyle().textRendering = "optimizeLegibility",
+                c.slTitle = c.txt.screen.className,
+                c.showThumbnail_bl ? c.txt.setX(2 * c.padding + c.thumbImageWidth + 4) : c.txt.setX(2 * c.padding),
+                c.txt.setInnerHTML(c.htmlContent_str),
+                c.addChild(c.txt),
+                c.dumy_do = new FWDUVPDisplayObject("div"),
+                c.dumy_do.getStyle().width = "100%",
+                c.dumy_do.getStyle().height = "100%",
+                FWDUVPUtils.isIE && (c.dumy_do.setBkColor("#FF0000"),
+                                     c.dumy_do.setAlpha(.01)),
+                c.showThumbnail_bl && c.addChild(c.mainImgHld),
+                c.mainImgHld.addChild(c.imageHolder_do),
+                c.addChild(c.dumy_do)
             }, this.updateText = function(e) {
                 try {
                     c.htmlContent_str = e, c.txt.setInnerHTML(c.htmlContent_str)
                 } catch (e) {}
-            }, this.setImage = function(e) {
+            },
+            this.setImage = function(e) {
                 var t;
-                (c.normalImage_do = new FWDUVPDisplayObject("img"), c.normalImage_do.setScreen(e), c.imageOriginalW = c.normalImage_do.w, c.imageOriginalH = c.normalImage_do.h, c.resizeImage(), c.imageHolder_do.setX(parseInt(c.thumbImageWidth / 2)), c.imageHolder_do.setY(parseInt(c.thumbImageHeight / 2)), c.imageHolder_do.setWidth(0), c.imageHolder_do.setHeight(0), c.normalImage_do.setX(-parseInt(c.normalImage_do.w / 2)), c.normalImage_do.setY(-parseInt(c.normalImage_do.h / 2)), FWDAnimation.to(c.imageHolder_do, .8, {
+                (c.normalImage_do = new FWDUVPDisplayObject("img"),
+                c.normalImage_do.setScreen(e),
+                c.imageOriginalW = c.normalImage_do.w,
+                c.imageOriginalH = c.normalImage_do.h,
+                c.resizeImage(),
+                c.imageHolder_do.setX(parseInt(c.thumbImageWidth / 2)),
+                c.imageHolder_do.setY(parseInt(c.thumbImageHeight / 2)),
+                c.imageHolder_do.setWidth(0),
+                c.imageHolder_do.setHeight(0),
+                c.normalImage_do.setX(-parseInt(c.normalImage_do.w / 2)),
+                c.normalImage_do.setY(-parseInt(c.normalImage_do.h / 2)),
+                FWDAnimation.to(c.imageHolder_do, .8, {
                     x: 0,
                     y: 0,
                     w: c.thumbImageWidth,
@@ -7985,12 +8310,22 @@ var FWDUVPAddress = new function() {
                     y: c.finalY,
                     ease: Expo.easeInOut
                 }) : (FWDAnimation.killTweensOf(c), c.setX(c.finalX), c.setY(c.finalY)), c.resizeImage()
-            }, this.resizeImage = function(e) {
+            },
+            this.resizeImage = function(e) {
                 if (c.normalImage_do) {
-                    c.isMbl ? 1 == c.normalImage_do.alpha || c.isDisabled_bl || c.normalImage_do.setAlpha(1) : 1 == c.imageHolder_do.alpha || c.isDisabled_bl || c.imageHolder_do.setAlpha(1);
+                    c.isMbl ? 1 == c.normalImage_do.alpha || c.isDisabled_bl || c.normalImage_do.setAlpha(1)
+                            : 1 == c.imageHolder_do.alpha || c.isDisabled_bl || c.imageHolder_do.setAlpha(1);
                     var t, s = c.thumbImageWidth / c.imageOriginalW,
                         o = c.thumbImageHeight / c.imageOriginalH;
-                    t = o <= s ? s : o, c.imageFinalW = Math.ceil(t * c.imageOriginalW), c.imageFinalH = Math.ceil(t * c.imageOriginalH), c.imageFinalX = Math.round((c.thumbImageWidth - c.imageFinalW) / 2), c.imageFinalY = Math.round((c.thumbImageHeight - c.imageFinalH) / 2), c.normalImage_do.setX(c.imageFinalX), c.normalImage_do.setY(c.imageFinalY), c.normalImage_do.setWidth(c.imageFinalW), c.normalImage_do.setHeight(c.imageFinalH)
+                    t = o <= s ? s : o,
+                    c.imageFinalW = Math.ceil(t * c.imageOriginalW),
+                    c.imageFinalH = Math.ceil(t * c.imageOriginalH),
+                    c.imageFinalX = Math.round((c.thumbImageWidth - c.imageFinalW) / 2),
+                    c.imageFinalY = Math.round((c.thumbImageHeight - c.imageFinalH) / 2),
+                    c.normalImage_do.setX(c.imageFinalX),
+                    c.normalImage_do.setY(c.imageFinalY),
+                    c.normalImage_do.setWidth(c.imageFinalW),
+                    c.normalImage_do.setHeight(c.imageFinalH)
                 }
             }, this.setNormalState = function(e) {
                 "normal" != c.curStt && (c.curStt = "normal", c.slTitle && (c.txt.screen.className = c.slTitle), e ? FWDAnimation.to(c.screen, .8, {
@@ -8019,41 +8354,122 @@ var FWDUVPAddress = new function() {
                 c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), c.setNormalState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(1) : FWDAnimation.to(c.imageHolder_do, .6, {
                     alpha: 1
                 }))
-            }, this.disable = function() {
-                c.isDisabled_bl || (c.disableForAWhile_bl = !0, clearTimeout(c.disableForAWhileId_to), c.disableForAWhileId_to = setTimeout(function() {
+            },
+            this.disable = function() {
+                c.isDisabled_bl || (c.disableForAWhile_bl = !0,
+                                    clearTimeout(c.disableForAWhileId_to),
+                                    c.disableForAWhileId_to = setTimeout(function() {
                     c.disableForAWhile_bl = !1
-                }, 200), c.isDisabled_bl = !0, c.setButtonMode(!1), c.setDisabledState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(.3) : FWDAnimation.to(c.imageHolder_do, .6, {
+                }, 200),
+                c.isDisabled_bl = !0,
+                c.setButtonMode(!1),
+                c.setDisabledState(!0),
+                c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(.3)
+                        : FWDAnimation.to(c.imageHolder_do, .6, {
                     alpha: .3
                 }))
-            }, this.destroy = function() {
-                FWDAnimation.killTweensOf(c), c.normalImage_do && (FWDAnimation.killTweensOf(c.normalImage_do), c.normalImage_do.destroy()), FWDAnimation.killTweensOf(c.imageHolder_do), c.imageHolder_do.destroy(), c.dumy_do.destroy(), c.txt.destroy(), c.backgroundImagePath_str = t, c.imageHolder_do = null, c.normalImage_do = null, c.dumy_do = null, c.txt = null, c.htmlContent_str = null, c.htmlText_str = null, c.curStt = null
+            },
+            this.destroy = function() {
+                FWDAnimation.killTweensOf(c),
+                c.normalImage_do && (FWDAnimation.killTweensOf(c.normalImage_do),
+                                     c.normalImage_do.destroy()),
+                FWDAnimation.killTweensOf(c.imageHolder_do),
+                c.imageHolder_do.destroy(),
+                c.dumy_do.destroy(),
+                c.txt.destroy(),
+                c.backgroundImagePath_str = t,
+                c.imageHolder_do = null,
+                c.normalImage_do = null,
+                c.dumy_do = null,
+                c.txt = null,
+                c.htmlContent_str = null,
+                c.htmlText_str = null,
+                c.curStt = null
             }, this.init()
         };
         _.setPrototype = function() {
             _.prototype = new FWDUVPDisplayObject("div")
-        }, _.SHOW_TOOL_TIP = "showToolTip", _.HIDE_TOOL_TIP = "hideToolTip", _.MOUSE_UP = "onMouseUp", _.prototype = null, e.FWDUVPPlaylistThumb = _
+        },
+        _.SHOW_TOOL_TIP = "showToolTip",
+        _.HIDE_TOOL_TIP = "hideToolTip",
+        _.MOUSE_UP = "onMouseUp",
+        _.prototype = null,
+        e.FWDUVPPlaylistThumb = _
     }(window),
+
     function(e) {
         var n = function(e, t, s, o, i) {
             var l = this;
             n.prototype;
-            this.buttonRef_do = null, this.bkPath_str = e, this.pointerPath_str = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = s, this.position_str = o, this.id = -1, "bottom" == this.position_str ? (this.pointerWidth = 7, this.pointerHeight = 4) : (this.pointerWidth = 4, this.pointerHeight = 7), this.maxWidth = i, this.showWithDelayId_to, this.isMbl = FWDUVPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-                l.setOverflow("visible"), l.setupMainContainers(), l.hide(), l.getStyle().background = "url('" + l.bkPath_str + "')", l.getStyle().zIndex = 9999999999999
-            }, this.setupMainContainers = function() {
-                l.text_do = new FWDUVPDisplayObject("div"), l.text_do.hasTransform3d_bl = !1, l.text_do.hasTransform2d_bl = !1, l.text_do.setBackfaceVisibility(), l.text_do.setDisplay("inline-block"), l.text_do.getStyle().fontFamily = "Arial", l.text_do.getStyle().fontSize = "12px", l.text_do.getStyle().color = l.fontColor_str, l.text_do.getStyle().fontSmoothing = "antialiased", l.text_do.getStyle().webkitFontSmoothing = "antialiased", l.text_do.getStyle().textRendering = "optimizeLegibility", l.text_do.getStyle().lineHeight = "16px", l.text_do.getStyle().padding = "6px", l.text_do.getStyle().paddingTop = "4px", l.text_do.getStyle().paddingBottom = "4px", l.text_do.getStyle().textAlign = "center", l.addChild(l.text_do);
+            this.buttonRef_do = null,
+            this.bkPath_str = e,
+            this.pointerPath_str = t,
+            this.text_do = null,
+            this.pointer_do = null,
+            this.fontColor_str = s,
+            this.position_str = o,
+            this.id = -1,
+            "bottom" == this.position_str ? (this.pointerWidth = 7, this.pointerHeight = 4)
+                                          : (this.pointerWidth = 4,
+                                            this.pointerHeight = 7),
+            this.maxWidth = i,
+            this.showWithDelayId_to,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.isShowed_bl = !0,
+            this.init = function() {
+                l.setOverflow("visible"),
+                l.setupMainContainers(),
+                l.hide(),
+                l.getStyle().background = "url('" + l.bkPath_str + "')",
+                l.getStyle().zIndex = 9999999999999
+            },
+            this.setupMainContainers = function() {
+                l.text_do = new FWDUVPDisplayObject("div"),
+                l.text_do.hasTransform3d_bl = !1,
+                l.text_do.hasTransform2d_bl = !1,
+                l.text_do.setBackfaceVisibility(),
+                l.text_do.setDisplay("inline-block"),
+                l.text_do.getStyle().fontFamily = "Arial",
+                l.text_do.getStyle().fontSize = "12px",
+                l.text_do.getStyle().color = l.fontColor_str,
+                l.text_do.getStyle().fontSmoothing = "antialiased",
+                l.text_do.getStyle().webkitFontSmoothing = "antialiased",
+                l.text_do.getStyle().textRendering = "optimizeLegibility",
+                l.text_do.getStyle().lineHeight = "16px",
+                l.text_do.getStyle().padding = "6px",
+                l.text_do.getStyle().paddingTop = "4px",
+                l.text_do.getStyle().paddingBottom = "4px",
+                l.text_do.getStyle().textAlign = "center",
+                l.addChild(l.text_do);
                 var e = new Image;
-                e.src = l.pointerPath_str, l.pointer_do = new FWDUVPDisplayObject("img"), l.pointer_do.setScreen(e), l.pointer_do.setWidth(l.pointerWidth), l.pointer_do.setHeight(l.pointerHeight), l.addChild(l.pointer_do)
-            }, this.setLabel = function(e, t) {
-                l.id != t && (l.setVisible(!1), l.text_do.getStyle().whiteSpace = "normal", l.setWidth(l.maxWidth), l.text_do.setInnerHTML(e)), setTimeout(function() {
+                e.src = l.pointerPath_str,
+                l.pointer_do = new FWDUVPDisplayObject("img"),
+                l.pointer_do.setScreen(e),
+                l.pointer_do.setWidth(l.pointerWidth),
+                l.pointer_do.setHeight(l.pointerHeight),
+                l.addChild(l.pointer_do)
+            },
+            this.setLabel = function(e, t) {
+                l.id != t && (l.setVisible(!1),
+                              l.text_do.getStyle().whiteSpace = "normal",
+                              l.setWidth(l.maxWidth),
+                              l.text_do.setInnerHTML(e)),
+                setTimeout(function() {
                     if (null != l) {
                         var e = l.text_do.screen.getBoundingClientRect().width;
-                        (e = e < 8 && null != e ? (l.setHeight(Math.round(100 * l.text_do.screen.getBoundingClientRect().height)), Math.round(100 * e)) : (l.setHeight(l.text_do.screen.offsetHeight), Math.round(l.text_do.screen.offsetWidth))) < l.w - 15 && l.setWidth(e), e < l.maxWidth && (l.text_do.getStyle().whiteSpace = "nowrap"), l.positionPointer(), l.id = t
+                        (e = e < 8 && null != e ? (l.setHeight(Math.round(100 * l.text_do.screen.getBoundingClientRect().height)),
+                                                               Math.round(100 * e))
+                                                : (l.setHeight(l.text_do.screen.offsetHeight),
+                                                   Math.round(l.text_do.screen.offsetWidth)))
+                      < l.w - 15 && l.setWidth(e),
+                      e < l.maxWidth && (l.text_do.getStyle().whiteSpace = "nowrap"), l.positionPointer(), l.id = t
                     }
                 }, 60)
             }, this.positionPointer = function(e) {
                 var t, s;
                 e = e || 0, s = "bottom" == l.position_str ? (t = parseInt((l.w - l.pointerWidth) / 2) + e, l.h) : (t = l.w, parseInt((l.h - l.pointerHeight) / 2)), l.pointer_do.setX(t), l.pointer_do.setY(s)
-            }, this.show = function() {
+            },
+            this.show = function() {
                 l.isShowed_bl || (l.isShowed_bl = !0, FWDAnimation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, 100))
             }, this.showFinal = function() {
                 l.setVisible(!0), l.setAlpha(0), FWDAnimation.to(l, .4, {
@@ -8069,22 +8485,74 @@ var FWDUVPAddress = new function() {
         };
         n.setPrototype = function() {
             n.prototype = null, n.prototype = new FWDUVPDisplayObject("div", "fixed")
-        }, n.CLICK = "onClick", n.MOUSE_DOWN = "onMouseDown", n.prototype = null, e.FWDUVPPlaylistToolTip = n
+        },
+        n.CLICK = "onClick",
+        n.MOUSE_DOWN = "onMouseDown",
+        n.prototype = null,
+        e.FWDUVPPlaylistToolTip = n
     }(window),
+
     function() {
         var v = function(i, e, t, s, o, l, n, a, r, d, u, h, c, _, f, p, m, b, g) {
             var y = this;
             v.prototype;
-            this.clsBtn, this.image_do, this.imgSrc = e, this.link = o, this.target = l, this.start = t, this.end = s, this.google_ad_client = r, this.google_ad_slot = d, this.originalW = this.google_ad_width = u, this.originalH = this.google_ad_height = h, this.tracking = c, this.finalW = 0, this.finalH = 0, Boolean(this.google_ad_client) ? this.type = "adsense" : this.imgSrc.match(/.png|.jpg|.jpeg/gi) ? this.type = "image" : this.type = "iframe", this.id = a, this.shwPpoppAdClsBtn = p, this.poppAdClsNPth = _, this.poppAdClsSPth = f, this.isClsd = n, this.isLded = !1, this.isShowed_bl = !1, this.init = function() {
+            this.clsBtn,
+            this.image_do,
+            this.imgSrc = e,
+            this.link = o,
+            this.target = l,
+            this.start = t,
+            this.end = s,
+            this.google_ad_client = r,
+            this.google_ad_slot = d,
+            this.originalW = this.google_ad_width = u,
+            this.originalH = this.google_ad_height = h,
+            this.tracking = c,
+            this.finalW = 0,
+            this.finalH = 0,
+            Boolean(this.google_ad_client) ? this.type = "adsense"
+                                           : this.imgSrc.match(/.png|.jpg|.jpeg/gi)
+                                           ? this.type = "image"
+                                           : this.type = "iframe",
+            this.id = a,
+            this.shwPpoppAdClsBtn = p,
+            this.poppAdClsNPth = _,
+            this.poppAdClsSPth = f,
+            this.isClsd = n,
+            this.isLded = !1,
+            this.isShowed_bl = !1,
+            this.init = function() {
                 y.setBkColor("rgba(0, 0, 0, 0.6)"), y.setX(-5e3);
                 var e = y.poppAdClsNPth;
-                window.isWhite && (e = "content/hex_white/close-button-normal.png"), y.shwPpoppAdClsBtn && (FWDUVPSimpleSizeButton.setPrototype(), y.clsBtn = new FWDUVPSimpleSizeButton(e, y.poppAdClsSPth, 22, 21, m, b, g, !0), y.clsBtn.addListener(FWDUVPSimpleSizeButton.MOUSE_UP, y.closeClickButtonCloseHandler)), "image" == this.type ? (this.image = new Image, this.image.src = this.imgSrc, this.image.onload = this.onLoadHandler) : (y.isLded = !0, y.setWidth(y.originalW), y.setHeight(y.originalH)), y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)), y.link && y.setButtonMode(!0)
+                window.isWhite && (e = "content/hex_white/close-button-normal.png"),
+                                   y.shwPpoppAdClsBtn && (FWDUVPSimpleSizeButton.setPrototype(),
+                                                          y.clsBtn = new FWDUVPSimpleSizeButton(e, y.poppAdClsSPth, 22, 21, m, b, g, !0),
+                                                          y.clsBtn.addListener(FWDUVPSimpleSizeButton.MOUSE_UP, y.closeClickButtonCloseHandler)),
+                                  "image" == this.type ? (this.image = new Image,
+                                                          this.image.src = this.imgSrc,
+                                                          this.image.onload = this.onLoadHandler)
+                                                       : (y.isLded = !0,
+                                                          y.setWidth(y.originalW),
+                                                          y.setHeight(y.originalH)),
+                                  y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)),
+                                  y.link && y.setButtonMode(!0)
             }, this.closeClickButtonCloseHandler = function() {
                 y.hide(), y.isClsd = !0, i.popupAds_ar[y.id].isClosed = !0
             }, this.clickHandler = function() {
                 y.link && (i.prt.pause(), window.open(y.link, y.target))
-            }, this.onLoadHandler = function() {
-                y.originalW = y.image.width, y.originalH = y.image.height, y.image_do = new FWDUVPDisplayObject("img"), y.image_do.setScreen(y.image), y.image_do.setWidth(y.originalW), y.image_do.setHeight(y.originalH), y.addChild(y.image_do), y.isLded = !0, y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)), y.screen.addEventListener ? y.image_do.screen.addEventListener("click", y.clickHandler) : y.image_do.screen.attachEvent("onclick", y.clickHandler)
+            },
+            this.onLoadHandler = function() {
+                y.originalW = y.image.width,
+                y.originalH = y.image.height,
+                y.image_do = new FWDUVPDisplayObject("img"),
+                y.image_do.setScreen(y.image),
+                y.image_do.setWidth(y.originalW),
+                y.image_do.setHeight(y.originalH),
+                y.addChild(y.image_do),
+                y.isLded = !0,
+                y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)),
+                y.screen.addEventListener ? y.image_do.screen.addEventListener("click", y.clickHandler)
+                                          : y.image_do.screen.attachEvent("onclick", y.clickHandler)
             }, this.hide = function(e) {
                 if (this.isShowed_bl) {
                     this.isShowed_bl = !1;
@@ -8094,87 +8562,273 @@ var FWDUVPAddress = new function() {
                 }
             }, this.show = function() {
                 this.isShowed_bl || this.isClsd || !y.isLded || (this.isShowed_bl = !0, y.setX(0), setTimeout(function() {
-                    if (FWDAnimation.killTweensOf(i), i.setVisible(!0), y.setVisible(!0), "adsense" != y.type || y.isGooglAdCreated_bl) "iframe" == y.type && (y.container = new FWDUVPTransformDisplayObject("div"), y.container.setWidth(y.originalW), y.container.setHeight(y.originalH), y.ifr = new FWDUVPTransformDisplayObject("iframe"), y.ifr.screen.scrolling = "no", y.ifr.setWidth(y.originalW), y.ifr.setHeight(y.originalH), y.ifr.screen.src = y.imgSrc, y.container.addChild(y.ifr), y.link && (y.clicker = new FWDUVPDisplayObject("div"), y.clicker.screen.style.width = "100%", y.clicker.screen.style.height = "100%", y.container.addChild(y.clicker), y.container.addChild(y.clicker), y.container.screen.addEventListener("click", y.clickHandler)), y.addChild(y.container), y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)));
+                    if (FWDAnimation.killTweensOf(i),
+                        i.setVisible(!0),
+                        y.setVisible(!0),
+                        "adsense" != y.type || y.isGooglAdCreated_bl) "iframe" == y.type && (y.container = new FWDUVPTransformDisplayObject("div"),
+                                                                                             y.container.setWidth(y.originalW),
+                                                                                             y.container.setHeight(y.originalH),
+                                                                                             y.ifr = new FWDUVPTransformDisplayObject("iframe"),
+                                                                                             y.ifr.screen.scrolling = "no",
+                                                                                             y.ifr.setWidth(y.originalW),
+                                                                                             y.ifr.setHeight(y.originalH),
+                                                                                             y.ifr.screen.src = y.imgSrc,
+                                                                                             y.container.addChild(y.ifr),
+                                                                                             y.link && (y.clicker = new FWDUVPDisplayObject("div"),
+                                                                                                        y.clicker.screen.style.width = "100%",
+                                                                                                        y.clicker.screen.style.height = "100%",
+                                                                                                        y.container.addChild(y.clicker),
+                                                                                                        y.container.addChild(y.clicker),
+                                                                                                        y.container.screen.addEventListener("click", y.clickHandler)),
+                                                                                             y.addChild(y.container),
+                                                                                             y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)));
                     else {
-                        y.isGooglAdCreated_bl = !0, window.google_ad_client = y.google_ad_client, window.google_ad_slot = y.google_ad_slot, window.google_ad_width = y.originalW, window.google_ad_height = y.originalH, y.container = new FWDUVPTransformDisplayObject("div"), y.container.setWidth(y.originalW), y.container.setHeight(y.originalH), y.addChild(y.container);
+                        y.isGooglAdCreated_bl = !0,
+                        window.google_ad_client = y.google_ad_client,
+                        window.google_ad_slot = y.google_ad_slot,
+                        window.google_ad_width = y.originalW,
+                        window.google_ad_height = y.originalH,
+                        y.container = new FWDUVPTransformDisplayObject("div"),
+                        y.container.setWidth(y.originalW),
+                        y.container.setHeight(y.originalH),
+                        y.addChild(y.container);
                         var t = document.write;
                         document.write = function(e) {
                             y.container.screen.innerHTML = e, document.write = t
                         };
                         var e = document.createElement("script");
-                        e.type = "text/javascript", -1 != location.href.indexOf("https") ? e.src = "https://pagead2.googlesyndication.com/pagead/show_ads.js" : e.src = "http://pagead2.googlesyndication.com/pagead/show_ads.js", document.body.appendChild(e), y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300))
+                        e.type = "text/javascript",
+                        -1 != location.href.indexOf("https") ? e.src = "https://pagead2.googlesyndication.com/pagead/show_ads.js"
+                                                             : e.src = "http://pagead2.googlesyndication.com/pagead/show_ads.js",
+                        document.body.appendChild(e),
+                        y.clsBtn && (y.addChild(y.clsBtn),
+                        y.clsBtn.setX(-300))
                     }
                     var s = Math.min(1, i.prt.tempVidStageWidth / y.originalW),
                         o = parseInt(s * y.originalH) - 2;
                     finalY = i.prt.controller_do.isShowed_bl ? parseInt(i.prt.tempVidStageHeight - i.prt.controller_do.h - y.originalH * s + 2 + o) : parseInt(i.prt.tempVidStageHeight - y.originalH * s + 2 + o), i.setY(finalY), y.resizeAndPosition(!0)
                 }, 100))
-            }, this.resizeAndPosition = function(e) {
+            },
+            this.resizeAndPosition = function(e) {
                 if (y.isLded && !y.isClsd && y.isShowed_bl) {
                     var t, s;
                     FWDUVPUtils.isIEAndLessThen9;
-                    s = Math.min(1, i.prt.tempVidStageWidth / y.originalW), y.finalW = parseInt(s * y.originalW), y.finalH = parseInt(s * y.originalH), y.finalW == y.prevFinalW && y.finalH == y.prevFinalH || (y.setWidth(y.finalW), y.setHeight(y.finalH), "image" == y.type ? (y.image_do.setWidth(y.finalW), y.image_do.setHeight(y.finalH)) : y.container && (y.container.setScale2(s), y.container.setX((y.finalW - y.originalW) / 2), y.container.setY((y.finalH - y.originalH) / 2)), t = i.prt.controller_do ? i.prt.controller_do.isShowed_bl ? parseInt(i.prt.tempVidStageHeight - i.prt.controller_do.h - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s), i.setX(parseInt((i.prt.tempVidStageWidth - y.finalW) / 2)), FWDAnimation.killTweensOf(i), e ? FWDAnimation.to(i, .8, {
+                    s = Math.min(1, i.prt.tempVidStageWidth / y.originalW),
+                    y.finalW = parseInt(s * y.originalW),
+                    y.finalH = parseInt(s * y.originalH),
+                    y.finalW == y.prevFinalW && y.finalH == y.prevFinalH || (y.setWidth(y.finalW),
+                                                                             y.setHeight(y.finalH),
+                                                                             "image" == y.type ? (y.image_do.setWidth(y.finalW),
+                                                                                                  y.image_do.setHeight(y.finalH))
+                                                                                               : y.container && (y.container.setScale2(s),
+                                                                                                 y.container.setX((y.finalW - y.originalW) / 2),
+                                                                                                 y.container.setY((y.finalH - y.originalH) / 2)),
+                    t = i.prt.controller_do ? i.prt.controller_do.isShowed_bl
+                                            ? parseInt(i.prt.tempVidStageHeight - i.prt.controller_do.h - y.originalH * s - 10)
+                                            : parseInt(i.prt.tempVidStageHeight - y.originalH * s - 10)
+                                            : parseInt(i.prt.tempVidStageHeight - y.originalH * s),
+                    i.setX(parseInt((i.prt.tempVidStageWidth - y.finalW) / 2)),
+                    FWDAnimation.killTweensOf(i),
+                    e ? FWDAnimation.to(i, .8, {
                         y: t,
                         ease: Expo.easeInOut
-                    }) : i.setY(t), y.clsBtn && (y.clsBtn.setY(5), y.clsBtn.setX(parseInt(y.finalW - 21 - 5))), y.prevFinalW = y.finalW, y.prevFinallH = y.finalH, i.setWidth(y.finalW), i.setHeight(y.finalH))
+                        })
+                      : i.setY(t),
+                    y.clsBtn && (y.clsBtn.setY(5), y.clsBtn.setX(parseInt(y.finalW - 21 - 5))),
+                    y.prevFinalW = y.finalW,
+                    y.prevFinallH = y.finalH,
+                    i.setWidth(y.finalW),
+                    i.setHeight(y.finalH))
                 }
             }, y.init()
         };
         v.setPrototype = function() {
             v.prototype = new FWDUVPDisplayObject("div", "absolute", "visible")
-        }, v.MOUSE_OVER = "onMouseOver", v.MOUSE_OUT = "onMouseOut", v.CLICK = "onClick", v.prototype = null, window.FWDUVPPopupAddButton = v
+        },
+        v.MOUSE_OVER = "onMouseOver",
+        v.MOUSE_OUT = "onMouseOut",
+        v.CLICK = "onClick",
+        v.prototype = null,
+        window.FWDUVPPopupAddButton = v
     }(window),
+
     function(e) {
         var s = function(o, e, t) {
             var i = this;
             s.prototype;
-            this.img_img = new Image, this.img_do = null, this.imgW = 0, this.imgH = 0, this.finalW = 0, this.finalH = 0, this.finalX = 0, this.finalY = 0, this.curPath_str, this.posterBackgroundColor_str = t, this.isTransparent_bl = !1, this.showPoster_bl = e, this.showOrLoadOnMobile_bl = !1, this.isShowed_bl = !0, this.allowToShow_bl = !0, this.isMbl = FWDUVPUtils.isMobile, this.init = function() {
-                i.img_img = new Image, i.img_do = new FWDUVPDisplayObject("img"), i.hide()
-            }, this.positionAndResize = function() {
+            this.img_img = new Image,
+            this.img_do = null,
+            this.imgW = 0,
+            this.imgH = 0,
+            this.finalW = 0,
+            this.finalH = 0,
+            this.finalX = 0,
+            this.finalY = 0,
+            this.curPath_str,
+            this.posterBackgroundColor_str = t,
+            this.isTransparent_bl = !1,
+            this.showPoster_bl = e,
+            this.showOrLoadOnMobile_bl = !1,
+            this.isShowed_bl = !0,
+            this.allowToShow_bl = !0,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.init = function() {
+                i.img_img = new Image,
+                i.img_do = new FWDUVPDisplayObject("img"),
+                i.hide()
+            },
+            this.positionAndResize = function() {
                 if (o.vidStageWidth && (i.setWidth(o.tempVidStageWidth), i.setHeight(o.tempVidStageHeight), i.imgW)) {
                     var e, t = o.tempVidStageWidth / i.imgW,
                         s = o.tempVidStageHeight / i.imgH;
-                    e = t <= s ? t : s, o.data.fillEntireposterScreen_bl && (e = s <= t ? t : s), i.finalW = Math.round(e * i.imgW), i.finalH = Math.round(e * i.imgH), i.finalX = parseInt((o.tempVidStageWidth - i.finalW) / 2), i.finalY = parseInt((o.tempVidStageHeight - i.finalH) / 2), i.img_do.setX(i.finalX), i.img_do.setY(i.finalY), i.img_do.setWidth(i.finalW), i.img_do.setHeight(i.finalH)
+                    e = t <= s ? t : s,
+                    o.data.fillEntireposterScreen_bl && (e = s <= t ? t : s),
+                    i.finalW = Math.round(e * i.imgW),
+                    i.finalH = Math.round(e * i.imgH),
+                    i.finalX = parseInt((o.tempVidStageWidth - i.finalW) / 2),
+                    i.finalY = parseInt((o.tempVidStageHeight - i.finalH) / 2),
+                    i.img_do.setX(i.finalX),
+                    i.img_do.setY(i.finalY),
+                    i.img_do.setWidth(i.finalW),
+                    i.img_do.setHeight(i.finalH)
                 }
             }, this.setPoster = function(e) {
                 if (i.id != o.id && e) {
-                    if (i.id = o.id, e && "" == FWDUVPUtils.trim(e) || "none" == e) return i.showOrLoadOnMobile_bl = !0, i.isTransparent_bl = !0, void i.show();
-                    if ("youtubemobile" == e) return i.isTransparent_bl = !1, i.showOrLoadOnMobile_bl = !1, i.img_img.src = null, void(i.imgW = 0);
-                    e == i.curPath_str ? (i.isTransparent_bl = !1, i.showOrLoadOnMobile_bl = !0) : i.isTransparent_bl = !1, i.isTransparent_bl ? i.getStyle().backgroundColor = "transparent" : i.getStyle().backgroundColor = i.posterBackgroundColor_str, i.isTransparent_bl = !1, i.showOrLoadOnMobile_bl = !0, i.curPath_str = e, i.allowToShow_bl && (i.isShowed_bl = !1);
+                    if (i.id = o.id, e && "" == FWDUVPUtils.trim(e) || "none" == e)
+                      return i.showOrLoadOnMobile_bl = !0,
+                             i.isTransparent_bl = !0,
+                             void i.show();
+                    if ("youtubemobile" == e)
+                       return i.isTransparent_bl = !1,
+                              i.showOrLoadOnMobile_bl = !1,
+                              i.img_img.src = null,
+                              void(i.imgW = 0);
+                    e == i.curPath_str ? (i.isTransparent_bl = !1, i.showOrLoadOnMobile_bl = !0)
+                                       : i.isTransparent_bl = !1,
+                    i.isTransparent_bl ? i.getStyle().backgroundColor = "transparent"
+                                       : i.getStyle().backgroundColor = i.posterBackgroundColor_str,
+                    i.isTransparent_bl = !1,
+                    i.showOrLoadOnMobile_bl = !0,
+                    i.curPath_str = e,
+                    i.allowToShow_bl && (i.isShowed_bl = !1);
                     try {
                         i.removeChild(i.img_do)
                     } catch (e) {}
-                    i.img_img = new Image, i.img_img.onload = i.posterLoadHandler, i.img_img.src = i.curPath_str
+                    i.img_img = new Image,
+                    i.img_img.onload = i.posterLoadHandler,
+                    i.img_img.src = i.curPath_str
                 }
-            }, this.posterLoadHandler = function(e) {
-                i.imgW = i.img_img.width, i.imgH = i.img_img.height, i.img_do.setScreen(i.img_img), i.addChild(i.img_do), i.positionAndResize(), i.isShowed_bl && i.show()
-            }, this.show = function(e) {
-                i.allowToShow_bl && !i.isShowed_bl && i.showOrLoadOnMobile_bl && (i.isShowed_bl = !0, i.isTransparent_bl ? 0 != i.alpha && i.setAlpha(0) : 1 != i.alpha && i.setAlpha(1), i.setVisible(!0), i.isMbl || i.isTransparent_bl || (FWDAnimation.killTweensOf(i), i.setAlpha(0), FWDAnimation.to(i, .6, {
+            },
+            this.posterLoadHandler = function(e) {
+                i.imgW = i.img_img.width,
+                i.imgH = i.img_img.height,
+                i.img_do.setScreen(i.img_img),
+                i.addChild(i.img_do),
+                i.positionAndResize(),
+                i.isShowed_bl && i.show()
+            },
+            this.show = function(e) {
+                i.allowToShow_bl && !i.isShowed_bl
+                                 && i.showOrLoadOnMobile_bl
+                                 && (i.isShowed_bl = !0,
+                i.isTransparent_bl ? 0 != i.alpha && i.setAlpha(0)
+                                   : 1 != i.alpha && i.setAlpha(1), i.setVisible(!0), i.isMbl || i.isTransparent_bl || (FWDAnimation.killTweensOf(i),
+                i.setAlpha(0),
+                FWDAnimation.to(i, .6, {
                     alpha: 1,
                     delay: .4
                 })), i.positionAndResize())
-            }, this.hide = function(e) {
+            },
+            this.hide = function(e) {
                 (i.isShowed_bl || e) && (FWDAnimation.killTweensOf(i), i.isShowed_bl = !1, i.setVisible(!1))
             }, this.init()
         };
         s.setPrototype = function() {
             s.prototype = new FWDUVPDisplayObject("div")
-        }, s.prototype = null, e.FWDUVPPoster = s
+        },
+        s.prototype = null,
+        e.FWDUVPPoster = s
     }(window),
+
     function(e) {
         var r = function(e, t, s, o, i, l, n) {
             var a = this;
             r.prototype;
-            a.main_do, a.preloaderPostion = t, a.backgroundColor = o, a.fillColor = i, a.radius = s, a.strokeSize = l, this.animDuration = n || 300, this.strtAngle = 270, this.countAnimation = 0, this.isShowed_bl = !0, this.slideshowAngle = {
+            a.main_do,
+            a.preloaderPostion = t,
+            a.backgroundColor = o,
+            a.fillColor = i,
+            a.radius = s,
+            a.strokeSize = l,
+            this.animDuration = n || 300,
+            this.strtAngle = 270,
+            this.countAnimation = 0,
+            this.isShowed_bl = !0,
+            this.slideshowAngle = {
                 n: 0
             }, this.init = function() {
-                a.main_do = new FWDUVPDisplayObject("div"), a.main_do.setOverflow("visible"), a.main_do.setWidth(2 * a.radius + a.strokeSize), a.main_do.setHeight(2 * a.radius + a.strokeSize), a.addChild(a.main_do), a.setOverflow("visible"), a.setWidth(2 * a.radius + a.strokeSize), a.setHeight(2 * a.radius + a.strokeSize), this.bkCanvas = new FWDUVPDisplayObject("canvas"), this.bkCanvasContext = this.bkCanvas.screen.getContext("2d"), this.fillCircleCanvas = new FWDUVPDisplayObject("canvas"), this.fillCircleCanvasContext = this.fillCircleCanvas.screen.getContext("2d"), a.main_do.screen.style.transformOrigin = "50% 50%", a.main_do.addChild(this.bkCanvas), a.main_do.addChild(this.fillCircleCanvas), a.drawBackground(), a.drawFill(), a.hide()
-            }, this.positionAndResize = function() {
-                "bottomleft" == a.preloaderPostion ? (a.setX(e.offsetPreloader), a.setY(e.sH - a.h - e.offsetPreloader)) : "bottomright" == a.preloaderPostion ? (a.setX(e.sW - a.w - e.offsetPreloader), a.setY(e.sH - a.h - e.offsetPreloader)) : "topright" == a.preloaderPostion ? (a.setX(e.sW - a.w - e.offsetPreloader), a.setY(e.offsetPreloader)) : "topleft" == a.preloaderPostion ? (a.setX(e.offsetPreloader), a.setY(e.offsetPreloader)) : "center" == a.preloaderPostion && (a.setX(Math.round(e.sW - a.w) / 2), a.setY(Math.round(Math.min(e.sH, e.viewportSize.h) - a.h) / 2))
-            }, this.drawBackground = function() {
-                this.bkCanvas.screen.width = 2 * this.radius + 2 * a.strokeSize, this.bkCanvas.screen.height = 2 * this.radius + 2 * a.strokeSize, this.bkCanvasContext.lineWidth = this.thicknessSize, this.bkCanvasContext.translate(a.strokeSize / 2, a.strokeSize / 2), this.bkCanvasContext.shadowColor = "#333333", this.bkCanvasContext.shadowBlur = 1, this.bkCanvasContext.lineWidth = a.strokeSize, this.bkCanvasContext.strokeStyle = this.backgroundColor, this.bkCanvasContext.beginPath(), this.bkCanvasContext.arc(this.radius, this.radius, this.radius, Math.PI / 180 * 0, Math.PI / 180 * 360, !1), this.bkCanvasContext.stroke(), this.bkCanvasContext.closePath()
-            }, this.drawFill = function() {
-                a.fillCircleCanvas.screen.width = 2 * a.radius + 2 * a.strokeSize, a.fillCircleCanvas.screen.height = 2 * a.radius + 2 * a.strokeSize, a.fillCircleCanvasContext.lineWidth = a.thicknessSize, a.fillCircleCanvasContext.translate(a.strokeSize / 2, a.strokeSize / 2), a.fillCircleCanvasContext.lineWidth = a.strokeSize, a.fillCircleCanvasContext.strokeStyle = a.fillColor, a.fillCircleCanvasContext.beginPath(), a.fillCircleCanvasContext.arc(a.radius, a.radius, a.radius, Math.PI / 180 * a.strtAngle, Math.PI / 180 * (a.strtAngle + a.slideshowAngle.n), !1), a.fillCircleCanvasContext.stroke(), a.fillCircleCanvasContext.closePath()
-            }, this.startSlideshow = function() {
+                a.main_do = new FWDUVPDisplayObject("div"),
+                a.main_do.setOverflow("visible"),
+                a.main_do.setWidth(2 * a.radius + a.strokeSize),
+                a.main_do.setHeight(2 * a.radius + a.strokeSize),
+                a.addChild(a.main_do),
+                a.setOverflow("visible"),
+                a.setWidth(2 * a.radius + a.strokeSize),
+                a.setHeight(2 * a.radius + a.strokeSize),
+                this.bkCanvas = new FWDUVPDisplayObject("canvas"),
+                this.bkCanvasContext = this.bkCanvas.screen.getContext("2d"),
+                this.fillCircleCanvas = new FWDUVPDisplayObject("canvas"),
+                this.fillCircleCanvasContext = this.fillCircleCanvas.screen.getContext("2d"),
+                a.main_do.screen.style.transformOrigin = "50% 50%",
+                a.main_do.addChild(this.bkCanvas),
+                a.main_do.addChild(this.fillCircleCanvas),
+                a.drawBackground(),
+                a.drawFill(),
+                a.hide()
+            },
+            this.positionAndResize = function() {
+                "bottomleft" == a.preloaderPostion ? (a.setX(e.offsetPreloader), a.setY(e.sH - a.h - e.offsetPreloader))
+                                                   : "bottomright" == a.preloaderPostion
+                                                   ? (a.setX(e.sW - a.w - e.offsetPreloader),
+                                                      a.setY(e.sH - a.h - e.offsetPreloader))
+                                                   : "topright" == a.preloaderPostion
+                                                   ? (a.setX(e.sW - a.w - e.offsetPreloader), a.setY(e.offsetPreloader))
+                                                   : "topleft" == a.preloaderPostion
+                                                   ? (a.setX(e.offsetPreloader), a.setY(e.offsetPreloader))
+                                                   : "center" == a.preloaderPostion && (a.setX(Math.round(e.sW - a.w) / 2),
+                                                      a.setY(Math.round(Math.min(e.sH, e.viewportSize.h) - a.h) / 2))
+            },
+            this.drawBackground = function() {
+                this.bkCanvas.screen.width = 2 * this.radius + 2 * a.strokeSize,
+                this.bkCanvas.screen.height = 2 * this.radius + 2 * a.strokeSize,
+                this.bkCanvasContext.lineWidth = this.thicknessSize,
+                this.bkCanvasContext.translate(a.strokeSize / 2, a.strokeSize / 2),
+                this.bkCanvasContext.shadowColor = "#333333",
+                this.bkCanvasContext.shadowBlur = 1,
+                this.bkCanvasContext.lineWidth = a.strokeSize,
+                this.bkCanvasContext.strokeStyle = this.backgroundColor,
+                this.bkCanvasContext.beginPath(),
+                this.bkCanvasContext.arc(this.radius, this.radius, this.radius, Math.PI / 180 * 0, Math.PI / 180 * 360, !1),
+                this.bkCanvasContext.stroke(),
+                this.bkCanvasContext.closePath()
+            },
+            this.drawFill = function() {
+                a.fillCircleCanvas.screen.width = 2 * a.radius + 2 * a.strokeSize,
+                a.fillCircleCanvas.screen.height = 2 * a.radius + 2 * a.strokeSize,
+                a.fillCircleCanvasContext.lineWidth = a.thicknessSize,
+                a.fillCircleCanvasContext.translate(a.strokeSize / 2, a.strokeSize / 2),
+                a.fillCircleCanvasContext.lineWidth = a.strokeSize,
+                a.fillCircleCanvasContext.strokeStyle = a.fillColor,
+                a.fillCircleCanvasContext.beginPath(),
+                a.fillCircleCanvasContext.arc(a.radius,
+                                              a.radius,
+                                              a.radius,
+                                              Math.PI / 180 * a.strtAngle,
+                                              Math.PI / 180 * (a.strtAngle + a.slideshowAngle.n), !1),
+                a.fillCircleCanvasContext.stroke(),
+                a.fillCircleCanvasContext.closePath()
+            },
+            this.startSlideshow = function() {
                 null != a && (FWDAnimation.killTweensOf(a.slideshowAngle), FWDAnimation.to(a.slideshowAngle, a.animDuration, {
                     n: 360,
                     onUpdate: a.drawFill,
@@ -8200,8 +8854,11 @@ var FWDUVPAddress = new function() {
                     rotation: 360,
                     repeat: 100
                 })
-            }, this.stopPreloader = function() {
-                FWDAnimation.killTweensOf(a.slideshowAngle), FWDAnimation.killTweensOf(a.main_do.screen), FWDAnimation.to(a.main_do.screen, 1e-5, {
+            },
+            this.stopPreloader = function() {
+                FWDAnimation.killTweensOf(a.slideshowAngle),
+                FWDAnimation.killTweensOf(a.main_do.screen),
+                FWDAnimation.to(a.main_do.screen, 1e-5, {
                     rotation: 0
                 })
             }, this.show = function() {
@@ -8220,16 +8877,36 @@ var FWDUVPAddress = new function() {
         };
         r.setPrototype = function() {
             r.prototype = new FWDUVPDisplayObject("div")
-        }, r.HIDE_COMPLETE = "hideComplete", r.prototype = null, e.FWDUVPPreloader = r
+        },
+        r.HIDE_COMPLETE = "hideComplete",
+        r.prototype = null,
+        e.FWDUVPPreloader = r
     }(window),
+
     function(e) {
         var n = function(e, t, s, o, i) {
             var l = this;
             n.prototype;
-            this.imageSource_img = e, this.image_sdo = null, this.segmentWidth = t, this.segmentHeight = s, this.totalSegments = o, this.animDelay = i || 300, this.count = 0, this.delayTimerId_int, this.isShowed_bl = !1, this.init = function() {
-                l.setWidth(l.segmentWidth), l.setHeight(l.segmentHeight), l.image_sdo = new FWDUVPDisplayObject("img"), l.image_sdo.setScreen(l.imageSource_img), l.addChild(l.image_sdo), l.hide(!1)
-            }, this.start = function() {
-                null != l && (clearInterval(l.delayTimerId_int), l.delayTimerId_int = setInterval(l.updatePreloader, l.animDelay))
+            this.imageSource_img = e,
+            this.image_sdo = null,
+            this.segmentWidth = t,
+            this.segmentHeight = s,
+            this.totalSegments = o,
+            this.animDelay = i || 300,
+            this.count = 0,
+            this.delayTimerId_int,
+            this.isShowed_bl = !1,
+            this.init = function() {
+                l.setWidth(l.segmentWidth),
+                l.setHeight(l.segmentHeight),
+                l.image_sdo = new FWDUVPDisplayObject("img"),
+                l.image_sdo.setScreen(l.imageSource_img),
+                l.addChild(l.image_sdo),
+                l.hide(!1)
+            },
+            this.start = function() {
+                null != l && (clearInterval(l.delayTimerId_int),
+                              l.delayTimerId_int = setInterval(l.updatePreloader, l.animDelay))
             }, this.stop = function() {
                 clearInterval(l.delayTimerId_int)
             }, this.updatePreloader = function() {
@@ -8254,19 +8931,67 @@ var FWDUVPAddress = new function() {
         };
         n.setPrototype = function() {
             n.prototype = new FWDUVPDisplayObject("div")
-        }, n.HIDE_COMPLETE = "hideComplete", n.prototype = null, e.FWDUVPPreloader2 = n
+        },
+        n.HIDE_COMPLETE = "hideComplete",
+        n.prototype = null,
+        e.FWDUVPPreloader2 = n
     }(window),
+
     function(e) {
         var t = function(e, i) {
             var l = this;
             t.prototype;
-            this.prt = e, this.main_do = null, this.reader = null, this.subtitiles_ar = null, this.totalAds = 0, l.popupAds_ar, l.popupAdsButtons_ar, this.hasText_bl = !1, this.isLded = !1, this.isMbl = FWDUVPUtils.isMobile, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.showSubByDflt = i.showSubByDflt, l.nBC = i.nBC, l.sBC = i.sBC, this.setSizeOnce_bl = !1, l.init = function() {
-                -1 != i.sknPth.indexOf("hex_white") && (l.sBC = "#FFFFFF"), l.setOverflow("visible"), l.getStyle().cursor = "default", l.setVisible(!1)
-            }, this.resetPopups = function(e, t) {
+            this.prt = e,
+            this.main_do = null,
+            this.reader = null,
+            this.subtitiles_ar = null,
+            this.totalAds = 0,
+            l.popupAds_ar,
+            l.popupAdsButtons_ar,
+            this.hasText_bl = !1,
+            this.isLded = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.showSubByDflt = i.showSubByDflt,
+            l.nBC = i.nBC,
+            l.sBC = i.sBC,
+            this.setSizeOnce_bl = !1,
+            l.init = function() {
+                -1 != i.sknPth.indexOf("hex_white") && (l.sBC = "#FFFFFF"),
+                l.setOverflow("visible"),
+                l.getStyle().cursor = "default",
+                l.setVisible(!1)
+            },
+            this.resetPopups = function(e, t) {
                 if (l.id != t) {
                     var s;
-                    l.hideAllPopupButtons(!0), l.popupAds_ar = e, l.totalAds = l.popupAds_ar.length, l.popupAdsButtons_ar = [];
-                    for (var o = 0; o < l.totalAds; o++) FWDUVPPopupAddButton.setPrototype(), s = new FWDUVPPopupAddButton(l, l.popupAds_ar[o].source, l.popupAds_ar[o].timeStart, l.popupAds_ar[o].timeEnd, l.popupAds_ar[o].link, l.popupAds_ar[o].trget, l.popupAds_ar[o].isClosed, o, l.popupAds_ar[o].google_ad_client, l.popupAds_ar[o].google_ad_slot, l.popupAds_ar[o].google_ad_width, l.popupAds_ar[o].google_ad_height, l.popupAds_ar[o].tracking, i.poppAdClsNPth, i.poppAdClsSPth, i.shwPpoppAdClsBtn, i.useHEX, l.nBC, l.sBC), l.popupAdsButtons_ar[o] = s, l.addChild(s)
+                    l.hideAllPopupButtons(!0),
+                    l.popupAds_ar = e,
+                    l.totalAds = l.popupAds_ar.length,
+                    l.popupAdsButtons_ar = [];
+                    for (var o = 0; o < l.totalAds; o++)
+                      FWDUVPPopupAddButton.setPrototype(),
+                      s = new FWDUVPPopupAddButton(l,
+                                                   l.popupAds_ar[o].source,
+                                                   l.popupAds_ar[o].timeStart,
+                                                   l.popupAds_ar[o].timeEnd,
+                                                   l.popupAds_ar[o].link,
+                                                   l.popupAds_ar[o].trget,
+                                                   l.popupAds_ar[o].isClosed,
+                                                   o,
+                                                   l.popupAds_ar[o].google_ad_client,
+                                                   l.popupAds_ar[o].google_ad_slot,
+                                                   l.popupAds_ar[o].google_ad_width,
+                                                   l.popupAds_ar[o].google_ad_height,
+                                                   l.popupAds_ar[o].tracking,
+                                                   i.poppAdClsNPth,
+                                                   i.poppAdClsSPth,
+                                                   i.shwPpoppAdClsBtn,
+                                                   i.useHEX,
+                                                   l.nBC,
+                                                   l.sBC),
+                      l.popupAdsButtons_ar[o] = s,
+                      l.addChild(s)
                 }
             }, this.update = function(e) {
                 if (0 != l.totalAds)
@@ -8285,16 +9010,65 @@ var FWDUVPAddress = new function() {
         };
         t.setPrototype = function() {
             t.prototype = new FWDUVPDisplayObject("div")
-        }, t.LOAD_ERROR = "error", t.LOAD_COMPLETE = "complete", t.prototype = null, e.FWDUVPPupupAds = t
+        },
+        t.LOAD_ERROR = "error",
+        t.LOAD_COMPLETE = "complete",
+        t.prototype = null,
+        e.FWDUVPPupupAds = t
     }(window),
+
     function(e) {
         var n = function(e, t, s, o, i) {
             var l = this;
             n.prototype;
-            this.buttonRef_do = e, this.bkColor = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = s, this.toolTipLabel_str = o, this.toolTipsButtonsHideDelay = 1e3 * i, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMbl = FWDUVPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-                l.setOverflow("visible"), l.screen.className = "UVP-tooltip-bk", l.setupMainContainers(), l.setLabel(o), l.hide(), l.setVisible(!1), l.getStyle().backgroundColor = l.bkColor, l.getStyle().zIndex = 9999999999999, l.getStyle().pointerEvents = "none"
+            this.buttonRef_do = e,
+            this.bkColor = t,
+            this.text_do = null,
+            this.pointer_do = null,
+            this.fontColor_str = s,
+            this.toolTipLabel_str = o,
+            this.toolTipsButtonsHideDelay = 1e3 * i,
+            this.pointerWidth = 7,
+            this.pointerHeight = 4,
+            this.showWithDelayId_to,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.isShowed_bl = !0,
+            this.init = function() {
+                l.setOverflow("visible"),
+                l.screen.className = "UVP-tooltip-bk",
+                l.setupMainContainers(),
+                l.setLabel(o),
+                l.hide(),
+                l.setVisible(!1),
+                l.getStyle().backgroundColor = l.bkColor,
+                l.getStyle().zIndex = 9999999999999,
+                l.getStyle().pointerEvents = "none"
             }, this.setupMainContainers = function() {
-                l.pointerHolder_do = new FWDUVPDisplayObject("div"), l.pointerHolder_do.setOverflow("visible"), l.addChild(l.pointerHolder_do), l.text_do = new FWDUVPDisplayObject("div"), l.text_do.screen.className = "UVP-tooltip-text", l.text_do.hasTransform3d_bl = !1, l.text_do.hasTransform2d_bl = !1, l.text_do.setBackfaceVisibility(), l.text_do.setDisplay("inline-block"), l.text_do.getStyle().fontFamily = "Arial", l.text_do.getStyle().fontSize = "12px", l.text_do.getStyle().color = l.fontColor_str, l.text_do.getStyle().whiteSpace = "nowrap", l.text_do.getStyle().fontSmoothing = "antialiased", l.text_do.getStyle().webkitFontSmoothing = "antialiased", l.text_do.getStyle().textRendering = "optimizeLegibility", l.text_do.getStyle().padding = "6px", l.text_do.getStyle().paddingTop = "4px", l.text_do.getStyle().paddingBottom = "4px", l.addChild(l.text_do), l.pointer_do = new FWDUVPDisplayObject("div"), l.pointer_do.screen.className = "UVP-scrubber-pointer", l.pointer_do.setBkColor(l.bkColor), l.pointer_do.screen.style = "border: 4px solid transparent; border-top-color: " + l.bkColor + ";", l.pointerHolder_do.addChild(l.pointer_do)
+                l.pointerHolder_do = new FWDUVPDisplayObject("div"),
+                l.pointerHolder_do.setOverflow("visible"),
+                l.addChild(l.pointerHolder_do),
+                l.text_do = new FWDUVPDisplayObject("div"),
+                l.text_do.screen.className = "UVP-tooltip-text",
+                l.text_do.hasTransform3d_bl = !1,
+                l.text_do.hasTransform2d_bl = !1,
+                l.text_do.setBackfaceVisibility(),
+                l.text_do.setDisplay("inline-block"),
+                l.text_do.getStyle().fontFamily = "Arial",
+                l.text_do.getStyle().fontSize = "12px",
+                l.text_do.getStyle().color = l.fontColor_str,
+                l.text_do.getStyle().whiteSpace = "nowrap",
+                l.text_do.getStyle().fontSmoothing = "antialiased",
+                l.text_do.getStyle().webkitFontSmoothing = "antialiased",
+                l.text_do.getStyle().textRendering = "optimizeLegibility",
+                l.text_do.getStyle().padding = "6px",
+                l.text_do.getStyle().paddingTop = "4px",
+                l.text_do.getStyle().paddingBottom = "4px",
+                l.addChild(l.text_do),
+                l.pointer_do = new FWDUVPDisplayObject("div"),
+                l.pointer_do.screen.className = "UVP-scrubber-pointer",
+                l.pointer_do.setBkColor(l.bkColor),
+                l.pointer_do.screen.style = "border: 4px solid transparent; border-top-color: " + l.bkColor + ";",
+                l.pointerHolder_do.addChild(l.pointer_do)
             }, this.setLabel = function(e) {
                 void 0 !== e && (l.text_do.setInnerHTML(e), setTimeout(function() {
                     null != l && (l.setWidth(l.text_do.getWidth()), l.setHeight(l.text_do.getHeight()), l.positionPointer())
