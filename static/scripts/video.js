@@ -7563,23 +7563,161 @@ var FWDUVPAddress = new function() {
         };
         t.setPrototype = function() {
             t.prototype = new FWDUVPDisplayObject("div")
-        }, t.HIDE_COMPLETE = "hideComplete", t.prototype = null, e.FWDUVPOPWindow = t
+        },
+        t.HIDE_COMPLETE = "hideComplete",
+        t.prototype = null,
+        e.FWDUVPOPWindow = t
     }(window),
+
     function(e) {
         var s = function(e, t) {
             var o = this;
             s.prototype;
-            this.xhr = null, this.passColoseN_img = e.passColoseN_img, this.privateVideoPassword_str = e.privateVideoPassword_str, this.bk_do = null, this.mainHld = null, this.passMainHolder_do = null, this.passMainHldBk = null, this.passMainLbl = null, this.passLbl = null, this.passInpt = null, this.clsBtn = null, this.embedWindowBackground_str = e.embedWindowBackground_str, this.secondaryLabelsColor_str = e.secondaryLabelsColor_str, this.inputColor_str = e.inputColor_str, this.mainLabelsColor_str = e.mainLabelsColor_str, this.passButtonNPath_str = e.passButtonNPath_str, this.passButtonSPath_str = e.passButtonSPath_str, this.inputBackgroundColor_str = e.inputBackgroundColor_str, this.borderColor_str = e.borderColor_str, this.maxTextWidth = 0, this.totalWidth = 0, this.sW = 0, this.sH = 0, this.buttonWidth = 28, this.buttonHeight = 19, this.embedWindowCloseButtonMargins = e.embedWindowCloseButtonMargins, this.finalEmbedPath_str = null, this.isShowed_bl = !1, this.isMbl = FWDUVPUtils.isMobile, this.init = function() {
-                o.setBackfaceVisibility(), o.mainHld = new FWDUVPDisplayObject("div"), o.mainHld.hasTransform3d_bl = !1, o.mainHld.hasTransform2d_bl = !1, o.mainHld.setBackfaceVisibility(), o.bk_do = new FWDUVPDisplayObject("div"), o.bk_do.getStyle().width = "100%", o.bk_do.getStyle().height = "100%", o.bk_do.setAlpha(.9), o.bk_do.getStyle().background = "url('" + o.embedWindowBackground_str + "')", o.passMainHolder_do = new FWDUVPDisplayObject("div"), o.passMainHldBk = new FWDUVPDisplayObject("div"), o.passMainHldBk.getStyle().background = "url('" + o.embedWindowBackground_str + "')", o.passMainHldBk.getStyle().borderStyle = "solid", o.passMainHldBk.getStyle().borderWidth = "1px", o.passMainHldBk.getStyle().borderColor = o.borderColor_str, o.passMainLbl = new FWDUVPDisplayObject("div"), o.passMainLbl.screen.className = "UVP-main-label", o.passMainLbl.setBackfaceVisibility(), o.passMainLbl.getStyle().fontFamily = "Arial", o.passMainLbl.getStyle().fontSize = "12px", o.passMainLbl.getStyle().color = o.mainLabelsColor_str, o.passMainLbl.getStyle().whiteSpace = "nowrap", o.passMainLbl.getStyle().fontSmoothing = "antialiased", o.passMainLbl.getStyle().webkitFontSmoothing = "antialiased", o.passMainLbl.getStyle().textRendering = "optimizeLegibility", o.passMainLbl.getStyle().padding = "0px", o.passMainLbl.setInnerHTML("PRIVATE VIDEO"), o.passLbl = new FWDUVPDisplayObject("div"), o.passLbl.screen.className = "UVP-secnd-label", o.passLbl.setBackfaceVisibility(), o.passLbl.getStyle().fontFamily = "Arial", o.passLbl.getStyle().fontSize = "12px", o.passLbl.getStyle().color = o.secondaryLabelsColor_str, o.passLbl.getStyle().whiteSpace = "nowrap", o.passLbl.getStyle().fontSmoothing = "antialiased", o.passLbl.getStyle().webkitFontSmoothing = "antialiased", o.passLbl.getStyle().textRendering = "optimizeLegibility", o.passLbl.getStyle().padding = "0px", o.passLbl.setInnerHTML("Please enter password:"), o.passInpt = new FWDUVPDisplayObject("input"), o.passInpt.screen.className = "UVP-embed-inpt", o.passInpt.setBackfaceVisibility(), o.passInpt.getStyle().fontFamily = "Arial", o.passInpt.getStyle().fontSize = "12px", o.passInpt.getStyle().backgroundColor = o.inputBackgroundColor_str, o.passInpt.getStyle().color = o.inputColor_str, o.passInpt.getStyle().outline = 0, o.passInpt.getStyle().whiteSpace = "nowrap", o.passInpt.getStyle().fontSmoothing = "antialiased", o.passInpt.getStyle().webkitFontSmoothing = "antialiased", o.passInpt.getStyle().textRendering = "optimizeLegibility", o.passInpt.getStyle().padding = "6px", o.passInpt.getStyle().paddingTop = "4px", o.passInpt.getStyle().paddingBottom = "4px", o.passInpt.screen.setAttribute("type", "password"), FWDUVPSimpleSizeButton.setPrototype(), o.passBtn = new FWDUVPSimpleSizeButton(o.passButtonNPath_str, o.passButtonSPath_str, o.buttonWidth, o.buttonHeight, e.useHEX, e.nBC, e.sBC, !0), o.passBtn.addListener(FWDUVPSimpleSizeButton.MOUSE_UP, o.passClickHandler), o.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), o.clsBtn = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<div class='table-fwduvp-button'><span class='table-cell-fwduvp-button icon-close'></span></div>", void 0, "UVPCloseButtonNormalState", "UVPCloseButtonSelectedState")) : (FWDUVPSimpleButton.setPrototype(), o.clsBtn = new FWDUVPSimpleButton(o.passColoseN_img, e.embedWindowClosePathS_str, void 0, !0, e.useHEX, e.nBC, e.sBC, !1, !1, !1, !1, !0)), o.clsBtn.addListener(FWDUVPSimpleButton.MOUSE_UP, o.closeButtonOnMouseUpHandler), o.addChild(o.mainHld), o.mainHld.addChild(o.bk_do), o.passMainHolder_do.addChild(o.passMainHldBk), o.passMainHolder_do.addChild(o.passMainLbl), o.passMainHolder_do.addChild(o.passLbl), o.passMainHolder_do.addChild(o.passInpt), o.passMainHolder_do.addChild(o.passBtn), o.mainHld.addChild(o.passMainHolder_do), o.mainHld.addChild(o.clsBtn)
+            this.xhr = null,
+            this.passColoseN_img = e.passColoseN_img,
+            this.privateVideoPassword_str = e.privateVideoPassword_str,
+            this.bk_do = null,
+            this.mainHld = null,
+            this.passMainHolder_do = null,
+            this.passMainHldBk = null,
+            this.passMainLbl = null,
+            this.passLbl = null,
+            this.passInpt = null,
+            this.clsBtn = null,
+            this.embedWindowBackground_str = e.embedWindowBackground_str,
+            this.secondaryLabelsColor_str = e.secondaryLabelsColor_str,
+            this.inputColor_str = e.inputColor_str,
+            this.mainLabelsColor_str = e.mainLabelsColor_str,
+            this.passButtonNPath_str = e.passButtonNPath_str,
+            this.passButtonSPath_str = e.passButtonSPath_str,
+            this.inputBackgroundColor_str = e.inputBackgroundColor_str,
+            this.borderColor_str = e.borderColor_str,
+            this.maxTextWidth = 0,
+            this.totalWidth = 0,
+            this.sW = 0,
+            this.sH = 0,
+            this.buttonWidth = 28,
+            this.buttonHeight = 19,
+            this.embedWindowCloseButtonMargins = e.embedWindowCloseButtonMargins,
+            this.finalEmbedPath_str = null,
+            this.isShowed_bl = !1,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.init = function() {
+                o.setBackfaceVisibility(),
+                o.mainHld = new FWDUVPDisplayObject("div"),
+                o.mainHld.hasTransform3d_bl = !1,
+                o.mainHld.hasTransform2d_bl = !1,
+                o.mainHld.setBackfaceVisibility(),
+                o.bk_do = new FWDUVPDisplayObject("div"),
+                o.bk_do.getStyle().width = "100%",
+                o.bk_do.getStyle().height = "100%",
+                o.bk_do.setAlpha(.9),
+                o.bk_do.getStyle().background = "url('" + o.embedWindowBackground_str + "')",
+                o.passMainHolder_do = new FWDUVPDisplayObject("div"),
+                o.passMainHldBk = new FWDUVPDisplayObject("div"),
+                o.passMainHldBk.getStyle().background = "url('" + o.embedWindowBackground_str + "')",
+                o.passMainHldBk.getStyle().borderStyle = "solid",
+                o.passMainHldBk.getStyle().borderWidth = "1px",
+                o.passMainHldBk.getStyle().borderColor = o.borderColor_str,
+                o.passMainLbl = new FWDUVPDisplayObject("div"),
+                o.passMainLbl.screen.className = "UVP-main-label",
+                o.passMainLbl.setBackfaceVisibility(),
+                o.passMainLbl.getStyle().fontFamily = "Arial",
+                o.passMainLbl.getStyle().fontSize = "12px",
+                o.passMainLbl.getStyle().color = o.mainLabelsColor_str,
+                o.passMainLbl.getStyle().whiteSpace = "nowrap",
+                o.passMainLbl.getStyle().fontSmoothing = "antialiased",
+                o.passMainLbl.getStyle().webkitFontSmoothing = "antialiased",
+                o.passMainLbl.getStyle().textRendering = "optimizeLegibility",
+                o.passMainLbl.getStyle().padding = "0px",
+                o.passMainLbl.setInnerHTML("PRIVATE VIDEO"),
+                o.passLbl = new FWDUVPDisplayObject("div"),
+                o.passLbl.screen.className = "UVP-secnd-label",
+                o.passLbl.setBackfaceVisibility(),
+                o.passLbl.getStyle().fontFamily = "Arial",
+                o.passLbl.getStyle().fontSize = "12px",
+                o.passLbl.getStyle().color = o.secondaryLabelsColor_str,
+                o.passLbl.getStyle().whiteSpace = "nowrap",
+                o.passLbl.getStyle().fontSmoothing = "antialiased",
+                o.passLbl.getStyle().webkitFontSmoothing = "antialiased",
+                o.passLbl.getStyle().textRendering = "optimizeLegibility",
+                o.passLbl.getStyle().padding = "0px",
+                o.passLbl.setInnerHTML("Please enter password:"),
+                o.passInpt = new FWDUVPDisplayObject("input"),
+                o.passInpt.screen.className = "UVP-embed-inpt",
+                o.passInpt.setBackfaceVisibility(),
+                o.passInpt.getStyle().fontFamily = "Arial",
+                o.passInpt.getStyle().fontSize = "12px",
+                o.passInpt.getStyle().backgroundColor = o.inputBackgroundColor_str,
+                o.passInpt.getStyle().color = o.inputColor_str,
+                o.passInpt.getStyle().outline = 0,
+                o.passInpt.getStyle().whiteSpace = "nowrap",
+                o.passInpt.getStyle().fontSmoothing = "antialiased",
+                o.passInpt.getStyle().webkitFontSmoothing = "antialiased",
+                o.passInpt.getStyle().textRendering = "optimizeLegibility",
+                o.passInpt.getStyle().padding = "6px",
+                o.passInpt.getStyle().paddingTop = "4px",
+                o.passInpt.getStyle().paddingBottom = "4px",
+                o.passInpt.screen.setAttribute("type", "password"),
+                FWDUVPSimpleSizeButton.setPrototype(),
+                o.passBtn = new FWDUVPSimpleSizeButton(o.passButtonNPath_str, o.passButtonSPath_str, o.buttonWidth, o.buttonHeight, e.useHEX, e.nBC, e.sBC, !0),
+                o.passBtn.addListener(FWDUVPSimpleSizeButton.MOUSE_UP, o.passClickHandler),
+                o.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                       o.clsBtn = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<div class='table-fwduvp-button'><span class='table-cell-fwduvp-button icon-close'></span></div>", void 0, "UVPCloseButtonNormalState", "UVPCloseButtonSelectedState"))
+                                    : (FWDUVPSimpleButton.setPrototype(),
+                                       o.clsBtn = new FWDUVPSimpleButton(o.passColoseN_img, e.embedWindowClosePathS_str, void 0, !0, e.useHEX, e.nBC, e.sBC, !1, !1, !1, !1, !0)),
+                o.clsBtn.addListener(FWDUVPSimpleButton.MOUSE_UP, o.closeButtonOnMouseUpHandler),
+                o.addChild(o.mainHld),
+                o.mainHld.addChild(o.bk_do),
+                o.passMainHolder_do.addChild(o.passMainHldBk),
+                o.passMainHolder_do.addChild(o.passMainLbl),
+                o.passMainHolder_do.addChild(o.passLbl),
+                o.passMainHolder_do.addChild(o.passInpt),
+                o.passMainHolder_do.addChild(o.passBtn),
+                o.mainHld.addChild(o.passMainHolder_do),
+                o.mainHld.addChild(o.clsBtn)
             }, this.closeButtonOnMouseUpHandler = function() {
                 o.isShowed_bl && o.hide()
-            }, this.positionAndResize = function() {
-                o.sW = t.sW, o.sH = t.sH, o.maxTextWidth = Math.min(o.sW - 150, 300), o.totalWidth = o.maxTextWidth + o.buttonWidth, o.positionFinal(), o.clsBtn.setX(o.sW - o.clsBtn.w - o.embedWindowCloseButtonMargins), o.clsBtn.setY(o.embedWindowCloseButtonMargins), o.setWidth(o.sW), o.setHeight(o.sH), o.mainHld.setWidth(o.sW), o.mainHld.setHeight(o.sH)
-            }, this.positionFinal = function() {
+            },
+            this.positionAndResize = function() {
+                o.sW = t.sW,
+                o.sH = t.sH,
+                o.maxTextWidth = Math.min(o.sW - 150, 300),
+                o.totalWidth = o.maxTextWidth + o.buttonWidth,
+                o.positionFinal(),
+                o.clsBtn.setX(o.sW - o.clsBtn.w - o.embedWindowCloseButtonMargins),
+                o.clsBtn.setY(o.embedWindowCloseButtonMargins),
+                o.setWidth(o.sW),
+                o.setHeight(o.sH),
+                o.mainHld.setWidth(o.sW),
+                o.mainHld.setHeight(o.sH)
+            },
+            this.positionFinal = function() {
                 var e, t, s = o.passLbl.getHeight();
-                t = o.passMainLbl.getHeight(), o.passMainLbl.setX(16), o.passLbl.setX(16), o.passLbl.setY(t + 14), o.passInpt.setX(10), o.passInpt.setWidth(parseInt(o.totalWidth - 40 - o.buttonWidth)), o.passInpt.setY(o.passLbl.y + s + 5), o.passBtn.setX(10 + o.passInpt.w + 20), o.passBtn.setY(o.passLbl.y + s + 6), o.passMainHldBk.setY(o.passLbl.y - 9), o.passMainHldBk.setWidth(o.totalWidth - 2), o.passMainHldBk.setHeight(o.passBtn.y + o.passBtn.h - 9), o.passMainHolder_do.setWidth(o.totalWidth), o.passMainHolder_do.setHeight(o.passBtn.y + o.passBtn.h + 14), o.passMainHolder_do.setX(Math.round((o.sW - o.totalWidth) / 2)), e = o.passMainHldBk.getHeight(), o.passMainHolder_do.setY(Math.round((o.sH - e) / 2) - 10)
-            }, this.passClickHandler = function() {
-                o.privateVideoPassword_str = e.privateVideoPassword_str, t.playlistPass && (o.privateVideoPassword_str = e.playlistPass), e.playlist_ar[t.id].privateVideoPassword_str && (o.privateVideoPassword_str = e.playlist_ar[t.id].privateVideoPassword_str), o.privateVideoPassword_str == FWDUVPUtils.MD5(o.passInpt.screen.value) ? (t.playlistPass = void 0, s.isCorect = !0, o.dispatchEvent(s.CORRECT)) : FWDAnimation.isTweening(o.passInpt.screen) || FWDAnimation.to(o.passInpt.screen, .1, {
+                t = o.passMainLbl.getHeight(),
+                o.passMainLbl.setX(16),
+                o.passLbl.setX(16),
+                o.passLbl.setY(t + 14),
+                o.passInpt.setX(10),
+                o.passInpt.setWidth(parseInt(o.totalWidth - 40 - o.buttonWidth)),
+                o.passInpt.setY(o.passLbl.y + s + 5),
+                o.passBtn.setX(10 + o.passInpt.w + 20),
+                o.passBtn.setY(o.passLbl.y + s + 6),
+                o.passMainHldBk.setY(o.passLbl.y - 9),
+                o.passMainHldBk.setWidth(o.totalWidth - 2),
+                o.passMainHldBk.setHeight(o.passBtn.y + o.passBtn.h - 9),
+                o.passMainHolder_do.setWidth(o.totalWidth),
+                o.passMainHolder_do.setHeight(o.passBtn.y + o.passBtn.h + 14),
+                o.passMainHolder_do.setX(Math.round((o.sW - o.totalWidth) / 2)),
+                e = o.passMainHldBk.getHeight(),
+                o.passMainHolder_do.setY(Math.round((o.sH - e) / 2) - 10)
+            },
+            this.passClickHandler = function() {
+                o.privateVideoPassword_str = e.privateVideoPassword_str,
+                t.playlistPass && (o.privateVideoPassword_str = e.playlistPass),
+                e.playlist_ar[t.id].privateVideoPassword_str && (o.privateVideoPassword_str = e.playlist_ar[t.id].privateVideoPassword_str),
+                o.privateVideoPassword_str == FWDUVPUtils.MD5(o.passInpt.screen.value) ? (t.playlistPass = void 0, s.isCorect = !0, o.dispatchEvent(s.CORRECT))
+                                                                                       : FWDAnimation.isTweening(o.passInpt.screen) || FWDAnimation.to(o.passInpt.screen, .1, {
                     css: {
                         backgroundColor: "#FF0000"
                     },
@@ -7588,66 +7726,312 @@ var FWDUVPAddress = new function() {
                 })
             }, this.updateHEXColors = function(e, t) {
                 o.passBtn.updateHEXColors(e, t), o.clsBtn.updateHEXColors(e, t)
-            }, this.showInfo = function(e, t) {
-                o.infoText_do.setInnerHTML(e), o.passMainHolder_do.addChild(o.infoText_do), o.infoText_do.setWidth(o.buttonWidth), o.infoText_do.setHeight(o.buttonHeight - 4), o.infoText_do.setX(o.passBtn.x), o.infoText_do.setY(o.passBtn.y - 23), o.infoText_do.setAlpha(0), o.infoText_do.getStyle().color = t ? "#FF0000" : o.mainLabelsColor_str, FWDAnimation.killTweensOf(o.infoText_do), FWDAnimation.to(o.infoText_do, .16, {
+            },
+            this.showInfo = function(e, t) {
+                o.infoText_do.setInnerHTML(e),
+                o.passMainHolder_do.addChild(o.infoText_do),
+                o.infoText_do.setWidth(o.buttonWidth),
+                o.infoText_do.setHeight(o.buttonHeight - 4),
+                o.infoText_do.setX(o.passBtn.x),
+                o.infoText_do.setY(o.passBtn.y - 23),
+                o.infoText_do.setAlpha(0),
+                o.infoText_do.getStyle().color = t ? "#FF0000" : o.mainLabelsColor_str,
+                FWDAnimation.killTweensOf(o.infoText_do),
+                FWDAnimation.to(o.infoText_do, .16, {
                     alpha: 1,
                     yoyo: !0,
                     repeat: 7
                 })
-            }, this.show = function(e) {
-                o.isShowed_bl || (s.isCorect = !1, o.isShowed_bl = !0, t.main_do.addChild(o), o.passInpt.setInnerHTML(""), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!0), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), o.mainHld.setY(-o.sH), o.showCompleteId_to = setTimeout(o.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(o.mainHld, .8, {
-                        y: 0,
-                        delay: .1,
-                        ease: Expo.easeInOut
-                    })
-                }, 100))
-            }, this.showCompleteHandler = function() {}, this.hide = function() {
-                o.isShowed_bl && (o.isShowed_bl = !1, t.customContextMenu_do && t.customContextMenu_do.enable(), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800), FWDAnimation.killTweensOf(o.mainHld), FWDAnimation.to(o.mainHld, .8, {
-                    y: -o.sH,
-                    ease: Expo.easeInOut
-                }))
-            }, this.hideCompleteHandler = function() {
-                t.main_do.removeChild(o), o.dispatchEvent(s.HIDE_COMPLETE)
-            }, this.init()
+            },
+            this.show = function(e) {
+                o.isShowed_bl || (s.isCorect = !1,
+                                  o.isShowed_bl = !0,
+                                  t.main_do.addChild(o),
+                                  o.passInpt.setInnerHTML(""),
+                                  (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!0),
+                                  o.positionAndResize(),
+                                  clearTimeout(o.hideCompleteId_to),
+                                  clearTimeout(o.showCompleteId_to),
+                                  o.mainHld.setY(-o.sH),
+                                  o.showCompleteId_to = setTimeout(o.showCompleteHandler, 900),
+                                  setTimeout(function() {
+                                    FWDAnimation.to(o.mainHld, .8, {
+                                      y: 0,
+                                      delay: .1,
+                                      ease: Expo.easeInOut
+                                    })
+                                  }, 100))
+            },
+            this.showCompleteHandler = function() {},
+            this.hide = function() {
+                o.isShowed_bl && (o.isShowed_bl = !1,
+                                  t.customContextMenu_do && t.customContextMenu_do.enable(),
+                                  o.positionAndResize(),
+                                  clearTimeout(o.hideCompleteId_to),
+                                  clearTimeout(o.showCompleteId_to),
+                                  (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1),
+                                  o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800),
+                                  FWDAnimation.killTweensOf(o.mainHld),
+                                  FWDAnimation.to(o.mainHld, .8, {
+                                    y: -o.sH,
+                                    ease: Expo.easeInOut
+                                  }))
+            },
+            this.hideCompleteHandler = function() {
+                t.main_do.removeChild(o),
+                o.dispatchEvent(s.HIDE_COMPLETE)
+            },
+            this.init()
         };
         s.setPrototype = function() {
             s.prototype = new FWDUVPDisplayObject("div")
-        }, s.ERROR = "error", s.CORRECT = "correct", s.HIDE_COMPLETE = "hideComplete", s.prototype = null, e.FWDUVPPassword = s
+        },
+        s.ERROR = "error",
+        s.CORRECT = "correct",
+        s.HIDE_COMPLETE = "hideComplete",
+        s.prototype = null,
+        e.FWDUVPPassword = s
     }(window),
+
     function(n) {
         var t = function(i, l) {
             var a = this;
             t.prototype;
-            this.moveEvent = null, this.prt = i, this.data = l, this.image_img = null, this.prevN_img = l.prevN_img, this.nextN_img = l.nextN_img, this.replayN_img = l.replayN_img, this.shuffleN_img = l.shuffleN_img, this.scrBkTop_img = l.scrBkTop_img, this.scrDragTop_img = l.scrDragTop_img, this.scrLinesN_img = l.scrLinesN_img, this.playlist_ar = null, this.buttons_ar = [], this.thumbs_ar = null, this.playlistNameHolder_do = null, this.playlistName_do = null, this.scrMainHolder_do = null, this.scrTrack_do = null, this.scrTrackTop_do = null, this.scrTrackMiddle_do = null, this.scrTrackBottom_do = null, this.scrHandler_do = null, this.scrHandlerTop_do = null, this.scrHandlerMiddle_do = null, this.scrHandlerBottom_do = null, this.scrHandlerLines_do = null, this.scrHandlerLinesN_do = null, this.scrHandlerLinesS_do = null, this.mainHld = null, this.mainThumbsHolder_do = null, this.controllBar_do = null, this.input_do = null, this.inputArrow_do = null, this.bk_do = null, this.thumbsHolder_do = null, this.nextButton_do = null, this.prevButton_do = null, this.toolTip_do = null, this.shuffleButton_do = null, this.loopButton_do = null, this.prevButtonToolTip_do = null, this.loopButtonToolTip_do = null, this.shuffleButtonToolTip_do = null, this.nextButtonToolTip_do = null, this.noSearchFound_do = null, a.useHEX = l.useHEX, a.nBC = l.nBC, a.sBC = l.sBC, this.bkPath_str = l.controllerBkPath_str, this.position_str = i.playlistPosition_str, this.playlistBackgroundColor_str = l.playlistBackgroundColor_str, this.inputBackgroundColor_str = l.searchInputBackgroundColor_str, this.inputColor_str = l.searchInputColor_str, this.prevInputValue_str = "none", this.scrWidth = a.scrBkTop_img.width, this.mouseX = 0, this.mouseY = 0, this.catId = -1, this.dif = 0, this.countLoadedThumbs = 0, this.curId = -1, this.finalX = 0, this.finalY = 0, this.controlBarHeight = l.controllerHeight, this.totalThumbs = 0, this.totalWidth = i.playlistWidth, this.totalHeight = i.playlistHeight, this.thumbImageW = l.thumbnailWidth, this.thumbImageH = l.thumbnailHeight, this.thumbInPadding = 3, this.spaceBetweenThumbnails = l.spaceBetweenThumbnails, this.startSpaceBetweenButtons = l.startSpaceBetweenButtons, this.spaceBetweenButtons = l.spaceBetweenButtons, this.totalButtons = 0, this.buttonsToolTipHideDelay = l.buttonsToolTipHideDelay, this.removeFromThumbsHolderHeight = 0, this.totalThumbsHeight = 0, this.scrollBarHandlerFinalY = 0, this.sW = a.totalWidth, this.sH = a.totalHeight, this.scrollbarOffestWidth = l.scrollbarOffestWidth, this.lastThumbnailFinalY = -1, this.thumbnailsFinalY = 0, this.scollbarSpeedSensitivity = l.scollbarSpeedSensitivity, this.vy = 0, this.vy2 = 0, this.friction = .9, this.loadWithDelayId_to, this.showToolTipId_to, this.disableThumbsId_to, this.disableMouseWheelId_to, this.thumbnailsAnimDoneId_to, this.disableForAWhileAfterThumbClickId_to, this.updateMobileScrollBarId_int, this.showThumbnail_bl = l.showThumbnail_bl, this.disableForAWhileAfterThumbClick_bl = !1, this.showPlaylistName_bl = l.showPlaylistName_bl, this.isShowNothingFound_bl = !1, this.hasInputFocus_bl = !1, this.showController_bl = l.showSearchInpt || l.showNextAndPrevButtons_bl || l.showLoopButton_bl || l.showShuffleButton_bl, this.loop_bl = l.loop_bl, this.shuffle_bl = l.shuffle_bl, this.showSearchInpt = l.showSearchInpt, this.allowToScrollAndScrollBarIsActive_bl = !0, this.showPlaylistToolTips_bl = l.showPlaylistToolTips_bl, this.hasPlaylist_bl = !1, this.showPlaylistByDefault_bl = l.showPlaylistByDefault_bl, this.repeatBackground_bl = l.repeatBackground_bl, this.addMouseWheelSupport_bl = l.addMouseWheelSupport_bl, this.showNextAndPrevButtons_bl = l.showNextAndPrevButtons_bl, this.showShuffleButton_bl = l.showShuffleButton_bl, this.showLoopButton_bl = l.showLoopButton_bl, this.showButtonsToolTip_bl = l.showButtonsToolTip_bl, this.isShowed_bl = !0, this.allowToSwipe_bl = !1, this.disableThumbs_bl = !1, this.disableMouseWheel_bl = !1, this.usePlaylistsSelectBox_bl = l.usePlaylistsSelectBox_bl, this.isMbl = FWDUVPUtils.isMobile, this.isDragging_bl = !1, this.isSearched_bl = !1, this.addScrOnMM_bl = l.addScrOnMM_bl, this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent, this.useVectorIcons_bl = l.useVectorIcons_bl, this.init = function() {
-                if (a.setOverflow("hidden"), a.screen.className = "fwduvp-playlist", a.mainHld = new FWDUVPDisplayObject("div"), a.mainHld.screen.className = "fwduvp-playlist-background", l.isWhite && (a.mainHld.screen.className = "fwduvp-playlist-background white"), a.mainHld.setBkColor(a.playlistBackgroundColor_str), a.mainThumbsHolder_do = new FWDUVPDisplayObject("div"), a.mainThumbsHolder_do.screen.className = "fwduvp-playlist-thumbs-holder", a.mainThumbsHolder_do.setBkColor(a.playlistBackgroundColor_str), a.thumbsHolder_do = new FWDUVPDisplayObject("div"), a.thumbsHolder_do.setOverflow("visible"), a.mainThumbsHolder_do.addChild(a.thumbsHolder_do), a.mainHld.addChild(a.mainThumbsHolder_do), a.addChild(a.mainHld), a.showController_bl) {
-                    if (a.controllBar_do = new FWDUVPDisplayObject("div"), a.repeatBackground_bl) a.controllerBk_do = new FWDUVPDisplayObject("div"), a.controllerBk_do.getStyle().background = "url('" + a.bkPath_str + "')";
+            this.moveEvent = null,
+            this.prt = i,
+            this.data = l,
+            this.image_img = null,
+            this.prevN_img = l.prevN_img,
+            this.nextN_img = l.nextN_img,
+            this.replayN_img = l.replayN_img,
+            this.shuffleN_img = l.shuffleN_img,
+            this.scrBkTop_img = l.scrBkTop_img,
+            this.scrDragTop_img = l.scrDragTop_img,
+            this.scrLinesN_img = l.scrLinesN_img,
+            this.playlist_ar = null,
+            this.buttons_ar = [],
+            this.thumbs_ar = null,
+            this.playlistNameHolder_do = null,
+            this.playlistName_do = null,
+            this.scrMainHolder_do = null,
+            this.scrTrack_do = null,
+            this.scrTrackTop_do = null,
+            this.scrTrackMiddle_do = null,
+            this.scrTrackBottom_do = null,
+            this.scrHandler_do = null,
+            this.scrHandlerTop_do = null,
+            this.scrHandlerMiddle_do = null,
+            this.scrHandlerBottom_do = null,
+            this.scrHandlerLines_do = null,
+            this.scrHandlerLinesN_do = null,
+            this.scrHandlerLinesS_do = null,
+            this.mainHld = null,
+            this.mainThumbsHolder_do = null,
+            this.controllBar_do = null,
+            this.input_do = null,
+            this.inputArrow_do = null,
+            this.bk_do = null,
+            this.thumbsHolder_do = null,
+            this.nextButton_do = null,
+            this.prevButton_do = null,
+            this.toolTip_do = null,
+            this.shuffleButton_do = null,
+            this.loopButton_do = null,
+            this.prevButtonToolTip_do = null,
+            this.loopButtonToolTip_do = null,
+            this.shuffleButtonToolTip_do = null,
+            this.nextButtonToolTip_do = null,
+            this.noSearchFound_do = null,
+            a.useHEX = l.useHEX,
+            a.nBC = l.nBC,
+            a.sBC = l.sBC,
+            this.bkPath_str = l.controllerBkPath_str,
+            this.position_str = i.playlistPosition_str,
+            this.playlistBackgroundColor_str = l.playlistBackgroundColor_str,
+            this.inputBackgroundColor_str = l.searchInputBackgroundColor_str,
+            this.inputColor_str = l.searchInputColor_str,
+            this.prevInputValue_str = "none",
+            this.scrWidth = a.scrBkTop_img.width,
+            this.mouseX = 0,
+            this.mouseY = 0,
+            this.catId = -1,
+            this.dif = 0,
+            this.countLoadedThumbs = 0,
+            this.curId = -1,
+            this.finalX = 0,
+            this.finalY = 0,
+            this.controlBarHeight = l.controllerHeight,
+            this.totalThumbs = 0,
+            this.totalWidth = i.playlistWidth,
+            this.totalHeight = i.playlistHeight,
+            this.thumbImageW = l.thumbnailWidth,
+            this.thumbImageH = l.thumbnailHeight,
+            this.thumbInPadding = 3,
+            this.spaceBetweenThumbnails = l.spaceBetweenThumbnails,
+            this.startSpaceBetweenButtons = l.startSpaceBetweenButtons,
+            this.spaceBetweenButtons = l.spaceBetweenButtons,
+            this.totalButtons = 0,
+            this.buttonsToolTipHideDelay = l.buttonsToolTipHideDelay,
+            this.removeFromThumbsHolderHeight = 0,
+            this.totalThumbsHeight = 0,
+            this.scrollBarHandlerFinalY = 0,
+            this.sW = a.totalWidth,
+            this.sH = a.totalHeight,
+            this.scrollbarOffestWidth = l.scrollbarOffestWidth,
+            this.lastThumbnailFinalY = -1,
+            this.thumbnailsFinalY = 0,
+            this.scollbarSpeedSensitivity = l.scollbarSpeedSensitivity,
+            this.vy = 0,
+            this.vy2 = 0,
+            this.friction = .9,
+            this.loadWithDelayId_to,
+            this.showToolTipId_to,
+            this.disableThumbsId_to,
+            this.disableMouseWheelId_to,
+            this.thumbnailsAnimDoneId_to,
+            this.disableForAWhileAfterThumbClickId_to,
+            this.updateMobileScrollBarId_int,
+            this.showThumbnail_bl = l.showThumbnail_bl,
+            this.disableForAWhileAfterThumbClick_bl = !1,
+            this.showPlaylistName_bl = l.showPlaylistName_bl,
+            this.isShowNothingFound_bl = !1,
+            this.hasInputFocus_bl = !1,
+            this.showController_bl = l.showSearchInpt || l.showNextAndPrevButtons_bl || l.showLoopButton_bl || l.showShuffleButton_bl,
+            this.loop_bl = l.loop_bl,
+            this.shuffle_bl = l.shuffle_bl,
+            this.showSearchInpt = l.showSearchInpt,
+            this.allowToScrollAndScrollBarIsActive_bl = !0,
+            this.showPlaylistToolTips_bl = l.showPlaylistToolTips_bl,
+            this.hasPlaylist_bl = !1,
+            this.showPlaylistByDefault_bl = l.showPlaylistByDefault_bl,
+            this.repeatBackground_bl = l.repeatBackground_bl,
+            this.addMouseWheelSupport_bl = l.addMouseWheelSupport_bl,
+            this.showNextAndPrevButtons_bl = l.showNextAndPrevButtons_bl,
+            this.showShuffleButton_bl = l.showShuffleButton_bl,
+            this.showLoopButton_bl = l.showLoopButton_bl,
+            this.showButtonsToolTip_bl = l.showButtonsToolTip_bl,
+            this.isShowed_bl = !0,
+            this.allowToSwipe_bl = !1,
+            this.disableThumbs_bl = !1,
+            this.disableMouseWheel_bl = !1,
+            this.usePlaylistsSelectBox_bl = l.usePlaylistsSelectBox_bl,
+            this.isMbl = FWDUVPUtils.isMobile,
+            this.isDragging_bl = !1,
+            this.isSearched_bl = !1,
+            this.addScrOnMM_bl = l.addScrOnMM_bl,
+            this.hasPointerEvent_bl = FWDUVPUtils.hasPointerEvent,
+            this.useVectorIcons_bl = l.useVectorIcons_bl,
+            this.init = function() {
+                if (a.setOverflow("hidden"),
+                    a.screen.className = "fwduvp-playlist",
+                    a.mainHld = new FWDUVPDisplayObject("div"),
+                    a.mainHld.screen.className = "fwduvp-playlist-background",
+                    l.isWhite && (a.mainHld.screen.className = "fwduvp-playlist-background white"),
+                    a.mainHld.setBkColor(a.playlistBackgroundColor_str),
+                    a.mainThumbsHolder_do = new FWDUVPDisplayObject("div"),
+                    a.mainThumbsHolder_do.screen.className = "fwduvp-playlist-thumbs-holder",
+                    a.mainThumbsHolder_do.setBkColor(a.playlistBackgroundColor_str),
+                    a.thumbsHolder_do = new FWDUVPDisplayObject("div"),
+                    a.thumbsHolder_do.setOverflow("visible"),
+                    a.mainThumbsHolder_do.addChild(a.thumbsHolder_do),
+                    a.mainHld.addChild(a.mainThumbsHolder_do),
+                    a.addChild(a.mainHld), a.showController_bl) {
+                      if (a.controllBar_do = new FWDUVPDisplayObject("div"),
+                          a.repeatBackground_bl)
+                          a.controllerBk_do = new FWDUVPDisplayObject("div"),
+                          a.controllerBk_do.getStyle().background = "url('" + a.bkPath_str + "')";
                     else {
                         a.controllerBk_do = new FWDUVPDisplayObject("img");
                         var e = new Image;
                         e.src = a.bkPath_str, a.controllerBk_do.setScreen(e)
                     }
-                    a.controllerBk_do.setHeight(a.controlBarHeight), a.controllerBk_do.getStyle().width = "100%", a.controllBar_do.addChild(a.controllerBk_do), a.controllBar_do.setHeight(a.controlBarHeight), a.mainHld.addChild(a.controllBar_do)
+                    a.controllerBk_do.setHeight(a.controlBarHeight),
+                    a.controllerBk_do.getStyle().width = "100%",
+                    a.controllBar_do.addChild(a.controllerBk_do),
+                    a.controllBar_do.setHeight(a.controlBarHeight),
+                    a.mainHld.addChild(a.controllBar_do)
                 }
                 a.showShuffleButton_bl && a.setupShuffleButton(),
                 a.showLoopButton_bl && a.setupLoopButton(),
-                a.showNextAndPrevButtons_bl && (a.setupPrevButton(), a.setupNextButton()), 
-                a.totalButtons = a.buttons_ar.length, a.showSearchInpt && a.showController_bl && a.setupInput(), a.showController_bl && (a.removeFromThumbsHolderHeight = a.controllBar_do.h + a.spaceBetweenThumbnails), a.setupMobileScrollbar(), a.isMbl || a.setupScrollbar(), a.addMouseWheelSupport_bl && a.addMouseWheelSupport(), a.showPlaylistName_bl && (a.setupPlaylistName(), a.removeFromThumbsHolderHeight += a.controlBarHeight + a.spaceBetweenThumbnails, a.mainThumbsHolder_do.setY(a.controlBarHeight + a.spaceBetweenThumbnails), a.scrMainHolder_do && a.scrMainHolder_do.setY(a.mainThumbsHolder_do.y));
+                a.showNextAndPrevButtons_bl && (a.setupPrevButton(), a.setupNextButton()),
+                a.totalButtons = a.buttons_ar.length,
+                a.showSearchInpt && a.showController_bl && a.setupInput(),
+                a.showController_bl && (a.removeFromThumbsHolderHeight = a.controllBar_do.h + a.spaceBetweenThumbnails),
+                a.setupMobileScrollbar(),
+                a.isMbl || a.setupScrollbar(),
+                a.addMouseWheelSupport_bl && a.addMouseWheelSupport(),
+                a.showPlaylistName_bl && (a.setupPlaylistName(),
+                                          a.removeFromThumbsHolderHeight += a.controlBarHeight + a.spaceBetweenThumbnails,
+                                          a.mainThumbsHolder_do.setY(a.controlBarHeight + a.spaceBetweenThumbnails),
+                                          a.scrMainHolder_do && a.scrMainHolder_do.setY(a.mainThumbsHolder_do.y));
                 var t = i.ec;
-                t && (this.ec = new FWDUVPDisplayObject("div", "relative"), this.ec.setInnerHTML(t.innerHTML), this.addChild(this.ec)), a.showPlaylistByDefault_bl || a.hide()
-            }, this.resizeAndPosition = function(e) {
+                t && (this.ec = new FWDUVPDisplayObject("div", "relative"),
+                      this.ec.setInnerHTML(t.innerHTML),
+                      this.addChild(this.ec)),
+                a.showPlaylistByDefault_bl || a.hide()
+            },
+            this.resizeAndPosition = function(e) {
                 if (i.sW) {
                     var t = 0;
-                    a.ec && (t = Math.round(a.ec.getHeight()), a.ec.setY(-t)), "bottom" == a.position_str ? (a.sW = i.sW, a.sH = i.playlistHeight, a.finalX = 0, a.finalY = i.tempVidStageHeight + i.spaceBetweenControllerAndPlaylist) : (a.sW = a.totalWidth, a.sH = i.sH - t, a.finalX = i.sW - a.totalWidth, a.finalY = 0), a.comboBox_do && a.comboBox_do.resizeAndPosition(), a.bk_do && (a.bk_do.setWidth(a.sW), a.bk_do.setHeight(a.sH)), a.positionThumbs(e), a.allowToScrollAndScrollBarIsActive_bl && a.scrMainHolder_do ? a.mainThumbsHolder_do.setWidth(a.sW - a.scrollbarOffestWidth + 1) : a.mainThumbsHolder_do.setWidth(a.sW), a.mainThumbsHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrHandler_do && a.updateScrollBarSizeActiveAndDeactivate(), a.controllBar_do && a.positionControllBar(), a.updateScrollBarHandlerAndContent(e), a.setWidth(a.sW), a.setHeight(a.sH + t), a.setX(a.finalX), a.setY(a.finalY + t), a.mainHld.setWidth(a.sW), a.mainHld.setHeight(a.sH)
+                    a.ec && (t = Math.round(a.ec.getHeight()),
+                             a.ec.setY(-t)),
+                    "bottom" == a.position_str ? (a.sW = i.sW,
+                                                  a.sH = i.playlistHeight,
+                                                  a.finalX = 0,
+                                                  a.finalY = i.tempVidStageHeight + i.spaceBetweenControllerAndPlaylist)
+                                               : (a.sW = a.totalWidth,
+                                                  a.sH = i.sH - t,
+                                                  a.finalX = i.sW - a.totalWidth,
+                                                  a.finalY = 0),
+                    a.comboBox_do && a.comboBox_do.resizeAndPosition(),
+                    a.bk_do && (a.bk_do.setWidth(a.sW), a.bk_do.setHeight(a.sH)),
+                    a.positionThumbs(e),
+                    a.allowToScrollAndScrollBarIsActive_bl && a.scrMainHolder_do ? a.mainThumbsHolder_do.setWidth(a.sW - a.scrollbarOffestWidth + 1)
+                                                                                 : a.mainThumbsHolder_do.setWidth(a.sW),
+                    a.mainThumbsHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight),
+                    a.scrHandler_do && a.updateScrollBarSizeActiveAndDeactivate(),
+                    a.controllBar_do && a.positionControllBar(),
+                    a.updateScrollBarHandlerAndContent(e),
+                    a.setWidth(a.sW),
+                    a.setHeight(a.sH + t),
+                    a.setX(a.finalX),
+                    a.setY(a.finalY + t),
+                    a.mainHld.setWidth(a.sW),
+                    a.mainHld.setHeight(a.sH)
                 }
-            }, this.updatePlaylist = function(e, t, s, o) {
-                clearTimeout(a.populateNextItemId_to), a.hasPlaylist_bl = !0, a.catId = t, a.curId = s, a.playlist_ar = e, a.countLoadedThumbs = 0, a.allowToScrollAndScrollBarIsActive_bl = !1, a.input_do && (a.hasInputFocus_bl = !1, a.input_do.screen.value = "search"), a.setupThumbnails(), a.updatePlaylistName(o), a.showThumbnail_bl && a.loadImages(), a.comboBox_do && a.comboBox_do.setButtonsStateBasedOnId(a.catId), a.hideAndShow(!0), a.resizeAndPosition(), a.scrHandler_do && (a.updateScrollBarSizeActiveAndDeactivate(), a.updateScrollBarHandlerAndContent(!1, !0))
-            }, this.destroyPlaylist = function() {
+            },
+            this.updatePlaylist = function(e, t, s, o) {
+                clearTimeout(a.populateNextItemId_to),
+                a.hasPlaylist_bl = !0,
+                a.catId = t,
+                a.curId = s,
+                a.playlist_ar = e,
+                a.countLoadedThumbs = 0,
+                a.allowToScrollAndScrollBarIsActive_bl = !1,
+                a.input_do && (a.hasInputFocus_bl = !1, a.input_do.screen.value = "search"),
+                a.setupThumbnails(),
+                a.updatePlaylistName(o),
+                a.showThumbnail_bl && a.loadImages(),
+                a.comboBox_do && a.comboBox_do.setButtonsStateBasedOnId(a.catId),
+                a.hideAndShow(!0),
+                a.resizeAndPosition(),
+                a.scrHandler_do && (a.updateScrollBarSizeActiveAndDeactivate(), a.updateScrollBarHandlerAndContent(!1, !0))
+            },
+            this.destroyPlaylist = function() {
                 if (a.thumbs_ar) {
                     var e;
-                    a.hasPlaylist_bl = !1, a.image_img && (a.image_img.onerror = null, a.image_img.onload = null), FWDAnimation.killTweensOf(a.mainHld), "bottom" == a.position_str ? a.mainHld.setY(-a.sH - 5) : a.mainHld.setX(-a.sW - 5), a.ec && a.ec.setX(-5e3), clearTimeout(a.loadWithDelayId_to);
-                    for (var t = 0; t < a.totalThumbs; t++) e = a.thumbs_ar[t], a.thumbsHolder_do.removeChild(e), e.destroy();
-                    a.thumbs_ar = null
+                    a.hasPlaylist_bl = !1,
+                    a.image_img && (a.image_img.onerror = null,
+                                    a.image_img.onload = null),
+                    FWDAnimation.killTweensOf(a.mainHld),
+                    "bottom" == a.position_str ? a.mainHld.setY(-a.sH - 5) : a.mainHld.setX(-a.sW - 5),
+                    a.ec && a.ec.setX(-5e3),
+                    clearTimeout(a.loadWithDelayId_to);
+                    for (var t = 0; t < a.totalThumbs; t++)
+                     e = a.thumbs_ar[t],
+                     a.thumbsHolder_do.removeChild(e),
+                     e.destroy();
+                     a.thumbs_ar = null
                 }
             }, this.setupcomboBox = function() {
                 a.labels_ar = [];
@@ -7668,38 +8052,121 @@ var FWDUVPAddress = new function() {
                     arrowW: 11,
                     arrowH: 6
                 };
-                FWDUVPComboBox.setPrototype(), a.comboBox_do = new FWDUVPComboBox(a, t), a.comboBox_do.addListener(FWDUVPComboBox.BUTTON_PRESSED, a.changePlaylistOnClick), a.mainHld.addChild(a.comboBox_do)
+                FWDUVPComboBox.setPrototype(),
+                a.comboBox_do = new FWDUVPComboBox(a, t),
+                a.comboBox_do.addListener(FWDUVPComboBox.BUTTON_PRESSED, a.changePlaylistOnClick),
+                a.mainHld.addChild(a.comboBox_do)
             }, a.changePlaylistOnClick = function(e) {
                 a.dispatchEvent(t.CHANGE_PLAYLIST, {
                     id: e.id
                 })
-            }, this.setupPlaylistName = function() {
-                if (a.playlistNameHolder_do = new FWDUVPDisplayObject("div"), a.playlistNameHolder_do.setHeight(a.controlBarHeight), a.playlistNameHolder_do.getStyle().width = "100%", a.repeatBackground_bl) a.playlistNameBk_do = new FWDUVPDisplayObject("div"), a.playlistNameBk_do.getStyle().background = "url('" + a.bkPath_str + "')";
+            },
+            this.setupPlaylistName = function() {
+                if (a.playlistNameHolder_do = new FWDUVPDisplayObject("div"),
+                    a.playlistNameHolder_do.setHeight(a.controlBarHeight),
+                    a.playlistNameHolder_do.getStyle().width = "100%", a.repeatBackground_bl)
+                     a.playlistNameBk_do = new FWDUVPDisplayObject("div"),
+                     a.playlistNameBk_do.getStyle().background = "url('" + a.bkPath_str + "')";
                 else {
                     a.playlistNameBk_do = new FWDUVPDisplayObject("img");
                     var e = new Image;
-                    e.src = a.bkPath_str, a.playlistNameBk_do.setScreen(e)
+                    e.src = a.bkPath_str,
+                    a.playlistNameBk_do.setScreen(e)
                 }
-                a.playlistNameBk_do.getStyle().width = "100%", a.playlistNameBk_do.getStyle().height = "100%", a.playlistName_do = new FWDUVPDisplayObject("div"), a.playlistName_do.getStyle().width = "100%", a.playlistName_do.screen.className = "fwduvp-playlist-name", a.playlistName_do.getStyle().textAlign = "center", a.playlistName_do.getStyle().fontSmoothing = "antialiased", a.playlistName_do.getStyle().webkitFontSmoothing = "antialiased", a.playlistName_do.getStyle().textRendering = "optimizeLegibility", a.playlistName_do.getStyle().fontFamily = "Arial", a.playlistName_do.getStyle().fontSize = "14px", a.playlistName_do.getStyle().color = l.playlistNameColor_str, a.playlistNameHolder_do.addChild(a.playlistNameBk_do), a.usePlaylistsSelectBox_bl || a.playlistNameHolder_do.addChild(a.playlistName_do), a.mainHld.addChild(a.playlistNameHolder_do), a.usePlaylistsSelectBox_bl && (a.setupcomboBox(), a.controllBar_do && a.mainHld.addChild(a.controllBar_do))
+                a.playlistNameBk_do.getStyle().width = "100%",
+                a.playlistNameBk_do.getStyle().height = "100%",
+                a.playlistName_do = new FWDUVPDisplayObject("div"),
+                a.playlistName_do.getStyle().width = "100%",
+                a.playlistName_do.screen.className = "fwduvp-playlist-name",
+                a.playlistName_do.getStyle().textAlign = "center",
+                a.playlistName_do.getStyle().fontSmoothing = "antialiased",
+                a.playlistName_do.getStyle().webkitFontSmoothing = "antialiased",
+                a.playlistName_do.getStyle().textRendering = "optimizeLegibility",
+                a.playlistName_do.getStyle().fontFamily = "Arial",
+                a.playlistName_do.getStyle().fontSize = "14px",
+                a.playlistName_do.getStyle().color = l.playlistNameColor_str,
+                a.playlistNameHolder_do.addChild(a.playlistNameBk_do), a.usePlaylistsSelectBox_bl || a.playlistNameHolder_do.addChild(a.playlistName_do),
+                a.mainHld.addChild(a.playlistNameHolder_do),
+                a.usePlaylistsSelectBox_bl && (a.setupcomboBox(),
+                a.controllBar_do && a.mainHld.addChild(a.controllBar_do))
             }, this.updatePlaylistName = function(e) {
                 a.playlistName_do && (a.playlistName_do.setInnerHTML(e), setTimeout(function() {
                     a.playlistName_do.setY(parseInt((a.playlistNameHolder_do.h - a.playlistName_do.getHeight()) / 2) + 1)
                 }, 50))
-            }, this.setupInput = function() {
-                a.input_do = new FWDUVPDisplayObject("input"), a.input_do.screen.maxLength = 20, a.input_do.screen.className = "fwduvp-search", a.input_do.getStyle().textAlign = "left", a.input_do.getStyle().outline = "none", a.input_do.getStyle().boxShadow = "none", a.input_do.getStyle().fontSmoothing = "antialiased", a.input_do.getStyle().webkitFontSmoothing = "antialiased", a.input_do.getStyle().textRendering = "optimizeLegibility", a.input_do.getStyle().fontFamily = "Arial", a.input_do.getStyle().fontSize = "12px", a.input_do.getStyle().padding = "7px 10px 7px", a.input_do.getStyle().boxSizing = "border-box", FWDUVPUtils.isIEAndLessThen9 || (a.input_do.getStyle().paddingRight = "-6px"), a.input_do.getStyle().backgroundColor = a.inputBackgroundColor_str, a.input_do.getStyle().color = a.inputColor_str, a.input_do.screen.value = "search", a.noSearchFound_do = new FWDUVPDisplayObject("div"), a.noSearchFound_do.setX(0), a.noSearchFound_do.screen.className = "fwduvp-search-not-found", a.noSearchFound_do.getStyle().textAlign = "center", a.noSearchFound_do.getStyle().width = "100%", a.noSearchFound_do.getStyle().fontSmoothing = "antialiased", a.noSearchFound_do.getStyle().webkitFontSmoothing = "antialiased", a.noSearchFound_do.getStyle().textRendering = "optimizeLegibility", a.noSearchFound_do.getStyle().fontFamily = "Arial", a.noSearchFound_do.getStyle().fontSize = "12px", a.noSearchFound_do.getStyle().color = a.inputColor_str, a.noSearchFound_do.setInnerHTML("NOTHING FOUND!"), a.noSearchFound_do.setVisible(!1), a.mainHld.addChild(a.noSearchFound_do), a.hasPointerEvent_bl ? a.input_do.screen.addEventListener("pointerdown", a.inputFocusInHandler) : a.input_do.screen.addEventListener && (a.input_do.screen.addEventListener("mousedown", a.inputFocusInHandler), a.input_do.screen.addEventListener("touchstart", a.inputFocusInHandler)), a.input_do.screen.addEventListener("keyup", a.keyUpHandler);
+            },
+            this.setupInput = function() {
+                a.input_do = new FWDUVPDisplayObject("input"),
+                a.input_do.screen.maxLength = 20,
+                a.input_do.screen.className = "fwduvp-search",
+                a.input_do.getStyle().textAlign = "left",
+                a.input_do.getStyle().outline = "none",
+                a.input_do.getStyle().boxShadow = "none",
+                a.input_do.getStyle().fontSmoothing = "antialiased",
+                a.input_do.getStyle().webkitFontSmoothing = "antialiased",
+                a.input_do.getStyle().textRendering = "optimizeLegibility",
+                a.input_do.getStyle().fontFamily = "Arial",
+                a.input_do.getStyle().fontSize = "12px",
+                a.input_do.getStyle().padding = "7px 10px 7px",
+                a.input_do.getStyle().boxSizing = "border-box",
+                FWDUVPUtils.isIEAndLessThen9 || (a.input_do.getStyle().paddingRight = "-6px"),
+                a.input_do.getStyle().backgroundColor = a.inputBackgroundColor_str,
+                a.input_do.getStyle().color = a.inputColor_str,
+                a.input_do.screen.value = "search",
+                a.noSearchFound_do = new FWDUVPDisplayObject("div"),
+                a.noSearchFound_do.setX(0),
+                a.noSearchFound_do.screen.className = "fwduvp-search-not-found",
+                a.noSearchFound_do.getStyle().textAlign = "center",
+                a.noSearchFound_do.getStyle().width = "100%",
+                a.noSearchFound_do.getStyle().fontSmoothing = "antialiased",
+                a.noSearchFound_do.getStyle().webkitFontSmoothing = "antialiased",
+                a.noSearchFound_do.getStyle().textRendering = "optimizeLegibility",
+                a.noSearchFound_do.getStyle().fontFamily = "Arial",
+                a.noSearchFound_do.getStyle().fontSize = "12px",
+                a.noSearchFound_do.getStyle().color = a.inputColor_str,
+                a.noSearchFound_do.setInnerHTML("NOTHING FOUND!"),
+                a.noSearchFound_do.setVisible(!1),
+                a.mainHld.addChild(a.noSearchFound_do),
+                a.hasPointerEvent_bl ? a.input_do.screen.addEventListener("pointerdown", a.inputFocusInHandler)
+                                     : a.input_do.screen.addEventListener && (a.input_do.screen.addEventListener("mousedown", a.inputFocusInHandler),
+                                                                              a.input_do.screen.addEventListener("touchstart", a.inputFocusInHandler)),
+                                       a.input_do.screen.addEventListener("keyup", a.keyUpHandler);
                 var e = new Image;
-                e.src = l.inputArrowPath_str, a.inputArrow_do = new FWDUVPDisplayObject("img"), a.inputArrow_do.setScreen(e), a.inputArrow_do.setWidth(12), a.inputArrow_do.setHeight(12), a.controllBar_do.addChild(a.input_do), a.controllBar_do.addChild(a.inputArrow_do)
-            }, this.inputFocusInHandler = function() {
-                a.hasInputFocus_bl || (a.hasInputFocus_bl = !0, "search" == a.input_do.screen.value && (a.input_do.screen.value = ""), a.input_do.screen.focus(), setTimeout(function() {
-                    a.hasPointerEvent_bl ? n.addEventListener("pointerdown", a.inputFocusOutHandler) : n.addEventListener && (n.addEventListener("mousedown", a.inputFocusOutHandler), n.addEventListener("touchstart", a.inputFocusOutHandler)), FWDUVPlayer.isSearchedFocused_bl = !0
+                e.src = l.inputArrowPath_str,
+                a.inputArrow_do = new FWDUVPDisplayObject("img"),
+                a.inputArrow_do.setScreen(e),
+                a.inputArrow_do.setWidth(12),
+                a.inputArrow_do.setHeight(12),
+                a.controllBar_do.addChild(a.input_do),
+                a.controllBar_do.addChild(a.inputArrow_do)
+            },
+            this.inputFocusInHandler = function() {
+                a.hasInputFocus_bl || (a.hasInputFocus_bl = !0,
+                                       "search" == a.input_do.screen.value && (a.input_do.screen.value = ""),
+                                       a.input_do.screen.focus(),
+                                       setTimeout(function() {
+                    a.hasPointerEvent_bl ? n.addEventListener("pointerdown", a.inputFocusOutHandler)
+                                         : n.addEventListener && (n.addEventListener("mousedown", a.inputFocusOutHandler),
+                                                                  n.addEventListener("touchstart", a.inputFocusOutHandler)),
+                                          FWDUVPlayer.isSearchedFocused_bl = !0
                 }, 50))
-            }, this.inputFocusOutHandler = function(e) {
+            },
+            this.inputFocusOutHandler = function(e) {
                 if (FWDUVPlayer.isSearchedFocused_bl = !1, a.hasInputFocus_bl) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                    return FWDUVPUtils.hitTest(a.input_do.screen, t.screenX, t.screenY) ? void 0 : (a.hasInputFocus_bl = !1, void("" == a.input_do.screen.value && (a.input_do.screen.value = "search", a.hasPointerEvent_bl ? n.removeEventListener("pointerdown", a.inputFocusOutHandler) : n.removeEventListener && (n.removeEventListener("mousedown", a.inputFocusOutHandler), n.removeEventListener("touchstart", a.inputFocusOutHandler)))))
+                    return FWDUVPUtils.hitTest(a.input_do.screen, t.screenX, t.screenY) ? void 0
+                                                                                        : (a.hasInputFocus_bl = !1,
+                                                                                           void("" == a.input_do.screen.value && (a.input_do.screen.value = "search", a.hasPointerEvent_bl ? n.removeEventListener("pointerdown", a.inputFocusOutHandler)
+                                                                                                                                                                                           : n.removeEventListener && (n.removeEventListener("mousedown", a.inputFocusOutHandler),
+                                                                                                                                                                                                                       n.removeEventListener("touchstart", a.inputFocusOutHandler)))))
                 }
-            }, this.keyUpHandler = function(e) {
-                e.stopPropagation && e.stopPropagation(), a.prevInputValue_str != a.input_do.screen.value && (a.isMbl ? (a.positionThumbs(!1), a.thumbnailsFinalY = -1 * Math.round(a.curId / (a.totalThumbs - 1) * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))) : a.positionThumbs(!0)), a.prevInputValue_str = a.input_do.screen.value, a.scrHandler_do && (a.updateScrollBarSizeActiveAndDeactivate(), a.updateScrollBarHandlerAndContent(!0, !0))
+            },
+            this.keyUpHandler = function(e) {
+                e.stopPropagation && e.stopPropagation(),
+                a.prevInputValue_str != a.input_do.screen.value && (a.isMbl ? (a.positionThumbs(!1),
+                                                                               a.thumbnailsFinalY = -1 * Math.round(a.curId / (a.totalThumbs - 1) * (a.totalThumbsHeight - a.mainThumbsHolder_do.h)))
+                                                                            : a.positionThumbs(!0)),
+                a.prevInputValue_str = a.input_do.screen.value,
+                a.scrHandler_do && (a.updateScrollBarSizeActiveAndDeactivate(), a.updateScrollBarHandlerAndContent(!0, !0))
             }, this.showNothingFound = function() {
                 a.isShowNothingFound_bl || (a.isShowNothingFound_bl = !0, a.noSearchFound_do.setVisible(!0), a.noSearchFound_do.setY(parseInt((a.sH - a.noSearchFound_do.getHeight()) / 2)), a.noSearchFound_do.setAlpha(0), FWDAnimation.to(a.noSearchFound_do, .1, {
                     alpha: 1,
@@ -7708,43 +8175,103 @@ var FWDUVPAddress = new function() {
                 }))
             }, this.hideNothingFound = function() {
                 a.isShowNothingFound_bl && (a.isShowNothingFound_bl = !1, FWDAnimation.killTweensOf(a.noSearchFound_do), a.noSearchFound_do.setVisible(!1))
-            }, this.positionControllBar = function() {
+            },
+            this.positionControllBar = function() {
                 var e, t, s;
                 if (a.input_do && a.sW <= 340) {
-                    e = a.sW - 2 * a.startSpaceBetweenButtons, a.nextButton_do && (e -= a.nextButton_do.w + a.spaceBetweenButtons), a.prevButton_do && (e -= a.prevButton_do.w + a.spaceBetweenButtons), a.shuffleButton_do && (e -= a.shuffleButton_do.w + a.spaceBetweenButtons), a.loopButton_do && (e -= a.loopButton_do.w + a.spaceBetweenButtons);
-                    for (var o = 0; o < a.totalButtons; o++) t = a.buttons_ar[a.totalButtons - 1 - o], s = a.buttons_ar[a.totalButtons - o], 0 == o ? t.setX(a.sW - t.w - a.startSpaceBetweenButtons) : t.setX(s.x - s.w - a.spaceBetweenButtons), t.setY(parseInt((a.controllBar_do.h - t.h) / 2))
-                } else if (a.input_do && 340 < a.sW) {
-                    350 < (e = a.sW - 2 * a.startSpaceBetweenButtons + a.spaceBetweenButtons - 2) && (e = 350), a.nextButton_do && (e -= a.nextButton_do.w + a.spaceBetweenButtons), a.prevButton_do && (e -= a.prevButton_do.w + a.spaceBetweenButtons), a.shuffleButton_do && (e -= a.shuffleButton_do.w + a.spaceBetweenButtons), a.loopButton_do && (e -= a.loopButton_do.w + a.spaceBetweenButtons);
-                    for (o = 0; o < a.totalButtons; o++) t = a.buttons_ar[a.totalButtons - 1 - o], s = a.buttons_ar[a.totalButtons - o], 0 == o ? t.setX(a.sW - t.w - a.startSpaceBetweenButtons) : t.setX(s.x - s.w - a.spaceBetweenButtons), t.setY(parseInt((a.controllBar_do.h - t.h) / 2))
-                } else a.shuffleButton_do ? (a.shuffleButton_do.setX(a.spaceBetweenButtons), a.shuffleButton_do.setY(parseInt((a.controllBar_do.h - a.shuffleButton_do.h) / 2)), a.loopButton_do && (a.loopButton_do.setX(a.shuffleButton_do.x + a.shuffleButton_do.w + a.spaceBetweenButtons), a.loopButton_do.setY(parseInt((a.controllBar_do.h - a.shuffleButton_do.h) / 2)))) : a.loopButton_do && (a.loopButton_do.setX(a.spaceBetweenButtons), a.loopButton_do.setY(parseInt((a.controllBar_do.h - a.loopButton_do.h) / 2))), a.nextButton_do && (a.nextButton_do.setX(a.sW - a.nextButton_do.w - a.startSpaceBetweenButtons), a.nextButton_do.setY(parseInt((a.controllBar_do.h - a.nextButton_do.h) / 2)), a.prevButton_do.setX(a.nextButton_do.x - a.nextButton_do.w - a.spaceBetweenButtons), a.prevButton_do.setY(parseInt((a.controllBar_do.h - a.prevButton_do.h) / 2)));
-                a.input_do && (a.input_do.setWidth(e), a.input_do.setX(a.startSpaceBetweenButtons), a.input_do.setY(parseInt((a.controllBar_do.h - a.input_do.getHeight()) / 2)), a.inputArrow_do.setX(parseInt(a.input_do.x + a.input_do.getWidth()) - a.inputArrow_do.w - 7), a.inputArrow_do.setY(parseInt((a.controllBar_do.h - a.inputArrow_do.h) / 2))), a.controllBar_do.setWidth(a.sW), a.controllBar_do.setY(a.sH - a.controllBar_do.h)
-            }, this.setupPrevButton = function() {
-                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-left'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(a.prevN_img, l.prevSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.prevButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.prevButtonShowTooltipHandler), a.prevButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.prevButtonOnMouseUpHandler), a.buttons_ar.push(a.prevButton_do), a.controllBar_do.addChild(a.prevButton_do)
-            }, this.prevButtonShowTooltipHandler = function(e) {
-                a.showToolTip(a.prevButton_do, a.prevButtonToolTip_do, e.e)
+                    e = a.sW - 2 * a.startSpaceBetweenButtons,
+                    a.nextButton_do && (e -= a.nextButton_do.w + a.spaceBetweenButtons),
+                    a.prevButton_do && (e -= a.prevButton_do.w + a.spaceBetweenButtons),
+                    a.shuffleButton_do && (e -= a.shuffleButton_do.w + a.spaceBetweenButtons),
+                    a.loopButton_do && (e -= a.loopButton_do.w + a.spaceBetweenButtons);
+                    for (var o = 0; o < a.totalButtons; o++)
+                      t = a.buttons_ar[a.totalButtons - 1 - o],
+                      s = a.buttons_ar[a.totalButtons - o],
+                      0 == o ? t.setX(a.sW - t.w - a.startSpaceBetweenButtons) : t.setX(s.x - s.w - a.spaceBetweenButtons),
+                      t.setY(parseInt((a.controllBar_do.h - t.h) / 2))
+                }
+                else if (a.input_do && 340 < a.sW) {
+                    350 < (e = a.sW - 2 * a.startSpaceBetweenButtons + a.spaceBetweenButtons - 2) && (e = 350),
+                    a.nextButton_do && (e -= a.nextButton_do.w + a.spaceBetweenButtons),
+                    a.prevButton_do && (e -= a.prevButton_do.w + a.spaceBetweenButtons),
+                    a.shuffleButton_do && (e -= a.shuffleButton_do.w + a.spaceBetweenButtons),
+                    a.loopButton_do && (e -= a.loopButton_do.w + a.spaceBetweenButtons);
+                    for (o = 0; o < a.totalButtons; o++)
+                      t = a.buttons_ar[a.totalButtons - 1 - o],
+                      s = a.buttons_ar[a.totalButtons - o],
+                      0 == o ? t.setX(a.sW - t.w - a.startSpaceBetweenButtons) : t.setX(s.x - s.w - a.spaceBetweenButtons),
+                      t.setY(parseInt((a.controllBar_do.h - t.h) / 2))
+                }
+                else a.shuffleButton_do ? (a.shuffleButton_do.setX(a.spaceBetweenButtons),
+                                           a.shuffleButton_do.setY(parseInt((a.controllBar_do.h - a.shuffleButton_do.h) / 2)),
+                                           a.loopButton_do && (a.loopButton_do.setX(a.shuffleButton_do.x + a.shuffleButton_do.w + a.spaceBetweenButtons),
+                                                               a.loopButton_do.setY(parseInt((a.controllBar_do.h - a.shuffleButton_do.h) / 2))))
+                                        : a.loopButton_do && (a.loopButton_do.setX(a.spaceBetweenButtons),
+                                                              a.loopButton_do.setY(parseInt((a.controllBar_do.h - a.loopButton_do.h) / 2))),
+                     a.nextButton_do && (a.nextButton_do.setX(a.sW - a.nextButton_do.w - a.startSpaceBetweenButtons),
+                     a.nextButton_do.setY(parseInt((a.controllBar_do.h - a.nextButton_do.h) / 2)),
+                     a.prevButton_do.setX(a.nextButton_do.x - a.nextButton_do.w - a.spaceBetweenButtons),
+                     a.prevButton_do.setY(parseInt((a.controllBar_do.h - a.prevButton_do.h) / 2)));
+                a.input_do && (a.input_do.setWidth(e),
+                               a.input_do.setX(a.startSpaceBetweenButtons),
+                               a.input_do.setY(parseInt((a.controllBar_do.h - a.input_do.getHeight()) / 2)),
+                               a.inputArrow_do.setX(parseInt(a.input_do.x + a.input_do.getWidth()) - a.inputArrow_do.w - 7),
+                               a.inputArrow_do.setY(parseInt((a.controllBar_do.h - a.inputArrow_do.h) / 2))),
+                               a.controllBar_do.setWidth(a.sW),
+                               a.controllBar_do.setY(a.sH - a.controllBar_do.h)
+            },
+            this.setupPrevButton = function() {
+                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                       a.prevButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-left'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState"))
+                                    : (FWDUVPSimpleButton.setPrototype(),
+                                       a.prevButton_do = new FWDUVPSimpleButton(a.prevN_img, l.prevSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)),
+                                       a.prevButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.prevButtonShowTooltipHandler),
+                                       a.prevButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.prevButtonOnMouseUpHandler),
+                                       a.buttons_ar.push(a.prevButton_do),
+                                       a.controllBar_do.addChild(a.prevButton_do)
             }, this.prevButtonOnMouseUpHandler = function() {
                 a.dispatchEvent(t.PLAY_PREV_VIDEO)
-            }, this.setupNextButton = function() {
-                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(a.nextN_img, l.nextSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.nextButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.nextButtonShowTooltipHandler), a.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.nextButtonOnMouseUpHandler), a.buttons_ar.push(a.nextButton_do), a.controllBar_do.addChild(a.nextButton_do)
-            }, this.nextButtonShowTooltipHandler = function(e) {
-                a.showToolTip(a.nextButton_do, a.nextButtonToolTip_do, e.e)
+            },
+            this.setupNextButton = function() {
+                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                       a.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState"))
+                                    : (FWDUVPSimpleButton.setPrototype(),
+                                       a.nextButton_do = new FWDUVPSimpleButton(a.nextN_img, l.nextSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)),
+                                       a.nextButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.nextButtonShowTooltipHandler),
+                                       a.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.nextButtonOnMouseUpHandler),
+                                       a.buttons_ar.push(a.nextButton_do),
+                                       a.controllBar_do.addChild(a.nextButton_do)
             }, this.nextButtonOnMouseUpHandler = function() {
                 a.dispatchEvent(t.PLAY_NEXT_VIDEO)
-            }, this.setupShuffleButton = function() {
-                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-shuffle'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.shuffleButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.shuffleButtonShowToolTipHandler), a.shuffleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.shuffleButtonOnMouseUpHandler), a.buttons_ar.push(a.shuffleButton_do), a.controllBar_do.addChild(a.shuffleButton_do), !a.loop_bl && a.shuffle_bl && a.setShuffleButtonState("selected")
-            }, this.shuffleButtonShowToolTipHandler = function(e) {
-                a.showToolTip(a.shuffleButton_do, a.shuffleButtonToolTip_do, e.e)
+            },
+            this.setupShuffleButton = function() {
+                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                       a.shuffleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-shuffle'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState"))
+                                    : (FWDUVPSimpleButton.setPrototype(),
+                                       a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.shuffleButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.shuffleButtonShowToolTipHandler),
+                                       a.shuffleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.shuffleButtonOnMouseUpHandler),
+                                       a.buttons_ar.push(a.shuffleButton_do),
+                                       a.controllBar_do.addChild(a.shuffleButton_do),
+                                       !a.loop_bl && a.shuffle_bl && a.setShuffleButtonState("selected")
             }, this.shuffleButtonOnMouseUpHandler = function() {
                 a.shuffleButton_do.isSelectedFinal_bl ? a.dispatchEvent(t.DISABLE_SHUFFLE) : a.dispatchEvent(t.ENABLE_SHUFFLE)
             }, this.setShuffleButtonState = function(e) {
                 a.shuffleButton_do && ("selected" == e ? a.shuffleButton_do.setSelected() : "unselected" == e && a.shuffleButton_do.setUnselected())
             }, this.setupLoopButton = function() {
-                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.loopButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-loop'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.loopButton_do = new FWDUVPSimpleButton(a.replayN_img, l.replaySPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.loopButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.loopButtonShowTooltipHandler), a.loopButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.loopButtonOnMouseUpHandler), a.buttons_ar.push(a.loopButton_do), a.controllBar_do.addChild(a.loopButton_do), a.loop_bl && a.setLoopStateButton("selected")
-            }, this.loopButtonShowTooltipHandler = function(e) {
-                a.showToolTip(a.loopButton_do, a.loopButtonToolTip_do, e.e)
-            }, this.loopButtonOnMouseUpHandler = function() {
+                a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
+                                       a.loopButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-loop'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState"))
+                                    : (FWDUVPSimpleButton.setPrototype(),
+                                       a.loopButton_do = new FWDUVPSimpleButton(a.replayN_img, l.replaySPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)),
+                a.loopButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.loopButtonShowTooltipHandler),
+                a.loopButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.loopButtonOnMouseUpHandler),
+                a.buttons_ar.push(a.loopButton_do),
+                a.controllBar_do.addChild(a.loopButton_do),
+                a.loop_bl && a.setLoopStateButton("selected")
+            },
+            this.loopButtonOnMouseUpHandler = function() {
                 a.loopButton_do.isSelectedFinal_bl ? a.dispatchEvent(t.DISABLE_LOOP) : a.dispatchEvent(t.ENABLE_LOOP)
-            }, this.setLoopStateButton = function(e) {
+            },
+            this.setLoopStateButton = function(e) {
                 a.loopButton_do && ("selected" == e ? a.loopButton_do.setSelected() : "unselected" == e && a.loopButton_do.setUnselected())
             },
             this.setupThumbnails = function() {
