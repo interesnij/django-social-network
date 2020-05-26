@@ -4186,7 +4186,7 @@ if (! function(e) {
                 b.mainScrubberMiddleImage.src = b.mainScrubberDragMiddlePath_str,
                 b.volumeScrubberDragMiddle_do = new FWDUVPDisplayObject("div"),
                 b.mainScrubberDragMiddle_do = new FWDUVPDisplayObject("div"),
-                b.mainScrubberDragMiddle_do.getStyle().background = "url('" + b.mainScrubberDragMiddlePath_str + "') repeat-x"),
+                b.mainScrubberDragMiddle_do.getStyle().background = "url('" + b.mainScrubberDragMiddlePath_str + "') repeat-x",
                 b.mainScrubberDragMiddle_do.setHeight(b.mainScrbH),
                 b.mainScrubberDragMiddle_do.setX(b.mainScrbDrgLW),
                 b.mainScrubberBarLine_do = new FWDUVPDisplayObject("img"),
