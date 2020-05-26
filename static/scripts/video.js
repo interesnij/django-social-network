@@ -9920,7 +9920,7 @@ var FWDUVPAddress = new function() {
                 else if (u.n_sdo = new FWDUVPTransformDisplayObject("img"),
                                      u.n_sdo.setScreen(u.nImg))
                   u.addChild(u.n_sdo),
-                  u.allowToCreateSecondButton_bl {
+                  u.allowToCreateSecondButton_blб
                     u.img1 = new Image,
                     u.img1.src = u.sPath_str;
                     var e = new Image;
