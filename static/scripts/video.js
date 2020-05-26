@@ -4289,6 +4289,7 @@ if (! function(e) {
                 }, 50);
                 b.buttons_ar.push(b.prevButton_do), b.mainHld.addChild(b.prevButton_do)
             }, this.prevButtonOnMouseUpHandler = function() {
+              console.log("playlist prev");
                 b.dispatchEvent(FWDUVPPlaylist.PLAY_PREV_VIDEO)
             }, this.setupNextButton = function() {
                 b.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), b.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), b.nextButton_do = new FWDUVPSimpleButton(p.next2N_img, p.nextSPath_str, void 0, !0, b.useHEX, b.nBC, b.sBC)), b.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, b.nextButtonOnMouseUpHandler), b.nextButton_do.setY(parseInt((b.sH - b.nextButton_do.h) / 2));
@@ -4297,6 +4298,7 @@ if (! function(e) {
                 }, 50);
                 b.buttons_ar.push(b.nextButton_do), b.mainHld.addChild(b.nextButton_do)
             }, this.nextButtonOnMouseUpHandler = function() {
+              console.log("playlist next")
                 b.dispatchEvent(FWDUVPPlaylist.PLAY_NEXT_VIDEO)
             }, this.setupPlayPauseButton = function() {
                 b.useVectorIcons_bl ? (FWDUVPComplexButton.setPrototype(), b.playPauseButton_do = new FWDUVPComplexButton(void 0, void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-play'></span>", "<span class='fwdicon fwdicon-pause'></span>", "UVPMainButtonsNormalState play", "UVPMainButtonsSelectedState play")) : (FWDUVPComplexButton.setPrototype(), b.playPauseButton_do = new FWDUVPComplexButton(b.playN_img, p.playSPath_str, b.pauseN_img, p.pauseSPath_str, !0, b.useHEX, b.nBC, b.sBC)), b.buttons_ar.push(b.playPauseButton_do), b.playPauseButton_do.setY(parseInt((b.sH - b.playPauseButton_do.buttonHeight) / 2));
@@ -8021,9 +8023,25 @@ var FWDUVPAddress = new function() {
                     c.setNormalState(!0)
                 }
             }, this.setupMainContainers = function() {
-                c.mainImgHld = new FWDUVPDisplayObject("div"), c.mainImgHld.screen.className = "fwduvp-playlist-thumbnail", c.mainImgHld.getStyle().background = "url('" + c.backgroundImagePath_str + "')", c.mainImgHld.setX(c.padding), c.mainImgHld.setY(c.padding), c.mainImgHld.setWidth(c.thumbImageWidth), c.mainImgHld.setHeight(c.thumbImageHeight), c.imageHolder_do = new FWDUVPDisplayObject("div"), c.txt = new FWDUVPDisplayObject("div");
+                c.mainImgHld = new FWDUVPDisplayObject("div"),
+                c.mainImgHld.screen.className = "fwduvp-playlist-thumbnail",
+                c.mainImgHld.getStyle().background = "url('" + c.backgroundImagePath_str + "')",
+                c.mainImgHld.setX(c.padding),
+                c.mainImgHld.setY(c.padding),
+                c.mainImgHld.setWidth(c.thumbImageWidth),
+                c.mainImgHld.setHeight(c.thumbImageHeight),
+                c.imageHolder_do = new FWDUVPDisplayObject("div"),
+                c.txt = new FWDUVPDisplayObject("div");
                 var e = "fwduvp-playlist-thumbnail-white-text";
-                c.isDark && (e = "fwduvp-playlist-thumbnail-dark-text"), c.txt.screen.className = e, c.txt.hasTransform3d_bl = !1, c.txt.hasTransform2d_bl = !1, c.txt.setHeight(c.finalH - 6), c.txt.setBackfaceVisibility(), c.txt.getStyle().fontFamily = "Arial", c.txt.getStyle().fontSize = "12px", c.txt.getStyle().color = c.fontColor_str, c.txt.getStyle().fontSmoothing = "antialiased", c.txt.getStyle().webkitFontSmoothing = "antialiased", c.txt.getStyle().textRendering = "optimizeLegibility", c.slTitle = c.txt.screen.className, c.showThumbnail_bl ? c.txt.setX(2 * c.padding + c.thumbImageWidth + 4) : c.txt.setX(2 * c.padding), c.txt.setInnerHTML(c.htmlContent_str), c.addChild(c.txt), c.dumy_do = new FWDUVPDisplayObject("div"), c.dumy_do.getStyle().width = "100%", c.dumy_do.getStyle().height = "100%", FWDUVPUtils.isIE && (c.dumy_do.setBkColor("#FF0000"), c.dumy_do.setAlpha(.01)), c.showThumbnail_bl && c.addChild(c.mainImgHld), c.mainImgHld.addChild(c.imageHolder_do), c.addChild(c.dumy_do)
+                c.isDark && (e = "fwduvp-playlist-thumbnail-dark-text"),
+                c.txt.screen.className = e,
+                c.txt.hasTransform3d_bl = !1,
+                c.txt.hasTransform2d_bl = !1,
+                c.txt.setHeight(c.finalH - 6),
+                c.txt.setBackfaceVisibility(),
+                c.txt.getStyle().fontFamily = "Arial",
+                c.txt.getStyle().fontSize = "12px",
+                c.txt.getStyle().color = c.fontColor_str, c.txt.getStyle().fontSmoothing = "antialiased", c.txt.getStyle().webkitFontSmoothing = "antialiased", c.txt.getStyle().textRendering = "optimizeLegibility", c.slTitle = c.txt.screen.className, c.showThumbnail_bl ? c.txt.setX(2 * c.padding + c.thumbImageWidth + 4) : c.txt.setX(2 * c.padding), c.txt.setInnerHTML(c.htmlContent_str), c.addChild(c.txt), c.dumy_do = new FWDUVPDisplayObject("div"), c.dumy_do.getStyle().width = "100%", c.dumy_do.getStyle().height = "100%", FWDUVPUtils.isIE && (c.dumy_do.setBkColor("#FF0000"), c.dumy_do.setAlpha(.01)), c.showThumbnail_bl && c.addChild(c.mainImgHld), c.mainImgHld.addChild(c.imageHolder_do), c.addChild(c.dumy_do)
             }, this.updateText = function(e) {
                 try {
                     c.htmlContent_str = e, c.txt.setInnerHTML(c.htmlContent_str)
