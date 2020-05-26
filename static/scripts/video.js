@@ -5301,7 +5301,9 @@ if (! function(e) {
                         for (var i = 0; i < totalChildren; i++) {
                             var obj = {},
                                 adsObj, annotations_ar;
-                            if (child = children_ar[i], !FWDUVPUtils.hasAttribute(child, "data-thumb-source")) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
+                            if (child = children_ar[i], !FWDUVPUtils.hasAttribute(child, "data-thumb-source"))
+                               return self.isPlaylistDispatchingError_bl = !0,
+                                      void(showLoadPlaylistErrorId_to = setTimeout(function() {
                                 self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
                                     text: "Attribute <font color='#ff0000'>data-thumb-source</font> is required in the playlist at position <font color='#ff0000'>" + (i + 1)
                                 })
@@ -5413,24 +5415,46 @@ if (! function(e) {
                         }), self.isPlaylistDispatchingError_bl = !1
                     }, 50)
                 }
-            }, this.parseFolderJSON = function(e) {
+            },
+            this.parseFolderJSON = function(e) {
                 var t;
                 self.playlist_ar = [];
-                for (var s = e.folder, o = 0; o < s.length; o++)(t = {}).videoSource = encodeURI(s[o]["@attributes"]["data-video-path"]), t.videoSource = s[o]["@attributes"]["data-video-path"], t.dataPlaybackRate = s[o]["@attributes"]["data-playback-rate"], t.startAtVideo = s[o]["@attributes"]["data-start-at-video"] || 0, t.videoSource = [{
+                for (var s = e.folder, o = 0; o < s.length; o++)
+                   (t = {}).videoSource = encodeURI(s[o]["@attributes"]["data-video-path"]),
+                      t.videoSource = s[o]["@attributes"]["data-video-path"],
+                      t.dataPlaybackRate = s[o]["@attributes"]["data-playback-rate"],
+                      t.startAtVideo = s[o]["@attributes"]["data-start-at-video"] || 0,
+                      t.videoSource = [{
                     source: FWDUVPUtils.getValidSource(t.videoSource)
                 }], t.thumbSource = encodeURI(s[o]["@attributes"]["data-thumb-path"]), t.posterSource = encodeURI(s[o]["@attributes"]["data-poster-path"]), t.downloadPath = encodeURIComponent(s[o]["@attributes"]["download-path"]), t.downloadable = self.showDownloadVideoButton_bl, self.forceDisableDownloadButtonForFolder_bl && (t.downloadable = !1), t.titleText = "...", t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>...</p>", t.titleText = s[o]["@attributes"]["data-title"], t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>" + s[o]["@attributes"]["data-title"] + "</p>", t.desc = void 0, self.playlist_ar[o] = t;
                 self.randomizePlaylist_bl && (self.playlist_ar = FWDUVPUtils.randomizeArray(self.playlist_ar)), self.maxPlaylistItems < self.playlist_ar.length && (self.playlist_ar = self.playlist_ar.splice(0, self.maxPlaylistItems)), clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
                     self.dispatchEvent(FWDUVPData.PLAYLIST_LOAD_COMPLETE)
                 }, 50), self.isDataLoaded_bl = !0
-            }, this.parseXML = function(response) {
+            },
+            this.parseXML = function(response) {
                 var obj;
                 self.playlist_ar = [];
                 var obj_ar = response.li,
                     has360Video = !1;
                 obj_ar.length || (obj_ar = [obj_ar]);
                 for (var i = 0; i < obj_ar.length; i++) {
-                    if (obj = {}, obj.videoSource = obj_ar[i]["@attributes"]["data-video-source"], obj.startAtVideo = obj_ar[i]["@attributes"]["data-start-at-video"] || 0, obj.isLive = obj_ar[i]["@attributes"]["data-is-live"], obj.atb = "yes" == obj_ar[i]["@attributes"]["data-use-a-to-b"], self.useAToB || (obj.atb = !1), obj.isPrivate = obj_ar[i]["@attributes"]["data-is-private"], "yes" == obj.isPrivate ? obj.isPrivate = !0 : obj.isPrivate = !1, obj.privateVideoPassword_str = obj_ar[i]["@attributes"]["data-private-video-password"], obj.startAtTime = obj_ar[i]["@attributes"]["data-start-at-time"], "00:00:00" != obj.startAtTime && FWDUVPUtils.checkTime(obj.startAtTime) || (obj.startAtTime = void 0), obj.stopAtTime = obj_ar[i]["@attributes"]["data-stop-at-time"], "00:00:00" != obj.stopAtTime && FWDUVPUtils.checkTime(obj.stopAtTime) || (obj.stopAtTime = void 0), -1 != obj.videoSource.indexOf("{source:")) try {
-                        obj.videoLabels_ar = [], obj.videoSource = eval(obj.videoSource);
+                    if (obj = {},
+                        obj.videoSource = obj_ar[i]["@attributes"]["data-video-source"],
+                        obj.startAtVideo = obj_ar[i]["@attributes"]["data-start-at-video"] || 0,
+                        obj.isLive = obj_ar[i]["@attributes"]["data-is-live"],
+                        obj.atb = "yes" == obj_ar[i]["@attributes"]["data-use-a-to-b"],
+                        self.useAToB || (obj.atb = !1),
+                        obj.isPrivate = obj_ar[i]["@attributes"]["data-is-private"],
+                        "yes" == obj.isPrivate ? obj.isPrivate = !0 : obj.isPrivate = !1,
+                        obj.privateVideoPassword_str = obj_ar[i]["@attributes"]["data-private-video-password"],
+                        obj.startAtTime = obj_ar[i]["@attributes"]["data-start-at-time"],
+                        "00:00:00" != obj.startAtTime && FWDUVPUtils.checkTime(obj.startAtTime) || (obj.startAtTime = void 0),
+                        obj.stopAtTime = obj_ar[i]["@attributes"]["data-stop-at-time"],
+                        "00:00:00" != obj.stopAtTime && FWDUVPUtils.checkTime(obj.stopAtTime) || (obj.stopAtTime = void 0),
+                        -1 != obj.videoSource.indexOf("{source:"))
+                        try {
+                        obj.videoLabels_ar = [],
+                        obj.videoSource = eval(obj.videoSource);
                         for (var m = 0; m < obj.videoSource.length; m++) obj.videoLabels_ar[m] = obj.videoSource[m].label;
                         for (var m = 0; m < obj.videoSource.length; m++) {
                             var src = obj.videoSource[m].source; - 1 != src.indexOf("encrypt:") && (src = atob(src.substr(8))), obj.videoSource[m].source = FWDUVPUtils.getValidSource(src)
