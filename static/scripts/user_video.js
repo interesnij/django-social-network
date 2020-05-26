@@ -32,7 +32,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     function onReady(){
     console.log("video player ready");
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
-    setTimeout(function() {}, 1000);
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
     }
   }, 500);
 });
@@ -56,6 +56,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
     }
   }, 500);
 });
