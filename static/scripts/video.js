@@ -8608,7 +8608,7 @@ var FWDUVPAddress = new function() {
                                                                                  c.screen.addEventListener("mouseup", c.onMouseUp)),
                                                                     c.screen.addEventListener("touchend", c.onMouseUp))
             }, c.onMouseOver = function(e) {
-                if (c.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
+                if (c.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType) {
                     if (c.isDisabled_bl || c.isSelectedFinal_bl) return;
                     c.dispatchEvent(_.MOUSE_OVER, {
                         e: e
