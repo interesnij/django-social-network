@@ -5910,7 +5910,11 @@ if (! function(e) {
                       t.startAtVideo = s[o]["@attributes"]["data-start-at-video"] || 0,
                       t.videoSource = [{
                     source: FWDUVPUtils.getValidSource(t.videoSource)
-                }], t.thumbSource = encodeURI(s[o]["@attributes"]["data-thumb-path"]), t.posterSource = encodeURI(s[o]["@attributes"]["data-poster-path"]), t.downloadPath = encodeURIComponent(s[o]["@attributes"]["download-path"]), t.downloadable = self.showDownloadVideoButton_bl, self.forceDisableDownloadButtonForFolder_bl && (t.downloadable = !1), t.titleText = "...", t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>...</p>", t.titleText = s[o]["@attributes"]["data-title"], t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>" + s[o]["@attributes"]["data-title"] + "</p>", t.desc = void 0, self.playlist_ar[o] = t;
+                }],
+                t.thumbSource = encodeURI(s[o]["@attributes"]["data-thumb-path"]),
+                t.uuidSource = FWDUVPUtils.getAttributeValue(child, "data-video-uuid"),
+                t.posterSource = encodeURI(s[o]["@attributes"]["data-poster-path"]),
+                t.downloadPath = encodeURIComponent(s[o]["@attributes"]["download-path"]), t.downloadable = self.showDownloadVideoButton_bl, self.forceDisableDownloadButtonForFolder_bl && (t.downloadable = !1), t.titleText = "...", t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>...</p>", t.titleText = s[o]["@attributes"]["data-title"], t.title = "<p class='fwduvp-thumbnail-title' style='color:" + self.youtubeAndFolderVideoTitleColor_str + "'>" + s[o]["@attributes"]["data-title"] + "</p>", t.desc = void 0, self.playlist_ar[o] = t;
                 self.randomizePlaylist_bl && (self.playlist_ar = FWDUVPUtils.randomizeArray(self.playlist_ar)), self.maxPlaylistItems < self.playlist_ar.length && (self.playlist_ar = self.playlist_ar.splice(0, self.maxPlaylistItems)), clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
                     self.dispatchEvent(FWDUVPData.PLAYLIST_LOAD_COMPLETE)
                 }, 50), self.isDataLoaded_bl = !0
@@ -5989,7 +5993,7 @@ if (! function(e) {
                     -1 == obj.videoSource[0].source.indexOf(".") && (obj.downloadable = !1),
                     obj.posterSource = encodeURI(obj_ar[i]["@attributes"]["data-poster-source"]),
                     obj.thumbSource = obj_ar[i]["@attributes"]["data-thumb-source"],
-                    obj.uuid = obj_ar[i]["@attributes"]["data-video-uuid"],
+                    obj.uuidSource = obj_ar[i]["@attributes"]["data-video-uuid"],
                     obj.title = obj_ar[i]["@attributes"]["data-title"],
                     obj.titleText = obj_ar[i]["@attributes"]["data-title"],
                     obj.desc = obj_ar[i]["@attributes"]["data-desc"],
@@ -7517,7 +7521,7 @@ var FWDUVPAddress = new function() {
                 }, this.play = function() {
                    console.log("play");
                    console.log(this.uuidSource);
-                   console.log(self.data);
+                   console.log(self.uuidSource);
                     if (self.isAPIReady_bl)
                         if (self.isCasting) self.cc.play();
                         else if (!self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE
