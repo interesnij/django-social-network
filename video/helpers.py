@@ -8,5 +8,5 @@ def upload_to_video_directory(user_profile, uuid):
     return _upload_to_user_directory(creator=creator, uuid=uuid)
 
 def _upload_to_user_directory(creator, uuid):
-    path = 'users/%(user_id)s/%(image_uuid)s/' % {'user_uuid': str(creator.id), 'image_uuid': str(uuid)}
+    path = 'users/%(user_id)s/%(image_uuid)s/' % {'user_id': str(creator.id), 'image_uuid': str(uuid)}
     return path
