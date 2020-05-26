@@ -123,7 +123,7 @@ class VideoAlbum(models.Model):
 class Video(models.Model):
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
-                                upload_to=upload_to_thumb_directory(),
+                                upload_to=upload_to_video_directory,
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
     created = models.DateTimeField(default=timezone.now)
@@ -141,9 +141,6 @@ class Video(models.Model):
     album = models.ForeignKey(VideoAlbum, related_name="video_album", blank=True, null=True, on_delete=models.CASCADE, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
-
-    def upload_to_thumb_directory():
-        return 'users/{}/video/img/{}'.format(self.created.pk, self.uuid)
 
     def __str__(self):
         return self.title
