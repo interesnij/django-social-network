@@ -8248,7 +8248,7 @@ var FWDUVPAddress = new function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(),
                                        a.shuffleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-shuffle'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState"))
                                     : (FWDUVPSimpleButton.setPrototype(),
-                                       a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.shuffleButton_do.addListener(FWDUVPSimpleButton.SHOW_TOOLTIP, a.shuffleButtonShowToolTipHandler),
+                                       a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), 
                                        a.shuffleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.shuffleButtonOnMouseUpHandler),
                                        a.buttons_ar.push(a.shuffleButton_do),
                                        a.controllBar_do.addChild(a.shuffleButton_do),
