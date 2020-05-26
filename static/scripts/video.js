@@ -4229,7 +4229,7 @@ if (! function(e) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e).screenX - b.mainScrubber_do.getGlobalX();
                     t < 0 ? t = 0 : t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth);
                     var s = t / b.maiScrbW;
-                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.updateToolTip(t, s), b.updateMainScrubber(s), b.updateThumbnailsPreview(t, s), b.dispatchEvent(o.START_TO_SCRUB), b.dispatchEvent(o.SCRUB, {
+                    !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.updateMainScrubber(s), b.updateThumbnailsPreview(t, s), b.dispatchEvent(o.START_TO_SCRUB), b.dispatchEvent(o.SCRUB, {
                         percent: s
                     }), b.hasPointerEvent_bl ? (window.addEventListener("pointermove", b.mainScrubberMoveHandler), window.addEventListener("pointerup", b.mainScrubberEndHandler)) : (window.addEventListener("mousemove", b.mainScrubberMoveHandler), window.addEventListener("mouseup", b.mainScrubberEndHandler), window.addEventListener("touchmove", b.mainScrubberMoveHandler), window.addEventListener("touchend", b.mainScrubberEndHandler))
                 }
