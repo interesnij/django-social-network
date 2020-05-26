@@ -7516,19 +7516,56 @@ var FWDUVPAddress = new function() {
                     self.controller_do.positionScrollBarOnTopOfTheController()
                 }, this.play = function() {
                    console.log("play");
+                   console.log(this);
+                   console.log(self);
                     if (self.isAPIReady_bl)
                         if (self.isCasting) self.cc.play();
-                        else if (!self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE || !self.ytb_do || self.ytb_do.isSafeToBeControlled_bl || self.data.aom_bl)
-                        if (self.videoType_str == FWDUVPlayer.HLS_JS && 0 <= location.protocol.indexOf("file:")) self.showSourceError("HLS m3u8 videos can't be played local on this browser, please test it online!.");
+                        else if (!self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE
+                                             || !self.ytb_do
+                                             || self.ytb_do.isSafeToBeControlled_bl
+                                             || self.data.aom_bl)
+                        if (self.videoType_str == FWDUVPlayer.HLS_JS && 0 <= location.protocol.indexOf("file:"))
+                            self.showSourceError("HLS m3u8 videos can't be played local on this browser, please test it online!.");
                         else {
-                            if (!self.isAdd_bl && self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do || self.playlistPass) return self.lrgPlayBtn && self.lrgPlayBtn.show(), self.passWindow_do.show(), void self.videoPoster_do.show();
-                            if (self.hasPassedPassowrd_bl = !0, self.isMbl ? FWDUVPlayer.stopAllVideos(self) : FWDUVPlayer.videoStartBehaviour == FWDUVPlayer.PAUSE_ALL_VIDEOS ? FWDUVPlayer.pauseAllVideos(self) : FWDUVPlayer.videoStartBehaviour == FWDUVPlayer.STOP_ALL_VIDEOS && FWDUVPlayer.stopAllVideos(self), self.isIMA) {
-                                if (self.isIMA && self.IMA && !self.IMA.isReady) return;
+                            if (!self.isAdd_bl && self.data.playlist_ar[self.id].isPrivate
+                                               && !self.hasPassedPassowrd_bl
+                                               && self.passWindow_do || self.playlistPass)
+                              return self.lrgPlayBtn && self.lrgPlayBtn.show(),
+                                     self.passWindow_do.show(),
+                                     void self.videoPoster_do.show();
+                            if (self.hasPassedPassowrd_bl = !0,
+                                self.isMbl ? FWDUVPlayer.stopAllVideos(self)
+                                           : FWDUVPlayer.videoStartBehaviour == FWDUVPlayer.PAUSE_ALL_VIDEOS
+                                           ? FWDUVPlayer.pauseAllVideos(self)
+                                           : FWDUVPlayer.videoStartBehaviour == FWDUVPlayer.STOP_ALL_VIDEOS && FWDUVPlayer.stopAllVideos(self),
+                                self.isIMA) {
+                                if (self.isIMA && self.IMA && !self.IMA.isReady)
+                                   return;
                                 self.IMA.play()
-                            } else self.videoType_str == FWDUVPlayer.IMAGE ? self.startUpdateImageInterval() : self.videoType_str == FWDUVPlayer.YOUTUBE ? self.ytb_do && self.ytb_do.play() : self.videoType_str == FWDUVPlayer.MP3 ? (self.audioScreen_do && self.audioScreen_do.play(), FWDUVPUtils.isLocal || self.audioScreen_do.setupSpectrum()) : self.videoType_str == FWDUVPlayer.VIMEO ? self.vimeo_do && self.vimeo_do.play() : FWDUVPlayer.hasHTML5Video ? self.videoType_str != FWDUVPlayer.HLS_JS || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play() : (self.videoScreen_do.initVideo(), window.Hls && (self.setupHLS(), self.hlsJS.loadSource(self.videoSourcePath_str), self.hlsJS.attachMedia(self.videoScreen_do.video_el), self.hlsJS.on(Hls.Events.MANIFEST_PARSED, function(e) {
-                                self.isHLSManifestReady_bl = !0, self.videoType_str == FWDUVPlayer.HLS_JS && self.play()
-                            }))) : self.isFlashScreenReady_bl && (self.flashObject.playVideo(), self.scrub(0));
-                            (FWDUVPlayer.keyboardCurInstance = self).videoPoster_do.allowToShow_bl = !1, self.lrgPlayBtn.hide(), self.videoPoster_do.hide()
+                            }
+                            else self.videoType_str == FWDUVPlayer.IMAGE ? self.startUpdateImageInterval()
+                                                                         : self.videoType_str == FWDUVPlayer.YOUTUBE
+                                                                         ? self.ytb_do && self.ytb_do.play()
+                                                                         : self.videoType_str == FWDUVPlayer.MP3
+                                                                         ? (self.audioScreen_do && self.audioScreen_do.play(),
+                                                                            FWDUVPUtils.isLocal || self.audioScreen_do.setupSpectrum())
+                                                                         : self.videoType_str == FWDUVPlayer.VIMEO
+                                                                         ? self.vimeo_do && self.vimeo_do.play()
+                                                                         : FWDUVPlayer.hasHTML5Video
+                                                                         ? self.videoType_str != FWDUVPlayer.HLS_JS || self.isHLSManifestReady_bl
+                                                                         ? self.videoScreen_do && self.videoScreen_do.play()
+                                                                         : (self.videoScreen_do.initVideo(),
+                                                                            window.Hls && (self.setupHLS(),
+                                                                            self.hlsJS.loadSource(self.videoSourcePath_str),
+                                                                            self.hlsJS.attachMedia(self.videoScreen_do.video_el),
+                                                                            self.hlsJS.on(Hls.Events.MANIFEST_PARSED, function(e) {
+                                                                              self.isHLSManifestReady_bl = !0,
+                                                                              self.videoType_str == FWDUVPlayer.HLS_JS && self.play()
+                                                                            })))
+                                                                          : self.isFlashScreenReady_bl && (self.flashObject.playVideo(), self.scrub(0));
+                          (FWDUVPlayer.keyboardCurInstance = self).videoPoster_do.allowToShow_bl = !1,
+                          self.lrgPlayBtn.hide(),
+                          self.videoPoster_do.hide()
                         }
                 }, this.pause = function() {
                     self.isAPIReady_bl && (self.isCasting ? self.cc.pause() : self.isIMA ? self.IMA.pause() : self.videoType_str == FWDUVPlayer.IMAGE ? self.stopUpdateImageInterval() : self.videoType_str == FWDUVPlayer.YOUTUBE ? self.ytb_do.pause() : self.videoType_str == FWDUVPlayer.MP3 ? self.audioScreen_do && self.audioScreen_do.pause() : self.videoType_str == FWDUVPlayer.VIMEO ? self.vimeo_do.pause() : FWDUVPlayer.hasHTML5Video ? self.videoScreen_do && self.videoScreen_do.pause() : self.isFlashScreenReady_bl && self.flashObject.pauseVideo())
