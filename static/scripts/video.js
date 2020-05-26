@@ -5456,7 +5456,32 @@ if (! function(e) {
                                 var source = obj.subtitleSource[x].source; - 1 != source.indexOf("encrypt:") && (obj.subtitleSource[x].source = atob(source.substr(8)))
                             }
                     }
-                    obj.dataAdvertisementOnPauseSource = obj_ar[i]["@attributes"]["data-advertisement-on-pause-source"], obj.scrubAtTimeAtFirstPlay = obj_ar[i]["@attributes"]["data-scrub-at-time-at-first-play"], obj.scrubAtTimeAtFirstPlay && /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g.test(obj.scrubAtTimeAtFirstPlay) && (obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getSecondsFromString(obj.scrubAtTimeAtFirstPlay)), obj.downloadPath = obj.videoSource[obj.startAtVideo], obj.downloadable = "yes" == obj_ar[i]["@attributes"]["data-downloadable"], -1 == obj.videoSource[0].source.indexOf(".") && (obj.downloadable = !1), obj.posterSource = encodeURI(obj_ar[i]["@attributes"]["data-poster-source"]), obj.thumbSource = obj_ar[i]["@attributes"]["data-thumb-source"], obj.title = obj_ar[i]["@attributes"]["data-title"], obj.titleText = obj_ar[i]["@attributes"]["data-title"], obj.desc = obj_ar[i]["@attributes"]["data-desc"], obj.gaStr = obj.titleText, obj_ar[i]["@attributes"]["data-ads-source"] && (adsObj = {}, adsObj.source = FWDUVPUtils.getValidSource(obj_ar[i]["@attributes"]["data-ads-source"]), adsObj.pageToOpen = obj_ar[i]["@attributes"]["data-ads-page-to-open-url"], adsObj.pageTarget = obj_ar[i]["@attributes"]["data-ads-page-target"] || "_blank", adsObj.timeToHoldAds = obj_ar[i]["@attributes"]["data-time-to-hold-ads"] || 0, obj.ads = adsObj), obj_ar[i]["@attributes"]["data-cuepoints"] && (adsObj = {}, adsObj.timeStart = obj_ar[i]["@attributes"]["data-time-start"], adsObj.javascriptCall = obj_ar[i]["@attributes"]["data-javascript-call"], adsObj.isPlayed_bl = !1, obj.cuepoints_ar = adsObj), self.playlist_ar[i] = obj
+                    obj.dataAdvertisementOnPauseSource = obj_ar[i]["@attributes"]["data-advertisement-on-pause-source"],
+                    obj.scrubAtTimeAtFirstPlay = obj_ar[i]["@attributes"]["data-scrub-at-time-at-first-play"],
+                    obj.scrubAtTimeAtFirstPlay && /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g.test(obj.scrubAtTimeAtFirstPlay) && (obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getSecondsFromString(obj.scrubAtTimeAtFirstPlay)),
+                    obj.downloadPath = obj.videoSource[obj.startAtVideo],
+                    obj.downloadable = "yes" == obj_ar[i]["@attributes"]["data-downloadable"],
+                    -1 == obj.videoSource[0].source.indexOf(".") && (obj.downloadable = !1),
+                    obj.posterSource = encodeURI(obj_ar[i]["@attributes"]["data-poster-source"]),
+                    obj.thumbSource = obj_ar[i]["@attributes"]["data-thumb-source"],
+                    obj.uuid = obj_ar[i]["@attributes"]["data-video-uuid"],
+                    obj.title = obj_ar[i]["@attributes"]["data-title"],
+                    obj.titleText = obj_ar[i]["@attributes"]["data-title"],
+                    obj.desc = obj_ar[i]["@attributes"]["data-desc"],
+                    obj.gaStr = obj.titleText,
+                    obj_ar[i]["@attributes"]["data-ads-source"] && (adsObj = {},
+                                                                    adsObj.source = FWDUVPUtils.getValidSource(obj_ar[i]["@attributes"]["data-ads-source"]),
+                                                                    adsObj.pageToOpen = obj_ar[i]["@attributes"]["data-ads-page-to-open-url"],
+                                                                    adsObj.pageTarget = obj_ar[i]["@attributes"]["data-ads-page-target"] || "_blank",
+                                                                    adsObj.timeToHoldAds = obj_ar[i]["@attributes"]["data-time-to-hold-ads"] || 0,
+                                                                    obj.ads = adsObj),
+                    obj_ar[i]["@attributes"]["data-cuepoints"] && (adsObj = {},
+                                                                   adsObj.timeStart = obj_ar[i]["@attributes"]["data-time-start"],
+                                                                   adsObj.javascriptCall = obj_ar[i]["@attributes"]["data-javascript-call"],
+                                                                   adsObj.isPlayed_bl = !1,
+                                                                   obj.cuepoints_ar = adsObj),
+                    self.playlist_ar[i] = obj;
+                    console.log(obj.uuid);
                 }
                 self.randomizePlaylist_bl && (self.playlist_ar = FWDUVPUtils.randomizeArray(self.playlist_ar)), self.maxPlaylistItems < self.playlist_ar.length && (self.playlist_ar = self.playlist_ar.splice(0, self.maxPlaylistItems)), clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
                     self.dispatchEvent(FWDUVPData.PLAYLIST_LOAD_COMPLETE)
