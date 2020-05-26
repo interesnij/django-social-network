@@ -9918,7 +9918,7 @@ var FWDUVPAddress = new function() {
                   u.addChild(u.d_sdo),
                   u.setFinalSize();
                 else if (u.n_sdo = new FWDUVPTransformDisplayObject("img"),
-                                     u.n_sdo.setScreen(u.nImg)),
+                                     u.n_sdo.setScreen(u.nImg))
                   u.addChild(u.n_sdo),
                   u.allowToCreateSecondButton_bl) {
                     u.img1 = new Image,
