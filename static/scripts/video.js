@@ -4725,7 +4725,17 @@ if (! function(e) {
         };
         o.setPrototype = function() {
             o.prototype = new FWDUVPDisplayObject("div")
-        }, o.UNCAST = "uncast", o.CAST = "cast", o.SHOW_SHARE_WINDOW = "showShareWindow", o.SHOW_SUBTITLE = "showSubtitle", o.HIDE_SUBTITLE = "hideSubtitle", o.SHOW_PLAYLIST = "showPlaylist", o.HIDE_PLAYLIST = "hidePlaylist", o.SHOW_CATEGORIES = "showCategories", o.DOWNLOAD_VIDEO = "downloadVideo", o.UNCAST = "uncast", o.REWIND = "rewind", o.FULL_SCREEN = "fullScreen", o.NORMAL_SCREEN = "normalScreen", o.PLAY = "play", o.PAUSE = "pause", o.START_TO_SCRUB = "startToScrub", o.SCRUB = "scrub", o.STOP_TO_SCRUB = "stopToScrub", o.CHANGE_VOLUME = "changeVolume", o.CHANGE_YOUTUBE_QUALITY = "changeYoutubeQuality", o.SHOW_EMBED_WINDOW = "showEmbedWindow", o.SHOW_INFO_WINDOW = "showInfoWindow", o.CHANGE_SUBTITLE = "changeSubtitle", o.CHANGE_PLAYBACK_RATES = "changePlaybackRate", o.prototype = null, window.FWDUVPController = o
+        },
+        o.UNCAST = "uncast",
+        o.CAST = "cast",
+        o.SHOW_SHARE_WINDOW = "showShareWindow",
+        o.SHOW_SUBTITLE = "showSubtitle",
+        o.HIDE_SUBTITLE = "hideSubtitle",
+        o.SHOW_PLAYLIST = "showPlaylist",
+        o.HIDE_PLAYLIST = "hidePlaylist",
+        o.SHOW_CATEGORIES = "showCategories",
+        o.DOWNLOAD_VIDEO = "downloadVideo",
+        o.UNCAST = "uncast", o.REWIND = "rewind", o.FULL_SCREEN = "fullScreen", o.NORMAL_SCREEN = "normalScreen", o.PLAY = "play", o.PAUSE = "pause", o.START_TO_SCRUB = "startToScrub", o.SCRUB = "scrub", o.STOP_TO_SCRUB = "stopToScrub", o.CHANGE_VOLUME = "changeVolume", o.CHANGE_YOUTUBE_QUALITY = "changeYoutubeQuality", o.SHOW_EMBED_WINDOW = "showEmbedWindow", o.SHOW_INFO_WINDOW = "showInfoWindow", o.CHANGE_SUBTITLE = "changeSubtitle", o.CHANGE_PLAYBACK_RATES = "changePlaybackRate", o.prototype = null, window.FWDUVPController = o
     }(), function(window) {
         var FWDUVPData = function(props, playListElement, prt) {
             var self = this,
