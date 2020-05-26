@@ -4215,7 +4215,7 @@ if (! function(e) {
                 b.updateThumbnailsPreview(s, o)
             }, this.mainScrubberOnOverHandler = function(e) {
                 if (!b.isMainScrubberDisabled_bl) {
-                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.isMbl || !b.ttm && !b.thumbnailsPreview_do || (window.removeEventListener("mousemove", b.mainScrubberWMouseMove), window.addEventListener("mousemove", b.mainScrubberWMouseMove));
+                    !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.isMbl || !b.ttm && !b.thumbnailsPreview_do || (window.removeEventListener("mousemove", b.mainScrubberWMouseMove), window.addEventListener("mousemove", b.mainScrubberWMouseMove));
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e).screenX - b.mainScrubber_do.getGlobalX();
                     t < 0 ? t = 0 : t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth);
                     var s = t / b.maiScrbW;
@@ -8256,10 +8256,10 @@ var FWDUVPAddress = new function() {
         var n = function(e, t, s, o, i) {
             var l = this;
             n.prototype;
-            this.buttonRef_do = e, this.bkColor = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = s, this.toolTipLabel_str = o, this.toolTipsButtonsHideDelay = 1e3 * i, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMbl = FWDUVPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-                l.setOverflow("visible"), l.screen.className = "UVP-tooltip-bk", l.setupMainContainers(), l.setLabel(o), l.hide(), l.setVisible(!1), l.getStyle().backgroundColor = l.bkColor, l.getStyle().zIndex = 9999999999999, l.getStyle().pointerEvents = "none"
+            this.buttonRef_do = e, this.bkColor = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = s, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMbl = FWDUVPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
+                l.setOverflow("visible"), l.screen.className = "UVP-bk", l.setupMainContainers(), l.setLabel(o), l.hide(), l.setVisible(!1), l.getStyle().backgroundColor = l.bkColor, l.getStyle().zIndex = 9999999999999, l.getStyle().pointerEvents = "none"
             }, this.setupMainContainers = function() {
-                l.pointerHolder_do = new FWDUVPDisplayObject("div"), l.pointerHolder_do.setOverflow("visible"), l.addChild(l.pointerHolder_do), l.text_do = new FWDUVPDisplayObject("div"), l.text_do.screen.className = "UVP-tooltip-text", l.text_do.hasTransform3d_bl = !1, l.text_do.hasTransform2d_bl = !1, l.text_do.setBackfaceVisibility(), l.text_do.setDisplay("inline-block"), l.text_do.getStyle().fontFamily = "Arial", l.text_do.getStyle().fontSize = "12px", l.text_do.getStyle().color = l.fontColor_str, l.text_do.getStyle().whiteSpace = "nowrap", l.text_do.getStyle().fontSmoothing = "antialiased", l.text_do.getStyle().webkitFontSmoothing = "antialiased", l.text_do.getStyle().textRendering = "optimizeLegibility", l.text_do.getStyle().padding = "6px", l.text_do.getStyle().paddingTop = "4px", l.text_do.getStyle().paddingBottom = "4px", l.addChild(l.text_do), l.pointer_do = new FWDUVPDisplayObject("div"), l.pointer_do.screen.className = "UVP-scrubber-pointer", l.pointer_do.setBkColor(l.bkColor), l.pointer_do.screen.style = "border: 4px solid transparent; border-top-color: " + l.bkColor + ";", l.pointerHolder_do.addChild(l.pointer_do)
+                l.pointerHolder_do = new FWDUVPDisplayObject("div"), l.pointerHolder_do.setOverflow("visible"), l.addChild(l.pointerHolder_do), l.text_do = new FWDUVPDisplayObject("div"), l.text_do.screen.className = "text", l.text_do.hasTransform3d_bl = !1, l.text_do.hasTransform2d_bl = !1, l.text_do.setBackfaceVisibility(), l.text_do.setDisplay("inline-block"), l.text_do.getStyle().fontFamily = "Arial", l.text_do.getStyle().fontSize = "12px", l.text_do.getStyle().color = l.fontColor_str, l.text_do.getStyle().whiteSpace = "nowrap", l.text_do.getStyle().fontSmoothing = "antialiased", l.text_do.getStyle().webkitFontSmoothing = "antialiased", l.text_do.getStyle().textRendering = "optimizeLegibility", l.text_do.getStyle().padding = "6px", l.text_do.getStyle().paddingTop = "4px", l.text_do.getStyle().paddingBottom = "4px", l.addChild(l.text_do), l.pointer_do = new FWDUVPDisplayObject("div"), l.pointer_do.screen.className = "UVP-scrubber-pointer", l.pointer_do.setBkColor(l.bkColor), l.pointer_do.screen.style = "border: 4px solid transparent; border-top-color: " + l.bkColor + ";", l.pointerHolder_do.addChild(l.pointer_do)
             }, this.setLabel = function(e) {
                 void 0 !== e && (l.text_do.setInnerHTML(e), setTimeout(function() {
                     null != l && (l.setWidth(l.text_do.getWidth()), l.setHeight(l.text_do.getHeight()), l.positionPointer())
@@ -8273,7 +8273,7 @@ var FWDUVPAddress = new function() {
                 clearTimeout(l.hideWithDelayId_to),
                 FWDAnimation.killTweensOf(l),
                 clearTimeout(l.showWithDelayId_to),
-                l.showWithDelayId_to = setTimeout(l.showFinal, l.toolTipsButtonsHideDelay)
+                l.showWithDelayId_to = setTimeout(l.showFinal)
             },
             this.showFinal = function() {
                 l.setVisible(!0), FWDAnimation.to(l, .4, {
@@ -8545,7 +8545,6 @@ var FWDUVPAddress = new function() {
             this.d_sdo,
             this.showOver = h,
             i || (this.showOver = !1),
-            this.toolTipLabel_str,
             this.nImg && (this.totalWidth = this.nImg.width,
                           this.totalHeight = this.nImg.height,
                           c.buttonWidth = c.totalWidth,
@@ -8609,9 +8608,7 @@ var FWDUVPAddress = new function() {
                                                                                  c.screen.addEventListener("mouseup", c.onMouseUp)),
                                                                     c.screen.addEventListener("touchend", c.onMouseUp))
             }, c.onMouseOver = function(e) {
-                if (c.dispatchEvent(_.SHOW_TOOLTIP, {
-                        e: e
-                    }), !(c.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
+                if !(c.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
                     if (c.isDisabled_bl || c.isSelectedFinal_bl) return;
                     c.dispatchEvent(_.MOUSE_OVER, {
                         e: e
@@ -8736,7 +8733,6 @@ var FWDUVPAddress = new function() {
         },
         _.CLICK = "onClick",
         _.MOUSE_OVER = "onMouseOver",
-        _.SHOW_TOOLTIP = "showTooltip",
         _.MOUSE_OUT = "onMouseOut",
         _.MOUSE_UP = "onMouseDown",
         _.prototype = null,
@@ -8990,8 +8986,6 @@ var FWDUVPAddress = new function() {
             this.text_do = null,
             this.pointer_do = null,
             this.fontColor_str = i,
-            this.toolTipLabel_str = o,
-            this.toolTipsButtonsHideDelay = 1e3 * l,
             this.pointerWidth = 7,
             this.pointerHeight = 4,
             this.showWithDelayId_to,
@@ -8999,16 +8993,15 @@ var FWDUVPAddress = new function() {
             this.isShowed_bl = !0,
             this.init = function() {
                 n.setOverflow("visible"),
-                n.screen.className = "UVP-tooltip-bk",
+                n.screen.className = "UVP-bk",
                 n.setupMainContainers(),
-                n.setLabel(n.toolTipLabel_str),
                 n.hide(),
                 n.getStyle().background = "url('" + n.bkPath_str + "')",
                 n.getStyle().zIndex = 9999999999999
             },
             this.setupMainContainers = function() {
                 n.text_do = new FWDUVPDisplayObject("div"),
-                n.text_do.screen.className = "UVP-tooltip-text",
+                n.text_do.screen.className = "UVP-text",
                 n.text_do.hasTransform3d_bl = !1,
                 n.text_do.hasTransform2d_bl = !1,
                 n.text_do.setBackfaceVisibility(),
@@ -9026,7 +9019,7 @@ var FWDUVPAddress = new function() {
                 n.setLabel(),
                 n.addChild(n.text_do),
                 n.pointer_do = new FWDUVPDisplayObject("div"),
-                n.pointer_do.screen.className = "UVP-tooltip-pointer",
+                n.pointer_do.screen.className = "UVP-pointer",
                 n.pointer_do.getStyle().background = "url('" + n.pointerPath_str + "')",
                 n.pointer_do.setWidth(n.pointerWidth),
                 n.pointer_do.setHeight(n.pointerHeight),
@@ -9043,7 +9036,7 @@ var FWDUVPAddress = new function() {
                 n.isShowed_bl || (n.isShowed_bl = !0,
                                   FWDAnimation.killTweensOf(n),
                                   clearTimeout(n.showWithDelayId_to),
-                                  n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay),
+                                  n.showWithDelayId_to = setTimeout(n.showFinal),
                                   a.addEventListener ? a.addEventListener("mousemove", n.moveHandler)
                                                      : document.attachEvent && (document.detachEvent("onmousemove", n.moveHandler),
                                   document.attachEvent("onmousemove", n.moveHandler)))
@@ -9070,7 +9063,7 @@ var FWDUVPAddress = new function() {
         };
         r.setPrototype = function() {
             r.prototype = null, r.prototype = new FWDUVPDisplayObject("div", "fixed")
-        }, r.CLICK = "onClick", r.MOUSE_DOWN = "onMouseDown", r.prototype = null, a.FWDUVPToolTip = r
+        }, r.CLICK = "onClick", r.MOUSE_DOWN = "onMouseDown", r.prototype = null
     }(window),
 
     window.FWDUVPTransformDisplayObject = function(e, t, s, o) {
@@ -9982,7 +9975,6 @@ var FWDUVPAddress = new function() {
             this.n_sdo,
             this.s_sdo,
             this.d_sdo,
-            this.toolTipLabel_str,
             this.nImg && (this.totalWidth = this.nImg.width,
                           this.totalHeight = this.nImg.height),
             this.normalCalssName = r,
@@ -10207,7 +10199,6 @@ var FWDUVPAddress = new function() {
               u.d_sdo = null,
               sImg = e = null,
               dImg = null,
-              u.toolTipLabel_str = null,
               u.init = null,
               u.setupMainContainers = null,
               u.onMouseOver = null,
@@ -10227,7 +10218,6 @@ var FWDUVPAddress = new function() {
             c.prototype = null,
             c.prototype = new FWDUVPDisplayObject("div")
         },
-        c.SHOW_TOOLTIP = "showTooltip",
         c.CLICK = "onClick",
         c.MOUSE_OVER = "onMouseOver",
         c.MOUSE_OUT = "onMouseOut",
