@@ -7743,17 +7743,8 @@ var FWDUVPAddress = new function() {
                 a.loopButton_do.isSelectedFinal_bl ? a.dispatchEvent(t.DISABLE_LOOP) : a.dispatchEvent(t.ENABLE_LOOP)
             }, this.setLoopStateButton = function(e) {
                 a.loopButton_do && ("selected" == e ? a.loopButton_do.setSelected() : "unselected" == e && a.loopButton_do.setUnselected())
-            }, this.setupToolTips = function() {
-                a.showNextAndPrevButtons_bl && (FWDUVPToolTip.setPrototype(), a.prevButtonToolTip_do = new FWDUVPToolTip(a.prevButton_do, l.toopTipBk_str, l.toopTipPointer_str, "previous video", l.buttonsToolTipFontColor_str, a.buttonsToolTipHideDelay), document.documentElement.appendChild(a.prevButtonToolTip_do.screen), FWDUVPToolTip.setPrototype(), a.nextButtonToolTip_do = new FWDUVPToolTip(a.nextButton_do, l.toopTipBk_str, l.toopTipPointer_str, "next video", l.buttonsToolTipFontColor_str, a.buttonsToolTipHideDelay), document.documentElement.appendChild(a.nextButtonToolTip_do.screen)), a.showShuffleButton_bl && (FWDUVPToolTip.setPrototype(), a.shuffleButtonToolTip_do = new FWDUVPToolTip(a.shuffleButton_do, l.toopTipBk_str, l.toopTipPointer_str, "shuffle", l.buttonsToolTipFontColor_str, a.buttonsToolTipHideDelay), document.documentElement.appendChild(a.shuffleButtonToolTip_do.screen)), a.showLoopButton_bl && (FWDUVPToolTip.setPrototype(), a.loopButtonToolTip_do = new FWDUVPToolTip(a.loopButton_do, l.toopTipBk_str, l.toopTipPointer_str, "loop", l.buttonsToolTipFontColor_str, a.buttonsToolTipHideDelay), document.documentElement.appendChild(a.loopButtonToolTip_do.screen))
-            }, this.showToolTip = function(e, t, s) {
-                if (a.showButtonsToolTip_bl) {
-                    var o, i, l = FWDUVPUtils.getViewportSize();
-                    FWDUVPUtils.getViewportMouseCoordinates(s);
-                    i = e.screen.offsetWidth < 3 ? (o = parseInt(100 * e.getGlobalX() + e.w / 2 - t.w / 2), parseInt(100 * e.getGlobalY() - t.h - 8)) : (o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2), parseInt(e.getGlobalY() - t.h - 8));
-                    var n = 0;
-                    o < 0 ? (n = o, o = 0) : o + t.w > l.w && (o += -1 * (n = -1 * (l.w - (o + t.w)))), t.positionPointer(n, !1), t.setX(o), t.setY(i), t.show()
-                }
-            }, this.setupThumbnails = function() {
+            },
+            this.setupThumbnails = function() {
                 var e;
                 a.totalThumbs = a.playlist_ar.length, a.thumbs_ar = [];
                 var t = l.thumbnailNormalBackgroundColor_str,
@@ -7777,11 +7768,13 @@ var FWDUVPAddress = new function() {
                                               (a.thumbs_ar[i] = e).addListener(FWDUVPPlaylistThumb.MOUSE_UP, a.thumbMouseUpHandler),
                                               a.thumbsHolder_do.addChild(e)
             }, this.thumbMouseUpHandler = function(e) {
-                a.disableThumbs_bl || (a.disableForAWhileAfterThumbClick_bl = !0, clearTimeout(a.disableForAWhileAfterThumbClickId_to), a.disableForAWhileAfterThumbClickId_to = setTimeout(function() {
-                    a.disableForAWhileAfterThumbClick_bl = !1
-                }, 50), a.dispatchEvent(t.THUMB_MOUSE_UP, {
-                    id: e.id
-                }))
+                a.disableThumbs_bl || (a.disableForAWhileAfterThumbClick_bl = !0,
+                                       clearTimeout(a.disableForAWhileAfterThumbClickId_to),
+                                       a.disableForAWhileAfterThumbClickId_to = setTimeout(function() {
+                                         a.disableForAWhileAfterThumbClick_bl = !1
+                                       }, 50), a.dispatchEvent(t.THUMB_MOUSE_UP, {
+                                         id: e.id
+                                       }))
             },
             this.loadImages = function() {
                 a.playlist_ar[a.countLoadedThumbs] && (a.image_img && (a.image_img.onload = null, a.image_img.onerror = null), a.image_img = new Image, a.image_img.onerror = a.onImageLoadError, a.image_img.onload = a.onImageLoadComplete, a.image_img.src = a.playlist_ar[a.countLoadedThumbs].thumbSource)
