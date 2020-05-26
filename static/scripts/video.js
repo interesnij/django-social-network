@@ -761,6 +761,7 @@ if (! function(t) {
                 }, s.stop = function() {
                     return this.paused(!0)
                 }, s.gotoAndPlay = function(e, t) {
+                    console.log("play!!!");
                     return this.play(e, t)
                 }, s.gotoAndStop = function(e, t) {
                     return this.pause(e, t)
@@ -2248,6 +2249,7 @@ if (! function(t) {
                     g && 2e3 < U() - C && b.wake(), setTimeout(u, 2e3)
                 };
                 u(), s.play = function(e, t) {
+                  console.log("play");
                     return null != e && this.seek(e, t), this.reversed(!1).paused(!1)
                 }, s.pause = function(e, t) {
                     return null != e && this.seek(e, t), this.paused(!0)
@@ -3070,8 +3072,18 @@ if (! function(e) {
                 }
             }, this.setSource = function(e) {
                 n.sourcePath_str = e, clearTimeout(n.testShoutCastId_to), -1 != n.sourcePath_str.indexOf(";") ? (n.isShoutcast_bl = !0, n.countShoutCastErrors = 0) : n.isShoutcast_bl = !1, -1 == n.sourcePath_str.indexOf(";") ? (n.isNormalMp3_bl = !0, n.countNormalMp3Errors = 0) : n.isNormalMp3_bl = !1, n.lastPercentPlayed = 0, n.audio_el && n.stop(!0)
-            }, this.play = function(e) {
-                if (n.isStopped_bl) n.isPlaying_bl = !1, n.hasError_bl = !1, n.allowScrubing_bl = !1, n.isStopped_bl = !1, n.setupAudio(), n.audio_el.src = n.sourcePath_str, n.play(), n.setVisible(!0);
+            },
+            this.play = function(e) {
+              console.log("play");
+                if (n.isStopped_bl)
+                   n.isPlaying_bl = !1,
+                   n.hasError_bl = !1,
+                   n.allowScrubing_bl = !1,
+                   n.isStopped_bl = !1,
+                   n.setupAudio(),
+                   n.audio_el.src = n.sourcePath_str,
+                   n.play(),
+                   n.setVisible(!0);
                 else if (!n.audio_el.ended || e) try {
                     n.isPlaying_bl = !0, n.hasPlayedOnce_bl = !0;
                     var t = n.audio_el.play();
@@ -5061,6 +5073,7 @@ if (! function(e) {
                 }
                 return e
             }, this.loadPlaylist = function(e) {
+              console.log("load playlist");
                 if (self.stopToLoadPlaylist(), !self.isPlaylistDispatchingError_bl) {
                     clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
                     var t = self.catsRef_ar[e];
@@ -5251,15 +5264,18 @@ if (! function(e) {
                 self.youtubeAndFolderVideoTitleColor_str = e
             }, this.closeJsonPLoader = function() {
                 clearTimeout(self.JSONPRequestTimeoutId_to)
-            }, this.parseDOMPlaylist = function(element, id) {
+            },
+            this.parseDOMPlaylist = function(element, id) {
                 if (!self.isPlaylistDispatchingError_bl) {
                     var children_ar = FWDUVPUtils.getChildren(element),
                         totalChildren = children_ar.length,
-                        child, has360Video = !1;
+                        child,
+                        has360Video = !1;
                     if (self.playlist_ar = [], 0 != totalChildren) {
                         for (var i = 0; i < totalChildren; i++) {
                             var obj = {},
-                                adsObj, annotations_ar;
+                                adsObj,
+                                annotations_ar;
                             if (child = children_ar[i], !FWDUVPUtils.hasAttribute(child, "data-thumb-source"))
                                return self.isPlaylistDispatchingError_bl = !0,
                                       void(showLoadPlaylistErrorId_to = setTimeout(function() {
@@ -5267,18 +5283,44 @@ if (! function(e) {
                                     text: "Attribute <font color='#ff0000'>data-thumb-source</font> is required in the playlist at position <font color='#ff0000'>" + (i + 1)
                                 })
                             }, 50));
-                            if (!FWDUVPUtils.hasAttribute(child, "data-video-source")) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
+                            if (!FWDUVPUtils.hasAttribute(child, "data-video-source"))
+                               return self.isPlaylistDispatchingError_bl = !0,
+                                      void(showLoadPlaylistErrorId_to = setTimeout(function() {
                                 self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
                                     text: "Attribute <font color='#ff0000'>data-video-source</font> is required in the playlist at position <font color='#ff0000'>" + (i + 1)
                                 })
                             }, 50));
-                            if (obj.thumbSource = encodeURI(FWDUVPUtils.getAttributeValue(child, "data-thumb-source")), obj.videoSource = FWDUVPUtils.getAttributeValue(child, "data-video-source"), obj.dataPlaybackRate = FWDUVPUtils.getAttributeValue(child, "data-playback-rate"), obj.startAtVideo = FWDUVPUtils.getAttributeValue(child, "data-start-at-video") || 0, obj.isLive = FWDUVPUtils.getAttributeValue(child, "data-is-live"), obj.atb = "yes" == FWDUVPUtils.getAttributeValue(child, "data-use-a-to-b"), obj.thumbnailsPreview = FWDUVPUtils.getAttributeValue(child, "data-thumbnails-preview"), self.useAToB || (obj.atb = !1), "yes" == obj.isLive ? obj.isLive = !0 : obj.isLive = !1, obj.isPrivate = FWDUVPUtils.getAttributeValue(child, "data-is-private"), "yes" == obj.isPrivate ? obj.isPrivate = !0 : obj.isPrivate = !1, obj.redirectURL = FWDUVPUtils.getAttributeValue(child, "data-redirect-url"), obj.redirectTarget = FWDUVPUtils.getAttributeValue(child, "data-redirect-target"), obj.privateVideoPassword_str = FWDUVPUtils.getAttributeValue(child, "data-private-video-password"), obj.startAtTime = FWDUVPUtils.getAttributeValue(child, "data-start-at-time"), "00:00:00" != obj.startAtTime && FWDUVPUtils.checkTime(obj.startAtTime) || (obj.startAtTime = void 0), obj.stopAtTime = FWDUVPUtils.getAttributeValue(child, "data-stop-at-time"), "00:00:00" != obj.stopAtTime && FWDUVPUtils.checkTime(obj.stopAtTime) || (obj.stopAtTime = void 0), -1 != obj.videoSource.indexOf("{source:")) try {
+                            if (obj.thumbSource = encodeURI(FWDUVPUtils.getAttributeValue(child, "data-thumb-source")),
+                                obj.videoSource = FWDUVPUtils.getAttributeValue(child, "data-video-source"),
+                                obj.uuidSource = FWDUVPUtils.getAttributeValue(child, "data-video-uuid"),
+                                obj.dataPlaybackRate = FWDUVPUtils.getAttributeValue(child, "data-playback-rate"),
+                                obj.startAtVideo = FWDUVPUtils.getAttributeValue(child, "data-start-at-video") || 0,
+                                obj.isLive = FWDUVPUtils.getAttributeValue(child, "data-is-live"),
+                                obj.atb = "yes" == FWDUVPUtils.getAttributeValue(child, "data-use-a-to-b"),
+                                obj.thumbnailsPreview = FWDUVPUtils.getAttributeValue(child, "data-thumbnails-preview"),
+                                self.useAToB || (obj.atb = !1), "yes" == obj.isLive ? obj.isLive = !0 : obj.isLive = !1,
+                                obj.isPrivate = FWDUVPUtils.getAttributeValue(child, "data-is-private"),
+                                "yes" == obj.isPrivate ? obj.isPrivate = !0 : obj.isPrivate = !1,
+                                obj.redirectURL = FWDUVPUtils.getAttributeValue(child, "data-redirect-url"),
+                                obj.redirectTarget = FWDUVPUtils.getAttributeValue(child, "data-redirect-target"),
+                                obj.privateVideoPassword_str = FWDUVPUtils.getAttributeValue(child, "data-private-video-password"),
+                                obj.startAtTime = FWDUVPUtils.getAttributeValue(child, "data-start-at-time"),
+                                "00:00:00" != obj.startAtTime && FWDUVPUtils.checkTime(obj.startAtTime) || (obj.startAtTime = void 0),
+                                obj.stopAtTime = FWDUVPUtils.getAttributeValue(child, "data-stop-at-time"),
+                                "00:00:00" != obj.stopAtTime && FWDUVPUtils.checkTime(obj.stopAtTime) || (obj.stopAtTime = void 0),
+                                -1 != obj.videoSource.indexOf("{source:")) try {
                                 obj.videoLabels_ar = [], obj.videoSource = eval(obj.videoSource);
                                 for (var m = 0; m < obj.videoSource.length; m++) obj.videoLabels_ar[m] = obj.videoSource[m].label;
                                 for (var m = 0; m < obj.videoSource.length; m++) {
-                                    var src = obj.videoSource[m].source; - 1 != src.indexOf("encrypt:") && (src = atob(src.substr(8))), obj.videoSource[m].source = FWDUVPUtils.getValidSource(src)
+                                    var src = obj.videoSource[m].source;
+                                    - 1 != src.indexOf("encrypt:") && (src = atob(src.substr(8))),
+                                    obj.videoSource[m].source = FWDUVPUtils.getValidSource(src)
                                 }
-                                for (var m = 0; m < obj.videoSource.length; m++) obj.videoSource[m].is360 = obj.videoSource[m].is360, "yes" == obj.videoSource[m].is360 && (obj.videoSource[m].is360 = !0), "no" == obj.videoSource[m].is360 && (obj.videoSource[m].is360 = !1), 1 == obj.videoSource[m].is360 && (has360Video = !0);
+                                for (var m = 0; m < obj.videoSource.length; m++)
+                                obj.videoSource[m].is360 = obj.videoSource[m].is360,
+                                "yes" == obj.videoSource[m].is360 && (obj.videoSource[m].is360 = !0),
+                                "no" == obj.videoSource[m].is360 && (obj.videoSource[m].is360 = !1),
+                                1 == obj.videoSource[m].is360 && (has360Video = !0);
                                 obj.videoLabels_ar.reverse()
                             } catch (e) {
                                 return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
@@ -5314,11 +5356,33 @@ if (! function(e) {
                                         var source = obj.subtitleSource[x].source; - 1 != source.indexOf("encrypt:") && (obj.subtitleSource[x].source = atob(source.substr(8)))
                                     }
                             }
-                            obj.dataAdvertisementOnPauseSource = FWDUVPUtils.getAttributeValue(child, "data-advertisement-on-pause-source"), obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getAttributeValue(child, "data-scrub-at-time-at-first-play") || "none", /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g.test(obj.scrubAtTimeAtFirstPlay) ? obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getSecondsFromString(obj.scrubAtTimeAtFirstPlay) : obj.scrubAtTimeAtFirstPlay = void 0, FWDUVPUtils.hasAttribute(child, "data-poster-source") ? obj.posterSource = encodeURI(FWDUVPUtils.getAttributeValue(child, "data-poster-source")) : obj.posterSource = "none", obj.downloadPath = obj.videoSource[obj.startAtVideo], FWDUVPUtils.hasAttribute(child, "data-downloadable") && self.showDownloadVideoButton_bl ? (obj.downloadable = "yes" == FWDUVPUtils.getAttributeValue(child, "data-downloadable"), -1 == obj.downloadPath.source.indexOf(".") && (obj.downloadable = !1)) : obj.downloadable = !1;
+                            obj.dataAdvertisementOnPauseSource = FWDUVPUtils.getAttributeValue(child, "data-advertisement-on-pause-source"),
+                            obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getAttributeValue(child, "data-scrub-at-time-at-first-play") || "none",
+                            /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g.test(obj.scrubAtTimeAtFirstPlay) ? obj.scrubAtTimeAtFirstPlay = FWDUVPUtils.getSecondsFromString(obj.scrubAtTimeAtFirstPlay)
+                                                                                                      : obj.scrubAtTimeAtFirstPlay = void 0,
+                            FWDUVPUtils.hasAttribute(child, "data-poster-source") ? obj.posterSource = encodeURI(FWDUVPUtils.getAttributeValue(child, "data-poster-source"))
+                                                                                  : obj.posterSource = "none",
+                            obj.downloadPath = obj.videoSource[obj.startAtVideo],
+                            FWDUVPUtils.hasAttribute(child, "data-downloadable") && self.showDownloadVideoButton_bl ? (obj.downloadable = "yes" == FWDUVPUtils.getAttributeValue(child, "data-downloadable"),
+                                                                                                                       -1 == obj.downloadPath.source.indexOf(".") && (obj.downloadable = !1))
+                                                                                                                    : obj.downloadable = !1;
                             for (var mainPopupAds_ar = FWDUVPUtils.getChildren(child), tempPopupAds_ar, popupAds_ar, popupOrAnnotationChild, finalPopupChild, popupObj, k = 0; k < mainPopupAds_ar.length; k++) {
-                                if (popupOrAnnotationChild = mainPopupAds_ar[k], FWDUVPUtils.hasAttribute(popupOrAnnotationChild, "data-add-popup")) {
+                                if (popupOrAnnotationChild = mainPopupAds_ar[k],
+                                    FWDUVPUtils.hasAttribute(popupOrAnnotationChild, "data-add-popup")) {
                                     tempPopupAds_ar = FWDUVPUtils.getChildren(popupOrAnnotationChild), popupAds_ar = [];
-                                    for (var x = 0; x < tempPopupAds_ar.length; x++) finalPopupChild = tempPopupAds_ar[x], finalPopupChild && (popupObj = {}, popupObj.source = FWDUVPUtils.getValidSource(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-image-path")), popupObj.timeStart = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-time-start")), popupObj.timeEnd = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-time-end")), popupObj.link = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-link"), popupObj.target = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-target"), popupObj.google_ad_width = parseInt(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-width")) || 600, popupObj.google_ad_height = parseInt(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-height")) || 200, popupObj.google_ad_client = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-client"), popupObj.google_ad_slot = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-slot"), popupAds_ar.push(popupObj));
+                                    for (var x = 0; x < tempPopupAds_ar.length; x++)
+                                        finalPopupChild = tempPopupAds_ar[x],
+                                        finalPopupChild && (popupObj = {},
+                                          popupObj.source = FWDUVPUtils.getValidSource(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-image-path")),
+                                          popupObj.timeStart = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-time-start")),
+                                          popupObj.timeEnd = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-time-end")),
+                                          popupObj.link = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-link"),
+                                          popupObj.target = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-target"),
+                                          popupObj.google_ad_width = parseInt(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-width")) || 600,
+                                          popupObj.google_ad_height = parseInt(FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-height")) || 200,
+                                          popupObj.google_ad_client = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-client"),
+                                          popupObj.google_ad_slot = FWDUVPUtils.getAttributeValue(finalPopupChild, "data-google-ad-slot"),
+                                          popupAds_ar.push(popupObj));
                                     obj.popupAds_ar = popupAds_ar
                                 }
                                 if (FWDUVPUtils.hasAttribute(popupOrAnnotationChild, "data-ads")) {
@@ -5326,7 +5390,16 @@ if (! function(e) {
                                     adsData_ar = FWDUVPUtils.getChildren(popupOrAnnotationChild), ads_ar = [];
                                     for (var tt = adsData_ar.length, m = 0; m < tt; m++) {
                                         var adsObj = {};
-                                        adsChild = adsData_ar[m], adsObj.timeStart = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(adsChild, "data-time-start")), FWDUVPUtils.hasAttribute(adsChild, "data-add-duration") && (adsObj.addDuration = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(adsChild, "data-add-duration"))), adsObj.thumbnailSource = FWDUVPUtils.getAttributeValue(adsChild, "data-thumbnail-source"), "" != adsObj.thumbnailSource && " " != adsObj.thumbnailSource || (adsObj.thumbnailSource = void 0), adsObj.timeToHoldAds = FWDUVPUtils.getAttributeValue(adsChild, "data-time-to-hold-ads") || 4, adsObj.source = FWDUVPUtils.getValidSource(FWDUVPUtils.getAttributeValue(adsChild, "data-source")), adsObj.link = FWDUVPUtils.getAttributeValue(adsChild, "data-link"), adsObj.target = FWDUVPUtils.getAttributeValue(adsChild, "data-target"), ads_ar[m] = adsObj
+                                        adsChild = adsData_ar[m],
+                                        adsObj.timeStart = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(adsChild, "data-time-start")),
+                                        FWDUVPUtils.hasAttribute(adsChild, "data-add-duration") && (adsObj.addDuration = FWDUVPUtils.getSecondsFromString(FWDUVPUtils.getAttributeValue(adsChild, "data-add-duration"))),
+                                        adsObj.thumbnailSource = FWDUVPUtils.getAttributeValue(adsChild, "data-thumbnail-source"),
+                                        "" != adsObj.thumbnailSource && " " != adsObj.thumbnailSource || (adsObj.thumbnailSource = void 0),
+                                        adsObj.timeToHoldAds = FWDUVPUtils.getAttributeValue(adsChild, "data-time-to-hold-ads") || 4,
+                                        adsObj.source = FWDUVPUtils.getValidSource(FWDUVPUtils.getAttributeValue(adsChild, "data-source")),
+                                        adsObj.link = FWDUVPUtils.getAttributeValue(adsChild, "data-link"),
+                                        adsObj.target = FWDUVPUtils.getAttributeValue(adsChild, "data-target"),
+                                        ads_ar[m] = adsObj
                                     }
                                     obj.ads_ar = ads_ar
                                 }
@@ -5481,7 +5554,7 @@ if (! function(e) {
                                                                    adsObj.isPlayed_bl = !1,
                                                                    obj.cuepoints_ar = adsObj),
                     self.playlist_ar[i] = obj;
-                    console.log(obj.uuid);
+
                 }
                 self.randomizePlaylist_bl && (self.playlist_ar = FWDUVPUtils.randomizeArray(self.playlist_ar)), self.maxPlaylistItems < self.playlist_ar.length && (self.playlist_ar = self.playlist_ar.splice(0, self.maxPlaylistItems)), clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
                     self.dispatchEvent(FWDUVPData.PLAYLIST_LOAD_COMPLETE)
@@ -6990,6 +7063,7 @@ var FWDUVPAddress = new function() {
                 }, this.hiderHideCompleteHandler = function() {
                     self.controller_do.positionScrollBarOnTopOfTheController()
                 }, this.play = function() {
+                   console.log("play");
                     if (self.isAPIReady_bl)
                         if (self.isCasting) self.cc.play();
                         else if (!self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE || !self.ytb_do || self.ytb_do.isSafeToBeControlled_bl || self.data.aom_bl)
@@ -7232,10 +7306,13 @@ var FWDUVPAddress = new function() {
                 }, this.onFullScreenChange = function(e) {
                     document.fullScreen || document.msFullscreenElement || document.mozFullScreen || document.webkitIsFullScreen || document.msieFullScreen || (self.controller_do.showNormalScreenButton(), self.addMainDoToTheOriginalParent(), self.isFullScreen_bl = !1)
                 }, this.loadPlaylist = function(e) {
+                  console.log("load playlist");
                     self.isAPIReady_bl && self.data.prevId != e && (self.data.playlist_ar && self.data.playlist_ar[self.id] && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.catId = e, self.id = 0, self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalPlaylists - 1 && (self.catId = self.data.totalPlaylists - 1), self.useDeepLinking_bl ? FWDUVPAddress.setValue("?playlistId=" + self.catId + "&videoId=" + self.id) : self.loadInternalPlaylist())
                 }, this.playNext = function() {
+                  console.log("play next");
                     self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.id++, self.executePlayNextPrevOrShuffle())
                 }, this.playPrev = function() {
+                  console.log("play prev");
                     self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.id--, self.executePlayNextPrevOrShuffle())
                 }, this.playShuffle = function() {
                     if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
@@ -7726,10 +7803,12 @@ var FWDUVPAddress = new function() {
             }, this.setupPrevButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-left'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(a.prevN_img, l.prevSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.prevButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.prevButtonOnMouseUpHandler), a.buttons_ar.push(a.prevButton_do), a.controllBar_do.addChild(a.prevButton_do)
             }, this.prevButtonOnMouseUpHandler = function() {
+              console.log("play prev");
                 a.dispatchEvent(t.PLAY_PREV_VIDEO)
             }, this.setupNextButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(a.nextN_img, l.nextSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.nextButtonOnMouseUpHandler), a.buttons_ar.push(a.nextButton_do), a.controllBar_do.addChild(a.nextButton_do)
             }, this.nextButtonOnMouseUpHandler = function() {
+              console.log("play next");
                 a.dispatchEvent(t.PLAY_NEXT_VIDEO)
             }, this.setupShuffleButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-shuffle'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.shuffleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.shuffleButtonOnMouseUpHandler), a.buttons_ar.push(a.shuffleButton_do), a.controllBar_do.addChild(a.shuffleButton_do), !a.loop_bl && a.shuffle_bl && a.setShuffleButtonState("selected")
@@ -9496,6 +9575,7 @@ var FWDUVPAddress = new function() {
                 l.initVideo()
             },
             this.play = function(e) {
+              console.log("play");
                 var t;
                 if (clearTimeout(l.playWithDelayId_to),
                                  FWDUVPlayer.curInstance = i,
@@ -9877,6 +9957,7 @@ var FWDUVPAddress = new function() {
                 s.data.loop_bl && (o.stop(), setTimeout(o.play, 200)), o.dispatchEvent(i.PLAY_COMPLETE)
             },
             this.play = function(e) {
+              console.log("play");
                 FWDUVPlayer.curInstance = s;
                 o.hasError_bl = !1,
                 s.prevVideoType_str,
@@ -10399,6 +10480,7 @@ var FWDUVPAddress = new function() {
                     (!t.isMbl && (t.data.autoPlay_bl || t.isThumbClick_bl || t.isAdd_bl && !t.loadAddFirstTime_bl) && !t.lightBox_do || t.lightBox_do && t.lightBox_do.isShowed_bl) && (t.videoPoster_do.hide(!0), t.lrgPlayBtn.hide(), t.play()), clearInterval(n.setSourceId_int))
                 }, 50)
             }, this.play = function(e) {
+              console.log("play");
                 FWDUVPlayer.curInstance = t, n.isPlaying_bl = !0, n.hasError_bl = !1, n.hasStarted_bl = !0;
                 try {
                     n.ytb.playVideo(), n.startToUpdate()
