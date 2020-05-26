@@ -10480,7 +10480,6 @@ var FWDUVPAddress = new function() {
                     (!t.isMbl && (t.data.autoPlay_bl || t.isThumbClick_bl || t.isAdd_bl && !t.loadAddFirstTime_bl) && !t.lightBox_do || t.lightBox_do && t.lightBox_do.isShowed_bl) && (t.videoPoster_do.hide(!0), t.lrgPlayBtn.hide(), t.play()), clearInterval(n.setSourceId_int))
                 }, 50)
             }, this.play = function(e) {
-              console.log("play");
                 FWDUVPlayer.curInstance = t, n.isPlaying_bl = !0, n.hasError_bl = !1, n.hasStarted_bl = !0;
                 try {
                     n.ytb.playVideo(), n.startToUpdate()
