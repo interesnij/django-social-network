@@ -2,7 +2,7 @@
 {% block title %}О сайте{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container text-center">
+<div class="container mt-4 main-container text-center card">
             <h1 class="mb-0">We are <span class="font-weight-light">Go</span>TRI Mobile</h1>
             <h3 class="font-weight-light mb-4">A responsive HTML template</h3>
             <h5 class="text-warning mb-4">
@@ -37,7 +37,7 @@
                                             <p class="content-color-secondary">Ознакомьтесь с правилами для пользователей нашего сайта.</p>
                                         </div>
                                         <div class="card-footer border-top">
-                                            <a href="" class="btn btn-link btn-block text-uppercase"> Support
+                                            <a href="{% url 'terms' %}" class="btn btn-link btn-block text-uppercase"> Перейти
                                               <svg fill="currentColor" class="svg_default svg_info" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"/><path fill="none" d="M0 24V0h24v24H0z"/></svg>
                                             </a>
                                         </div>
@@ -53,7 +53,7 @@
                                             <p class="content-color-secondary">Узнайте, на каких условиях пользователям предоставляется право использования трезвый.рус.</p>
                                         </div>
                                         <div class="card-footer border-top">
-                                            <a href="" class="btn btn-link btn-block text-uppercase"> Support
+                                            <a href="{% url 'licence' %}" class="btn btn-link btn-block text-uppercase ajax"> Перейти
                                                <svg fill="currentColor" class="svg_default svg_info" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"/><path fill="none" d="M0 24V0h24v24H0z"/></svg>
                                              </a>
                                         </div>
@@ -69,7 +69,7 @@
                                             <p class="content-color-secondary">Рассказываем о том, какие данные о пользователях мы собираем, как мы их обрабатываем и защищаем.</p>
                                         </div>
                                         <div class="card-footer border-top">
-                                            <a href="" class="btn btn-link btn-block text-uppercase"> Support
+                                            <a href="{% url 'policy' %}" class="btn btn-link btn-block text-uppercase ajax"> Перейти
                                               <svg fill="currentColor" class="svg_default svg_info" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"/><path fill="none" d="M0 24V0h24v24H0z"/></svg>
                                             </a>
                                         </div>
@@ -88,7 +88,7 @@
                                             <p class="content-color-secondary">Вопросы и ответы по всей соцсети трезвый.рус</p>
                                         </div>
                                         <div class="card-footer border-top">
-                                            <a href="" class="btn btn-link btn-block text-uppercase"> Support
+                                            <a href="{% url 'quan_categories' cat_name='popular_question' %}" class="btn btn-link btn-block text-uppercase ajax"> Перейти
                                               <svg fill="currentColor" class="svg_default svg_info" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"/><path fill="none" d="M0 24V0h24v24H0z"/></svg>
                                             </a>
                                         </div>
@@ -123,58 +123,58 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5 p-4">
                                     <form class="text-center">
-                                        <label class="sr-only">Your Name</label>
+                                        <label class="sr-only">Ваше имя"</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                  <svg fill="rgba(0, 0, 0, 0.5);" class="svg_info" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                                  <svg style="color:rgba(0, 0, 0, 0.5);" fill="currentColor" class="svg_info" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Your name">
+                                            <input type="text" class="form-control" placeholder="Ваше имя">
                                         </div>
                                         <br>
-                                        <label class="sr-only">Inquiry for</label>
+                                        <label class="sr-only">Тема письма</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                  <svg fill="rgba(0, 0, 0, 0.5);" class="svg_info" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                                                  <svg style="color:rgba(0, 0, 0, 0.5);" fill="currentColor" class="svg_info" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
                                                 </span>
                                             </div>
                                             <select class="form-control">
-                                                <option>Template</option>
-                                                <option>Customization</option>
-                                                <option>Project</option>
-                                                <option>Support</option>
+                                                <option>Сайт не работает</option>
+                                                <option>Нужна помощь</option>
+                                                <option>Сотрудничество</option>
+                                                <option>Защита прав</option>
                                             </select>
                                         </div>
                                         <br>
-                                        <label class="sr-only">Email address</label>
+                                        <label class="sr-only">Email почта</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                  <svg fill="rgba(0, 0, 0, 0.5);" class="svg_info" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                                  <svg style="color:rgba(0, 0, 0, 0.5);" fill="currentColor" class="svg_info" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Email address">
+                                            <input type="text" class="form-control" placeholder="Email почта">
                                         </div>
                                         <br>
-                                        <label class="sr-only">Message</label>
+                                        <label class="sr-only">Сообщение</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <svg class="svg_info" fill="rgba(0, 0, 0, 0.5);" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                                    <svg class="svg_info" style="color:rgba(0, 0, 0, 0.5);" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                                 </span>
                                             </div>
-                                            <textarea rows="3" class="form-control" placeholder="Message"></textarea>
+                                            <textarea rows="3" class="form-control" placeholder="Сообщение"></textarea>
                                         </div>
                                         <br>
-                                        <button class="btn btn-rounded pink-gradient text-uppercase px-3">Submit</button>
+                                        <button class="btn btn-rounded pink-gradient text-uppercase px-3">Отправить</button>
                                     </form>
                                 </div>
                             </div>
                             <br>
                             <br>
-                            <div class="text-center"><h1 class="icon-circle icon-100 bg-light-danger mb-4 mx-auto">
+                            <div class="text-center"><h1 class="icon-circle icon-100 mb-4 mx-auto">
                               <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24">
                                 <path d="M0 0h24v24H0z" fill="none"/><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
                               </svg>
