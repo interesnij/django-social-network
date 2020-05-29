@@ -24,7 +24,7 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group" id="admins-container">
                     {% for object in object_list %}
-                    <div class="card mb-4">
+                    <div class="card">
 						            <div class="card-header" id="headingOne">
 							              <button class="p-0 btn btn-link collapsed" data-toggle="collapse" data-target="#q_{{ object.pk }}" aria-expanded="false" aria-controls="q_{{ object.pk }}">
 								               {{ object.quest}}
@@ -49,7 +49,7 @@
 
     <div class="col-md-3 order-2 left_menu">
         {% for object in quest_categories %}
-          <a class="mb-2 mr-2 btn btn-link" href="{% url 'quan_categories' cat_name=object.name_en %}">
+          <a class="mb-2 mr-2" href="{% url 'quan_categories' cat_name=object.name_en %}">
             {{ object.name_ru }}
           </a>
         {% endfor %}
