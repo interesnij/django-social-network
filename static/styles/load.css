@@ -2,6 +2,10 @@
 .ckeditor_support frame{
   width:100%
 }
+.ckeditor_support a{
+  color:blue;
+  text-decoration:underline;
+}
 
 select{
   background-color: #fafafc;
