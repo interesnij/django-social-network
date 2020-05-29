@@ -192,11 +192,11 @@ function get_video_dop(){
   if (style.href.indexOf("white") != -1
       || style.href.indexOf("orange") != -1
       || style.href.indexOf("grey") != -1
-      || style.href.indexOf("brown") != -1)
-      || style.href.indexOf("teal") != -1)
-      || style.href.indexOf("skyblue") != -1)
-      || style.href.indexOf("blue") != -1)
-      || style.href.indexOf("purple") != -1)
+      || style.href.indexOf("brown") != -1
+      || style.href.indexOf("teal") != -1
+      || style.href.indexOf("skyblue") != -1
+      || style.href.indexOf("blue") != -1
+      || style.href.indexOf("purple") != -1
       || style.href.indexOf("red") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
   }else if (style.href.indexOf("dark-grey") != -1){
