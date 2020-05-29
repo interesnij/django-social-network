@@ -24,20 +24,19 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <ul class="list-group" id="admins-container">
+                <ul class="list-group" id="quan-container">
                     {% for object in object_list %}
                     <div class="card mb-4">
-						            <div class="card-header" id="headingOne">
-							              <button class="p-0 btn btn-link collapsed" data-toggle="collapse" data-target="#q_{{ object.pk }}" aria-expanded="false" aria-controls="q_{{ object.pk }}">
+						            <div class="card-header menu_drop" style="margin-top: 20px;">
+							              <button class="p-0 btn btn-link">
 								               {{ object.quest}}
 							              </button>
 						            </div>
 
-						            <div id="q_{{ object.pk }}" class="collapse" aria-labelledby="q_{{ object.pk }}" data-parent="#q_{{ object.pk }}" style="">
+						            <div class="collapse">
 							               <div class="card-body">{{ object.content|safe }}</div>
 						            </div>
 					           </div>
-
                     {% empty %}
                     <div class="card mb-4">
                       <div class="card-body">
