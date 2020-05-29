@@ -1,0 +1,97 @@
+{% extends "anon_base.html" %}
+{% load thumbnail %}
+{% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+<div class="row">
+    <div class="col-md-9 order-1">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по вопросам" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Вопросы - {{ category.name_ru }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+                <ul class="list-group" id="admins-container">
+                    {% for object in object_list %}
+                    <div class="card mb-4">
+						            <div class="card-header" id="headingOne">
+							              <button class="p-0 btn btn-link collapsed" data-toggle="collapse" data-target="#q_{{ object.pk }}" aria-expanded="false" aria-controls="q_{{ object.pk }}">
+								               {{ object.quest}}
+							              </button>
+						            </div>
+
+						            <div id="q_{{ object.pk }}" class="collapse" aria-labelledby="q_{{ object.pk }}" data-parent="#q_{{ object.pk }}" style="">
+							               <div class="card-body">{{ object.content|safe }}</div>
+						            </div>
+					           </div>
+                    {% empty %}
+                    <div class="card mb-4">
+                      <div class="card-body">
+                        Пока нет вопросов у матросов...
+                      </div>
+                    </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 order-2 left_menu">
+        {% for object in quest_categories %}
+          <a class="mb-2 mr-2 btn btn-link" href="{% url 'quan_categories' cat_name=object.name_en %}">
+            {{ object.name_ru }}
+          </a>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<div class="card mb-4 manage_window_fullscreen" style="display:none">
+  <span class="community_manage_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </span>
+  <div id="load_staff_window" style="margin-top:30px"></div>
+</div>
+
+<script>
+ready(() => {
+  var page = 2;
+  var loaded = false;
+
+  onscroll = function(){
+    try{
+    var admins = document.getElementById("admins-container");
+
+    if(admins.getElementsByClassName('list-group-item').length === (page-1)*30){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/admins/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        admins_list = elem.querySelector(".list-group");
+        if(admins_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
+        admins.append(admins_list);
+        }
+      }
+    }}
+  }catch{return}
+  }
+});
+</script>
+{% endblock %}

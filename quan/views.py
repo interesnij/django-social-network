@@ -7,8 +7,11 @@ class QuanCategoryView(ListView):
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
+		if request.user.is_authenticated:
+			self.template_name = "questions.html"
+		else:
+			self.template_name = "anon_questions.html"
 		self.category = QuestionsCategory.objects.get(name_en=self.kwargs["cat_name"])
-		self.template_name = "questions.html"
 		return super(QuanCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
