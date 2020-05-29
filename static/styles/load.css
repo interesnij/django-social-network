@@ -1,3 +1,8 @@
+.ckeditor_support img,
+.ckeditor_support frame{
+  width:100%
+}
+
 select{
   background-color: #fafafc;
   border-color: rgba(0, 0, 0, 0.2);

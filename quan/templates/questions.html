@@ -2,7 +2,7 @@
 {% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container">
+<div class="container mt-4 main-container ckeditor_support">
 <div class="row">
     <div class="col-md-9 order-1">
         <div class="input-group mb-3">
@@ -16,7 +16,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">
-                          <svg class="svg_info svg_default" style="margin-bottom:5px" fill="currentColor" viewBox="0 0 24 24">
+                          <svg class="svg_info svg_default" style="margin-right: 5px;" fill="currentColor" viewBox="0 0 24 24">
                             {{ category.icon|safe }}
                           </svg>  {{ category.name_ru }}</h5>
                     </div>
