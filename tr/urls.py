@@ -39,5 +39,6 @@ urlpatterns = [
     url(r'^video/', include('video.urls')),
     url(r'^stat/', include('stst.urls')),
     url(r'^questions/', include('quan.urls')),
+    url(r'^about/', include('about.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
