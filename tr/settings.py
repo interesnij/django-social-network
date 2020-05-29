@@ -55,6 +55,7 @@ MY_APPS = [
     'music',
     'video',
     'stst',
+    'quan',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS

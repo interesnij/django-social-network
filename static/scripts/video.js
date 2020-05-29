@@ -7520,7 +7520,7 @@ var FWDUVPAddress = new function() {
                     self.controller_do.positionScrollBarOnTopOfTheController()
                 }, this.play = function() {
                    console.log("play");
-                   console.log(this.uuidSource);
+                   console.log(this.data.uuidSource);
                    console.log(self.uuidSource);
                     if (self.isAPIReady_bl)
                         if (self.isCasting) self.cc.play();
