@@ -35,15 +35,15 @@ class Question(models.Model):
 
 class QuestionVote(models.Model):
 	DONT_LIKE_THIS = 'DL'
-    ANSVER_UNCLEAR = 'AU'
-    HAVE_QUESTIONS = 'HQ'
+	ANSVER_UNCLEAR = 'AU'
+	HAVE_QUESTIONS = 'HQ'
 	PROBLEM_SOLVED = 'PS'
-    VOIS_TYPES = (
-        (DONT_LIKE_THIS, 'Мне не нравится, как всё устроено'),
-        (ANSVER_UNCLEAR, 'Ответ неясный'),
-        (HAVE_QUESTIONS, 'У меня остались вопросы'),
-		(PROBLEM_SOLVED, 'Вопрос решен'),
-    )
+	VOIS_TYPES = (
+	(DONT_LIKE_THIS, 'Мне не нравится, как всё устроено'),
+	(ANSVER_UNCLEAR, 'Ответ неясный'),
+	(HAVE_QUESTIONS, 'У меня остались вопросы'),
+	(PROBLEM_SOLVED, 'Вопрос решен'),
+	)
 	type = models.CharField(choices=VOIS_TYPES, max_length=2)
 	question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='quest_vois', verbose_name="Впрос")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='quest_creator', on_delete=models.CASCADE, verbose_name="Создатель")
