@@ -2,7 +2,7 @@
 {% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container ckeditor_support">
+<div class="container mt-4 main-container">
 <div class="row">
     <div class="col-md-9 order-1">
         <div class="input-group mb-3">
@@ -27,7 +27,7 @@
                 <ul class="list-group" id="quan-container">
                     {% for object in object_list %}
                     <div class="card">
-						            <a class="menu_drop" style="margin: 20px;cursor:pointer">
+						            <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">
 								            {{ object.quest}}
 						            </a>
 
