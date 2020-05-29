@@ -7,7 +7,7 @@ class QuestionsCategory(models.Model):
 	name_ru = models.CharField(max_length=100, unique=True, verbose_name="Русское название")
 	name_en = models.CharField(max_length=100, unique=True, verbose_name="Английское название")
 	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
-	icon = models.CharField(max_length=200, verbose_name="svg icon")
+	icon = models.CharField(max_length=400, verbose_name="svg icon")
 
 	def __str__(self):
 		return self.name_ru
