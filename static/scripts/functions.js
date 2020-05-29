@@ -689,6 +689,6 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
     }
 
-    IndexAnon.initLink();
+    Index.initLink();
     if_list(document.getElementById('ajax'));
     load_chart()
