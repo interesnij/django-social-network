@@ -16,7 +16,10 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Вопросы - {{ category.name_ru }}</h5>
+                        <h5 class="mt-1">
+                          <svg class="svg_info svg_default" style="margin-bottom:5px" fill="currentColor" viewBox="0 0 24 24">
+                            {{ category.icon|safe }}
+                          </svg> {{ category.name_ru }}</h5>
                     </div>
                 </div>
             </div>
