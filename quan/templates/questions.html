@@ -52,7 +52,7 @@
 
     <div class="col-md-3 order-2 left_menu">
         {% for object in quest_categories %}
-          <a class="mb-2 mr-2 btn btn-link" href="{% url 'quan_categories' cat_name=object.name_en %}">
+          <a class="mb-2 mr-2 ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">
             {{ object.name_ru }}
           </a>
         {% endfor %}
@@ -67,34 +67,4 @@
   <div id="load_staff_window" style="margin-top:30px"></div>
 </div>
 
-<script>
-ready(() => {
-  var page = 2;
-  var loaded = false;
-
-  onscroll = function(){
-    try{
-    var admins = document.getElementById("admins-container");
-
-    if(admins.getElementsByClassName('list-group-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/manage/admins/' + '{{ community.pk }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        admins_list = elem.querySelector(".list-group");
-        if(admins_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-        admins.append(admins_list);
-        }
-      }
-    }}
-  }catch{return}
-  }
-});
-</script>
 {% endblock %}
