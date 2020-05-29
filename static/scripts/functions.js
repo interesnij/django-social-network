@@ -189,7 +189,15 @@ function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
   settings = [];
-  if (style.href.indexOf("white") != -1 || style.href.indexOf("orange") != -1){
+  if (style.href.indexOf("white") != -1
+      || style.href.indexOf("orange") != -1
+      || style.href.indexOf("grey") != -1
+      || style.href.indexOf("brown") != -1)
+      || style.href.indexOf("teal") != -1)
+      || style.href.indexOf("skyblue") != -1)
+      || style.href.indexOf("blue") != -1)
+      || style.href.indexOf("purple") != -1)
+      || style.href.indexOf("red") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
   }else if (style.href.indexOf("dark-grey") != -1){
     settings += ["images/video_dark",'#000000','#000000']
