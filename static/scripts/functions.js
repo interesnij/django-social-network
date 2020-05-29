@@ -1,5 +1,6 @@
-load_chart()
+function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
+load_chart()
 function addStyleSheets (href) {
   $head = document.head,
   $link = document.createElement('link');

@@ -12,11 +12,7 @@
     <link rel="stylesheet" href="{% static 'styles/video.css' %}" />
     <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/{{ request.user.color_settings.color }}.css" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
-    <script>
-    function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
-    var ready = (callback) => {if (document.readyState != "loading") callback();else document.addEventListener("DOMContentLoaded", callback);}
-    function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
-  </script>
+
 </head>
   <body class="fixed-header">
     <div class="wrapper" id="video_id_saver" data-video="first_player">
