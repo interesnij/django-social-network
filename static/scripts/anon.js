@@ -10,7 +10,7 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.send(form_data);
 })
 on('body', 'click', '#logg', function() {
-  form_data = new FormData(document.querySelector("#login"));
+  form_data = new FormData(document.querySelector("#login_form"));
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'POST', "/rest-auth/login/", true );
   link.onreadystatechange = function () {
