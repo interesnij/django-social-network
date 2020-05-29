@@ -1,6 +1,47 @@
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
+function load_chart() {
+  try{
+var ctx = document.getElementById('canvas');
+var dates = ctx.getAttribute('data-dates').split(",");
+var data_1 = ctx.getAttribute('data-data_1').split(",");
+var data_2 = ctx.getAttribute('data-data_2').split(",");
+var label_1 = ctx.getAttribute('data-label_1');
+var label_2 = ctx.getAttribute('data-label_2');
 
-load_chart()
+var config = {
+type: 'line',
+data: {
+  labels: dates,
+  datasets: [{
+    label: label_1,
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    data: data_1,
+    fill: false,
+  }, {
+    label: label_2,
+    fill: false,
+    backgroundColor: 'rgb(54, 162, 235)',
+    borderColor: 'rgb(54, 162, 235)',
+    data: data_2,
+  }]
+},
+options: {
+  responsive: true,
+  title: {display: true,text: ''},
+  tooltips: {mode: 'index',intersect: false,},
+  hover: {mode: 'nearest',intersect: true},
+  scales: {
+  xAxes: [{display: true,scaleLabel: {display: true,labelString: ''}}],
+  yAxes: [{display: true,scaleLabel: {display: true,labelString: ''}}]
+  }
+}
+};
+
+ctx.getContext('2d');window.myLine = new Chart(ctx, config);
+}catch{return}
+}
+
 function addStyleSheets (href) {
   $head = document.head,
   $link = document.createElement('link');
@@ -645,3 +686,8 @@ function music_onReady(){console.log("Аудио плеер готов");}
     } entrou = true;
     setTimeout(function() { entrou = false; }, 1000);
     }};
+
+
+Index.initLink();
+if_list(document.getElementById('ajax'));
+load_chart()

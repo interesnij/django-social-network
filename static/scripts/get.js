@@ -96,7 +96,5 @@ on('#ajax', 'click', '.select_photo', function() {
 });
 
 
-Index.initLink();
-if_list(document.getElementById('ajax'));
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
