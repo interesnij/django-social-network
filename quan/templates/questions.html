@@ -48,12 +48,12 @@
     </div>
 
     <div class="col-md-3 order-2 left_menu">
-      <br><br><br>
+      <br><br>
         {% for object in quest_categories %}
           <a class="mb-2 mr-2 ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">
             {{ object.name_ru }}
           </a>
-          <br><br>
+          <br>
         {% endfor %}
     </div>
 </div>
