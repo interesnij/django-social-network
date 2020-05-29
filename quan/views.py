@@ -7,7 +7,7 @@ class QuanCategoryView(ListView):
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
-        self.category = QuestionsCategory.objects.get(name_en=self.kwargs["cat_name"])
+		self.category = QuestionsCategory.objects.get(name_en=self.kwargs["cat_name"])
 		self.template_name = "questions.html"
 		return super(QuanCategoryView,self).get(request,*args,**kwargs)
 
