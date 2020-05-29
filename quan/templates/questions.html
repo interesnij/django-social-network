@@ -37,7 +37,7 @@
 							               <div class="card-body">{{ object.content|safe }}</div>
 						            </div>
 					           </div>
-                     <br>
+
                     {% empty %}
                     <div class="card mb-4">
                       <div class="card-body">
@@ -55,6 +55,7 @@
           <a class="mb-2 mr-2 ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">
             {{ object.name_ru }}
           </a>
+          <br>
         {% endfor %}
     </div>
 </div>
