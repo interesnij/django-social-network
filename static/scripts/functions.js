@@ -189,14 +189,13 @@ function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
   settings = [];
-  if (style.href.indexOf("white") != -1){
+  if (style.href.indexOf("white") != -1 || style.href.indexOf("orange") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
   }else if (style.href.indexOf("dark-grey") != -1){
     settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
 }
-console.log(get_video_dop()[0]);
 
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
