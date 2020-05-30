@@ -1,3 +1,31 @@
+.doc_sub_item{
+  font-weight:bold;
+  font-size: 18px;
+}
+.doc_sub2_item{
+  font-weight:bold;
+  font-size: 15px;
+}
+.doc_item{
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.doc_p{
+  padding-left:20px;
+}
+.doc_2p{
+  padding-left:35px;
+}
+.doc_3p{
+  padding-left:50px;
+}
+.doc_4p{
+  padding-left:65px;
+}
+.doc_5p{
+  padding-left:80px;
+}
+
 .ckeditor_support img,
 .ckeditor_support frame{
   width:100%
