@@ -42,4 +42,4 @@ class LicenceView(TemplateView):
             self.template_name = "licence/licence.html"
         else:
             self.template_name = "licence/anon_licence.html"
-        return super(AboutView,self).get(request,*args,**kwargs)
+        return super(LicenceView,self).get(request,*args,**kwargs)
