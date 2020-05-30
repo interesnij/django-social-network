@@ -130,14 +130,14 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
-        IndexAnon.initLink();
+        Index.initLink();
       }
     }
     ajax_link.send();
 }
 
 
-class IndexAnon {
+class Index {
   // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
   static push_url(event){
@@ -149,5 +149,5 @@ class IndexAnon {
   }
 }
 
-IndexAnon.initLink();
+Index.initLink();
 if_list(document.getElementById('ajax'));
