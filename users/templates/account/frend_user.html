@@ -27,12 +27,12 @@
                   </a>
               </div>
 
-              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+              <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
                         У Вас в друзьях
                     </button>
-                    <div class="dropdown-menu btn-secondary" data-pk="{{ user.pk }}" x-placement="bottom-start">
+                    <div class="dropdown-menu btn-secondary" data-pk="{{ user.pk }}">
                         <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
                         <a class="dropdown-item user_block" href="#">Заблокировать</a>
                         <a class="dropdown-item" href="#">Пожаловаться</a>
@@ -40,8 +40,8 @@
                 </div>
               </span>
 
-              <span style="display: flex;align-items: center;justify-content: center;">
-                <a data-js="new_message" href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
+              <span class="centered">
+                <a href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
               </span>
 
           </div>
