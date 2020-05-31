@@ -4220,8 +4220,8 @@ cursor: pointer;
 .stat_fullscreen_hide,
 .votes_fullscreen_hide {cursor: pointer;float: right;}
 
-.prev_item { position: absolute; right: -10%; top: 160px; cursor: pointer; }
-.next_item { position: absolute; left: -10%; top: 160px; cursor: pointer; }
+.prev_item, .prev_photo { position: absolute; right: -10%; top: 160px; cursor: pointer; }
+.next_item, .next_photo { position: absolute; left: -10%; top: 160px; cursor: pointer; }
 
 #good_loader .card-body img {
     width: 100% !important;
