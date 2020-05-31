@@ -258,7 +258,7 @@
             <div class="card-body p-1" data-pk="{{ user.pk }}">
                 <div class="row no-gutters">
                   {% for object in user.get_last_video %}
-                    <div style="flex: 0 0 50%;max-width:50%;padding:5px;cursor:pointer" class="u_video_detail" data-counter="{{ forloop.counter0 }}">
+                    <div style="cursor:pointer" class="u_video_detail" data-counter="{{ forloop.counter0 }}">
                       <img style="width:100%;object-fit:cover;height:auto;" class="lazyload" data-src="{{ object.image.url }}" alt="">
                       <p>{{ object.title }}</p>
                     </div>
