@@ -594,7 +594,7 @@ class User(AbstractUser):
         return video_list
 
     def get_last_video(self):
-        from video.models import  Video
+        from video.models import Video
 
         video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")

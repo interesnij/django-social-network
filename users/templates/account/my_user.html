@@ -26,7 +26,7 @@
                       </figure>
                   </a>
               </div>
-              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+              <span style="margin-bottom: 10px;" class="centered">
                   <a class="btn btn-sm btn-secondary ajax" style="color:white !important;" href="{% url 'user_general_form' request.user.pk %}">Редактировать</a>
               </span>
 
@@ -75,9 +75,9 @@
         </div>
 
         {% else %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                <div class="media centered">
                     <a href="{% url 'all_users' %}" class="ajax">
                         <div class="media-body">
                             <h4 class="content-color-primary mb-0">Найдите друзей </h4>
@@ -129,7 +129,7 @@
         {% else %}
         <div class="card mb-4" style="">
             <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                <div class="media centered">
                     <a href="{% url 'all_communities' %}" class="ajax">
                         <div class="media-body">
                             <h4 class="content-color-primary mb-0">Вступайте в группы</h4>
@@ -193,9 +193,9 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                <div class="media centered">
                     <a href="{% url 'all_music' %}" class="ajax">
                         <div class="media-body">
                             <h4 class="content-color-primary mb-0">Добавьте музыку</h4>
@@ -207,7 +207,7 @@
         {% endif %}
 
         {% if user.get_profile_photos %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
               <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
                 <div class="media">
@@ -229,12 +229,51 @@
             </div>
         </div>
         {% else %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                <div class="media centered">
                     <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
                         <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Добавляйте фото</h4>
+                            <h4 class="content-color-primary mb-0">Добавьте фото</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.get_last_video %}
+
+        <div class="card mb-4">
+            <div class="card-header">
+              <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="content-color-primary mb-0">Видео </h4>
+                    </div>
+                    все
+                </div>
+              </a>
+            </div>
+            <div class="card-body p-1">
+                <div class="row no-gutters">
+                  {% for object in user.get_last_video %}
+                    <div style="flex: 0 0 50%;max-width:50%;padding:5px;cursor:pointer" class="u_video_detail">
+                      <img style="width:100%;object-fit:cover;height:auto;" class="lazyload" data-src="{{ object.image.url }}" alt="">
+                      <p>{{ object.title }}</p>
+                    </div>
+                  {% endfor %}
+                </div>
+
+            </div>
+        </div>
+        {% else %}
+        <div class="card mb-4" style="">
+            <div class="card-header">
+                <div class="media centered">
+                    <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+                        <div class="media-body">
+                            <h4 class="content-color-primary mb-0">Добавьте видео</h4>
                         </div>
                     </a>
                 </div>

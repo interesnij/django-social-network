@@ -1,0 +1,26 @@
+{% if user.get_last_video %}
+
+<div class="card mb-4" style="">
+    <div class="card-header">
+      <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Видео </h4>
+            </div>
+            все
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        <div class="row no-gutters">
+          {% for object in user.get_last_video %}
+            <div style="flex: 0 0 50%;max-width:50%;padding:5px;cursor:pointer" class="u_video_detail">
+              <img style="width:100%;object-fit:cover;height:auto;" class="lazyload" data-src="{{ object.image.url }}" alt="">
+              <p>{{ object.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endif %}
