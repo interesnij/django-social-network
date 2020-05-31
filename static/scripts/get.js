@@ -8,7 +8,8 @@ on('body', 'click', '.ajax', function(event) {
 window.addEventListener('popstate', function (e) {
     var state = e.state;
     if (state !== null) {
-        alert("Назад!")
+      history.back();
+      alert("Назад!");
     }
 });
 on('body', 'click', '.next_item', function(event) {
