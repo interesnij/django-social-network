@@ -675,15 +675,13 @@ function music_onReady(){console.log("Аудио плеер готов");}
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0,0);
             document.title = elem_.querySelector('title').innerHTML;
-            window.history.pushState({route: url}, "network", url);
+            window.history.pushState({route: url});
             if_list(rtr);
-            //Index.initLink();
             load_chart()
           }
         }
         ajax_link.send();
     }
-
 
 on('body', 'click', '.ajax', function() {
   event.preventDefault();
@@ -693,18 +691,5 @@ on('body', 'click', '.ajax', function() {
   }
 })
 
-    class Index {
-      // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.
-      static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-      static push_url(event){
-        event.preventDefault();
-        var url = this.getAttribute('href');
-        if (url != window.location.pathname){
-          ajax_get_reload(url);
-        }
-      }
-    }
-
-    //Index.initLink();
-    if_list(document.getElementById('ajax'));
-    load_chart()
+if_list(document.getElementById('ajax'));
+load_chart()
