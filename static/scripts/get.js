@@ -17,6 +17,8 @@ on('body', 'click', '.next_item', function(event) {
         elem_.innerHTML = ajax_link.responseText;
         rtr = document.getElementById('item_loader');
         rtr.innerHTML = elem_.innerHTML;
+        console.log(elem_);
+        console.log(rtr);
         window.scrollTo(0,0);
       //  document.title = elem_.querySelector('title').innerHTML;
       //  window.history.pushState({route: url}, "network", url);
