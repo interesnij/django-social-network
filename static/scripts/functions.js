@@ -675,7 +675,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0,0);
             title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, title, url);
+            window.history.pushState(null, "vfgffgfgf", url);
             document.title = title;
             if_list(rtr);
             load_chart()
