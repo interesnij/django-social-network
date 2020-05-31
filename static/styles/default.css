@@ -1,7 +1,9 @@
 .user_status{
   min-height: 22px;
 }
-
+.media-body a {
+  white-space: nowrap;
+}
 body,
 html {
   height: 100%;

@@ -159,6 +159,7 @@ input, button, select, optgroup, textarea {
 }
 .media-body {
   flex: 1;
+  overflow: hidden;
 }
 .dropdown{
   position: relative;
