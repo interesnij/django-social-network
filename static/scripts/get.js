@@ -7,9 +7,11 @@ on('body', 'click', '.ajax', function(event) {
 })
 window.addEventListener('popstate', function (e) {
     var state = e.state;
-    if (state !== null) {
+    var is_null = 1;
+    if (state !== null && is_null !== null) {
+      var is_null = null;
       history.back();
-      
+
     }
 });
 on('body', 'click', '.next_item', function(event) {
