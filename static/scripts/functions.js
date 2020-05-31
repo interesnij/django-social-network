@@ -677,13 +677,19 @@ function music_onReady(){console.log("Аудио плеер готов");}
             document.title = elem_.querySelector('title').innerHTML;
             window.history.pushState({route: url}, "network", url);
             if_list(rtr);
-            Index.initLink();
+            //Index.initLink();
             load_chart()
           }
         }
         ajax_link.send();
     }
-
+on('#ajax', 'click', '.ajax', function() {
+  event.preventDefault();
+  var url = this.getAttribute('href');
+  if (url != window.location.pathname){
+    ajax_get_reload(url);
+  }
+})
 
     class Index {
       // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.
@@ -697,6 +703,6 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
     }
 
-    Index.initLink();
+    //Index.initLink();
     if_list(document.getElementById('ajax'));
     load_chart()
