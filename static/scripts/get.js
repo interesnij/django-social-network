@@ -18,8 +18,8 @@ on('body', 'click', '.next_item', function(event) {
         rtr = document.getElementById('item_loader');
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
-        document.title = elem_.querySelector('title').innerHTML;
-        window.history.pushState({route: url}, "network", url);
+      //  document.title = elem_.querySelector('title').innerHTML;
+      //  window.history.pushState({route: url}, "network", url);
       }
     }
     ajax_link.send();
