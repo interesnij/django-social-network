@@ -683,7 +683,9 @@ function music_onReady(){console.log("Аудио плеер готов");}
         }
         ajax_link.send();
     }
-on('#ajax', 'click', '.ajax', function() {
+
+
+on('body', 'click', '.ajax', function() {
   event.preventDefault();
   var url = this.getAttribute('href');
   if (url != window.location.pathname){
