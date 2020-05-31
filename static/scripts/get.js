@@ -17,8 +17,21 @@ on('body', 'click', '.next_item', function(event) {
         elem_.innerHTML = ajax_link.responseText;
         rtr = document.getElementById('item_loader');
         rtr.innerHTML = elem_.innerHTML;
-      //  document.title = elem_.querySelector('title').innerHTML;
-      //  window.history.pushState({route: url}, "network", url);
+      }
+    }
+    ajax_link.send();
+})
+on('body', 'click', '.prev_item', function(event) {
+  event.preventDefault();
+  var url = this.getAttribute('href');
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url, true );
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        rtr = document.getElementById('item_loader');
+        rtr.innerHTML = elem_.innerHTML;
       }
     }
     ajax_link.send();
