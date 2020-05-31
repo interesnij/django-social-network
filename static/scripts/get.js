@@ -7,7 +7,6 @@ on('body', 'click', '.ajax', function(event) {
 })
 window.addEventListener('popstate', function (e) {
     window.history.back();
-    }
 });
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
