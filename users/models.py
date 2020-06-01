@@ -578,7 +578,7 @@ class User(AbstractUser):
         from video.models import Video, VideoAlbum
 
         list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
-        video_query = Q(video_album=list, is_deleted=False)
+        video_query = Q(album=list, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
 
@@ -586,7 +586,7 @@ class User(AbstractUser):
         from video.models import Video, VideoAlbum
         try:
             list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
-            video_query = Q(video_album=list, is_deleted=False)
+            video_query = Q(album=list, is_deleted=False)
             video_list = Video.objects.filter(video_query).order_by("-created")
             return video_list
         except:
