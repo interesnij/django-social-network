@@ -148,6 +148,9 @@ class Video(models.Model):
         dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
 
+    def __str__(self):
+        return self.title
+
 
 class VideoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
