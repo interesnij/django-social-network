@@ -62,51 +62,15 @@
         </div>
         {% endif %}
         </span>
-        &nbsp;&nbsp;
-            <span title="Комментарий" class="u_video_comments comments_close btn_default" style="cursor:pointer;{% if not object.comments_enabled %}display:none{% endif %}">
-              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                <span class="comment-count">
-                    {% if object.count_comments %}{{ object.count_comments }}{% endif %}
-                </span>
-            </span>
 
         &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" class="u_video_repost btn_default" data-target="#user_repost" style="cursor:pointer">
-              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                <span class="repost-count">
-                  {% if object.count_reposts %}
-                  {{ object.count_reposts }}
-                  {% endif %}
-                </span>
+              Поделиться
             </span>
-            <span class="repost_window">
-              {% if object.get_window_reposts %}
-            <div class="repost_pop" style="margin:15px">
-              <span class="u_all_reposts" style="cursor:pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
-              <br><br>
-              <span style="display: flex;">
-                {% for repost in object.get_window_reposts %}
-                <a href="{% url 'user' pk=repost.creator.pk %}" class="ajax" style="padding-right:10px">
-                  <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
-                    {% if repost.creator.get_avatar %}
-                      <img src="{{ repost.creator.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
-                    {% else %}
-                      <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                    {% endif %}
-                    </figure>
-                  </a>
-                  {% endfor %}
-                </span>
-            </div>
-            {% endif %}
-            </span>
-
         </div>
-        <span class="col-auto" title="Просмотры" style="font-size:12px">
+        <span title="Просмотры" style="font-size:12px">
           <svg fill="currentColor" class="svg_info svg_default" style="width:17px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-            {{ object.all_visits_count }}
+            {{ object.all_visits_count }} просмотров
         </span>
     </div>
-
-    <div class="uv_load_comments"></div>
 </div>
