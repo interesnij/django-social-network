@@ -49,9 +49,11 @@ class UserVideoCreate(View):
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")
             new_video.save()
-            for album in albums:
-                album.video_album.add(new_video)
-            my_list.video_album.add(new_video)
+            if not albums:
+                my_list.video_album.add(new_video)
+            else:
+                for album in albums:
+                    album.video_album.add(new_video)
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
             return HttpResponseBadRequest()
