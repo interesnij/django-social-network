@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from video.models import VideoAlbum
+from video.models import VideoAlbum, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
 
