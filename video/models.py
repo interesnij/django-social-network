@@ -80,9 +80,6 @@ class VideoAlbum(models.Model):
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
         verbose_name = 'Видеоальбом'
         verbose_name_plural = 'Видеоальбомы'
 
