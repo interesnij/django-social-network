@@ -17,7 +17,6 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
 });
 
 on('#ajax', 'click', '.u_video_detail', function() {
-  var uuid, pk, loader;
   counter = this.getAttribute('data-counter');
   parent = this.parentElement.parentElement;
   pk = parent.getAttribute('data-pk');
@@ -35,6 +34,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
 
     info_video = document.body.querySelector("#info_video");
+    console.log(info_video);
     if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
       pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
       list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
