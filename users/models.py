@@ -548,7 +548,7 @@ class User(AbstractUser):
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
-        return list(reversed(music_list))
+        return music_list
         #except:
             #return []
 
