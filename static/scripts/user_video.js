@@ -50,10 +50,9 @@ function get_video_info(){
     pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
     list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
-
+    console.log("Воспроизводится ролик № : " + video_id)
+    console.log("uuid ролика : " + uuid);
 }
-console.log("Воспроизводится ролик № : " + video_id)
-console.log("uuid ролика : " + uuid);
 
 }
 
