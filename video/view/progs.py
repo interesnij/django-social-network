@@ -41,9 +41,11 @@ class UserVideoCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user == user:
+            my_list = VideoAlbum.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
+            my_list.add(new_video)
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
             return HttpResponseBadRequest()
