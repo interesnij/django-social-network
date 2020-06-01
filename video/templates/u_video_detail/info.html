@@ -67,6 +67,30 @@
         <a title="Поделиться" data-toggle="modal" class="u_video_repost btn_default" data-target="#user_repost" style="cursor:pointer">
           Поделиться
         </a>
+        &nbsp;&nbsp;
+        <a title="Изменить" class="u_video_edit btn_default" style="cursor:pointer">
+          Изменить
+        </a>
+        <div class="dropdown d-inline-block">
+            <a style="cursor:pointer" class="btn_default drop">
+              еще
+            </a>
+            <div class="dropdown-menu">
+                <span class="dropdown-item video_user_remove">Удалить видео</span>
+                <span class="dropdown-item">Редактировать</span>
+                <span>
+                  {% if object.comments_enabled %}
+                    <span class="dropdown-item video_user_off_comment">Выключить комментарии</span>
+                  {% else %}
+                    <span class="dropdown-item video_user_on_comment">Включить комментарии</span>
+                  {% endif %}
+                </span>
+                <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+                  <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'video_detail' uuid=object.uuid pk=user.pk %}</textarea>
+                </span>
+                <span class="dropdown-item video_stat_f">Статистика записи</span>
+            </div>
+        </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span title="Просмотры">
           <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
