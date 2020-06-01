@@ -127,9 +127,6 @@ class Video(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         verbose_name="Видео-ролики"
         verbose_name_plural="Видео-ролики"
