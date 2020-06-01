@@ -61,10 +61,13 @@ class TrackAdd(View):
     """
     def get(self, request, *args, **kwargs):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
+        try:
+            my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
+        except:
+            my_list = SoundList.objects.create(creator_id=request.user.pk, community=None, is_generic=True)
         if not my_list.is_track_in_list(track.pk):
             my_list.track.add(track)
-        return HttpResponse("!") 
+        return HttpResponse("!")
 
 class TrackRemove(View):
     """
