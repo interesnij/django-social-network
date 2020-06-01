@@ -37,12 +37,12 @@ on('#ajax', 'click', '.u_video_detail', function() {
   }, 500);
 });
 function video_onPlay(){
-    video_id = video_player.getVideoId();
+    video_id = video_player.getVideoId() + 1;
     console.log("Воспроизводится ролик № : " + video_id);
     my_playlist = document.body.querySelector("#my_playlist");
     videos = my_playlist.querySelectorAll('li');
     uuid = videos[video_id].getAttribute("data-video-uuid");
-    console.log("uuid ролитка : " + uuid);
+    console.log("uuid ролика : " + uuid);
     music_player.pause()
   }
 on('#ajax', 'click', '.u_video_list_detail', function() {
