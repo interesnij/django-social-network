@@ -547,7 +547,7 @@ class User(AbstractUser):
             list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
             music_query = Q(players=list, is_deleted=False)
             music_query.add(exclude_reported_and_approved_music_query, Q.AND)
-            music_list = SoundcloudParsing.objects.filter(music_query)
+            music_list = SoundcloudParsing.objects.filter(music_query).order_by("-created_at")
             return music_list
         except:
             return []
