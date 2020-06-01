@@ -542,13 +542,15 @@ class User(AbstractUser):
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
         from moderation.models import ModeratedObject
-
-        exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
-        music_query = Q(players=list, is_deleted=False)
-        music_query.add(exclude_reported_and_approved_music_query, Q.AND)
-        music_list = SoundcloudParsing.objects.filter(music_query)
-        return music_list
+        try:
+            exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
+            music_query = Q(players=list, is_deleted=False)
+            music_query.add(exclude_reported_and_approved_music_query, Q.AND)
+            music_list = SoundcloudParsing.objects.filter(music_query)
+            return music_list
+        except:
+            return []
 
     def get_music_count(self):
         from music.models import SoundList, SoundcloudParsing
@@ -582,11 +584,13 @@ class User(AbstractUser):
 
     def get_video(self):
         from video.models import Video, VideoAlbum
-
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
-        video_query = Q(video_album=list, is_deleted=False)
-        video_list = Video.objects.filter(video_query).order_by("-created")
-        return video_list
+        try:
+            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+            video_query = Q(video_album=list, is_deleted=False)
+            video_list = Video.objects.filter(video_query).order_by("-created")
+            return video_list
+        except:
+            return []
 
     def get_my_video(self):
         from video.models import Video, VideoAlbum
