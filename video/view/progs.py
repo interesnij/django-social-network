@@ -44,7 +44,7 @@ class UserVideoCreate(View):
             try:
                 my_list = VideoAlbum.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
             except:
-                my_list = VideoAlbum.objects.create(creator_id=request.user.pk, community=None, is_generic=True, name="Все видео")
+                my_list = VideoAlbum.objects.create(creator_id=request.user.pk, community=None, is_generic=True, title="Все видео")
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
