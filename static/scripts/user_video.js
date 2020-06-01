@@ -34,7 +34,6 @@ on('#ajax', 'click', '.u_video_detail', function() {
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
     get_video_info()
     }
-    }
   }, 500);
 });
 
