@@ -47,8 +47,8 @@ class UserVideoCreate(View):
                 my_list = VideoAlbum.objects.create(creator_id=request.user.pk, community=None, is_generic=True, title="Все видео")
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
+            new_video.album = my_list
             new_video.save()
-            my_list.video.add(new_video)
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
             return HttpResponseBadRequest()
