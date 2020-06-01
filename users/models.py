@@ -594,11 +594,13 @@ class User(AbstractUser):
 
     def get_my_video(self):
         from video.models import Video, VideoAlbum
-
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
-        video_query = Q(video_album=list, is_deleted=False)
-        video_list = Video.objects.filter(video_query).order_by("-created")
-        return video_list
+        try:
+            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+            video_query = Q(video_album=list, is_deleted=False)
+            video_list = Video.objects.filter(video_query).order_by("-created")
+            return video_list
+        except:
+            return []
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
