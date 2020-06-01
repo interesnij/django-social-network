@@ -761,7 +761,6 @@ if (! function(t) {
                 }, s.stop = function() {
                     return this.paused(!0)
                 }, s.gotoAndPlay = function(e, t) {
-                    console.log("play!!!");
                     return this.play(e, t)
                 }, s.gotoAndStop = function(e, t) {
                     return this.pause(e, t)
@@ -2249,7 +2248,6 @@ if (! function(t) {
                     g && 2e3 < U() - C && b.wake(), setTimeout(u, 2e3)
                 };
                 u(), s.play = function(e, t) {
-                  console.log("play");
                     return null != e && this.seek(e, t), this.reversed(!1).paused(!1)
                 }, s.pause = function(e, t) {
                     return null != e && this.seek(e, t), this.paused(!0)
@@ -3074,7 +3072,6 @@ if (! function(e) {
                 n.sourcePath_str = e, clearTimeout(n.testShoutCastId_to), -1 != n.sourcePath_str.indexOf(";") ? (n.isShoutcast_bl = !0, n.countShoutCastErrors = 0) : n.isShoutcast_bl = !1, -1 == n.sourcePath_str.indexOf(";") ? (n.isNormalMp3_bl = !0, n.countNormalMp3Errors = 0) : n.isNormalMp3_bl = !1, n.lastPercentPlayed = 0, n.audio_el && n.stop(!0)
             },
             this.play = function(e) {
-              console.log("play");
                 if (n.isStopped_bl)
                    n.isPlaying_bl = !1,
                    n.hasError_bl = !1,
@@ -3089,7 +3086,7 @@ if (! function(e) {
                     var t = n.audio_el.play();
                     void 0 !== t && t.then(function() {}, function() {}), FWDUVPUtils.isIE && n.dispatchEvent(i.PLAY)
                 } catch (e) {
-                    console.log(e)
+                    null
                 }
             }, this.resume = function() {
                 n.isStopped_bl || n.play()
@@ -4289,7 +4286,6 @@ if (! function(e) {
                 }, 50);
                 b.buttons_ar.push(b.prevButton_do), b.mainHld.addChild(b.prevButton_do)
             }, this.prevButtonOnMouseUpHandler = function() {
-              console.log("playlist prev");
                 b.dispatchEvent(FWDUVPPlaylist.PLAY_PREV_VIDEO)
             }, this.setupNextButton = function() {
                 b.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), b.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), b.nextButton_do = new FWDUVPSimpleButton(p.next2N_img, p.nextSPath_str, void 0, !0, b.useHEX, b.nBC, b.sBC)), b.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, b.nextButtonOnMouseUpHandler), b.nextButton_do.setY(parseInt((b.sH - b.nextButton_do.h) / 2));
@@ -4298,7 +4294,6 @@ if (! function(e) {
                 }, 50);
                 b.buttons_ar.push(b.nextButton_do), b.mainHld.addChild(b.nextButton_do)
             }, this.nextButtonOnMouseUpHandler = function() {
-              console.log("playlist next")
                 b.dispatchEvent(FWDUVPPlaylist.PLAY_NEXT_VIDEO)
             }, this.setupPlayPauseButton = function() {
                 b.useVectorIcons_bl ? (FWDUVPComplexButton.setPrototype(), b.playPauseButton_do = new FWDUVPComplexButton(void 0, void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-play'></span>", "<span class='fwdicon fwdicon-pause'></span>", "UVPMainButtonsNormalState play", "UVPMainButtonsSelectedState play")) : (FWDUVPComplexButton.setPrototype(), b.playPauseButton_do = new FWDUVPComplexButton(b.playN_img, p.playSPath_str, b.pauseN_img, p.pauseSPath_str, !0, b.useHEX, b.nBC, b.sBC)), b.buttons_ar.push(b.playPauseButton_do), b.playPauseButton_do.setY(parseInt((b.sH - b.playPauseButton_do.buttonHeight) / 2));
@@ -5525,7 +5520,6 @@ if (! function(e) {
                 }
                 return e
             }, this.loadPlaylist = function(e) {
-              console.log("load playlist");
                 if (self.stopToLoadPlaylist(), !self.isPlaylistDispatchingError_bl) {
                     clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
                     var t = self.catsRef_ar[e];
@@ -7519,9 +7513,6 @@ var FWDUVPAddress = new function() {
                 }, this.hiderHideCompleteHandler = function() {
                     self.controller_do.positionScrollBarOnTopOfTheController()
                 }, this.play = function() {
-                   console.log("play");
-                   console.log(this.data.uuidSource);
-                   console.log(self.uuidSource);
                     if (self.isAPIReady_bl)
                         if (self.isCasting) self.cc.play();
                         else if (!self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE
@@ -7799,13 +7790,10 @@ var FWDUVPAddress = new function() {
                 }, this.onFullScreenChange = function(e) {
                     document.fullScreen || document.msFullscreenElement || document.mozFullScreen || document.webkitIsFullScreen || document.msieFullScreen || (self.controller_do.showNormalScreenButton(), self.addMainDoToTheOriginalParent(), self.isFullScreen_bl = !1)
                 }, this.loadPlaylist = function(e) {
-                  console.log("load playlist");
                     self.isAPIReady_bl && self.data.prevId != e && (self.data.playlist_ar && self.data.playlist_ar[self.id] && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.catId = e, self.id = 0, self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalPlaylists - 1 && (self.catId = self.data.totalPlaylists - 1), self.useDeepLinking_bl ? FWDUVPAddress.setValue("?playlistId=" + self.catId + "&videoId=" + self.id) : self.loadInternalPlaylist())
                 }, this.playNext = function() {
-                  console.log("play next");
                     self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.id++, self.executePlayNextPrevOrShuffle())
                 }, this.playPrev = function() {
-                  console.log("play prev");
                     self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].gaStr, self.videoCat = self.data.cats_ar[self.catId].playlistName), self.id--, self.executePlayNextPrevOrShuffle())
                 }, this.playShuffle = function() {
                     if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
@@ -8325,12 +8313,10 @@ var FWDUVPAddress = new function() {
             }, this.setupPrevButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-left'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.prevButton_do = new FWDUVPSimpleButton(a.prevN_img, l.prevSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.prevButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.prevButtonOnMouseUpHandler), a.buttons_ar.push(a.prevButton_do), a.controllBar_do.addChild(a.prevButton_do)
             }, this.prevButtonOnMouseUpHandler = function() {
-              console.log("play prev");
                 a.dispatchEvent(t.PLAY_PREV_VIDEO)
             }, this.setupNextButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-FF-right'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.nextButton_do = new FWDUVPSimpleButton(a.nextN_img, l.nextSPath_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.nextButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.nextButtonOnMouseUpHandler), a.buttons_ar.push(a.nextButton_do), a.controllBar_do.addChild(a.nextButton_do)
             }, this.nextButtonOnMouseUpHandler = function() {
-              console.log("play next");
                 a.dispatchEvent(t.PLAY_NEXT_VIDEO)
             }, this.setupShuffleButton = function() {
                 a.useVectorIcons_bl ? (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-shuffle'></span>", void 0, "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPSimpleButton.setPrototype(), a.shuffleButton_do = new FWDUVPSimpleButton(a.shuffleN_img, l.shufflePathS_str, void 0, !0, l.useHEX, l.nBC, l.sBC)), a.shuffleButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, a.shuffleButtonOnMouseUpHandler), a.buttons_ar.push(a.shuffleButton_do), a.controllBar_do.addChild(a.shuffleButton_do), !a.loop_bl && a.shuffle_bl && a.setShuffleButtonState("selected")
@@ -10113,7 +10099,6 @@ var FWDUVPAddress = new function() {
                 l.initVideo()
             },
             this.play = function(e) {
-              console.log("play");
                 var t;
                 if (clearTimeout(l.playWithDelayId_to),
                                  FWDUVPlayer.curInstance = i,
@@ -10495,7 +10480,6 @@ var FWDUVPAddress = new function() {
                 s.data.loop_bl && (o.stop(), setTimeout(o.play, 200)), o.dispatchEvent(i.PLAY_COMPLETE)
             },
             this.play = function(e) {
-              console.log("play");
                 FWDUVPlayer.curInstance = s;
                 o.hasError_bl = !1,
                 s.prevVideoType_str,
