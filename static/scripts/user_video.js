@@ -41,12 +41,19 @@ function video_onPlay(){
     videos = my_playlist.querySelectorAll('li');
     video_id = video_player.getVideoId();
 
-    video_id != 0 ? (video_id += 1, uuid = videos[video_id].getAttribute("data-video-uuid"))
-                  : (video_id = 1, uuid = videos[0].getAttribute("data-video-uuid"));
+    video_id != 0 ? (video_id += 1, uuid = videos[video_id].getAttribute("data-video-uuid")) : (video_id = 1, uuid = videos[0].getAttribute("data-video-uuid"));
 
     console.log("Воспроизводится ролик № : " + video_id)
     console.log("uuid ролика : " + uuid);
-    music_player.pause()
+    music_player.pause();
+
+    info_video = document.body.querySelector("#info_video");
+    if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
+      pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
+      list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
+      info_video.setAttribute("data-uuid", uuid);
+    }
+
   }
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;

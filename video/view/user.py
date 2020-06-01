@@ -51,6 +51,22 @@ class UserVideoList(ListView):
         return video_list
 
 
+class UserVideoDetail(ListView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = self.user.get_template_user(folder="detail/", template="video.html", request=request)
+        return super(UserVideoDetail,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoDetail,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['video'] = self.video
+        return context
+
+
 class UserCreateVideoWindow(TemplateView):
     template_name = None
 
