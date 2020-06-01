@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% block title %}Мои видеоролики{% endblock %}
+{% block title %}Мои видеоролики :: Основной список{% endblock %}
 {% block content %}
 
 <div class="container mt-3 main-container">
@@ -18,7 +18,7 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Мои видеоролики
+                      <h5 class="mt-1">Мои видеоролики :: Основной список
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_video_count }}</small>
                       </h5>
                   </div>
