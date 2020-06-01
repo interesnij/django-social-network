@@ -42,7 +42,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
 function get_video_info(){
   info_video = document.body.querySelector("#info_video");
   my_playlist = document.body.querySelector("#my_playlist");
-  videos = my_playlist.querySelectorAll('li');
+  videos = my_playlist.querySelectorAll('.video_playlist_li');
   video_id = video_player.getVideoId();
   video_id != 0 ? (video_id = video_id, uuid = videos[video_id].getAttribute("data-video-uuid"))
                 : (video_id = 0, uuid = videos[video_id].getAttribute("data-video-uuid"));
