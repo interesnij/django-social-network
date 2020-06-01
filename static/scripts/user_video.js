@@ -37,19 +37,6 @@ on('#ajax', 'click', '.u_video_detail', function() {
   }, 500);
 });
 
-function get_video_info(){
-  info_video = document.body.querySelector("#info_video");
-  my_playlist = document.body.querySelector("#my_playlist");
-  videos = my_playlist.querySelectorAll('li');
-  video_id = video_player.getVideoId();
-  video_id != 0 ? (video_id += 1, uuid = videos[video_id].getAttribute("data-video-uuid")) : (video_id = 1, uuid = videos[0].getAttribute("data-video-uuid"));
-  if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
-    pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
-    list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
-    info_video.setAttribute("data-uuid", uuid);
-}
-}
-
 function video_onPlay(){
     get_video_info()
     console.log("Воспроизводится ролик № : " + video_id)
