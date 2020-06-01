@@ -46,16 +46,12 @@ function get_video_info(){
   video_id = video_player.getVideoId();
   video_id != 0 ? (video_id = video_id, uuid = videos[video_id].getAttribute("data-video-uuid"))
                 : (video_id = 0, uuid = videos[video_id].getAttribute("data-video-uuid"));
-//  if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
+  if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
     pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
     list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
     console.log("Воспроизводится ролик № : " + video_id)
-    console.log("uuid ролика : " + uuid);
-    console.log(videos[video_id]);
-//}
-
-}
+  }}
 
 function video_onPlay(){
     get_video_info()
