@@ -48,6 +48,7 @@ function get_video_info(){
     list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
 }
+}
 
 function video_onPlay(){
     get_video_info()
