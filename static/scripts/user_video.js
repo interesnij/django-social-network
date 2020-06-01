@@ -37,7 +37,12 @@ on('#ajax', 'click', '.u_video_detail', function() {
   }, 500);
 });
 function video_onPlay(){
-    console.log("Воспроизводится ролик № : " + video_player.getVideoId());
+    video_id = video_player.getVideoId();
+    console.log("Воспроизводится ролик № : " + video_id);
+    my_playlist = document.body.querySelector("#my_playlist");
+    videos = my_playlist.querySelectorAll('li');
+    uuid = videos[video_id].getAttribute("data-video-uuid");
+    console.log("uuid ролитка : " + uuid);
     music_player.pause()
   }
 on('#ajax', 'click', '.u_video_list_detail', function() {
@@ -96,8 +101,6 @@ on('#ajax', 'click', '#create_video_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     album = document.body.querySelector("#id_album");
-    console.log(album.value);
-    if (album.value == ""){
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_detail");
@@ -106,7 +109,6 @@ on('#ajax', 'click', '#create_video_btn', function() {
       container = document.body.querySelector(".movies_list");
       container.prepend(elem_);
       try{container.querySelector(".video_none").style.display = "none"}catch{null};
-    }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }};
