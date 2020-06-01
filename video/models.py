@@ -73,12 +73,11 @@ class VideoAlbum(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
-    cover_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_video_directory, processors=[ResizeToFit(width=500, upscale=False)], blank=True, null=True)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
+    is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
 
     class Meta:
         indexes = (
@@ -86,19 +85,9 @@ class VideoAlbum(models.Model):
         )
         verbose_name = 'Видеоальбом'
         verbose_name_plural = 'Видеоальбомы'
-        ordering = ["-created"]
 
     def __str__(self):
         return self.title
-
-    def get_cover_photo(self):
-        if self.cover_photo:
-            return self.cover_photo
-        elif Video.objects.filter(album=self, is_deleted=False).exists():
-            video = Video.objects.filter(album=self, is_deleted=False).last()
-            return video.image
-        else:
-            return False
 
     def count_video(self):
         return self.video_album.filter(is_deleted=False).count()
@@ -127,7 +116,6 @@ class Video(models.Model):
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
     created = models.DateTimeField(default=timezone.now)
-    duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name="Описание")
     category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
     tag = models.ForeignKey(VideoTags, blank=True, null=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег")
@@ -137,8 +125,7 @@ class Video(models.Model):
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     is_child = models.BooleanField(default=True, verbose_name="Доступен детям")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    album = models.ForeignKey(VideoAlbum, related_name="video_album", blank=True, null=True, on_delete=models.CASCADE, verbose_name="Альбом")
+    album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
 

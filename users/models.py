@@ -544,7 +544,7 @@ class User(AbstractUser):
         from moderation.models import ModeratedObject
 
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
@@ -555,7 +555,7 @@ class User(AbstractUser):
         from moderation.models import ModeratedObject
 
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         count = SoundcloudParsing.objects.filter(music_query).values("pk")
@@ -566,44 +566,48 @@ class User(AbstractUser):
         from moderation.models import ModeratedObject
 
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
     def get_video_count(self):
-        from video.models import Video
+        from video.models import Video, VideoAlbum
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        video_query = Q(video_album=list, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
 
     def get_video(self):
-        from video.models import Video
+        from video.models import Video, VideoAlbum
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        video_query = Q(video_album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
     def get_my_video(self):
-        from video.models import Video
+        from video.models import Video, VideoAlbum
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        video_query = Q(video_album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
     def get_last_video(self):
-        from video.models import Video
+        from video.models import Video, VideoAlbum
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        video_query = Q(video_album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
 
     def get_music_list_id(self):
         from music.models import SoundList
 
-        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
         return list.pk
 
     def my_playlist_too(self):
