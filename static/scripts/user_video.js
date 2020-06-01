@@ -47,13 +47,6 @@ function video_onPlay(){
     console.log("uuid ролика : " + uuid);
     music_player.pause();
 
-    info_video = document.body.querySelector("#info_video");
-    if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
-      pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
-      list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
-      info_video.setAttribute("data-uuid", uuid);
-    }
-
   }
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
