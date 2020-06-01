@@ -115,7 +115,7 @@ class Video(models.Model):
                                 upload_to=upload_to_video_directory,
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
-    created = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name="Описание")
     category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
     tag = models.ForeignKey(VideoTags, blank=True, null=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег")
