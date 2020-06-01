@@ -44,7 +44,7 @@ function get_video_info(){
   my_playlist = document.body.querySelector("#my_playlist");
   videos = my_playlist.querySelectorAll('li');
   video_id = video_player.getVideoId();
-  video_id != 0 ? (video_id = video_id + 1, uuid = videos[video_id].getAttribute("data-video-uuid"))
+  video_id != 0 ? (video_id = video_id, uuid = videos[video_id].getAttribute("data-video-uuid"))
                 : (video_id = 0, uuid = videos[video_id].getAttribute("data-video-uuid"));
 //  if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
     pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
