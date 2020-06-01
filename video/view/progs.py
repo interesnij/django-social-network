@@ -36,7 +36,7 @@ class UserVideoCreate(View):
         context["form_post"] = VideoForm()
         return context
 
-    def post(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs): 
         form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 

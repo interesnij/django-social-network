@@ -82,6 +82,7 @@ class VideoAlbum(models.Model):
     class Meta:
         verbose_name = 'Видеоальбом'
         verbose_name_plural = 'Видеоальбомы'
+        ordering = ['order']
 
     def __str__(self):
         return self.title

@@ -60,7 +60,7 @@ class SoundList(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
-    #created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -75,6 +75,7 @@ class SoundList(models.Model):
     class Meta:
         verbose_name="список: весь, человека или сообщества"
         verbose_name_plural="списки: весь, человека или сообщества"
+        ordering = ['order']
 
 
 class SoundTags(models.Model):
