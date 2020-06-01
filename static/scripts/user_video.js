@@ -45,7 +45,7 @@ function get_video_info(){
   videos = my_playlist.querySelectorAll('.video_playlist_li');
   video_id = video_player.getVideoId();
   uuid = videos[video_id].getAttribute("data-video-uuid");
-//  if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
+  if (info_video.innerHTML == "" || info_video.getAttribute("data-uuid") != uuid){
     pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
     list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
