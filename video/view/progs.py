@@ -36,7 +36,7 @@ class UserVideoCreate(View):
         context["form_post"] = VideoForm()
         return context
 
-    def post(self,request,*args,**kwargs): 
+    def post(self,request,*args,**kwargs):
         form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 
@@ -48,7 +48,6 @@ class UserVideoCreate(View):
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
-            my_list.video.add(new_video)
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
             return HttpResponseBadRequest()
