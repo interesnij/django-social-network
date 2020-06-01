@@ -51,7 +51,7 @@ class UserVideoList(ListView):
         return video_list
 
 
-class UserVideoDetail(ListView):
+class UserVideoDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
