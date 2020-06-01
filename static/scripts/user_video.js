@@ -52,6 +52,7 @@ function get_video_info(){
     info_video.setAttribute("data-uuid", uuid);
     console.log("Воспроизводится ролик № : " + video_id)
     console.log("uuid ролика : " + uuid);
+    console.log(videos[video_id]);
 //}
 
 }
