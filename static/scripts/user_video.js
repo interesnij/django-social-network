@@ -50,7 +50,7 @@ function get_video_info(){
     list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
     console.log("Воспроизводится ролик № : " + video_id)
-//  }
+  }
 }
 
 function video_onPlay(){
