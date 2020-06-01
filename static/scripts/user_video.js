@@ -33,6 +33,13 @@ on('#ajax', 'click', '.u_video_detail', function() {
     console.log("video player ready");
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
+
+    info_video = document.body.querySelector("#info_video");
+    if (info_video.innerHTML == "" && info_video.getAttribute("data-uuid") != uuid){
+      pk = document.body.querySelector("#movies_container").getAttribute("data-pk");
+      list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
+      info_video.setAttribute("data-uuid", uuid);
+    }
     }
   }, 500);
 });
