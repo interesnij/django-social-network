@@ -96,6 +96,7 @@ on('#ajax', 'click', '#create_video_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     album = document.body.querySelector("#id_album");
+    console.log(album.value);
     if (album.value == ""){
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
