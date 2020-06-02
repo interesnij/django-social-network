@@ -180,7 +180,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
   $div = document.createElement("div");
   $span = document.createElement("span");
-  $span.innerHTML = '<svg tooltip="Не прикреплять" flow="up" class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   $img = document.createElement("img");
 
   $div.classList.add("col-md-6");
@@ -211,7 +211,13 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   console.log(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
-  this.parentElement.remove();
+  pk = this.nextElementSibling.getAttribute("data-pk");
+  parent = this.parentElement;
+  input_1 = parent.querySelector(".input_select_photo");
+  input_2 = parent.querySelector(".input_select_photo2");
+  if (input_1.value == pk){input_1.value == ""}
+  else if (input_2.value == pk){input_2.value == ""};
+  parent.remove();
   if (dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
   else if(dropdown.classList.contains("files_two")){
