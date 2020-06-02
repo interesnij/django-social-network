@@ -9,6 +9,16 @@ html {
   height: 100%;
 }
 
+.photo_selected{
+  position: absolute;
+    right: 20px;
+    padding: 7px;
+    background-color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    top: 10px;
+}
+
 canvas{
   -moz-user-select: none;
   -webkit-user-select: none;
