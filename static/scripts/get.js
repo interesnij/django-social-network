@@ -167,7 +167,7 @@ function is_full_dropdown(dropdown){
     document.getElementById("create_loader").innerHTML="";
   }
   if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
-    dropdown.style.display = "block";
+    dropdown.style.display = "block"}
 }
 
 on('#ajax', 'click', '.photo_load_detail', function() {
