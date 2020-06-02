@@ -166,11 +166,11 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   img_block = document.body.querySelector(".img_block");
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
-  $img.classList.add("photo_selected");
+  $img.classList.add("photo_selected", "col-md-2");
   img_block.append($img);
 });
 on('#ajax', 'click', '.photo_selected', function() {
-  this.remove
+  this.parentNode.removeChild(this)
 });
 
 
