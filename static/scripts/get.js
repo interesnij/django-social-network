@@ -190,10 +190,10 @@ on('#ajax', 'click', '.photo_load_detail', function() {
         input_2.value == pk}
     else if(input_2.value == "" && input_1.value == ""){
         input_1.value == pk}
-  if (dropdown.classList.contains(".files_null")){
-    dropdown.classList.add(".files_one"), dropdown.classList.remove(".files_null")}
-  else if(dropdown.classList.contains(".files_one")){
-    dropdown.classList.add(".files_two"), dropdown.classList.remove(".files_one")};
+  if (dropdown.classList.contains("files_null")){
+    dropdown.classList.add("files_one"), dropdown.classList.remove("files_null")}
+  else if(dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
   is_full_dropdown(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
