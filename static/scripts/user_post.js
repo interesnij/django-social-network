@@ -327,13 +327,13 @@ on('#ajax', 'click', '.u_dislike', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
 });
-on('#ajax', 'click', '.u_dislike', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
-});
 on('#ajax', 'click', '.u_like2', function() {
+  item = this.parentElement;
+  comment_pk = item.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  send_dislike(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
+});
+on('#ajax', 'click', '.u_dislike2', function() {
   item = this.parentElement;
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
