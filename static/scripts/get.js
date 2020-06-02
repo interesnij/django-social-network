@@ -213,8 +213,8 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
-  input_1 = parent.querySelector(".input_select_photo");
-  input_2 = parent.querySelector(".input_select_photo2");
+  input_1 = parent.parentElement.querySelector(".input_select_photo");
+  input_2 = parent.parentElement.querySelector(".input_select_photo2");
   if (input_1.value == pk){input_1.value == ""}
   else if (input_2.value == pk){input_2.value == ""};
   parent.remove();
