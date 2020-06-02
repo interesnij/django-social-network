@@ -1,3 +1,7 @@
+.u_photo_detail {
+  cursor:pointer
+}
+
 [tooltip] {
   position: relative; /* opinion 1 */
 }

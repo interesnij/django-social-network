@@ -176,6 +176,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   is_full_dropdown(dropdown);
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('data-pk');
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
   $div = document.createElement("div");
@@ -184,10 +185,11 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img = document.createElement("img");
 
   $div.classList.add("col-md-6");
+  $div.setAttribute("data-uuid", uuid);
   $span.classList.add("photo_selected");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
-  $img.classList.add("u_photo_detail" );
+  $img.classList.add("u_photo_detail");
   $img.src = _this.getAttribute('data-src');
   $img.style.width = "100%";
   $img.setAttribute('data-pk', pk);
@@ -217,8 +219,8 @@ on('#ajax', 'click', '.photo_selected', function() {
   if (input_1.value == pk){input_1.value == ""}
   else if (input_2.value == pk){input_2.value == ""};
   parent.remove();
-  console.log(input_1);
-  console.log(input_2);
+  console.log(input_1.value );
+  console.log(input_2.value );
   console.log(pk);
   if (dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
