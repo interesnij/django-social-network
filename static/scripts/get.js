@@ -163,14 +163,28 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('data-pk');
+
   img_block = document.body.querySelector(".img_block");
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
-  $img.classList.add("photo_selected", "col-md-2");
+  $img.className("photo_selected", "col-md-6" , pk);
   img_block.append($img);
+
+  $input = document.createElement("input");
+  $input.type = "hidden";
+  $input.value = pk;
+  $input.name = pk;
+  img_block.append($input);
+
 });
 on('#ajax', 'click', '.photo_selected', function() {
-  this.parentNode.removeChild(this)
+  _this = this;
+  _class = _this.className
+  _this.parentNode.removeChild(_this)
+  img_block = document.body.querySelector(".img_block");
+  try{img_block.querySelector(_class)
+    img_block.querySelector(_class).parentNode.removeChild(img_block.querySelector(_class))}
+    catch{ null }
 });
 
 
