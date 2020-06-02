@@ -36,41 +36,41 @@ class ItemUserCommentList(ListView):
 
 
 class ItemCommentUserCreate(View):
-	form_post = None
+    form_post = None
 
-	def post(self,request,*args,**kwargs):
-		form_post = CommentForm(request.POST, request.FILES)
-		user = User.objects.get(pk=request.POST.get('id'))
-		item_uuid = request.POST.get('item')
-		item = Item.objects.get(uuid=item_uuid)
-		if form_post.is_valid():
-			comment=form_post.save(commit=False)
-			photo=form_post.cleaned_data['photo']
-			photo2=form_post.cleaned_data['photo2']
+    def post(self,request,*args,**kwargs):
+        form_post = CommentForm(request.POST, request.FILES)
+        user = User.objects.get(pk=request.POST.get('id'))
+        item_uuid = request.POST.get('item')
+        item = Item.objects.get(uuid=item_uuid)
+        if form_post.is_valid():
+            comment=form_post.save(commit=False)
+            photo=form_post.cleaned_data['photo']
+            photo2=form_post.cleaned_data['photo2']
             select_photo=form_post.cleaned_data['select_photo']
-			select_photo2=form_post.cleaned_data['select_photo2']
+            select_photo2=form_post.cleaned_data['select_photo2']
 
-			if not comment.text and not photo and not select_photo and not select_photo2:
+            if not comment.text and not photo and not select_photo and not select_photo2:
 				raise ValidationError('Напишите текст или прикрепите что-нибудь')
-			if request.user.pk != user.pk:
-				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-				if user.is_closed_profile():
-					check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
-			new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
-			if photo:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				upload_photo = Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album)
-				upload_photo.item_comment.add(new_comment)
-			if photo2:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album)
-				upload_photo2.item_comment.add(new_comment)
+            if request.user.pk != user.pk:
+                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
+                if user.is_closed_profile():
+                    check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
+            new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
+            if photo:
+                try:
+                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+                except:
+                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+                _photo = Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album)
+                _photo.item_comment.add(new_comment)
+            if photo2:
+                try:
+                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+                except:
+                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+                _photo2 = Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album)
+                _photo2.item_comment.add(new_comment)
             if select_photo:
                 try:
                     _select_photo = Photo.objects.get(creator=request.user, file=select_photo, community=None, is_public=True)
@@ -83,10 +83,10 @@ class ItemCommentUserCreate(View):
                     _select_photo2.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Фото не найдено')
-			new_comment.notification_user_comment(request.user)
-			return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
-		else:
-			return HttpResponseBadRequest()
+            new_comment.notification_user_comment(request.user)
+            return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+        else:
+            return HttpResponseBadRequest()
 
 
 class ItemReplyUserCreate(View):
