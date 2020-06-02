@@ -180,7 +180,7 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
     span_2 = document.createElement("span");
     span_2.innerHTML = dislike_link.responseText;
     _dislike_block.innerHTML = "";
-    _dislike_block.append(span_2);
+    _dislike_block.innerHTML = span_2.innerHTM;
   }}
   dislike_link.send( null );
 }
