@@ -263,7 +263,8 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  pk = item.parentElement.getAttribute("user-pk");
+
+  pk = dociment.body.querySelector(".pk_saver").getAttribute("data-pk");
   like = item.querySelector(".u_like");
   dislike = item.querySelector(".u_dislike");
   like_block = this.nextElementSibling;
@@ -294,7 +295,7 @@ on('#ajax', 'click', '.u_like', function() {
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  pk = item.parentElement.getAttribute("user-pk");
+  pk = dociment.body.querySelector(".pk_saver").getAttribute("data-pk");
   like = item.querySelector(".u_like");
   dislike = item.querySelector(".u_dislike");
   like_block = this.previousElementSibling;
