@@ -169,7 +169,7 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
     span_1 = document.createElement("span");
     span_1.innerHTML = like_link.responseText;
     _like_block.innerHTML = "";
-    _like_block.append(span_1);
+    _like_block.innerHTML = span_1.innerHTML;
   }}
   like_link.send( null );
 
