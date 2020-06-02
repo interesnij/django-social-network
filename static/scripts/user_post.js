@@ -268,16 +268,11 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   }};
   link__.send( null );
 });
-function send_like(item, link, like, dislike){
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  like = item.querySelector(".u_like");
-  dislike = item.querySelector(".u_dislike");
-  like_block = this.nextElementSibling;
-  dislike_block = this.nextElementSibling.nextElementSibling.nextElementSibling;
 
+function send_like(item, link, like, dislike){
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
-  link__.open( 'GET', "/votes/user_like/" + uuid + "/" + pk + "/", true );
+  link__.open( 'GET', link, true );
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
@@ -297,10 +292,12 @@ function send_like(item, link, like, dislike){
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
+  like = item.querySelector(".u_like");
+  dislike = item.querySelector(".u_dislike");
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
-  send_like(item, "/votes/user_like/" + uuid + "/" + pk + "/");
+  send_like(item, "/votes/user_like/" + uuid + "/" + pk + "/", like, dislike);
   vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, dislike_block)
 });
 
