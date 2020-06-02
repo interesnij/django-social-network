@@ -166,6 +166,8 @@ function is_full_dropdown(dropdown){
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }
+  if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
+    dropdown.style.display = "block";
 }
 
 on('#ajax', 'click', '.photo_load_detail', function() {
@@ -199,12 +201,15 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 });
 on('#ajax', 'click', '.photo_selected', function() {
   _this = this;
-  _class = _this.className
-  _this.parentNode.removeChild(_this)
+  _class = _this.className;
+  _this.parentNode.removeChild(_this);
   img_block = document.body.querySelector(".img_block");
-  try{img_block.querySelector(_class)
-    img_block.querySelector(_class).parentNode.removeChild(img_block.querySelector(_class))}
-    catch{ null }
+  if (dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
+  else if(dropdown.classList.contains("files_two")){
+    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
+  console.log(document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
+  is_full_dropdown(document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
 });
 
 
