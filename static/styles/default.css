@@ -4258,8 +4258,11 @@ cursor: pointer;
 .comment_like_window,
 .dislike_window,
 .repost_window { opacity: 0; visibility: hidden; position: absolute; bottom: 25px; margin-bottom: 10px; display: flex; transition: 0.5s; }
-.like_window:hover, .dislike_window:hover, .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
-.comment_like_window:hover, .comment_dislike_window:hover { z-index: 10; opacity: 1; visibility: visible;}
+.like_window:hover,
+.comment_like_window:hover,
+.comment_dislike_window:hover,
+.dislike_window:hover,
+.repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 
 .c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
 .c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
