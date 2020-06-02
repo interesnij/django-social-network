@@ -155,27 +155,47 @@ on('#ajax', 'click', '.close_upload_block', function() {
 on('#ajax', 'click', '.select_photo', function() {
   uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute('data-id');
+  this.classList.add("current_file_dropdown");
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
 });
 
+function is_full_dropdown(dropdown){
+  if (dropdown.querySelector(".files_two")){
+    dropdown.style.display = "none";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+}
+
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('data-pk');
 
   img_block = document.body.querySelector(".img_block");
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
-  $img.classList.add("photo_selected", "col-md-6" , pk);
+
+  img_block.querySelector(".selected_img1") ? img_class = "selected_img2" : img_class = "selected_img1";
+  $img.classList.add("photo_selected", "col-md-6" , img_class);
   img_block.append($img);
 
-  $input = document.createElement("input");
-  $input.type = "hidden";
-  $input.value = pk;
-  $input.name = pk;
-  img_block.append($input);
-
+  input_1 = img_block.querySelector(".input_select_photo");
+  input_2 = img_block.querySelector(".input_select_photo2");
+    if (input_2.value != "" && input_1.value != ""){
+        is_full_dropdown(dropdown)}
+    else if(input_2.value == "" && input_1.value != ""){
+        input_2.value == pk}
+    else if(input_2.value == "" && input_1.value == ""){
+        input_1.value == pk}
+  if (dropdown.contains(".files_null")){
+    dropdown.classList.add(".files_one"), dropdown.classList.remove(".files_null")}
+  else if(dropdown.contains(".files_one")){
+    dropdown.classList.add(".files_two"), dropdown.classList.remove(".files_one")};
+  is_full_dropdown(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
   _this = this;
