@@ -185,6 +185,8 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
   $div.classList.add("col-md-6");
   $span.classList.add("photo_selected");
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
   $img.classList.add("u_photo_detail" );
   $img.src = _this.getAttribute('data-src');
   $img.style.width = "100%";
