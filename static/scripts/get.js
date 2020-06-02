@@ -208,10 +208,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   console.log(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
-  _this = this;
-  _class = _this.className;
-  _this.parentNode.parentNode.removeChild(parentNode._this);
-  img_block = document.body.querySelector(".img_block");
+  this.parentElement.remove();
   if (dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
   else if(dropdown.classList.contains("files_two")){
