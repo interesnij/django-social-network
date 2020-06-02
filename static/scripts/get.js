@@ -180,6 +180,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
   $div = document.createElement("div");
   $span = document.createElement("span");
+  $span.innerHTML = "x";
   $img = document.createElement("img");
 
   $div.classList.add("col-md-6");
