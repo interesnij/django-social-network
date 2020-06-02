@@ -74,7 +74,9 @@
         &nbsp;&nbsp;
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="btn_default drop">
-              еще
+              еще <span class="icon-circle icon-30">
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </span>
             </a>
             <div class="dropdown-menu">
                 <span class="dropdown-item video_user_remove">Удалить видео</span>
@@ -92,7 +94,7 @@
                 <span class="dropdown-item video_stat_f">Статистика записи</span>
             </div>
         </div>
-        <span title="Просмотры" style="margin-left:20rem">
+        <span title="Просмотры" style="margin-left:23rem">
           <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
             {{ object.all_visits_count }}&nbsp;&nbsp;просмотров
         </span>
