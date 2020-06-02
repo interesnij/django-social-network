@@ -47,8 +47,8 @@ class ItemUserCommentLikeWindow(TemplateView):
     template_name="item_votes/u_comment_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -101,8 +101,8 @@ class ItemUserCommentDislikeWindow(TemplateView):
     template_name="item_votes/u_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -165,8 +165,8 @@ class ItemCommunityCommentLikeWindow(TemplateView):
     template_name="item_votes/c_comment_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
         return super(ItemCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -183,8 +183,8 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
     template_name="item_votes/c_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
         return super(ItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
