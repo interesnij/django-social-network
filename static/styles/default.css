@@ -20,7 +20,7 @@ html {
   height: 25px;
   width: 25px;
 }
-.selected_close{
+.photo_selected svg{
   width: 12px;
   position: absolute;
 }
