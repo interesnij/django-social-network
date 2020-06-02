@@ -161,7 +161,7 @@ on('#ajax', 'click', '.select_photo', function() {
 });
 
 function is_full_dropdown(dropdown){
-  if (dropdown.classList.contains(".files_two")){
+  if (dropdown.classList.contains("files_two")){
     dropdown.style.display = "none";
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
