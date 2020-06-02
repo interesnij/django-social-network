@@ -189,11 +189,10 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $span.classList.add("photo_selected");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
-  $img.classList.add("u_photo_detail");
+  $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
-  $img.style.width = "100%";
   $img.setAttribute('data-pk', pk);
-  $div.append($span);
+  $div.append($span); 
   $div.append($img);
   img_block.append($div);
 
