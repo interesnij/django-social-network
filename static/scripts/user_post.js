@@ -287,7 +287,7 @@ function send_like(item, link){
     like.classList.toggle("btn_default");
     dislike.classList.add("btn_default");
     dislike.classList.remove("btn_danger");
-    vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+    vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", like.nextElementSibling, like.nextElementSibling.nextElementSibling.nextElementSibling)
   }};
   link__.send( null );
 }
