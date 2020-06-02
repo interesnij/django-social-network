@@ -349,7 +349,7 @@ on('#ajax', 'click', '.u_like2', function() {
     like.classList.add("btn_default");
     like.classList.remove("btn_success");
 
-    vote_reload("/item_window/u_comment_like_window/" + uuid + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + uuid + "/" + pk + "/", like_block, dislike_block)
+    vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", like_block, dislike_block)
 
   }};
 link__.send( null );
@@ -380,7 +380,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
     dislike.classList.add("btn_default");
     dislike.classList.remove("btn_danger");
 
-    vote_reload("/item_window/u_comment_like_window/" + uuid + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + uuid + "/" + pk + "/", like_block, dislike_block)
+    vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", like_block, dislike_block)
 
   }};
   link__.send( null );
