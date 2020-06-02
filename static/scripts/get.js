@@ -185,6 +185,9 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
   input_1 = img_block.querySelector(".input_select_photo");
   input_2 = img_block.querySelector(".input_select_photo2");
+  console.log(input_1);
+  console.log(input_2);
+  console.log(img_block);
     if (input_2.value != "" && input_1.value != ""){
         is_full_dropdown(dropdown)}
     else if(input_2.value == "" && input_1.value != ""){
