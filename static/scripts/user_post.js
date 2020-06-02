@@ -74,7 +74,12 @@ on('#ajax', 'click', '.u_itemComment', function() {
     response = new_post.querySelector(".comment");
     form.parentElement.previousElementSibling.append(response);
     form.querySelector(".img_block").innerHTML = "";
+    form.querySelector(".img_block").innerHTML = '<input type="hidden" class="input_select_photo" name="select_photo" value=""><input type="hidden" class="input_select_photo2" name="select_photo2" value="">';
     form.querySelector(".img_block").nextElementSibling.innerHTML = "";
+    form_dropdown = form.querySelector(".current_file_dropdown");
+    form_dropdown.classList.remove("current_file_dropdown");
+    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
+    form_dropdown.parentElement.parentElement.classList.add("files_null")
   }};
 
   link_.send(form_comment);
