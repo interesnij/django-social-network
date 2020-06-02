@@ -132,6 +132,9 @@ class Video(models.Model):
         verbose_name_plural="Видео-ролики"
         indexes = (BrinIndex(fields=['created']),)
 
+    def __str__(self):
+        return self.title
+
     def likes(self):
         likes = VideoVotes.objects.filter(parent=self, vote__gt=0)
         return likes
@@ -148,8 +151,10 @@ class Video(models.Model):
         dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
 
-    def __str__(self):
-        return self.title
+    def all_visits_count(self):
+        from stst.models import VideoNumbers
+
+        return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
 
 class VideoComment(models.Model):
