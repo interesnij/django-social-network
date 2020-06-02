@@ -325,48 +325,21 @@ on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
+  send_dislike(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
 });
-
+on('#ajax', 'click', '.u_dislike', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  send_dislike(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
+});
 on('#ajax', 'click', '.u_like2', function() {
   item = this.parentElement;
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-
+  send_like(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
 });
 
-
-on('#ajax', 'click', '.u_dislike2', function() {
-  item = this.parentElement;
-  comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  like = item.querySelector(".u_like2");
-  dislike = item.querySelector(".u_dislike2");
-  like_block = this.previousElementSibling;
-  dislike_block = this.nextElementSibling;
-
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.overrideMimeType("application/json");
-  link__.open( 'GET', "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/", true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    jsonResponse = JSON.parse(link__.responseText);
-    likes_count = item.querySelector(".likes_count");
-    dislikes_count = item.querySelector(".dislikes_count");
-    likes_count.innerHTML = jsonResponse.like_count;
-    dislikes_count.innerHTML = jsonResponse.dislike_count;
-    dislike.classList.toggle("btn_danger");
-    dislike.classList.toggle("btn_default");
-    like.classList.add("btn_default");
-    like.classList.remove("btn_success");
-
-    vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", like_block, dislike_block)
-
-  }};
-  link__.send( null );
-});
 
 on('#ajax', 'click', '.color_change', function() {
   var span = this;
