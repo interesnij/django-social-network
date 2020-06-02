@@ -79,7 +79,7 @@ class ItemCommentUserLikeCreate(View):
 
 class ItemUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        comment = ItemComment.objects.get(uuid=self.kwargs["uuid"])
+        comment = ItemComment.objects.get(uuid=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)

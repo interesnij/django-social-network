@@ -4275,7 +4275,7 @@ cursor: pointer;
 .u_like2:hover~.comment_like_window,
 .u_dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
 .c_like, .c_dislike, .u_like, .u_dislike, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; }
-.c_like2, .c_dislike2, .u_like2, .u_dislike2{ cursor:pointer; }
+.like, .dislike { cursor:pointer; }
 
 .card-body img{
 width: 100%
