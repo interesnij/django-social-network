@@ -10,7 +10,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
-  pk = container.parentElement.getAttribute('user-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 })
@@ -19,7 +19,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
-  pk = container.parentElement.getAttribute('user-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("article_loader");
   open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
 });
@@ -33,7 +33,7 @@ on('#ajax', 'click', '#article_add', function() {
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
@@ -41,7 +41,7 @@ on('#ajax', 'click', '.u_all_likes', function() {
 on('#ajax', 'click', '.u_all_dislikes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_dislike/" + uuid + "/" + pk + "/", loader)
@@ -49,7 +49,7 @@ on('#ajax', 'click', '.u_all_dislikes', function() {
 on('#ajax', 'click', '.u_all_reposts', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
@@ -58,7 +58,7 @@ on('#ajax', 'click', '.u_all_reposts', function() {
 on('#ajax', 'click', '.u_item_comments.comments_close', function() {
   var parent, pk, uuid, url
   parent = this.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.parentElement.getAttribute("user-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".u_item_comments");
   _this.classList.add("comments_open");
