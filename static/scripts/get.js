@@ -184,7 +184,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img = document.createElement("img");
 
   $div.classList.add("col-md-6");
-  $span.classList.add("photo_selected");
+  $span.classList.add("photo_selected", "selected_close");
   $img.classList.add("u_photo_detail" );
   $img.src = _this.getAttribute('data-src');
   $img.style.width = "100%";
