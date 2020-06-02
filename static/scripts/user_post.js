@@ -269,52 +269,6 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   link__.send( null );
 });
 
-function send_like(item, link){
-  like = item.querySelector(".like");
-  dislike = item.querySelector(".dislike");
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.overrideMimeType("application/json");
-  link__.open( 'GET', link, true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    jsonResponse = JSON.parse(link__.responseText);
-    likes_count = item.querySelector(".likes_count");
-    dislikes_count = item.querySelector(".dislikes_count");
-    likes_count.innerHTML = jsonResponse.like_count;
-    dislikes_count.innerHTML = jsonResponse.dislike_count;
-    like.classList.toggle("btn_success");
-    like.classList.toggle("btn_default");
-    dislike.classList.add("btn_default");
-    dislike.classList.remove("btn_danger");
-    vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", like.nextElementSibling, like.nextElementSibling.nextElementSibling.nextElementSibling)
-  }};
-  link__.send( null );
-}
-
-function send_dislike(item, link){
-  like = item.querySelector(".like");
-  dislike = item.querySelector(".dislike");
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.overrideMimeType("application/json");
-  link__.open( 'GET', link, true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    jsonResponse = JSON.parse(link__.responseText);
-    likes_count = item.querySelector(".likes_count");
-    dislikes_count = item.querySelector(".dislikes_count");
-    likes_count.innerHTML = jsonResponse.like_count;
-    dislikes_count.innerHTML = jsonResponse.dislike_count;
-    dislike.classList.toggle("btn_danger");
-    dislike.classList.toggle("btn_default");
-    like.classList.add("btn_default");
-    like.classList.remove("btn_success");
-    vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", dislike.previousElementSibling, dislike.nextElementSibling)
-  }};
-  link__.send( null );
-}
-
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
