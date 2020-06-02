@@ -185,18 +185,15 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
   input_1 = img_block.querySelector(".input_select_photo");
   input_2 = img_block.querySelector(".input_select_photo2");
-  console.log(input_1);
-  console.log(input_2);
-  console.log(img_block);
     if (input_2.value != "" && input_1.value != ""){
         is_full_dropdown(dropdown)}
     else if(input_2.value == "" && input_1.value != ""){
         input_2.value == pk}
     else if(input_2.value == "" && input_1.value == ""){
         input_1.value == pk}
-  if (dropdown.contains(".files_null")){
+  if (dropdown.classList.contains(".files_null")){
     dropdown.classList.add(".files_one"), dropdown.classList.remove(".files_null")}
-  else if(dropdown.contains(".files_one")){
+  else if(dropdown.classList.contains(".files_one")){
     dropdown.classList.add(".files_two"), dropdown.classList.remove(".files_one")};
   is_full_dropdown(dropdown);
 });
