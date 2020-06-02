@@ -67,9 +67,9 @@ class UserVideoDetail(TemplateView):
             except:
                 MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.user.pk, platform=1)
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.user.pk, platform=0)
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
         return super(UserVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
