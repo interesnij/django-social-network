@@ -51,7 +51,7 @@ class ItemCommentUserCreate(View):
             select_photo2=form_post.cleaned_data['select_photo2']
 
             if not comment.text and not photo and not select_photo and not select_photo2:
-				raise ValidationError('Напишите текст или прикрепите что-нибудь')
+                raise ValidationError('Напишите текст или прикрепите что-нибудь')
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
                 if user.is_closed_profile():
