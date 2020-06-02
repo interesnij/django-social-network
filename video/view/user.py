@@ -63,7 +63,7 @@ class UserVideoDetail(TemplateView):
         self.template_name = self.user.get_template_user(folder="u_video_detail/", template="video.html", request=request)
         if request.user.is_authenticated:
             try:
-                VideoNumbers.objects.get(user=request.user.pk, video=self.user.pk)
+                VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
                 MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
