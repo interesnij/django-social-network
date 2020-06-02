@@ -337,7 +337,7 @@ on('#ajax', 'click', '.u_like2', function() {
   item = this.parentElement;
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
+  send_dislike(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
 });
 
 
