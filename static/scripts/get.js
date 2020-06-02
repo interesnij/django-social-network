@@ -195,6 +195,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   else if(dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
   is_full_dropdown(dropdown);
+  console.log(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
   _this = this;
