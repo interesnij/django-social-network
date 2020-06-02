@@ -49,7 +49,7 @@ class ItemCommentUserCreate(View):
             photo=form_post.cleaned_data['photo']
             photo2=form_post.cleaned_data['photo2']
             select_photo = request.POST.get('select_photo')
-            select_photo2 = form_post.cleaned_data['select_photo2']
+            select_photo2 = request.POST.get('select_photo2')
 
             if not comment.text and not photo and not select_photo and not select_photo2:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
