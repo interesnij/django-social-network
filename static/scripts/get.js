@@ -153,9 +153,9 @@ on('#ajax', 'click', '.close_upload_block', function() {
 });
 
 on('#ajax', 'click', '.select_photo', function() {
+  this.classList.add("current_file_dropdown");
   uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute('data-id');
-  this.classList.add("current_file_dropdown");
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
 });
@@ -179,8 +179,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
 
-  img_block.querySelector(".selected_img1") ? img_class = "selected_img2" : img_class = "selected_img1";
-  $img.classList.add("photo_selected", "col-md-6" , img_class);
+  $img.classList.add("photo_selected", "col-md-6" );
   img_block.append($img);
 
   input_1 = img_block.querySelector(".input_select_photo");
