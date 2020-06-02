@@ -178,11 +178,18 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   pk = _this.getAttribute('data-pk');
 
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
+  $div = document.createElement("div");
+  $span = document.createElement("span");
   $img = document.createElement("img");
-  $img.src = _this.getAttribute('data-src');
 
-  $img.classList.add("photo_selected", "col-md-6" );
-  img_block.append($img);
+  $div.classList.add("col-md-6");
+  $span.classList.add("photo_selected");
+  $img.classList.add("u_photo_detail" );
+  $img.src = _this.getAttribute('data-src');
+  $img.setAttribute('data-pk', pk);
+  $div.append($span);
+  $div.append($img);
+  img_block.append($div);
 
   input_1 = img_block.querySelector(".input_select_photo");
   input_2 = img_block.querySelector(".input_select_photo2");
@@ -202,7 +209,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 on('#ajax', 'click', '.photo_selected', function() {
   _this = this;
   _class = _this.className;
-  _this.parentNode.removeChild(_this);
+  _this.parentNode.parentNode.removeChild(parentNode._this);
   img_block = document.body.querySelector(".img_block");
   if (dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
