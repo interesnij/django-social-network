@@ -83,11 +83,12 @@ on('#ajax', 'click', '#holder_article_image', function() {
   get_image_priview(this, img)
 });
 on('#ajax', 'click', '.comment_photo1', function() {
-  img = this.previousElementSibling.querySelector(".file1")
+  img = this.previousElementSibling.querySelector(".file1");
+  console.log(img);
   get_image_priview(this, img)
 });
 on('#ajax', 'click', '.comment_photo2', function() {
-  img = this.previousElementSibling.querySelector(".file2")
+  img = this.previousElementSibling.querySelector(".file2");
   get_image_priview(this, img)
 });
 
