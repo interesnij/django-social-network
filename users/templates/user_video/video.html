@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load liked_user get_key %}
+{% load liked_user %}
 {% block title %}Видеоролики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 
 {% block content %}
@@ -18,7 +18,10 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Видеоролики {{ user.first_name|gent }} {{ user.last_name|gent }}
+                      <h5 class="mt-1">Видеоролики 
+                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                            {{ user.first_name|gent }} {{ user.last_name|gent }}
+                        </a>
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_video_count }}</small>
                       </h5>
                   </div>
@@ -26,7 +29,7 @@
               </div>
               <div class="card-body">
 
-                <div class="video_playlist" id="movies_container" data-pk="">
+                <div class="video_playlist pk_saver" id="movies_container" data-pk="{{ user.pk }}">
                   <div class="row">
                       {% for object in object_list %}
                       <div class="col-sm-12 col-md-6 col-lg-4 u_video_detail" style="cursor:pointer" data-pk="{{ object.pk }}">
