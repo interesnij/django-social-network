@@ -798,7 +798,6 @@ class User(AbstractUser):
 
     def get_template_user(self, folder, template, request):
         import re
-        from stst.models import UserNumbers
 
         if self.pk == request.user.pk:
             if not request.user.is_phone_verified:
@@ -825,11 +824,6 @@ class User(AbstractUser):
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
-            if request.user.is_authenticated:
-                UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=1)
-        else:
-            if request.user.is_authenticated:
-                UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=0)
         return template_name
 
     def get_template_list_user(self, folder, template, request):

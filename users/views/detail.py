@@ -130,15 +130,24 @@ class ProfileUserView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        import re
+        from stst.models import UserNumbers
+
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.communities=self.user.get_pop_communities()
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
+        
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if request.user.is_authenticated and request.user.pk != self.user.pk:
+            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=1)
+            else:
+                UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=0)
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['communities'] = self.communities
+        context['communities'] = self.user.get_pop_communities()
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context
