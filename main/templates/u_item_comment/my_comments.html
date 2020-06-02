@@ -5,7 +5,7 @@
     {% include 'u_item_comment/my_parent.html' with comment=comment  %}
     {% endfor %}
 </span>
-
+<div>
   <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="row img_block" style="margin:10px">
@@ -42,3 +42,4 @@
           </div>
       </div>
   </form>
+</div>
