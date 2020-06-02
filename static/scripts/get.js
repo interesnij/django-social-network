@@ -167,7 +167,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   img_block = document.body.querySelector(".img_block");
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
-  $img.className("photo_selected", "col-md-6" , pk);
+  $img.classList.add("photo_selected", "col-md-6" , pk);
   img_block.append($img);
 
   $input = document.createElement("input");
