@@ -208,7 +208,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   else if(dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
   is_full_dropdown(dropdown);
-  console.log(dropdown);
 });
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
@@ -218,6 +217,9 @@ on('#ajax', 'click', '.photo_selected', function() {
   if (input_1.value == pk){input_1.value == ""}
   else if (input_2.value == pk){input_2.value == ""};
   parent.remove();
+  console.log(input_1);
+  console.log(input_2);
+  console.log(pk);
   if (dropdown.classList.contains("files_one")){
     dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
   else if(dropdown.classList.contains("files_two")){
