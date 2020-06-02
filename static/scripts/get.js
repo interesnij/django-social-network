@@ -189,9 +189,9 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     if (input_2.value != "" && input_1.value != ""){
         is_full_dropdown(dropdown)}
     else if(input_2.value == "" && input_1.value != ""){
-        input_2.value == pk}
+        input_2.value = pk}
     else if(input_2.value == "" && input_1.value == ""){
-        input_1.value == pk}
+        input_1.value = pk}
   if (dropdown.classList.contains("files_null")){
     dropdown.classList.add("files_one"), dropdown.classList.remove("files_null")}
   else if(dropdown.classList.contains("files_one")){
