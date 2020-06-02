@@ -175,7 +175,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('data-pk');
 
-  img_block = document.body.querySelector(".img_block");
+  img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
   $img = document.createElement("img");
   $img.src = _this.getAttribute('data-src');
 
