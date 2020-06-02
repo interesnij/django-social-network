@@ -4264,8 +4264,16 @@ cursor: pointer;
 .dislike_window:hover,
 .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
+.c_like:hover~.like_window,
+.c_dislike:hover~.dislike_window,
+.c_repost:hover~.repost_window,
+.u_like:hover~.like_window,
+.u_dislike:hover~.dislike_window,
+.u_repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
+.c_like2:hover~.comment_like_window,
+.c_dislike2:hover~.comment_dislike_window,
+.u_like2:hover~.comment_like_window,
+.u_dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
 .c_like, .c_dislike, .u_like, .u_dislike, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; }
 .c_like2, .c_dislike2, .u_like2, .u_dislike2{ cursor:pointer; }
 
