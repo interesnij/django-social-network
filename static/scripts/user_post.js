@@ -82,6 +82,14 @@ on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
   get_image_priview(this, img)
 });
+on('#ajax', 'click', '.comment_photo1', function() {
+  img = this.previousElementSibling.querySelector("#id_item_comment_photo")
+  get_image_priview(this, img)
+});
+on('#ajax', 'click', '.comment_photo2', function() {
+  img = this.previousElementSibling.querySelector("#id_item_comment_photo2")
+  get_image_priview(this, img)
+});
 
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
