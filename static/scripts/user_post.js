@@ -298,7 +298,7 @@ on('#ajax', 'click', '.u_like', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   send_like(item, "/votes/user_like/" + uuid + "/" + pk + "/", like, dislike);
-  vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, dislike_block)
+  vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 
 on('#ajax', 'click', '.u_dislike', function() {
