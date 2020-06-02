@@ -187,6 +187,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $span.classList.add("photo_selected");
   $img.classList.add("u_photo_detail" );
   $img.src = _this.getAttribute('data-src');
+  $img.style.width = "100%";
   $img.setAttribute('data-pk', pk);
   $div.append($span);
   $div.append($img);
