@@ -268,12 +268,7 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   }};
   link__.send( null );
 });
-
-
-on('#ajax', 'click', '.u_like', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-
+function send_like(item, link, like, dislike){
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   like = item.querySelector(".u_like");
   dislike = item.querySelector(".u_dislike");
@@ -296,10 +291,17 @@ on('#ajax', 'click', '.u_like', function() {
     dislike.classList.add("btn_default");
     dislike.classList.remove("btn_danger");
 
-    vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", like_block, dislike_block)
-
   }};
   link__.send( null );
+}
+
+on('#ajax', 'click', '.u_like', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+
+  send_like(item, "/votes/user_like/" + uuid + "/" + pk + "/");
+  vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, dislike_block)
 });
 
 on('#ajax', 'click', '.u_dislike', function() {

@@ -157,7 +157,7 @@ on('#ajax', 'click', '.select_photo', function() {
   var uuid, loader;
   uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute('data-id');
-  loader = document.getElementById("good_loader");
+  loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
 });
 
