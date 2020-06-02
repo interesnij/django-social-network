@@ -4253,8 +4253,8 @@ cursor: pointer;
   width: 100px;height: 100px;
 }
 
-.like_window, .dislike_window, .repost_window { opacity: 0; visibility: hidden; position: absolute; bottom: 25px; margin-bottom: 10px; display: flex; transition: 0.5s; }
-.comment_like_window, .comment_dislike_window { opacity: 0; visibility: hidden; position: absolute; margin-bottom: 10px; display: flex; transition: 0.5s; }
+.like_window, .comment_dislike_window, .dislike_window, .repost_window { opacity: 0; visibility: hidden; position: absolute; bottom: 25px; margin-bottom: 10px; display: flex; transition: 0.5s; }
+.comment_like_window { opacity: 0; visibility: hidden; position: absolute; margin-bottom: 10px; display: flex; transition: 0.5s; }
 .like_window:hover, .dislike_window:hover, .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 .comment_like_window:hover, .comment_dislike_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 

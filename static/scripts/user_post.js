@@ -3,7 +3,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#form_post");
   lenta_load = form_post.parentElement.nextElementSibling;
-  pk = this.getAttribute("user-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/add_post/" + pk + "/", true );
@@ -37,7 +37,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
 });
 
 on('#ajax', 'click', '#article_post', function() {
-  pk = this.getAttribute("user-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#user_article_form");
   CKEDITOR.instances.id_content.updateElement();
