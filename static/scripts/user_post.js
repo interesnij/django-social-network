@@ -332,7 +332,6 @@ on('#ajax', 'click', '.u_dislike', function() {
   }};
   link__.send( null );
 });
-
 on('#ajax', 'click', '.u_like2', function() {
   item = this.parentElement;
   comment_pk = item.getAttribute("data-pk");
@@ -353,10 +352,10 @@ on('#ajax', 'click', '.u_like2', function() {
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
-    dislike.classList.toggle("btn_danger");
-    dislike.classList.toggle("btn_default");
-    like.classList.add("btn_default");
-    like.classList.remove("btn_success");
+    like.classList.toggle("btn_success");
+    like.classList.toggle("btn_default");
+    dislike.classList.add("btn_default");
+    dislike.classList.remove("btn_danger");
 
     vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", like_block, dislike_block)
 
@@ -384,10 +383,10 @@ on('#ajax', 'click', '.u_dislike2', function() {
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
-    like.classList.toggle("btn_success");
-    like.classList.toggle("btn_default");
-    dislike.classList.add("btn_default");
-    dislike.classList.remove("btn_danger");
+    dislike.classList.toggle("btn_danger");
+    dislike.classList.toggle("btn_default");
+    like.classList.add("btn_default");
+    like.classList.remove("btn_success");
 
     vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", like_block, dislike_block)
 
