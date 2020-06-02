@@ -47,8 +47,8 @@ class ItemCommentUserCreate(View):
             comment=form_post.save(commit=False)
             photo=form_post.cleaned_data['photo']
             photo2=form_post.cleaned_data['photo2']
-            select_photo=form_post.cleaned_data['select_photo']
-            select_photo2=form_post.cleaned_data['select_photo2']
+            select_photo=form_post.request.POST.get['select_photo']
+            select_photo2=form_post.request.POST.get['select_photo2']
 
             if not comment.text and not photo and not select_photo and not select_photo2:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
@@ -73,13 +73,13 @@ class ItemCommentUserCreate(View):
                 _photo2.item_comment.add(new_comment)
             if select_photo:
                 try:
-                    _select_photo = Photo.objects.get(creator=request.user, file=select_photo, community=None, is_public=True)
+                    _select_photo = Photo.objects.get(pk=select_photo, is_public=True)
                     _select_photo.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Фото не найдено')
             if select_photo2:
                 try:
-                    _select_photo2 = Photo.objects.get(creator=request.user, file=select_photo2, community=None, is_public=True)
+                    _select_photo2 = Photo.objects.get(pk=select_photo, is_public=True)
                     _select_photo2.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Фото не найдено')
