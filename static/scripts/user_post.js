@@ -72,7 +72,9 @@ on('#ajax', 'click', '.u_itemComment', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
-    form.parentElement.previousElementSibling.append(response)
+    form.parentElement.previousElementSibling.append(response);
+    form.querySelector(".img_block").innerHTML = "";
+    form.querySelector(".img_block").nextElementSibling.innerHTML = "";
   }};
 
   link_.send(form_comment);
