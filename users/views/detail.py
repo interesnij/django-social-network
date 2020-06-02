@@ -136,8 +136,8 @@ class ProfileUserView(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if request.user.is_authenticated and request.user.pk != self.user.pk:
+            MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
             if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                 UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
             else:
