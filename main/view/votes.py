@@ -45,7 +45,7 @@ class ItemUserLikeCreate(View):
 
 class ItemCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = ItemComment.objects.get(uuid=self.kwargs["uuid"])
+        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -113,7 +113,7 @@ class ItemUserDislikeCreate(View):
 
 class ItemCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        comment = ItemComment.objects.get(uuid=self.kwargs["uuid"])
+        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -208,7 +208,7 @@ class ItemCommunityDislikeCreate(View):
 
 class ItemCommentCommunityLikeCreate(View):
     def post(self, request, **kwargs):
-        comment = ItemComment.objects.get(uuid=self.kwargs["uuid"])
+        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
@@ -239,7 +239,7 @@ class ItemCommentCommunityLikeCreate(View):
 
 class ItemCommentCommunityDislikeCreate(View):
     def post(self, request, **kwargs):
-        comment = ItemComment.objects.get(uuid=self.kwargs["uuid"])
+        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:

@@ -326,7 +326,7 @@ on('#ajax', 'click', '.u_dislike', function() {
 
 on('#ajax', 'click', '.u_like2', function() {
   item = this.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   like = item.querySelector(".u_like2");
   dislike = item.querySelector(".u_dislike2");
@@ -335,7 +335,7 @@ on('#ajax', 'click', '.u_like2', function() {
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
-  link__.open( 'GET', "/votes/user_comment/" + uuid + "/" + pk + "/like/", true );
+  link__.open( 'GET', "/votes/user_comment/" + comment_pk + "/" + pk + "/like/", true );
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
@@ -357,7 +357,7 @@ link__.send( null );
 
 on('#ajax', 'click', '.u_dislike2', function() {
   item = this.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   like = item.querySelector(".u_like2");
   dislike = item.querySelector(".u_dislike2");
@@ -366,7 +366,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
-  link__.open( 'GET', "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", true );
+  link__.open( 'GET', "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/", true );
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
