@@ -58,12 +58,12 @@ on('#ajax', 'click', '.u_all_reposts', function() {
 on('#ajax', 'click', '.u_item_comments.comments_close', function() {
   var parent, pk, uuid, url
 
-  try{
+  //try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("current_file_dropdown");
-  }} catch { null }
-  
+  //}} catch { null }
+
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
