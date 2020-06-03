@@ -175,6 +175,7 @@ function remove_file_dropdown(dropdown){
 }
 
 on('#ajax', 'click', '.upload_photo', function() {
+  this.classList.add("current_file_dropdown");
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
