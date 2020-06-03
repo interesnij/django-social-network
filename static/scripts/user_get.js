@@ -62,7 +62,9 @@ on('#ajax', 'click', '.u_item_comments.comments_close', function() {
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("current_file_dropdown");
-  //}} catch { null }
+    console.log(dropdowns[i])
+  }
+//} catch { null }
 
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
