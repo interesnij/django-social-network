@@ -71,9 +71,9 @@ class CommunityDetail(TemplateView):
 		if request.user.is_authenticated:
 			MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 			if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-				CommunityNumbers.objects.create(user=request.user.pk, community=community.pk, platform=1)
+				CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
 			else:
-				CommunityNumbers.objects.create(user=request.user.pk, community=community.pk, platform=0)
+				CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
 		return super(CommunityDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

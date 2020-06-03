@@ -80,7 +80,7 @@ class ItemCommentUserCreate(View):
                     raise ValidationError('Фото не найдено')
             if select_photo2:
                 try:
-                    _select_photo2 = Photo.objects.get(pk=select_photo, is_public=True)
+                    _select_photo2 = Photo.objects.get(pk=select_photo2, is_public=True)
                     _select_photo2.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Фото не найдено')
