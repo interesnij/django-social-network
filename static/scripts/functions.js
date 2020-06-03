@@ -690,6 +690,9 @@ function music_onReady(){console.log("Аудио плеер готов");}
         extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
       if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg")
       {if (typeof FileReader != "undefined") {
+        if (ggg){
+
+        }
         ggg.innerHTML = "";
         reader = new FileReader();
         reader.onload = function(e) {
@@ -697,6 +700,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
           $img.id = "targetImageCrop";
           $img.src = e.target.result;
           $img.class = "thumb-image";
+          ggg.innerHTML = '<a href="#" style="display:none;position: absolute;right:15px;" class="delete_thumb">Удалить</a>'
           ggg.append($img);
 
           };
