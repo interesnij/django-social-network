@@ -178,7 +178,7 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
     remove_file_dropdown();
     is_full_dropdown();
   }
-  this.parentElement.remove();
+  this.parentElement.parentElement.remove();
 })
 
 on('#ajax', 'click', '.photo_load_detail', function() {
