@@ -284,7 +284,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   $img.classList.add("image_fit");
-  $img.src = _this.getAttribute('data-src');
+  $img.src = _this.querySelector(".lazyload").getAttribute('data-src');
   $div.append($span);
   $div.append($input);
   $div.append($img);
