@@ -192,7 +192,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
   $img.setAttribute('data-pk', pk);
-  $div.append($span); 
+  $div.append($span);
   $div.append($img);
   img_block.append($div);
 

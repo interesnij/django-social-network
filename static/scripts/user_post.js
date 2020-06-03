@@ -112,13 +112,20 @@ on('#ajax', 'click', '.u_replyComment', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
     form.parentElement.style.display = "none";
-    upload_block.innerHTML = "";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
     reply_stream.append(response);
     reply_stream.classList.add("replies_open");
+
+    form.querySelector(".img_block").innerHTML = "";
+    form.querySelector(".img_block").innerHTML = '<input type="hidden" class="input_select_photo" name="select_photo" value=""><input type="hidden" class="input_select_photo2" name="select_photo2" value="">';
+    form.querySelector(".img_block").nextElementSibling.innerHTML = "";
+    form_dropdown = form.querySelector(".current_file_dropdown");
+    form_dropdown.classList.remove("current_file_dropdown");
+    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
+    form_dropdown.parentElement.parentElement.classList.add("files_null")
   }};
 
   link_.send(form_comment);
@@ -138,12 +145,19 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
     form.parentElement.style.display = "none";
-    upload_block.innerHTML = "";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
     reply_stream.append(response);
+
+    form.querySelector(".img_block").innerHTML = "";
+    form.querySelector(".img_block").innerHTML = '<input type="hidden" class="input_select_photo" name="select_photo" value=""><input type="hidden" class="input_select_photo2" name="select_photo2" value="">';
+    form.querySelector(".img_block").nextElementSibling.innerHTML = "";
+    form_dropdown = form.querySelector(".current_file_dropdown");
+    form_dropdown.classList.remove("current_file_dropdown");
+    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
+    form_dropdown.parentElement.parentElement.classList.add("files_null")
   }};
 
   link_.send(form_comment);
