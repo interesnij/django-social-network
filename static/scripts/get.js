@@ -192,7 +192,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
-    else if (img_block.querySelector(".select_photo1"){
+    else if (img_block.querySelector(".select_photo1")){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
         $input = '<input type="hidden" name="select_photo2" value="">';
