@@ -201,7 +201,7 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
     remove_file_dropdown(dropdown);
     is_full_dropdown(dropdown);
   }
-  this.parentElement.delete();
+  this.parentElement.remove();
 })
 
 on('#ajax', 'click', '.photo_load_detail', function() {
