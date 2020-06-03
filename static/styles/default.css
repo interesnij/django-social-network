@@ -4321,16 +4321,7 @@ position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;
 .manage_window_fullscreen_hide{
 cursor: pointer;float: right;
 }
-.comment_photo1,.comment_photo2{
-  border: 2px dashed #FF0000;
-  color: rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  text-align: center;
-  margin: 20px;
-  cursor:pointer;
-  width: 85%;
-  min-width: 85%;
-}
+
 .comment_photo1 img, .comment_photo2 img{
 width: 85%;
 height: auto;

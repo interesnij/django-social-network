@@ -702,7 +702,6 @@ function music_onReady(){console.log("Аудио плеер готов");}
           $img.class = "thumb-image";
           ggg.innerHTML = '<a href="#" style="position: absolute;right:15px;top: 0;" class="delete_thumb">Удалить</a>'
           ggg.append($img);
-
           };
           reader.readAsDataURL(img.files[0]);
         }

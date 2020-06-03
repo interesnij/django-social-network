@@ -188,9 +188,9 @@ on('#ajax', 'click', '.upload_photo', function() {
   if (img_block.querySelector(".comment_photo2")){
     $div.innerHTML = ''
   } else if (img_block.querySelector(".comment_photo1")){
-    $div.innerHTML = '<div class="comment_photo2"><input class="file2 hide_image" name="photo2" accept="image/*" id="id_item_comment_photo2"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div>'
+    $div.innerHTML = '<div class="comment_photo2"><input class="file2 hide_image" type="file" name="photo2" accept="image/*" id="id_item_comment_photo2"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div>'
   } else{
-    $div.innerHTML = '<div class="comment_photo1"><input class="file1 hide_image" name="photo" accept="image/*" id="id_item_comment_photo"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div>'
+    $div.innerHTML = '<div class="comment_photo1"><input class="file1 hide_image" type="file" name="photo" accept="image/*" id="id_item_comment_photo"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div>'
   }
   img_block.append($div);
   add_file_dropdown()
