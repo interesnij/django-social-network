@@ -189,12 +189,24 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
-  $div = document.createElement("div");
+
+    if (img_block.querySelector(".select_photo2")){
+        is_full_dropdown()}
+    else if(img_block.querySelector(".select_photo1"){
+        $div = document.createElement("div");
+        $div.classList.add("col-md-6", "select_photo2");
+        $input = '<input type="hidden" name="select_photo2" value="">'
+      }
+    else if(input_2.value == "" && input_1.value == ""){
+        $div = document.createElement("div", "select_photo1");
+        $div.classList.add("col-md-6", "select_photo1");
+        $input = '<input type="hidden" name="select_photo" value="">'
+      }
+
   $span = document.createElement("span");
   $span.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   $img = document.createElement("img");
 
-  $div.classList.add("col-md-6");
   $div.setAttribute("data-uuid", uuid);
   $span.classList.add("photo_selected");
   $span.setAttribute("tooltip", "Не прикреплять");
@@ -203,17 +215,9 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img.src = _this.getAttribute('data-src');
   $img.setAttribute('data-pk', pk);
   $div.append($span);
+  $div.append($input);
   $div.append($img);
   img_block.append($div);
-
-  input_1 = img_block.querySelector(".input_select_photo");
-  input_2 = img_block.querySelector(".input_select_photo2");
-    if (input_2.value != "" && input_1.value != ""){
-        is_full_dropdown(dropdown)}
-    else if(input_2.value == "" && input_1.value != ""){
-        input_2.value = pk}
-    else if(input_2.value == "" && input_1.value == ""){
-        input_1.value = pk}
 
   add_file_dropdown()
   is_full_dropdown();
