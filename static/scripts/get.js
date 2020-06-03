@@ -201,7 +201,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else {
         $div = document.createElement("div", "select_photo1");
         $div.classList.add("col-md-6", "select_photo1");
-        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
+        $input.innerHTML = '<input type="hidden" name="select_photo" value="' + pk + '">';
       }
 
   $span = document.createElement("span");
