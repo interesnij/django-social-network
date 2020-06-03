@@ -3,7 +3,9 @@
   object-fit: cover;
   height: 200px;
 }
-
+.files_null{
+  display: block;
+}
 .u_photo_detail {
   cursor:pointer
 }
