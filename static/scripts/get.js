@@ -192,14 +192,14 @@ on('#ajax', 'click', '.upload_photo', function() {
   is_full_dropdown(dropdown);
 });
 
-on('#ajax', 'click', '.delete_thumb', function() {
-  this.preventDefault();
+on('#ajax', 'click', '.delete_thumb', function(e) {
+  e.preventDefault();
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  if this.parentElement.querySelector("img"){
+  if e.parentElement.querySelector("img"){
     remove_file_dropdown(dropdown);
     is_full_dropdown(dropdown);
   }
-  this.parentElement.delete();
+  e.parentElement.delete();
 })
 
 on('#ajax', 'click', '.photo_load_detail', function() {
