@@ -180,7 +180,7 @@ function remove_file_dropdown(){
 on('#ajax', 'click', '.upload_photo', function() {
   this.classList.add("current_file_dropdown");
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown(dropdown);
+  is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
   $div = document.createElement("div");
   $div.classList.add("col-md-6");
