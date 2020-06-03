@@ -10,7 +10,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from gallery.models import Album, Photo
 from video.models import Video
-from music.models import SoundcloudParsingAdmin
+from music.models import SoundcloudParsing
 
 
 class ItemUserCommentList(ListView):
