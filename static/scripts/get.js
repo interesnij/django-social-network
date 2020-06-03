@@ -196,12 +196,12 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else if (img_block.querySelector(".select_photo1")){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
-        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + 'pk">';
+        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
       }
     else {
         $div = document.createElement("div", "select_photo1");
         $div.classList.add("col-md-6", "select_photo1");
-        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + 'pk">';
+        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
       }
 
   $span = document.createElement("span");
