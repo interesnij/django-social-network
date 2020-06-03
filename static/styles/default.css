@@ -4399,7 +4399,13 @@ cursor: pointer;
 .article_fullscreen_hide,
 .good_fullscreen_hide,
 .stat_fullscreen_hide,
-.votes_fullscreen_hide {cursor: pointer;float: right;}
+.votes_fullscreen_hide {
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+  margin: 10px;
+  top: 30px;
+}
 
 .prev_item, .prev_photo { position: absolute; right: -10%; top: 160px; cursor: pointer; }
 .next_item, .next_photo { position: absolute; left: -10%; top: 160px; cursor: pointer; }
