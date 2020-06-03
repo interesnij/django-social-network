@@ -188,7 +188,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   pk = _this.getAttribute('data-pk');
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
-  img_block = dropdown.parentElement.previousElementSibling; 
+  img_block = dropdown.parentElement.previousElementSibling;
 
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
@@ -228,10 +228,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
-  input_1 = parent.parentElement.querySelector(".input_select_photo");
-  input_2 = parent.parentElement.querySelector(".input_select_photo2");
-  if (input_1.value == pk){input_1.value = ""}
-  else if (input_2.value == pk){input_2.value = ""};
   parent.remove();
 
   remove_file_dropdown(dropdown);
