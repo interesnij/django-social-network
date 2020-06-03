@@ -93,13 +93,13 @@ on('#ajax', 'click', '#holder_article_image', function() {
 on('#ajax', 'click', '.comment_photo1', function() {
   img = this.querySelector("#id_item_comment_photo");
   get_image_priview(this, img);
-  add_file_dropdown();
+  //add_file_dropdown();
   is_full_dropdown();
 });
 on('#ajax', 'click', '.comment_photo2', function() {
   img = this.querySelector("#id_item_comment_photo2");
   get_image_priview(this, img);
-  add_file_dropdown();
+  //add_file_dropdown();
   is_full_dropdown();
 });
 

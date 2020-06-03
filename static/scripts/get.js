@@ -151,32 +151,6 @@ on('#ajax', 'click', '.select_photo', function() {
   open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
 });
 
-function is_full_dropdown(){
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  if (dropdown.classList.contains("files_two")){
-    dropdown.style.display = "none";
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
-  }
-  if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
-    dropdown.style.display = "block"}
-}
-function add_file_dropdown(){
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  if (dropdown.classList.contains("files_null")){
-    dropdown.classList.add("files_one"),
-    dropdown.classList.remove("files_null")}
-  else if(dropdown.classList.contains("files_one")){
-    dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
-}
-function remove_file_dropdown(){
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  if (dropdown.classList.contains("files_one")){
-    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
-  else if(dropdown.classList.contains("files_two")){
-    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
-}
-
 on('#ajax', 'click', '.upload_photo', function() {
   this.classList.add("current_file_dropdown");
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
