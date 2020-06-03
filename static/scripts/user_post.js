@@ -88,21 +88,23 @@ on('#ajax', 'click', '.u_itemComment', function() {
 on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
   get_image_priview(this, img);
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  add_file_dropdown(dropdown);
-  is_full_dropdown(dropdown);
+
 });
 on('#ajax', 'click', '.comment_photo1', function() {
-  img = this.parentElement.querySelector(".file1");
-  console.log(img);
+  img = this.querySelector(".file1");
+  this.querySelector(".delete_thumb").style.display = "block";
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   add_file_dropdown(dropdown);
   is_full_dropdown(dropdown);
 });
 on('#ajax', 'click', '.comment_photo2', function() {
-  img = this.parentElement.querySelector(".file2");
+  img = this.querySelector(".file2");
+  this.querySelector(".delete_thumb").style.display = "block";
   get_image_priview(this, img);
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  add_file_dropdown(dropdown);
+  is_full_dropdown(dropdown);
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
