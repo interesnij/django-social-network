@@ -192,12 +192,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
       comment_photo1.parentElement.remove();
     }
   }
-  if (img_block.querySelector(".comment_photo1")){
-    comment_photo1 = img_block.querySelector(".comment_photo1");
-    if (!comment_photo1.querySelector("img")){
-      comment_photo1.parentElement.remove();
-    }
-  }
   if (img_block.querySelector(".comment_photo2")){
     comment_photo2 = img_block.querySelector(".comment_photo2");
     if (!comment_photo2.querySelector("img")){
