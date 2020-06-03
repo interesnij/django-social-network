@@ -192,13 +192,13 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
-    else if(img_block.querySelector(".select_photo1"){
+    else if (img_block.querySelector(".select_photo1"){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
         $input = '<input type="hidden" name="select_photo2" value="">';
         $input.value = pk
       }
-    else if(input_2.value == "" && input_1.value == ""){
+    else {
         $div = document.createElement("div", "select_photo1");
         $div.classList.add("col-md-6", "select_photo1");
         $input = '<input type="hidden" name="select_photo" value="">';
