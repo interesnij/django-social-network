@@ -126,6 +126,8 @@ class Video(models.Model):
     album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
+    item = models.ManyToManyField("main.Item", blank=True, related_name='item_photo')
+    item_comment = models.ManyToManyField("main.ItemComment", blank=True, related_name='comment_photo')
 
     class Meta:
         verbose_name="Видео-ролики"
