@@ -1,41 +1,5 @@
 {% load humanize liked_user thumbnail %}
-<style>
-  .video-banner-icon-play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
 
-  display: block;
-  width: 2.5em;
-  height: 2.5em;
-
-  -webkit-transform: translateX(-50%) translateY(-50%) scale(1.0);
-	-moz-transform: translateX(-50%) translateY(-50%) scale(1.0);
-	-ms-transform: translateX(-50%) translateY(-50%) scale(1.0);
-	-o-transform: translateX(-50%) translateY(-50%) scale(1.0);
-	transform: translateX(-50%) translateY(-50%) scale(1.0);
-
-  -webkit-transition:
-		all 0.2s ease-out 0.05s;
-	transition:
-		all 0.2s ease-out 0.05s;
-}
-@media (min-width: 641px) {
-  .video-banner-icon-play {
-    width: 4.5em;
-    height: 4.5em;
-  }
-}
-.video-banner-icon-play:hover {
-  -webkit-transform: translateX(-50%) translateY(-50%) scale(1.2);
-	-moz-transform: translateX(-50%) translateY(-50%) scale(1.2);
-	-ms-transform: translateX(-50%) translateY(-50%) scale(1.2);
-	-o-transform: translateX(-50%) translateY(-50%) scale(1.2);
-	transform: translateX(-50%) translateY(-50%) scale(1.2);
-
-  backgound: #330099;
-}
-</style>
 <div class="media comment">
     <figure>
         {% if comment.commenter.get_avatar %}
@@ -58,10 +22,10 @@
           </div>
           {% endfor %}
           {% for object in comment.comment_video.all %}
-          <div class="col-md-6 u_video_detail" data-counter="{{ forloop.counter0 }}">
+          <div class="col-md-6">
               <img class="comment_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.image.url }}" alt="video">
-              <svg class="svg_s_info video-banner-icon-play" fill="currentColor" viewBox="0 0 24 24">
-                <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+              <svg data-counter="{{ forloop.counter0 }}" class="svg_s_info video_icon_play u_video_detail" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none"/><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
               </svg>
           </div>
           {% endfor %}

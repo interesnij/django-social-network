@@ -1,3 +1,37 @@
+.video_icon_play {
+position: absolute;
+left: 50%;
+top: 50%;
+cursor:pointer;
+display: block;
+width: 2.5em;
+height: 2.5em;
+
+-webkit-transform: translateX(-50%) translateY(-50%) scale(1.0);
+-moz-transform: translateX(-50%) translateY(-50%) scale(1.0);
+-ms-transform: translateX(-50%) translateY(-50%) scale(1.0);
+-o-transform: translateX(-50%) translateY(-50%) scale(1.0);
+transform: translateX(-50%) translateY(-50%) scale(1.0);
+
+-webkit-transition:
+  all 0.2s ease-out 0.05s;
+transition:
+  all 0.2s ease-out 0.05s;
+}
+@media (min-width: 641px) {
+.video_icon_play {
+  width: 4.5em;
+  height: 4.5em;
+}
+}
+.video_icon_play:hover {
+-webkit-transform: translateX(-50%) translateY(-50%) scale(1.2);
+-moz-transform: translateX(-50%) translateY(-50%) scale(1.2);
+-ms-transform: translateX(-50%) translateY(-50%) scale(1.2);
+-o-transform: translateX(-50%) translateY(-50%) scale(1.2);
+transform: translateX(-50%) translateY(-50%) scale(1.2);
+}
+
 .image_fit{
   object-fit: cover;
   height: 200px;
