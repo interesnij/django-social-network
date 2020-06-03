@@ -190,20 +190,18 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
   img_block = dropdown.parentElement.previousElementSibling;
-
+    $input = document.createElement("span");
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
-        $input = '<input type="hidden" name="select_photo2" value="">';
-        $input.value = pk
+        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + 'pk">';
       }
     else {
         $div = document.createElement("div", "select_photo1");
         $div.classList.add("col-md-6", "select_photo1");
-        $input = '<input type="hidden" name="select_photo" value="">';
-        $input.value = pk
+        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + 'pk">';
       }
 
   $span = document.createElement("span");
