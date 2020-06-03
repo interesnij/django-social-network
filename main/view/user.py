@@ -9,6 +9,8 @@ from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from gallery.models import Album, Photo
+from video.models import Video
+from music.models import SoundcloudParsingAdmin
 
 
 class ItemUserCommentList(ListView):
@@ -50,6 +52,8 @@ class ItemCommentUserCreate(View):
             photo2=form_post.cleaned_data['photo2']
             select_photo = request.POST.get('select_photo')
             select_photo2 = request.POST.get('select_photo2')
+            select_video = request.POST.get('select_video')
+            select_video2 = request.POST.get('select_video2')
 
             if not comment.text and not photo and not select_photo and not select_photo2:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
@@ -84,6 +88,18 @@ class ItemCommentUserCreate(View):
                     _select_photo2.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Фото не найдено')
+            if select_video:
+                try:
+                    _select_video = Video.objects.get(pk=select_video, is_public=True)
+                    _select_video.item_comment.add(new_comment)
+                except:
+                    raise ValidationError('Видео не найдено')
+            if select_video2:
+                try:
+                    _select_video2 = Video.objects.get(pk=select_video2, is_public=True)
+                    _select_video2.item_comment.add(new_comment)
+                except:
+                    raise ValidationError('Видео не найдено')
             new_comment.notification_user_comment(request.user)
             return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
