@@ -4,7 +4,7 @@
   height: 200px;
 }
 .files_null{
-  display: block;
+  display: block !important;
 }
 .u_photo_detail {
   cursor:pointer
