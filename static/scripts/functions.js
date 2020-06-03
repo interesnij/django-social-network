@@ -731,7 +731,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
           ggg.append($img);
           };
           reader.readAsDataURL(img.files[0]);
-          try{add_file_dropdown()}catch{ null };
+          try{add_file_dropdown(); is_full_dropdown()}catch{ null };
         }
       } else { this.value = null; }
     } entrou = true;
