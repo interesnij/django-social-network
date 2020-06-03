@@ -195,12 +195,14 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else if(img_block.querySelector(".select_photo1"){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
-        $input = '<input type="hidden" name="select_photo2" value="">'
+        $input = '<input type="hidden" name="select_photo2" value="">';
+        $input.value = pk
       }
     else if(input_2.value == "" && input_1.value == ""){
         $div = document.createElement("div", "select_photo1");
         $div.classList.add("col-md-6", "select_photo1");
-        $input = '<input type="hidden" name="select_photo" value="">'
+        $input = '<input type="hidden" name="select_photo" value="">';
+        $input.value = pk
       }
 
   $span = document.createElement("span");
