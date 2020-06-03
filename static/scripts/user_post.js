@@ -94,15 +94,15 @@ on('#ajax', 'click', '.comment_photo1', function() {
   img = this.querySelector("#id_item_comment_photo");
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  add_file_dropdown(dropdown);
-  is_full_dropdown(dropdown);
+  add_file_dropdown();
+  is_full_dropdown();
 });
 on('#ajax', 'click', '.comment_photo2', function() {
   img = this.querySelector("#id_item_comment_photo2");
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  add_file_dropdown(dropdown);
-  is_full_dropdown(dropdown);
+  add_file_dropdown();
+  is_full_dropdown();
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
