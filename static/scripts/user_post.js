@@ -91,7 +91,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 });
 on('#ajax', 'click', '.comment_photo1', function() {
-  img = this.querySelector(".file");
+  img = this.querySelector(".file1");
   this.querySelector(".delete_thumb").style.display = "block";
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
