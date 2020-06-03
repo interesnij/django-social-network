@@ -120,8 +120,6 @@ on('#ajax', 'click', '.u_replyComment', function() {
     reply_stream.classList.add("replies_open");
 
     form.querySelector(".img_block").innerHTML = "";
-    form.querySelector(".img_block").innerHTML = '<input type="hidden" class="input_select_photo" name="select_photo" value=""><input type="hidden" class="input_select_photo2" name="select_photo2" value="">';
-    form.querySelector(".img_block").nextElementSibling.innerHTML = "";
     form_dropdown = form.querySelector(".current_file_dropdown");
     form_dropdown.classList.remove("current_file_dropdown");
     form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
@@ -152,8 +150,6 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
     reply_stream.append(response);
 
     form.querySelector(".img_block").innerHTML = "";
-    form.querySelector(".img_block").innerHTML = '<input type="hidden" class="input_select_photo" name="select_photo" value=""><input type="hidden" class="input_select_photo2" name="select_photo2" value="">';
-    form.querySelector(".img_block").nextElementSibling.innerHTML = "";
     form_dropdown = form.querySelector(".current_file_dropdown");
     form_dropdown.classList.remove("current_file_dropdown");
     form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");

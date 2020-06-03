@@ -185,11 +185,24 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
+  img_block = dropdown.parentElement.previousElementSibling;
+  if (img_block.querySelector(".comment_photo1")){
+    comment_photo1 = img_block.querySelector(".comment_photo1");
+    if (!comment_photo1.querySelector("img")){
+      comment_photo1.parentElement.remove();
+    }
+  }
+  if (img_block.querySelector(".comment_photo2")){
+    comment_photo2 = img_block.querySelector(".comment_photo2");
+    if (!comment_photo2.querySelector("img")){
+      comment_photo2.parentElement.remove();
+    }
+  }
+
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('data-pk');
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
-  img_block = dropdown.parentElement.previousElementSibling;
     $input = document.createElement("span");
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
