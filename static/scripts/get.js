@@ -155,9 +155,10 @@ on('#ajax', 'click', '.upload_photo', function() {
   this.classList.add("current_file_dropdown");
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown();
-  img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
+  img_block = dropdown.parentElement.previousElementSibling;
   $div = document.createElement("div");
   $div.classList.add("col-md-6");
+  console.log(img_block);
 
   if (img_block.querySelector(".comment_photo2")){
     $div.innerHTML = ''
