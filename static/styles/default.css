@@ -4404,7 +4404,7 @@ cursor: pointer;
   position: absolute;
   right: 40px;
   margin: 10px;
-  top: 30px;
+  top: 40px;
 }
 
 .prev_item, .prev_photo { position: absolute; right: -10%; top: 160px; cursor: pointer; }

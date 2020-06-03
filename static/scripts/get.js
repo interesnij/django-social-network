@@ -142,15 +142,6 @@ on('#ajax', 'click', '.comment_image', function() {
   open_fullscreen("/gallery/load/comment/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.upload_photo', function() {
-  img_block = this.parentElement.parentElement.parentElement.previousElementSibling;
-  if (img_block != null){img_block.innerHTML = ""};
-  img_block.innerHTML = '<span class="close_upload_block" title="Закрыть панель загрузки фото"><svg fill="currentColor" style="width:15px;margin-top: 20px" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><div class="col-lg-6 col-md-6"><a href="#" style="display:none" class="delete_thumb1">Удалить</a><input class="file1 hide_image" type="file" name="photo" accept="image/*" id="id_item_comment_photo"><div class="comment_photo1"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div></div><div class="col-lg-6 col-md-6"><a href="#" style="display:none" class="delete_thumb1">Удалить</a><input class="file2 hide_image" type="file" name="photo2" accept="image/*" id="id_item_comment_photo2"><div class="comment_photo2"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24">+<path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div></div>'
-});
-
-on('#ajax', 'click', '.close_upload_block', function() {
-  this.parentElement.innerHTML = ""
-});
 
 on('#ajax', 'click', '.select_photo', function() {
   this.classList.add("current_file_dropdown");
@@ -169,6 +160,63 @@ function is_full_dropdown(dropdown){
   if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
     dropdown.style.display = "block"}
 }
+function add_file_dropdown(dropdown){
+  if (dropdown.classList.contains("files_null")){
+    dropdown.classList.add("files_one"),
+    dropdown.classList.remove("files_null")}
+  else if(dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
+}
+function remove_file_dropdown(dropdown){
+  if (dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
+  else if(dropdown.classList.contains("files_two")){
+    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
+}
+
+on('#ajax', 'click', '.upload_photo', function() {
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
+  img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
+  $div = document.createElement("div");
+  $div.classList.add("col-md-6");
+
+  if (img_block.querySelector(".comment_photo2")){
+    $div.innerHTML = ''
+  } else if (img_block.querySelector(".comment_photo1")){
+    $div.innerHTML = '<div class="comment_photo2">
+      <input class="file2 hide_image" type="file" name="photo2" accept="image/*" id="id_item_comment_photo2">
+      <a href="#" style="display:none;position: absolute;15px;" class="delete_thumb">Удалить</a>
+      <h4 class="svg_default">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        </svg>
+      </h4>
+    </div>'
+  } else{
+    $div.innerHTML = '<div class="comment_photo">
+      <input class="file2 hide_image" type="file" name="photo" accept="image/*" id="id_item_comment_photo">
+      <a href="#" style="display:none;position: absolute;15px;" class="delete_thumb">Удалить</a>
+      <h4 class="svg_default">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        </svg>
+      </h4>
+    </div>'
+  }
+  add_file_dropdown(dropdown)
+  is_full_dropdown(dropdown);
+});
+
+on('#ajax', 'click', '.delete_thumb', function() {
+  this.preventDefault();
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  if this.parentElement.querySelector("img"){
+    remove_file_dropdown(dropdown);
+    is_full_dropdown(dropdown);
+  }
+  this.parentElement.delete();
+})
 
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
@@ -205,13 +253,10 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else if(input_2.value == "" && input_1.value == ""){
         input_1.value = pk}
 
-    if (dropdown.classList.contains("files_null")){
-      dropdown.classList.add("files_one"),
-      dropdown.classList.remove("files_null")}
-    else if(dropdown.classList.contains("files_one")){
-      dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
+  add_file_dropdown(dropdown)
   is_full_dropdown(dropdown);
 });
+
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
@@ -220,14 +265,8 @@ on('#ajax', 'click', '.photo_selected', function() {
   if (input_1.value == pk){input_1.value = ""}
   else if (input_2.value == pk){input_2.value = ""};
   parent.remove();
-  console.log(input_1.value );
-  console.log(input_2.value );
-  console.log(pk);
-  if (dropdown.classList.contains("files_one")){
-    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
-  else if(dropdown.classList.contains("files_two")){
-    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
-  console.log(document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
+
+  remove_file_dropdown(dropdown);
   is_full_dropdown(document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
 });
 
