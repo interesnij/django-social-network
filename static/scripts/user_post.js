@@ -92,7 +92,6 @@ on('#ajax', 'click', '#holder_article_image', function() {
 });
 on('#ajax', 'click', '.comment_photo1', function() {
   img = this.querySelector("#id_item_comment_photo");
-  this.querySelector(".delete_thumb").style.display = "block";
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   add_file_dropdown(dropdown);
@@ -100,7 +99,6 @@ on('#ajax', 'click', '.comment_photo1', function() {
 });
 on('#ajax', 'click', '.comment_photo2', function() {
   img = this.querySelector("#id_item_comment_photo2");
-  this.querySelector(".delete_thumb").style.display = "block";
   get_image_priview(this, img);
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   add_file_dropdown(dropdown);

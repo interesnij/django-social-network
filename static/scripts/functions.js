@@ -700,7 +700,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
           $img.id = "targetImageCrop";
           $img.src = e.target.result;
           $img.class = "thumb-image";
-          ggg.innerHTML = '<a href="#" style="display:none;position: absolute;right:15px;" class="delete_thumb">Удалить</a>'
+          ggg.innerHTML = '<a href="#" style="position: absolute;right:15px;" class="delete_thumb">Удалить</a>'
           ggg.append($img);
 
           };
