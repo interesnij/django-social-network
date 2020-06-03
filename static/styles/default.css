@@ -1,7 +1,10 @@
 .image_fit{
-  width: 100%;
   object-fit: cover;
   height: 200px;
+}
+.image_fit_small{
+  object-fit: cover;
+  height: 120px;
 }
 .files_null{
   display: block !important;

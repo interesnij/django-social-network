@@ -18,12 +18,12 @@
         <div class="row" style="padding-bottom: 10px;">
           {% for object in comment.comment_photo.all %}
           <div class="col-lg-6 col-md-6">
-              <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image image_fit" style="cursor:pointer" src="{{ object.file.url }}" alt="img">
+              <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image image_fit_small" style="cursor:pointer" src="{{ object.file.url }}" alt="img">
           </div>
           {% endfor %}
           {% for object in comment.comment_video.all %}
           <div class="col-md-6 u_video_detail" data-counter="{{ forloop.counter0 }}">
-              <img class="comment_image image_fit" style="cursor:pointer" src="{{ object.image.url }}" alt="video">
+              <img class="comment_image image_fit_small" style="cursor:pointer" src="{{ object.image.url }}" alt="video">
           </div>
           {% endfor %}
         </div>
