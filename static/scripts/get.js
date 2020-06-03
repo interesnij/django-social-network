@@ -188,7 +188,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   pk = _this.getAttribute('data-pk');
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
-  img_block = dropdown.parentElement.previousElementSibling.previousElementSibling;
+  img_block = dropdown.parentElement.previousElementSibling; 
 
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
