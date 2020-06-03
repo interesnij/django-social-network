@@ -21,7 +21,7 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
 on('#ajax', 'click', '.u_video_detail', function() {
   counter = this.getAttribute('data-counter');
   parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
+  pk = document.querySelector(".pk_saver").getAttribute('data-pk'); 
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/basic_list/" + pk + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
