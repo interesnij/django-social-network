@@ -239,7 +239,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   parent.remove();
 
   remove_file_dropdown(dropdown);
