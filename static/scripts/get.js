@@ -241,6 +241,59 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   is_full_dropdown();
 });
 
+on('#ajax', 'click', '.video_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
+  img_block = dropdown.parentElement.previousElementSibling;
+  if (img_block.querySelector(".comment_photo1")){
+    comment_photo1 = img_block.querySelector(".comment_photo1");
+    if (!comment_photo1.querySelector("img")){
+      comment_photo1.parentElement.remove();
+    }
+  }
+  if (img_block.querySelector(".comment_photo2")){
+    comment_photo2 = img_block.querySelector(".comment_photo2");
+    if (!comment_photo2.querySelector("img")){
+      comment_photo2.parentElement.remove();
+    }
+  }
+
+  _this.classList.add("video_load_toggle");
+  pk = _this.getAttribute('data-pk');
+
+    $input = document.createElement("span");
+    if (img_block.querySelector(".select_video2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_video1")){
+        $div = document.createElement("div");
+        $div.classList.add("col-md-6", "select_video2");
+        $input.innerHTML = '<input type="hidden" name="select_video2" value="' + pk + '">';
+      }
+    else {
+        $div = document.createElement("div", "select_video1");
+        $div.classList.add("col-md-6", "select_video1");
+        $input.innerHTML = '<input type="hidden" name="select_video" value="' + pk + '">';
+      }
+
+  $span = document.createElement("span");
+  $span.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $img = document.createElement("img");
+
+  $span.classList.add("photo_selected");
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  $img.classList.add("image_fit");
+  $img.src = _this.getAttribute('data-src');
+  $div.append($span);
+  $div.append($input);
+  $div.append($img);
+  img_block.append($div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+});
+
 on('#ajax', 'click', '.photo_selected', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
