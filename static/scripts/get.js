@@ -145,11 +145,15 @@ on('#ajax', 'click', '.comment_image', function() {
 
 on('#ajax', 'click', '.select_photo', function() {
   this.classList.add("current_file_dropdown");
-  uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute('data-id');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
+  open_fullscreen('/users/load/img_load/', loader)
 });
+on('#ajax', 'click', '.select_video', function() {
+  this.classList.add("current_file_dropdown");
+  loader = document.getElementById("create_loader");
+  open_fullscreen('/users/load/video_load/', loader)
+});
+
 
 on('#ajax', 'click', '.upload_photo', function() {
   this.classList.add("current_file_dropdown");

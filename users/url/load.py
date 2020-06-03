@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    url(r'^profile_stat/(?P<pk>\d+)/$', ProfileStatReload.as_view(), name='profile_stat_reload'),
-    url(r'^(?P<pk>\d+)/profile_reload/$', ProfileReload.as_view(), name='profile_reload'),
-    url(r'^img_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserImagesLoad.as_view())),
+    url(r'^img_load/$', login_required(UserImagesList.as_view())),
+    url(r'^video_load/$', login_required(UserVideoList.as_view())),
 ]
