@@ -11,8 +11,7 @@ def get_comment_attach(comment,
                         select_photo2,
                         select_video,
                         select_video2,
-                        select_music,
-                        select_music2):
+                        select_music, select_music2):
     if photo:
         try:
             album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
