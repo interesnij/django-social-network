@@ -261,7 +261,7 @@ class ItemComment(models.Model):
             raise ValidationError('Напишите текст или прикрепите что-нибудь')
 
         comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
-        get_comment_attach(photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2)
+        get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
