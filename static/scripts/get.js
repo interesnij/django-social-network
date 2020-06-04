@@ -360,7 +360,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
   $figure.append($img);
 
   $media.innerHTML = media_body.innerHTML;
-  $media.style.marginRight = "10px";
+  $media.style.marginLeft = "10px";
   h6 = $media.querySelector("h6");
   h6.classList.add("music_list_item");
 

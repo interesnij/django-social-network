@@ -100,6 +100,18 @@ class ItemCommentUserCreate(View):
                     _select_video2.item_comment.add(new_comment)
                 except:
                     raise ValidationError('Видео не найдено')
+            if select_music:
+                try:
+                    _select_music = SoundcloudParsing.objects.get(pk=select_music)
+                    _select_music.item_comment.add(new_comment)
+                except:
+                    raise ValidationError('Аудиозапись не найдена')
+            if select_music2:
+                try:
+                    _select_music2 = SoundcloudParsing.objects.get(pk=select_music2)
+                    _select_music2.item_comment.add(new_comment)
+                except:
+                    raise ValidationError('Аудиозапись не найдена')
             new_comment.notification_user_comment(request.user)
             return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
