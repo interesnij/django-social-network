@@ -42,10 +42,9 @@ class ItemCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk=request.POST.get('pk'))
-        item_uuid = request.POST.get('uuid')
+        user = User.objects.get(uuid=request.POST.get('user_uuid'))
+        item = Item.objects.get(pk = request.POST.get('item_pk'))
 
-        item = Item.objects.get(uuid=item_uuid)
         if form_post.is_valid():
             comment=form_post.save(commit=False)
             photo=form_post.cleaned_data['photo']
@@ -122,9 +121,9 @@ class ItemCommentUserCreate(View):
 
 class ItemReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post=CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk = request.POST.get('pk'))
-        parent = ItemComment.objects.get(uuid = request.POST.get('uuid'))
+        form_post = CommentForm(request.POST, request.FILES)
+        user = User.objects.get(uuid=request.POST.get('user_uuid'))
+        parent = ItemComment.objects.get(pk=request.POST.get('comment_pk'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
