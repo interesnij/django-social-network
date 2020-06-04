@@ -338,7 +338,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
       }
     else {
         $div = document.createElement("div", "select_music1");
-        $div.classList.add("col-md-6", "select_video1");
+        $div.classList.add("col-md-12", "select_video1");
         $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
       }
 
@@ -353,7 +353,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
   $span.setAttribute("flow", "up");
 
   $img.src = _this.querySelector("img").getAttribute('data-src');
-  $figure = '<figure>' + $img + '</figure>';
+  $figure.append($img);
 
   $media.innerHTML = media_body.innerHTML;
 
