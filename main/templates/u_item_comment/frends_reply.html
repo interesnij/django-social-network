@@ -34,14 +34,11 @@
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
                             <div class="row img_block" style="margin:10px"></div>
-                            <div class="row upload_block" style="margin:10px"></div>
 
                             <div class="row no-gutters" style="margin-top: 20px;">
                               {% include 'u_item_comment/form_dropdown.html' %}
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 105%;">
-                                      <input type="hidden" name="uuid" value="{{ user.uuid }}">
-                                      <input type="hidden" name="pk" value="{{ comment.pk }}">
 
                                       <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                                       <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyParentComment" type="button">
