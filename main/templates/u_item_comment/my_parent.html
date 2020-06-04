@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
                     {% include 'u_item_comment/info.html' %}
-                    <div class="border-top" style="margin-top:10px;display:none">
+                    <div style="margin-top:10px;display:none">
                         <form action="" method="post" class="comment_form replyComment_form">
                             {% csrf_token %}
 
