@@ -353,7 +353,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
   $span.setAttribute("flow", "up");
 
   $img.src = _this.querySelector("img").getAttribute('data-src');
-  $div.style.width = "65px";
+  $img.style.width = "50px";
   $figure.append($img);
 
   $media.innerHTML = media_body.innerHTML;
