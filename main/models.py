@@ -12,8 +12,10 @@ from django.db.models import Count
 from common.model.votes import ItemVotes, ItemCommentVotes
 from imagekit.models import ProcessedImageField
 from pilkit.processors import ResizeToFit, ResizeToFill
-from ckeditor_uploader.fields import RichTextUploadingField
 from rest_framework.exceptions import ValidationError
+from gallery.models import Album, Photo
+from video.models import Video
+from music.models import SoundcloudParsing
 
 
 class Item(models.Model):
@@ -243,8 +245,62 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
-    def create_comment(cls, commenter, item=None, parent_comment=None, text=None, created=None ):
+    def create_comment(cls, commenter, item, parent_comment, text, created, photo, photo2, select_photo, select_photo, select_video, select_video2, select_music, select_music):
+        if not comment.text and not photo and not select_photo and not select_video and not select_music:
+            raise ValidationError('Напишите текст или прикрепите что-нибудь')
+
         comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text)
+        if photo:
+            try:
+                album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
+            except:
+                album=Album.objects.create(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
+            _photo = Photo.objects.create(creator=commenter, file=photo,community=None,is_public=True, album=album)
+            _photo.item_comment.add(new_comment)
+        if photo2:
+            try:
+                album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
+            except:
+                album=Album.objects.create(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
+            _photo2 = Photo.objects.create(creator=commenter, file=photo2,community=None,is_public=True, album=album)
+            _photo2.item_comment.add(new_comment)
+        if select_photo:
+            try:
+                _select_photo = Photo.objects.get(pk=select_photo, is_public=True)
+                _select_photo.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Фото не найдено')
+        if select_photo2:
+            try:
+                _select_photo2 = Photo.objects.get(pk=select_photo2, is_public=True)
+                _select_photo2.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Фото не найдено')
+        if select_video:
+            try:
+                _select_video = Video.objects.get(pk=select_video, is_public=True)
+                _select_video.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Видео не найдено')
+        if select_video2:
+            try:
+                _select_video2 = Video.objects.get(pk=select_video2, is_public=True)
+                _select_video2.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Видео не найдено')
+        if select_music:
+            try:
+                _select_music = SoundcloudParsing.objects.get(pk=select_music)
+                _select_music.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Аудиозапись не найдена')
+        if select_music2:
+            try:
+                _select_music2 = SoundcloudParsing.objects.get(pk=select_music2)
+                _select_music2.item_comment.add(new_comment)
+            except:
+                raise ValidationError('Аудиозапись не найдена')
+
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
