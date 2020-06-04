@@ -12,18 +12,10 @@
         <h5 class="mt-0"><span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
             <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
         </h5>
-        {% if reply.comment_photo %}
+
         <p style="padding-bottom:10px;">{{ reply.text|safe }}</p>
-        <div class="row" style="padding-bottom:10px;">
-          {% for object in reply.comment_photo.all %}
-          <div class="col-lg-6 col-md-6">
-              <img data-uuid="{{ object.uuid }}" data-id="{{ reply.commenter.pk }}" class="comment_image" style="width:100%;object-fit:cover;height:200px;cursor:pointer" src="{{ object.file.url }}" alt="">
-          </div>
-          {% endfor %}
-        </div>
-        {% else %}
-        <p>{{ reply.text|safe }}</p>
-        {% endif %}
+        
+        {% include 'generic/comment_attach.html' %}
 
         <div class="">
             <div class="row">

@@ -14,15 +14,7 @@
         </h5>
         <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
-        {% if comment.comment_photo.all %}
-        <div class="row" style="padding-bottom: 10px;">
-          {% for object in comment.comment_photo.all %}
-          <div class="col-lg-6 col-md-6">
-              <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image" style="width:100%;object-fit:cover;height:200px;cursor:pointer" src="{{ object.file.url }}" alt="">
-          </div>
-          {% endfor %}
-        </div>
-        {% endif %}
+        {% include 'generic/comment_attach.html' %}
 
         <div class="">
             <div class="row">
