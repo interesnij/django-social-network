@@ -342,7 +342,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
         $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
       }
   $div.style.display = "flex";
-  $div.style.margin = "10px";
+  $div.style.margin = "5px";
   $div.setAttribute('data-counter', counter);
 
   $span = document.createElement("span");
@@ -361,6 +361,8 @@ on('#ajax', 'click', '.music_load_detail', function() {
   $figure.append($img);
 
   $media.innerHTML = media_body.innerHTML;
+  h6 = $media.querySelector("h6");
+  h6.classList.add("music_list_item");
 
   $div.append($span);
   $div.append($input);
