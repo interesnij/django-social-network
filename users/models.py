@@ -422,6 +422,16 @@ class User(AbstractUser):
         items = Item.objects.filter(posts_query)
         return items
 
+    def get_articles(self):
+        from article.models import Article
+        from moderation.models import ModeratedObject
+
+        articles_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        exclude_reported_and_approved_articles_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        articles_query.add(exclude_reported_and_approved_articles_query, Q.AND)
+        articles = Article.objects.filter(articles_query)
+        return articles
+
     def get_photos(self):
         from gallery.models import Photo
         from moderation.models import ModeratedObject

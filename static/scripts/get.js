@@ -153,6 +153,11 @@ on('#ajax', 'click', '.select_video', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/video_load/', loader)
 });
+on('#ajax', 'click', '.select_music', function() {
+  this.classList.add("current_file_dropdown");
+  loader = document.getElementById("create_loader");
+  open_fullscreen('/users/load/music_load/', loader)
+});
 
 
 on('#ajax', 'click', '.upload_photo', function() {
