@@ -43,7 +43,7 @@ class ItemCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
         user = Community.objects.get(pk=request.POST.get('id'))
-		item = Item.objects.get(uuid=request.POST.get('item'))
+        item = Item.objects.get(uuid=request.POST.get('item'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
