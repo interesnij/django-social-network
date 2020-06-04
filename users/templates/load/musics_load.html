@@ -2,7 +2,7 @@
 {% for object in object_list %}
   <div class="col-md-8 mx-auto">
     <div class="media music_load_detail mb-2" style="cursor:pointer" data-pk="{{ object.pk }}" data-counter="{{ forloop.counter0 }}">
-        <figure>
+        <figure style="cursor:pointer">
             {% if object.artwork_url %}
               <img style="width:50px;heigth:auto" class="lazyload" data-src="{{ object.artwork_url }}" />
             {% else %}
