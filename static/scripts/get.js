@@ -341,7 +341,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
         $div.classList.add("col-md-12", "select_video1");
         $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
       }
-
+  $div.style.display = "flex";
   $span = document.createElement("span");
   $img = document.createElement("img");
   $media = document.createElement("div");
