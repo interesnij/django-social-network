@@ -32,7 +32,8 @@
                     <div style="margin-top:10px;display:none">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
-
+                            <input type="hidden" name="uuid" value="{{ user.uuid }}">
+                            <input type="hidden" name="pk" value="{{ comment.pk }}">
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters" style="margin-top: 20px;">

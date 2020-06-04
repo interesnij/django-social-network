@@ -33,6 +33,9 @@
                     <div style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
+                            <input type="hidden" name="uuid" value="{{ user.uuid }}">
+                            <input type="hidden" name="pk" value="{{ comment.pk }}">
+                            
                             <div class="row img_block" style="margin:10px"></div>
                             <div class="row no-gutters" style="margin-top: 20px;">
                               {% include 'u_item_comment/info.html' %}
