@@ -42,7 +42,7 @@ class ItemCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = Community.objects.get(pk=request.POST.get('id'))
+        user = User.objects.get(pk=request.POST.get('id'))
         item = Item.objects.get(uuid=request.POST.get('item'))
 
         if form_post.is_valid():
@@ -122,7 +122,7 @@ class ItemCommentUserCreate(View):
 class ItemReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = Community.objects.get(uuid=request.POST.get('uuid'))
+        user = User.objects.get(uuid=request.POST.get('uuid'))
         parent = ItemComment.objects.get(pk=request.POST.get('pk'))
 
         if form_post.is_valid():
