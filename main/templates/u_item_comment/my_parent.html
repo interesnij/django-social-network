@@ -14,7 +14,7 @@
         </h5>
         <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
-        {% include 'generic/comment_attach.html' %} 
+        {% include 'generic/comment_attach.html' %}
 
         <div class="">
             <div class="row">
@@ -27,7 +27,7 @@
                             <input type="hidden" name="pk" value="{{ comment.pk }}">
                             <div class="row img_block"></div>
 
-                            <div class="row no-gutters" style="margin-top: 0;">
+                            <div class="row no-gutters" style="margin-top: 20;">
                               {% include 'u_item_comment/form_dropdown.html' %}
 
                                 <div class="col">
