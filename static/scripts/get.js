@@ -267,12 +267,12 @@ on('#ajax', 'click', '.video_load_detail', function() {
         is_full_dropdown()}
     else if (img_block.querySelector(".select_video1")){
         $div = document.createElement("div");
-        $div.classList.add("col", "select_video2");
+        $div.classList.add("col-md-6", "select_video2");
         $input.innerHTML = '<input type="hidden" name="select_video2" value="' + pk + '">';
       }
     else {
         $div = document.createElement("div", "select_video1");
-        $div.classList.add("col", "select_video1");
+        $div.classList.add("col-md-6", "select_video1");
         $input.innerHTML = '<input type="hidden" name="select_video" value="' + pk + '">';
       }
 
