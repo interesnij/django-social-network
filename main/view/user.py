@@ -57,7 +57,7 @@ class ItemCommentUserCreate(View):
             select_music = request.POST.get('select_music')
             select_music2 = request.POST.get('select_music2')
 
-            if not comment.text and not photo and not select_photo and not select_videoand not select_audio:
+            if not comment.text and not photo and not select_photo and not select_videoand and not select_audio:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
