@@ -13,7 +13,6 @@ from common.model.votes import ItemVotes, ItemCommentVotes
 from imagekit.models import ProcessedImageField
 from pilkit.processors import ResizeToFit, ResizeToFill
 from rest_framework.exceptions import ValidationError
-from gallery.models import Album, Photo
 from video.models import Video
 from music.models import SoundcloudParsing
 
@@ -246,6 +245,7 @@ class ItemComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, item, parent_comment, text, created, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2):
+        from gallery.models import Album, Photo
         if not comment.text and not photo and not select_photo and not select_video and not select_music:
             raise ValidationError('Напишите текст или прикрепите что-нибудь')
 
