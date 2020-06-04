@@ -20,7 +20,7 @@
           <div class="col-lg-6 col-md-6">
               <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
           </div>
-          {% endfor %}
+          {% endfor %} 
           {% for object in comment.comment_video.all %}
           <div class="col-md-6">
               <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="video">

@@ -250,7 +250,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
     comment_photo1 = img_block.querySelector(".comment_photo1");
     if (!comment_photo1.querySelector("img")){
       comment_photo1.parentElement.remove();
-    }  
+    }
   }
   if (img_block.querySelector(".comment_photo2")){
     comment_photo2 = img_block.querySelector(".comment_photo2");
@@ -279,15 +279,20 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $span = document.createElement("span");
   $span.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   $img = document.createElement("img");
+  $icon_div = document.createElement("div");
 
   $span.classList.add("photo_selected");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   $img.classList.add("image_fit");
   $img.src = _this.getAttribute('data-src');
+  $icon_div.classList.add("video_icon_play_v2", "u_video_detail");
+  $icon_div.setAttribute("data-counter", _this.getAttribute('data-counter'));
+
   $div.append($span);
   $div.append($input);
   $div.append($img);
+  $div.append($icon_div);
   img_block.append($div);
 
   add_file_dropdown()
