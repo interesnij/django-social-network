@@ -249,7 +249,7 @@ class ItemComment(models.Model):
         if not comment.text and not photo and not select_photo and not select_video and not select_music:
             raise ValidationError('Напишите текст или прикрепите что-нибудь')
 
-        comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text)
+        comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
         if photo:
             try:
                 album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
