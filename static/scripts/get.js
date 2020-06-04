@@ -226,7 +226,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $img = document.createElement("img");
 
   $div.setAttribute("data-uuid", uuid);
-  $span.classList.add("photo_selected");
+  $span.classList.add("item_preview_delete");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   $img.classList.add("u_photo_detail", "image_fit");
@@ -281,7 +281,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $img = document.createElement("img");
   $icon_div = document.createElement("div");
 
-  $span.classList.add("photo_selected");
+  $span.classList.add("item_preview_delete");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   $img.classList.add("image_fit");
@@ -299,7 +299,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   is_full_dropdown();
 });
 
-on('#ajax', 'click', '.photo_selected', function() {
+on('#ajax', 'click', '.item_preview_delete', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
   parent.remove();

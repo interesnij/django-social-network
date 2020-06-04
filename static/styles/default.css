@@ -225,7 +225,7 @@ html {
   height: 100%;
 }
 
-.photo_selected{
+.item_preview_delete{
   position: absolute;
   right: 20px;
   padding: 6px;
@@ -237,7 +237,7 @@ html {
   width: 25px;
   border: 1px grey solid;
 }
-.photo_selected svg{
+.item_preview_delete svg{
   width: 12px;
   position: absolute;
   color: grey;
