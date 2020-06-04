@@ -42,8 +42,8 @@ class ItemCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk=request.POST.get('id'))
-        item_uuid = request.POST.get('item')
+        user = User.objects.get(pk=request.POST.get('pk'))
+        item_uuid = request.POST.get('uuid')
 
         item = Item.objects.get(uuid=item_uuid)
         if form_post.is_valid():
@@ -57,7 +57,7 @@ class ItemCommentUserCreate(View):
             select_music = request.POST.get('select_music')
             select_music2 = request.POST.get('select_music2')
 
-            if not comment.text and not photo and not select_photo and not select_video:
+            if not comment.text and not photo and not select_photo and not select_videoand not select_audio:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
