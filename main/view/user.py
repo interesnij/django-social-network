@@ -76,7 +76,7 @@ class ItemReplyUserCreate(View):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
-            new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text,
+            new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, item=None, text=comment.text,
                                                 photo=form_post.cleaned_data['photo'], photo2=form_post.cleaned_data['photo2'],
                                                 select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
                                                 select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
