@@ -261,7 +261,7 @@
                   {% for object in user.get_last_video %}
                     <div style="position:relative">
                       <img class="lazyload image_fit" data-src="{{ object.image.url }}" alt="">
-                      <div class="video_icon_play_v2"></div>
+                      <div class="video_icon_play_v2" class="u_video_detail" data-counter="{{ forloop.counter0 }}"></div>
                       <p>{{ object.title }}</p>
                     </div>
                   {% endfor %}
