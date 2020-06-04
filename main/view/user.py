@@ -71,29 +71,16 @@ class ItemReplyUserCreate(View):
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
-            photo=form_post.cleaned_data['photo']
-            photo2=form_post.cleaned_data['photo2']
-            if not comment.text and not photo and not photo2:
-                raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
+
             if request.user != user:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
-            new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
-            if photo:
-                try:
-                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-                except:
-                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-                upload_photo = Photo.objects.create(creator=request.user, file=photo, community=None, album=album)
-                upload_photo.item_comment.add(new_comment)
-            if photo2:
-                try:
-                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-                except:
-                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-                upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=None, album=album)
-                upload_photo2.item_comment.add(new_comment)
+            new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, item=item, text=comment.text,
+                                                photo=form_post.cleaned_data['photo'], photo2=form_post.cleaned_data['photo2'],
+                                                select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
+                                                select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
+                                                select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'))
             new_comment.notification_user_reply_comment(request.user)
             return render_to_response('u_item_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
