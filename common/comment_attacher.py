@@ -4,7 +4,15 @@ from music.models import SoundcloudParsing
 from gallery.models import Album, Photo
 
 
-def get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2):
+def get_comment_attach(comment,
+                        photo,
+                        photo2,
+                        select_photo,
+                        select_photo2,
+                        select_video,
+                        select_video2,
+                        select_music,
+                        select_music2):
     if photo:
         try:
             album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)

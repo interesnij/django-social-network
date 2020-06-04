@@ -242,15 +242,26 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
-    def create_comment(cls, commenter, item, parent_comment, text, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2):
+    def create_comment(cls,
+                        commenter,
+                        item,
+                        parent_comment,
+                        text,
+                        photo,
+                        photo2,
+                        select_photo,
+                        select_photo2,
+                        select_video,
+                        select_video2,
+                        select_music,
+                        select_music2):
         from common.comment_attacher import get_comment_attach
-        
+
         if not text and not photo and not select_photo and not select_video and not select_music:
             raise ValidationError('Напишите текст или прикрепите что-нибудь')
 
         comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
-        get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2)
-
+        get_comment_attach(photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
