@@ -16,19 +16,19 @@
 
         <div class="row" style="padding-bottom: 10px;">
           {% for object in comment.comment_photo.all %}
-          <div class="col-lg-6 col-md-6">
+          <div class="col-md-6 mb-2">
               <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
           </div>
           {% endfor %}
           {% for object in comment.comment_video.all %}
-          <div class="col-md-6">
+          <div class="col-md-6 mb-2">
               <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="video">
               <div class="video_icon_play_v2 u_video_detail" data-counter="{{ forloop.counter0 }}"></div>
 
           </div>
           {% endfor %}
           {% for object in comment.comment_music.all %}
-          <div class="col-md-12">
+          <div class="col-md-12 mb-2">
             <div class="media" data-counter="{{ forloop.counter0 }}">
                 <figure style="cursor:pointer">
                   <a class="music_list_item">
