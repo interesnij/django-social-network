@@ -240,6 +240,7 @@ html {
 .photo_selected svg{
   width: 12px;
   position: absolute;
+  color: grey;
 }
 
 canvas{
