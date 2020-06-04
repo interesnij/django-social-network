@@ -54,6 +54,8 @@ class ItemCommentUserCreate(View):
             select_photo2 = request.POST.get('select_photo2')
             select_video = request.POST.get('select_video')
             select_video2 = request.POST.get('select_video2')
+            select_music = request.POST.get('select_music')
+            select_music2 = request.POST.get('select_music2')
 
             if not comment.text and not photo and not select_photo and not select_video:
                 raise ValidationError('Напишите текст или прикрепите что-нибудь')
