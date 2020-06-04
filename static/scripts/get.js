@@ -304,6 +304,69 @@ on('#ajax', 'click', '.video_load_detail', function() {
   is_full_dropdown();
 });
 
+on('#ajax', 'click', '.music_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
+  img_block = dropdown.parentElement.previousElementSibling;
+  media_body = _this.querySelector(".media-body");
+  pk = _this.getAttribute('data-pk');
+
+  if (img_block.querySelector(".comment_photo1")){
+    comment_photo1 = img_block.querySelector(".comment_photo1");
+    if (!comment_photo1.querySelector("img")){
+      comment_photo1.parentElement.remove();
+    }
+  }
+  if (img_block.querySelector(".comment_photo2")){
+    comment_photo2 = img_block.querySelector(".comment_photo2");
+    if (!comment_photo2.querySelector("img")){
+      comment_photo2.parentElement.remove();
+    }
+  }
+
+  _this.classList.add("music_load_toggle");
+  counter = _this.getAttribute('data-counter');
+
+    $input = document.createElement("span");
+    if (img_block.querySelector(".select_music2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_music1")){
+        $div = document.createElement("div");
+        $div.classList.add("col-md-12", "select_music2");
+        $input.innerHTML = '<input type="hidden" name="select_music2" value="' + pk + '">';
+      }
+    else {
+        $div = document.createElement("div", "select_music1");
+        $div.classList.add("col-md-6", "select_video1");
+        $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
+      }
+
+  $span = document.createElement("span");
+  $img = document.createElement("img");
+  $media = document.createElement("div");
+  $figure = document.createElement("figure");
+
+  $span.classList.add("item_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+
+  $img.src = _this.querySelector("img").getAttribute('data-src');
+  $figure = '<figure>' + $img + '</figure>';
+
+  $media.innerHTML = media_body.innerHTML;
+
+  $div.append($span);
+  $div.append($input);
+  $div.append($figure);
+  $div.append($media);
+  img_block.append($div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+});
+
 on('#ajax', 'click', '.item_preview_delete', function() {
   pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
