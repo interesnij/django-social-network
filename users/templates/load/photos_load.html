@@ -1,6 +1,13 @@
 <style>
   .hide_image input { display: none; }
-  #add_multi_comments_photos {border: 2px dashed green;color: rgba(0, 0, 0, 0.8);padding-top: 10px;text-align: center;}
+  #add_multi_comments_photos {
+    border: 2px dashed green;
+     width: 400px;
+     position: absolute;
+     top: 30px;
+     color: rgba(0, 0, 0, 0.8);
+     padding-top: 5px;
+     text-align: center;}
   #add_multi_comments_photos:hover {cursor: pointer}
 </style>
 
@@ -8,8 +15,7 @@
     {% csrf_token %}
       <input type="file" id="photo_add_attach" name="file" style="display:none" multiple="multiple">
       <div id="add_multi_comments_photos">
-          <h4>загрузить</h4>
-          <p>Максимум два фото</p>
+          <h4>загрузить (максимум 2 фото)</h4>
       </div>
 </form>
 <br><br>
