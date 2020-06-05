@@ -81,11 +81,12 @@ class PhotoUserCreate(View):
     """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        uploaded_file = request.FILES['file']
         photos = []
         if self.user == request.user:
-            photo = Photo.objects.create(file=uploaded_file, creator=self.user)
-            return render_to_response('gallery_user/test_page.html',{'object_list': uploaded_file, 'user': request.user, 'request': request})
+            for photo in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=uploaded_file, creator=self.user)
+                photos += [photo,]
+            return render_to_response('gallery_user/test_page.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
 class PhotoAlbumUserCreate(View):
