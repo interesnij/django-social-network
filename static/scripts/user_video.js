@@ -20,7 +20,7 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
 
 on('#ajax', 'click', '.user_video_create_attach', function(e) {
   e.preventDefault();
-  pk = this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
   var list = loader.querySelectorAll('select');
@@ -29,7 +29,6 @@ on('#ajax', 'click', '.user_video_create_attach', function(e) {
     list[i].classList.add("form-control")
   }
   btn = loader.querySelector('.create_video_btn');
-  console.log(btn);
   btn.classList.replace("create_video_btn", "create_video_attach_btn");
 });
 
