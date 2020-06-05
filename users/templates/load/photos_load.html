@@ -1,7 +1,13 @@
 
 <form id="add_photos" method="post">
     {% csrf_token %}
-    <input type="file" id="photo_add_attach" name="file" multiple="multiple">
+    <span>
+      <div class="hide_image"><input type="file" id="photo_add_attach" name="file" multiple="multiple"></div>
+    </span>
+      <div id="holder_article_image">
+          <h4 style="font-weight:bold;font-size:70px;color:#CECECE">Создать</h4>
+          <p>Максимум два фото</p>
+      </div>
 </form>
 <br><br>
 
