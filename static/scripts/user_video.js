@@ -28,7 +28,7 @@ on('#ajax', 'click', '.user_video_create_attach', function(e) {
   for(i=0; i<count; i++) {
     list[i].classList.add("form-control")
   }
-  btn = document.body.querySelector('.create_video_btn');
+  var btn = loader.querySelector('.create_video_btn');
   console.log(btn);
   btn.classList.add("create_video_attach_btn");
 });
