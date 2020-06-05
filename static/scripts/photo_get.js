@@ -1,7 +1,7 @@
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   var container, uuid, uuid2, pk, loader;
   container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   uuid2 = container.getAttribute('data-uuid2');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
