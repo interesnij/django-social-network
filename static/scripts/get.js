@@ -189,12 +189,12 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         img_block.append($div1);
         add_file_dropdown()
       }
-    else { try{
+    else {
       $div1 = document.createElement("div");
       $div1.classList.add("col-md-6", "select_photo1");
       photo1_pk = photo_list[0].getAttribute("photo_pk");
       $input1 = document.createElement("span");
-      $input1.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo1_pk + '">';
+      $input1.innerHTML = '<input type="hidden" name="select_photo" value="' + photo1_pk + '">';
       $span1 = document.createElement("span");
       $span1.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
       $img1 = document.createElement("img");
@@ -205,11 +205,11 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $img1.classList.add("u_photo_detail", "image_fit");
       $img1.src = photo_list[0].getAttribute('data-src');
       $img1.setAttribute('photo-pk', pk);
-      $div1.append($span);
-      $div1.append($input);
-      $div1.append($img);
+      $div1.append($span1);
+      $div1.append($input1);
+      $div1.append($img1);
       img_block.append($div1);
-
+      try{
       $div2 = document.createElement("div");
       $div2.classList.add("col-md-6", "select_photo2");
       photo2_pk = photo_list[1].getAttribute("photo_pk");
