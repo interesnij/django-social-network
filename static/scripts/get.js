@@ -195,6 +195,13 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[photo-pk=' + '"' + _this.getAttribute('photo-pk') + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+
   if (img_block.querySelector(".comment_photo1")){
     comment_photo1 = img_block.querySelector(".comment_photo1");
     if (!comment_photo1.querySelector("img")){
@@ -209,7 +216,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   }
 
   _this.classList.add("photo_load_toggle");
-  pk = _this.getAttribute('data-pk');
+  pk = _this.getAttribute('photo-pk');
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
     $input = document.createElement("span");
