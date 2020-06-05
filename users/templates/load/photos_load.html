@@ -1,25 +1,12 @@
 <style>
   .hide_image input { display: none; }
-  
+  #add_multi_comments_photos {border: 2px dashed #FF0000;color: rgba(0, 0, 0, 0.8);padding: 10px;text-align: center;margin: 10px;}
+  #add_multi_comments_photos:hover {cursor: pointer;margin: 9px;}
 </style>
 
 <form id="add_photos" method="post">
     {% csrf_token %}
       <input type="file" id="photo_add_attach" name="file" style="display:none" multiple="multiple">
-      <div class="card-body p-2" id="add_multi_comments_photos">
-        <div class="media">
-          <div class="media-body">
-            <p class="mb-0">максимум 2 фото</p>
-            <h5 class="mb-0">загрузить</h5>
-          </div>
-          <a class="icon-rounded icon-40 bg-success ml-2">
-            <svg class="svg_default" fill="currentColor" width="24" height="20" viewBox="0 0 24 24">
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
-            </svg>
-          </a>
-        </div>
-      </div>
       <div id="add_multi_comments_photos">
           <h4>загрузить</h4>
           <p>Максимум два фото</p>
