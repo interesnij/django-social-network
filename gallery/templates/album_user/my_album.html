@@ -30,12 +30,6 @@
 </div>
 
 <div class="container mt-4 main-container">
-    <div id="photos_add_window" style="display:none">
-        <form method="post" action="{% url 'photo_album_add_user' album.pk user.uuid %}" class="dropzone">
-            {% csrf_token %}
-        </form>
-        <br><br>
-    </div>
 
     <div id="album_photo_load" data-link="/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}"></div>
 
