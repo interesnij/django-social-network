@@ -1,10 +1,18 @@
 on('#ajax', 'change', '#photo_add_attach', function() {
-   files = this.files;
-   for(var a=0;a<files.length;a++)
-   //if (parseInt(files.length)>2){
-  //    alert("You can only upload a maximum of 2 files");
-  //  }
-  alert(files[a].name);
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    document.querySelector(".responseeee").append(new_post)
+  }};
+
+  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {

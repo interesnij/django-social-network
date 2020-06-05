@@ -7,22 +7,6 @@ from gallery.forms import AlbumForm, AvatarUserForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render_to_response
-from common.utils import is_mobile
-
-
-class AvatarReload(TemplateView):
-    """
-    после загрузки аватара перезагружает окошко с аватаром пользователя
-    """
-    template_name="photo_user/avatar_reload.html"
-
-    def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        return super(AvatarReload,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(AvatarReload,self).get_context_data(**kwargs)
-        return context
 
 
 class UserGalleryView(TemplateView):
@@ -55,41 +39,6 @@ class UserAlbumView(TemplateView):
         context = super(UserAlbumView,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['album'] = self.album
-        return context
-
-
-class NewAlbomView(TemplateView):
-    """
-    промежуточная страница, получающая последний альбом пользователя для показа его как нового
-    """
-    template_name = "photo_user/new_album.html"
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.filter(creator=self.user)
-        self.new_url = self.album.last().uuid
-        return super(NewAlbomView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(NewAlbomView,self).get_context_data(**kwargs)
-        context["album"] = self.album
-        context["pk"] = self.user.pk
-        context["new_url"] = self.new_url
-        return context
-
-class UserAlbomReload(TemplateView):
-    """
-    загрузка нового альбома после его создания
-    """
-    template_name="photo_user/album_reload.html"
-    def get(self,request,*args,**kwargs):
-        self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = Photo.objects.filter(album=self.album)
-        return super(UserAlbomReload,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(UserAlbomReload,self).get_context_data(**kwargs)
-        context['album'] = self.album
-        context['photos'] = self.photos
         return context
 
 
@@ -134,8 +83,8 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         uploaded_file = request.FILES['file']
         if self.user == request.user:
-            Photo.objects.create(file=uploaded_file, creator=self.user)
-            return HttpResponse ('!')
+            photos = Photo.objects.create(file=uploaded_file, creator=self.user)
+            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
 class PhotoAlbumUserCreate(View):
