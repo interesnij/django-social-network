@@ -253,8 +253,8 @@ on('#ajax', 'click', '.video_load_detail', function() {
   img_block = dropdown.parentElement.previousElementSibling;
 
   if (img_block.querySelector( '[video-counter=' + '"' + _this.getAttribute('video-counter') + '"' + ']' )){
-    _this.setAttribute("tooltip", "Видеоролик уже выбран");
-    _this.setAttribute("flow", "up");
+    _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
+    _this.parentElement.setAttribute("flow", "up");
     return
   };
 
