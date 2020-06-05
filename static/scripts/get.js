@@ -311,11 +311,12 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
   counter = _this.getAttribute('music-counter');
   img_block = dropdown.parentElement.previousElementSibling;
-  music_counter = '[music-counter=' + '"' + counter + '"' + ']';
-  m_c = '([music-counter="2"])'
-  if (img_block.querySelector( music_counter )){
+
+  //music_counter = '[music-counter=' + '"' + counter + '"' + ']';
+  if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
     alert("Уже есть!!!")
   };
+
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
