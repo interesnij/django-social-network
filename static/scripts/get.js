@@ -312,7 +312,9 @@ on('#ajax', 'click', '.music_load_detail', function() {
   counter = _this.getAttribute('music-counter');
   img_block = dropdown.parentElement.previousElementSibling;
 
-  //if (img_block.querySelector('.select_music1')
+  if (img_block.querySelector('[music-counter=' + counter + ']')){
+    alert("Уже есть!!!")
+  };
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
