@@ -163,7 +163,8 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
-
+    console.log(photo_list[0]);
+    console.log(photo_list[1]);
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
