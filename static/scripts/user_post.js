@@ -1,4 +1,5 @@
-on('#ajax', 'onchange', '#photo_add_attach', function() {
+
+document.querySelector('#photo_add_attach').onchange = function(e) {
    files = this.files;
    for(var a=0;a<files.length;a++)
    if (parseInt(this.get(0).files.length)>2){
