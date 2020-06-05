@@ -204,7 +204,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $span1.setAttribute("flow", "up");
       $img1.classList.add("u_photo_detail", "image_fit");
       $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
-      $img1.setAttribute('photo-pk', pk);
+      $img1.setAttribute('photo-pk', photo1_pk);
       $div1.append($span1);
       $div1.append($input1);
       $div1.append($img1);

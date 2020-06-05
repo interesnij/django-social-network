@@ -3,9 +3,7 @@
 {% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
-<link rel="stylesheet" href="/static/styles/dropzone.css" />
-
-<div class="container-fluid" style="margin-top:30px">
+<div class="container-fluid mt-3" data-uuid="{{ user.uuid }}">
     <div class="row">
         <div class="col-12">
             <h5 class="mt-1">Альбомы
@@ -21,7 +19,7 @@
   {% include 'gallery_user/albums.html' %}
 </div>
 
-  <div class="container-fluid" style="margin-top:30px">
+  <div class="container-fluid mt-3">
       <div class="row">
           <div class="col-12">
               <h5 class="mt-1">Фотографии

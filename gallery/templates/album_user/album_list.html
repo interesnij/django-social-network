@@ -1,6 +1,6 @@
 
 {% if photos %}
-<div class="album-container row" data-uuid="{{ user.uuid }}" data-uuid2="{{ album.uuid }}">
+<div class="album-container row" data-uuid2="{{ album.uuid }}">
 {% for object in photos %}
   <div class="col-sm-12 col-md-6 col-lg-4 infinite-item u_album_photo_detail" style="cursor:pointer"  photo-pk="{{ object.pk }}">
       <div class="card rounded-0 border-0 mb-4">
