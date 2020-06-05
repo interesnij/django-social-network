@@ -314,7 +314,8 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
   //music_counter = '[music-counter=' + '"' + counter + '"' + ']';
   if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    alert("Уже есть!!!");
+    _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
+    _this.setAttribute("flow", "up");
     return
   };
 
