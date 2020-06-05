@@ -8,12 +8,12 @@
 </style>
 
 
-<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографии</h4>
+<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографий</h4>
 <form id="add_photos" method="post">
     {% csrf_token %}
       <input type="file" id="photo_add_attach" name="file" style="display:none" multiple="multiple">
       <div id="add_multi_comments_photos">
-          <h4>загрузить (максимум 2 фото)</h4>
+          <h4>загрузить и прикрепить (максимум 2 фото)</h4>
       </div>
 </form>
 <br><br>

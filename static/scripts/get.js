@@ -300,6 +300,31 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   is_full_dropdown();
 });
 
+on('#ajax', 'click', '.create_video_attach_btn', function() {
+  form_data = new FormData(document.querySelector("#create_video_form"));
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/video/progs/create_video/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    album = document.body.querySelector("#id_album");
+      elem_ = document.createElement('div');
+      elem_.innerHTML = link_.responseText;
+      elem_.classList.add("col-12", "col-md-6", "u_video_detail");
+      elem_.setAttribute("video-counter", "0");
+      elem_.style.cursor = "pointer";
+      container = document.body.querySelector(".movies_list");
+      container.prepend(elem_);
+      try{container.querySelector(".video_none").style.display = "none"}catch{null};
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }};
+
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.video_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;

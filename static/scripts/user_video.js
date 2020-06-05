@@ -18,6 +18,21 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
   }
 });
 
+on('#ajax', 'click', '.user_video_create_attach', function(e) {
+  e.preventDefault();
+  pk = this.getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
+  var list = loader.querySelectorAll('select');
+  var count = list.length;
+  for(i=0; i<count; i++) {
+    list[i].classList.add("form-control")
+  }
+  btn = loader.querySelector('.create_video_btn');
+  btn.classList.replace("create_video_btn", "create_video_attach_btn");
+});
+
+
 on('#ajax', 'click', '.u_video_detail', function() {
   counter = this.getAttribute('video-counter');
   parent = this.parentElement.parentElement;
@@ -105,9 +120,9 @@ on('#ajax', 'click', '.user_video_list_create', function() {
   open_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '#create_video_btn', function() {
+on('#ajax', 'click', '.create_video_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
-  pk = this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/progs/create_video/" + pk + "/", true );
@@ -181,29 +196,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
 });
 
 on('body', 'click', '#video_holder', function() {
-entrou = false;
 ggg = this;
 img = this.previousElementSibling.querySelector("#id_image");
-img.click();
-
-img.onchange = function() {
-  if (!entrou) {imgPath = img.value;
-    extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
-  if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg")
-  {if (typeof FileReader != "undefined") {
-    ggg.innerHTML = "";
-    reader = new FileReader();
-    reader.onload = function(e) {
-      $img = document.createElement("img");
-      $img.id = "targetImageCrop";
-      $img.src = e.target.result;
-      $img.class = "thumb-image";
-      ggg.append($img);
-
-      };
-      reader.readAsDataURL(img.files[0]);
-    }
-  } else { this.value = null; }
-} entrou = true;
-setTimeout(function() { entrou = false; }, 1000);
-}});
+get_image_priview(ggg, img)
+});
