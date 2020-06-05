@@ -26,13 +26,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    try{document.querySelector('#id_text').value = "";}catch{console.log("text null")};
-    document.querySelector('#for_images_upload').innerHTML = "";
-    document.querySelector('#for_gallery').innerHTML = "";
-    document.querySelector('#for_doc').innerHTML = "";
-    document.querySelector('#for_good').innerHTML = "";
-    document.querySelector('#for_question').innerHTML = "";
-    document.querySelector('#for_settings').innerHTML = "";
+    try{document.querySelector('#id_text').value = "";}catch{ null };
 
     elem = link_.responseText;
     new_post = document.createElement("span");
