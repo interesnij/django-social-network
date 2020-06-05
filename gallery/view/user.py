@@ -80,7 +80,7 @@ class PhotoUserCreate(View):
     асинхронная мульти загрузка фотографий пользователя прямо в галерею
     """
     def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         uploaded_file = request.FILES['file']
         if self.user == request.user:
             photos = Photo.objects.create(file=uploaded_file, creator=self.user)
