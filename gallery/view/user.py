@@ -86,7 +86,7 @@ class PhotoUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 photos += [photo,]
-            return render_to_response('gallery_user/test_page.html',{'object_list': photos, 'user': request.user, 'request': request})
+            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
 class PhotoAlbumUserCreate(View):

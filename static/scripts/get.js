@@ -100,28 +100,6 @@ on('body', 'click', '.create_fullscreen_hide', function() {document.querySelecto
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
 
-on('#ajax', 'click', '#add_board_hide', function() {
-  document.querySelector('#for_settings').style.display = "block";
-});
-on('#ajax', 'click', '#images_upload', function() {
-  document.querySelector('#for_images_upload').style.display = "block";
-});
-on('#ajax', 'click', '#settings', function() {
-  document.querySelector('#for_settings').style.display = "block";
-});
-on('#ajax', 'click', '#gallery', function() {
-  document.querySelector('#for_gallery').style.display = "block";
-});
-on('#ajax', 'click', '#doc', function() {
-  document.querySelector('#for_doc').style.display = "block";
-});
-on('#ajax', 'click', '#good', function() {
-  document.querySelector('#for_good').style.display = "block";
-});
-on('#ajax', 'click', '#question', function() {
-  document.querySelector('#for_question').style.display = "block";
-});
-
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
 });
@@ -159,27 +137,6 @@ on('#ajax', 'click', '.select_music', function() {
   open_fullscreen('/users/load/music_load/', loader)
 });
 
-
-on('#ajax', 'click', '.upload_photo', function() {
-  this.classList.add("current_file_dropdown");
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown();
-  img_block = dropdown.parentElement.previousElementSibling;
-  $div = document.createElement("div");
-  $div.classList.add("col-md-6");
-  console.log(img_block);
-
-  if (img_block.querySelector(".comment_photo2")){
-    $div.innerHTML = ''
-  } else if (img_block.querySelector(".comment_photo1")){
-    $div.innerHTML = '<div class="comment_photo2"><input class="file2 hide_image" type="file" name="photo2" accept="image/*" id="id_item_comment_photo2"><span id="photo2"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></span></div>'
-  } else{
-    $div.innerHTML = '<div class="comment_photo1"><input class="file1 hide_image" type="file" name="photo" accept="image/*" id="id_item_comment_photo"><span id="photo"><h4 class="svg_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></span></div>'
-  }
-  img_block.append($div);
-  is_full_dropdown();
-});
-
 on('#ajax', 'click', '.delete_thumb', function(e) {
   e.preventDefault();
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
@@ -190,10 +147,97 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
   this.parentElement.parentElement.parentElement.remove();
 })
 
+
+on('#ajax', 'change', '#photo_add_attach', function() {
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown();
+  img_block = dropdown.parentElement.previousElementSibling;
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".u_photo_detail");
+
+    if (img_block.querySelector(".select_photo2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_photo1")){
+        $div1 = document.createElement("div");
+        $div1.classList.add("col-md-6", "select_photo2");
+        photo1_pk = photo_list[0].getAttribute("photo_pk");
+        $input1 = document.createElement("span");
+        $input1.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo1_pk + '">';
+        $span1 = document.createElement("span");
+        $span1.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+        $img1 = document.createElement("img");
+
+        $span1.classList.add("item_preview_delete");
+        $span1.setAttribute("tooltip", "Не прикреплять");
+        $span1.setAttribute("flow", "up");
+        $img1.classList.add("u_photo_detail", "image_fit");
+        $img1.src = photo_list[0].getAttribute('data-src');
+        $img1.setAttribute('photo-pk', photo1_pk);
+        $div1.append($span1);
+        $div1.append($input1);
+        $div1.append($img1);
+        img_block.append($div1);
+      }
+    else { try{
+      $div1 = document.createElement("div");
+      $div1.classList.add("col-md-6", "select_photo1");
+      photo1_pk = photo_list[0].getAttribute("photo_pk");
+      $input1 = document.createElement("span");
+      $input1.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo1_pk + '">';
+      $span1 = document.createElement("span");
+      $span1.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+      $img1 = document.createElement("img");
+
+      $span1.classList.add("item_preview_delete");
+      $span1.setAttribute("tooltip", "Не прикреплять");
+      $span1.setAttribute("flow", "up");
+      $img1.classList.add("u_photo_detail", "image_fit");
+      $img1.src = photo_list[0].getAttribute('data-src');
+      $img1.setAttribute('photo-pk', pk);
+      $div1.append($span);
+      $div1.append($input);
+      $div1.append($img);
+      img_block.append($div1);
+
+      $div2 = document.createElement("div");
+      $div2.classList.add("col-md-6", "select_photo2");
+      photo2_pk = photo_list[1].getAttribute("photo_pk");
+      $input2 = document.createElement("span");
+      $input2.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo2_pk + '">';
+      $span2 = document.createElement("span");
+      $span2.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+      $img2 = document.createElement("img");
+
+      $span2.classList.add("item_preview_delete");
+      $span2.setAttribute("tooltip", "Не прикреплять");
+      $span2.setAttribute("flow", "up");
+      $img2.classList.add("u_photo_detail", "image_fit");
+      $img2.src = photo_list[1].getAttribute('data-src');
+      $img2.setAttribute('photo-pk', photo2_pk);
+      $div2.append($span2);
+      $div2.append($input2);
+      $div2.append($img2);
+      img_block.append($div2);
+    } catch { null }
+      }
+  }};
+  link_.send(form_data);
+});
+
+
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown(dropdown);
+  is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
 
   if (img_block.querySelector( '[photo-pk=' + '"' + _this.getAttribute('photo-pk') + '"' + ']' )){
@@ -201,19 +245,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-
-  if (img_block.querySelector(".comment_photo1")){
-    comment_photo1 = img_block.querySelector(".comment_photo1");
-    if (!comment_photo1.querySelector("img")){
-      comment_photo1.parentElement.remove();
-    }
-  }
-  if (img_block.querySelector(".comment_photo2")){
-    comment_photo2 = img_block.querySelector(".comment_photo2");
-    if (!comment_photo2.querySelector("img")){
-      comment_photo2.parentElement.remove();
-    }
-  }
 
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('photo-pk');
@@ -225,7 +256,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else if (img_block.querySelector(".select_photo1")){
         $div = document.createElement("div");
         $div.classList.add("col-md-6", "select_photo2");
-        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
+        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';;
       }
     else {
         $div = document.createElement("div", "select_photo1");
