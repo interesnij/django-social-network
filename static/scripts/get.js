@@ -1,3 +1,9 @@
+
+
+on('body', 'click', '#add_multi_comments_photos', function(event) {
+  this.previousElementSibling.click();
+})
+
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
   var url = this.getAttribute('href');

@@ -6,11 +6,9 @@
 
 <form id="add_photos" method="post">
     {% csrf_token %}
-    <span>
-      <div class="hide_image"><input type="file" id="photo_add_attach" name="file" multiple="multiple"></div>
-    </span>
+      <input type="file" id="photo_add_attach" name="file" style="display:none" multiple="multiple">
       <div id="add_multi_comments_photos">
-          <h4 style="font-weight:bold;font-size:70px;color:#CECECE">Создать</h4>
+          <h4 style="font-weight:bold;font-size:70px;color:#CECECE">загрузить</h4>
           <p>Максимум два фото</p>
       </div>
 </form>
