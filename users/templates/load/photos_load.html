@@ -1,4 +1,12 @@
 
+<div id="photos_add_window">
+    <form id="add-photos" method="post" enctype='multipart/form-data' action="{% url 'photo_add_user' user.uuid %}">
+        {% csrf_token %}
+        <input type="file" name="file" multiple="multiple">
+    </form>
+    <br><br>
+</div>
+
 <div class="photos-load row">
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4">
