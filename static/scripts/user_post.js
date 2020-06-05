@@ -1,10 +1,10 @@
 on('#ajax', 'change', '#photo_add_attach', function() {
    files = this.files;
    for(var a=0;a<files.length;a++)
-   if (parseInt(files.length)>2){
-      alert("You can only upload a maximum of 2 files");
-    }
-alert(files);
+   //if (parseInt(files.length)>2){
+  //    alert("You can only upload a maximum of 2 files");
+  //  }
+  alert(files[a].name);
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {
