@@ -251,6 +251,13 @@ on('#ajax', 'click', '.video_load_detail', function() {
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[video-counter=' + '"' + _this.getAttribute('video-counter') + '"' + ']' )){
+    _this.setAttribute("tooltip", "Видеоролик уже выбран");
+    _this.setAttribute("flow", "up");
+    return
+  };
+
   if (img_block.querySelector(".comment_photo1")){
     comment_photo1 = img_block.querySelector(".comment_photo1");
     if (!comment_photo1.querySelector("img")){
@@ -312,7 +319,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
   counter = _this.getAttribute('music-counter');
   img_block = dropdown.parentElement.previousElementSibling;
 
-  //music_counter = '[music-counter=' + '"' + counter + '"' + ']';
   if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
     _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
     _this.setAttribute("flow", "up");
