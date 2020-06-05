@@ -10,7 +10,7 @@ on('#ajax', 'click', '.u_album_photo_detail', function() {
 on('#ajax', 'click', '.u_photo_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
-  uuid = document.body.querySelector("pk_saver").getAttribute('data-uuid');
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/u_photo/" + pk + "/" + uuid + "/", loader)

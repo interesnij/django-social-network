@@ -2,7 +2,7 @@
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3" data-uuid="{{ user.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-uuid="{{ user.uuid }}">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои альбомы</h5> {% if not user.is_album_exists %}- альбомов нет{% endif %}
