@@ -163,7 +163,8 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
-
+    console.log(photo_list[0]);
+    console.log(photo_list[1]);
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
@@ -186,6 +187,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         $div1.append($input1);
         $div1.append($img1);
         img_block.append($div1);
+        add_file_dropdown()
       }
     else { try{
       $div1 = document.createElement("div");
@@ -227,6 +229,8 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $div2.append($input2);
       $div2.append($img2);
       img_block.append($div2);
+      add_file_dropdown();
+      add_file_dropdown();
     } catch { null }
       }
   }};
