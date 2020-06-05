@@ -10,7 +10,7 @@ class UserPhotosList(ListView):
 		return super(UserPhotosList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		photos_list = self.request.user.get_photos()
+		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
 
@@ -22,7 +22,7 @@ class UserVideosList(ListView):
 		return super(UserVideosList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		videos_list = self.request.user.get_video()
+		videos_list = self.request.user.get_video().order_by('-created')
 		return videos_list
 
 
@@ -34,7 +34,7 @@ class UserMusicsList(ListView):
 		return super(UserMusicsList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		musics_list = self.request.user.get_music()
+		musics_list = self.request.user.get_music().order_by('-created')
 		return musics_list
 
 
@@ -46,7 +46,7 @@ class UserArticlesList(ListView):
 		return super(UserArticlesList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		articles_list = self.request.user.get_articles()
+		articles_list = self.request.user.get_articles().order_by('-created')
 		return articles_list
 
 
