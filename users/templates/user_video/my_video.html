@@ -28,7 +28,7 @@
                 <div class="video_playlist pk_saver" id="movies_container" data-pk="{{ user.pk }}">
                   <div class="row movies_list">
                       {% for object in object_list %}
-                      <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
+                      <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
                         <div class="blog-header-img">
                           {% if object.image %}
                             <img class="lazyload image_fit" data-src="{{ object.image.url }}" alt="">

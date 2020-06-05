@@ -2,7 +2,7 @@
 
 
 on('#ajax', 'click', '.tag_item', function() {
-  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("tag_" + tag_pk)){
     save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
@@ -16,7 +16,7 @@ on('#ajax', 'click', '.tag_item', function() {
   });
 
 on('#ajax', 'click', '.genre_item', function() {
-  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   var genre_pk = document.querySelector(".genre_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("genre_" + genre_pk)){
     save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
@@ -30,7 +30,7 @@ on('#ajax', 'click', '.genre_item', function() {
 });
 
 on('#ajax', 'click', '.music_list_item', function() {
-  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("list_" + list_pk)){
     save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)

@@ -157,7 +157,7 @@
             {% for object in user.get_last_music %}
             <div class="card border-top border-bottom">
                 <div class="card-body">
-                    <div class="media" data-counter="{{ forloop.counter0 }}">
+                    <div class="media" music-counter="{{ forloop.counter0 }}">
                         <figure style="cursor:pointer">
                           <a class="music_list_item">
                             {% if object.artwork_url %}
@@ -261,7 +261,7 @@
                   {% for object in user.get_last_video %}
                     <div style="position:relative">
                       <img class="lazyload image_fit" data-src="{{ object.image.url }}" alt="">
-                      <div class="video_icon_play_v2 u_video_detail" data-counter="{{ forloop.counter0 }}"></div>
+                      <div class="video_icon_play_v2 u_video_detail" video-counter="{{ forloop.counter0 }}"></div>
                       <p>{{ object.title }}</p>
                     </div>
                   {% endfor %}

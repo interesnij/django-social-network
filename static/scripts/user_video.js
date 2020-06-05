@@ -19,9 +19,9 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
 });
 
 on('#ajax', 'click', '.u_video_detail', function() {
-  counter = this.getAttribute('data-counter');
+  counter = this.getAttribute('video-counter');
   parent = this.parentElement.parentElement;
-  pk = document.querySelector(".pk_saver").getAttribute('data-pk'); 
+  pk = document.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/basic_list/" + pk + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
@@ -60,7 +60,7 @@ function video_onPlay(){
   }
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
-  counter = this.getAttribute('data-counter');
+  counter = this.getAttribute('video-counter');
   parent = this.parentElement.parentElement;
   pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute('data-uuid');
@@ -118,7 +118,7 @@ on('#ajax', 'click', '#create_video_btn', function() {
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_detail");
-      elem_.setAttribute("data-counter", "0");
+      elem_.setAttribute("video-counter", "0");
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list");
       container.prepend(elem_);
@@ -144,7 +144,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
-      elem_.setAttribute("data-counter", "0");
+      elem_.setAttribute("video-counter", "0");
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list_in_list");
       container.prepend(elem_);

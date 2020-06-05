@@ -292,7 +292,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $img.classList.add("image_fit");
   $img.src = _this.getAttribute('data-src');
   $icon_div.classList.add("video_icon_play_v2", "u_video_detail");
-  $icon_div.setAttribute("data-counter", _this.getAttribute('data-counter'));
+  $icon_div.setAttribute("video-counter", _this.getAttribute('video-counter'));
 
   $div.append($span);
   $div.append($input);
@@ -308,7 +308,11 @@ on('#ajax', 'click', '.music_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
+
+  counter = _this.getAttribute('music-counter');
   img_block = dropdown.parentElement.previousElementSibling;
+
+  //if (img_block.querySelector('.select_music1')
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
@@ -326,7 +330,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
   }
 
   _this.classList.add("music_load_toggle");
-  counter = _this.getAttribute('data-counter');
 
     $input = document.createElement("span");
     if (img_block.querySelector(".select_music2")){
@@ -338,12 +341,12 @@ on('#ajax', 'click', '.music_load_detail', function() {
       }
     else {
         $div = document.createElement("div", "select_music1");
-        $div.classList.add("col-md-12", "select_video1");
+        $div.classList.add("col-md-12", "select_music1");
         $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
       }
   $div.style.display = "flex";
   $div.style.margin = "5px";
-  $div.setAttribute('data-counter', counter);
+  $div.setAttribute('music-counter', counter);
 
   $span = document.createElement("span");
   $img = document.createElement("img");

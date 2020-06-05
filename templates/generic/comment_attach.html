@@ -7,13 +7,13 @@
   {% for object in comment.comment_video.all %}
   <div class="col-md-6">
       <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="video">
-      <div class="video_icon_play_v2 u_video_detail" data-counter="{{ forloop.counter0 }}"></div>
+      <div class="video_icon_play_v2 u_video_detail" video-counter="{{ forloop.counter0 }}"></div>
 
   </div>
   {% endfor %}
   {% for object in comment.comment_music.all %}
   <div class="col-md-12 mt-3">
-    <div class="media" data-counter="{{ forloop.counter0 }}">
+    <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
           <a class="music_list_item">
             {% if object.artwork_url %}

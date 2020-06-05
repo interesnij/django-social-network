@@ -30,8 +30,8 @@
                 <div class="music_playlist" id="tracks_container" data-pk="{{ user.get_music_list_id }}">
                     <ul>
                       {% for object in object_list %}
-                      <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
-                          <div class="media" data-counter="{{ forloop.counter0 }}">
+                      <li class="list-group-item infinite-item id_{{ object.id }}">
+                          <div class="media" music-counter="{{ forloop.counter0 }}">
                               <figure style="cursor:pointer">
                                 <a class="music_list_item">
                                   {% if object.artwork_url %}
