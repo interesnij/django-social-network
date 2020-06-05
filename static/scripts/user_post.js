@@ -6,7 +6,7 @@ document.querySelector('#photo_add_attach').onchange = function(e) {
       alert("You can only upload a maximum of 2 files");
     }
 alert(files[a].name);
-});
+};
 
 on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
