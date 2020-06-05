@@ -313,7 +313,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
   img_block = dropdown.parentElement.previousElementSibling;
   music_counter = '[music-counter=' + counter + '])';
   m_c = '([music-counter="2"])'
-  if (img_block.querySelector( + music_counter + )){
+  if (img_block.querySelector( music_counter )){
     alert("Уже есть!!!")
   };
   media_body = _this.querySelector(".media-body");
