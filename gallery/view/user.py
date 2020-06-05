@@ -86,7 +86,7 @@ class PhotoUserCreate(View):
         if self.user == request.user:
             for file in uploaded_file:
                 photo = Photo.objects.create(file=uploaded_file, creator=self.user)
-                photos =+ [photo,]
+                photos += [photo,]
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
