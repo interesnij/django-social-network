@@ -30,7 +30,7 @@ on('#ajax', 'click', '.user_video_create_attach', function(e) {
   }
   btn = loader.querySelector('.create_video_btn');
   console.log(btn);
-  btn.classList.add("create_video_attach_btn");
+  loader.classList.add("create_video_attach_btn");
 });
 
 
