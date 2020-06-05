@@ -314,7 +314,8 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
   //music_counter = '[music-counter=' + '"' + counter + '"' + ']';
   if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    alert("Уже есть!!!")
+    alert("Уже есть!!!");
+    return
   };
 
   media_body = _this.querySelector(".media-body");
