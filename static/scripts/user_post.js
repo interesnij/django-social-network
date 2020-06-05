@@ -4,7 +4,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
    if (parseInt(files.length)>2){
       alert("You can only upload a maximum of 2 files");
     }
-alert(files[a].name);
+alert(files[a]);
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {
