@@ -181,7 +181,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         $span1.setAttribute("tooltip", "Не прикреплять");
         $span1.setAttribute("flow", "up");
         $img1.classList.add("u_photo_detail", "image_fit");
-        $img1.src = photo_list[0].getAttribute('data-src');
+        $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
         $img1.setAttribute('photo-pk', photo1_pk);
         $div1.append($span1);
         $div1.append($input1);
@@ -224,7 +224,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $span2.setAttribute("flow", "up");
       $img2.classList.add("u_photo_detail", "image_fit");
       $img2.src = photo_list[1].getAttribute('data-src');
-      $img2.setAttribute('photo-pk', photo2_pk);
+      $img2.querySelector("img").setAttribute('photo-pk', photo2_pk);
       $div2.append($span2);
       $div2.append($input2);
       $div2.append($img2);
