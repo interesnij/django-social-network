@@ -89,6 +89,24 @@ class PhotoUserCreate(View):
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
+class PhotoCommentUserCreate(View):
+    """
+    мульти сохранение изображений для комментов с моментальным выводом в превью
+    """
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        photos = []
+        if self.user == request.user:
+            try:
+                album = Album.objects.get(creator_pk=request.user.pk, is_generic=True, title="Фото со стены")
+            except:
+                album = Album.objects.create(creator_pk=request.user.pk, is_generic=True, title="Фото со стены")
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, album=album, creator=self.user)
+                photos += [photo,]
+            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
+
+
 class PhotoAlbumUserCreate(View):
     """
     асинхронная мульти загрузка фотографий пользователя в альбом
