@@ -243,7 +243,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $span.setAttribute("flow", "up");
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
-  $img.setAttribute('data-pk', pk);
+  $img.setAttribute('photo-pk', pk);
   $div.append($span);
   $div.append($input);
   $div.append($img);
