@@ -1,7 +1,7 @@
 {% if photo_list %}
 <div id="photos_container" data-uuid="{{ user.uuid }}" data-uuid2="{{ album.uuid }}" style="margin-left: 0;margin-right: 0;display: flex;flex-wrap: wrap">
 {% for object in photo_list %}
-  <div class="u_album_photo_detail" data-pk="{{ object.pk }}" style="cursor:pointer;flex: 0 0 50%;max-width:50%;padding:5px;">
+  <div class="u_album_photo_detail" photo-pk="{{ object.pk }}" style="cursor:pointer;flex: 0 0 50%;max-width:50%;padding:5px;">
       <div class="card rounded-0 border-0 ">
         {% if object.file %}
           <img style="width: 100%;object-fit: cover;height: 140px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
