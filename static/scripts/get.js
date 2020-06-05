@@ -187,7 +187,9 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         $div1.append($input1);
         $div1.append($img1);
         img_block.append($div1);
-        add_file_dropdown()
+        add_file_dropdown();
+        document.querySelector(".create_fullscreen").style.display = "none";
+        document.getElementById("create_loader").innerHTML="";
       }
     else {
       $div1 = document.createElement("div");
@@ -210,6 +212,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $div1.append($img1);
       img_block.append($div1);
       add_file_dropdown();
+
       try{
       $div2 = document.createElement("div");
       $div2.classList.add("col-md-6", "select_photo2");
@@ -231,7 +234,10 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $div2.append($img2);
       img_block.append($div2);
       add_file_dropdown();
+
     } catch { null }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
       }
   }};
   link_.send(form_data);
@@ -300,19 +306,6 @@ on('#ajax', 'click', '.video_load_detail', function() {
     return
   };
 
-  if (img_block.querySelector(".comment_photo1")){
-    comment_photo1 = img_block.querySelector(".comment_photo1");
-    if (!comment_photo1.querySelector("img")){
-      comment_photo1.parentElement.remove();
-    }
-  }
-  if (img_block.querySelector(".comment_photo2")){
-    comment_photo2 = img_block.querySelector(".comment_photo2");
-    if (!comment_photo2.querySelector("img")){
-      comment_photo2.parentElement.remove();
-    }
-  }
-
   _this.classList.add("video_load_toggle");
   pk = _this.getAttribute('data-pk');
 
@@ -369,19 +362,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
-
-  if (img_block.querySelector(".comment_photo1")){
-    comment_photo1 = img_block.querySelector(".comment_photo1");
-    if (!comment_photo1.querySelector("img")){
-      comment_photo1.parentElement.remove();
-    }
-  }
-  if (img_block.querySelector(".comment_photo2")){
-    comment_photo2 = img_block.querySelector(".comment_photo2");
-    if (!comment_photo2.querySelector("img")){
-      comment_photo2.parentElement.remove();
-    }
-  }
 
   _this.classList.add("music_load_toggle");
 
