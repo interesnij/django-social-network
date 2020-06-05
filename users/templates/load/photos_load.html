@@ -1,17 +1,21 @@
+<style>
+  .hide_image input { display: none; }
+  #add_multi_comments_photos {border: 2px dashed #FF0000;color: rgba(0, 0, 0, 0.8);padding: 10px;text-align: center;margin: 10px;}
+  #add_multi_comments_photos:hover {cursor: pointer;margin: 9px;}
+</style>
 
 <form id="add_photos" method="post">
     {% csrf_token %}
     <span>
       <div class="hide_image"><input type="file" id="photo_add_attach" name="file" multiple="multiple"></div>
     </span>
-      <div id="holder_article_image">
+      <div id="add_multi_comments_photos">
           <h4 style="font-weight:bold;font-size:70px;color:#CECECE">Создать</h4>
           <p>Максимум два фото</p>
       </div>
 </form>
 <br><br>
 
-<div class="responseeee"></div>
 <div class="photos-load row">
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4">
