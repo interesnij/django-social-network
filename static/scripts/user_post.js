@@ -1,12 +1,11 @@
-
-document.querySelector('#photo_add_attach').onchange = function(e) {
+on('#ajax', 'change', '#photo_add_attach', function() {
    files = this.files;
    for(var a=0;a<files.length;a++)
    if (parseInt(this.get(0).files.length)>2){
       alert("You can only upload a maximum of 2 files");
     }
 alert(files[a].name);
-};
+});
 
 on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
