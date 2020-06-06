@@ -145,15 +145,9 @@ on('#ajax', 'click', '.select_music', function() {
 
 on('#ajax', 'click', '.delete_thumb', function(e) {
   e.preventDefault();
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  if (this.parentElement.querySelector("img")){
-    remove_file_dropdown();
-    is_full_dropdown();
-  }
   this.nextElementSibling.remove();
   block = document.createElement("div");
-  block.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>";
-  this.parentElement.append(block);
+  this.parentElement.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>";
   this.remove();
 })
 
