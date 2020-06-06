@@ -60,6 +60,8 @@ on('#ajax', 'change', '.goods_category', function() {
 
 galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
 galleryFeatured = document.querySelector(".product-gallery-featured img");
+console.log(galleryThumbnail);
+console.log(galleryFeatured);
 
 galleryThumbnail.forEach((item) => {
   on('#ajax', 'mouseover', item, function() {
