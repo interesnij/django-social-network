@@ -2,7 +2,7 @@
 {% load liked_user %}
 {% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
+<div class="container-fluid mt-3 pk_saver" data-uuid="{{ user.uuid }}">
     <div class="row">
       <div class="col-md-8">
         <div class="input-group mb-3">
