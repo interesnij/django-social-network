@@ -150,7 +150,7 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
     remove_file_dropdown();
     is_full_dropdown();
   }
-  this.parentElement.parentElement.parentElement.remove();
+  this.parentElement.remove();
 })
 
 
@@ -314,7 +314,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_detail");
       elem_.setAttribute("video-counter", "0");
-      
+
   }};
 
   link_.send(form_data);
