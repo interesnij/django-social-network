@@ -622,7 +622,8 @@ class User(AbstractUser):
 
     def get_all_video_list_uuid(self):
         from video.models import VideoAlbum
-        return VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео").uuid
+        album = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+        return album.uuid
 
     def get_music_list_id(self):
         from music.models import SoundList
