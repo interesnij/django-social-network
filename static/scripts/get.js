@@ -150,7 +150,9 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
     remove_file_dropdown();
     is_full_dropdown();
   }
-  this.parentElement.remove();
+  this.nextElementSibling.remove();
+  this.remove();
+
 })
 
 
