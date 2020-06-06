@@ -60,13 +60,14 @@ on('#ajax', 'change', '.goods_category', function() {
 
 galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
 galleryFeatured = document.querySelector(".product-gallery-featured img");
+big_img = galleryFeatured.querySelector("img");
 console.log(galleryThumbnail);
-console.log(galleryFeatured);
+console.log(big_img);
 
 galleryThumbnail.forEach((item) => {
   on('#ajax', 'mouseover', item, function() {
   //item.addEventListener("mouseover", function () {
     image = item.children[0].src;
-    galleryFeatured.src = image;
+    big_img.src = image;
   });
 });
