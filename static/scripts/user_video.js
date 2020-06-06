@@ -18,7 +18,7 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
   }
 });
 
-on('#ajax', 'click', '.user_video_create_attach', function(e) {
+on('#ajax', 'click', '.create_video_attach_window', function(e) { 
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");

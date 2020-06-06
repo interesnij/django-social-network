@@ -305,7 +305,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/progs/create_video/" + pk + "/", true );
+  link_.open( 'POST', "/video/progs/create_video_attach/" + pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -314,12 +314,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_detail");
       elem_.setAttribute("video-counter", "0");
-      elem_.style.cursor = "pointer";
-      container = document.body.querySelector(".movies_list");
-      container.prepend(elem_);
-      try{container.querySelector(".video_none").style.display = "none"}catch{null};
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+      
   }};
 
   link_.send(form_data);

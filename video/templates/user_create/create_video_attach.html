@@ -1,0 +1,73 @@
+<style>
+  #video_holder{
+  width: 200px;
+  min-width: 200px;
+  border: 2px dashed #FF0000;
+  color: rgba(0,0,0,0.8);
+  padding: 10px;
+  text-align: center;
+  margin:10px;
+  }
+  #video_holder{
+  cursor: pointer;
+  margin:9px;
+  }
+  #video_holder img{
+  width: 172px;
+  height: auto;
+  }
+  .id_image input,
+  .id_image{
+      display: none;
+  }
+  #id_album{
+    height: auto;
+  }
+</style>
+    <form action="" id="create_video_form">
+      {% csrf_token %}
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="title" class="form-control" id="id_title">
+                  </div>
+                  <div class="form-group">
+                    <label>Описание</label>
+                    {{ form_post.description }}
+                  </div>
+                  <div class="form-group">
+                    <label>Ссылка на ролик</label>
+                    <input type="text" name="uri" class="form-control" id="id_uri">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group">
+                    <label>Обложка</label>
+                    <div class="id_image">
+                      <input type="file" name="image" accept="image/*" id="id_image">
+                    </div>
+                    <div id="video_holder">
+                      <h4 style="font-weight:bold;font-size:70px;color:#CECECE">№ 1</h4>
+                      <p>Обложка</p>
+                      <i style="color:#CECECE">(обязательно)</i>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+              <button class="btn btn-secondary create_fullscreen_hide" style="float:none;position:relative;top:0;right:0">Отмена</button>
+              <button type="button" class="btn btn-success float-right create_video_attach_btn">Создать</button>
+            </div>
+        </div>
+    </form>
