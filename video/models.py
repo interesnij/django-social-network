@@ -76,7 +76,7 @@ class VideoAlbum(models.Model):
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False ) 
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
 
     class Meta:
@@ -91,11 +91,11 @@ class VideoAlbum(models.Model):
         return self.video_album.filter(is_deleted=False).count()
 
     def get_queryset(self):
-        queryset = self.video_album.all().order_by("-created")
+        queryset = self.video_album.filter(is_public=True).order_by("-created")
         return queryset
 
     def get_my_queryset(self):
-        queryset = self.video_album.filter(is_public=True).order_by("-created")
+        queryset = self.video_album.all().order_by("-created")
         return queryset
 
     def get_video_count(self):
