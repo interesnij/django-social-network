@@ -104,26 +104,30 @@ class UserMusic(ListView):
 
 
 class UserVideo(ListView):
-    template_name = None
-    paginate_by = 30
+	template_name = None
+	paginate_by = 30
 
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_user(folder="user_video/", template="video.html", request=request)
-        if self.user == request.user:
-            self.video_list = self.user.get_my_video()
-        else:
-            self.video_list = self.user.get_video()
-        return super(UserVideo,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
 
-    def get_context_data(self,**kwargs):
-        context = super(UserVideo,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        return context
+		self.template_name = request.user.get_template_user(folder="user_video_list/", template="list.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		if self.user == request.user:
+			self.video_list = self.album.get_my_queryset()
+		else:
+			self.video_list = self.album.get_queryset()
+		return super(UserVideo,self).get(request,*args,**kwargs)
 
-    def get_queryset(self):
-        video_list = self.video_list
-        return video_list
+	def get_context_data(self,**kwargs):
+		context = super(UserVideo,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['album'] = self.album
+		return context
+
+	def get_queryset(self):
+		video_list = self.video_list
+		return video_list
 
 
 class ProfileUserView(TemplateView):
