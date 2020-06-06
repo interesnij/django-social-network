@@ -587,7 +587,7 @@ class User(AbstractUser):
     def get_video_count(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
         video_query = Q(album=list, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
