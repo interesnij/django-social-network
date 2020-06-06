@@ -58,8 +58,8 @@ on('#ajax', 'change', '.goods_category', function() {
 });
 
 
-galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
-galleryFeatured = document.querySelector(".product-gallery-featured img");
+var galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
+var galleryFeatured = document.querySelector(".big_img");
 console.log(galleryThumbnail);
 console.log(galleryFeatured);
 
