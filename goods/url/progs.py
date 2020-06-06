@@ -1,4 +1,4 @@
-from goods.view.base import *
+from goods.view.progs import *
 from django.conf.urls import url
 
 
