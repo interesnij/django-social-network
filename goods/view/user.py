@@ -27,7 +27,7 @@ class UserGoods(ListView):
     def get_queryset(self):
         goods_list = self.user.get_goods().order_by('-created')
         return goods_list
-        
+
 
 class UserGood(TemplateView):
     template_name = None
@@ -77,7 +77,7 @@ class GoodUserCreate(TemplateView):
             new_good=self.form.save(commit=False)
             new_good.creator=self.user
             new_good=self.form.save()
-            html = render_to_string('good_user/good.html',{'object': new_good,'request': request})
+            html = render_to_response('good_user/good.html',{'object': new_good,'request': request})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
