@@ -3,7 +3,7 @@
 {% block title %}Мои товары{% endblock %}
 {% block content %}
 
-<div class="container-fluid" style="margin-top:30px">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
       <div class="col-md-8">
         <div class="input-group mb-3">
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <button id="u_good_add" data-pk="{{ user.pk }}" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
+        <button id="u_good_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
             Создать товар
         </button>
       </div>

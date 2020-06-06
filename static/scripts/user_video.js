@@ -18,20 +18,6 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
   }
 });
 
-on('#ajax', 'click', '.user_video_create', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
-  var list = loader.querySelectorAll('select');
-  var count = list.length;
-  for(i=0; i<count; i++) {
-    list[i].classList.add("form-control")
-  }
-  $span = document.createElement("span");
-  $span.classList.add("is_comment_video_attach");
-});
-
 on('#ajax', 'click', '.user_video_create_attach', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -44,26 +30,6 @@ on('#ajax', 'click', '.user_video_create_attach', function(e) {
   }
 });
 
-on('#ajax', 'click', '.u_video_detail', function() {
-  counter = this.getAttribute('video-counter');
-  parent = this.parentElement.parentElement;
-  pk = document.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/basic_list/" + pk + "/", loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
-  setTimeout(function() {
-    load_video_playlist(video_player_id + "a", counter);
-    video_player.addListener(FWDUVPlayer.READY, onReady);
-    function onReady(){
-    console.log("video player ready");
-    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
-    setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    get_video_info()
-    }
-  }, 500);
-});
 
 function get_video_info(){
   info_video = document.body.querySelector("#info_video");

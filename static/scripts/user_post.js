@@ -52,6 +52,23 @@ on('#ajax', 'click', '#article_post', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#add_good_user_btn', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_good_user_form"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/goods/user/add/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_good = document.body.createElement("span");
+    new_good.innerHTML = elem;
+    document.body.querySelector("#goods_container").prepend(new_good);
+  }};
+
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
