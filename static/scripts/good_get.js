@@ -56,3 +56,14 @@ on('#ajax', 'change', '.goods_category', function() {
   link.send( null );
   };
 });
+
+galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
+
+galleryFeatured = document.querySelector(".product-gallery-featured img");
+
+galleryThumbnail.forEach((item) => {
+  item.addEventListener("mouseover", function () {
+    image = item.children[0].src;
+    galleryFeatured.src = image;
+  });
+});
