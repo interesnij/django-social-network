@@ -1,7 +1,5 @@
 {% load liked_user %}
 
-{% if object %}
-<div class="mb-4" item-id="{{ object.uuid }}">
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
@@ -96,53 +94,3 @@
             </div>
         </div>
     </div>
-
-</div>
-
-{% endif %}
-
-<div>
-  <script>
-    class Listen {
-      static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
-      static nextLink() {document.body.querySelectorAll('.next_item').forEach( next => next.addEventListener('click', Listen.push_next) );}
-
-      static push_prev(e){
-          e.preventDefault();
-          var url = this.getAttribute('href')
-          var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          prev_link.open( 'GET', this.getAttribute('href'), true );
-          prev_link.send();
-          prev_link.onreadystatechange = function () {
-            if ( this.readyState == 4 && this.status == 200 ) {
-              var loader = document.getElementById('good_loader');
-              var elem_ = document.createElement('span');
-              elem_.innerHTML = prev_link.responseText;
-              loader.innerHTML = '';
-              loader.append(elem_);
-              Listen.prevLink();Listen.nextLink();
-              window.history.pushState({route: url}, "network", url);
-            }
-          }
-      };
-      static push_next(er){
-          er.preventDefault();
-          var url = this.getAttribute('href')
-          var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          prev_link.open( 'GET', url, true );
-          prev_link.send();
-          prev_link.onreadystatechange = function () {
-            if ( this.readyState == 4 && this.status == 200 ) {
-              var loader = document.getElementById('good_loader');
-              var elem_ = document.createElement('span');
-              elem_.innerHTML = prev_link.responseText;
-              loader.innerHTML = '';
-              loader.append(elem_);
-              Listen.prevLink();Listen.nextLink();
-              window.history.pushState({route: url}, "network", url);
-            }
-          }
-      }
-    }
-    Listen.prevLink();Listen.nextLink();
-  </script>
