@@ -300,19 +300,56 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
 on('#ajax', 'click', '.create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/progs/create_video_attach/" + pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    album = document.body.querySelector("#id_album");
+    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    is_full_dropdown(dropdown);
+    img_block = dropdown.parentElement.previousElementSibling;
+
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
-      elem_.classList.add("col-12", "col-md-6", "u_video_detail");
-      elem_.setAttribute("video-counter", "0");
 
+      pk = elem_.querySelector("img").getAttribute('data-pk');
+
+        $input = document.createElement("span");
+        if (img_block.querySelector(".select_video2")){
+            is_full_dropdown()}
+        else if (img_block.querySelector(".select_video1")){
+            $div = document.createElement("div");
+            $div.classList.add("col-md-6", "select_video2");
+            $input.innerHTML = '<input type="hidden" name="select_video2" value="' + pk + '">';
+          }
+        else {
+            $div = document.createElement("div", "select_video1");
+            $div.classList.add("col-md-6", "select_video1");
+            $input.innerHTML = '<input type="hidden" name="select_video" value="' + pk + '">';
+          }
+
+      $span = document.createElement("span");
+      $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+      $img = document.createElement("img");
+      $icon_div = document.createElement("div");
+
+      $span.classList.add("item_preview_delete");
+      $span.setAttribute("tooltip", "Не прикреплять");
+      $span.setAttribute("flow", "up");
+      $img.classList.add("image_fit");
+      $img.src = elem_.querySelector("img").getAttribute('data-src');
+      $icon_div.classList.add("video_icon_play_v2", "u_video_detail");
+      $icon_div.setAttribute("video-counter", "0");
+
+      $div.append($span);
+      $div.append($input);
+      $div.append($img);
+      $div.append($icon_div);
+      img_block.append($div);
+
+      add_file_dropdown()
+      is_full_dropdown();
   }};
 
   link_.send(form_data);
