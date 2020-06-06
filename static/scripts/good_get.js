@@ -59,7 +59,7 @@ on('#ajax', 'change', '.goods_category', function() {
 
 
 galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
-galleryFeatured = document.querySelector(".product-gallery-featured img");
+galleryFeatured = document.querySelector(".product-gallery-featured");
 big_img = galleryFeatured.querySelector("img");
 console.log(galleryThumbnail);
 console.log(big_img);
