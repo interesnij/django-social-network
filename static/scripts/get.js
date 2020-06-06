@@ -151,7 +151,9 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
     is_full_dropdown();
   }
   this.nextElementSibling.remove();
-  this.parentElement.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>"
+  block = document.createElement("div");
+  block.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>";
+  this.parentElement.append(block);
   this.remove();
 })
 
