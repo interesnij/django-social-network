@@ -98,9 +98,9 @@ class PhotoCommentUserCreate(View):
         photos = []
         if self.user == request.user:
             try:
-                album = Album.objects.get(creator_id=request.user.pk, is_generic=True, title="Фото со стены")
+                album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
             except:
-                album = Album.objects.create(creator_id=request.user.pk, is_generic=True, title="Фото со стены")
+                album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, album=album, creator=self.user)
                 photos += [photo,]

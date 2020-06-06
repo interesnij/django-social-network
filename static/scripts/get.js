@@ -337,7 +337,6 @@ on('#ajax', 'click', '.video_load_detail', function() {
     return
   };
 
-  _this.classList.add("video_load_toggle");
   pk = _this.getAttribute('data-pk');
 
     $input = document.createElement("span");
