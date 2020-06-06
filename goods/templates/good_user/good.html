@@ -77,7 +77,7 @@
                     <div class="product-gallery-featured">
                       {% if object.image %}
                         <img src="{{ object.image.url }}" class="img-responsive" alt="">
-                      {% endif %}
+                      {% else %}
                         <img src="/static/images/no_album_photo.png" class="img-responsive" alt="">
                       {% endif %}
                     </div>
