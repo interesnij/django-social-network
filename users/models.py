@@ -620,6 +620,9 @@ class User(AbstractUser):
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
 
+    def get_all_video_list_id(self):
+        return VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео").uuid
+
     def get_music_list_id(self):
         from music.models import SoundList
 
