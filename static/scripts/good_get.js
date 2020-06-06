@@ -18,7 +18,7 @@ on('#ajax', 'click', '#u_good_add', function() {
   open_fullscreen('/goods/user/add/' + pk + '/', loader)
 });
 
-on('#add_good_user_form', 'change', '#category', function() {
+on('#ajax', 'change', '.goods_category', function() { 
   var val = this.value;
   if (val == '') {
     document.getElementById('subcat').innerHTML = "";
