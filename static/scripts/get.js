@@ -350,6 +350,8 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 
       add_file_dropdown()
       is_full_dropdown();
+      document.querySelector(".create_fullscreen").style.display = "none";
+      document.getElementById("create_loader").innerHTML="";
   }};
 
   link_.send(form_data);
