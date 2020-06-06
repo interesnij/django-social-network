@@ -605,7 +605,7 @@ class User(AbstractUser):
     def get_my_video(self):
         from video.models import Video, VideoAlbum
         try:
-            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
             video_query = Q(album=list, is_deleted=False)
             video_list = Video.objects.filter(video_query).order_by("-created")
             return video_list
@@ -615,7 +615,7 @@ class User(AbstractUser):
     def get_last_video(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
         video_query = Q(album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
