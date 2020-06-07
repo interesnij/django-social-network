@@ -604,7 +604,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $div.append($span);
   $div.append($input);
   $div.append($figure);
-  $div.append($media);
+  //$div.append($media);
   img_block.append($div);
 
   add_file_dropdown()
