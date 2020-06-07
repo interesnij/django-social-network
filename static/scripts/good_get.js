@@ -60,15 +60,14 @@ on('#ajax', 'change', '.goods_category', function() {
 
 function good_gallery(loader){
   thumb_list = loader.querySelectorAll(".thumb_list li");
-  thumb = loader.querySelectorAll(".product-gallery");
-  //big_img = thumb.nextElementSibling;
+  thumb = loader.querySelector(".big_img");
   console.log(thumb);
   console.log(thumb_list);
 
   thumb_list.forEach((item) => {
     item.addEventListener("mouseover", function () {
     image = item.children[0].src;
-      big_img.src = image;
+      thumb.src = image;
     });
   });
 }
