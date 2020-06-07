@@ -147,6 +147,11 @@ on('#ajax', 'click', '.select_good', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/good_load/', loader)
 });
+on('#ajax', 'click', '.select_article', function() {
+  this.classList.add("current_file_dropdown");
+  loader = document.getElementById("create_loader");
+  open_fullscreen('/users/load/article_load/', loader)
+});
 
 on('#ajax', 'click', '.delete_thumb', function(e) {
   e.preventDefault();
