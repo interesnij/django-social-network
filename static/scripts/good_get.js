@@ -60,8 +60,9 @@ on('#ajax', 'change', '.goods_category', function() {
 
 function good_gallery(){
   loader = document.getElementById("good_loader");
-  var thumb_list = loader.querySelectorAll(".thumb_list li");
-  var big_img = thumb_list.nextElementSibling;
+  thumb_list = loader.querySelectorAll(".thumb_list li");
+  thumb = loader.querySelector(".thumb_list");
+  big_img = thumb.nextElementSibling;
   console.log(thumb_list);
   console.log(big_img);
 
