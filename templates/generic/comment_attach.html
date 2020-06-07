@@ -26,13 +26,11 @@
   <div class="col-md-6" item-uuid="{{ object.uuid }}">
     <div class="bg-dark text-center has-background-img u_article_detail" style="cursor:pointer">
         <div class="align-items-center">
-               <figure class="background-img" style="position: absolute;">
                  {% if object.article.g_image %}
                    <img class="lazyload image_fit" data-src="{{ object.article.g_image.url }}" alt="">
                  {% else %}
                    <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
                  {% endif %}
-               </figure>
                <div class="container article_info">
                  <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
                  <br>
