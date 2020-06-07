@@ -601,7 +601,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $img.src = _this.querySelector("img").getAttribute('data-src');
   $figure.append($img);
 
-  $h4.innerHTML = _this.querySelector(".article_title")
+  $h4.innerHTML = _this.querySelector(".article_title").innerHTML
 
   $div.append($span);
   $div.append($input);
