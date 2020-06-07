@@ -79,7 +79,8 @@ class ItemReplyUserCreate(View):
             new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, item=None, text=comment.text,
                                                 select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
                                                 select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
-                                                select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'))
+                                                select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'),
+                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'))
             new_comment.notification_user_reply_comment(request.user)
             return render_to_response('u_item_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
