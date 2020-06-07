@@ -65,10 +65,10 @@ function good_gallery(){
   console.log(galleryThumbnail);
   console.log(big_img);
 
-  galleryThumbnail.forEach((item) => {
+  thumb_list.forEach((item) => {
     item.addEventListener("mouseover", function () {
     image = item.children[0].src;
-      galleryFeatured.src = image;
+      big_img.src = image;
     });
   });
 }
