@@ -13,7 +13,7 @@
   {% endfor %}
   {% for object in comment.comment_good.all %}
   <div class="col-md-6 u_good_detail" good-pk="{{ object.pk }}" style="cursor:pointer">
-    <span class="badge badge-primary mb-2" style="position: absolute;right: 15px;">{{ object.title }}</span>
+    <span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;">{{ object.title }}</span>
     {% if object.image %}
       <img class="image_fit_small lazyload" style="width:100%" data-src="{{ object.image.url }}" alt="">
     {% else %}
@@ -31,7 +31,6 @@
           {% else %}
             <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
           {% endif %}
-          <p>{{ object.article.title}}</p>
       </div>
    </div>
   </div>
