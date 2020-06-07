@@ -58,13 +58,13 @@ def get_comment_attach(comment, select_photo, select_photo2, select_video, selec
             raise ValidationError('Товар не найден')
     if select_article:
         try:
-            _select_article = Item.objects.get(pk=select_article)
+            _select_article = Item.objects.get(uuid=select_article)
             _select_article.item_comment.add(comment)
         except:
             raise ValidationError('Статья не найдена')
     if select_article2:
         try:
-            _select_article2 = Item.objects.get(pk=select_article2)
+            _select_article2 = Item.objects.get(uuid=select_article2)
             _select_article2.item_comment.add(comment)
         except:
             raise ValidationError('Статья не найдена')
