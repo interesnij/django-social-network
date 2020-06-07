@@ -495,7 +495,7 @@ on('#ajax', 'click', '.good_load_detail', function() {
   $img.classList.add("image_fit");
   $img.src = _this.querySelector("img").getAttribute('data-src');
 
-  title = _this.querySelector(".article_title").innerHTML;
+  title = _this.querySelector(".good_title").innerHTML;
   $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom: 24px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
      + title + '</span>'
 
@@ -555,12 +555,14 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $img.src = _this.querySelector("img").getAttribute('data-src');
   $figure.append($img);
 
-  $p.innerHTML = _this.querySelector(".article_title").innerHTML
+  title = _this.querySelector(".article_title").innerHTML;
+  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom: 24px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
+     + title + '</span>'
 
   $div.append(get_delete_span());
   $div.append($input);
   $div.append($figure);
-  $div.append($p);
+  $div.append($title);
   img_block.append($div);
 
   add_file_dropdown()
