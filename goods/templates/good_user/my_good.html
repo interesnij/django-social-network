@@ -16,7 +16,7 @@
   cursor: zoom-in;
 }
 
-.product-gallery-thumbnails .thumbnails-list li {
+.product-gallery-thumbnails .thumb_list li {
   margin-bottom: 5px;
   cursor: pointer;
   position: relative;
@@ -24,12 +24,12 @@
   height: 70px;
 }
 
-.thumbnails-list li img {
+.thumb_list li img {
   display: block;
   width: 100%;
 }
 
-.product-gallery-thumbnails .thumbnails-list li:hover::before {
+.product-gallery-thumbnails .thumb_list li:hover::before {
   content: "";
   width: 3px;
   height: 100%;
@@ -38,15 +38,6 @@
   top: 0;
   left: 0;
 }
-
-.product-info .product-seller-recommended {
-  padding: 20px 20px 0 20px;
-}
-
-.product-comments textarea {
-  height: 50px;
-}
-
 </style>
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
@@ -65,7 +56,7 @@
                 <div class="col-md-6">
                   <div class="product-gallery">
                     <div class="product-gallery-thumbnails">
-                      <ol class="thumbnails-list list-unstyled">
+                      <ol class="thumb_list list-unstyled">
                         <li><img src="https://via.placeholder.com/350x350/ffcf5b" class="img-responsive" alt=""></li>
                         <li><img src="https://via.placeholder.com/350x350/f16a22" alt=""></li>
                         <li><img src="https://via.placeholder.com/350x350/d3ffce" alt=""></li>
