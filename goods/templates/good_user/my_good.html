@@ -1,32 +1,16 @@
 {% load liked_user %}
 <style>
-  .product-info .product-gallery {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid rgba(0,0,0,.125);
-}
 
 #big_img {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
   padding: 15px 0;
   cursor: zoom-in;
 }
-
-.product-gallery-thumbnails .thumb_list li {
+.product_gallery_thumbnails .thumb_list li {
   margin-bottom: 5px;
   cursor: pointer;
   position: relative;
   width: 70px;
   height: 70px;
-}
-
-.thumb_list li img {
-  display: block;
-  width: 100%;
 }
 </style>
   {% if prev %}
@@ -47,7 +31,7 @@ fgetrtrgrt5g
                   <div class="product-gallery">
                     <div class="row">
                       <div class="col-md-3">
-                        <div class="product-gallery-thumbnails">
+                        <div class="product_gallery_thumbnails">
                           <ol class="thumb_list list-unstyled">
                             {% if object.image %}
                             <li><img src="{{ object.image.url }}" class="img-responsive" alt=""></li>
