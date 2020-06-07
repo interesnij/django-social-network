@@ -15,7 +15,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 })
 
-on('#ajax', 'click', '.u_article_detail', function() {
+on('#ajax', 'click', '.u_article_detail', function() { 
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("article_loader");
