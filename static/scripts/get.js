@@ -589,7 +589,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
 
   $span = document.createElement("span");
   $img = document.createElement("img");
-  img.style.width = "100%";
+  $img.style.width = "100%";
   $media = document.createElement("div");
   $figure = document.createElement("figure");
 
