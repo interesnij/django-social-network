@@ -21,6 +21,21 @@
     <h5 class="card-title mb-1 header-color-primary text-center" style="white-space: nowrap;">{{ object.title }}</h5>
   </div>
   {% endfor %}
+  {% for object in comment.attached_comment.all %}
+  <div class="col-md-6" item-uuid="{{ object.uuid }}">
+    <span class="badge badge-info mb-2" style="position: absolute;right:5px;">статья</span>
+    <div class="text-center u_article_detail" style="cursor:pointer">
+      <div class="align-items-center">
+          {% if object.article.g_image %}
+            <img class="lazyload image_fit" data-src="{{ object.article.g_image.url }}" alt="">
+          {% else %}
+            <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
+          {% endif %}
+          <p>{{ object.article.title}}</p>
+      </div>
+   </div>
+  </div>
+  {% endfor %}
   {% for object in reply.comment_music.all %}
   <div class="col-md-12 mt-3">
     <div class="media" music-counter="{{ forloop.counter0 }}">
