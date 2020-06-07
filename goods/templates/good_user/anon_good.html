@@ -1,7 +1,44 @@
 {% load liked_user %}
+<style>
+  .product-info .product-gallery {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
 
-{% if object %}
-<div class="mb-4" item-id="{{ object.uuid }}">
+#big_img {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 15px 0;
+  cursor: zoom-in;
+}
+
+.product-gallery-thumbnails .thumb_list li {
+  margin-bottom: 5px;
+  cursor: pointer;
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+
+.thumb_list li img {
+  display: block;
+  width: 100%;
+}
+
+.product-gallery-thumbnails .thumb_list li:hover::before {
+  content: "";
+  width: 3px;
+  height: 100%;
+  background: #007bff;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
@@ -12,71 +49,54 @@
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
-
+fgetrtrgrt5g
     <div class="card mb-4">
         <div class="card-body py-0">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="carosel swiper-location-carousel my-4">
-                        <div data-pagination="{&quot;el&quot;: &quot;.swiper-pagination&quot;}" data-space-between="0" data-slides-per-view="1" class="swiper-container swiper-init swiper-product swiper-container-horizontal">
-                            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3"></span></div>
-                            <div class="swiper-wrapper" style="transform: translate3d(-560px, 0px, 0px); transition-duration: 0ms;">
-                                <div class="swiper-slide text-center swiper-slide-active" style="width: 280px;">
-                                    {% if object.image %}
-                                      <img src="{{ object.image.url }}" alt="">
-                                    {% else %}
-                                      <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                    {% endif %}
-                                </div>
-                                {% if object.image2 %}
-                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
-                                    <img src="{{ object.image2.url }}" alt="">
-                                </div>
-                                {% endif %}
-                                {% if object.image3 %}
-                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
-                                    <img src="{{ object.image3.url }}" alt="">
-                                </div>
-                                {% endif %}
-                                {% if object.image4 %}
-                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
-                                    <img src="{{ object.image4.url }}" alt="">
-                                </div>
-                                {% endif %}
-                                {% if object.image5 %}
-                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
-                                    <img src="{{ object.image5.url }}" alt="">
-                                </div>
-                                {% endif %}
-                            </div>
-                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                <div class="col-md-8">
+                  <div class="product-gallery">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="product-gallery-thumbnails">
+                          <ol class="thumb_list list-unstyled">
+                            {% if object.image %}
+                            <li><img src="{{ object.image.url }}" class="img-responsive" alt=""></li>
+                            {% else %}
+                            <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                            {% endif %}
+                            {% if object.image2 %}
+                            <li><img src="{{ object.image2.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image3 %}
+                            <li><img src="{{ object.image3.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image4 %}
+                            <li><img src="{{ object.image4.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image5 %}
+                            <li><img src="{{ object.image5.url }}" alt=""></li>
+                            {% endif %}
+                          </ol>
                         </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div id="big_img">
+                          {% if object.image %}
+                          <img src="{{ object.image.url }}" class="big_img img-responsive" alt="">
+                          {% else %}
+                          <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                          {% endif %}
+                        </div>
+                      </div>
                     </div>
-                    <div class="row bg-light-secondary text-center">
-                        <div class="col py-3">
-                            <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
-                            <p class="content-color-secondary small mb-0">Цена</p>
-                        </div>
-                        <div class="col py-3">
-                            <h5 class="content-color-primary mb-0">0</h5>
-                            <p class="content-color-secondary small mb-0">Просмотры</p>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <a href="" class="btn btn-block btn-primary pink-gradient mb-3">Написать</a>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-block btn-outline-danger mb-3">В избранное</button>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-                <div class="col-md-6 border-left pr-0">
+
+                <div class="col-md-4 border-left pr-0">
                     <div class="card no-shadow h-100">
                         <div class="card-header">
                             <div class="media">
                                 <div class="media-body">
-                                    <h5 class="content-color-primary my-2">тут что то</h5>
                                     <h3 class="mb-2 header-color-primary">{{ object.title }}</h3>
                                     <h6 class="card-subtitle header-color-secondary">{{ object.sub_category }}</h6>
                                 </div>
@@ -96,53 +116,3 @@
             </div>
         </div>
     </div>
-
-</div>
-
-{% endif %}
-
-<div>
-  <script>
-    class Listen {
-      static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
-      static nextLink() {document.body.querySelectorAll('.next_item').forEach( next => next.addEventListener('click', Listen.push_next) );}
-
-      static push_prev(e){
-          e.preventDefault();
-          var url = this.getAttribute('href')
-          var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          prev_link.open( 'GET', this.getAttribute('href'), true );
-          prev_link.send();
-          prev_link.onreadystatechange = function () {
-            if ( this.readyState == 4 && this.status == 200 ) {
-              var loader = document.getElementById('good_loader');
-              var elem_ = document.createElement('span');
-              elem_.innerHTML = prev_link.responseText;
-              loader.innerHTML = '';
-              loader.append(elem_);
-              Listen.prevLink();Listen.nextLink();
-              window.history.pushState({route: url}, "network", url);
-            }
-          }
-      };
-      static push_next(er){
-          er.preventDefault();
-          var url = this.getAttribute('href')
-          var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          prev_link.open( 'GET', url, true );
-          prev_link.send();
-          prev_link.onreadystatechange = function () {
-            if ( this.readyState == 4 && this.status == 200 ) {
-              var loader = document.getElementById('good_loader');
-              var elem_ = document.createElement('span');
-              elem_.innerHTML = prev_link.responseText;
-              loader.innerHTML = '';
-              loader.append(elem_);
-              Listen.prevLink();Listen.nextLink();
-              window.history.pushState({route: url}, "network", url);
-            }
-          }
-      }
-    }
-    Listen.prevLink();Listen.nextLink();
-  </script>

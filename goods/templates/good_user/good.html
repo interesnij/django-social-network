@@ -6,7 +6,7 @@
   border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
-.product-gallery-featured {
+#big_img {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -16,7 +16,7 @@
   cursor: zoom-in;
 }
 
-.product-gallery-thumbnails .thumbnails-list li {
+.product-gallery-thumbnails .thumb_list li {
   margin-bottom: 5px;
   cursor: pointer;
   position: relative;
@@ -24,12 +24,12 @@
   height: 70px;
 }
 
-.thumbnails-list li img {
+.thumb_list li img {
   display: block;
   width: 100%;
 }
 
-.product-gallery-thumbnails .thumbnails-list li:hover::before {
+.product-gallery-thumbnails .thumb_list li:hover::before {
   content: "";
   width: 3px;
   height: 100%;
@@ -38,15 +38,6 @@
   top: 0;
   left: 0;
 }
-
-.product-info .product-seller-recommended {
-  padding: 20px 20px 0 20px;
-}
-
-.product-comments textarea {
-  height: 50px;
-}
-
 </style>
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
@@ -58,56 +49,54 @@
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
-
+fgetrtrgrt5g
     <div class="card mb-4">
         <div class="card-body py-0">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                   <div class="product-gallery">
-                    <div class="product-gallery-thumbnails">
-                      <ol class="thumbnails-list list-unstyled">
-
-                        <li><img src="https://via.placeholder.com/350x350/ffcf5b" class="img-responsive" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/f16a22" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/d3ffce" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/7937fc" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/930000" alt=""></li>
-                      </ol>
-                    </div>
-                    <div class="product-gallery-featured">
-                      {% if object.image %}
-                        <img src="{{ object.image.url }}" class="img-responsive" alt="">
-                      {% else %}
-                        <img src="/static/images/no_album_photo.png" class="img-responsive" alt="">
-                      {% endif %}
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="product-gallery-thumbnails">
+                          <ol class="thumb_list list-unstyled">
+                            {% if object.image %}
+                            <li><img src="{{ object.image.url }}" class="img-responsive" alt=""></li>
+                            {% else %}
+                            <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                            {% endif %}
+                            {% if object.image2 %}
+                            <li><img src="{{ object.image2.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image3 %}
+                            <li><img src="{{ object.image3.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image4 %}
+                            <li><img src="{{ object.image4.url }}" alt=""></li>
+                            {% endif %}
+                            {% if object.image5 %}
+                            <li><img src="{{ object.image5.url }}" alt=""></li>
+                            {% endif %}
+                          </ol>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div id="big_img">
+                          {% if object.image %}
+                          <img src="{{ object.image.url }}" class="big_img img-responsive" alt="">
+                          {% else %}
+                          <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                          {% endif %}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="row bg-light-secondary text-center">
-                      <div class="col py-3">
-                        <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
-                        <p class="content-color-secondary small mb-0">Цена</p>
-                      </div>
-                      <div class="col py-3">
-                        <h5 class="content-color-primary mb-0">Просмотры</h5>
-                        <p class="content-color-secondary small mb-0"></p>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                    <div class="col">
-                        <a href="" class="btn btn-block btn-primary pink-gradient mb-3">Написать</a>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-block btn-outline-danger mb-3">В избранное</button>
-                    </div>
-                    </div>
                 </div>
 
-                <div class="col-md-6 border-left pr-0">
+                <div class="col-md-4 border-left pr-0">
                     <div class="card no-shadow h-100">
                         <div class="card-header">
                             <div class="media">
                                 <div class="media-body">
-                                    <h5 class="content-color-primary my-2">тут что то</h5>
                                     <h3 class="mb-2 header-color-primary">{{ object.title }}</h3>
                                     <h6 class="card-subtitle header-color-secondary">{{ object.sub_category }}</h6>
                                 </div>
