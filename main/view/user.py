@@ -56,7 +56,8 @@ class ItemCommentUserCreate(View):
                                                 select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
                                                 select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
                                                 select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'),
-                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'))
+                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'),
+                                                select_article = request.POST.get('select_article '), select_article 2 = request.POST.get('select_article 2'))
             new_comment.notification_user_comment(request.user)
             return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
@@ -80,7 +81,8 @@ class ItemReplyUserCreate(View):
                                                 select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
                                                 select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
                                                 select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'),
-                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'))
+                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'),
+                                                select_article = request.POST.get('select_article '), select_article 2 = request.POST.get('select_article 2'))
             new_comment.notification_user_reply_comment(request.user)
             return render_to_response('u_item_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
