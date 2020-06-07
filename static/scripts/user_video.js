@@ -53,9 +53,9 @@ function video_onPlay(){
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('video-counter');
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  uuid = parent.getAttribute('data-uuid');
+  parent = this.parentElement;
+  pk = parent.getAttribute('album-pk');
+  uuid = document.querySelector("pk_saver").getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
