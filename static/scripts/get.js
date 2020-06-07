@@ -194,7 +194,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         $span1.classList.add("item_preview_delete");
         $span1.setAttribute("tooltip", "Не прикреплять");
         $span1.setAttribute("flow", "up");
-        $img1.classList.add("u_photo_detail", "image_fit_small");
+        $img1.classList.add("u_photo_detail", "image_fit");
         $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
         $img1.setAttribute('photo-pk', photo1_pk);
         $div1.append($span1);
@@ -240,7 +240,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       $span2.classList.add("item_preview_delete");
       $span2.setAttribute("tooltip", "Не прикреплять");
       $span2.setAttribute("flow", "up");
-      $img2.classList.add("u_photo_detail", "image_fit_small");
+      $img2.classList.add("u_photo_detail", "image_fit");
       $img2.src = photo_list[1].querySelector("img").getAttribute('data-src');
       $img2.setAttribute('photo-pk', photo2_pk);
       $div2.append($span2);
@@ -296,7 +296,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $span.classList.add("item_preview_delete");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
-  $img.classList.add("u_photo_detail", "image_fit_small");
+  $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
   $img.setAttribute('photo-pk', pk);
   $div.append($span);
@@ -347,7 +347,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
       $span.classList.add("item_preview_delete");
       $span.setAttribute("tooltip", "Не прикреплять");
       $span.setAttribute("flow", "up");
-      $img.classList.add("image_fit_small");
+      $img.classList.add("image_fit");
       $img.src = elem_.querySelector("img").getAttribute('data-src');
       $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
       $icon_div.setAttribute("video-counter", "0");
@@ -403,7 +403,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $span.classList.add("item_preview_delete");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
-  $img.classList.add("image_fit_small");
+  $img.classList.add("image_fit");
   $img.src = _this.getAttribute('data-src');
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
   $icon_div.setAttribute("video-counter", _this.getAttribute('video-counter'));
@@ -538,7 +538,7 @@ on('#ajax', 'click', '.good_load_detail', function() {
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
 
-  $img.classList.add("image_fit_small");
+  $img.classList.add("image_fit");
   $img.src = _this.querySelector("img").getAttribute('data-src');
 
   $info.innerHTML = _this.querySelector(".good_info").innerHTML;
@@ -589,7 +589,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $span = document.createElement("span");
   $img = document.createElement("img");
   $img.style.width = "100%";
-  $img.classList.add("image_fit_small");
+  $img.classList.add("image_fit");
   $media = document.createElement("div");
   $figure = document.createElement("figure");
   $figure.classList.add("u_article_detail");
