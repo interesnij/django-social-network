@@ -63,8 +63,8 @@ function good_gallery(){
   thumb_list = loader.querySelectorAll(".thumb_list li");
   thumb = loader.querySelector(".product-gallery-thumbnails");
   big_img = thumb.nextElementSibling;
-  console.log(thumb);
-  console.log(big_img);
+  //console.log(thumb);
+  //console.log(big_img);
 
   thumb_list.forEach((item) => {
     item.addEventListener("mouseover", function () {
