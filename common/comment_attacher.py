@@ -59,12 +59,12 @@ def get_comment_attach(comment, select_photo, select_photo2, select_video, selec
     if select_article:
         try:
             _select_article = Item.objects.get(uuid=select_article)
-            _select_article.attached_comment.add(comment)
+            _select_article.comment_attach.add(comment)
         except:
             raise ValidationError('Статья не найдена')
     if select_article2:
         try:
             _select_article2 = Item.objects.get(uuid=select_article2)
-            _select_article2.attached_comment.add(comment)
+            _select_article2.comment_attach.add(comment)
         except:
             raise ValidationError('Статья не найдена')
