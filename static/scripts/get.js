@@ -142,6 +142,11 @@ on('#ajax', 'click', '.select_music', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/music_load/', loader)
 });
+on('#ajax', 'click', '.select_good', function() {
+  this.classList.add("current_file_dropdown");
+  loader = document.getElementById("create_loader");
+  open_fullscreen('/users/load/good_load/', loader)
+});
 
 on('#ajax', 'click', '.delete_thumb', function(e) {
   e.preventDefault();
