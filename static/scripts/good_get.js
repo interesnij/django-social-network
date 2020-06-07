@@ -25,7 +25,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
   pk = this.getAttribute('data-pk');
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader);
-  good_gallery(loader);
+  setTimeout(function() {good_gallery(loader)}, 1000)
 });
 
 on('#ajax', 'click', '#c_good_add', function() {
