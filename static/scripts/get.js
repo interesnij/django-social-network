@@ -180,7 +180,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     console.log(photo_list[0]);
     console.log(photo_list[1]);
     if (img_block.querySelector(".select_photo2")){
-        is_full_dropdown()} 
+        is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
         $div1 = document.createElement("div");
         $div1.classList.add("col-md-6", "select_photo2");
@@ -403,7 +403,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $span.classList.add("item_preview_delete");
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
-  $img.classList.add("image_fit");
+  $img.classList.add("image_fit_small");
   $img.src = _this.getAttribute('data-src');
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
   $icon_div.setAttribute("video-counter", _this.getAttribute('video-counter'));
