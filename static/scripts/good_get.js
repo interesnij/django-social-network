@@ -61,7 +61,7 @@ on('#ajax', 'change', '.goods_category', function() {
 function good_gallery(){
   loader = document.getElementById("good_loader");
   thumb_list = loader.querySelectorAll(".thumb_list li");
-  thumb = loader.querySelector(".product-gallery");
+  thumb = document.body.querySelector(".product-gallery");
   //big_img = thumb.nextElementSibling;
   console.log(thumb);
   //console.log(big_img);
