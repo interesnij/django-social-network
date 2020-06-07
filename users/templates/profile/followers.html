@@ -2,14 +2,14 @@
 {% if user.get_pop_followers %}
 <div class="card mb-4" style="">
     <div class="card-header">
+      <a href="{% url 'follows' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Друзья </h4>
             </div>
-            <a href="{% url 'follows' pk=user.pk %}" class="ajax">
-                все
-            </a>
+            все
         </div>
+      </a>
     </div>
 
     {% for object in user.get_pop_followers %}

@@ -4,7 +4,6 @@ from django.db.models import Sum
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.postgres.indexes import BrinIndex
-from django.db import transaction
 from notifications.model.item import *
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q

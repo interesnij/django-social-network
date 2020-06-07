@@ -37,16 +37,16 @@
         {% include 'profile/online_frends.html' %}
 
         {% if user.get_pop_connection %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
+              <a href="{% url 'frends' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
                         <h4 class="content-color-primary mb-0">Друзья </h4>
                     </div>
-                    <a href="{% url 'frends' pk=user.pk %}" class="ajax">
-                        все
-                    </a>
+                    все
                 </div>
+              </a>
             </div>
 
             {% for object in user.get_pop_connection %}
@@ -90,16 +90,16 @@
         {% endif %}
 
         {% if communities %}
-        <div class="card mb-4" style="">
+        <div class="card mb-4">
             <div class="card-header">
+              <a href="{% url 'communities' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
                         <h4 class="content-color-primary mb-0">Группы </h4>
                     </div>
-                    <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-                        все
-                    </a>
+                    все
                 </div>
+              </a>
             </div>
 
             {% for object in communities %}
@@ -144,14 +144,14 @@
         {% if user.get_last_music %}
         <div class="card mb-4 music_playlist" data-pk="{{ user.get_music_list_id }}">
             <div class="card-header">
+              <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
                         <h4 class="content-color-primary mb-0">Аудиозаписи</h4>
                     </div>
-                    <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
-                        все
-                    </a>
+                    все
                 </div>
+              </a>
             </div>
 
             {% for object in user.get_last_music %}

@@ -2,14 +2,14 @@
 {% if user.get_last_music %}
 <div class="card mb-4 music_playlist" data-pk="{{ user.get_music_list_id }}">
     <div class="card-header">
+      <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Аудиозаписи</h4>
             </div>
-            <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
-                все
-            </a>
+            все
         </div>
+      </a>
     </div>
 
     {% for object in user.get_last_music %}

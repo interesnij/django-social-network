@@ -2,14 +2,14 @@
 {% if common_frends %}
 <div class="card mb-4" style="">
     <div class="card-header">
+      <a href="{% url 'frends' pk=user.pk %}#tabhome323" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Общие друзья </h4>
             </div>
-            <a href="{% url 'frends' pk=user.pk %}#tabhome323" class="ajax">
-                все
-            </a>
+            все
         </div>
+      </a>
     </div>
 
     {% for object in common_frends %}
