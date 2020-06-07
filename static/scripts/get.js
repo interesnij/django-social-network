@@ -541,7 +541,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
         $div.classList.add("col-md-6", "select_article1");
         $input.innerHTML = '<input type="hidden" name="select_article" value="' + uuid + '">';
       }
-
+  $title = document.createElement("span");
   $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
 
