@@ -247,7 +247,7 @@ class ItemComment(models.Model):
                         select_article, select_article2):
         from common.comment_attacher import get_comment_attach
 
-        if text or select_photo or select_video or select_music or select_good:
+        if text or select_photo or select_video or select_music or select_good or select_article:
             comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
             get_comment_attach(comment, select_photo, select_photo2, select_video, select_video2, select_music, select_music2, select_good, select_good2, select_article, select_article2)
             channel_layer = get_channel_layer()
