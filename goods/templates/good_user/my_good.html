@@ -55,6 +55,13 @@ fgetrtrgrt5g
             <div class="row">
                 <div class="col-md-8">
                   <div class="product-gallery">
+                    <div id="big_img">
+                      {% if object.image %}
+                        <img src="{{ object.image.url }}" class="big_img img-responsive" alt="">
+                      {% else %}
+                        <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                      {% endif %}
+                    </div>
                     <div class="product-gallery-thumbnails">
                       <ol class="thumb_list list-unstyled">
                         {% if object.image %}
@@ -75,13 +82,6 @@ fgetrtrgrt5g
                         <li><img src="{{ object.image5.url }}" alt=""></li>
                         {% endif %}
                       </ol>
-                    </div>
-                    <div id="big_img">
-                      {% if object.image %}
-                        <img src="{{ object.image.url }}" class="big_img img-responsive" alt="">
-                      {% else %}
-                        <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
-                      {% endif %}
                     </div>
                   </div>
                   <div class="row bg-light-secondary text-center">
