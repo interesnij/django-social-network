@@ -25,7 +25,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
   pk = this.getAttribute('data-pk');
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader);
-  good_gallery()
+  good_gallery(loader);
 });
 
 on('#ajax', 'click', '#c_good_add', function() {
@@ -58,10 +58,9 @@ on('#ajax', 'change', '.goods_category', function() {
   };
 });
 
-function good_gallery(){
-  loader = document.getElementById("good_loader");
+function good_gallery(loader){
   thumb_list = loader.querySelectorAll(".thumb_list li");
-  thumb = document.body.querySelector(".product-gallery");
+  thumb = loader.querySelector(".product-gallery");
   //big_img = thumb.nextElementSibling;
   console.log(thumb);
   //console.log(big_img);
