@@ -5,6 +5,7 @@
     padding: 5px;
     text-align: center;}
   #add_multi_comments_articles:hover {cursor: pointer}
+  .btn-primary { display:none }
 </style>
 
 
@@ -33,7 +34,7 @@
                   <h2 class="text-white">{{ object.article.title}}</h2>
                   <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
                   <hr class="my-3">
-                  <a class="btn btn-primary" role="button">Читать</a>
+                  <a class="btn btn-primary">Читать</a>
                 </div>
         </div>
     </div>
