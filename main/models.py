@@ -39,6 +39,9 @@ class Item(models.Model):
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
 
+    item_attach = models.ManyToManyField("self", blank=True, related_name='attached_item')
+    comment_attach = models.ManyToManyField("main.ItemComment", blank=True, related_name='attached_comment')
+
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name="запись"
