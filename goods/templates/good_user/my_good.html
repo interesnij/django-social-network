@@ -6,7 +6,7 @@
   border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
-#big_img { 
+#big_img {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -66,7 +66,7 @@
                     </div>
                     <div id="big_img">
                       {% if object.image %}
-                        <img src="{{ object.image.url }}" class="img-responsive fgfg" alt="">
+                        <img src="{{ object.image.url }}" class="img-responsive" alt="">
                       {% else %}
                         <img src="/static/images/no_album_photo.png" class="img-responsive" alt="">
                       {% endif %}
