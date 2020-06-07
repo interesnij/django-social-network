@@ -21,7 +21,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
   uuid = container.getAttribute('item-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("article_loader");
-  open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '#article_add', function() {
