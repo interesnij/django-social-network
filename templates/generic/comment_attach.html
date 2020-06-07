@@ -23,7 +23,7 @@
   </div>
   {% endfor %}
   {% for object in comment.attached_comment.all %}
-  <div class="col-md-6">
+  <div class="col-md-6" item-uuid="{{ object.uuid }}">
     <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow u_article_detail" style="cursor:pointer">
         <div class="row align-items-center no-gutters">
                <figure class="background-img">
