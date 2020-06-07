@@ -589,7 +589,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $img = document.createElement("img");
   $img.style.width = "100%";
   $img.classList.add("image_fit");
-  $h4 = document.createElement("h4");
+  $p = document.createElement("p");
   $figure = document.createElement("figure");
   $figure.classList.add("u_article_detail");
 
@@ -601,12 +601,12 @@ on('#ajax', 'click', '.article_load_detail', function() {
   $img.src = _this.querySelector("img").getAttribute('data-src');
   $figure.append($img);
 
-  $h4.innerHTML = _this.querySelector(".article_title").innerHTML
+  $p.innerHTML = _this.querySelector(".article_title").innerHTML
 
   $div.append($span);
   $div.append($input);
   $div.append($figure);
-  $div.append($h4);
+  $div.append($p);
   img_block.append($div);
 
   add_file_dropdown()
