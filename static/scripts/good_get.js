@@ -62,8 +62,8 @@ function good_gallery(){
   loader = document.getElementById("good_loader");
   thumb_list = loader.querySelectorAll(".thumb_list li");
   thumb = loader.querySelector(".product-gallery-thumbnails");
-  big_img = thumb.nextElementSibling;
-  //console.log(thumb);
+  //big_img = thumb.nextElementSibling;
+  console.log(thumb);
   //console.log(big_img);
 
   thumb_list.forEach((item) => {
