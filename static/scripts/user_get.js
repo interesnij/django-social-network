@@ -16,9 +16,7 @@ on('#ajax', 'click', '.fullscreen', function() {
 })
 
 on('#ajax', 'click', '.u_article_detail', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
