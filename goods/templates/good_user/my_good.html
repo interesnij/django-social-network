@@ -57,11 +57,23 @@ fgetrtrgrt5g
                   <div class="product-gallery">
                     <div class="product-gallery-thumbnails">
                       <ol class="thumb_list list-unstyled">
-                        <li><img src="https://via.placeholder.com/350x350/ffcf5b" class="img-responsive" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/f16a22" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/d3ffce" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/7937fc" alt=""></li>
-                        <li><img src="https://via.placeholder.com/350x350/930000" alt=""></li>
+                        {% if object.image %}
+                        <li><img src="{{ object.image.url }}" class="img-responsive" alt=""></li>
+                        {% else %}
+                        <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                        {% endif %}
+                        {% if object.image2 %}
+                        <li><img src="{{ object.image2.url }}" alt=""></li>
+                        {% endif %}
+                        {% if object.image3 %}
+                        <li><img src="{{ object.image3.url }}" alt=""></li>
+                        {% endif %}
+                        {% if object.image4 %}
+                        <li><img src="{{ object.image4.url }}" alt=""></li>
+                        {% endif %}
+                        {% if object.image5 %}
+                        <li><img src="{{ object.image5.url }}" alt=""></li>
+                        {% endif %}
                       </ol>
                     </div>
                     <div id="big_img">
