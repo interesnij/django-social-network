@@ -242,9 +242,8 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
-    def create_comment(cls, commenter, item, parent_comment, text, photo, photo2,
-                        select_photo, select_photo2, select_video, select_video2, select_music, select_music2,
-                        select_good, select_good2):
+    def create_comment(cls, commenter, item, parent_comment, text, select_photo, select_photo2,
+                        select_video, select_video2, select_music, select_music2, select_good, select_good2):
         from common.comment_attacher import get_comment_attach
 
         if text or select_photo or select_video or select_music or select_good:
