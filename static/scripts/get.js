@@ -584,9 +584,12 @@ on('#ajax', 'click', '.article_load_detail', function() {
       }
 
   $div.setAttribute('data-uuid', uuid);
+  $div.style.cursor = "pointer";
+  $div.classList.add("u_article_detail");
 
   $span = document.createElement("span");
   $img = document.createElement("img");
+  img.style.width = "100%";
   $media = document.createElement("div");
   $figure = document.createElement("figure");
 
