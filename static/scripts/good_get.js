@@ -59,8 +59,9 @@ on('#ajax', 'change', '.goods_category', function() {
 });
 
 function good_gallery(){
-  var galleryThumbnail = document.querySelectorAll(".thumbnails-list li");
-  var galleryFeatured = document.querySelector(".product-gallery-featured");
+  loader = document.getElementById("good_loader");
+  var galleryThumbnail = loader.querySelectorAll(".thumbnails-list li");
+  var galleryFeatured = loader.querySelector(".product-gallery-featured");
   console.log(galleryThumbnail);
   console.log(galleryFeatured);
 
