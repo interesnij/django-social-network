@@ -344,7 +344,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
       $span.setAttribute("flow", "up");
       $img.classList.add("image_fit");
       $img.src = elem_.querySelector("img").getAttribute('data-src');
-      $icon_div.classList.add("video_icon_play_v2", "u_video_detail");
+      $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
       $icon_div.setAttribute("video-counter", "0");
 
       $div.append($span);
@@ -400,7 +400,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
   $span.setAttribute("flow", "up");
   $img.classList.add("image_fit");
   $img.src = _this.getAttribute('data-src');
-  $icon_div.classList.add("video_icon_play_v2", "u_video_detail");
+  $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
   $icon_div.setAttribute("video-counter", _this.getAttribute('video-counter'));
 
   $div.append($span);
