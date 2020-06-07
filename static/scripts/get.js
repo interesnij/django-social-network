@@ -551,3 +551,62 @@ on('#ajax', 'click', '.good_load_detail', function() {
   add_file_dropdown()
   is_full_dropdown();
 });
+
+on('#ajax', 'click', '.article_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
+  uuid = _this.getAttribute('item-uuid');
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+    _this.setAttribute("tooltip", "Статья уже выбрана");
+    _this.setAttribute("flow", "up");
+    return
+  };
+
+  media_body = _this.querySelector(".article_info");
+
+  _this.classList.add("attach_toggle");
+
+    $input = document.createElement("span");
+    if (img_block.querySelector(".select_article2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_article1")){
+        $div = document.createElement("div");
+        $div.classList.add("col-md-6", "select_article2");
+        $input.innerHTML = '<input type="hidden" name="select_article2" value="' + uuid + '">';
+      }
+    else {
+        $div = document.createElement("div", "select_article1");
+        $div.classList.add("col-md-6", "select_article1");
+        $input.innerHTML = '<input type="hidden" name="select_article" value="' + uuid + '">';
+      }
+
+  $div.setAttribute('data-uuid', uuid);
+
+  $span = document.createElement("span");
+  $img = document.createElement("img");
+  $media = document.createElement("div");
+  $figure = document.createElement("figure");
+  $figure.classList.add("background-img");
+
+  $span.classList.add("item_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+
+  $img.src = _this.querySelector("img").getAttribute('data-src');
+  $figure.append($img);
+
+  $media.innerHTML = media_body.innerHTML;
+
+  $div.append($span);
+  $div.append($input);
+  $div.append($figure);
+  $div.append($media);
+  img_block.append($div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+});

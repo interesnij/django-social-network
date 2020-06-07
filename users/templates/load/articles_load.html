@@ -18,7 +18,7 @@
 {% if object_list %}
 <div class="articles-load row">
 {% for object in object_list %}
-<div class="col-md-6 article_load_detail" style="cursor:pointer">
+<div class="col-md-6 article_load_detail" style="cursor:pointer" data-uuid="{{ object.uuid }}">
      <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
          <div class="row align-items-center no-gutters">
                 <figure class="background-img">
@@ -28,7 +28,7 @@
                     <img class="lazyload" data-src="/static/images/no-image.jpg" />
                   {% endif %}
                 </figure>
-                <div class="container">
+                <div class="container article_info">
                   <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
                   <br>
                   <h2 class="text-white">{{ object.article.title}}</h2>
