@@ -496,8 +496,8 @@ on('#ajax', 'click', '.good_load_detail', function() {
   img_block = dropdown.parentElement.previousElementSibling;
 
   if (img_block.querySelector( '[good-pk=' + '"' + _this.getAttribute('good-pk') + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
+    _this.setAttribute("tooltip", "Товар уже выбран");
+    _this.setAttribute("flow", "up");
     return
   };
 
