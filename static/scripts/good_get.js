@@ -62,7 +62,7 @@ function good_gallery(){
   loader = document.getElementById("good_loader");
   var thumb_list = loader.querySelectorAll(".thumb_list li");
   var big_img = loader.querySelector("#big_img");
-  console.log(galleryThumbnail);
+  console.log(thumb_list);
   console.log(big_img);
 
   thumb_list.forEach((item) => {
