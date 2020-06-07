@@ -64,9 +64,8 @@ console.log(galleryThumbnail);
 console.log(galleryFeatured);
 
 galleryThumbnail.forEach((item) => {
-  on('#ajax', 'mouseover', item, function() {
-  //item.addEventListener("mouseover", function () {
-    image = item.children[0].src;
+  item.addEventListener("mouseover", function () {
+  image = item.children[0].src;
     galleryFeatured.src = image;
   });
 });
