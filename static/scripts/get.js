@@ -487,5 +487,59 @@ on('#ajax', 'click', '.item_preview_delete', function() {
   is_full_dropdown();
 });
 
-
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
+
+on('#ajax', 'click', '.good_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown();
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[good-pk=' + '"' + _this.getAttribute('good-pk') + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+
+  _this.classList.add("good_load_toggle");
+  pk = _this.getAttribute('good-pk');
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
+
+    $input = document.createElement("span");
+    $span = document.createElement("span");
+    $img = document.createElement("img");
+    $info = document.createElement("span");
+
+    if (img_block.querySelector(".select_good2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_good1")){
+        $div = document.createElement("div");
+        $div.classList.add("col-md-6", "select_good2");
+        $input.innerHTML = '<input type="hidden" name="select_good2" value="' + pk + '">';;
+      }
+    else {
+        $div = document.createElement("div", "select_good1");
+        $div.classList.add("col-md-6", "select_good1");
+        $input.innerHTML = '<input type="hidden" name="select_good" value="' + pk + '">';
+      }
+
+  $div.setAttribute('data-pk', pk);
+
+  $span.innerHTML = '<svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.classList.add("item_preview_delete");
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+
+  $img.classList.add("u_good_detail", "image_fit");
+  $img.src = _this.querySelector("img").getAttribute('data-src');
+
+  $info.innerHTML = _this.querySelector(".good_info").innerHTML;
+  $div.append($span);
+  $div.append($input);
+  $div.append($img);
+  $div.append($info);
+  img_block.append($div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+});
