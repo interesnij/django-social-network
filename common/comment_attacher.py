@@ -5,8 +5,8 @@ from gallery.models import Photo
 from goods.models import Good
 
 
-def get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2,
-                        select_music, select_music2):
+def get_comment_attach(comment, select_photo, select_photo2, select_video, select_video2,
+                        select_music, select_music2, select_good, select_good2):
     if select_photo:
         try:
             _select_photo = Photo.objects.get(pk=select_photo, is_public=True)
