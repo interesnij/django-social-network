@@ -597,7 +597,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
 
   $p.innerHTML = _this.querySelector(".article_title").innerHTML
 
-  $div.append(get_delete_span());
+  $div.append(get_delete_span()); 
   $div.append($input);
   $div.append($figure);
   $div.append($p);
