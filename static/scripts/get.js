@@ -559,7 +559,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
   uuid = _this.getAttribute('item-uuid');
   img_block = dropdown.parentElement.previousElementSibling;
 
-  if (img_block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+  if (img_block.querySelector( '[item-uuid=' + '"' + uuid + '"' + ']' )){
     _this.setAttribute("tooltip", "Статья уже выбрана");
     _this.setAttribute("flow", "up");
     return
@@ -583,7 +583,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
         $input.innerHTML = '<input type="hidden" name="select_article" value="' + uuid + '">';
       }
 
-  $div.setAttribute('data-uuid', uuid);
+  $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
 
   $span = document.createElement("span");
