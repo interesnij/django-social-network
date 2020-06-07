@@ -34,7 +34,7 @@ class UserMusicsList(ListView):
 		return super(UserMusicsList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		musics_list = self.request.user.get_music().order_by('-created')
+		musics_list = self.request.user.get_music().order_by('-created_at')
 		return musics_list
 
 
