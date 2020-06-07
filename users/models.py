@@ -426,7 +426,7 @@ class User(AbstractUser):
         from article.models import Article
         from moderation.models import ModeratedObject
 
-        articles_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        articles_query = Q(creator_id=self.id, is_deleted=False)
         exclude_reported_and_approved_articles_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         articles_query.add(exclude_reported_and_approved_articles_query, Q.AND)
         articles = Article.objects.filter(articles_query)
@@ -623,7 +623,7 @@ class User(AbstractUser):
     def get_all_video_list_uuid(self):
         from video.models import VideoAlbum
         album = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
-        return album.uuid 
+        return album.uuid
 
     def get_music_list_id(self):
         from music.models import SoundList
