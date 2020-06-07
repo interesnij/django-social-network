@@ -60,7 +60,7 @@ on('#ajax', 'change', '.goods_category', function() {
 
 function good_gallery(loader){
   thumb_list = loader.querySelectorAll(".thumb_list li");
-  thumb = loader.querySelector(".product-gallery");
+  thumb = loader.querySelectorAll(".product-gallery");
   //big_img = thumb.nextElementSibling;
   console.log(thumb);
   console.log(thumb_list);
