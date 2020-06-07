@@ -24,8 +24,8 @@
   {% endfor %}
   {% for object in comment.attached_comment.all %}
   <div class="col-md-6" item-uuid="{{ object.uuid }}">
-    <div class="bg-dark text-center has-background-img position-relative box-shadow u_article_detail" style="cursor:pointer">
-        <div class="align-items-center no-gutters">
+    <div class="bg-dark text-center has-background-img u_article_detail" style="cursor:pointer">
+        <div class="align-items-center">
                <figure class="background-img" style="position: absolute;">
                  {% if object.article.g_image %}
                    <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
