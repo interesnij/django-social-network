@@ -28,16 +28,6 @@
   display: block;
   width: 100%;
 }
-
-.product-gallery-thumbnails .thumb_list li:hover::before {
-  content: "";
-  width: 3px;
-  height: 100%;
-  background: #007bff;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 </style>
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
