@@ -2430,7 +2430,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary:hover {
-    color: #fff;
+    color: #fff !important;
     background-color: #5353ff;
     border-color: #4646ff
 }
