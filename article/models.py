@@ -12,8 +12,8 @@ class Article(Item):
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
     content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
-    item = models.ManyToManyField('main.Item', blank=True, related_name='item_article')
-    item_comment = models.ManyToManyField('main.ItemComment', blank=True, related_name='comment_article')
+    item = models.ManyToManyField("main.Item", blank=True, related_name='item_good')
+	item_comment = models.ManyToManyField("main.ItemComment", blank=True, related_name='comment_good')
 
     @classmethod
     def create_article(cls, creator, title=None, community=None, g_image=None, content=None, created=None, is_draft=False, status= None, comments_enabled=None ):

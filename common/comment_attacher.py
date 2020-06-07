@@ -3,7 +3,7 @@ from video.models import Video
 from music.models import SoundcloudParsing
 from gallery.models import Photo
 from goods.models import Good
-from article.models import Article
+from main.models import Item
 
 
 def get_comment_attach(comment, select_photo, select_photo2, select_video, select_video2,
@@ -58,13 +58,13 @@ def get_comment_attach(comment, select_photo, select_photo2, select_video, selec
             raise ValidationError('Товар не найден')
     if select_article:
         try:
-            _select_article = Article.objects.get(uuid=select_article)
-            _select_article.comment_article.add(comment)
+            _select_article = Item.objects.get(uuid=select_article)
+            _select_article.item_comment.add(comment)
         except:
             raise ValidationError('Статья не найдена')
     if select_article2:
         try:
-            _select_article2 = Article.objects.get(uuid=select_article2)
-            _select_article2.comment_article.add(comment)
+            _select_article2 = Item.objects.get(uuid=select_article2)
+            _select_article2.item_comment.add(comment)
         except:
             raise ValidationError('Статья не найдена')
