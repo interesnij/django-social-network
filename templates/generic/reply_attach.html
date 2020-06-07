@@ -10,7 +10,7 @@
       <div class="video_icon_play_v2 u_video_detail" video-counter="{{ forloop.counter0 }}"></div>
   </div>
   {% endfor %}
-  {% for object in comment.comment_good.all %}
+  {% for object in reply.comment_good.all %}
   <div class="col-md-6 u_good_detail" good-pk="{{ object.pk }}" style="cursor:pointer">
     <span class="badge badge-primary mb-2" style="position: absolute;right: 15px;">товар</span>
         {% if object.image %}
