@@ -53,10 +53,10 @@ class ItemCommentUserCreate(View):
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
             new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text,
-                                                photo=form_post.cleaned_data['photo'], photo2=form_post.cleaned_data['photo2'],
                                                 select_photo = request.POST.get('select_photo'), select_photo2 = request.POST.get('select_photo2'),
                                                 select_video = request.POST.get('select_video'), select_video2 = request.POST.get('select_video2'),
-                                                select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'))
+                                                select_music = request.POST.get('select_music'), select_music2 = request.POST.get('select_music2'),
+                                                select_good = request.POST.get('select_good'), select_good2 = request.POST.get('select_good2'))
             new_comment.notification_user_comment(request.user)
             return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:

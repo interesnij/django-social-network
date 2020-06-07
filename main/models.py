@@ -243,23 +243,24 @@ class ItemComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, item, parent_comment, text, photo, photo2,
-                        select_photo, select_photo2, select_video, select_video2, select_music, select_music2):
+                        select_photo, select_photo2, select_video, select_video2, select_music, select_music2,
+                        select_good, select_good2):
         from common.comment_attacher import get_comment_attach
 
-        if not text and not photo and not select_photo and not select_video and not select_music:
-            raise ValidationError('Напишите текст или прикрепите что-нибудь')
-
-        comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
-        get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2, select_music, select_music2)
-        channel_layer = get_channel_layer()
-        payload = {
+        if text or select_photo or select_video or select_music or select_good:
+            comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
+            get_comment_attach(comment, select_photo, select_photo2, select_video, select_video2, select_music, select_music2, select_good, select_good2)
+            channel_layer = get_channel_layer()
+            payload = {
                 "type": "receive",
                 "key": "comment_item",
                 "actor_name": comment.commenter.get_full_name()
             }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
-        comment.save()
-        return comment
+            async_to_sync(channel_layer.group_send)('notifications', payload)
+            comment.save()
+            return comment
+        else:
+            raise ValidationError('Напишите текст или прикрепите что-нибудь')
 
 
 class ItemMute(models.Model):

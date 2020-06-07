@@ -1,25 +1,12 @@
 from rest_framework.exceptions import ValidationError
 from video.models import Video
 from music.models import SoundcloudParsing
-from gallery.models import Album, Photo
+from gallery.models import Photo
+from goods.models import Good
 
 
 def get_comment_attach(comment, photo, photo2, select_photo, select_photo2, select_video, select_video2,
                         select_music, select_music2):
-    if photo:
-        try:
-            album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
-        except:
-            album=Album.objects.create(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
-        _photo = Photo.objects.create(creator=commenter, file=photo,community=None,is_public=True, album=album)
-        _photo.item_comment.add(comment)
-    if photo2:
-        try:
-            album=Album.objects.get(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
-        except:
-            album=Album.objects.create(creator=commenter, title="Сохраненные фото", is_generic=True, community=None)
-        _photo2 = Photo.objects.create(creator=commenter, file=photo2,community=None,is_public=True, album=album)
-        _photo2.item_comment.add(comment)
     if select_photo:
         try:
             _select_photo = Photo.objects.get(pk=select_photo, is_public=True)
@@ -56,3 +43,15 @@ def get_comment_attach(comment, photo, photo2, select_photo, select_photo2, sele
             _select_music2.item_comment.add(comment)
         except:
             raise ValidationError('Аудиозапись не найдена')
+    if select_good:
+        try:
+            _select_good = Good.objects.get(pk=select_good)
+            _select_good.item_comment.add(comment)
+        except:
+            raise ValidationError('Товар не найден')
+    if select_good2:
+        try:
+            _select_good2 = Good.objects.get(pk=select_good2)
+            _select_good2.item_comment.add(comment)
+        except:
+            raise ValidationError('Товар не найден')
