@@ -24,6 +24,7 @@
   {% endfor %}
   {% for object in comment.attached_comment.all %}
   <div class="col-md-6" item-uuid="{{ object.uuid }}">
+    <span class="badge badge-info mb-2" style="position: absolute;right: 15px;">статья</span>
     <div class="text-center u_article_detail" style="cursor:pointer">
       <div class="align-items-center">
           {% if object.article.g_image %}
