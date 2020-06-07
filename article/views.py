@@ -47,7 +47,7 @@ class ArticleCommunityDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_template_list(folder="c_article/", template="article.html", request=request)
+        self.template_name = self.community.get_template_list(folder="c_article/", template="article.html", request=request)
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
