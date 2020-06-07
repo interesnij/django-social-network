@@ -499,7 +499,7 @@ on('#ajax', 'click', '.good_load_detail', function() {
 
   $div.append(get_delete_span());
   $div.append($input);
-  $div.append($title.innerHTML);
+  $div.append($title);
   $div.append($img);
   img_block.append($div);
 
