@@ -56,6 +56,10 @@ on('#ajax', 'click', '.u_itemComment', function() {
   toast_success("Комментарий опубликован!")
 });
 
+on('#ajax', 'click', '.test_toast', function() {
+  toast_success("Комментарий опубликован!")
+});
+
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/user/reply-comment/')
