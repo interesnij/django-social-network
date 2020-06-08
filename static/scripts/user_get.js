@@ -59,11 +59,10 @@ on('#ajax', 'click', '.u_item_comments', function() {
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("current_file_dropdown")
   }} catch { null }
-
+  this.classList.toggle("comments_open");
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
-  this.classList.toggle("comments_open");
   //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/user/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
