@@ -77,6 +77,7 @@ function good_gallery(loader){
 on('#ajax', 'click', '#add_good_user_btn', function() {
   pk_block = document.body.querySelector(".pk_saver");
   pk = pk_block.getAttribute("data-pk");
+  loader = document.body.querySelector("#good_loader");
   form_data = new FormData(document.body.querySelector("#add_good_user_form"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/user/add/" + pk + "/", true );
@@ -86,7 +87,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     elem = link_.responseText;
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
-    if (pk_block.querySelector(".is_attach")){
+    if (loader.querySelector(".is_attach")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
