@@ -82,3 +82,37 @@ class GoodUserCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+
+class GoodUserCreateAttach(TemplateView):
+    template_name="good_user/add_attach.html"
+    form=None
+    success_url="/"
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form=GoodForm(initial={"creator":self.user})
+        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from goods.models import GoodSubCategory, GoodCategory
+
+        context=super(GoodUserCreateAttach,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        context["sub_categories"]=GoodSubCategory.objects.only("id")
+        context["categories"]=GoodCategory.objects.only("id")
+        context["user"]=self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form=GoodForm(request.POST,request.FILES)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.form.is_valid():
+            new_good=self.form.save(commit=False)
+            new_good.creator=self.user
+            new_good=self.form.save()
+            html = render_to_response('good_user/good.html',{'object': new_good,'request': request})
+            return HttpResponse(html)
+        else:
+            return HttpResponseBadRequest()
+        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)

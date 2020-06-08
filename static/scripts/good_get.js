@@ -41,10 +41,7 @@ on('#ajax', 'click', '#u_good_add', function() {
 on('#ajax', 'click', '#good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user/add/' + pk + '/', loader);
-  $span = document.createElement("span");
-  $span.classList.add("is_attach");
-  loader.add($span)
+  open_fullscreen('/goods/user/add_attach/' + pk + '/', loader);
 });
 
 on('#ajax', 'change', '.goods_category', function() {
