@@ -66,9 +66,6 @@ on('#ajax', 'change', '.goods_category', function() {
 function good_gallery(loader){
   thumb_list = loader.querySelectorAll(".thumb_list li");
   thumb = loader.querySelector(".big_img");
-  console.log(thumb);
-  console.log(thumb_list);
-
   thumb_list.forEach((item) => {
     item.addEventListener("mouseover", function () {
     image = item.children[0].src;
@@ -88,7 +85,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     elem = link_.responseText;
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
-    if (document.body.querySelector(".is_attach")){
+    if (form_data.querySelector(".is_attach")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
@@ -129,12 +126,11 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       $div.append($img);
       img_block.append($div);
       add_file_dropdown()
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
     } else {
     document.body.querySelector("#goods_container").prepend(new_good);
   }
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
   }};
-
   link_.send(form_data);
 });
