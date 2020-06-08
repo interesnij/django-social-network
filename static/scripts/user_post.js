@@ -17,6 +17,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(new_post.querySelector(".card")),
+                                       toast_info("Запись опубликована"),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");
   }};
