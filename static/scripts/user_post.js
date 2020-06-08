@@ -69,10 +69,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
     response = new_post.querySelector(".comment");
     form.parentElement.previousElementSibling.append(response);
     form.querySelector(".img_block").innerHTML = "";
-    form_dropdown = form.querySelector(".current_file_dropdown");
-    form_dropdown.classList.remove("current_file_dropdown");
-    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
-    form_dropdown.parentElement.parentElement.classList.add("files_null")
+    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
   }};
 
   link_.send(form_comment);
@@ -81,7 +78,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
-  reply_stream = form.parentElement.nextElementSibling.nextElementSibling;
+  reply_stream = form.parentElement.parentElement.querySelector(".stream_reply_comments");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', '/user/reply-comment/', true );
@@ -97,10 +94,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     reply_stream.classList.add("replies_open");
 
     form.querySelector(".img_block").innerHTML = "";
-    form_dropdown = form.querySelector(".current_file_dropdown");
-    form_dropdown.classList.remove("current_file_dropdown");
-    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
-    form_dropdown.parentElement.parentElement.classList.add("files_null")
+    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
   }};
 
   link_.send(form_comment);
@@ -125,10 +119,7 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
     reply_stream.append(new_post);
 
     form.querySelector(".img_block").innerHTML = "";
-    form_dropdown = form.querySelector(".current_file_dropdown");
-    form_dropdown.classList.remove("current_file_dropdown");
-    form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
-    form_dropdown.parentElement.parentElement.classList.add("files_null")
+    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
   }};
 
   link_.send(form_comment);
