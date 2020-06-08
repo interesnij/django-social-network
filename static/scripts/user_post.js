@@ -18,8 +18,8 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post.innerHTML = elem;
     new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(new_post.querySelector(".card")),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
-                                    :  null;
-  }else{toast_error("Нужно написать или прикрепить что-нибудь!")}};
+                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+  }};
 
   link_.send(form_data);
 });
