@@ -125,14 +125,17 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       $div.append($title);
       $div.append($img);
       img_block.append($div);
-      add_file_dropdown()
+      add_file_dropdown();
+      toast_info("Товар создан!")
     } else {
       goods = document.body.querySelector("#goods_container");
-      goods.prepend(new_good);
-      goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null;
+      new_good ? (goods.prepend(new_good), toast_info("Товар создан!"),
+                  goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
+               :  null;
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
+  new_good ? toast_info("Товар создан!") : toast_error("Название, обложка, категория - обязательные поля!");
   }};
   link_.send(form_data);
 });
