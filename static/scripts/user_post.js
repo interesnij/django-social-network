@@ -52,80 +52,21 @@ on('#ajax', 'click', '#article_post', function() {
   link_.send(form_data);
 });
 
-function send_comment(form, block, link){
-  form_comment = new FormData(form);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', link, true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    form.querySelector(".form-control-rounded").value="";
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    block.append(new_post);
-
-    form.querySelector(".img_block").innerHTML = "";
-    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
-  }};
-
-  link_.send(form_comment);
-}
-
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  form_comment = new FormData(form);
   send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/')
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  form_comment = new FormData(form);
-  reply_stream = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', '/user/reply-comment/', true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    form.querySelector(".form-control-rounded").value="";
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    reply_stream.append(new_post);
-    reply_stream.classList.add("replies_open");
-
-    form.querySelector(".img_block").innerHTML = "";
-    form.parentElement.style.display = "none";
-    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
-  }};
-
-  link_.send(form_comment);
+  send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/user/reply-comment/')
+  form.parentElement.style.display = "none";
 });
-
 
 on('#ajax', 'click', '.u_replyParentComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  form_comment = new FormData(form);
-  reply_stream = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', '/user/reply-comment/', true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    form.querySelector(".form-control-rounded").value="";
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    reply_stream.append(new_post);
-    form.parentElement.style.display = "none";
-
-    form.querySelector(".img_block").innerHTML = "";
-    try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
-  }};
-
-  link_.send(form_comment);
+  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/user/reply-comment/')
+  form.parentElement.style.display = "none";
 });
 
 
@@ -172,44 +113,30 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.send();
 });
 
+
+function send_change(span, _link, new_class, html){
+  parent = span.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    new_span = document.createElement("span");
+    new_span.classList.add(new_class);
+    new_span.innerHTML = html;
+    parent.innerHTML = "";
+    parent.append(new_span);
+  }};
+  link.send( null );
+}
+
 on('#ajax', 'click', '.item_user_fixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
-
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.open( 'GET', "/user/fixed/" + uuid + "/", true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    new_span = document.createElement("span");
-    new_span.classList.add("dropdown-item", "item_user_unfixed");
-    new_span.innerHTML = "Открепить";
-    parent.innerHTML = "";
-    parent.append(new_span)
-  }};
-  link__.send( null );
-});
-
+  send_change(this, "/user/fixed/", "item_user_unfixed", "Открепить")
+})
 on('#ajax', 'click', '.item_user_unfixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
-
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.open( 'GET', "/user/unfixed/" + uuid + "/", true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    new_span = document.createElement("span");
-    new_span.classList.add("dropdown-item", "item_user_fixed");
-    new_span.innerHTML = "Закрепить";
-    parent.innerHTML = "";
-    parent.append(new_span)
-  }};
-  link__.send( null );
-});
-
+  send_change(this, "/user/fixed/", "item_user_fixed", "Закрепить")
+})
 
 on('#ajax', 'click', '.item_user_off_comment', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
