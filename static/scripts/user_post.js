@@ -16,7 +16,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(response);
+    new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(response),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  null;
   }else{toast_error("Нужно написать или прикрепить что-нибудь!")}};
