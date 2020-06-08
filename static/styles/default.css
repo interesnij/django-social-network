@@ -61,7 +61,13 @@ color: #4CAF50;
 }
 
 .error {
-background-color: #FFEBEE;
+/*background-color: #FFEBEE;*/
+    color: #ffffff !important;
+    background-image: -moz-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+    background-image: -webkit-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+    background-image: -ms-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+    border-color: transparent;
+    background-color: #cf0723 !important;
 }
 .error span {
 color: #EF5350;
@@ -74,7 +80,15 @@ color: #EF5350;
 }
 
 .info {
-background-color: #E3F2FD;
+/*background-color: #E3F2FD;*/
+    color: #ffffff !important;
+    background-image: -moz-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
+    background-image: -webkit-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
+    background-image: -ms-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
+    border-color: transparent;
+    background-color: #8226f5 !important;
+    background-size: cover;
+    background-repeat: repeat;
 }
 .info span {
 color: #42A5F5;
@@ -90,7 +104,13 @@ color: #42A5F5;
 background-color: #FFFDE7;
 }
 .warning span {
-color: #FFD600;
+/*color: #FFD600;*/
+    color: #ffffff !important;
+    background-image: -moz-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+    background-image: -webkit-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+    background-image: -ms-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+    border-color: transparent;
+    background-color: #ff7800 !important;
 }
 .warning progress[value]::-webkit-progress-value {
 background-color: #FFD600;

@@ -56,8 +56,17 @@ on('#ajax', 'click', '.u_itemComment', function() {
   toast_success("Комментарий опубликован!")
 });
 
-on('#ajax', 'click', '.test_toast', function() {
+on('#ajax', 'click', '.success_toast', function() {
   toast_success("Комментарий опубликован!")
+});
+on('#ajax', 'click', '.error_toast', function() {
+  toast_error("Комментарий опубликован!")
+});
+on('#ajax', 'click', '.info_toast', function() {
+  toast_info("Комментарий опубликован!")
+});
+on('#ajax', 'click', '.warning_toast', function() {
+  toast_warning("Комментарий опубликован!")
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
