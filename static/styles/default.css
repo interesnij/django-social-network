@@ -42,7 +42,13 @@ background-color: white;
 }
 
 .success {
-background-color: #E8F5E9;
+/*background-color: #E8F5E9; */
+color: #ffffff !important;
+background-image: -moz-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+background-image: -webkit-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+background-image: -ms-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+border-color: transparent;
+background-color: #07ba7d !important;
 }
 .success span {
 color: #4CAF50;

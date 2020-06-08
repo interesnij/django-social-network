@@ -11,7 +11,7 @@ class ToastManager {
 
 		var body = document.querySelector('#ajax');
 		this.toastsContainer = document.createElement('div');
-		this.toastsContainer.classList.add('toasts', 'alert', 'border-0');
+		this.toastsContainer.classList.add('toasts', 'border-0');
 		body.appendChild(this.toastsContainer);
 	}
 
