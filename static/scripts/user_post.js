@@ -135,7 +135,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   send_change(this, "/user/fixed/", "item_user_unfixed", "Открепить")
 })
 on('#ajax', 'click', '.item_user_unfixed', function() {
-  send_change(this, "/user/fixed/", "item_user_fixed", "Закрепить")
+  send_change(this, "/user/unfixed/", "item_user_fixed", "Закрепить")
 })
 
 on('#ajax', 'click', '.item_user_off_comment', function() {
