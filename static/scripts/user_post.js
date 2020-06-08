@@ -94,7 +94,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".reply");
+    response = new_post.querySelector(".stream_reply_comments");
     reply_stream.append(response);
     reply_stream.classList.add("replies_open");
 
@@ -125,7 +125,7 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".reply");
+    response = new_post.querySelector(".stream_reply_comments");
     reply_stream.append(response);
 
     form.querySelector(".img_block").innerHTML = "";
