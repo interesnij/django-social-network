@@ -75,6 +75,9 @@ function good_gallery(loader){
 }
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
+  if (!document.body.querySelector("#id_title").value){
+    toast_error("Название, обложка, категория - обязательные поля!")
+  }
   pk_block = document.body.querySelector(".pk_saver");
   pk = pk_block.getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_good_user_form"));
@@ -131,8 +134,8 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     } else {
       goods = document.body.querySelector("#goods_container");
       new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
-                  goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
-               :  toast_error("Название, обложка, категория - обязательные поля!");
+                                              goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
+               : null;
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
