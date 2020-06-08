@@ -127,7 +127,9 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       img_block.append($div);
       add_file_dropdown()
     } else {
-    document.body.querySelector("#goods_container").prepend(new_good);
+      goods = document.body.querySelector("#goods_container");
+      goods.prepend(new_good);
+      goods.querySelector(".goods_empty") ? lenta_load.querySelector(".goods_empty").style.display = "none" : null;
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
