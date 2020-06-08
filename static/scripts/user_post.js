@@ -60,7 +60,6 @@ function send_comment(form, block, link){
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
-    form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
