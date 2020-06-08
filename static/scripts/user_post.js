@@ -89,7 +89,6 @@ on('#ajax', 'click', '.u_replyComment', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
-    form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
@@ -97,6 +96,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     reply_stream.classList.add("replies_open");
 
     form.querySelector(".img_block").innerHTML = "";
+    form.parentElement.style.display = "none";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
   }};
 
@@ -115,11 +115,11 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
-    form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     reply_stream.append(new_post);
+    form.parentElement.style.display = "none";
 
     form.querySelector(".img_block").innerHTML = "";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
