@@ -81,7 +81,6 @@ on('#ajax', 'click', '.u_itemComment', function() {
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
-  upload_block = form.parentElement.querySelector(".upload_block");
   reply_stream = form.parentElement.nextElementSibling.nextElementSibling;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -94,8 +93,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".stream_reply_comments");
-    reply_stream.append(response);
+    reply_stream.append(new_post);
     reply_stream.classList.add("replies_open");
 
     form.querySelector(".img_block").innerHTML = "";
@@ -112,7 +110,6 @@ on('#ajax', 'click', '.u_replyComment', function() {
 on('#ajax', 'click', '.u_replyParentComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
-  upload_block = form.parentElement.querySelector(".upload_block");
   reply_stream = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -125,8 +122,7 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".stream_reply_comments");
-    reply_stream.append(response);
+    reply_stream.append(new_post);
 
     form.querySelector(".img_block").innerHTML = "";
     form_dropdown = form.querySelector(".current_file_dropdown");
