@@ -86,7 +86,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
-    new_good = document.body.createElement("span");
+    new_good = document.createElement("span");
     new_good.innerHTML = elem;
     if (document.body.querySelector(".is_attach")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
