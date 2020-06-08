@@ -79,9 +79,9 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     toast_error("Название - обязательное поле!")
   } else if (!document.body.querySelector("#category").value){
     toast_error("Категория - обязательное поле!")
-  } else if (!document.body.querySelector("#description").value){
+  } else if (!document.body.querySelector("#id_description").value){
     toast_error("Описание товара - обязательное поле!")
-  } else if (!document.body.querySelector("#image").value){
+  } else if (!document.body.querySelector("#id_image").value){
     toast_error("Фотография на обложку обязательна!")
   }
   pk_block = document.body.querySelector(".pk_saver");
