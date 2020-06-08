@@ -52,27 +52,31 @@ on('#ajax', 'click', '#article_post', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_itemComment', function() {
-  form = this.parentElement.parentElement.parentElement;
+function send_comment(form, block, link){
   form_comment = new FormData(form);
-  upload_block = form.querySelector(".upload_block");
-
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', '/user/post-comment/', true );
+  link_.open( 'POST', link, true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
+    form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".comment");
-    form.parentElement.previousElementSibling.append(response);
+    reply_stream.append(new_post);
+
     form.querySelector(".img_block").innerHTML = "";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
   }};
 
   link_.send(form_comment);
+}
+
+on('#ajax', 'click', '.u_itemComment', function() {
+  form = this.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/')
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
@@ -89,7 +93,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
-    new_post.innerHTML = elem; 
+    new_post.innerHTML = elem;
     reply_stream.append(new_post);
     reply_stream.classList.add("replies_open");
 
