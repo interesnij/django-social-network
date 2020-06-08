@@ -8,8 +8,9 @@
         <div class="col-12">
             <h5 class="mt-1">Альбомы
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                  {{ user.first_name|gent }} {{ user.last_name|gent }} {% if not user.is_album_exists %}- альбомов нет{% endif %}
+                  {{ user.first_name|gent }} {{ user.last_name|gent }}
                 </a>
+                {% if not user.is_album_exists %}- альбомов нет{% endif %}
             </h5>
         </div>
     </div>

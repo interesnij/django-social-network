@@ -82,9 +82,9 @@ fgetrtrgrt5g
                       <div class="col-md-9">
                         <div id="big_img">
                           {% if object.image %}
-                          <img src="{{ object.image.url }}" class="big_img img-responsive" alt="">
+                          <img data-src="{{ object.image.url }}" class="big_img lazyload" alt="">
                           {% else %}
-                          <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
+                          <img data-src="/static/images/no_album_photo.png" class="big_img lazyload" alt="">
                           {% endif %}
                         </div>
                       </div>

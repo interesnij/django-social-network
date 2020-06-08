@@ -52,7 +52,8 @@ on('#ajax', 'click', '#article_post', function() {
 
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/')
+  send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/');
+  toast_success("Комментарий опубликован!")
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {

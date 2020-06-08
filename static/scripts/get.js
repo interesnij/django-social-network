@@ -1,5 +1,4 @@
 
-
 on('body', 'click', '#add_multi_comments_photos', function(event) {
   this.previousElementSibling.click();
 })
