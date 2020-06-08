@@ -66,6 +66,8 @@ on('#ajax', 'change', '.goods_category', function() {
 function good_gallery(loader){
   thumb_list = loader.querySelectorAll(".thumb_list li");
   thumb = loader.querySelector(".big_img");
+  console.log(thumb_list);
+  console.log(thumb);
   thumb_list.forEach((item) => {
     item.addEventListener("mouseover", function () {
     image = item.children[0].src;
@@ -129,7 +131,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     } else {
       goods = document.body.querySelector("#goods_container");
       goods.prepend(new_good);
-      goods.querySelector(".goods_empty") ? lenta_load.querySelector(".goods_empty").style.display = "none" : null;
+      goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null;
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
