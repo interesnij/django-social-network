@@ -11,7 +11,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    try{form_post.querySelector('#id_text').value = "";}catch{ null };
+    try{form_post.querySelector('.id_text').value = "";}catch{ null };
 
     elem = link_.responseText;
     new_post = document.createElement("span");
