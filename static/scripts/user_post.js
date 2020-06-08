@@ -20,12 +20,12 @@ on('#ajax', 'click', '#form_post_btn', function() {
     if (link_.responseText.indexOf("Нужно") != -1){
       error = form_post.querySelector("#user_post_error");
       error.append(link_.responseText);
-      toast_error("Нужно написать или прикрепить что-нибудь!")
+
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
-  }};
+  }toast_error("Нужно написать или прикрепить что-нибудь!")};
 
   link_.send(form_data);
 });
