@@ -11,14 +11,14 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    try{document.querySelector('#id_text').value = "";}catch{ null };
+    try{form_post.querySelector('#id_text').value = "";}catch{ null };
 
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    response = new_post.querySelector(".card");
-    lenta_load.querySelector(".stream").prepend(response)
-    lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
+    new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(response);
+                                       lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
+                                    :  null;
   }else{toast_error("Нужно написать или прикрепить что-нибудь!")}};
 
   link_.send(form_data);
