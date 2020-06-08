@@ -55,9 +55,9 @@
                       <div class="col-md-9">
                         <div id="big_img" good-pk="{{ object.pk }}">
                           {% if object.image %}
-                          <img data-src="{{ object.image.url }}" class="lazyload" alt="">
+                          <img data-src="{{ object.image.url }}" class="lazyload big_img" alt="">
                           {% else %}
-                          <img data-src="/static/images/no_album_photo.png" class="lazyload" alt="">
+                          <img data-src="/static/images/no_album_photo.png" class="lazyload big_img" alt="">
                           {% endif %}
                         </div>
                       </div>
