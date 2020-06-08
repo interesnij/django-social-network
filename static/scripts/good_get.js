@@ -76,7 +76,13 @@ function good_gallery(loader){
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
   if (!document.body.querySelector("#id_title").value){
-    toast_error("Название, обложка, категория - обязательные поля!")
+    toast_error("Название - обязательное поле!")
+  } else if (!document.body.querySelector("#category").value){
+    toast_error("Категория - обязательное поле!")
+  } else if (!document.body.querySelector("#description").value){
+    toast_error("Описание товара - обязательное поле!")
+  } else if (!document.body.querySelector("#image").value){
+    toast_error("Фотография на обложку обязательна!")
   }
   pk_block = document.body.querySelector(".pk_saver");
   pk = pk_block.getAttribute("data-pk");
