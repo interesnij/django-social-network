@@ -116,7 +116,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 
 function send_change(span, _link, new_class, html){
   parent = span.parentElement;
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + pk + "/", true );
