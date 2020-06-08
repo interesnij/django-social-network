@@ -17,13 +17,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-    if (link_.responseText.indexOf("Нужно") != -1){
-      error = form_post.querySelector("#user_post_error");
-      error.append(link_.responseText);
-
-    }else{
-      lenta_load.querySelector(".stream").prepend(response)
-    }
+    lenta_load.querySelector(".stream").prepend(response)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
   }else{toast_error("Нужно написать или прикрепить что-нибудь!")}};
 
