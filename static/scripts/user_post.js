@@ -23,7 +23,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
-    lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
+    lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
   }};
 
   link_.send(form_data);
