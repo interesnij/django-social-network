@@ -25,7 +25,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
       lenta_load.querySelector(".stream").prepend(response)
     }
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
-  }toast_error("Нужно написать или прикрепить что-нибудь!")};
+  }else{toast_error("Нужно написать или прикрепить что-нибудь!")}};
 
   link_.send(form_data);
 });
