@@ -1,6 +1,6 @@
 {% load humanize thumbnail liked_user %}
 
-<div class="media reply">
+<div class="media reply" style="margin-top:15px">
     <figure>
         {% if reply.commenter.get_avatar %}
           <img src="{{ reply.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
