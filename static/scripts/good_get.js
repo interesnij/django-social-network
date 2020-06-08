@@ -130,7 +130,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       toast_info("Товар создан!")
     } else {
       goods = document.body.querySelector("#goods_container");
-      this.status == 200 ? (goods.prepend(new_good), toast_info("Товар создан!"),
+      new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
                   goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
                :  toast_error("Название, обложка, категория - обязательные поля!");
   }
