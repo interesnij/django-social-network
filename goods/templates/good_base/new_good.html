@@ -1,0 +1,26 @@
+<div class="col-md-6 u_good_detail" style="cursor:pointer">
+        <div class="">
+            <div class="row align-items-center no-gutters">
+                <div class="col new_image" good-pk="{{ object.pk }}">
+                  {% if object.image %}
+                    <img style="width:100%" class="lazyload" data-src="{{ object.image.url }}" alt="">
+                  {% else %}
+                    <svg class="svg_default lazyload" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                  {% endif %}
+                </div>
+            </div>
+            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+            <br>
+            <div class="row bg-light-secondary text-center">
+                <div class="col py-3">
+                    <h5 class="content-color-primary mb-0 good_title">{{ object.price }}</h5>
+                    <p class="content-color-secondary small mb-0">Цена</p>
+                </div>
+                <div class="col py-3">
+                    <h5 class="content-color-primary mb-0">12</h5>
+                    <p class="content-color-secondary small mb-0">Просмотров</p>
+                </div>
+            </div>
+        </div>
+</div>

@@ -91,9 +91,8 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
-
-      big_img = new_good.querySelector("#big_img");
-      pk = big_img.getAttribute('good-pk');
+      xxx = new_good.querySelector(".new_image")
+      pk = xxx.getAttribute('good-pk');
 
         $input = document.createElement("span");
         $img = document.createElement("img");
@@ -117,7 +116,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       $div.classList.add("u_good_detail");
 
       $img.classList.add("image_fit");
-      $img.src = big_img.querySelector("img").getAttribute('data-src');
+      $img.src = xxx.querySelector("img").getAttribute('data-src');
 
       title = new_good.querySelector(".good_title").innerHTML;
       $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>'
