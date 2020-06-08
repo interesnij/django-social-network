@@ -123,7 +123,7 @@ function send_change(span, _link, new_class, html){
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     new_span = document.createElement("span");
-    new_span.classList.add(new_class);
+    new_span.classList.add(new_class, "dropdown-item");
     new_span.innerHTML = html;
     parent.innerHTML = "";
     parent.append(new_span);
