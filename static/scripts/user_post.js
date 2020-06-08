@@ -89,7 +89,7 @@ on('#ajax', 'click', '.u_replyComment', function() {
     form.parentElement.style.display = "none";
     elem = link_.responseText;
     new_post = document.createElement("span");
-    new_post.innerHTML = elem;
+    new_post.innerHTML = elem; 
     reply_stream.append(new_post);
     reply_stream.classList.add("replies_open");
 
