@@ -54,7 +54,6 @@ on('#ajax', 'click', '.u_all_reposts', function() {
 });
 
 on('#ajax', 'click', '.u_item_comments', function() {
-  this.classList.toggle("comments_open");
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
@@ -67,6 +66,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/user/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
+  this.classList.toggle("comments_open");
 });
 on('#ajax', 'click', '.comments_open', function() {
   parent = this.parentElement.parentElement.nextElementSibling;
