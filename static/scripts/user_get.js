@@ -60,7 +60,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("current_file_dropdown")
-  }} catch { null }
+  }} catch { null } 
 
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -72,6 +72,6 @@ on('#ajax', 'click', '.u_item_comments', function() {
 on('#ajax', 'click', '.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".u_load_comments");
-  container.innerHTML=""; 
+  container.innerHTML="";
   this.classList.toggle("comments_close");
 });
