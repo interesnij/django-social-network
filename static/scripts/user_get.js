@@ -63,13 +63,13 @@ on('#ajax', 'click', '.u_item_comments', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
-  this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
+  this.classList.toggle("comments_open");
+  //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/user/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
 });
 on('#ajax', 'click', '.comments_open', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  container = parent.querySelector(".u_load_comments");
-  container.innerHTML="";
-  this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
+  parent = this.parentElement.parentElement.nextElementSibling;
+  parent.innerHTML="";
+  this.classList.toggle("comments_open");  this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
 });
