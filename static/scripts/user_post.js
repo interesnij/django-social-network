@@ -64,7 +64,7 @@ function send_comment(form, block, link){
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    reply_stream.append(new_post);
+    block.append(new_post);
 
     form.querySelector(".img_block").innerHTML = "";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
