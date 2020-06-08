@@ -53,30 +53,25 @@ on('#ajax', 'click', '.u_all_reposts', function() {
   open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.u_item_comments.comments_close', function() {
+on('#ajax', 'click', '.u_item_comments', function() {
   var parent, pk, uuid, url
 
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
-    dropdowns[i].classList.remove("current_file_dropdown");
-    console.log(dropdowns[i])
+    dropdowns[i].classList.remove("current_file_dropdown")
   }} catch { null }
 
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
-  _this = parent.querySelector(".u_item_comments");
-  _this.classList.add("comments_open");
-  _this.classList.remove("comments_close");
+  this.classList.toggle("comments_open");
   url = "/user/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
 });
-on('#ajax', 'click', '.u_item_comments.comments_open', function() {
+on('#ajax', 'click', '.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".u_load_comments");
-  container.innerHTML="";
-  _this = parent.querySelector(".u_item_comments");
-  _this.classList.add("comments_close");
-  _this.classList.remove("comments_open");
+  container.innerHTML=""; 
+  this.classList.toggle("comments_close");
 });

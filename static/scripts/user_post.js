@@ -20,11 +20,9 @@ on('#ajax', 'click', '#form_post_btn', function() {
     if (link_.responseText.indexOf("Нужно") != -1){
       error = form_post.querySelector("#user_post_error");
       error.append(link_.responseText);
-      //setTimeout(error.innerHTML = "", 4000);
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
-
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
 
@@ -139,49 +137,11 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
 })
 
 on('#ajax', 'click', '.item_user_off_comment', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
-  comment_btn = item.querySelector(".u_item_comments");
-  comment_block = item.querySelector(".u_load_comments");
-
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.open( 'GET', "/user/off_comment/" + uuid + "/", true );
-
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    new_span = document.createElement("span");
-    new_span.classList.add("dropdown-item", "item_user_on_comment");
-    new_span.innerHTML = "Включить комментарии";
-    parent.innerHTML = "";
-    parent.append(new_span);
-    comment_btn.style.display = "none";
-    comment_block.style.display = "none"
-  }};
-  link__.send( null );
-});
-
+  send_change(this, "/user/off_comment/", "item_user_on_comment", "Включить комментарии")
+})
 on('#ajax', 'click', '.item_user_on_comment', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
-  comment_btn = item.querySelector(".u_item_comments");
-  comment_block = item.querySelector(".u_load_comments");
-
-  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.open( 'GET', "/user/on_comment/" + uuid + "/", true );
-  link__.onreadystatechange = function () {
-  if ( link__.readyState == 4 && link__.status == 200 ) {
-    new_span = document.createElement("span");
-    new_span.classList.add("dropdown-item", "item_user_off_comment");
-    new_span.innerHTML = "Выключить комментарии";
-    parent.innerHTML = "";
-    parent.append(new_span);
-    comment_btn.style.display = "inline-block";
-    comment_block.style.display = "block"
-  }};
-  link__.send( null );
-});
+  send_change(this, "/user/on_comment/", "item_user_off_comment", "Выключить комментарии")
+})
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
