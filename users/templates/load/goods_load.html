@@ -1,15 +1,15 @@
 {% load humanize liked_user %}
 <style>
-  .user_good_create_attach {
+  #good_add_attach {
     border: 1px dashed green;
     padding: 5px;
     text-align: center;}
-  .user_good_create_attach:hover {cursor: pointer}
+  #good_add_attach:hover {cursor: pointer}
 </style>
 
 
 <h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление товаров</h4>
-<h4 class="user_good_create_attach mb-3">Создать и прикрепить</h4>
+<h4 id="good_add_attach" class="mb-3">Создать и прикрепить</h4>
 
 <div class="videos-load row mb-3">
 {% for object in object_list %}
