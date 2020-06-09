@@ -94,7 +94,7 @@ function send_comment(form, block, link){
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', link, true );
-	//if (form.querySelector("#id_text").value){toast_error("Напишите или прикрепите что-нибудь")}
+	if (!form.querySelector(".text").value){toast_error("Напишите или прикрепите что-нибудь")}
 	console.log(form.querySelector(".text-comment"));
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
