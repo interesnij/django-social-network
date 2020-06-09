@@ -81,7 +81,7 @@ on('#ajax', 'click', '#add_album', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/video/user/add_album/" + pk + "/", true );
+    ajax_link.open( 'POST', "/gallery/user/add_album/" + pk + "/", true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');
