@@ -239,8 +239,8 @@ on('#ajax', 'change', '#photo_add_attach', function() {
 });
 
 function create_preview_photo(div_class, img_src, pk){
-  div = document.createElement("div");
-  div.classList.add("col-md-6", div_class);
+  $div = document.createElement("div");
+  $div.classList.add("col-md-6", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
   $img = document.createElement("img");
