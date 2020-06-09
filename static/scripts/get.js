@@ -10,9 +10,9 @@ on('body', 'click', '.ajax', function(event) {
     ajax_get_reload(url);
   }
 })
-window.addEventListener('popstate', function (e) {
-    window.history.go(-1);
-});
+
+//window.addEventListener('popstate', function (e) {window.history.go(-1);});
+
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   var url = this.getAttribute('href');
