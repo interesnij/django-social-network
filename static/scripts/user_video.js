@@ -150,9 +150,13 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
 });
 
 on('#ajax', 'click', '#create_video_list_btn', function() {
-  form_data = new FormData(document.querySelector("#video_list_create"));
-  pk = this.getAttribute("data-pk");
-  uuid = this.getAttribute("data-uuid");
+  form = document.body.querySelector("#video_list_create");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else {toast_info("Список видео создан!")}
+  
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
     ajax_link.onreadystatechange = function () {
@@ -162,11 +166,13 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-        uuid = rtr.querySelector(".uuid_saver").getAttribute("album-uuid");
+        uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
-        Index.initLink();
-        window.history.pushState({route: '/users/detail/video_list/' + pk + '/' + uuid + '/'}, "network", '/users/detail/video_list/' + pk + '/' + uuid + '/');
+
+        uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
+        pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+        window.history.pushState(null, "vfgffgfgf", '/users/detail/video_list/' + pk + '/' + uuid + '/');
       }
     }
     ajax_link.send(form_data);

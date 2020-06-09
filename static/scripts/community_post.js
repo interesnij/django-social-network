@@ -13,7 +13,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
   } else if (!form.querySelector("#sub_category").value){
     form.querySelector("#sub_category").style.border = "1px #FF0000 solid";
     toast_error("Тематика - обязательное поле!")
-  }
+  } else {toast_info("Сообщество создано!")};
   create_reload_page(form, "/communities/progs/add/", '/communities/')
 });
 

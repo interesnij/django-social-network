@@ -1,3 +1,24 @@
+function create_reload_page(form, post_link, history_link) {
+	form_data = new FormData(form);
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', post_link, true );
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+          ajax = elem_.querySelector("#reload_block");
+          rtr = document.getElementById('ajax');
+          rtr.innerHTML = ajax.innerHTML;
+          pk = rtr.querySelector(".pk_saver").getAttribute("data-pk");
+          window.scrollTo(0,0);
+          document.title = elem_.querySelector('title').innerHTML;
+          if_list(rtr);
+          window.history.pushState(null, "vfgffgfgf", history_link + pk + '/');
+      }
+    }
+    ajax_link.send(form_data);
+}
+
 class ToastManager {
 	constructor(){
 		this.id = 0;
@@ -874,26 +895,6 @@ function music_onReady(){console.log("Аудио плеер готов");}
         }
         ajax_link.send();
     }
-function create_reload_page(form, post_link, history_link) {
-	form_data = new FormData(form);
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', post_link, true );
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-          elem_ = document.createElement('span');
-          elem_.innerHTML = ajax_link.responseText;
-          ajax = elem_.querySelector("#reload_block");
-          rtr = document.getElementById('ajax');
-          rtr.innerHTML = ajax.innerHTML;
-          pk = rtr.querySelector(".pk_saver").getAttribute("data-pk");
-          window.scrollTo(0,0);
-          document.title = elem_.querySelector('title').innerHTML;
-          if_list(rtr);
-          window.history.pushState(null, "vfgffgfgf", history_link + pk + '/');
-      }
-    }
-    ajax_link.send(form_data);
-}
 
 if_list(document.getElementById('ajax'));
 load_chart()
