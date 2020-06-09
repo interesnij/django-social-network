@@ -112,7 +112,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
     toast_error("Фотография на обложку обязательна!")
   }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid"); 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
 
