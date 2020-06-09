@@ -269,8 +269,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
       }
 
   $img = document.createElement("img");
-
-  //$div.setAttribute("data-uuid", uuid);
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
   $img.setAttribute('photo-uuid', pk);

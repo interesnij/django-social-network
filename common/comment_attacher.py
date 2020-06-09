@@ -10,13 +10,13 @@ def get_comment_attach(comment, select_photo, select_photo2, select_video, selec
                         select_music, select_music2, select_good, select_good2, select_article, select_article2):
     if select_photo:
         try:
-            _select_photo = Photo.objects.get(pk=select_photo, is_public=True)
+            _select_photo = Photo.objects.get(uuid=select_photo, is_public=True)
             _select_photo.item_comment.add(comment)
         except:
             raise ValidationError('Фото не найдено')
     if select_photo2:
         try:
-            _select_photo2 = Photo.objects.get(pk=select_photo2, is_public=True)
+            _select_photo2 = Photo.objects.get(uuid=select_photo2, is_public=True)
             _select_photo2.item_comment.add(comment)
         except:
             raise ValidationError('Фото не найдено')
