@@ -141,7 +141,7 @@ class AlbumUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = AlbumForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid() and self.user == request.user and request.is_ajax():
+        if self.form.is_valid() and self.user == request.user:
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"
