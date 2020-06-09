@@ -112,7 +112,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
     toast_error("Фотография на обложку обязательна!")
   }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid"); 
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
 
@@ -154,7 +154,6 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-        uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
 
