@@ -94,7 +94,8 @@ on('#ajax', 'click', '#add_album', function() {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", '/gallery/user/album/' + pk + '/' + uuid + '/');
         toast_info("Альбом изображений создан!");
-        list_load(rtr);
+        album_photo_load =  rtr.querySelector("#album_photo_load");
+        list_load(album_photo_load, album_photo_load.getAttribute("data-link"));
       }
     }
     ajax_link.send(form_data);
