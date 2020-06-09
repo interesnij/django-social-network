@@ -47,57 +47,8 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-secondary remove_form">Отмена</button>
-                <button class="btn btn-success float-right add_com">Создать</button>
+                <button class="btn btn-success float-right add_community_btn">Создать</button>
             </div>
         </div>
     </form>
 </div>
-<script>
-  function loadCat() {
-    var http = new XMLHttpRequest();
-    http.open('GET', '{% url "community_ggg" %}', true);
-    ajax = document.getElementById('ajax')
-    ajax.innerHTML = http.responseText;
-    http.send(null);
-  };
-</script>
-<script>
-  document.querySelector(".add_com").addEventListener("click", (e) => {
-   e.preventDefault;
-   var form10 = document.getElementById('COMMUNITY');
-   var formEntries = new FormData(form10);
-   var options = {
-     method: 'POST',
-     body: formEntries,
-   };
-   fetch('{% url "add_community" %}', options).then(data => {
-     console.log("Все ОК")
-   }).catch(error => {console.log("Все не ОК")});
-});
-</script>
-<script>
-    document.querySelector("#sub_category").addEventListener( 'change', function() {
-        var val = this.value;
-        if (val == '') {
-          document.getElementById('subcat').innerHTML = "";
-        } else {
-          var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link.open( 'GET', "/communities/progs/cat/" + val + "/", true );
-          link.onreadystatechange = function () {
-            if ( link.readyState == 4 ) {
-                if ( link.status == 200 ) {
-                    var sub = document.getElementById("subcat");
-                    sub.innerHTML = link.responseText;
-                }
-            }
-        };
-        link.send( null );
-        };
-    });
-</script>
-<script>
-  document.querySelector(".remove_form").addEventListener("click", () => {
-    document.querySelector(".community_fullscreen").style.display = "none";
-    document.getElementById('community_loader').innerHTML = "";
-  });
-</script>
