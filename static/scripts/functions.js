@@ -94,15 +94,14 @@ function send_comment(form, block, link){
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', link, true );
-	if (!form.querySelector(".text-comment").value){toast_error("Напишите или прикрепите что-нибудь")}
-	console.log(form.querySelector(".text-comment"));
+
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-		block.append(new_post);
+		form.querySelector(".text-comment").value ? block.append(new_post) : toast_error("Напишите или прикрепите что-нибудь");
 		toast_success(" Комментарий опубликован");
     form.querySelector(".img_block").innerHTML = "";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
