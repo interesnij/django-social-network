@@ -172,7 +172,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
 
         uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
         pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-        window.history.pushState(null, "vfgffgfgf", '/users/detail/video_list/' + pk + '/' + uuid + '/');
+        window.history.pushState(null, "vfgffgfgf", '/users/' + pk + '/video/' + '/' + uuid + '/');
         toast_info("Список видео создан!")
       }
     }
