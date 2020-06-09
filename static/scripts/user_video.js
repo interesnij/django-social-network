@@ -107,7 +107,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
   } else if (!form.querySelector("#id_uri").value){
     form.querySelector("#id_uri").style.border = "1px #FF0000 solid";
     toast_error("Ссылка на видео - обязательное поле!")
-  } else if (!form.querySelector("#video_holder").value){
+  } else if (!form.querySelector("#id_image").value){
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
   }
