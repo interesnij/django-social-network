@@ -874,7 +874,8 @@ function music_onReady(){console.log("Аудио плеер готов");}
         }
         ajax_link.send();
     }
-function create_reload_page(form_data, post_link, history_link) {
+function create_reload_page(form, post_link, history_link) {
+	form_data = new FormData(form_data);
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', post_link, true );
     ajax_link.onreadystatechange = function () {

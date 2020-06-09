@@ -8,7 +8,7 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
 on('#ajax', 'click', '#add_community_btn', function() {
   form = document.querySelector("#add_community_form");
   create_reload_page(form, "/communities/progs/add/", '/communities/')
-});
+}); 
 
 on('#ajax', 'change', '#sub_category', function() {
   var val = this.value;
