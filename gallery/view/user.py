@@ -140,7 +140,7 @@ class AlbumUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = AlbumForm(request.POST)
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and self.user == request.user and request.is_ajax():
             album = self.form.save(commit=False)
             if not album.description:
