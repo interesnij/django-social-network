@@ -93,7 +93,8 @@ on('#ajax', 'click', '#add_album', function() {
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", '/gallery/user/album/' + pk + '/' + uuid + '/');
-        toast_info("Альбом изображений создан!")
+        toast_info("Альбом изображений создан!");
+        list_load(block.querySelector("#album_photo_load"), rtr);
       }
     }
     ajax_link.send(form_data);
