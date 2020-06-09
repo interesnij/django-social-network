@@ -90,7 +90,7 @@ on('#ajax', 'click', '#add_album', function() {
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
         uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
-        window.scrollTo(0,0);
+        window.scrollTo(0,0); 
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", '/gallery/user/album/' + pk + '/' + uuid + '/');
         toast_info("Альбом изображений создан!");
