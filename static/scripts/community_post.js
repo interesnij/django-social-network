@@ -7,8 +7,15 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
 
 on('#ajax', 'click', '#add_community_btn', function() {
   form = document.querySelector("#add_community_form");
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else if (!form.querySelector("#sub_category").value){
+    form.querySelector("#sub_category").style.border = "1px #FF0000 solid";
+    toast_error("Тематика - обязательное поле!")
+  }
   create_reload_page(form, "/communities/progs/add/", '/communities/')
-}); 
+});
 
 on('#ajax', 'change', '#sub_category', function() {
   var val = this.value;
