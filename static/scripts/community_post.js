@@ -5,7 +5,7 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
   open_fullscreen("/communities/progs/create_community_window/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.add_community_btn', function() {
+on('#ajax', 'click', '#add_community_btn', function() {
   create_reload_page(document.querySelector("#add_community_form"),
                      "/communities/progs/add/" + this.getAttribute("data-pk") + "/",
                      '/communities/')
