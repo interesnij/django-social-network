@@ -248,8 +248,8 @@ function create_preview_photo(div_class, img_src, pk){
   $img.src = img_src;
   $img.setAttribute('photo-uuid', pk);
   $div.append(get_delete_span());
-  $div.append($input1);
-  $div.append($img1);
+  $div.append($input);
+  $div.append($img);
   return $div
 }
 
