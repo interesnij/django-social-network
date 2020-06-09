@@ -76,7 +76,8 @@ function good_gallery(loader){
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
   if (!document.body.querySelector("#id_title").value){
-    toast_error("Название - обязательное поле!")
+    document.body.querySelector("#id_title").style.border = "1px #FF0000 solid"
+    toast_error("Название - обязательное поле!");
   } else if (!document.body.querySelector("#category").value){
     toast_error("Категория - обязательное поле!")
   } else if (!document.body.querySelector("#id_description").value){
