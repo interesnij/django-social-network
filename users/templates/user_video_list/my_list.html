@@ -72,7 +72,7 @@
               </div>
           </div>
           {% endif %}
-          {% if not album.is_generic or album.title="Все видео" %}
+          {% if not album.is_generic or album.title == "Все видео" %}
           <div class="card mb-3">
               <div class="card-header">
                 <div class="media">
