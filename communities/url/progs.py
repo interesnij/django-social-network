@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^delete_member/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityMemberDelete.as_view()),
 
     url(r'^create_community_window/(?P<pk>\d+)/$', UserCreateCommunityWindow.as_view()),
-    url(r'^add/(?P<pk>\d+)/$', CommunityCreate.as_view(), name="add_community"),
+    url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
     url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
 
     url(r'^add_admin/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdminCreate.as_view()),
