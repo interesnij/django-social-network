@@ -101,7 +101,7 @@ function send_comment(form, block, link){
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    block.append(new_post);
+		new_post.querySelector(".media") ? (block.append(new_post), toast_success(" Комментарий опубликован")) : toast_error("Напишите или прикрепите что-нибудь")
 
     form.querySelector(".img_block").innerHTML = "";
     try{form_dropdown = form.querySelector(".current_file_dropdown");form_dropdown.classList.remove("current_file_dropdown");form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");form_dropdown.parentElement.parentElement.classList.add("files_null")}catch { null }
