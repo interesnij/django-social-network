@@ -181,13 +181,13 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     else if (img_block.querySelector(".select_photo1")){
         $div1 = document.createElement("div");
         $div1.classList.add("col-md-6", "select_photo2");
-        photo1_pk = photo_list[0].getAttribute("photo-pk");
+        photo1_pk = photo_list[0].getAttribute("photo-uuid");
         $input1 = document.createElement("span");
         $input1.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo1_pk + '">';
         $img1 = document.createElement("img");
         $img1.classList.add("u_photo_detail", "image_fit");
         $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
-        $img1.setAttribute('photo-pk', photo1_pk);
+        $img1.setAttribute('photo-uuid', photo1_pk);
         $div1.append(get_delete_span());
         $div1.append($input1);
         $div1.append($img1);
@@ -199,13 +199,13 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     else {
       $div1 = document.createElement("div");
       $div1.classList.add("col-md-6", "select_photo1");
-      photo1_pk = photo_list[0].getAttribute("photo-pk");
+      photo1_pk = photo_list[0].getAttribute("photo-uuid");
       $input1 = document.createElement("span");
       $input1.innerHTML = '<input type="hidden" name="select_photo" value="' + photo1_pk + '">';
       $img1 = document.createElement("img");
       $img1.classList.add("u_photo_detail", "image_fit");
       $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
-      $img1.setAttribute('photo-pk', photo1_pk);
+      $img1.setAttribute('photo-uuid', photo1_pk);
       $div1.append(get_delete_span());
       $div1.append($input1);
       $div1.append($img1);
@@ -215,14 +215,14 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       try{
       $div2 = document.createElement("div");
       $div2.classList.add("col-md-6", "select_photo2");
-      photo2_pk = photo_list[1].getAttribute("photo-pk");
+      photo2_pk = photo_list[1].getAttribute("photo-uuid");
       $input2 = document.createElement("span");
       $input2.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo2_pk + '">';
       $img2 = document.createElement("img");
 
       $img2.classList.add("u_photo_detail", "image_fit");
       $img2.src = photo_list[1].querySelector("img").getAttribute('data-src');
-      $img2.setAttribute('photo-pk', photo2_pk);
+      $img2.setAttribute('photo-uuid', photo2_pk);
       $div2.append(get_delete_span());
       $div2.append($input2);
       $div2.append($img2);
@@ -244,14 +244,14 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
 
-  if (img_block.querySelector( '[photo-pk=' + '"' + _this.getAttribute('photo-pk') + '"' + ']' )){
+  if (img_block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
 
   _this.classList.add("photo_load_toggle");
-  pk = _this.getAttribute('photo-pk');
+  pk = _this.getAttribute('photo-uuid');
   uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
     $input = document.createElement("span");
@@ -273,7 +273,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   $div.setAttribute("data-uuid", uuid);
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = _this.getAttribute('data-src');
-  $img.setAttribute('photo-pk', pk);
+  $img.setAttribute('photo-uuid', pk);
   $div.append(get_delete_span());
   $div.append($input);
   $div.append($img);
