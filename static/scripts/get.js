@@ -179,55 +179,21 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
-        $div1 = document.createElement("div");
-        $div1.classList.add("col-md-6", "select_photo2");
-        photo1_pk = photo_list[0].getAttribute("photo-uuid");
-        $input1 = document.createElement("span");
-        $input1.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo1_pk + '">';
-        $img1 = document.createElement("img");
-        $img1.classList.add("u_photo_detail", "image_fit");
-        $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
-        $img1.setAttribute('photo-uuid', photo1_pk);
-        $div1.append(get_delete_span());
-        $div1.append($input1);
-        $div1.append($img1);
-        img_block.append($div1);
-        add_file_dropdown();
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
+      create_preview_photo("select_photo2", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
+      img_block.append($div);
+      add_file_dropdown();
+      document.querySelector(".create_fullscreen").style.display = "none";
+      document.getElementById("create_loader").innerHTML="";
       }
 
     else {
-      $div1 = document.createElement("div");
-      $div1.classList.add("col-md-6", "select_photo1");
-      photo1_pk = photo_list[0].getAttribute("photo-uuid");
-      $input1 = document.createElement("span");
-      $input1.innerHTML = '<input type="hidden" name="select_photo" value="' + photo1_pk + '">';
-      $img1 = document.createElement("img");
-      $img1.classList.add("u_photo_detail", "image_fit");
-      $img1.src = photo_list[0].querySelector("img").getAttribute('data-src');
-      $img1.setAttribute('photo-uuid', photo1_pk);
-      $div1.append(get_delete_span());
-      $div1.append($input1);
-      $div1.append($img1);
-      img_block.append($div1);
+      create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
+      img_block.append($div);
       add_file_dropdown();
 
       try{
-      $div2 = document.createElement("div");
-      $div2.classList.add("col-md-6", "select_photo2");
-      photo2_pk = photo_list[1].getAttribute("photo-uuid");
-      $input2 = document.createElement("span");
-      $input2.innerHTML = '<input type="hidden" name="select_photo2" value="' + photo2_pk + '">';
-      $img2 = document.createElement("img");
-
-      $img2.classList.add("u_photo_detail", "image_fit");
-      $img2.src = photo_list[1].querySelector("img").getAttribute('data-src');
-      $img2.setAttribute('photo-uuid', photo2_pk);
-      $div2.append(get_delete_span());
-      $div2.append($input2);
-      $div2.append($img2);
-      img_block.append($div2);
+        create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
+      img_block.append($div);
       add_file_dropdown();
 
     } catch { null }
