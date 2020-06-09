@@ -148,7 +148,7 @@ class AlbumUserCreate(TemplateView):
             new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
             return render_to_response('album_user/my_album.html',{'album': new_album, 'user': self.user, 'request': request})
         else:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest() 
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
 
