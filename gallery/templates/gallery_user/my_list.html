@@ -3,7 +3,7 @@
 <div class="row" id="photos_container" style="margin-left: 0;margin-right: 0;">
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4 u_photo_detail" photo-uuid="{{ object.uuid }}">
-      <div class="card rounded-0 border-0 mb-4">
+      <div class="card rounded-0 border-0 mb-4"> 
         {% if object.file %}
           <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="">
         {% else %}
