@@ -124,7 +124,7 @@ class AlbumUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
-    template_name="photo_user/add_album.html"
+    template_name="album_user/add_album.html" 
     form=None
 
     def get(self,request,*args,**kwargs):
