@@ -196,6 +196,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
         document.querySelector(".create_fullscreen").style.display = "none";
         document.getElementById("create_loader").innerHTML="";
       }
+
     else {
       $div1 = document.createElement("div");
       $div1.classList.add("col-md-6", "select_photo1");
@@ -237,6 +238,20 @@ on('#ajax', 'change', '#photo_add_attach', function() {
   link_.send(form_data);
 });
 
+function create_preview_photo(div_class, img_src, pk){
+  div = document.createElement("div");
+  div.classList.add("col-md-6", div_class);
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
+  $img = document.createElement("img");
+  $img.classList.add("u_photo_detail", "image_fit");
+  $img.src = img_src;
+  $img.setAttribute('photo-uuid', pk);
+  $div.append(get_delete_span());
+  $div.append($input1);
+  $div.append($img1);
+  return $div
+}
 
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
@@ -252,29 +267,16 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('photo-uuid');
-  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
 
     $input = document.createElement("span");
     if (img_block.querySelector(".select_photo2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_photo1")){
-        $div = document.createElement("div");
-        $div.classList.add("col-md-6", "select_photo2");
-        $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';;
+        create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
       }
     else {
-        $div = document.createElement("div", "select_photo1");
-        $div.classList.add("col-md-6", "select_photo1");
-        $input.innerHTML = '<input type="hidden" name="select_photo" value="' + pk + '">';
+        create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
       }
-
-  $img = document.createElement("img");
-  $img.classList.add("u_photo_detail", "image_fit");
-  $img.src = _this.getAttribute('data-src');
-  $img.setAttribute('photo-uuid', pk);
-  $div.append(get_delete_span());
-  $div.append($input);
-  $div.append($img);
   img_block.append($div);
 
   add_file_dropdown()
