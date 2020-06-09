@@ -76,13 +76,16 @@ function good_gallery(loader){
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
   if (!document.body.querySelector("#id_title").value){
-    document.body.querySelector("#id_title").style.border = "1px #FF0000 solid"
+    document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else if (!document.body.querySelector("#category").value){
     toast_error("Категория - обязательное поле!")
+    document.body.querySelector("#category").style.border = "1px #FF0000 solid";
   } else if (!document.body.querySelector("#id_description").value){
-    toast_error("Описание товара - обязательное поле!")
+    toast_error("Описание товара - обязательное поле!");
+    document.body.querySelector("#id_description").style.border = "1px #FF0000 solid";
   } else if (!document.body.querySelector("#id_image").value){
+    document.body.querySelector("#id_image").nextElementSibling.style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
   }
   pk_block = document.body.querySelector(".pk_saver");
