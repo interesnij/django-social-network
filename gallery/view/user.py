@@ -124,7 +124,7 @@ class AlbumUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
-    template_name="album_user/add_album.html" 
+    template_name="album_user/add_album.html"
     form=None
 
     def get(self,request,*args,**kwargs):
@@ -143,6 +143,8 @@ class AlbumUserCreate(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.form.is_valid() and self.user == request.user and request.is_ajax():
             album = self.form.save(commit=False)
+            if not.album.description:
+                album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
         else:
             return HttpResponseBadRequest()
