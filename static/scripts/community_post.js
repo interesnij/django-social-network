@@ -6,9 +6,8 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
 });
 
 on('#ajax', 'click', '#add_community_btn', function() {
-  create_reload_page(document.querySelector("#add_community_form"),
-                     "/communities/progs/add/" + this.getAttribute("data-pk") + "/",
-                     '/communities/')
+  form = document.querySelector("#add_community_form");
+  create_reload_page(form, "/communities/progs/add/", '/communities/')
 });
 
 on('#ajax', 'change', '#sub_category', function() {
