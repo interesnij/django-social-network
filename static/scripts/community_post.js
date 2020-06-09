@@ -6,7 +6,7 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
 });
 
 on('#ajax', 'click', '.add_community_btn', function() {
-  create_reload_page(document.querySelector("#COMMUNITY"),
+  create_reload_page(document.querySelector("#add_community_form"),
                      "/communities/progs/add/" + this.getAttribute("data-pk") + "/",
                      '/communities/')
 });
