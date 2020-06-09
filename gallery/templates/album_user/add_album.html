@@ -49,36 +49,4 @@
             </div>
         </div>
     </form>
-
 </div>
-
-<script>
-  $('#add_album').click(function() {
-    var frm_album = $('#form_album_add');
-
-        $.ajax({
-            type: "post",
-            url: "{% url 'album_add_user' uuid=user.uuid %}",
-
-            data: frm_album.serialize(),
-            success: function(data) {
-              $('.add_fullscreen').hide();
-              $('#photo_add_loader').empty();
-              $('#ajax').html('').load("{% url 'album_ggg' uuid=user.uuid %}");
-
-            },
-            error: function(data) {
-                $.toast({
-                    heading: '{{ request.user.first_name }}',
-                    text: 'Для создания альбома нужно заполнить название',
-                    showHideTransition: 'fade',
-                    icon: 'error'
-                });
-                $('#id_description').show()
-            }
-        });
-        return false;
-    });
-
-  $(".remove_form").click(function() {$('.add_fullscreen').hide();$('#photo_add_loader').empty();});
-</script>
