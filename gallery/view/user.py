@@ -129,7 +129,7 @@ class AlbumUserCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.form=AlbumForm()
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

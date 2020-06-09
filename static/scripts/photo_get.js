@@ -22,9 +22,9 @@ on('#ajax', 'click', '.u_photos_add', function() {
 on('#ajax', 'click', '#u_albums_add', function() {
   var container, uuid, loader;
   container = this.parentElement;
-  uuid = this.getAttribute('data-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/add_album/" + uuid + "/", loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/gallery/user/add_album/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_photo_edit', function() {

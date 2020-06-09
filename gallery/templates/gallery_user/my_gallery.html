@@ -2,13 +2,13 @@
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-uuid="{{ user.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои альбомы</h5> {% if not user.is_album_exists %}- альбомов нет{% endif %}
         </div>
         <div class="col-12 col-md-4">
-          <button class="u_albums_add btn btn-outline-success" data-uuid="{{ user.uuid }}" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+          <button class="u_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить альбом
           </button>
         </div>
