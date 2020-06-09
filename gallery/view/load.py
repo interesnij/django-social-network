@@ -18,8 +18,8 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.user.get_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         self.form_image = PhotoDescriptionForm(instance=self.photo)
