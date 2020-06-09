@@ -94,7 +94,7 @@ function send_comment(form, block, link){
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', link, true );
-	(form.querySelector(".img_block") || form.querySelector("#id_text")) ? null : toast_error("Напишите или прикрепите что-нибудь");
+	(form.querySelector(".img_block").trim() != "" || form.querySelector("#id_text").trim() != "") ? null : toast_error("Напишите или прикрепите что-нибудь");
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form.querySelector(".form-control-rounded").value="";
