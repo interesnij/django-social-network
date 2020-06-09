@@ -155,8 +155,8 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else {toast_info("Список видео создан!")}
-  
+  } else { null }
+
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
     ajax_link.onreadystatechange = function () {
@@ -173,6 +173,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
         pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
         window.history.pushState(null, "vfgffgfgf", '/users/detail/video_list/' + pk + '/' + uuid + '/');
+        toast_info("Список видео создан!")
       }
     }
     ajax_link.send(form_data);
