@@ -242,7 +242,8 @@ function create_preview_photo(div_class, img_src, pk){
   $div = document.createElement("div");
   $div.classList.add("col-md-6", div_class);
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="select_photo2" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" value="' + pk + '">';
+  $input.name = div_class;
   $img = document.createElement("img");
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = img_src;
