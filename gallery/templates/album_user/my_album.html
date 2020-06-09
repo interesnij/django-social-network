@@ -2,7 +2,7 @@
 {% block title %}{{ album.title }} - мой альбом{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-uuid="{{ user.uuid }}" album-uuid="{{ album.uuid }}">
     <div class="row">
         <div class="col-12 col-md-6">
             <h5 class="mt-1">{{ album.title }}</h5>
