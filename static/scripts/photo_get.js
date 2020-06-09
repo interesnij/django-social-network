@@ -19,7 +19,7 @@ on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
 })
 
-on('#ajax', 'click', '#u_albums_add', function() {
+on('#ajax', 'click', '.u_albums_add', function() {
   var container, uuid, loader;
   container = this.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
