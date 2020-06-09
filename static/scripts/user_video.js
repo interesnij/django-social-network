@@ -111,8 +111,8 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
   }
-  pk = this.getAttribute("data-pk");
-  uuid = this.getAttribute("data-uuid");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
 

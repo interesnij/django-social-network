@@ -57,21 +57,6 @@ class UserVideoDetail(TemplateView):
         return context
 
 
-class UserCreateVideoWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="user_create/", template="create_video.html", request=request)
-
-        return super(UserCreateVideoWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserCreateVideoWindow,self).get_context_data(**kwargs)
-        context['form_post'] = VideoForm()
-        return context
-
-
 class UserCreateVideoAttachWindow(TemplateView):
     template_name = None
 
