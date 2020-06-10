@@ -260,12 +260,9 @@ on('#ajax', 'click', '.music_load_detail', function() {
 });
 
 on('#ajax', 'click', '.item_preview_delete', function() {
-  pk = this.nextElementSibling.getAttribute("data-pk");
   parent = this.parentElement;
   parent.remove();
-
-  remove_file_dropdown(dropdown);
-  is_full_dropdown();
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 
 on('#ajax', 'click', '.good_load_detail', function() {
