@@ -1,3 +1,16 @@
+function clear_comment_dropdown(){
+  try{
+  dropdowns = document.body.querySelectorAll(".current_file_dropdown");
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].classList.remove("current_file_dropdown");
+  }} catch { null }
+  try{
+  img_blocks = document.body.querySelectorAll(".img_block");
+  for (var i = 0; i < img_blocks.length; i++) {
+    img_blocks[i].innerHTML = "";
+  }} catch { null }
+}
+
 function create_preview_photo(div_class, img_src, pk){
   $div = document.createElement("div");
   $div.classList.add("col-md-6", div_class);
@@ -12,7 +25,7 @@ function create_preview_photo(div_class, img_src, pk){
   $div.append($img);
   return $div
 }
-function photo_comment_attach() {
+function photo_comment_attach(_this, dropdown) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
 

@@ -9,7 +9,7 @@ on('#ajax', 'click', '.avatar_detail', function() {
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
-  uuid = container.getAttribute('item-uuid'); 
+  uuid = container.getAttribute('item-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
@@ -54,12 +54,7 @@ on('#ajax', 'click', '.u_all_reposts', function() {
 });
 
 on('#ajax', 'click', '.u_item_comments', function() {
-  try{
-  dropdowns = document.body.querySelectorAll(".current_file_dropdown");
-  for (var i = 0; i < dropdowns.length; i++) {
-    dropdowns[i].classList.remove("current_file_dropdown")
-  }} catch { null }
-
+  clear_comment_dropdown()
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");
