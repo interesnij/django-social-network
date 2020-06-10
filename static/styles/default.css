@@ -344,7 +344,11 @@ html {
   height: 100%;
 }
 
-.item_preview_delete{
+.photo_preview_delete,
+.video_preview_delete,
+.music_preview_delete,
+.good_preview_delete,
+.article_preview_delete{
   position: absolute;
   right: 20px;
   padding: 6px;
@@ -356,7 +360,11 @@ html {
   width: 25px;
   border: 1px grey solid;
 }
-.item_preview_delete svg{
+.photo_preview_delete svg,
+.video_preview_delete svg,
+.music_preview_delete svg,
+.good_preview_delete svg,
+.article_preview_delete svg{
   width: 12px;
   position: absolute;
   color: grey;
