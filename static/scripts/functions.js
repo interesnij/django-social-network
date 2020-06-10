@@ -86,8 +86,37 @@ function create_preview_good(div_class, img_src, pk, title){
   $div.append($img);
   return $div
 }
+function good_comment_attach(_this, dropdown){
+  is_full_dropdown();
+  img_block = dropdown.parentElement.previousElementSibling;
 
-function create_preview_good(div_class, img_src, uuid, title){
+  if (img_block.querySelector( '[good-pk=' + '"' + _this.getAttribute('good-pk') + '"' + ']' )){
+    _this.setAttribute("tooltip", "Товар уже выбран");
+    _this.setAttribute("flow", "up");
+    return
+  };
+
+  _this.classList.add("good_load_toggle");
+  pk = _this.getAttribute('good-pk');
+  title = _this.querySelector(".good_title").innerHTML;
+
+    if (img_block.querySelector(".select_good1")){
+      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+    }
+    else if (img_block.querySelector(".select_good2") && !img_block.querySelector(".select_good1")){
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+    }
+    else {
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+    }
+
+  img_block.append(div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+}
+
+function create_preview_article(div_class, img_src, uuid, title){
   $div = document.createElement("div");
   $div.classList.add("col-md-6", div_class);
   $title = document.createElement("span");
@@ -106,9 +135,7 @@ function create_preview_good(div_class, img_src, uuid, title){
 
   $img.src = img_src;
   $figure.append($img);
-
-  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
-     + title + '</span>'
+  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>' + title + '</span>'
 
   $div.append(get_delete_span());
   $div.append($input);

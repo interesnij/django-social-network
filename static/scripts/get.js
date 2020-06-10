@@ -335,35 +335,6 @@ on('#ajax', 'click', '.item_preview_delete', function() {
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
-function good_comment_attach(_this, dropdown){
-  is_full_dropdown();
-  img_block = dropdown.parentElement.previousElementSibling;
-
-  if (img_block.querySelector( '[good-pk=' + '"' + _this.getAttribute('good-pk') + '"' + ']' )){
-    _this.setAttribute("tooltip", "Товар уже выбран");
-    _this.setAttribute("flow", "up");
-    return
-  };
-
-  _this.classList.add("good_load_toggle");
-  pk = _this.getAttribute('good-pk');
-  title = _this.querySelector(".good_title").innerHTML;
-
-    if (img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
-    }
-    else if (img_block.querySelector(".select_good2") && !img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
-    }
-    else {
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
-    }
-
-  img_block.append(div);
-
-  add_file_dropdown()
-  is_full_dropdown();
-}
 on('#ajax', 'click', '.good_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
@@ -386,10 +357,10 @@ on('#ajax', 'click', '.article_load_detail', function() {
   _this.classList.add("attach_toggle");
 
     if (img_block.querySelector(".select_article1")){
-        div = create_preview_good("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+        div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
     else if (img_block.querySelector(".select_article2") || !img_block.querySelector(".select_article1")){
-        div = create_preview_good("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+        div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
   img_block.append(div);
 
