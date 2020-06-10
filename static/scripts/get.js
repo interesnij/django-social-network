@@ -347,7 +347,7 @@ function create_preview_music(div_class, _this){
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
-  $div.classList.add("col-md-6", div_class);
+  $div.classList.add("col-md-12", div_class);
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.setAttribute('music-counter', _this.getAttribute('music-counter'));
