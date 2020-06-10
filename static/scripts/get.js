@@ -204,21 +204,6 @@ on('#ajax', 'change', '#photo_add_attach', function() {
   link_.send(form_data);
 });
 
-function create_preview_photo(div_class, img_src, pk){
-  $div = document.createElement("div");
-  $div.classList.add("col-md-6", div_class);
-  $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
-  $img = document.createElement("img");
-  $img.classList.add("u_photo_detail", "image_fit");
-  $img.src = img_src;
-  $img.setAttribute('photo-uuid', pk);
-  $div.append(get_delete_span());
-  $div.append($input);
-  $div.append($img);
-  return $div
-}
-
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
@@ -249,6 +234,40 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   is_full_dropdown();
 });
 
+function create_preview_photo(div_class, img_src, pk){
+  $div = document.createElement("div");
+  $div.classList.add("col-md-6", div_class);
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $img = document.createElement("img");
+  $img.classList.add("u_photo_detail", "image_fit");
+  $img.src = img_src;
+  $img.setAttribute('photo-uuid', pk);
+  $div.append(get_delete_span());
+  $div.append($input);
+  $div.append($img);
+  return $div
+}
+
+function create_preview_video(div_class, img_src, pk){
+  $div = document.createElement("div");
+  $div.classList.add("col-md-6", div_class);
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $img = document.createElement("img");
+  $icon_div = document.createElement("div");
+  $img.classList.add("image_fit");
+  $img.src = img_src;
+  $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
+  $icon_div.setAttribute("video-counter", "0");
+
+  $div.append(get_delete_span());
+  $div.append($input);
+  $div.append($img);
+  $div.append($icon_div);
+  return $div
+}
+
 on('#ajax', 'click', '.create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
 
@@ -266,32 +285,16 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 
       pk = elem_.querySelector("img").getAttribute('data-pk');
 
-        $input = document.createElement("span");
         if (img_block.querySelector(".select_video2")){
             is_full_dropdown()}
         else if (img_block.querySelector(".select_video1")){
-            $div = document.createElement("div");
+            create_preview_video("select_video2", elem_.querySelector("img").getAttribute('data-src'), pk)
             $div.classList.add("col-md-6", "select_video2");
-            $input.innerHTML = '<input type="hidden" name="select_video2" value="' + pk + '">';
           }
         else {
-            $div = document.createElement("div", "select_video1");
-            $div.classList.add("col-md-6", "select_video1");
-            $input.innerHTML = '<input type="hidden" name="select_video" value="' + pk + '">';
+            create_preview_video("select_video1", elem_.querySelector("img").getAttribute('data-src'), pk)
           }
 
-      $img = document.createElement("img");
-      $icon_div = document.createElement("div");
-
-      $img.classList.add("image_fit");
-      $img.src = elem_.querySelector("img").getAttribute('data-src');
-      $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
-      $icon_div.setAttribute("video-counter", "0");
-
-      $div.append(get_delete_span());
-      $div.append($input);
-      $div.append($img);
-      $div.append($icon_div);
       img_block.append($div);
 
       add_file_dropdown()
@@ -321,28 +324,12 @@ on('#ajax', 'click', '.video_load_detail', function() {
     if (img_block.querySelector(".select_video2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_video1")){
-        $div = document.createElement("div");
-        $div.classList.add("col-md-6", "select_video2");
-        $input.innerHTML = '<input type="hidden" name="select_video2" value="' + pk + '">';
+        create_preview_video("select_video2", _this.getAttribute('data-src'), pk)
       }
     else {
         $div = document.createElement("div", "select_video1");
-        $div.classList.add("col-md-6", "select_video1");
-        $input.innerHTML = '<input type="hidden" name="select_video" value="' + pk + '">';
+        create_preview_video("select_video1", _this.getAttribute('data-src'), pk)
       }
-
-  $img = document.createElement("img");
-  $icon_div = document.createElement("div");
-
-  $img.classList.add("image_fit");
-  $img.src = _this.getAttribute('data-src');
-  $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
-  $icon_div.setAttribute("video-counter", _this.getAttribute('video-counter'));
-
-  $div.append(get_delete_span());
-  $div.append($input);
-  $div.append($img);
-  $div.append($icon_div);
   img_block.append($div);
 
   add_file_dropdown()
