@@ -56,11 +56,6 @@ function photo_comment_upload_attach(response, dropdown){
     div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
     img_block.append(div);
     add_file_dropdown();
-    if (dropdown.classList.contains("files_two")){
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
-      return
-    }
     create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
     add_file_dropdown();
     is_full_dropdown();
