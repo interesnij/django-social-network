@@ -343,7 +343,7 @@ function create_preview_music(div_class, _this){
   $img = document.createElement("img");
   $figure = document.createElement("figure");
   $media = document.createElement("div");
-  
+
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
@@ -368,11 +368,6 @@ function create_preview_music(div_class, _this){
   $div.append($figure);
   $div.append($media);
 
-
-  $div.append(get_delete_span());
-  $div.append($input);
-  $div.append($img);
-  $div.append($icon_div);
   return $div
 }
 
