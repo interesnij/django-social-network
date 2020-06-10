@@ -266,7 +266,7 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
                                                                                  : console.log("Нет фото"))
                                             : null
                                             console.log(img_block);
-                                            console.log(img_block.querySelector(".photo"));
+                                            console.log(img_block.querySelectorAll(".photo"));
   parent.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
