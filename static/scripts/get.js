@@ -176,27 +176,29 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
-    if (img_block.querySelector(".select_photo2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_photo1")){
+    if (img_block.querySelector(".select_photo1")){
       create_preview_photo("select_photo2", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
       img_block.append($div);
       add_file_dropdown();
       document.querySelector(".create_fullscreen").style.display = "none";
       document.getElementById("create_loader").innerHTML="";
       }
-
+    else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
+      create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
+      img_block.append($div);
+      add_file_dropdown();
+      document.querySelector(".create_fullscreen").style.display = "none";
+      document.getElementById("create_loader").innerHTML="";
+    }
     else {
       create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
       img_block.append($div);
       add_file_dropdown();
-
-      try{
-        create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
-      img_block.append($div);
+      is_full_dropdown();
+      create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
       add_file_dropdown();
-
-    } catch { null }
+      is_full_dropdown();
+    }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
       }
@@ -220,12 +222,10 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   pk = _this.getAttribute('photo-uuid');
 
     $input = document.createElement("span");
-    if (img_block.querySelector(".select_photo2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_photo1")){
+    if (img_block.querySelector(".select_photo1")){
         create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
       }
-    else {
+    else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
         create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
       }
   img_block.append($div);
@@ -284,17 +284,12 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
       elem_.innerHTML = link_.responseText;
 
       pk = elem_.querySelector("img").getAttribute('data-pk');
-
-        if (img_block.querySelector(".select_video2")){
-            is_full_dropdown()}
-        else if (img_block.querySelector(".select_video1")){
+        if (img_block.querySelector(".select_video1")){
             create_preview_video("select_video2", elem_.querySelector("img").getAttribute('data-src'), pk)
-            $div.classList.add("col-md-6", "select_video2");
           }
-        else {
+        else if (img_block.querySelector(".select_video2") && !img_block.querySelector(".select_video1")){
             create_preview_video("select_video1", elem_.querySelector("img").getAttribute('data-src'), pk)
           }
-
       img_block.append($div);
 
       add_file_dropdown()
@@ -321,12 +316,11 @@ on('#ajax', 'click', '.video_load_detail', function() {
   pk = _this.getAttribute('data-pk');
 
     $input = document.createElement("span");
-    if (img_block.querySelector(".select_video2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_video1")){
+
+    if (img_block.querySelector(".select_video1")){
         create_preview_video("select_video2", _this.getAttribute('data-src'), pk)
       }
-    else {
+    else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
         $div = document.createElement("div", "select_video1");
         create_preview_video("select_video1", _this.getAttribute('data-src'), pk)
       }
@@ -389,14 +383,14 @@ on('#ajax', 'click', '.music_load_detail', function() {
     $input = document.createElement("span");
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        img_block.append(div); add_file_dropdown();
       }
     else if (img_block.querySelector(".select_music2") || !img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        img_block.append(div); add_file_dropdown();
       }
+    else{ return };
 
-  img_block.append(div);
-
-  add_file_dropdown()
   is_full_dropdown();
 });
 
