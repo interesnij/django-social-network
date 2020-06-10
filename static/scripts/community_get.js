@@ -10,7 +10,7 @@ on('#ajax', 'click', '.c_fullscreen', function() {
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.getAttribute('community-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('community-pk');
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
 });
