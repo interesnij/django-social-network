@@ -163,9 +163,6 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
 
 
 on('#ajax', 'change', '#photo_add_attach', function() {
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown();
-  img_block = dropdown.parentElement.previousElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -176,33 +173,9 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".u_photo_detail");
-    if (img_block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo2", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
-      img_block.append(div);
-      add_file_dropdown();
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
-      }
-    else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
-      img_block.append(div);
-      add_file_dropdown();
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
-    }
-    else if (!img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
-      img_block.append(div);
-      add_file_dropdown();
-      if (dropdown.classList.contains("files_two")){
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
-        return
-      }
-      create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
-      add_file_dropdown();
-      is_full_dropdown();
+
+    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    photo_comment_upload_attach(response, dropdown);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
