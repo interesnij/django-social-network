@@ -430,6 +430,7 @@ function create_preview_good(div_class, img_src, pk, title){
   $div.append($input);
   $div.append($title);
   $div.append($img);
+  return $div
 }
 
 on('#ajax', 'click', '.good_load_detail', function() {
