@@ -214,7 +214,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  photo_comment_attach(elem_.querySelector("img"), dropdown);
+  photo_comment_attach(_this.querySelector("img"), dropdown);
 
 });
 
