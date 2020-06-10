@@ -65,6 +65,7 @@ function photo_comment_upload_attach(response, dropdown){
     add_file_dropdown();
     is_full_dropdown();
 }
+}
 
 function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
