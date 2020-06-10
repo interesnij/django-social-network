@@ -250,7 +250,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
-      video_comment_attach(link_.querySelector("img"), dropdown);
+      video_comment_attach(elem_.querySelector("img"), dropdown);
 
       document.querySelector(".create_fullscreen").style.display = "none";
       document.getElementById("create_loader").innerHTML="";
