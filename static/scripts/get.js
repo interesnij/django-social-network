@@ -306,15 +306,14 @@ on('#ajax', 'click', '.video_load_detail', function() {
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling;
-
-  if (img_block.querySelector( '[video-counter=' + '"' + _this.getAttribute('video-counter') + '"' + ']' )){
+  counter = _this.getAttribute('video-counter');
+  if (img_block.querySelector( '[video-counter=' + '"' + counter + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
 
   pk = _this.getAttribute('data-pk');
-  counter = _this.getAttribute('video-counter');
 
     if (img_block.querySelector(".select_video1")){
         create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
