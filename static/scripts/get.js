@@ -249,7 +249,7 @@ function create_preview_photo(div_class, img_src, pk){
   return $div
 }
 
-function create_preview_video(div_class, img_src, pk){
+function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
   $div.classList.add("col-md-6", div_class);
   $input = document.createElement("span");
@@ -259,7 +259,7 @@ function create_preview_video(div_class, img_src, pk){
   $img.classList.add("image_fit");
   $img.src = img_src;
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
-  $icon_div.setAttribute("video-counter", "0");
+  $icon_div.setAttribute("video-counter", counter);
 
   $div.append(get_delete_span());
   $div.append($input);
@@ -314,11 +314,10 @@ on('#ajax', 'click', '.video_load_detail', function() {
   };
 
   pk = _this.getAttribute('data-pk');
-
-    $input = document.createElement("span");
+  counter = _this.getAttribute('video-counter');
 
     if (img_block.querySelector(".select_video1")){
-        create_preview_video("select_video2", _this.getAttribute('data-src'), pk)
+        create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
       }
     else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
         $div = document.createElement("div", "select_video1");
