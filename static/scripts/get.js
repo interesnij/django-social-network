@@ -274,55 +274,13 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 on('#ajax', 'click', '.video_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown(dropdown);
-  img_block = dropdown.parentElement.previousElementSibling;
-  counter = _this.getAttribute('video-counter');
-  if (img_block.querySelector( '[video-counter=' + '"' + counter + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
-
-  pk = _this.getAttribute('data-pk');
-
-    if (img_block.querySelector(".select_video1")){
-        create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
-      }
-    else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
-        create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)
-      }
-  img_block.append($div);
-
-  add_file_dropdown()
-  is_full_dropdown();
+  video_comment_attach(_this, dropdown);
 });
 
 on('#ajax', 'click', '.music_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown(dropdown);
-
-  counter = _this.getAttribute('music-counter');
-  img_block = dropdown.parentElement.previousElementSibling;
-
-  if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
-    _this.setAttribute("flow", "up");
-    return
-  };
-
-  _this.classList.add("music_load_toggle");
-
-    if (img_block.querySelector(".select_music1")){
-        div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
-        img_block.append(div); add_file_dropdown();
-      }
-    else if (img_block.querySelector(".select_music2") || !img_block.querySelector(".select_music1")){
-        div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
-        img_block.append(div); add_file_dropdown();
-      }
-
-  is_full_dropdown();
+  music_comment_attach(_this, dropdown)
 });
 
 on('#ajax', 'click', '.item_preview_delete', function() {
