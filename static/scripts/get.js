@@ -390,13 +390,13 @@ on('#ajax', 'click', '.music_load_detail', function() {
     if (img_block.querySelector(".select_music2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_music1")){
-        create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
     else {
-        create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
 
-  img_block.append($div);
+  img_block.append(div);
 
   add_file_dropdown()
   is_full_dropdown();
