@@ -504,7 +504,7 @@ on('#ajax', 'click', '.article_load_detail', function() {
     if (img_block.querySelector(".select_article1")){
         div = create_preview_good("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
-    else if (img_block.querySelector(".select_article2") && !img_block.querySelector(".select_article1")){
+    else if (img_block.querySelector(".select_article2") || !img_block.querySelector(".select_article1")){
         div = create_preview_good("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
   img_block.append(div);
