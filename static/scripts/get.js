@@ -336,45 +336,23 @@ on('#ajax', 'click', '.video_load_detail', function() {
   is_full_dropdown();
 });
 
-on('#ajax', 'click', '.music_load_detail', function() {
-  _this = this;
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown(dropdown);
 
-  counter = _this.getAttribute('music-counter');
-  img_block = dropdown.parentElement.previousElementSibling;
-
-  if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
-    _this.setAttribute("flow", "up");
-    return
-  };
-
+function create_preview_music(div_class, _this){
+  $div = document.createElement("div");
+  $input = document.createElement("span");
+  $img = document.createElement("img");
+  $figure = document.createElement("figure");
+  $media = document.createElement("div");
+  
   media_body = _this.querySelector(".media-body");
   pk = _this.getAttribute('data-pk');
 
-  _this.classList.add("music_load_toggle");
-
-    $input = document.createElement("span");
-    if (img_block.querySelector(".select_music2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_music1")){
-        $div = document.createElement("div");
-        $div.classList.add("col-md-12", "select_music2");
-        $input.innerHTML = '<input type="hidden" name="select_music2" value="' + pk + '">';
-      }
-    else {
-        $div = document.createElement("div", "select_music1");
-        $div.classList.add("col-md-12", "select_music1");
-        $input.innerHTML = '<input type="hidden" name="select_music" value="' + pk + '">';
-      }
+  $div.classList.add("col-md-6", div_class);
   $div.style.display = "flex";
   $div.style.margin = "5px";
-  $div.setAttribute('music-counter', counter);
+  $div.setAttribute('music-counter', _this.getAttribute('music-counter'));
 
-  $img = document.createElement("img");
-  $media = document.createElement("div");
-  $figure = document.createElement("figure");
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
 
   $img.src = _this.querySelector("img").getAttribute('data-src');
   $img.style.width = "50px";
@@ -389,6 +367,41 @@ on('#ajax', 'click', '.music_load_detail', function() {
   $div.append($input);
   $div.append($figure);
   $div.append($media);
+
+
+  $div.append(get_delete_span());
+  $div.append($input);
+  $div.append($img);
+  $div.append($icon_div);
+  return $div
+}
+
+on('#ajax', 'click', '.music_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  is_full_dropdown(dropdown);
+
+  counter = _this.getAttribute('music-counter');
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
+    _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
+    _this.setAttribute("flow", "up");
+    return
+  };
+
+  _this.classList.add("music_load_toggle");
+
+    $input = document.createElement("span");
+    if (img_block.querySelector(".select_music2")){
+        is_full_dropdown()}
+    else if (img_block.querySelector(".select_music1")){
+        create_preview_music("select_music2", _this)
+      }
+    else {
+        create_preview_music("select_music1", _this)
+      }
+
   img_block.append($div);
 
   add_file_dropdown()
