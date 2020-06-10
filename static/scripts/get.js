@@ -261,7 +261,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
 on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
-  document.body.querySelector(".img_block") ? (img_block = document.body.querySelector(".img_block"),
+  document.body.querySelector(".img_block") ? (img_block = this.parentElement.parentElement,
                                                img_block.querySelector(".col-md-6") ? console.log("Есть и еще фото")
                                                                                  : console.log("Нет фото"))
                                             : null
