@@ -247,23 +247,11 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    is_full_dropdown(dropdown);
-    img_block = dropdown.parentElement.previousElementSibling;
 
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
+      video_comment_attach(elem_, dropdown);
 
-      pk = elem_.querySelector("img").getAttribute('data-pk');
-        if (img_block.querySelector(".select_video1")){
-            div = create_preview_video("select_video2", elem_.querySelector("img").getAttribute('data-src'), pk)
-          }
-        else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
-            div = create_preview_video("select_video1", elem_.querySelector("img").getAttribute('data-src'), pk)
-          }
-      img_block.append(div);
-
-      add_file_dropdown()
-      is_full_dropdown();
       document.querySelector(".create_fullscreen").style.display = "none";
       document.getElementById("create_loader").innerHTML="";
   }};
