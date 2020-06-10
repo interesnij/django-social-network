@@ -249,7 +249,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
     dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
 
       elem_ = document.createElement('div');
-      elem_.innerHTML = link_, responseText;
+      elem_.innerHTML = link_.responseText;
       video_comment_attach(link_.querySelector("img"), dropdown);
 
       document.querySelector(".create_fullscreen").style.display = "none";
