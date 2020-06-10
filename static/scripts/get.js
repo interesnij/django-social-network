@@ -323,7 +323,6 @@ on('#ajax', 'click', '.video_load_detail', function() {
         create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
       }
     else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
-        $div = document.createElement("div", "select_video1");
         create_preview_video("select_video1", _this.getAttribute('data-src'), pk)
       }
   img_block.append($div);
