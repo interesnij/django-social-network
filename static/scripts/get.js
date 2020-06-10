@@ -183,14 +183,14 @@ on('#ajax', 'change', '#photo_add_attach', function() {
       document.querySelector(".create_fullscreen").style.display = "none";
       document.getElementById("create_loader").innerHTML="";
       }
-    else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
+    else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
       div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
       img_block.append(div);
       add_file_dropdown();
       document.querySelector(".create_fullscreen").style.display = "none";
       document.getElementById("create_loader").innerHTML="";
     }
-    else {
+    else if (!img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
       div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
       img_block.append(div);
       add_file_dropdown();
@@ -224,17 +224,12 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
   _this.classList.add("photo_load_toggle");
   pk = _this.getAttribute('photo-uuid');
-
-    $input = document.createElement("span");
     if (img_block.querySelector(".select_photo1")){
         div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
       }
-    else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
+    else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
         div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
       }
-    else {
-      div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
-    }
   img_block.append(div);
 
   add_file_dropdown()
@@ -294,7 +289,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
         if (img_block.querySelector(".select_video1")){
             div = create_preview_video("select_video2", elem_.querySelector("img").getAttribute('data-src'), pk)
           }
-        else if (img_block.querySelector(".select_video2") && !img_block.querySelector(".select_video1")){
+        else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
             div = create_preview_video("select_video1", elem_.querySelector("img").getAttribute('data-src'), pk)
           }
       img_block.append(div);
@@ -384,7 +379,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
   _this.classList.add("music_load_toggle");
 
-    $input = document.createElement("span");
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
         img_block.append(div); add_file_dropdown();
@@ -393,7 +387,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
         div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
         img_block.append(div); add_file_dropdown();
       }
-    else{ return };
 
   is_full_dropdown();
 });
@@ -465,6 +458,34 @@ on('#ajax', 'click', '.good_load_detail', function() {
   is_full_dropdown();
 });
 
+
+function create_preview_good(div_class, img_src, uuid, title){
+  $div = document.createElement("div");
+  $div.classList.add("col-md-6", div_class);
+  $title = document.createElement("span");
+  $div.setAttribute('item-uuid', uuid);
+  $div.style.cursor = "pointer";
+
+  $img = document.createElement("img");
+  $img.style.width = "100%";
+  $img.classList.add("image_fit");
+  $p = document.createElement("p");
+  $figure = document.createElement("figure");
+  $figure.classList.add("u_article_detail");
+
+  $img.src = img_src;
+  $figure.append($img);
+
+  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
+     + title + '</span>'
+
+  $div.append(get_delete_span());
+  $div.append($input);
+  $div.append($figure);
+  $div.append($title);
+  return $div
+}
+
 on('#ajax', 'click', '.article_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
@@ -478,46 +499,15 @@ on('#ajax', 'click', '.article_load_detail', function() {
     return
   };
 
-  media_body = _this.querySelector(".article_info");
-
   _this.classList.add("attach_toggle");
 
-    $input = document.createElement("span");
-    if (img_block.querySelector(".select_article2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_article1")){
-        $div = document.createElement("div");
-        $div.classList.add("col-md-6", "select_article2");
-        $input.innerHTML = '<input type="hidden" name="select_article2" value="' + uuid + '">';
+    if (img_block.querySelector(".select_article1")){
+        div = create_preview_good("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
-    else {
-        $div = document.createElement("div", "select_article1");
-        $div.classList.add("col-md-6", "select_article1");
-        $input.innerHTML = '<input type="hidden" name="select_article" value="' + uuid + '">';
+    else if (img_block.querySelector(".select_article2") && !img_block.querySelector(".select_article1")){
+        div = create_preview_good("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
-  $title = document.createElement("span");
-  $div.setAttribute('item-uuid', uuid);
-  $div.style.cursor = "pointer";
-
-  $img = document.createElement("img");
-  $img.style.width = "100%";
-  $img.classList.add("image_fit");
-  $p = document.createElement("p");
-  $figure = document.createElement("figure");
-  $figure.classList.add("u_article_detail");
-
-  $img.src = _this.querySelector("img").getAttribute('data-src');
-  $figure.append($img);
-
-  title = _this.querySelector(".article_title").innerHTML;
-  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
-     + title + '</span>'
-
-  $div.append(get_delete_span());
-  $div.append($input);
-  $div.append($figure);
-  $div.append($title);
-  img_block.append($div);
+  img_block.append(div);
 
   add_file_dropdown()
   is_full_dropdown();
