@@ -135,25 +135,25 @@ on('#ajax', 'click', '.comment_photo', function() {
 });
 on('#ajax', 'click', '.comment_video', function() {
   this.classList.add("current_file_dropdown");
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
+  clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/video_load/', loader)
 });
 on('#ajax', 'click', '.comment_music', function() {
   this.classList.add("current_file_dropdown");
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
+  clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/music_load/', loader)
 });
 on('#ajax', 'click', '.comment_good', function() {
   this.classList.add("current_file_dropdown");
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
+  clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/good_load/', loader)
 });
 on('#ajax', 'click', '.comment_article', function() {
   this.classList.add("current_file_dropdown");
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
+  clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/article_load/', loader)
 });

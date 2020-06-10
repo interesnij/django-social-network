@@ -2,6 +2,11 @@ function clear_comment_dropdown(){
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
+    btn = dropdowns[i].parentElement.parentElement;
+    btn.classList.remove("files_two");
+    btn.classList.remove("files_one");
+    btn.classList.add("files_null");
+    btn.style.display = "block";
     dropdowns[i].classList.remove("current_file_dropdown");
   }} catch { null }
   try{
@@ -9,6 +14,13 @@ function clear_comment_dropdown(){
   for (var i = 0; i < img_blocks.length; i++) {
     img_blocks[i].innerHTML = "";
   }} catch { null }
+}
+function clear_attach_block(){
+  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"),
+                                                  attach_block.innerHTML = "",
+                                                  attach_block.classList = "",
+                                                  attach_block.classList.add("files_0"),
+                                                  attach_block.classList.remove("attach_block")) : null;
 }
 
 function create_preview_photo(div_class, img_src, pk){
