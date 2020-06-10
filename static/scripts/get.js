@@ -202,7 +202,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
       }
-  }};
+  };
   link_.send(form_data);
 });
 
