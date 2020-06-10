@@ -1,3 +1,12 @@
+function get_delete_span_post(){
+  $span = document.createElement("span");
+  $span.classList.add("post_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
+
 function clear_comment_dropdown(){
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
@@ -16,11 +25,69 @@ function clear_comment_dropdown(){
   }} catch { null }
 }
 function clear_attach_block(){
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"),
-                                                  attach_block.innerHTML = "",
-                                                  attach_block.classList = "",
-                                                  attach_block.classList.add("files_0"),
-                                                  attach_block.classList.remove("attach_block")) : null;
+  document.body.querySelector(".attach_block") ? (a_b = document.body.querySelector(".attach_block"), a_b.innerHTML = "", a_b.classList = "", a_b.classList.add("files_0"), a_b.classList.remove("attach_block")) : null;
+}
+function is_full_dropdown(){
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  if (dropdown.classList.contains("files_two")){
+    dropdown.style.display = "none";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+  if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
+    dropdown.style.display = "block"}
+}
+function add_file_dropdown(){
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  if (dropdown.classList.contains("files_null")){
+    dropdown.classList.add("files_one"),
+    dropdown.classList.remove("files_null")}
+  else if(dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
+}
+function remove_file_dropdown(){
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  if (dropdown.classList.contains("files_one")){
+    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
+  else if(dropdown.classList.contains("files_two")){
+    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
+}
+
+function is_full_attach(){
+  files_block = document.body.querySelector(".attach_block");
+  if (files_block.classList.contains("files_10")){
+    files_block.querySelector(".attach_panel").style.display = "none";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+  if (!files_block.classList.contains("files_10")){
+    dropdown.style.display = "block"}
+}
+function add_file_attach(){
+  files_block = document.body.querySelector(".attach_block");
+  if (files_block.classList.contains("files_0")){ files_block.classList.add("files_1"), files_block.classList.remove("files_0")}
+  else if (files_block.classList.contains("files_1")){ files_block.classList.add("files_2"), files_block.classList.remove("files_1")}
+  else if (files_block.classList.contains("files_2")){ files_block.classList.add("files_3"), files_block.classList.remove("files_2")}
+  else if (files_block.classList.contains("files_3")){ files_block.classList.add("files_4"), files_block.classList.remove("files_3")}
+  else if (files_block.classList.contains("files_4")){ files_block.classList.add("files_5"), files_block.classList.remove("files_4")}
+  else if (files_block.classList.contains("files_5")){ files_block.classList.add("files_6"), files_block.classList.remove("files_5")}
+  else if (files_block.classList.contains("files_6")){ files_block.classList.add("files_7"), files_block.classList.remove("files_6")}
+  else if (files_block.classList.contains("files_7")){ files_block.classList.add("files_8"), files_block.classList.remove("files_7")}
+  else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_9"), files_block.classList.remove("files_8")}
+  else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_10"), files_block.classList.remove("files_9")}
+}
+function remove_file_attach(){
+  files_block = document.body.querySelector(".attach_block");
+  if (files_block.classList.contains("files_1")){ files_block.classList.add("files_0"), files_block.classList.remove("files_1")}
+  else if (files_block.classList.contains("files_2")){ files_block.classList.add("files_1"), files_block.classList.remove("files_2")}
+  else if (files_block.classList.contains("files_3")){ files_block.classList.add("files_2"), files_block.classList.remove("files_3")}
+  else if (files_block.classList.contains("files_4")){ files_block.classList.add("files_3"), files_block.classList.remove("files_4")}
+  else if (files_block.classList.contains("files_5")){ files_block.classList.add("files_4"), files_block.classList.remove("files_5")}
+  else if (files_block.classList.contains("files_6")){ files_block.classList.add("files_5"), files_block.classList.remove("files_6")}
+  else if (files_block.classList.contains("files_7")){ files_block.classList.add("files_6"), files_block.classList.remove("files_7")}
+  else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_7"), files_block.classList.remove("files_8")}
+  else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_8"), files_block.classList.remove("files_9")}
+  else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
 }
 
 function create_preview_photo(div_class, img_src, pk){
@@ -421,15 +488,6 @@ function send_comment(form, block, link){
   }};
 
   link_.send(form_comment);
-}
-
-function get_delete_span(){
-  $span = document.createElement("span");
-  $span.classList.add("item_preview_delete");
-  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
-  $span.setAttribute("tooltip", "Не прикреплять");
-  $span.setAttribute("flow", "up");
-  return $span
 }
 
 function is_full_dropdown(){
