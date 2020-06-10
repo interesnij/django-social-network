@@ -232,6 +232,9 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
         div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
       }
+    else {
+      div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
+    }
   img_block.append(div);
 
   add_file_dropdown()
