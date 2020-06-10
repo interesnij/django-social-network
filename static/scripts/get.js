@@ -262,7 +262,7 @@ on('#ajax', 'click', '.music_load_detail', function() {
 on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
   document.body.querySelector(".img_block") ? (img_block = document.body.querySelector(".img_block"),
-                                               img_block.querySelectorAll(".photo") ? console.log("Есть и еще фото")
+                                               !img_block.querySelector(".photo") ? console.log("Есть и еще фото")
                                                                                  : console.log("Нет фото"))
                                             : null
                                             console.log(img_block);
