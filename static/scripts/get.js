@@ -337,7 +337,7 @@ on('#ajax', 'click', '.video_load_detail', function() {
 });
 
 
-function create_preview_music(div_class, _this){
+function create_preview_music(div_class, img_src, pk, counter){
   $div = document.createElement("div");
   $input = document.createElement("span");
   $img = document.createElement("img");
@@ -345,16 +345,15 @@ function create_preview_music(div_class, _this){
   $media = document.createElement("div");
 
   media_body = _this.querySelector(".media-body");
-  pk = _this.getAttribute('data-pk');
 
   $div.classList.add("col-md-12", div_class);
   $div.style.display = "flex";
   $div.style.margin = "5px";
-  $div.setAttribute('music-counter', _this.getAttribute('music-counter'));
+  $div.setAttribute('music-counter', counter);
 
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
 
-  $img.src = _this.querySelector("img").getAttribute('data-src');
+  $img.src = img_src;
   $img.style.width = "50px";
   $figure.append($img);
 
@@ -391,10 +390,10 @@ on('#ajax', 'click', '.music_load_detail', function() {
     if (img_block.querySelector(".select_music2")){
         is_full_dropdown()}
     else if (img_block.querySelector(".select_music1")){
-        create_preview_music("select_music2", _this)
+        create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
     else {
-        create_preview_music("select_music1", _this)
+        create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
 
   img_block.append($div);
