@@ -1,6 +1,38 @@
-function get_delete_span(){
+function photo_preview_delete(){
   $span = document.createElement("span");
-  $span.classList.add("item_preview_delete");
+  $span.classList.add("photo_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
+function video_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("video_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
+function music_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("music_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
+function good_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("good_preview_delete");
+  $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
+function article_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("article_preview_delete");
   $span.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
@@ -92,14 +124,14 @@ function remove_file_attach(){
 
 function create_preview_photo(div_class, img_src, pk){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", div_class);
+  $div.classList.add("col-md-6", "photo", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
   $img.classList.add("u_photo_detail", "image_fit");
   $img.src = img_src;
   $img.setAttribute('photo-uuid', pk);
-  $div.append(get_delete_span());
+  $div.append(photo_preview_delete());
   $div.append($input);
   $div.append($img);
   return $div
@@ -157,7 +189,7 @@ function photo_comment_upload_attach(response, dropdown){
 
 function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", div_class);
+  $div.classList.add("col-md-6", "video", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
@@ -167,7 +199,7 @@ function create_preview_video(div_class, img_src, pk, counter){
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
   $icon_div.setAttribute("video-counter", counter);
 
-  $div.append(get_delete_span());
+  $div.append(video_preview_delete());
   $div.append($input);
   $div.append($img);
   $div.append($icon_div);
@@ -206,7 +238,7 @@ function create_preview_music(div_class, img_src, pk, counter){
 
   media_body = _this.querySelector(".media-body");
 
-  $div.classList.add("col-md-12", div_class);
+  $div.classList.add("col-md-12", "music", div_class);
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.setAttribute('music-counter', counter);
@@ -222,7 +254,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   h6 = $media.querySelector("h6");
   h6.classList.add("music_list_item");
 
-  $div.append(get_delete_span());
+  $div.append(music_preview_delete());
   $div.append($input);
   $div.append($figure);
   $div.append($media);
@@ -256,10 +288,9 @@ function music_comment_attach(_this, dropdown){
 
 function create_preview_good(div_class, img_src, pk, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", div_class);
+  $div.classList.add("col-md-6", "u_good_detail", "good", div_class);
   $div.setAttribute('good-pk', pk);
   $div.style.cursor = "pointer";
-  $div.classList.add("u_good_detail");
 
   $input = document.createElement("span");
   $title = document.createElement("span");
@@ -269,7 +300,7 @@ function create_preview_good(div_class, img_src, pk, title){
   $img.classList.add("image_fit");
   $img.src = img_src;
 
-  $div.append(get_delete_span());
+  $div.append(good_preview_delete());
   $div.append($input);
   $div.append($title);
   $div.append($img);
@@ -307,7 +338,7 @@ function good_comment_attach(_this, dropdown){
 
 function create_preview_article(div_class, img_src, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", div_class);
+  $div.classList.add("col-md-6", "article", div_class);
   $title = document.createElement("span");
   $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
@@ -326,7 +357,7 @@ function create_preview_article(div_class, img_src, uuid, title){
   $figure.append($img);
   $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>' + title + '</span>'
 
-  $div.append(get_delete_span());
+  $div.append(article_preview_delete());
   $div.append($input);
   $div.append($figure);
   $div.append($title);

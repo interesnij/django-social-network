@@ -259,8 +259,11 @@ on('#ajax', 'click', '.music_load_detail', function() {
   music_comment_attach(_this, dropdown)
 });
 
-on('#ajax', 'click', '.item_preview_delete', function() {
+on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
+  document.body.querySelector(".img_block") ? (img_block = document.body.querySelector(".img_block"),
+                                               img_block.querySelector(".photo") ? console.log("Есть и еще фото") : console.log("Нет больше фото"))
+                                            : null
   parent.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
