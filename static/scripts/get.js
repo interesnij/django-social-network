@@ -387,12 +387,10 @@ on('#ajax', 'click', '.music_load_detail', function() {
   _this.classList.add("music_load_toggle");
 
     $input = document.createElement("span");
-    if (img_block.querySelector(".select_music2")){
-        is_full_dropdown()}
-    else if (img_block.querySelector(".select_music1")){
+    if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
-    else {
+    else if (img_block.querySelector(".select_music2")){
         div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
 
