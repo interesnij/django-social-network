@@ -335,10 +335,7 @@ on('#ajax', 'click', '.item_preview_delete', function() {
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
-
-on('#ajax', 'click', '.good_load_detail', function() {
-  _this = this;
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+function good_comment_attach(_this, dropdown){
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
 
@@ -366,6 +363,11 @@ on('#ajax', 'click', '.good_load_detail', function() {
 
   add_file_dropdown()
   is_full_dropdown();
+}
+on('#ajax', 'click', '.good_load_detail', function() {
+  _this = this;
+  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+  good_comment_attach(_this, dropdown)
 });
 
 on('#ajax', 'click', '.article_load_detail', function() {
