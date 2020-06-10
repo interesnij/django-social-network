@@ -412,8 +412,7 @@ function create_preview_good(div_class, img_src, pk, title){
 
   $input = document.createElement("span");
   $title = document.createElement("span");
-  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>'
-
+  $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>';
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
   $img.classList.add("image_fit");
@@ -465,6 +464,9 @@ function create_preview_good(div_class, img_src, uuid, title){
   $title = document.createElement("span");
   $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
+
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + uuid + '">';
 
   $img = document.createElement("img");
   $img.style.width = "100%";
