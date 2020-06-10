@@ -57,7 +57,7 @@ class ItemCommentUserCreate(View):
                                                 select_video1 = request.POST.get('select_video1'), select_video2 = request.POST.get('select_video2'),
                                                 select_music1 = request.POST.get('select_music1'), select_music2 = request.POST.get('select_music2'),
                                                 select_good1 = request.POST.get('select_good1'), select_good2 = request.POST.get('select_good2'),
-                                                select_article1 = request.POST.get('select_article1'), select_article2 = request.POST.get('select_article 2'))
+                                                select_article1 = request.POST.get('select_article1'), select_article2 = request.POST.get('select_article2'))
             new_comment.notification_user_comment(request.user)
             return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
