@@ -261,13 +261,13 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
 on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
-  document.body.querySelector(".img_block") ? (img_block = this.parentElement.parentElement,
-                                               img_block.querySelector(".photo") ? console.log("Есть и еще фото")
+  img_block = parent.parentElement;
+  parent.remove();
+  document.body.querySelector(".img_block") ? (img_block.querySelector(".photo") ? console.log("Есть и еще фото")
                                                                                  : console.log("Нет фото"))
                                             : null
                                             console.log(img_block);
                                             console.log(img_block.querySelector(".photo"));
-  parent.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 
