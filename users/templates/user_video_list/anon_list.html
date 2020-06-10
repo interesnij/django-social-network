@@ -3,7 +3,7 @@
 {% block title %}{{ album.title }} : Видеоролики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 main-container pk_saver"  album-uuid="{{ album.uuid }}" data-pk="{{ user.pk }}">
+<div class="container mt-3 main-container pk_saver" data-uuid="{{ user.uuid }}">
     <div class="row">
         <div class="col-12 col-md-9 col-lg-9">
           <br>
@@ -27,7 +27,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body uuid_saver vk_saver" data-uuid="{{ user.uuid }}">
+              <div class="card-body uuid_saver vk_saver">
 
                 <div class="video_playlist" id="movies_container">
                   <div class="row movies_list_in_list" album-pk="{{ album.pk }}">

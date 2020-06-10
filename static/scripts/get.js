@@ -214,29 +214,9 @@ on('#ajax', 'change', '#photo_add_attach', function() {
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  is_full_dropdown();
-  img_block = dropdown.parentElement.previousElementSibling;
+  photo_comment_attach(elem_.querySelector("img"), dropdown);
 
-  if (img_block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
-
-  _this.classList.add("photo_load_toggle");
-  pk = _this.getAttribute('photo-uuid');
-    if (img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
-      }
-    else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
-      }
-  img_block.append(div);
-
-  add_file_dropdown()
-  is_full_dropdown();
 });
-
 
 on('#ajax', 'click', '.create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
@@ -246,10 +226,10 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    elem_ = document.createElement('div');
+    elem_.innerHTML = link_.responseText;
 
-      elem_ = document.createElement('div');
-      elem_.innerHTML = link_.responseText;
+      dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       video_comment_attach(elem_.querySelector("img"), dropdown);
 
       document.querySelector(".create_fullscreen").style.display = "none";

@@ -12,6 +12,28 @@ function create_preview_photo(div_class, img_src, pk){
   $div.append($img);
   return $div
 }
+function photo_comment_attach() {
+  is_full_dropdown();
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.classList.add("photo_load_toggle");
+  pk = _this.getAttribute('photo-uuid');
+    if (img_block.querySelector(".select_photo1")){
+        div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
+      }
+    else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
+        div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
+      }
+  img_block.append(div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+}
 
 function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
