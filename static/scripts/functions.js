@@ -56,7 +56,8 @@ function photo_comment_upload_attach(response, dropdown){
     div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
     img_block.append(div);
     add_file_dropdown();
-    create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
+    div2 = create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
+    img_block.append(div2);
     add_file_dropdown();
     is_full_dropdown();
 }
