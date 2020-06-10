@@ -240,9 +240,9 @@ on('#ajax', 'click', '.photo_load_detail', function() {
 
 on('#ajax', 'click', '.create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
-
+  user_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/progs/create_video_attach/" + pk + "/", true );
+  link_.open( 'POST', "/video/progs/create_video_attach/" + user_pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
