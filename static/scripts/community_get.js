@@ -2,7 +2,7 @@
 on('#ajax', 'click', '.c_fullscreen', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.getAttribute('community-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('community-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });

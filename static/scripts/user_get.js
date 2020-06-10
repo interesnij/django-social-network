@@ -9,7 +9,7 @@ on('#ajax', 'click', '.avatar_detail', function() {
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('item-uuid'); 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
