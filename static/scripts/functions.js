@@ -143,6 +143,30 @@ function create_preview_article(div_class, img_src, uuid, title){
   $div.append($title);
   return $div
 }
+function article_comment_attach(_this, dropdown){
+  is_full_dropdown(dropdown);
+  uuid = _this.getAttribute('item-uuid');
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[item-uuid=' + '"' + uuid + '"' + ']' )){
+    _this.setAttribute("tooltip", "Статья уже выбрана");
+    _this.setAttribute("flow", "up");
+    return
+  };
+
+  _this.classList.add("attach_toggle");
+
+    if (img_block.querySelector(".select_article1")){
+        div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+      }
+    else if (img_block.querySelector(".select_article2") || !img_block.querySelector(".select_article1")){
+        div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+      }
+  img_block.append(div);
+
+  add_file_dropdown()
+  is_full_dropdown();
+}
 
 function create_reload_page(form, post_link, history_link) {
 	form_data = new FormData(form);
