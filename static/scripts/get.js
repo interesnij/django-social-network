@@ -264,6 +264,8 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
   document.body.querySelector(".img_block") ? (img_block = document.body.querySelector(".img_block"),
                                                img_block.querySelector(".photo") ? console.log("Есть и еще фото") : console.log("Нет больше фото"))
                                             : null
+                                            console.log(img_block);
+                                            console.log(img_block.querySelector(".photo"));
   parent.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
