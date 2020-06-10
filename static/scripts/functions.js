@@ -45,7 +45,7 @@ function photo_comment_upload_attach(response, dropdown){
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
     }
-  else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
+  else if (img_block.querySelector(".select_photo2") && !img_block.querySelector(".select_photo1")){
     div = create_preview_photo("select_photo1", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
     img_block.append(div);
     add_file_dropdown();
