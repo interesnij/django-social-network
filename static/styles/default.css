@@ -4546,6 +4546,10 @@ cursor: pointer;
   position: fixed;
   z-index: 100;
 }
+.photo_open_200 {
+  position: fixed;
+  z-index: 200;
+}
 
 @media screen and (min-width: 621px) {
     .photo_fullscreen,
