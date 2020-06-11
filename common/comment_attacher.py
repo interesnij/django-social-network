@@ -49,24 +49,24 @@ def get_comment_attach(request, comment):
 
     if request.POST.get('video'):
         if request.POST.get('select_video1'):
-            video_attach(select_video1, comment)
+            video_attach(request.POST.get('select_video1'), comment)
         if request.POST.get('select_video2'):
-            video_attach(select_video2, comment)
+            video_attach(request.POST.get('select_video2'), comment)
 
     if request.POST.get('music'):
         if request.POST.get('select_music1'):
-            music_attach(select_music1, comment)
+            music_attach(request.POST.get('select_music1'), comment)
         if request.POST.get('select_music2'):
-            music_attach(select_music2, comment)
+            music_attach(request.POST.get('select_music2'), comment)
 
     if request.POST.get('good'):
         if request.POST.get('select_good1'):
-            music_attach(select_good1, comment)
+            music_attach(request.POST.get('select_good1'), comment)
         if request.POST.get('select_good2'):
-            music_attach(select_good2, comment)
+            music_attach(request.POST.get('select_good2'), comment)
 
     if request.POST.get('article'):
         if request.POST.get('select_article1'):
-            article_attach(select_article1, comment)
+            article_attach(request.POST.get('select_article1'), comment)
         if request.POST.get('select_article2'):
-            article_attach(select_article2, comment)
+            article_attach(request.POST.get('select_article2'), comment)
