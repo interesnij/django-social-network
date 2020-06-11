@@ -268,15 +268,15 @@ function video_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
     if (!block.querySelector("video_input")){div = create_preview_photo("select_video1", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video1")){div = create_preview_photo("select_video2", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video2")){div = create_preview_photo("select_video3", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video3")){div = create_preview_photo("select_video4", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video4")){div = create_preview_photo("select_video5", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video5")){div = create_preview_photo("select_video6", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video6")){div = create_preview_photo("select_video7", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video7")){div = create_preview_photo("select_video8", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video8")){div = create_preview_photo("select_video9", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video9")){div = create_preview_photo("select_video10", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video1")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video2")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video3")){div = create_preview_video("select_video4", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video4")){div = create_preview_video("select_video5", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video5")){div = create_preview_video("select_video6", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video6")){div = create_preview_video("select_video7", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video7")){div = create_preview_video("select_video8", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video8")){div = create_preview_video("select_video9", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_video9")){div = create_preview_video("select_video10", _this.getAttribute('data-src'), pk)}
   block.append(div);
   block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', block.append($video_input));
 
