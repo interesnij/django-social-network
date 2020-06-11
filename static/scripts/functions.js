@@ -93,7 +93,7 @@ function is_full_attach(){
     document.getElementById("create_loader").innerHTML="";
   }
   if (!files_block.classList.contains("files_10")){
-    files_block.querySelector(".attach_panel").style.display = "block"}
+    files_block.querySelector(".attach_panel") ? files_block.querySelector(".attach_panel").style.display = "block" : null}
 }
 function add_file_attach(){
   files_block = document.body.querySelector(".attach_block");
