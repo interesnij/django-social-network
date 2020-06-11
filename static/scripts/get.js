@@ -295,8 +295,11 @@ on('#ajax', 'click', '.video_load_detail', function() {
 
 on('#ajax', 'click', '.music_load_detail', function() {
   _this = this;
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  music_comment_attach(_this, dropdown)
+  if (document.body.querySelector(".current_file_dropdown")){
+    music_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    music_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
 });
 
 on('#ajax', 'click', '.good_load_detail', function() {
