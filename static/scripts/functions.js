@@ -345,14 +345,14 @@ function music_comment_attach(_this, dropdown){
 function music_post_attach(_this, block) {
   is_full_attach();
   counter = _this.getAttribute('music-counter');
-  if (block.querySelector( '[music-uuid=' + '"' + counter + '"' + ']' )){
+  if (block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("video_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector("music_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music1")){div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music2")){div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music3")){div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
@@ -430,7 +430,7 @@ function good_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   title = _this.querySelector(".good_title").innerHTML;
 
-    if (!block.querySelector("good_input")){div = create_preview_music("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    if (!block.querySelector("good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good1")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good2")){div = create_preview_good("select_good3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good3")){div = create_preview_good("select_good4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
@@ -510,7 +510,7 @@ function article_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   title = _this.querySelector(".article_title").innerHTML;
 
-    if (!block.querySelector("article_input")){div = create_preview_music("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    if (!block.querySelector("article_input")){div = create_preview_music("select_article1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_article1")){div = create_preview_good("select_article2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_article2")){div = create_preview_good("select_article3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_article3")){div = create_preview_good("select_article4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
