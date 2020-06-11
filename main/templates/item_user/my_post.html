@@ -5,9 +5,9 @@
       {% if object.post.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
-
-      {% include 'generic/attach/post_attach.html' %}
     </div>
+
+    {% include 'generic/attach/post_attach.html' %}
 
     {% if object.is_repost %}
       {% include 'item_user/repost.html' %}
