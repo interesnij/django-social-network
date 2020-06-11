@@ -124,7 +124,7 @@ function remove_file_attach(){
 
 function create_preview_photo(div_class, img_src, pk){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", "photo", div_class);
+  $div.classList.add("col", "photo", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
@@ -217,7 +217,7 @@ function photo_comment_upload_attach(response, dropdown){
 
 function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", "video", div_class);
+  $div.classList.add("col", "video", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
@@ -260,23 +260,24 @@ function video_comment_attach(_this, dropdown){
 
 function video_post_attach(_this, block) {
   is_full_attach();
-  if (block.querySelector( '[video-uuid=' + '"' + _this.getAttribute('video-uuid') + '"' + ']' )){
+  counter = _this.getAttribute('video-counter');
+  if (block.querySelector( '[video-counter=' + '"' + counter + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video1")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video2")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video3")){div = create_preview_video("select_video4", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video4")){div = create_preview_video("select_video5", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video5")){div = create_preview_video("select_video6", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video6")){div = create_preview_video("select_video7", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video7")){div = create_preview_video("select_video8", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video8")){div = create_preview_video("select_video9", _this.getAttribute('data-src'), pk)}
-    else if (block.querySelector(".select_video9")){div = create_preview_video("select_video10", _this.getAttribute('data-src'), pk)}
+    if (!block.querySelector("video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video1")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video2")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video3")){div = create_preview_video("select_video4", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video4")){div = create_preview_video("select_video5", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video5")){div = create_preview_video("select_video6", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video6")){div = create_preview_video("select_video7", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video7")){div = create_preview_video("select_video8", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video8")){div = create_preview_video("select_video9", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_video9")){div = create_preview_video("select_video10", _this.getAttribute('data-src'), pk, counter)}
   block.append(div);
   block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', block.append($video_input));
 
@@ -326,9 +327,7 @@ function music_comment_attach(_this, dropdown){
     _this.setAttribute("flow", "up");
     return
   };
-
   _this.classList.add("attach_toggle");
-
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
@@ -342,9 +341,36 @@ function music_comment_attach(_this, dropdown){
   is_full_dropdown();
 }
 
+function music_post_attach(_this, block) {
+  is_full_attach();
+  counter = _this.getAttribute('music-counter');
+  if (block.querySelector( '[music-uuid=' + '"' + counter + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.classList.add("attach_toggle");
+  pk = _this.getAttribute('data-pk');
+    if (!block.querySelector("video_input")){div = create_preview_video("select_music1", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_music1")){div = create_preview_video("select_music2", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music2")){div = create_preview_video("select_music3", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music3")){div = create_preview_video("select_music4", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music4")){div = create_preview_video("select_music5", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music5")){div = create_preview_video("select_music6", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music6")){div = create_preview_video("select_music7", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music7")){div = create_preview_video("select_music8", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music8")){div = create_preview_video("select_music9", _this.getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music9")){div = create_preview_video("select_music10", _this.getAttribute('data-src'), pk, counter)}
+  block.append(div);
+  block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
+
+  add_file_attach()
+  is_full_attach();
+}
+
 function create_preview_good(div_class, img_src, pk, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", "u_good_detail", "good", div_class);
+  $div.classList.add("col", "u_good_detail", "good", div_class);
   $div.setAttribute('good-pk', pk);
   $div.style.cursor = "pointer";
 
@@ -395,7 +421,7 @@ function good_comment_attach(_this, dropdown){
 
 function create_preview_article(div_class, img_src, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-6", "article", div_class);
+  $div.classList.add("col", "article", div_class);
   $title = document.createElement("span");
   $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
