@@ -145,7 +145,7 @@ function photo_comment_attach(_this, dropdown) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("photo_load_toggle");
+  _this.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (img_block.querySelector(".select_photo1")){
         div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
@@ -159,6 +159,33 @@ function photo_comment_attach(_this, dropdown) {
   add_file_dropdown()
   is_full_dropdown();
 }
+function photo_post_attach(_this, block) {
+  is_full_attach();
+
+  if (block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.classList.add("attach_toggle");
+  pk = _this.getAttribute('photo-uuid');
+    if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo1")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo2")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo3")){div = create_preview_photo("select_photo4", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo4")){div = create_preview_photo("select_photo5", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo5")){div = create_preview_photo("select_photo6", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo6")){div = create_preview_photo("select_photo7", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo7")){div = create_preview_photo("select_photo8", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo8")){div = create_preview_photo("select_photo9", _this.getAttribute('data-src'), pk)}
+    else if (block.querySelector(".select_photo9")){div = create_preview_photo("select_photo10", _this.getAttribute('data-src'), pk)}
+  block.append(div);
+  block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
+
+  add_file_attach()
+  is_full_attach();
+}
+
 function photo_comment_upload_attach(response, dropdown){
   is_full_dropdown();
   photo_list = response.querySelectorAll(".u_photo_detail");
@@ -275,7 +302,7 @@ function music_comment_attach(_this, dropdown){
     return
   };
 
-  _this.classList.add("music_load_toggle");
+  _this.classList.add("attach_toggle");
 
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
@@ -320,7 +347,7 @@ function good_comment_attach(_this, dropdown){
     return
   };
 
-  _this.classList.add("good_load_toggle");
+  _this.classList.add("attach_toggle");
   pk = _this.getAttribute('good-pk');
   title = _this.querySelector(".good_title").innerHTML;
 
