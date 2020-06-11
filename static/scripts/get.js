@@ -16,7 +16,8 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
   parent.remove();
-  document.body.querySelector(".img_block") ? (block.querySelector(".photo") ? null : block.querySelector(".photo_input").parentElement.remove()) : null;
+  block.querySelector(".photo") ? null : block.querySelector(".photo_input").parentElement.remove()
+
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.video_preview_delete', function() {
