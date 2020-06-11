@@ -368,7 +368,6 @@ function music_post_attach(_this, block) {
     else if (block.querySelector(".select_music8")){console.log(9);div = create_preview_music("select_music9", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music9")){console.log(10);div = create_preview_music("select_music10", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
   block.append(div);
-  block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
 
   add_file_attach()
   is_full_attach();
