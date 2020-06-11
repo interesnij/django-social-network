@@ -267,7 +267,7 @@ function video_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("video_input")){div = create_preview_photo("select_video1", _this.getAttribute('data-src'), pk)}
+    if (!block.querySelector("video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_video1")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_video2")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_video3")){div = create_preview_video("select_video4", _this.getAttribute('data-src'), pk)}
