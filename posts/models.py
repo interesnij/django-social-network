@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 
 
 class Post(Item):
-    text = models.TextField(max_length=settings.POST_MAX_LENGTH, null=True, verbose_name="Текст")
+    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
     is_public = models.BooleanField(default=True, verbose_name="Публичный")
 
     @classmethod
