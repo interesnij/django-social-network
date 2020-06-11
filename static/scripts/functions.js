@@ -514,16 +514,16 @@ function article_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   title = _this.querySelector(".article_title").innerHTML;
 
-    if (!block.querySelector(".article_input")){div = create_preview_music("select_article1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article2")){div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article3")){div = create_preview_article("select_article3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article4")){div = create_preview_article("select_article4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article5")){div = create_preview_article("select_article5", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article6")){div = create_preview_article("select_article6", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article7")){div = create_preview_article("select_article7", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article8")){div = create_preview_article("select_article8", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article9")){div = create_preview_article("select_article9", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_article10")){div = create_preview_article("select_article10", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    if (!block.querySelector(".article_input")){div = create_preview_music("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article2")){div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article3")){div = create_preview_article("select_article3", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article4")){div = create_preview_article("select_article4", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article5")){div = create_preview_article("select_article5", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article6")){div = create_preview_article("select_article6", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article7")){div = create_preview_article("select_article7", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article8")){div = create_preview_article("select_article8", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article9")){div = create_preview_article("select_article9", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    else if (!block.querySelector(".select_article10")){div = create_preview_article("select_article10", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
   block.append(div);
   block.querySelector(".article_input") ? null : ($article_input = document.createElement("span"), $article_input.innerHTML = '<input type="hidden" class="article_input" name="article" value="1">', block.append($article_input));
 
