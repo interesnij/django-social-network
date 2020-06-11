@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 
 
 class Post(Item):
-    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
+    text = models.TextField(max_length=settings.POST_MAX_LENGTH, null=True, verbose_name="Текст")
 
     @classmethod
     def create_post(cls, creator, text, community, comments_enabled, is_draft, status):
