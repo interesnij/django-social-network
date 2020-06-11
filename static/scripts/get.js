@@ -12,6 +12,17 @@ on('body', 'click', '.ajax', function(event) {
   }
 })
 
+on('#ajax', 'click', '.photo_preview_delete', function() {
+  parent = this.parentElement;
+  img_block = parent.parentElement;
+  parent.remove();
+  document.body.querySelector(".img_block") ? (img_block.querySelector(".photo") ? console.log("Есть и еще фото")
+                                                                                 : console.log("Нет фото"))
+                                            : null
+                                            console.log(img_block);
+                                            console.log(img_block.querySelector(".photo"));
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
 //window.addEventListener('popstate', function (e) {window.history.go(-1);});
 
 on('body', 'click', '.next_item', function(event) {
@@ -257,18 +268,6 @@ on('#ajax', 'click', '.music_load_detail', function() {
   _this = this;
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   music_comment_attach(_this, dropdown)
-});
-
-on('#ajax', 'click', '.photo_preview_delete', function() {
-  parent = this.parentElement;
-  img_block = parent.parentElement;
-  parent.remove();
-  document.body.querySelector(".img_block") ? (img_block.querySelector(".photo") ? console.log("Есть и еще фото")
-                                                                                 : console.log("Нет фото"))
-                                            : null
-                                            console.log(img_block);
-                                            console.log(img_block.querySelector(".photo"));
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 
 on('#ajax', 'click', '.good_load_detail', function() {
