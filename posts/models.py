@@ -10,19 +10,16 @@ class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
 
     @classmethod
-    def create_post(cls, creator, text=None, community=None, comments_enabled=None, video=None, is_draft=False, good=None, status= None, doc=None, question=None):
-        if not text and not photo:
-            raise ValidationError('Нужно ввести текст или прикрепить фото')
-        else:
-            post = Post.objects.create(creator=creator, text=text, community=community, comments_enabled=comments_enabled, status = status, )
-            channel_layer = get_channel_layer()
-            payload = {
-                    "type": "receive",
-                    "key": "additional_post",
-                    "actor_name": post.creator.get_full_name()
-                }
-            async_to_sync(channel_layer.group_send)('notifications', payload)
-        return post
+    def create_post(cls, creator, text=None, community=None, comments_enabled=None, is_draft=False, status= None):
+        post = Post.objects.create(creator=creator, text=text, community=community, comments_enabled=comments_enabled, status = status, )
+        channel_layer = get_channel_layer()
+        payload = {
+            "type": "receive",
+            "key": "additional_post",
+            "actor_name": post.creator.get_full_name()
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+    return post
 
     class Meta:
         ordering=["-created"]
