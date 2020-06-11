@@ -351,7 +351,7 @@ function music_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("video_input")){div = create_preview_music("select_music1", _this.getAttribute('data-src'), pk)}
+    if (!block.querySelector("video_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music1")){div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music2")){div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music3")){div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
