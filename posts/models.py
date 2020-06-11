@@ -19,7 +19,7 @@ class Post(Item):
             "actor_name": post.creator.get_full_name()
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
-    return post
+        return post
 
     class Meta:
         ordering=["-created"]
