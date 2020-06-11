@@ -54,6 +54,8 @@ class ItemCommentUserCreate(View):
                 get_comment_attach(request)
                 new_comment.notification_user_comment(request.user)
                 return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+            else:
+                return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
 
