@@ -183,6 +183,7 @@ function photo_comment_upload_attach(response, dropdown){
     add_file_dropdown();
     div2 = create_preview_photo("select_photo2", photo_list[1].querySelector("img").getAttribute('data-src'), photo_list[1].getAttribute("photo-uuid"))
     img_block.append(div2);
+    img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
     add_file_dropdown();
     is_full_dropdown();
 }
@@ -225,6 +226,7 @@ function video_comment_attach(_this, dropdown){
         create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)
       }
   img_block.append($div);
+  img_block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', img_block.append($video_input));
 
   add_file_dropdown()
   is_full_dropdown();
@@ -277,12 +279,13 @@ function music_comment_attach(_this, dropdown){
 
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
-        img_block.append(div); add_file_dropdown();
       }
     else if (img_block.querySelector(".select_music2") || !img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
-        img_block.append(div); add_file_dropdown();
       }
+    add_file_dropdown();
+    img_block.append(div)
+    img_block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', img_block.append($music_input));
 
   is_full_dropdown();
 }
@@ -332,6 +335,7 @@ function good_comment_attach(_this, dropdown){
     }
 
   img_block.append(div);
+  img_block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', img_block.append($good_input));
 
   add_file_dropdown()
   is_full_dropdown();
@@ -384,6 +388,7 @@ function article_comment_attach(_this, dropdown){
         div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
       }
   img_block.append(div);
+  img_block.querySelector(".article_input") ? null : ($article_input = document.createElement("span"), $article_input.innerHTML = '<input type="hidden" class="article_input" name="article" value="1">', img_block.append($article_input));
 
   add_file_dropdown()
   is_full_dropdown();
