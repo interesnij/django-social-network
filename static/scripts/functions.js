@@ -217,7 +217,7 @@ function photo_comment_upload_attach(response, dropdown){
 
 function create_preview_video(div_class, img_src, pk, counter){
   $div = document.createElement("div");
-  $div.classList.add("col", "video", div_class);
+  $div.classList.add("col-md-4", "video", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
@@ -370,7 +370,7 @@ function music_post_attach(_this, block) {
 
 function create_preview_good(div_class, img_src, pk, title){
   $div = document.createElement("div");
-  $div.classList.add("col", "u_good_detail", "good", div_class);
+  $div.classList.add("col-md-4", "u_good_detail", "good", div_class);
   $div.setAttribute('good-pk', pk);
   $div.style.cursor = "pointer";
 
@@ -391,25 +391,25 @@ function create_preview_good(div_class, img_src, pk, title){
 function good_comment_attach(_this, dropdown){
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
+  pk = _this.getAttribute('good-pk');
 
-  if (img_block.querySelector( '[good-pk=' + '"' + _this.getAttribute('good-pk') + '"' + ']' )){
+  if (img_block.querySelector( '[good-pk=' + '"' + pk + '"' + ']' )){
     _this.setAttribute("tooltip", "Товар уже выбран");
     _this.setAttribute("flow", "up");
     return
   };
 
   _this.classList.add("attach_toggle");
-  pk = _this.getAttribute('good-pk');
   title = _this.querySelector(".good_title").innerHTML;
 
     if (img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)
     }
     else if (img_block.querySelector(".select_good2") && !img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)
     }
     else {
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, _this.querySelector(".good_title").innerHTML)
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)
     }
 
   img_block.append(div);
@@ -418,10 +418,37 @@ function good_comment_attach(_this, dropdown){
   add_file_dropdown()
   is_full_dropdown();
 }
+function good_post_attach(_this, block) {
+  is_full_attach();
+  pk = _this.getAttribute('data-pk');
+  if (block.querySelector( '[good-pk=' + '"' + pk + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.classList.add("attach_toggle");
+  title = _this.querySelector(".good_title").innerHTML;
+
+    if (!block.querySelector("good_input")){div = create_preview_music("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good1")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good2")){div = create_preview_good("select_good3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good3")){div = create_preview_good("select_good4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good4")){div = create_preview_good("select_good5", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good5")){div = create_preview_good("select_good6", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good6")){div = create_preview_good("select_good7", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good7")){div = create_preview_good("select_good8", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good8")){div = create_preview_good("select_good9", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_good9")){div = create_preview_good("select_good10", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+  block.append(div);
+  block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
+
+  add_file_attach()
+  is_full_attach();
+}
 
 function create_preview_article(div_class, img_src, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("col", "article", div_class);
+  $div.classList.add("col-md-4", "article", div_class);
   $title = document.createElement("span");
   $div.setAttribute('item-uuid', uuid);
   $div.style.cursor = "pointer";
@@ -471,6 +498,32 @@ function article_comment_attach(_this, dropdown){
   add_file_dropdown()
   is_full_dropdown();
 }
+function article_post_attach(_this, block) {
+  is_full_attach();
+  uuid = _this.getAttribute('item-uuid');
+  if (block.querySelector( '[item-uuid=' + '"' + uuid + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Статья уже выбрана");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.classList.add("attach_toggle");
+  title = _this.querySelector(".article_title").innerHTML;
+
+    if (!block.querySelector("article_input")){div = create_preview_music("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article1")){div = create_preview_good("select_article2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article2")){div = create_preview_good("select_article3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article3")){div = create_preview_good("select_article4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article4")){div = create_preview_good("select_article5", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article5")){div = create_preview_good("select_article6", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article6")){div = create_preview_good("select_article7", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article7")){div = create_preview_good("select_article8", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article8")){div = create_preview_good("select_article9", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    else if (block.querySelector(".select_article9")){div = create_preview_good("select_article10", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+  block.append(div);
+  block.querySelector(".article_input") ? null : ($article_input = document.createElement("span"), $article_input.innerHTML = '<input type="hidden" class="article_input" name="article" value="1">', block.append($article_input));
+
+  add_file_attach()
+  is_full_attach();
 
 function create_reload_page(form, post_link, history_link) {
 	form_data = new FormData(form);

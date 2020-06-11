@@ -304,12 +304,20 @@ on('#ajax', 'click', '.music_load_detail', function() {
 
 on('#ajax', 'click', '.good_load_detail', function() {
   _this = this;
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  good_comment_attach(_this, dropdown)
+  if (document.body.querySelector(".current_file_dropdown")){
+    good_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    good_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
 });
 
 on('#ajax', 'click', '.article_load_detail', function() {
   _this = this;
+  if (document.body.querySelector(".current_file_dropdown")){
+    article_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    article_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   article_comment_attach(_this, dropdown)
 });
