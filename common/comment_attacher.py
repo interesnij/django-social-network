@@ -43,9 +43,9 @@ def article_attach(value, comment):
 def get_comment_attach(request, comment):
     if request.POST.get('photo'):
         if request.POST.get('select_photo1'):
-            photo_attach(select_photo1, comment)
+            photo_attach(request.POST.get('select_photo1'), comment)
         if request.POST.get('select_photo2'):
-            photo_attach(select_photo2, comment)
+            photo_attach(request.POST.get('select_photo2'), comment)
 
     if request.POST.get('video'):
         if request.POST.get('select_video1'):
