@@ -1,4 +1,4 @@
-<div class="row" style="padding-bottom: 10px;">
+<div class="row" style="padding-bottom:10px;margin-right:0;margin-left:0;">
   {% for photo in object.item_photo.all %}
   <div class="col">
       <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="comment_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
