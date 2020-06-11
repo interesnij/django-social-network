@@ -154,6 +154,7 @@ function photo_comment_attach(_this, dropdown) {
         div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
       }
   img_block.append(div);
+  img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
 
   add_file_dropdown()
   is_full_dropdown();

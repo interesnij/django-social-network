@@ -16,11 +16,8 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
   img_block = parent.parentElement;
   parent.remove();
-  document.body.querySelector(".img_block") ? (img_block.querySelector(".photo") ? console.log("Есть и еще фото")
-                                                                                 : console.log("Нет фото"))
-                                            : null
-                                            console.log(img_block);
-                                            console.log(img_block.querySelector(".photo"));
+  document.body.querySelector(".img_block") ?
+     (img_block.querySelector(".photo") ? null : photo_input = img_block.querySelector(".photo_input"), photo_input.delete()) : null;
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 //window.addEventListener('popstate', function (e) {window.history.go(-1);});
