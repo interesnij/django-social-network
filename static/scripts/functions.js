@@ -88,12 +88,12 @@ function remove_file_dropdown(){
 function is_full_attach(){
   files_block = document.body.querySelector(".attach_block");
   if (files_block.classList.contains("files_10")){
-    files_block.querySelector(".attach_panel").style.display = "none";
+    files_block.parentElement.querySelector(".attach_panel").style.display = "none";
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }
   if (!files_block.classList.contains("files_10")){
-    files_block.querySelector(".attach_panel") ? files_block.querySelector(".attach_panel").style.display = "block" : null}
+    files_block.parentElement.querySelector(".attach_panel").style.display = "block"
 }
 function add_file_attach(){
   files_block = document.body.querySelector(".attach_block");
