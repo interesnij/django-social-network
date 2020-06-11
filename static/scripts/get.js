@@ -286,8 +286,11 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 
 on('#ajax', 'click', '.video_load_detail', function() {
   _this = this;
-  dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-  video_comment_attach(_this, dropdown);
+  if (document.body.querySelector(".current_file_dropdown")){
+    video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    video_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
 });
 
 on('#ajax', 'click', '.music_load_detail', function() {
