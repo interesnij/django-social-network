@@ -258,9 +258,10 @@ on('#ajax', 'change', '#photo_add_attach', function() {
 on('#ajax', 'click', '.photo_load_detail', function() {
   _this = this;
   if (document.body.querySelector(".current_file_dropdown")){
-    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
+    console.log("photo_comment_attach")
   } else if (document.body.querySelector(".attach_block")){
-    photo_post_attach(_this, document.body.querySelector(".attach_block"))
+    photo_post_attach(_this, document.body.querySelector(".attach_block"); console.log("photo_post_attach"))
   }
 });
 
