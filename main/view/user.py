@@ -51,7 +51,7 @@ class ItemCommentUserCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
-                get_comment_attach(request)
+                get_comment_attach(requestб comment) 
                 new_comment.notification_user_comment(request.user)
                 return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
             else:
