@@ -524,6 +524,7 @@ function article_post_attach(_this, block) {
 
   add_file_attach()
   is_full_attach();
+}
 
 function create_reload_page(form, post_link, history_link) {
 	form_data = new FormData(form);
