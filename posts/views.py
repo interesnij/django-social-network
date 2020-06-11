@@ -43,7 +43,7 @@ class PostUserCreate(View):
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
 
-        if self.form_post.is_valid() and request.user == self.user:
+        if self.form_post.is_valid():
             post=self.form_post.save(commit=False)
             #if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
             from common.post_attacher import get_post_attach
