@@ -1,0 +1,61 @@
+<div class="row" style="padding-bottom: 10px;">
+  {% for photo in object.item_photo.all %}
+  <div class="col">
+      <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="comment_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
+  </div>
+  {% endfor %}
+  {% for video in object.item_video.all %}
+  <div class="col" album-pk="{{ video.video_album.pk }}">
+      <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="video">
+      <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+  </div>
+  {% endfor %}
+  {% for good in object.item_good.all %}
+  <div class="col u_good_detail" good-pk="{{ good.pk }}" style="cursor:pointer">
+    <span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;">
+      <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+      {{ good.title }}
+    </span>
+    {% if good.image %}
+      <img class="image_fit lazyload" style="width:100%" data-src="{{ good.image.url }}" alt="">
+    {% else %}
+      <svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% for item in object.attached_item.all %}
+  <div class="col" item-uuid="{{ item.uuid }}">
+    <span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;">
+      <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      {{ item.article.title}}
+    </span>
+    <div class="text-center u_article_detail" style="cursor:pointer">
+      <div class="align-items-center">
+          {% if item.article.g_image %}
+            <img class="lazyload image_fit" data-src="{{ item.article.g_image.url }}" alt="">
+          {% else %}
+            <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
+          {% endif %}
+      </div>
+   </div>
+  </div>
+  {% endfor %}
+  {% for music in object.comment_music.all %}
+  <div class="col-md-12 mt-3">
+    <div class="media" music-counter="{{ forloop.counter0 }}">
+        <figure style="cursor:pointer">
+          <a class="music_list_item">
+            {% if music.artwork_url %}
+              <img style="width:30px;heigth:auto" src="{{ music.artwork_url }}" />
+            {% else %}
+              <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+            {% endif %}
+          </a>
+        </figure>
+        <div class="media-body">
+            <h6 class="music_list_item" style="cursor:pointer;padding-top: 6px;"><a>{{ music.title }}</a></h6>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -10,12 +10,8 @@
       {% if object.post.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
-      {% if object.post.image %}
-        <p class="">{{ object.post.image.url }}</p>
-      {% endif %}
-      {% if object.post.doc %}
-        <p class="">{{ object.post.doc }}</p>
-      {% endif %}
+      
+      {% include 'generic/attach/post_attach.html' %}
     </div>
 
     {% include 'item_user/info.html' %}
