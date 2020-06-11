@@ -1,6 +1,6 @@
 .attach_toggle{
   border: 1px black solid;
-  padding: 10%;
+  padding: 15px;
 }
 
 .photo, .video, .music, .good, .article {
