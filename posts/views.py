@@ -50,8 +50,8 @@ class PostUserCreate(View):
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
                 get_post_attach(request, new_post)
                 return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
-            else:
-                return HttpResponseBadRequest()
+            #else:
+                #return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
 
