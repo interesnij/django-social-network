@@ -92,8 +92,9 @@ function is_full_attach(){
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }
-  if (!files_block.classList.contains("files_10")){
+  else {
     files_block.parentElement.querySelector(".attach_panel").style.display = "block"
+}
 }
 function add_file_attach(){
   files_block = document.body.querySelector(".attach_block");
