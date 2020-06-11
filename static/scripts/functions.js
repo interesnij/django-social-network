@@ -352,16 +352,16 @@ function music_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector(".music_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music1")){div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music2")){div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music3")){div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music4")){div = create_preview_music("select_music5", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music5")){div = create_preview_music("select_music6", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music6")){div = create_preview_music("select_music7", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music7")){div = create_preview_music("select_music8", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music8")){div = create_preview_music("select_music9", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (block.querySelector(".select_music9")){div = create_preview_music("select_music10", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector(".music_input")){console.log(1);div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music1")){console.log(2);div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music2")){console.log(3);div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music3")){console.log(4);div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music4")){console.log(5);div = create_preview_music("select_music5", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music5")){console.log(6);div = create_preview_music("select_music6", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music6")){console.log(7);div = create_preview_music("select_music7", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music7")){console.log(8);div = create_preview_music("select_music8", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music8")){console.log(9);div = create_preview_music("select_music9", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music9")){console.log(10);div = create_preview_music("select_music10", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
   block.append(div);
   block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
 
