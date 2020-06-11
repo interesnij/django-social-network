@@ -244,25 +244,19 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
-    def create_comment(cls, commenter, item, parent_comment, text, select_photo1, select_photo2,
-                        select_video1, select_video2, select_music1, select_music2, select_good1, select_good2,
-                        select_article1, select_article2):
-        from common.comment_attacher import get_comment_attach
+    def create_comment(cls, commenter, item, parent_comment, text):
 
-        if text or select_photo1 or select_video1 or select_music1 or select_good1 or select_article1:
-            comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
-            get_comment_attach(comment, select_photo1, select_photo2, select_video1, select_video2, select_music1, select_music2, select_good1, select_good2, select_article1, select_article2)
-            channel_layer = get_channel_layer()
-            payload = {
-                "type": "receive",
-                "key": "comment_item",
-                "actor_name": comment.commenter.get_full_name()
-            }
-            async_to_sync(channel_layer.group_send)('notifications', payload)
-            comment.save()
-            return comment
-        else:
-            raise ValidationError('Напишите текст или прикрепите что-нибудь')
+        comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, created=timezone.now())
+        get_comment_attach(comment, select_photo1, select_photo2, select_video1, select_video2, select_music1, select_music2, select_good1, select_good2, select_article1, select_article2)
+        channel_layer = get_channel_layer()
+        payload = {
+            "type": "receive",
+            "key": "comment_item",
+            "actor_name": comment.commenter.get_full_name()
+        }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+        comment.save()
+        return comment
 
 
 class ItemMute(models.Model):

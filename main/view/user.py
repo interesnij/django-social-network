@@ -7,10 +7,7 @@ from main.forms import CommentForm
 from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from rest_framework.exceptions import PermissionDenied, ValidationError
-from gallery.models import Album, Photo
-from video.models import Video
-from music.models import SoundcloudParsing
+from common.comment_attacher import get_comment_attach
 
 
 class ItemUserCommentList(ListView):
@@ -52,14 +49,11 @@ class ItemCommentUserCreate(View):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
-            new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text,
-                                                select_photo1 = request.POST.get('select_photo1'), select_photo2 = request.POST.get('select_photo2'),
-                                                select_video1 = request.POST.get('select_video1'), select_video2 = request.POST.get('select_video2'),
-                                                select_music1 = request.POST.get('select_music1'), select_music2 = request.POST.get('select_music2'),
-                                                select_good1 = request.POST.get('select_good1'), select_good2 = request.POST.get('select_good2'),
-                                                select_article1 = request.POST.get('select_article1'), select_article2 = request.POST.get('select_article2'))
-            new_comment.notification_user_comment(request.user)
-            return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
+                get_comment_attach(request)
+                new_comment.notification_user_comment(request.user)
+                return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
             return HttpResponseBadRequest()
 
