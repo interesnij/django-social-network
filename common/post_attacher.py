@@ -109,25 +109,25 @@ def get_post_attach(request, post):
 
     if request.POST.get('good'):
         if request.POST.get('select_good1'):
-            music_attach(request.POST.get('select_good1'), post)
+            good_attach(request.POST.get('select_good1'), post)
         if request.POST.get('select_good2'):
-            music_attach(request.POST.get('select_good2'), post)
+            good_attach(request.POST.get('select_good2'), post)
         if request.POST.get('select_good3'):
-            music_attach(request.POST.get('select_good3'), post)
+            good_attach(request.POST.get('select_good3'), post)
         if request.POST.get('select_good4'):
-            music_attach(request.POST.get('select_good4'), post)
+            good_attach(request.POST.get('select_good4'), post)
         if request.POST.get('select_good5'):
-            music_attach(request.POST.get('select_good5'), post)
+            good_attach(request.POST.get('select_good5'), post)
         if request.POST.get('select_good6'):
-            music_attach(request.POST.get('select_good6'), post)
+            good_attach(request.POST.get('select_good6'), post)
         if request.POST.get('select_good7'):
-            music_attach(request.POST.get('select_good7'), post)
+            good_attach(request.POST.get('select_good7'), post)
         if request.POST.get('select_good8'):
-            music_attach(request.POST.get('select_good8'), post)
+            good_attach(request.POST.get('select_good8'), post)
         if request.POST.get('select_good9'):
-            music_attach(request.POST.get('select_good9'), post)
+            good_attach(request.POST.get('select_good9'), post)
         if request.POST.get('select_good10'):
-            music_attach(request.POST.get('select_good10'), post)
+            good_attach(request.POST.get('select_good10'), post)
 
     if request.POST.get('article'):
         if request.POST.get('select_article1'):

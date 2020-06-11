@@ -394,7 +394,7 @@ function good_comment_attach(_this, dropdown){
   img_block = dropdown.parentElement.previousElementSibling;
   pk = _this.getAttribute('good-pk');
 
-  if (img_block.querySelector( '[good-pk=' + '"' + pk + '"' + ']' )){
+  if (img_block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
     _this.setAttribute("tooltip", "Товар уже выбран");
     _this.setAttribute("flow", "up");
     return
@@ -422,7 +422,7 @@ function good_comment_attach(_this, dropdown){
 function good_post_attach(_this, block) {
   is_full_attach();
   pk = _this.getAttribute('good-pk');
-  if (block.querySelector( '[good-pk=' + '"' + pk + '"' + ']' )){
+  if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
     _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
