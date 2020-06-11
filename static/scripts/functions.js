@@ -179,7 +179,7 @@ function photo_post_attach(_this, block) {
     else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", _this.getAttribute('data-src'), pk)}
     else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", _this.getAttribute('data-src'), pk)}
     else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", _this.getAttribute('data-src'), pk)}
-    img_block.append(div);
+    block.append(div);
   block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
 
   add_file_attach()
