@@ -261,7 +261,6 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block"))
   }
-
 });
 
 on('#ajax', 'click', '.create_video_attach_btn', function() {

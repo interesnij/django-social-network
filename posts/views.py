@@ -44,11 +44,11 @@ class PostUserCreate(View):
         self.user=User.objects.get(pk=self.kwargs["pk"])
 
         if self.form_post.is_valid() and request.user == self.user:
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+            if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
                 post=self.form_post.save(commit=False)
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
-                get_post_attach(request, new_post) 
+                #get_post_attach(request, new_post)
                 return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
             else:
                 return HttpResponseBadRequest()
