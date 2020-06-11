@@ -169,6 +169,7 @@ function photo_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
+  div = null;
     if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_photo1")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_photo2")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk)}
@@ -358,7 +359,8 @@ function music_post_attach(_this, block) {
       $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">';
       block.append($music_input)
     }
-    else if (block.querySelector(".select_music1")){console.log(2);div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    else if (block.querySelector(".select_music1")){
+      div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music2")){console.log(3);div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music3")){console.log(4);div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music4")){console.log(5);div = create_preview_music("select_music5", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
