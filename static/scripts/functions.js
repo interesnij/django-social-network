@@ -352,7 +352,12 @@ function music_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector(".music_input")){console.log(1);div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector(".music_input")){
+      div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter);
+      $music_input = document.createElement("span");
+      $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">';
+      block.append($music_input)
+    }
     else if (block.querySelector(".select_music1")){console.log(2);div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music2")){console.log(3);div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music3")){console.log(4);div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
