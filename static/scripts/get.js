@@ -261,7 +261,7 @@ on('#ajax', 'click', '.photo_load_detail', function() {
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
     console.log("photo_comment_attach")
   } else if (document.body.querySelector(".attach_block")){
-    photo_post_attach(_this, document.body.querySelector(".attach_block")); console.log("photo_post_attach"))
+    photo_post_attach(_this, document.body.querySelector(".attach_block")); console.log("photo_post_attach")
   }
 });
 
