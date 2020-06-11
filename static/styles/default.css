@@ -1,3 +1,6 @@
+.photo, .video, .music, .good, .article {
+  margin-bottom: 10px
+}
 .attach_block {
   padding-bottom: 10px;
 }
