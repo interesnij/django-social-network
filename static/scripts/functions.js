@@ -514,7 +514,7 @@ function article_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   title = _this.querySelector(".article_title").innerHTML;
 
-    if (!block.querySelector(".article_input")){div = create_preview_music("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+    if (!block.querySelector(".article_input")){div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
     else if (!block.querySelector(".select_article2")){div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
     else if (!block.querySelector(".select_article3")){div = create_preview_article("select_article3", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
     else if (!block.querySelector(".select_article4")){div = create_preview_article("select_article4", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
