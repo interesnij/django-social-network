@@ -30,7 +30,6 @@ class PostDetailView(TemplateView):
 
 class PostUserCreate(View):
     form_post=None
-    success_url="/"
 
     def get_context_data(self,**kwargs):
         context=super(PostUserCreate,self).get_context_data(**kwargs)
