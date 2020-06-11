@@ -40,7 +40,7 @@ class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import PostForm
 
-        self.form_post=PostForm(request.POST, request.FILES)
+        self.form_post=PostForm(request.POST)
         self.user=User.objects.get(pk=self.kwargs["pk"])
 
         if self.form_post.is_valid():
