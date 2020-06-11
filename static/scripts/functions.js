@@ -269,7 +269,7 @@ function video_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_video1")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_video2")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_video3")){div = create_preview_video("select_video4", _this.getAttribute('data-src'), pk, counter)}
@@ -352,7 +352,7 @@ function music_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
-    if (!block.querySelector("music_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector(".music_input")){div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music1")){div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music2")){div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
     else if (block.querySelector(".select_music3")){div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
@@ -430,7 +430,7 @@ function good_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   title = _this.querySelector(".good_title").innerHTML;
 
-    if (!block.querySelector("good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+    if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good1")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good2")){div = create_preview_good("select_good3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
     else if (block.querySelector(".select_good3")){div = create_preview_good("select_good4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
