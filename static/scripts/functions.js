@@ -169,10 +169,9 @@ function photo_post_attach(_this, block) {
   };
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
-
-    if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);block.append(div);}
-    else if (block.querySelector(".select_photo1")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk);block.append(div);}
-    else if (block.querySelector(".select_photo2")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk);block.append(div);}
+    if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);}
+    else if (block.querySelector(".select_photo1")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk);}
+    else if (block.querySelector(".select_photo2")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk);}
     else if (block.querySelector(".select_photo3")){div = create_preview_photo("select_photo4", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_photo4")){div = create_preview_photo("select_photo5", _this.getAttribute('data-src'), pk)}
     else if (block.querySelector(".select_photo5")){div = create_preview_photo("select_photo6", _this.getAttribute('data-src'), pk)}
