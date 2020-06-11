@@ -124,7 +124,7 @@ function remove_file_attach(){
 
 function create_preview_photo(div_class, img_src, pk){
   $div = document.createElement("div");
-  $div.classList.add("col", "photo", div_class);
+  $div.classList.add("col-md-4", "photo", div_class);
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
