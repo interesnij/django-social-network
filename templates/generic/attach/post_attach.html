@@ -1,6 +1,6 @@
 <div class="row" style="padding-bottom:10px;margin-right:0;margin-left:0;">
   {% for photo in object.item_photo.all %}
-  <div class="photo" style="-ms-flex: 1 0 0;flex: 1 0 0;min-width: 200px;">
+  <div class="photo" style="-ms-flex: 1 0 0;flex: 1 0 0;min-width: 200px;margin:5px">
       <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="comment_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
   </div>
   {% endfor %}
