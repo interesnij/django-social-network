@@ -255,7 +255,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.photo_load_detail', function() {
+on('#ajax', 'click', '.photo_load_several', function() {
   _this = this.previousElementSibling.querySelector("img");
   if (document.body.querySelector(".current_file_dropdown")){
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
@@ -263,7 +263,18 @@ on('#ajax', 'click', '.photo_load_detail', function() {
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block")); console.log("photo_post_attach")
   }
-  this.classList.add("active");
+  this.classList.add("active_svg");
+});
+on('#ajax', 'click', '.photo_load_one', function() {
+  _this = this;
+  if (document.body.querySelector(".current_file_dropdown")){
+    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
+    console.log("photo_comment_attach")
+  } else if (document.body.querySelector(".attach_block")){
+    photo_post_attach(_this, document.body.querySelector(".attach_block")); console.log("photo_post_attach")
+  }
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
 });
 
 on('#ajax', 'click', '.create_video_attach_btn', function() {

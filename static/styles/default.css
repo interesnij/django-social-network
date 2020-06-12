@@ -1,6 +1,6 @@
 .attach_toggle{
   border: 1px black solid;
-  padding: 8px;
+  padding: 5px;
 }
 
 .photo, .video, .music, .good, .article {
@@ -374,7 +374,7 @@ html {
   color: grey;
   opacity:0
 }
-.active svg{
+.active_svg svg{
   width: 12px;
   position: absolute;
   color: black;

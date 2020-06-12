@@ -22,13 +22,13 @@
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="card rounded-0 border-0 mb-4">
-          <img style="cursor:pointer"
+          <img style="cursor:pointer photo_load_one" 
                class="lazyload image_fit"
                photo-uuid="{{ object.uuid }}"
                data-src="{{ object.file.url }}"
                alt="img">
       </div>
-      <span class="item_attach_circle photo_load_detail"
+      <span class="item_attach_circle photo_load_several"
            tooltip="Выбрать несколько"
            flow="up">
           <svg fill="currentColor" viewBox="0 0 24 24">
