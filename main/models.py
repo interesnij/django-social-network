@@ -46,6 +46,10 @@ class Item(models.Model):
         verbose_name="запись"
         verbose_name_plural="записи"
 
+    def get_attach_count(self):
+        photo_count = self.item_photo.values("pk").count()
+        return photo_count
+
     def count_comments(self):
         parent_comments = ItemComment.objects.filter(item=self)
         parents_count = parent_comments.count()
