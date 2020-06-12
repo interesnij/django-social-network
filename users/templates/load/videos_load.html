@@ -16,7 +16,7 @@
 <div class="col-12 col-md-4" data-pk="{{ object.pk }}">
   <div class="card rounded-0 border-0 mb-4">
     {% if object.image %}
-      <img class="lazyload image_fit video_load_detail"
+      <img class="lazyload image_fit video_load_one"
            style="cursor:pointer"
            video-counter="{{ forloop.counter0 }}"
            data-pk="{{ object.pk }}"
@@ -25,6 +25,13 @@
       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}
   </div>
+  <span class="item_attach_circle video_load_several"
+       tooltip="Выбрать несколько"
+       flow="up">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+      </svg>
+  </span>
   <div class="card-body">
     <h5 class="text-truncate w-100">{{ object.title }}</h5>
     <span class="small">{{ object.created|naturaltime }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>

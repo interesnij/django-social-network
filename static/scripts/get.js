@@ -298,7 +298,17 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.video_load_detail', function() {
+on('#ajax', 'click', '.video_load_one', function() {
+  _this = this.previousElementSibling.querySelector("img");
+  if (document.body.querySelector(".current_file_dropdown")){
+    video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    video_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
+});
+on('#ajax', 'click', '.video_load_several', function() {
   _this = this;
   if (document.body.querySelector(".current_file_dropdown")){
     video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
