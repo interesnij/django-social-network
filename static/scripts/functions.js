@@ -492,10 +492,10 @@ function article_comment_attach(_this, dropdown){
   _this.classList.add("attach_toggle");
 
     if (img_block.querySelector(".select_article1")){
-        div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+        div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.parentElement.querySelector(".article_title").innerHTML)
       }
     else if (img_block.querySelector(".select_article2") || !img_block.querySelector(".select_article1")){
-        div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.querySelector(".article_title").innerHTML)
+        div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, _this.parentElement.querySelector(".article_title").innerHTML)
       }
   img_block.append(div);
   img_block.querySelector(".article_input") ? null : ($article_input = document.createElement("span"), $article_input.innerHTML = '<input type="hidden" class="article_input" name="article" value="1">', img_block.append($article_input));
@@ -512,7 +512,7 @@ function article_post_attach(_this, block) {
     return
   };
   _this.classList.add("attach_toggle");
-  title = _this.querySelector(".article_title").innerHTML;
+  title = _this.parentElement.querySelector(".article_title").innerHTML;
 
     if (!block.querySelector(".article_input")){div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
     else if (!block.querySelector(".select_article2")){div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
