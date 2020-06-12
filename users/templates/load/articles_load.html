@@ -20,14 +20,21 @@
 {% for object in object_list %}
 <div class="col-md-6">
      <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
-         <div class="article_load_one row align-items-center no-gutters" style="cursor:pointer" item-uuid="{{ object.uuid }}">
-                <figure class="background-img">
+         <div class="article_load_one row align-items-center no-gutters">
+                <figure class="background-img article_load_one" style="cursor:pointer" item-uuid="{{ object.uuid }}">
                   {% if object.article.g_image %}
                     <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
                   {% else %}
                     <img class="lazyload" data-src="/static/images/no-image.jpg" />
                   {% endif %}
                 </figure>
+                <span class="item_attach_circle article_load_several"
+                     tooltip="Выбрать несколько"
+                     flow="up">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+                    </svg>
+                </span>
                 <div class="container article_info">
                   <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
                   <br>
@@ -37,13 +44,7 @@
                   <a class="btn btn-primary">Читать</a>
                 </div>
         </div>
-        <span class="item_attach_circle article_load_several"
-             tooltip="Выбрать несколько"
-             flow="up">
-            <svg fill="currentColor" viewBox="0 0 24 24">
-              <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
-            </svg>
-        </span>
+
     </div>
   </div>
   {% endfor %}
