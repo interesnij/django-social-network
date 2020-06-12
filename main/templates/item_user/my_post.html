@@ -7,14 +7,7 @@
       {% endif %}
     </div>
 
-
-    {% if object.get_attach_count == 1 or object.get_attach_count == 4 or object.get_attach_count == 7 %}
-      {% include 'generic/attach/post_attach_1.html' %}
-    {% elif object.get_attach_count == 3 or object.get_attach_count == 6 or object.get_attach_count == 9 or object.get_attach_count == 5 or object.get_attach_count == 8 or object.get_attach_count == 10 %}
       {% include 'generic/attach/post_attach_3.html' %}
-    {% elif object.get_attach_count == 2 or object.get_attach_count == 4 %}
-      {% include 'generic/attach/post_attach_2.html' %}
-    {% endif %}
 
     {% if object.is_repost %}
       {% include 'item_user/repost.html' %}
