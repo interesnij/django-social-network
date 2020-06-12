@@ -7,6 +7,9 @@
 .photo, .video, .good, .article {
   margin-bottom: 10px;
   padding-right: 5px; padding-left: 5px;
+  flex-grow: 1;
+  max-width: 100%;
+  flex-basis: 50%;
 }
 .music{
   margin-bottom: 10px;
