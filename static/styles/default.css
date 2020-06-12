@@ -191,6 +191,11 @@ transform: translateX(-50%) translateY(-50%) scale(1.2);
   height: 200px;
   width:100%
 }
+.image_fit:nth-child(odd){
+  object-fit: cover;
+  height: 300px;
+  width:100%
+}
 .image_fit_small{
   object-fit: cover;
   height: 120px;
