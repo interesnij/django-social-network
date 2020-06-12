@@ -358,11 +358,22 @@ on('#ajax', 'click', '.good_load_several', function() {
   this.classList.add("active_svg");
 });
 
-on('#ajax', 'click', '.article_load_detail', function() {
-  _this = this;
+on('#ajax', 'click', '.article_load_one', function() {
+  _this = this.previousElementSibling;
   if (document.body.querySelector(".current_file_dropdown")){
     article_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     article_post_attach(_this, document.body.querySelector(".attach_block"))
   }
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
+});
+on('#ajax', 'click', '.article_load_several', function() {
+  _this = this.previousElementSibling;
+  if (document.body.querySelector(".current_file_dropdown")){
+    article_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    article_post_attach(_this, document.body.querySelector(".attach_block"))
+  }
+  this.classList.add("active_svg");
 });
