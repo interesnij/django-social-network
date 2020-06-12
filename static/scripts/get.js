@@ -299,7 +299,7 @@ on('#ajax', 'click', '.create_video_attach_btn', function() {
 });
 
 on('#ajax', 'click', '.video_load_one', function() {
-  _this = this.previousElementSibling.querySelector("img");
+  _this = this; 
   if (document.body.querySelector(".current_file_dropdown")){
     video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
@@ -309,7 +309,7 @@ on('#ajax', 'click', '.video_load_one', function() {
   document.getElementById("create_loader").innerHTML="";
 });
 on('#ajax', 'click', '.video_load_several', function() {
-  _this = this;
+  _this = this.previousElementSibling.querySelector("img");
   if (document.body.querySelector(".current_file_dropdown")){
     video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
