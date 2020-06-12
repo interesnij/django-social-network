@@ -1,5 +1,5 @@
 
-<div style="item_attach_block" style="padding-bottom:10px">
+<div class="item_attach_block" style="padding-bottom:10px">
   {% for photo in object.item_photo.all %}
   <div class="attach_item photo">
       <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="comment_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
