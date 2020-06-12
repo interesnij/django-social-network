@@ -356,6 +356,31 @@ html {
   height: 100%;
 }
 
+.item_attach_circle{
+  position: absolute;
+  right: 20px;
+  padding: 6px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  top: 6px;
+  height: 25px;
+  width: 25px;
+  border: 1px grey solid;
+}
+.item_attach_circle svg{
+  width: 12px;
+  position: absolute;
+  color: grey;
+  opacity:0
+}
+.item_attach_circle .active svg{
+  width: 12px;
+  position: absolute;
+  color: grey;
+  opacity:1
+}
+
 .photo_preview_delete,
 .video_preview_delete,
 .music_preview_delete,
