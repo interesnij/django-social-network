@@ -256,7 +256,7 @@ on('#ajax', 'change', '#photo_add_attach', function() {
 });
 
 on('#ajax', 'click', '.photo_load_detail', function() {
-  _this = this.nextElementSibling.querySelector("img");
+  _this = this.previousElementSibling.querySelector("img");
   if (document.body.querySelector(".current_file_dropdown")){
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
     console.log("photo_comment_attach")
