@@ -19,8 +19,8 @@
 <div class="articles-load row">
 {% for object in object_list %}
 <div class="col-md-6">
-     <div class="article_load_one jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow" style="cursor:pointer" item-uuid="{{ object.uuid }}">
-         <div class="row align-items-center no-gutters">
+     <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+         <div class="article_load_one row align-items-center no-gutters" style="cursor:pointer" item-uuid="{{ object.uuid }}">
                 <figure class="background-img">
                   {% if object.article.g_image %}
                     <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
@@ -37,14 +37,14 @@
                   <a class="btn btn-primary">Читать</a>
                 </div>
         </div>
+        <span class="item_attach_circle article_load_several"
+             tooltip="Выбрать несколько"
+             flow="up">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+            </svg>
+        </span>
     </div>
-    <span class="item_attach_circle article_load_several"
-         tooltip="Выбрать несколько"
-         flow="up">
-        <svg fill="currentColor" viewBox="0 0 24 24">
-          <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
-        </svg>
-    </span>
   </div>
   {% endfor %}
 </div>
