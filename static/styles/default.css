@@ -5,10 +5,6 @@
 
 .photo, .video, .good, .article {
   margin-bottom: 10px;
-  -ms-flex: 1 0 0;
-  flex: 1 0 0;
-  min-width: 200px;
-  margin:5px
 }
 .music{
   margin-bottom: 10px;
