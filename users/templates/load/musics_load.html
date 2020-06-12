@@ -1,7 +1,7 @@
 <div class="music-load row">
 {% for object in object_list %}
   <div class="col-md-8 mx-auto">
-    <div class="media music_load_detail mb-2" style="cursor:pointer" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}">
+    <div class="media music_load_one mb-2" style="cursor:pointer" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
             {% if object.artwork_url %}
               <img style="width:50px;heigth:auto" class="lazyload" data-src="{{ object.artwork_url }}" />
@@ -14,6 +14,13 @@
             {{ object.tag }}
         </div>
     </div>
+    <span class="item_attach_circle music_load_several"
+         tooltip="Выбрать несколько"
+         flow="up">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+        </svg>
+    </span>
   </div>
   {% empty %}
     <div class="card mb-4 centered">
