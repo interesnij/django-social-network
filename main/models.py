@@ -50,7 +50,7 @@ class Item(models.Model):
         photo_count = self.item_photo.values("pk").count()
         video_count = self.item_video.values("pk").count()
         good_count = self.item_good.values("pk").count()
-        article_count = self.attached_item.values("pk").count()
+        article_count = self.item_attach.values("pk").count() 
         return photo_count + video_count + good_count + article_count
 
     def count_comments(self):
