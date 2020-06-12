@@ -375,9 +375,9 @@ html {
   opacity:0
 }
 .active svg{
-  width: 12px;
+  width: 15px;
   position: absolute;
-  color: grey;
+  color: black;
   opacity:1
 }
 
