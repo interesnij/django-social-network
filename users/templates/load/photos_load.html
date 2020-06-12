@@ -22,8 +22,8 @@
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="card rounded-0 border-0 mb-4">
-          <img style="cursor:pointer photo_load_one" 
-               class="lazyload image_fit"
+          <img style="cursor:pointer" 
+               class="lazyload image_fit photo_load_one"
                photo-uuid="{{ object.uuid }}"
                data-src="{{ object.file.url }}"
                alt="img">
