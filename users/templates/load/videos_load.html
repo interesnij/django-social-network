@@ -14,7 +14,7 @@
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
 <div class="video_3" data-pk="{{ object.pk }}">
-  <div class="card rounded-0 border-0 mb-4">
+  <div>
     {% if object.image %}
       <img class="lazyload image_fit_200 video_load_one"
            style="cursor:pointer"
