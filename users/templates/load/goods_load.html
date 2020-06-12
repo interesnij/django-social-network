@@ -13,7 +13,8 @@
 
 <div class="videos-load row mb-3">
 {% for object in object_list %}
-<div class="col-md-6 good_load_one" good-pk="{{ object.pk }}" style="cursor:pointer">
+<div class="col-md-6">
+  <div class="good_load_one" good-pk="{{ object.pk }}" style="cursor:pointer">
     <div class="row align-items-center no-gutters">
       <div class="col">
         {% if object.image %}
@@ -27,6 +28,7 @@
       <h5 class="card-title mb-1 header-color-primary text-center good_title">{{ object.title }}</h5>
       <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
     </span>
+  </div>
     <span class="item_attach_circle good_load_several"
          tooltip="Выбрать несколько"
          flow="up">
