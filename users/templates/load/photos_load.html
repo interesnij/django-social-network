@@ -18,11 +18,11 @@
 </form>
 <br><br>
 
-<div class="photos-load row">
+<div class="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
-  <div class="col-sm-12 col-md-6 col-lg-4">
+  <div class="">
       <div class="card rounded-0 border-0 mb-4">
-          <img style="cursor:pointer" 
+          <img style="cursor:pointer"
                class="lazyload image_fit photo_load_one"
                photo-uuid="{{ object.uuid }}"
                data-src="{{ object.file.url }}"
