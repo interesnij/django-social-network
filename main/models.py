@@ -48,7 +48,10 @@ class Item(models.Model):
 
     def get_attach_count(self):
         photo_count = self.item_photo.values("pk").count()
-        return photo_count
+        video_count = self.item_video.values("pk").count()
+        good_count = self.item_good.values("pk").count()
+        article_count = self.attached_item.values("pk").count()
+        return photo_count + video_count + good_count + article_count
 
     def count_comments(self):
         parent_comments = ItemComment.objects.filter(item=self)
