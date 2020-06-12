@@ -11,12 +11,12 @@
 <h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление видеозаписей</h4>
 <h4 class="user_video_create_attach mb-3">Создать и прикрепить</h4>
 
-<div class="videos-load row mb-3">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
-<div class="col-12 col-md-4" data-pk="{{ object.pk }}">
+<div class="video_3" data-pk="{{ object.pk }}">
   <div class="card rounded-0 border-0 mb-4">
     {% if object.image %}
-      <img class="lazyload image_fit video_load_one"
+      <img class="lazyload image_fit_200 video_load_one"
            style="cursor:pointer"
            video-counter="{{ forloop.counter0 }}"
            data-pk="{{ object.pk }}"
@@ -25,7 +25,7 @@
       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}
   </div>
-  <span class="item_attach_circle video_load_several" 
+  <span class="item_attach_circle video_load_several"
        tooltip="Выбрать несколько"
        flow="up">
       <svg fill="currentColor" viewBox="0 0 24 24">
