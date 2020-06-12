@@ -1,20 +1,14 @@
 .item_attach_block {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 100vw;
-  max-height: 800px;
-  font-size: 0;
+  -moz-column-width: 13em;
+ -webkit-column-width: 13em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap: 1em;
 }
 .item_attach_block .attach_item {
-  width: 33.3%;
-}
-@supports not (flex-wrap: wrap) {
-  .item_attach_block { display: block; }
-  .item_attach_block .attach_item {
   display: inline-block;
-  vertical-align: top;
-  }
+ margin:  0.25rem;
+ padding:  1rem;
+ width:  100%; 
 }
 
 .attach_toggle{
