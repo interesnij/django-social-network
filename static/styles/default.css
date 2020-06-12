@@ -3,8 +3,15 @@
   padding: 5px;
 }
 
-.photo, .video, .music, .good, .article {
-  margin-bottom: 10px
+.photo, .video, .good, .article {
+  margin-bottom: 10px;
+  -ms-flex: 1 0 0;
+  flex: 1 0 0;
+  min-width: 200px;
+  margin:5px
+}
+.music{
+  margin-bottom: 10px;
 }
 .attach_block {
   padding-bottom: 10px;
