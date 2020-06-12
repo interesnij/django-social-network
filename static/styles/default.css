@@ -374,7 +374,7 @@ html {
   color: grey;
   opacity:0
 }
-.item_attach_circle .active svg{
+.active svg{
   width: 12px;
   position: absolute;
   color: grey;
