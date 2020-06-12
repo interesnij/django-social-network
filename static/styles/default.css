@@ -1,3 +1,23 @@
+.item_attach_block {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100vw;
+  max-height: 800px;
+  font-size: 0;
+}
+.item_attach_block .attach_item {
+  width: 33.3%;
+  transition: .8s opacity;
+}
+@supports not (flex-wrap: wrap) {
+  .item_attach_block { display: block; }
+  .item_attach_block .attach_item {  
+  display: inline-block;
+  vertical-align: top;
+  }
+}
+
 .attach_toggle{
   border: 1px black solid;
   padding: 5px;
