@@ -17,7 +17,7 @@ class Article(models.Model):
     content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    created = models.DateTimeField(default=timezone.now(), verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='articles')
