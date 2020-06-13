@@ -649,7 +649,7 @@ class CommunityMembership(models.Model):
 class CommunityLog(models.Model):
     source_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
-    item = models.ForeignKey("main.Item", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
+    item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
 
