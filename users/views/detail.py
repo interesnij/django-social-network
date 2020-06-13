@@ -93,9 +93,9 @@ class UserMusic(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.playlist = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
+            self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
         except:
-            self.playlist = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
+            self.playlist = SoundList.objects.create(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
         self.template_name = self.user.get_template_user(folder="user_music/", template="music.html", request=request)
         return super(UserMusic,self).get(request,*args,**kwargs)
 
