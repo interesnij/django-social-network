@@ -4,6 +4,8 @@ from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework.exceptions import ValidationError
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class Post(models.Model):
@@ -46,6 +48,7 @@ class Post(models.Model):
         ordering=["-created"]
         verbose_name="Запись"
         verbose_name_plural="Записи"
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return self.creator.get_full_name()

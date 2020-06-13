@@ -5,6 +5,7 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class Article(models.Model):
@@ -50,6 +51,7 @@ class Article(models.Model):
         ordering=["-created"]
         verbose_name="статья"
         verbose_name_plural="статьи"
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return self.title
