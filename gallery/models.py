@@ -16,7 +16,7 @@ class Album(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    #cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
+    cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     is_generic = models.BooleanField(default=False, verbose_name="Сгенерированный альбом")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -76,8 +76,8 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    #item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
-    #item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
+    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
+    item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:

@@ -68,8 +68,8 @@ class Good(models.Model):
 		(STATUS_SOLD, 'Продан'),
 		)
 	status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
-	#item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
-	#item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
+	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
+	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 
 	def __str__(self):
 		return self.title
