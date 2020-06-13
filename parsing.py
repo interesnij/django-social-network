@@ -15,7 +15,7 @@ from datetime import datetime, date, time
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-page_size = 200
+page_size = 2000
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
