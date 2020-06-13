@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 from pilkit.processors import ResizeToFit, ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
