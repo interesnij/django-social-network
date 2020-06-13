@@ -17,15 +17,7 @@
     {% if object_list %}
 
       {% for object in object_list %}
-
-      {% if object.article %}
-        {% include 'item_community/admin_article.html' with article=article  %}
-      {% endif %}
-
-      {% if object.post %}
         {% include 'item_community/admin_post.html' with post=post  %}
-      {% endif %}
-
       {% endfor %}
 
     {% endif %}

@@ -7,10 +7,10 @@
     {% endif %}
 
     <div class="card-body">
-      {% if object.post.text %}
+      {% if object.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
-      
+
       {% include 'generic/attach/post_attach.html' %}
     </div>
 

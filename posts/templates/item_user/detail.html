@@ -15,12 +15,6 @@
   </ol>
 </nav>
 
-{% if object.post %}
-  {% include 'item_user/post_detail.html' %}
-{% endif %}
-
-{% if object.article %}
-  {% include 'item_user/article.html' with article=article  %}
-{% endif %}
+{% include 'item_user/post_detail.html' %}
 
 {% endblock %}
