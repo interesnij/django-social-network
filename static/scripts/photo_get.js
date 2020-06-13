@@ -30,43 +30,6 @@ on('#ajax', 'click', '.u_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
 })
 
-on('#ajax', 'click', '#create_video_in_list_btn', function() {
-  form = document.querySelector("#create_video_list_form");
-  form_data = new FormData(form);
-
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else if (!form.querySelector("#id_uri").value){
-    form.querySelector("#id_uri").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка на видео - обязательное поле!")
-  } else if (!form.querySelector("#id_image").value){
-    form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
-    toast_error("Фотография на обложку обязательна!")
-  }
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    album = document.body.querySelector("#id_album");
-    if (album.value == pk){
-      elem_ = document.createElement('div');
-      elem_.innerHTML = link_.responseText;
-      elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
-      elem_.setAttribute("video-counter", "0");
-      elem_.style.cursor = "pointer";
-      container = document.body.querySelector(".movies_list_in_list");
-      container.prepend(elem_);
-      try{container.querySelector(".video_none").style.display = "none"}catch{null};
-    }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
-    toast_info("Видеоролик создан!")
-  }};
-
   link_.send(form_data);
 });
 
