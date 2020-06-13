@@ -3,7 +3,7 @@
 <div class="row" id="photos_container" style="margin-left: 0;margin-right: 0;">
 {% for object in object_list %}
   <div class="col-sm-12 col-md-6 col-lg-4 u_photo_detail" photo-uuid="{{ object.uuid }}">
-      <div class="card rounded-0 border-0 mb-4"> 
+      <div class="card rounded-0 border-0 mb-4">
         {% if object.file %}
           <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="">
         {% else %}
@@ -16,7 +16,7 @@
 {% else %}
 <div class="card mb-4 centered">
   <div class="card-body">
-  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
   </div>
   <h6 style="margin: 20px;text-align: center;"> Фотографий пока нет...</h6>
 </div>
