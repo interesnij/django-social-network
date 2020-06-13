@@ -1,5 +1,5 @@
 
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
+<div style="display: flex; flex-wrap: wrap;">
   {% for photo in object.item_photo.all %}
   <div class="photo">
       <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="comment_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
