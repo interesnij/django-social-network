@@ -6,19 +6,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0013_auto_20200311_1537'),
         ('goods', '0003_remove_good_views'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='good',
-            name='item',
-            field=models.ManyToManyField(blank=True, related_name='item_good', to='main.Item'),
-        ),
-        migrations.AddField(
-            model_name='good',
-            name='item_comment',
-            field=models.ManyToManyField(blank=True, related_name='comment_good', to='main.ItemComment'),
-        ),
     ]
