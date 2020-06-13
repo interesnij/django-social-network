@@ -52,19 +52,6 @@ on('#ajax', 'click', '.u_itemComment', function() {
   send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/');
 });
 
-on('#ajax', 'click', '.success_toast', function() {
-  toast_success("Комментарий опубликован!")
-});
-on('#ajax', 'click', '.error_toast', function() {
-  toast_error("Комментарий опубликован!")
-});
-on('#ajax', 'click', '.info_toast', function() {
-  toast_info("Комментарий опубликован!")
-});
-on('#ajax', 'click', '.warning_toast', function() {
-  toast_warning("Комментарий опубликован!")
-});
-
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/user/reply-comment/')
@@ -76,7 +63,6 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
   send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/user/reply-comment/')
   form.parentElement.style.display = "none";
 });
-
 
 /*!
    item post scripts for user
