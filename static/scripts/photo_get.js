@@ -30,8 +30,6 @@ on('#ajax', 'click', '.u_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
 })
 
-  link_.send(form_data);
-});
 
 on('#ajax', 'click', '#add_album', function() {
   form = document.body.querySelector("#form_album_add");
