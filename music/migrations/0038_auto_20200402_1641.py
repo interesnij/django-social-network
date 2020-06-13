@@ -7,7 +7,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('communities', '0012_auto_20200122_1328'),
         ('music', '0037_auto_20200327_1014'),
     ]
 
@@ -15,10 +14,5 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='usertempsoundlist',
             name='list',
-        ),
-        migrations.AddField(
-            model_name='usertempsoundlist',
-            name='community',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='community_field', to='communities.Community', verbose_name='Связь на сообщество'),
         ),
     ]
