@@ -17,7 +17,7 @@ class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
@@ -44,8 +44,8 @@ class User(AbstractUser):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-    #def __str__(self):
-    #    return self.get_full_name()
+    def __str__(self):
+        return self.get_full_name()
 
     def get_favorite_communities(self):
         return self.favorite_communities.all()

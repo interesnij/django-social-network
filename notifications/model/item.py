@@ -95,7 +95,7 @@ class ItemNotification(models.Model):
 
 
 class ItemCommunityNotification(models.Model):
-    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_item_recipient', verbose_name="Получатель")
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
