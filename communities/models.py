@@ -134,29 +134,29 @@ class Community(models.Model):
         from posts.models import Post
         from moderation.models import ModeratedObject
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED)
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Post.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
     def get_draft_posts(self):
         from moderation.models import ModeratedObject
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Post.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
     def get_archive_posts(self):
         from moderation.models import ModeratedObject
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED)
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
 
     def get_goods(self):
         from moderation.models import ModeratedObject
@@ -212,7 +212,6 @@ class Community(models.Model):
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_admin_photos(self):
-        from moderation.models import ModeratedObject
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, community=self)
@@ -222,7 +221,6 @@ class Community(models.Model):
         return photos
 
     def get_avatar_photos(self):
-        from moderation.models import ModeratedObject
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, community=self, album_2__title="Фото со страницы", album_2__is_generic=True)
@@ -240,7 +238,6 @@ class Community(models.Model):
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
-        from moderation.models import ModeratedObject
 
         #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, name="my_first_generic_playlist_number_12345678900000000")
@@ -251,7 +248,6 @@ class Community(models.Model):
 
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
-        from moderation.models import ModeratedObject
 
         #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, name="my_first_generic_playlist_number_12345678900000000")
@@ -473,7 +469,6 @@ class Community(models.Model):
 
     def is_community_playlist(self):
         from music.models import UserTempSoundList
-
         try:
             UserTempSoundList.objects.get(tag=None, community=self, genre=None)
             return True
