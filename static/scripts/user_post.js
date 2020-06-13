@@ -49,18 +49,18 @@ on('#ajax', 'click', '#article_post', function() {
 
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/user/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/user/post-comment/');
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/user/reply-comment/')
+  send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
 });
 
 on('#ajax', 'click', '.u_replyParentComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/user/reply-comment/')
+  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
 });
 
@@ -71,7 +71,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/user/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user/delete/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
@@ -97,7 +97,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/user/abort_delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user/abort_delete/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
@@ -126,48 +126,48 @@ function send_change(span, _link, new_class, html){
 }
 
 on('#ajax', 'click', '.item_user_fixed', function() {
-  send_change(this, "/user/fixed/", "item_user_unfixed", "Открепить")
+  send_change(this, "/posts/user/fixed/", "item_user_unfixed", "Открепить")
 })
 on('#ajax', 'click', '.item_user_unfixed', function() {
-  send_change(this, "/user/unfixed/", "item_user_fixed", "Закрепить")
+  send_change(this, "/posts/user/unfixed/", "item_user_fixed", "Закрепить")
 })
 
 on('#ajax', 'click', '.item_user_off_comment', function() {
-  send_change(this, "/user/off_comment/", "item_user_on_comment", "Включить комментарии")
+  send_change(this, "/posts/user/off_comment/", "item_user_on_comment", "Включить комментарии")
 })
 on('#ajax', 'click', '.item_user_on_comment', function() {
-  send_change(this, "/user/on_comment/", "item_user_off_comment", "Выключить комментарии")
+  send_change(this, "/posts/user/on_comment/", "item_user_off_comment", "Выключить комментарии")
 })
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
+  vote_reload("/posts/item_window/u_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(item, "/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/item_window/u_like_window/" + uuid + "/" + pk + "/", "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
+  send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
+  vote_reload("/posts/item_window/u_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.u_like2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  send_like(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
+  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_dislike2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(item, "/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  send_dislike(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
+  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
 
