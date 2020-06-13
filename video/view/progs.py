@@ -70,6 +70,7 @@ class UserVideoInListCreate(View):
         if form_post.is_valid() and request.user == user:
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
+            albums = form_post.cleaned_data.get("album")
             new_video.save()
             if not new_video.album:
                 new_video.album = album
