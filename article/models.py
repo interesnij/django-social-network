@@ -12,6 +12,7 @@ from django.utils import timezone
 
 
 class Article(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
     content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
