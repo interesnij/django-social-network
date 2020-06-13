@@ -86,7 +86,7 @@ class Post(models.Model):
         item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.DISLIKE, key='social_update', community=self.community, item=self, comment=None)
 
     def get_comments(self):
-        comments_query = Q(item_id=self.pk)
+        comments_query = Q(post_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return PostComment.objects.filter(comments_query)
