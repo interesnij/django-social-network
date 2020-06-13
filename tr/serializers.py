@@ -6,6 +6,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from users.models import User
 from common.utils import get_first_location
+from video.models import VideoAlbum
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -48,4 +49,5 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.save()
         get_first_location(request, user)
+        VideoAlbum.objects.get(creator_id=user.id, is_generic=True, title="Все видео")
         return user
