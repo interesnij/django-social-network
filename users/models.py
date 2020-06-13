@@ -713,7 +713,7 @@ class User(AbstractUser):
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #own_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        own_posts_queryset = self.posts.only('created').filter(own_posts_query)
+        own_posts_queryset = self.post_creator.only('created').filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
