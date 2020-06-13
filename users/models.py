@@ -546,7 +546,7 @@ class User(AbstractUser):
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
         try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
+            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной плейлист")
         except:
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = Q(players=list, is_deleted=False)
@@ -566,7 +566,7 @@ class User(AbstractUser):
         from music.models import SoundList, SoundcloudParsing
 
         try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
+            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной плейлист")
         except:
             list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной плейлист")
         music_query = Q(players=list, is_deleted=False)
@@ -623,7 +623,7 @@ class User(AbstractUser):
     def get_music_list_id(self):
         from music.models import SoundList
         try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
+            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной плейлист")
         except:
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной плейлист")
         return list.pk
