@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.conf import settings
 from asgiref.sync import async_to_sync
