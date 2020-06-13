@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from main.view.votes import *
+from posts.view.votes import *
 from django.contrib.auth.decorators import login_required
 
 
