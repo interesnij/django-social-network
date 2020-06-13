@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 from article.models import Article
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
-from main.models import Item
 from django.views import View
 
 
@@ -31,13 +30,13 @@ class ArticleUserDetailView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_template_list_user(folder="u_article/", template="article.html", request=request)
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ArticleUserDetailView,self).get_context_data(**kwargs)
-        context["object"]=self.item
+        context["object"]=self.article
         return context
 
 
@@ -46,13 +45,13 @@ class ArticleCommunityDetailView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(pk=self.kwargs["pk"])
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.community.get_template_list(folder="c_article/", template="article.html", request=request)
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ArticleCommunityDetailView,self).get_context_data(**kwargs)
-        context["object"]=self.item
+        context["object"]=self.article
         context["community"]=self.community
         return context
 
@@ -64,7 +63,7 @@ class ArticleUserCreate(View):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user == self.user:
             article = self.form.save(commit=False)
-            new_article = article.create_article(creator=request.user, content=article.content, community=None, g_image=article.g_image, comments_enabled=article.comments_enabled, status=article.status, title=article.title,)
+            new_article = article.create_article(creator=request.user, content=article.content, community=None, g_image=article.g_image, status=article.status, title=article.title,)
             return render_to_response('item_user/my_article.html',{'object': new_article, 'user': request.user, 'request': request})
         else:
            return HttpResponseBadRequest()
@@ -77,7 +76,7 @@ class ArticleCommunityCreate(View):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             article = self.form.save(commit=False)
-            new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, comments_enabled=article.comments_enabled, status=article.status, title=article.title,)
+            new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, status=article.status, title=article.title,)
             return render_to_response('item_community/admin_article.html',{'object': new_article, 'user': request.user, 'request': request})
         else:
            HttpResponseBadRequest()

@@ -3,12 +3,12 @@ from common.model.votes import *
 from common.model.other import PhoneCodes
 
 
-class ItemVotesAdmin(admin.ModelAdmin):
+class PostVotesAdmin(admin.ModelAdmin):
     list_display = (
         'vote',
         'user',
         #'parent',
     )
 
-admin.site.register(ItemVotes, ItemVotesAdmin)
+admin.site.register(PostVotes, PostVotesAdmin)
 admin.site.register(PhoneCodes)

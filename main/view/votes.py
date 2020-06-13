@@ -4,7 +4,7 @@ from main.models import Item, ItemComment
 from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
-from common.model.votes import ItemVotes, ItemCommentVotes
+from common.model.votes import PostVotes, PostCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
 
@@ -18,16 +18,16 @@ class ItemUserLikeCreate(View):
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
-            likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not ItemVotes.LIKE:
-                likedislike.vote = ItemVotes.LIKE
+            likedislike = PostVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PostVotes.LIKE:
+                likedislike.vote = PostVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             item.notification_user_like(request.user)
         likes = item.get_likes_for_item(request.user)
@@ -52,16 +52,16 @@ class ItemCommentUserLikeCreate(View):
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
-            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not ItemCommentVotes.LIKE:
-                likedislike.vote = ItemCommentVotes.LIKE
+            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not PostCommentVotes.LIKE:
+                likedislike.vote = PostCommentVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemCommentVotes.DoesNotExist:
-            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             comment.notification_user_comment_like(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
@@ -86,16 +86,16 @@ class ItemUserDislikeCreate(View):
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
-            likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not ItemVotes.DISLIKE:
-                likedislike.vote = ItemVotes.DISLIKE
+            likedislike = PostVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PostVotes.DISLIKE:
+                likedislike.vote = PostVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             item.notification_user_dislike(request.user)
         likes = item.get_likes_for_item(request.user)
@@ -120,16 +120,16 @@ class ItemCommentUserDislikeCreate(View):
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
-            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not ItemCommentVotes.DISLIKE:
-                likedislike.vote = ItemCommentVotes.DISLIKE
+            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not PostCommentVotes.DISLIKE:
+                likedislike.vote = PostCommentVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemCommentVotes.DoesNotExist:
-            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             comment.notification_user_comment_dislike(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
@@ -151,16 +151,16 @@ class ItemCommunityLikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
-            likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not ItemVotes.LIKE:
-                likedislike.vote = ItemVotes.LIKE
+            likedislike = PostVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PostVotes.LIKE:
+                likedislike.vote = PostVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             item.notification_community_like(request.user)
         likes = item.get_likes_for_item(request.user)
@@ -182,16 +182,16 @@ class ItemCommunityDislikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
-            likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not ItemVotes.DISLIKE:
-                likedislike.vote = ItemVotes.DISLIKE
+            likedislike = PostVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PostVotes.DISLIKE:
+                likedislike.vote = PostVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             item.notification_community_dislike(request.user)
         likes = item.get_likes_for_item(request.user)
@@ -212,16 +212,16 @@ class ItemCommentCommunityLikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
-            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not ItemCommentVotes.LIKE:
-                likedislike.vote = ItemCommentVotes.LIKE
+            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not PostCommentVotes.LIKE:
+                likedislike.vote = PostCommentVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemCommentVotes.DoesNotExist:
-            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             comment.notification_community_comment_like(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
@@ -243,16 +243,16 @@ class ItemCommentCommunityDislikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
-            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not ItemCommentVotes.DISLIKE:
-                likedislike.vote = ItemCommentVotes.DISLIKE
+            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not PostCommentVotes.DISLIKE:
+                likedislike.vote = PostCommentVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
             else:
                 likedislike.delete()
                 result = False
-        except ItemCommentVotes.DoesNotExist:
-            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             comment.notification_community_comment_dislike(request.user)
         likes = comment.get_likes_for_comment_item(request.user)

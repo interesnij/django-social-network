@@ -8,7 +8,7 @@ from notifications.model.item import *
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
-from common.model.votes import ItemVotes, ItemCommentVotes
+from common.model.votes import PostVotes, PostCommentVotes
 from imagekit.models import ProcessedImageField
 from pilkit.processors import ResizeToFit, ResizeToFill
 from rest_framework.exceptions import ValidationError
@@ -46,135 +46,6 @@ class Item(models.Model):
         verbose_name="запись"
         verbose_name_plural="записи"
 
-    def get_attach_count(self):
-        photo_count = self.item_photo.values("pk").count()
-        video_count = self.item_video.values("pk").count()
-        good_count = self.item_good.values("pk").count()
-        article_count = self.item_attach.values("pk").count() 
-        return photo_count + video_count + good_count + article_count
-
-    def count_comments(self):
-        parent_comments = ItemComment.objects.filter(item=self)
-        parents_count = parent_comments.count()
-        i = 0
-        for comment in parent_comments:
-            i = i + comment.count_replies()
-        i = i + parents_count
-        return i
-
-    def __str__(self):
-        return self.creator.get_full_name()
-
-    def notification_user_repost(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.REPOST, key='social_update', item=self, comment=None)
-
-    def notification_user_like(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.LIKE, key='social_update', item=self, comment=None)
-
-    def notification_user_dislike(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.DISLIKE, key='social_update', item=self, comment=None)
-
-    def notification_community_repost(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.REPOST, key='social_update', community=self.community, item=self, comment=None)
-
-    def notification_community_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.LIKE, key='social_update', community=self.community, item=self, comment=None)
-
-    def notification_community_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.DISLIKE, key='social_update', community=self.community, item=self, comment=None)
-
-    def get_comments(self):
-        comments_query = Q(item_id=self.pk)
-        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
-        return ItemComment.objects.filter(comments_query)
-
-    def likes(self):
-        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
-
-    def window_likes(self):
-        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
-        return likes[0:6]
-
-    def get_fixed_for_user(self, user_id):
-        try:
-            item = Item.objects.get(creator__id=user_id,is_fixed=True)
-            item.is_fixed = False
-            item.save(update_fields=['is_fixed'])
-            new_fixed = Item.objects.get(creator__id=user_id,id=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-        except:
-            new_fixed = Item.objects.get(creator__id=user_id,id=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-
-    def get_fixed_for_community(self, community_id):
-        try:
-            item = Item.objects.get(community__id=community_id,is_fixed=True)
-            item.is_fixed = False
-            item.save(update_fields=['is_fixed'])
-            new_fixed = Item.objects.get(pk=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-        except:
-            new_fixed = Item.objects.get(community__id=community_id,id=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-
-    def dislikes(self):
-        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes
-
-    def window_dislikes(self):
-        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes[0:6]
-
-    def get_reposts(self):
-        parents = Item.objects.filter(parent=self)
-        return parents
-
-    def get_window_reposts(self):
-        parents = Item.objects.filter(parent=self)
-        return parents[0:6]
-
-    def count_reposts(self):
-        parents = self.get_reposts()
-        count_reposts = parents.count()
-        return count_reposts
-
-    def get_likes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(item=self)
-        return ItemVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
-
-    def get_dislikes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(item=self)
-        return ItemVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
-
-    def get_visiter_users(self):
-        from stst.models import ItemNumbers
-        from users.model.profile import OneUserLocation
-
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
-        sities = OneUserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
-        return sities
-
-    def get_sity_count(self, sity):
-        from stst.models import ItemNumbers
-        from users.model.profile import OneUserLocation
-
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
-        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
-        return count
-
-    def all_visits_count(self):
-        from stst.models import ItemNumbers
-
-        return ItemNumbers.objects.filter(item=self.pk).values('pk').count()
-
 
 class ItemComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
@@ -200,28 +71,28 @@ class ItemComment(models.Model):
         return self.replies.count()
 
     def likes(self):
-        likes = ItemCommentVotes.objects.filter(item=self, vote__gt=0)
+        likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes
 
     def window_likes(self):
-        likes = ItemCommentVotes.objects.filter(item=self, vote__gt=0)
+        likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
-        dislikes = ItemCommentVotes.objects.filter(item=self, vote__lt=0)
+        dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes
 
     def window_dislikes(self):
-        dislikes = ItemCommentVotes.objects.filter(item=self, vote__lt=0)
+        dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes[0:6]
 
     def get_likes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_query_comment(comment=self)
-        return ItemCommentVotes.objects.filter(item=self, vote__gt=0).filter(reactions_query)
+        return PostCommentVotes.objects.filter(item=self, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_query_comment(comment=self)
-        return ItemCommentVotes.objects.filter(item=self, vote__lt=0).filter(reactions_query)
+        return PostCommentVotes.objects.filter(item=self, vote__lt=0).filter(reactions_query)
 
     def __str__(self):
         return str(self.item)
@@ -263,27 +134,3 @@ class ItemComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
-
-
-class ItemMute(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='mutes')
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes')
-
-    class Meta:
-        unique_together = ('item', 'muter',)
-
-    @classmethod
-    def create_post_mute(cls, item_id, muter_id):
-        return cls.objects.create(item_id=item_id, muter_id=muter_id)
-
-
-class ItemCommentMute(models.Model):
-    item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='mutes')
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes')
-
-    class Meta:
-        unique_together = ('item_comment', 'muter',)
-
-    @classmethod
-    def create_post_comment_mute(cls, post_comment_id, muter_id):
-        return cls.objects.create(post_comment_id=post_comment_id, muter_id=muter_id)

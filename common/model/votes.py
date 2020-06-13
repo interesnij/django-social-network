@@ -2,23 +2,23 @@ from django.db import models
 from django.conf import settings
 
 
-class ItemVotes(models.Model):
+class PostVotes(models.Model):
     LIKE = 1
     DISLIKE = -1
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
+    parent = models.ForeignKey('posts.Post', on_delete=models.CASCADE)
 
-class ItemCommentVotes(models.Model):
+class PostCommentVotes(models.Model):
     LIKE = 1
     DISLIKE = -1
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    item = models.ForeignKey('main.ItemComment', on_delete=models.CASCADE)
+    item = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE)
 
 
 class PhotoVotes(models.Model):
