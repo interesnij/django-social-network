@@ -1,9 +1,9 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
-from main.models import Item, ItemComment
+from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
-from main.forms import CommentForm
+from posts.forms import CommentForm
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -11,19 +11,19 @@ from gallery.models import Album, Photo
 from django.shortcuts import render_to_response
 
 
-class ItemCommunityCommentList(ListView):
+class PostCommunityCommentList(ListView):
     template_name = None
-    model = ItemComment
+    model = PostComment
     paginate_by = 30
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.community.get_template_list(folder="c_item_comment/", template="comments.html", request=request)
-        return super(ItemCommunityCommentList,self).get(request,*args,**kwargs)
+        return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(ItemCommunityCommentList, self).get_context_data(**kwargs)
+        context = super(PostCommunityCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
         context['form_comment'] = CommentForm()
         context['form_reply'] = CommentForm()
@@ -77,7 +77,7 @@ class ItemCommunityReplyCreate(View):
         uuid = request.POST.get('uuid')
         pk = request.POST.get('pk')
         community=Community.objects.get(uuid=uuid)
-        parent = ItemComment.objects.get(pk=pk)
+        parent = PostComment.objects.get(pk=pk)
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)

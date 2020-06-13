@@ -1,6 +1,6 @@
 import json
 from users.models import User
-from main.models import Item, ItemComment
+from main.models import Post, PostComment
 from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
@@ -9,9 +9,9 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from rest_framework.exceptions import PermissionDenied
 
 
-class ItemUserLikeCreate(View):
+class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -43,9 +43,9 @@ class ItemUserLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemCommentUserLikeCreate(View):
+class PostCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -77,9 +77,9 @@ class ItemCommentUserLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemUserDislikeCreate(View):
+class PostUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -111,9 +111,9 @@ class ItemUserDislikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemCommentUserDislikeCreate(View):
+class PostCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
@@ -145,9 +145,9 @@ class ItemCommentUserDislikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemCommunityLikeCreate(View):
+class PostCommunityLikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
@@ -176,9 +176,9 @@ class ItemCommunityLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemCommunityDislikeCreate(View):
+class PostCommunityDislikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
@@ -206,9 +206,9 @@ class ItemCommunityDislikeCreate(View):
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
-class ItemCommentCommunityLikeCreate(View):
+class PostCommentCommunityLikeCreate(View):
     def post(self, request, **kwargs):
-        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
@@ -237,9 +237,9 @@ class ItemCommentCommunityLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
-class ItemCommentCommunityDislikeCreate(View):
+class PostCommentCommunityDislikeCreate(View):
     def post(self, request, **kwargs):
-        comment = ItemComment.objects.get(pk=self.kwargs["comment_pk"])
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:

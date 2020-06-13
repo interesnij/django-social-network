@@ -5,7 +5,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
-from main.models import Item, ItemComment
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
 from common.model.votes import PhotoVotes, PhotoCommentVotes
@@ -77,8 +76,8 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    item = models.ManyToManyField(Item, blank=True, related_name='item_photo')
-    item_comment = models.ManyToManyField(ItemComment, blank=True, related_name='comment_photo')
+    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
+    item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:
@@ -134,7 +133,7 @@ class Photo(models.Model):
 
     def get_comment_replies_for_comment_with_post(self, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
-        return ItemComment.objects.filter(comment_replies_query)
+        return PostComment.objects.filter(comment_replies_query)
 
     def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
         comments_query = Q(photo_id=self.pk)

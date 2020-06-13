@@ -1,7 +1,7 @@
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, AuthenticationFailed
 from communities.models import Community
 from invitations.models import UserInvite
-from main.models import Item, ItemComment
+from posts.models import Post, PostComment
 import jwt
 from django.conf import settings
 
@@ -528,7 +528,7 @@ def check_has_post(user, item):
 def check_can_edit_comment_with_id_for_post(user, post_comment_id, item):
     check_can_see_post(user=user, item=item)
 
-    if not ItemComment.objects.filter(id=post_comment_id, item_id=item.pk).exists():
+    if not PostComment.objects.filter(id=post_comment_id, item_id=item.pk).exists():
         raise ValidationError(
             'Комментарий не относится к указанной записи'
         )
@@ -552,7 +552,7 @@ def check_has_post_comment_with_id(user, post_comment_id):
 def check_can_delete_comment_with_id_for_post(user, post_comment_id, item):
     check_can_see_post(user=user, item=item)
 
-    if not ItemComment.objects.filter(id=post_comment_id, item_id=item.pk).exists():
+    if not PostComment.objects.filter(id=post_comment_id, item_id=item.pk).exists():
         raise ValidationError(
             'Комментарий не относится к указанной записи'
         )
@@ -571,7 +571,7 @@ def check_can_delete_comment_with_id_for_post(user, post_comment_id, item):
                     'Вы не можете удалить комментарий, который Вам не принадлежит'
                 )
         else:
-            post_comment = ItemComment.objects.select_related('commenter').get(pk=post_comment_id)
+            post_comment = PostComment.objects.select_related('commenter').get(pk=post_comment_id)
             if post_comment.parent_comment is not None:
                 item.community.create_remove_post_comment_reply_log(source_user=user,
                                                                     target_user=post_comment.commenter)

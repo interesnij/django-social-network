@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import ItemComment
+from main.models import PostComment
 from gallery.models import Album, Photo
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id

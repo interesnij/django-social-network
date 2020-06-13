@@ -34,7 +34,7 @@ class Article(models.Model):
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
 
-    item_attach = models.ManyToManyField("self", blank=True, related_name='attached_item')
+    item_attach = models.ManyToManyField("posts.Post", blank=True, related_name='attached_item')
     comment_attach = models.ManyToManyField("posts.PostComment", blank=True, related_name='attached_comment')
 
     @classmethod

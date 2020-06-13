@@ -3,7 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
-from main.models import Item, ItemComment
+from posts.models import Post, PostComment
 
 
 class ModerationCategory(models.Model):

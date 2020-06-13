@@ -1,6 +1,5 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
-from main.models import Item
 
 
 class MainPageView(TemplateView):
@@ -19,10 +18,7 @@ class MainPageView(TemplateView):
 
 
 class NewsListView(ListView):
-	from main.models import Item
-
 	template_name="news_list.html"
-	model=Item
 	paginate_by=30
 
 	def get_queryset(self):
