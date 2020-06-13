@@ -526,7 +526,7 @@ class User(AbstractUser):
     def get_my_video_albums(self):
         from video.models import VideoAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, is_generic=False)
         albums = VideoAlbum.objects.filter(albums_query)
         return albums
 

@@ -112,7 +112,10 @@ class UserVideo(ListView):
 
 		self.template_name = request.user.get_template_user(folder="user_video_list/", template="list.html", request=request)
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео") 
+        try:
+            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
+        except:
+            self.album = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
 		if self.user == request.user:
 			self.video_list = self.album.get_my_queryset()
 		else:
