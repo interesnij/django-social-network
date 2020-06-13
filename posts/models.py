@@ -7,6 +7,7 @@ from rest_framework.exceptions import ValidationError
 #from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
+from common.model.votes import PostVotes, PostCommentVotes
 
 
 class Post(models.Model):
