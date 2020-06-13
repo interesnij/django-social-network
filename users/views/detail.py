@@ -85,27 +85,27 @@ class UserMobStaffed(TemplateView):
 
 
 class UserMusic(ListView):
-	template_name = None
-	paginate_by = 30
+    template_name = None
+    paginate_by = 30
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
             self.playlist = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         except:
             self.playlist = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-		self.template_name = self.user.get_template_user(folder="user_music/", template="music.html", request=request)
-		return super(UserMusic,self).get(request,*args,**kwargs)
+        self.template_name = self.user.get_template_user(folder="user_music/", template="music.html", request=request)
+        return super(UserMusic,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserMusic,self).get_context_data(**kwargs)
-		context['user'] = self.user
+    def get_context_data(self,**kwargs):
+        context = super(UserMusic,self).get_context_data(**kwargs)
+        context['user'] = self.user
         context['playlist'] = self.playlist
-		return context
+        return context
 
-	def get_queryset(self):
-		music_list = self.user.get_music()
-		return music_list
+    def get_queryset(self):
+        music_list = self.user.get_music()
+        return music_list
 
 
 class UserVideo(ListView):
