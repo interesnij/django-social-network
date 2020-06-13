@@ -10,7 +10,7 @@ class PostForm(forms.ModelForm):
 class PostCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Post
-		fields = ['text', 'status', 'comments_enabled']
+		fields = ['text', 'status', 'comments_on']
 
 
 class CommentForm(forms.ModelForm):
