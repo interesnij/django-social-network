@@ -1,6 +1,6 @@
 import json
 from users.models import User
-from main.models import Post, PostComment
+from posts.models import Post, PostComment
 from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
