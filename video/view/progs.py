@@ -66,7 +66,7 @@ class UserVideoInListCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = VideoForm(request.POST, request.FILES)
-        user = User.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user == user:
             new_video = form_post.save(commit=False)
