@@ -523,7 +523,7 @@ class User(AbstractUser):
     def user_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, is_public=True, is_generic=False).exists()
     def user_music_playlist_exists(self):
-        return self.user_playlist.filter(creator_id=self.id).exists()
+        return self.user_playlist.filter(creator_id=self.id, is_generic=False).exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
