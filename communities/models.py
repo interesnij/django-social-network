@@ -131,26 +131,26 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_posts(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
+        items = Post.objects.filter(posts_query)
         return items
     def get_draft_posts(self):
         from moderation.models import ModeratedObject
-        from main.models import Item
+        from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
+        items = Post.objects.filter(posts_query)
         return items
     def get_archive_posts(self):
         from moderation.models import ModeratedObject
-        from main.models import Item
+        from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)

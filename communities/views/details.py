@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from main.models import Item
+from posts.models import Post
 from communities.models import Community, CommunityMembership
 from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
@@ -8,7 +8,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 
 
-class ItemsCommunity(ListView):
+class PostsCommunity(ListView):
 	template_name = None
 	paginate_by = 30
 
@@ -16,13 +16,13 @@ class ItemsCommunity(ListView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_template_list(folder="c_lenta/", template="list.html", request=request)
 		try:
-			self.fixed = Item.objects.get(community=community, is_fixed=True)
+			self.fixed = Post.objects.get(community=community, is_fixed=True)
 		except:
 			self.fixed = None
-		return super(ItemsCommunity,self).get(request,*args,**kwargs)
+		return super(PostsCommunity,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(ItemsCommunity,self).get_context_data(**kwargs)
+		context = super(PostsCommunity,self).get_context_data(**kwargs)
 		context['object'] = self.fixed
 		context["community"] = self.community
 		return context
@@ -32,21 +32,21 @@ class ItemsCommunity(ListView):
 		return item_list
 
 
-class ItemCommunity(TemplateView):
-    model = Item
+class PostCommunity(TemplateView):
+    model = Post
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.items = self.community.get_posts()
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         self.template_name = self.community.get_template_list(folder="c_lenta/", template="item.html", request=request)
-        return super(ItemCommunity,self).get(request,*args,**kwargs)
+        return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(ItemCommunity,self).get_context_data(**kwargs)
+        context = super(PostCommunity,self).get_context_data(**kwargs)
         context["object"] = self.item
         context["community"] = self.community
         context["next"] = self.next

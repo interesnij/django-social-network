@@ -395,7 +395,7 @@ class User(AbstractUser):
         return query[0:5]
 
     def get_posts(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED, community=None)
@@ -404,7 +404,7 @@ class User(AbstractUser):
         items = Item.objects.filter(posts_query)
         return items
     def get_draft_posts(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT, community=None)
@@ -413,7 +413,7 @@ class User(AbstractUser):
         items = Item.objects.filter(posts_query)
         return items
     def get_archive_posts(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED, community=None)
@@ -680,7 +680,7 @@ class User(AbstractUser):
         return self._get_timeline_posts_v2()
 
     def _get_timeline_posts(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
 
         posts_select_related = ('creator', 'community')
@@ -711,7 +711,7 @@ class User(AbstractUser):
         return final_queryset
 
     def _get_timeline_posts_v2(self):
-        from main.models import Item
+        from posts.models import Post
         from moderation.models import ModeratedObject
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)

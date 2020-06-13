@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from django.shortcuts import render_to_response
-from main.models import Item
+from posts.models import Post
 
 
 class UserVisitCommunities(ListView):
@@ -43,12 +43,12 @@ class AllPossibleUsersList(ListView):
 
 class ItemListView(ListView):
 	template_name = None
-	model = Item
+	model = Post
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		try:
-			self.fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
+			self.fixed = Post.objects.get(creator__id=user.pk, is_fixed=True)
 		except:
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])

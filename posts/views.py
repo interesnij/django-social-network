@@ -2,7 +2,6 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render_to_response, render
 from posts.models import Post
-from main.models import Item
 from django.http import HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -86,7 +85,7 @@ class PostCommunityCreate(View):
 class RepostUserUser(View):
 
     def post(self, request, *args, **kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.item.creator
         if self.user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
@@ -112,7 +111,7 @@ class RepostUserUser(View):
 class RepostCommunityUser(View):
 
 	def post(self, request, *args, **kwargs):
-		self.item = Item.objects.get(pk=self.kwargs["pk"])
+		self.item = Post.objects.get(pk=self.kwargs["pk"])
 		if self.item.parent:
 			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item.parent, is_repost=True)
 			return HttpResponse("репост репоста")
@@ -125,7 +124,7 @@ class RepostCommunityCommunity(View):
     def post(self, request, *args, **kwargs):
         from communities.models import Community
 
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
             new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
@@ -139,7 +138,7 @@ class RepostUserCommunity(View):
     def post(self, request, *args, **kwargs):
         from communities.models import Community
 
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
             new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)

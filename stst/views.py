@@ -20,9 +20,9 @@ class StatItemView(TemplateView):
     template_name="item_stat.html"
 
     def get(self,request,*args,**kwargs):
-        from main.models import Item
+        from posts.models import Post
 
-        self.item=Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item=Post.objects.get(uuid=self.kwargs["uuid"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

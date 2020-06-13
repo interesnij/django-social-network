@@ -3,7 +3,7 @@ from video.models import Video
 from music.models import SoundcloudParsing
 from gallery.models import Photo
 from goods.models import Good
-from main.models import Item
+from article.models import Article
 
 def photo_attach(value, comment):
     try:
@@ -35,7 +35,7 @@ def good_attach(value, comment):
 
 def article_attach(value, comment):
     try:
-        _select_article = Item.objects.get(uuid=value)
+        _select_article = Article.objects.get(uuid=value)
         _select_article.item_comment.add(comment)
     except:
         raise ValidationError('Статья не найдена')
