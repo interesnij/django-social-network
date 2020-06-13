@@ -398,29 +398,29 @@ class User(AbstractUser):
         from posts.models import Post
         from moderation.models import ModeratedObject
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
     def get_draft_posts(self):
         from posts.models import Post
         from moderation.models import ModeratedObject
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
     def get_archive_posts(self):
         from posts.models import Post
         from moderation.models import ModeratedObject
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        items = Item.objects.filter(posts_query)
-        return items
+        posts = Post.objects.filter(posts_query)
+        return posts
 
     def get_articles(self):
         from article.models import Article
@@ -684,29 +684,29 @@ class User(AbstractUser):
         from moderation.models import ModeratedObject
 
         posts_select_related = ('creator', 'community')
-        items_only = ('id', 'created', 'creator__id', 'community__id')
+        posts_only = ('id', 'created', 'creator__id', 'community__id')
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
-        own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        own_posts_queryset = self.items.select_related(*posts_select_related).only(*items_only).filter(own_posts_query)
+        own_posts_queryset = self.posts.select_related(*posts_select_related).only(*posts_only).filter(own_posts_query)
 
-        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         #community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         #community_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        community_posts_queryset = Post.objects.select_related(*posts_select_related).only(*items_only).filter(community_posts_query)
+        community_posts_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
-        followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #followed_users_query.add(reported_posts_exclusion_query, Q.AND)
-        followed_users_queryset = Post.objects.select_related(*posts_select_related).only(*items_only).filter(followed_users_query)
+        followed_users_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
-        frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #frends_query.add(reported_posts_exclusion_query, Q.AND)
-        frends_queryset = Post.objects.select_related(*posts_select_related).only(*items_only).filter(frends_query)
+        frends_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
@@ -714,11 +714,11 @@ class User(AbstractUser):
         from posts.models import Post
         from moderation.models import ModeratedObject
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
-        own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #own_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        own_posts_queryset = self.items.only('created').filter(own_posts_query)
+        own_posts_queryset = self.posts.only('created').filter(own_posts_query)
 
-        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         #community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         #community_posts_query.add(reported_posts_exclusion_query, Q.AND)
@@ -726,13 +726,13 @@ class User(AbstractUser):
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
-        followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         followed_users_queryset = Post.objects.only('created').filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
-        frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
         frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Post.objects.only('created').filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
@@ -959,9 +959,9 @@ class User(AbstractUser):
         community_to_leave.remove_member(self)
         return community_to_leave
 
-    def _make_get_votes_query(self, item):
-        reactions_query = Q(parent_id=item.pk)
-        post_community = item.community
+    def _make_get_votes_query(self, post):
+        reactions_query = Q(parent_id=post.pk)
+        post_community = post.community
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
                 blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
@@ -975,11 +975,11 @@ class User(AbstractUser):
         return reactions_query
 
     def _make_get_votes_query_comment(self, comment):
-        reactions_query = Q(item_id=comment.pk)
+        reactions_query = Q(post_id=comment.pk)
         try:
-            post_community = comment.item.community
+            post_community = comment.post.community
         except:
-            post_community = comment.parent_comment.item.community
+            post_community = comment.parent_comment.post.community
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
                 blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))

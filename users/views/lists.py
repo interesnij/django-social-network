@@ -41,7 +41,7 @@ class AllPossibleUsersList(ListView):
 		possible_list = self.user.get_possible_friends()
 		return possible_list
 
-class ItemListView(ListView):
+class PostListView(ListView):
 	template_name = None
 	model = Post
 	paginate_by = 30
@@ -53,17 +53,17 @@ class ItemListView(ListView):
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
-		return super(ItemListView,self).get(request,*args,**kwargs)
+		return super(PostListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(ItemListView,self).get_context_data(**kwargs)
+		context = super(PostListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['object'] = self.fixed
 		return context
 
 	def get_queryset(self):
-		items_list = self.user.get_posts().order_by('-created')
-		return items_list
+		posts_list = self.user.get_posts().order_by('-created')
+		return posts_list
 
 
 class AllUsers(ListView):

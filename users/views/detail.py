@@ -6,22 +6,22 @@ from music.models import SoundcloudParsing
 from communities.models import Community
 
 
-class UserItemView(TemplateView):
+class UserPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         from posts.models import Post
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.items = self.user.get_posts()
-        self.template_name = self.user.get_template_list_user(folder="lenta/", template="item.html", request=request)
-        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        return super(UserItemView,self).get(request,*args,**kwargs)
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.posts = self.user.get_posts()
+        self.template_name = self.user.get_template_list_user(folder="lenta/", template="post.html", request=request)
+        self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
+        self.prev = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
+        return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserItemView,self).get_context_data(**kwargs)
-        context["object"] = self.item
+        context=super(UserPostView,self).get_context_data(**kwargs)
+        context["object"] = self.post
         context["user"] = self.user
         context["next"] = self.next
         context["prev"] = self.prev

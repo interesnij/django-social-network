@@ -37,16 +37,16 @@ class UserColorChange(View):
             return HttpResponse('Цвет выбран')
 
 
-class UserItemView(View):
+class UserPostView(View):
     def get(self,request,*args,**kwargs):
-        from stst.models import ItemNumbers
+        from stst.models import PostNumbers
         if request.user.is_authenticated:
             pk = self.kwargs["pk"]
             try:
-                obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
+                obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
                 return HttpResponse('')
             except:
-                obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
+                obj = PostNumbers.objects.create(user=request.user.pk, post=pk)
                 return HttpResponse('')
         else:
             return HttpResponse('')
