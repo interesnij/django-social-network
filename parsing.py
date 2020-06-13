@@ -1781,7 +1781,7 @@ for tag in a_angl_list_1:
                     genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
                     new_track = SoundcloudParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, description=description, title=track.title, uri=track.uri, release_year=track.release_year)
                 count = count + 1
-        while tracks.next_href != None and count < 2000:
+        while tracks.next_href != None and count < 100:
             tracks = client.get(tracks.next_href, limit=page_size, linked_partitioning=1)
             for track in tracks.collection:
                 created_at = track.created_at
