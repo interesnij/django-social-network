@@ -35,7 +35,7 @@ class PostCommunityCommentList(ListView):
         return comments
 
 
-class ItemCommunityCommentCreate(View):
+class PostCommunityCommentCreate(View):
 	form_post = None
 	def post(self,request,*args,**kwargs):
 		form_post = CommentForm(request.POST, request.FILES)
@@ -71,7 +71,7 @@ class ItemCommunityCommentCreate(View):
 			return HttpResponseBadRequest()
 
 
-class ItemCommunityReplyCreate(View):
+class PostCommunityReplyCreate(View):
     def post(self,request,*args,**kwargs):
         form_post=CommentForm(request.POST, request.FILES)
         uuid = request.POST.get('uuid')
@@ -109,13 +109,13 @@ class ItemCommunityReplyCreate(View):
 
 def post_update_interactions(request):
     data_point = request.POST['id_value']
-    item = Item.objects.get(uuid=data_point)
+    item = Post.objects.get(uuid=data_point)
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
 
 
 def community_fixed(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
+	item = Post.objects.get(uuid=uuid)
 	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.get_fixed_for_community(pk)
@@ -124,7 +124,7 @@ def community_fixed(request, pk, uuid):
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 def community_unfixed(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
+	item = Post.objects.get(uuid=uuid)
 	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
@@ -134,7 +134,7 @@ def community_unfixed(request, pk, uuid):
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
 def community_off_comment(request, pk, uuid):
-    item = Item.objects.get(uuid=uuid)
+    item = Post.objects.get(uuid=uuid)
     community = Community.objects.get(pk=pk)
     if request.user.is_staff_of_community_with_name(community.name):
         item.comments_enabled=False
@@ -144,7 +144,7 @@ def community_off_comment(request, pk, uuid):
         return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 def community_on_comment(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
+	item = Post.objects.get(uuid=uuid)
 	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.comments_enabled=True
@@ -154,7 +154,7 @@ def community_on_comment(request, pk, uuid):
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
 def community_item_delete(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
+	item = Post.objects.get(uuid=uuid)
 	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=True
@@ -164,7 +164,7 @@ def community_item_delete(request, pk, uuid):
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
 def community_item_abort_delete(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
+	item = Post.objects.get(uuid=uuid)
 	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=False
@@ -174,7 +174,7 @@ def community_item_abort_delete(request, pk, uuid):
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
 
-class ItemCommunityDetail(TemplateView):
+class PostCommunityDetail(TemplateView):
 	template_name = "item_community/detail.html"
 
 	def get(self,request,*args,**kwargs):
@@ -186,9 +186,9 @@ class ItemCommunityDetail(TemplateView):
 			self.comments = item.get_comments(request.user)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
-		return super(ItemCommunityDetail,self).get(request,*args,**kwargs)
+		return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(ItemCommunityDetail,self).get_context_data(**kwargs)
+		context=super(PostCommunityDetail,self).get_context_data(**kwargs)
 		context["object"]=self.object
 		return context
