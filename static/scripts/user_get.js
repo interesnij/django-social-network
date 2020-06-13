@@ -12,7 +12,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   uuid = container.getAttribute('item-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
 
 on('#ajax', 'click', '.u_article_detail', function() {
