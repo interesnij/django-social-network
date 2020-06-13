@@ -519,9 +519,11 @@ class User(AbstractUser):
         return albums
 
     def my_user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id).exists()
+        return self.video_user_creator.filter(creator_id=self.id, is_generic=False).exists()
     def user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, is_public=True).exists()
+        return self.video_user_creator.filter(creator_id=self.id, is_public=True, is_generic=False).exists()
+    def user_music_playlist_exists(self):
+        return self.user_playlist.filter(creator_id=self.id).exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
@@ -529,6 +531,13 @@ class User(AbstractUser):
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, is_generic=False)
         albums = VideoAlbum.objects.filter(albums_query)
         return albums
+
+    def get_audio_playlists(self):
+        from music.models import SoundList
+
+        playlists_query = Q(creator_id=self.id, is_deleted=False, community=None, is_generic=False)
+        playlists = VideoAlbum.objects.filter(playlists_query)
+        return playlists
 
     def get_goods(self):
         from goods.models import Good
