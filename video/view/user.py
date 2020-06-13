@@ -9,8 +9,8 @@ class UserVideoList(ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_template_user(folder="user_album_list/", template="list.html", request=request)
         if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
