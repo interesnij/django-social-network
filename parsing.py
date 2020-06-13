@@ -1779,6 +1779,5 @@ for tag in a_angl_list_1:
                     except:
                         self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                     genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
-                    new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, description=description, title=track.title, uri=track.uri, release_year=track.release_year)
+                    new_track = SoundcloudParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, description=description, title=track.title, uri=track.uri, release_year=track.release_year)
                 count = count + 1
-        
