@@ -84,8 +84,8 @@ class UserCreateVideoListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_settings_template(folder="user_create/", template="create_list_video.html", request=request)
         return super(UserCreateVideoListWindow,self).get(request,*args,**kwargs)
 
