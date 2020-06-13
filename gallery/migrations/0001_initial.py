@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('album', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='album_1', to='gallery.Album')),
                 ('album_2', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='album_2', to='gallery.Album')),
                 ('creator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='photo_creator', to=settings.AUTH_USER_MODEL, verbose_name='Создатель')),
-                ('item', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='main.Item')),
+                ('item', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='post.Posts')),
             ],
             options={
                 'verbose_name': 'Фото',

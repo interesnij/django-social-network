@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Создан')),
                 ('action_type', models.CharField(choices=[('B', 'Заблокировать'), ('U', 'Разблокировать'), ('AM', 'Добавить модератора'), ('RM', 'Удалить модератора'), ('AA', 'Добавить администратора'), ('RA', 'Удалить администратора'), ('OP', 'Открыть пост'), ('CP', 'Закрыть пост'), ('RP', 'Удалить пост'), ('RPC', 'Удалить комментарий к посту'), ('DPC', 'Отключить комментарии'), ('EPC', 'Включить комментарии')], editable=False, max_length=5)),
                 ('community', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='logs', to='communities.Community', verbose_name='Сообщество')),
-                ('item', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='main.Item', verbose_name='Пост')),
+                ('item', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='post.Posts', verbose_name='Пост')),
                 ('source_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Кто модерирует')),
                 ('target_user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Кого модерируют')),
             ],

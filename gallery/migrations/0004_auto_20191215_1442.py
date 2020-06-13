@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='photo',
             name='item',
-            field=models.ManyToManyField(related_name='item_photo', to='main.Item'),
+            field=models.ManyToManyField(related_name='item_photo', to='post.Posts'),
         ),
         migrations.RemoveField(
             model_name='photo',
@@ -27,6 +27,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='photo',
             name='item_comment',
-            field=models.ManyToManyField(related_name='comment_photo', to='main.ItemComment'),
+            field=models.ManyToManyField(related_name='comment_photo', to='posts.ItemPost'),
         ),
     ]

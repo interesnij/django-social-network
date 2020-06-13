@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='photo',
             name='item',
-            field=models.ManyToManyField(blank=True, null=True, related_name='item_photo', to='main.Item'),
+            field=models.ManyToManyField(blank=True, null=True, related_name='item_photo', to='post.Posts'),
         ),
         migrations.AlterField(
             model_name='photo',
             name='item_comment',
-            field=models.ManyToManyField(blank=True, null=True, related_name='comment_photo', to='main.ItemComment'),
+            field=models.ManyToManyField(blank=True, null=True, related_name='comment_photo', to='posts.ItemPost'),
         ),
     ]

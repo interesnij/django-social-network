@@ -15,13 +15,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='itemcommentvotes',
             name='parent',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='main.ItemComment'),
+            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='posts.ItemPost'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='itemvotes',
             name='parent',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='main.Item'),
+            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='post.Posts'),
             preserve_default=False,
         ),
     ]

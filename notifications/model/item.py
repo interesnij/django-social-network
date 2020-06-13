@@ -76,8 +76,8 @@ class ItemNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  ItemNotificationQS.as_manager()
-    item = models.ForeignKey('main.Item', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('main.ItemComment', null=True, blank=True, on_delete=models.CASCADE)
+    item = models.ForeignKey('post.Posts', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.ItemPost', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -133,8 +133,8 @@ class ItemCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = ItemNotificationQS.as_manager()
-    item = models.ForeignKey('main.Item', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('main.ItemComment', null=True, blank=True, on_delete=models.CASCADE)
+    item = models.ForeignKey('post.Posts', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.ItemPost', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
