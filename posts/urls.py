@@ -14,8 +14,8 @@ urlpatterns = [
     url(r'^repost_community_community/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(RepostCommunityCommunity.as_view()), name="repost_community_community"),
     url(r'^repost_community_user/(?P<pk>\d+)/$', login_required(RepostCommunityUser.as_view()), name="repost_community_user"),
 
-    url(r'^user/', include('main.url.user')),
-	url(r'^community/', include('main.url.community')),
-	url(r'^votes/', include('main.url.votes')),
-	url(r'^item_window/', include('main.url.window')),
+    url(r'^user/', include('posts.url.user')),
+	url(r'^community/', include('posts.url.community')),
+	url(r'^votes/', include('posts.url.votes')),
+	url(r'^item_window/', include('posts.url.window')),
 ]
