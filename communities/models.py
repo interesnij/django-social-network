@@ -12,8 +12,8 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class CommunityCategory(models.Model):
-    name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
-    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
+    name = models.CharField(max_length=100, verbose_name="Название")
+    avatar = models.ImageField(blank=True, verbose_name="Аватар")
     order = models.IntegerField(default=0, verbose_name="Номер")
 
     def __str__(self):
@@ -25,9 +25,9 @@ class CommunityCategory(models.Model):
 
 
 class CommunitySubCategory(models.Model):
-    name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
+    name = models.CharField(max_length=100, verbose_name="Название")
     sudcategory = models.ForeignKey(CommunityCategory, on_delete=models.CASCADE, related_name='community_categories', verbose_name="Подкатегория сообщества")
-    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
+    avatar = models.ImageField(blank=False, blank=True, verbose_name="Аватар")
     order = models.IntegerField(default=0, verbose_name="Номер")
 
     def __str__(self):
