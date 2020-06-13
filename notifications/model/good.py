@@ -74,7 +74,7 @@ class GoodNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
+    #good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
@@ -92,7 +92,7 @@ class GoodNotification(models.Model):
 
 
 class GoodCommunityNotification(models.Model):
-    community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
@@ -128,7 +128,7 @@ class GoodCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
+    #good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"
@@ -147,7 +147,7 @@ class GoodCommunityNotification(models.Model):
 
 def good_notification_handler(actor, recipient, verb, good, **kwargs):
     from users.models import User
-    
+
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':

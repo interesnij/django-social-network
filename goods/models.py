@@ -8,7 +8,7 @@ from notifications.model.good import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
-from django.contrib.contenttypes.fields import GenericRelation
+#from django.contrib.contenttypes.fields import GenericRelation
 
 
 class GoodCategory(models.Model):
@@ -46,12 +46,12 @@ class Good(models.Model):
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
-	community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+	#community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='goods')
+	#moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='goods')
 
 	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to="goods/%Y/%m/%d")
 	image2 = ProcessedImageField(verbose_name='изображение 2', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(512, 512)],upload_to="goods/%Y/%m/%d")
@@ -68,8 +68,8 @@ class Good(models.Model):
 		(STATUS_SOLD, 'Продан'),
 		)
 	status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
-	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
-	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
+	#item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
+	#item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 
 	def __str__(self):
 		return self.title
@@ -127,7 +127,7 @@ class Good(models.Model):
 		else:
 			blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
 			comments_query.add(blocked_users_query, Q.AND)
-			comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
+			#comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
 			comments_query.add(Q(is_deleted=False), Q.AND)
 		return comments_query
 
@@ -177,7 +177,7 @@ class GoodComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
 
     class Meta:
         indexes = (

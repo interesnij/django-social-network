@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation
+#from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from communities.models import Community
@@ -56,7 +56,7 @@ class SoundSymbol(models.Model):
 class SoundList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    track = models.ManyToManyField('music.SoundcloudParsing', related_name='players', blank="True")
+    #track = models.ManyToManyField('music.SoundcloudParsing', related_name='players', blank="True")
     #community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
@@ -124,7 +124,7 @@ class UserTempSoundList(models.Model):
 
 
 class SoundcloudParsing(models.Model):
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
     id = models.IntegerField(primary_key=True)
     artwork_url = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -136,8 +136,8 @@ class SoundcloudParsing(models.Model):
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=10, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
-    item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
+    #item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
+    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
 
     def __str__(self):
         return self.title

@@ -1,6 +1,6 @@
 import uuid
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericRelation
+#from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 from django.db.models import Q
@@ -39,7 +39,7 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    moderated_object = GenericRelation("moderation.ModeratedObject", related_query_name='communities',verbose_name="Модерация")
+    #moderated_object = GenericRelation("moderation.ModeratedObject", related_query_name='communities',verbose_name="Модерация")
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
@@ -135,8 +135,8 @@ class Community(models.Model):
         from moderation.models import ModeratedObject
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED)
-        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Post.objects.filter(posts_query)
         return items
     def get_draft_posts(self):
@@ -144,8 +144,8 @@ class Community(models.Model):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT)
-        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Post.objects.filter(posts_query)
         return items
     def get_archive_posts(self):
@@ -153,8 +153,8 @@ class Community(models.Model):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED)
-        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
 
@@ -163,8 +163,8 @@ class Community(models.Model):
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
-        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+        #exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
     def get_admin_goods(self):
@@ -172,8 +172,8 @@ class Community(models.Model):
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False)
-        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+        #exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
 
@@ -181,24 +181,24 @@ class Community(models.Model):
         from moderation.models import ModeratedObject
         from gallery.models import Photo
 
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         try:
             photos_query = Q(is_deleted=False, album_2_id=album_id, is_public=True)
         except:
             photos_query = Q(is_deleted=False, album_id=album_id, is_public=True)
-        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_admin_album(self, album_id):
         from moderation.models import ModeratedObject
         from gallery.models import Photo
 
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         try:
             photos_query = Q(is_deleted=False, album_2_id=album_id)
         except:
             photos_query = Q(is_deleted=False, album_id=album_id)
-        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
@@ -207,8 +207,8 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, is_public=True, community=self)
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_admin_photos(self):
@@ -216,8 +216,8 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, community=self)
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
@@ -226,8 +226,8 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, community=self, album_2__title="Фото со страницы", album_2__is_generic=True)
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)
         return avatar_photos
 
@@ -242,10 +242,10 @@ class Community(models.Model):
         from music.models import SoundList, SoundcloudParsing
         from moderation.models import ModeratedObject
 
-        exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
-        music_query.add(exclude_reported_and_approved_music_query, Q.AND)
+        #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
 
@@ -253,10 +253,10 @@ class Community(models.Model):
         from music.models import SoundList, SoundcloudParsing
         from moderation.models import ModeratedObject
 
-        exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
-        music_query.add(exclude_reported_and_approved_music_query, Q.AND)
+        #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
@@ -649,7 +649,7 @@ class CommunityMembership(models.Model):
 class CommunityLog(models.Model):
     source_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
-    item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
+    #item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
 

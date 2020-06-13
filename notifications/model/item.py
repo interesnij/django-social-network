@@ -76,8 +76,8 @@ class ItemNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
+    #item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    #comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -95,7 +95,7 @@ class ItemNotification(models.Model):
 
 
 class ItemCommunityNotification(models.Model):
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_item_recipient', verbose_name="Получатель")
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
@@ -133,8 +133,8 @@ class ItemCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
+    #item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    #comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"

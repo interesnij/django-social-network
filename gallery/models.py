@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-from django.contrib.contenttypes.fields import GenericRelation
+#from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
@@ -11,12 +11,12 @@ from common.model.votes import PhotoVotes, PhotoCommentVotes
 
 
 class Album(models.Model):
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='albums')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='albums')
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
+    #cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     is_generic = models.BooleanField(default=False, verbose_name="Сгенерированный альбом")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -66,8 +66,8 @@ class Album(models.Model):
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
+    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
     album = models.ForeignKey(Album, related_name="album_1", blank=True, null=True, on_delete=models.CASCADE)
     album_2 = models.ForeignKey(Album, related_name="album_2", blank=True, null=True, on_delete=models.CASCADE)
     file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
@@ -76,8 +76,8 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
-    item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
+    #item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
+    #item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:
@@ -153,7 +153,7 @@ class Photo(models.Model):
         else:
             blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
             comments_query.add(blocked_users_query, Q.AND)
-        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
+        #comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return comments_query
 
@@ -204,7 +204,7 @@ class PhotoComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )

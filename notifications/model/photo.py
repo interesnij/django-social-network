@@ -74,7 +74,7 @@ class PhotoNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  PhotoNotificationQS.as_manager()
-    photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
+    #photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
@@ -92,7 +92,7 @@ class PhotoNotification(models.Model):
 
 
 class PhotoCommunityNotification(models.Model):
-    community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_photo_recipient', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
@@ -128,7 +128,7 @@ class PhotoCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = PhotoNotificationQS.as_manager()
-    photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
+    #photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"
@@ -147,7 +147,7 @@ class PhotoCommunityNotification(models.Model):
 
 def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
     from users.models import User
-    
+
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':

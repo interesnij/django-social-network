@@ -70,7 +70,7 @@ class VideoTags(models.Model):
 
 
 class VideoAlbum(models.Model):
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
@@ -126,8 +126,8 @@ class Video(models.Model):
     album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
-    item = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
+    #item = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
+    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
 
     class Meta:
         verbose_name="Видео-ролики"
