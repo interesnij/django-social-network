@@ -33,7 +33,7 @@ class CommunityFollow(models.Model):
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
 
     class Meta:
-        unique_together = ('user', 'community')
+        #unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'
         verbose_name_plural = 'Подписчики группы'
 
