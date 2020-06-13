@@ -44,6 +44,29 @@ class UserVideoList(ListView):
 		return video_list
 
 
+class UserMusicList(ListView):
+	template_name = None
+	paginate_by = 30
+
+	def get(self,request,*args,**kwargs):
+		from music.models import SoundList
+
+		self.template_name = request.user.get_template_user(folder="user_music_list/", template="playlist.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		return super(UserMusicList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserMusicList,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['playlist'] = self.playlist
+		return context
+
+	def get_queryset(self):
+		playlist = self.playlist.playlist_too()
+		return playlist
+
+
 class AllPossibleUsersList(ListView):
 	template_name = None
 	model = User

@@ -10,4 +10,5 @@ urlpatterns = [
 
     url(r'^add_track/(?P<pk>\d+)/$', login_required(TrackAdd.as_view())),
     url(r'^remove_track/(?P<pk>\d+)/$', login_required(TrackRemove.as_view())),
+    url(r'^create_list/(?P<pk>\d+)/$', UserPlaylistCreate.as_view()),
 ]

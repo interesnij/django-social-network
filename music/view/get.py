@@ -47,3 +47,12 @@ class ListMusicGet(TemplateView):
         context = super(ListMusicGet,self).get_context_data(**kwargs)
         context["list"] = self.result
         return context
+
+
+class UserCreatePlaylistWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.user.get_settings_template(folder="music/", template="create_list.html", request=request)
+        return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)

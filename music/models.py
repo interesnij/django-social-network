@@ -1,3 +1,4 @@
+import uuid
 from django.conf import settings
 from django.db import models
 #from django.contrib.contenttypes.fields import GenericRelation
@@ -61,6 +62,7 @@ class SoundList(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
     order = models.PositiveIntegerField(default=0)
+    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
 
     def __str__(self):
         return self.name

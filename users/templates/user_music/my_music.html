@@ -84,6 +84,63 @@
                 </div>
               </div>
           </div>
+          {% if not album.is_generic %}
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="#" class="">Изменить список</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          {% endif %}
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="#" class="" >Добавить Музыку</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="#" class="user_video_list_create_window" data-pk="{{ user.pk }}">Создать список</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          {% if user.user_music_playlist_exists %}
+          <div class="card">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-1">
+                      <p>плейлисты</p>
+                    </h5>
+                  </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="nav flex-column nav-pills faqnav">
+                {% for object in user.get_audio_playlists %}
+                  <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
+                    {{ object.name }}
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
         </div>
     </div>
 </div>

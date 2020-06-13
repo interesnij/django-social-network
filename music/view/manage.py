@@ -1,8 +1,30 @@
 from music.models import *
 from users.models import User
-from django.http import HttpResponse
 from django.views import View
 from rest_framework.exceptions import PermissionDenied
+from music.forms import PlaylistForm
+from django.http import HttpResponse, HttpResponseBadRequest
+
+
+class UserPlaylistCreate(View):
+    form_post = None
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPlaylistCreate,self).get_context_data(**kwargs)
+        context["form_post"] = PlaylistForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post = PlaylistForm(request.POST)
+        user = User.objects.get(pk=self.kwargs["pk"])
+
+        if form_post.is_valid() and request.user == user:
+            new_playlist = form_post.save(commit=False)
+            new_playlist.creator = request.user
+            new_playlist.save()
+            return render_to_response('user_music/my_list.html',{'playlist': new_playlist, 'user': request.user, 'request': request})
+        else:
+            return HttpResponseBadRequest()
 
 
 class TempListOn(View):
@@ -75,7 +97,7 @@ class TrackRemove(View):
     """
     def get(self, request, *args, **kwargs):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
+        my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
         if my_list.is_track_in_list(track.pk):
             my_list.track.remove(track)
         return HttpResponse("!")
