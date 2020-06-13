@@ -6,19 +6,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0013_auto_20200311_1537'),
         ('music', '0042_auto_20200601_1457'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='soundcloudparsing',
-            name='item',
-            field=models.ManyToManyField(blank=True, related_name='item_music', to='main.Item'),
-        ),
-        migrations.AddField(
-            model_name='soundcloudparsing',
-            name='item_comment',
-            field=models.ManyToManyField(blank=True, related_name='comment_music', to='main.ItemComment'),
-        ),
     ]
