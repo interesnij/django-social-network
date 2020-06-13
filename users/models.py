@@ -44,8 +44,8 @@ class User(AbstractUser):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-    def __str__(self):
-        return self.get_full_name()
+    #def __str__(self):
+    #    return self.get_full_name()
 
     def get_favorite_communities(self):
         return self.favorite_communities.all()
