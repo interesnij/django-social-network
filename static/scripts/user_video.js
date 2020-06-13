@@ -2,13 +2,13 @@
 
 on('#ajax', 'click', '.user_video_list_create_window', function(e) {
   e.preventDefault();
-  pk = this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.user_video_create_window', function(e) {
   e.preventDefault();
-  pk = this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
   var list = loader.querySelectorAll('select');
@@ -54,8 +54,8 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('video-counter');
   parent = this.parentElement;
-  pk = parent.getAttribute('album-pk'); 
-  uuid = document.querySelector(".pk_saver").getAttribute('data-uuid');
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
@@ -91,8 +91,8 @@ on('body', 'click', '.video_fullscreen_normal', function() {
 });
 
 on('#ajax', 'click', '.user_video_list_create', function() {
-  uuid = this.getAttribute("data-uuid");
-  pk = this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", loader)
 });
@@ -144,6 +144,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
@@ -158,7 +159,6 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         document.title = elem_.querySelector('title').innerHTML;
 
         uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
-        pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
         window.history.pushState(null, "vfgffgfgf", '/users/' + pk + '/video/' + uuid + '/');
         toast_info("Список видео создан!")
       }
