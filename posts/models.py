@@ -6,6 +6,7 @@ from channels.layers import get_channel_layer
 from rest_framework.exceptions import ValidationError
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
+from django.utils import timezone
 
 
 class Post(models.Model):
@@ -13,7 +14,7 @@ class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now(), verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
