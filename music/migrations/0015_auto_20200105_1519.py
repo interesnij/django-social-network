@@ -8,7 +8,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('communities', '0004_auto_20191223_1222'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('music', '0014_auto_20200105_1016'),
     ]
@@ -25,11 +24,6 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name='soundtags',
             options={'verbose_name': 'музыкальный тег', 'verbose_name_plural': 'музыкальные теги'},
-        ),
-        migrations.AddField(
-            model_name='soundlist',
-            name='community',
-            field=models.ForeignKey(blank=True, db_index=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='communities.Community', verbose_name='Сообщество'),
         ),
         migrations.AddField(
             model_name='soundlist',

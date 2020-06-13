@@ -14,11 +14,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='soundlist',
-            name='community',
-            field=models.ForeignKey(blank=True, db_index=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='community_playlist', to='communities.Community', verbose_name='Сообщество'),
-        ),
-        migrations.AlterField(
-            model_name='soundlist',
             name='creator',
             field=models.ForeignKey(db_index=False, on_delete=django.db.models.deletion.CASCADE, related_name='user_playlist', to=settings.AUTH_USER_MODEL, verbose_name='Создатель'),
         ),
