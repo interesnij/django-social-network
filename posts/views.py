@@ -50,7 +50,6 @@ class PostUserCreate(View):
                                             text=post.text,
                                             community=None,
                                             comments_enabled=post.comments_enabled,
-                                            is_draft=post.comments_enabled,
                                             status=post.status)
                 get_post_attach(request, new_post)
                 return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
