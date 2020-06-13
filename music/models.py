@@ -55,7 +55,6 @@ class SoundSymbol(models.Model):
 
 
 class SoundList(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     track = models.ManyToManyField('music.SoundcloudParsing', related_name='players', blank="True")
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
