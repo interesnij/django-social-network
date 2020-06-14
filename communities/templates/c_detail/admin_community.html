@@ -24,11 +24,11 @@
                 </figure>
                 <h3 class="mb-2">{{ community.name }}</h3>
                 <span style="position: absolute; top: 45px; left: 92px;">Статус</span>
-                <div class="btn-group">
+                <div style="margin-left: auto; position: relative;">
                   <button type="button" class="btn btn-sm btn-secondary menu_drop">
                     Вы подписаны
                   </button>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu" style="margin-top: -28px;">
                     <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
                     <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
                   </div>
