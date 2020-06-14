@@ -13,7 +13,7 @@
 {% endif %}
 
 <div class="container-fluid mt-3 mb-3 pk_saver" community-pk="{{ community.pk }}">
-        <div class="container main-container card" style="padding: 15px;display: block;">
+        <div class="container main-container" style="padding: 15px;">
                 <figure style="margin-right:15px">
                   {% if object.community.get_avatar %}
                     <img src="{{ object.community.get_avatar.file.url }}" style="border-radius: 50px;width:60px;" alt="image">
