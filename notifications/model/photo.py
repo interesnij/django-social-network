@@ -74,7 +74,7 @@ class PhotoNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  PhotoNotificationQS.as_manager()
-    #photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
+    photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
@@ -128,7 +128,7 @@ class PhotoCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = PhotoNotificationQS.as_manager()
-    #photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
+    photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"
