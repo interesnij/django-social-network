@@ -56,14 +56,13 @@ on('#ajax', 'click', '#community_article_add', function() {
 
 
 on('#ajax', 'click', '.c_item_comments.comments_close', function() {
-  var parent, pk, uuid
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("current_file_dropdown");
   }} catch { null }
   parent = this.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.parentElement.getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk"); 
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".c_item_comments");
   this.className = '';

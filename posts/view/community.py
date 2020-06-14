@@ -6,8 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import CommentForm
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
-from rest_framework.exceptions import PermissionDenied, ValidationError
-from gallery.models import Album, Photo
+from rest_framework.exceptions import ValidationError
 from django.shortcuts import render_to_response
 
 
@@ -36,39 +35,24 @@ class PostCommunityCommentList(ListView):
 
 
 class PostCommunityCommentCreate(View):
-	form_post = None
-	def post(self,request,*args,**kwargs):
-		form_post = CommentForm(request.POST, request.FILES)
-		community = Community.objects.get(pk=request.POST.get('id'))
-		item_uuid = request.POST.get('item')
-		item = Post.objects.get(uuid=item_uuid)
-		if form_post.is_valid():
-			comment=form_post.save(commit=False)
-			photo=form_post.cleaned_data['photo']
-			photo2=form_post.cleaned_data['photo2']
-
-			if not comment.text and not photo and not photo2:
-				raise ValidationError('Напишите что-нибудь или прикрепите изображение')
-			check_can_get_posts_for_community_with_name(request.user,community.name)
-			new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
-			if photo:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, is_public=True, album=album)
-				upload_photo.item_comment.add(new_comment)
-			if photo2:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
-				upload_photo2.item_comment.add(new_comment)
-			new_comment.notification_community_comment(request.user)
-			return render_to_response('c_post_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
-		else:
-			return HttpResponseBadRequest()
+    def post(self,request,*args,**kwargs):
+        form_post = CommentForm(request.POST, request.FILES)
+        community = Community.objects.get(pk=request.POST.get('id'))
+        item_uuid = request.POST.get('item')
+        item = Post.objects.get(uuid=item_uuid)
+        if form_post.is_valid():
+            check_can_get_posts_for_community_with_name(request.user,community.name)
+            comment=form_post.save(commit=False)
+            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+                from common.comment_attacher import get_comment_attach
+                new_comment = comment.create_comment(commenter=request.user, community=community, parent_comment=None, post=post, text=comment.text)
+                get_comment_attach(request, new_comment)
+                new_comment.notification_community_comment(request.user)
+                return render_to_response('c_post_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
+            else:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
 
 
 class PostCommunityReplyCreate(View):
@@ -80,29 +64,16 @@ class PostCommunityReplyCreate(View):
         parent = PostComment.objects.get(pk=pk)
 
         if form_post.is_valid():
-            comment=form_post.save(commit=False)
-            photo=form_post.cleaned_data['photo']
-            photo2=form_post.cleaned_data['photo2']
-            if not comment.text and not photo and not photo2:
-                raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
             check_can_get_posts_for_community_with_name(request.user,community.name)
-            new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
-            if photo:
-                try:
-                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-                except:
-                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-                upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, album=album)
-                upload_photo.item_comment.add(new_comment)
-            if photo2:
-                try:
-                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-                except:
-                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-                upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
-            upload_photo2.item_comment.add(new_comment)
-            new_comment.notification_community_reply_comment(request.user)
-            return render_to_response('c_post_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+            comment=form_post.save(commit=False)
+            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+                from common.comment_attacher import get_comment_attach
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text)
+                get_comment_attach(request, new_comment)
+                new_comment.notification_community_reply_comment(request.user)
+                return render_to_response('c_post_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+            else:
+                return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
 
@@ -185,6 +156,7 @@ class PostCommunityDetail(TemplateView):
 		if request.user.is_anonymous and self.community.is_public:
 			self.comments = item.get_comments(request.user)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
+            from rest_framework.exceptions import PermissionDenied
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
 		return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 

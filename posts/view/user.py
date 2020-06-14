@@ -34,7 +34,6 @@ class PostUserCommentList(ListView):
 
 
 class PostCommentUserCreate(View):
-    form_post = None
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
