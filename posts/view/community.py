@@ -39,7 +39,7 @@ class PostCommunityCommentCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         community = Community.objects.get(pk=request.POST.get('id'))
         item_uuid = request.POST.get('item')
-        item = Post.objects.get(uuid=item_uuid)
+        post = Post.objects.get(uuid=item_uuid)
         if form_post.is_valid():
             check_can_get_posts_for_community_with_name(request.user,community.name)
             comment=form_post.save(commit=False)
