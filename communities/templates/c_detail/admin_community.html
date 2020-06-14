@@ -51,6 +51,15 @@
                               </li>
                           </ul>
                 </div>
+                <div class="btn-group centered">
+                  <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    Вы подписаны
+                  </button>
+                  <div class="dropdown-menu">
+                    <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
+                    <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
+                  </div>
+                </div>
             </div>
 
 <div class="container main-container">
@@ -63,15 +72,6 @@
 
         </div>
         <div class="col-12 col-md-12 col-lg-4">
-          <div class="btn-group centered">
-            <button type="button" class="btn btn-sm btn-secondary menu_drop">
-              Вы подписаны
-            </button>
-            <div class="dropdown-menu">
-              <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
-              <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
-            </div>
-          </div>
           {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
           {% endif %}
