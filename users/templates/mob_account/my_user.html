@@ -12,7 +12,7 @@
 
 <div class="container">
 <div class="user_page">
-      <div class="card mb-4">
+      <div class="card mb-3">
           <span style="margin:25px;line-height: 1.3;">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
             {% if user.get_online %}
@@ -41,7 +41,7 @@
       </div>
 
       {% if user.get_pop_connection %}
-      <div class="card mb-4">
+      <div class="card mb-3">
         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
           <div class="card-body py-2">
               <div class="media">
@@ -63,7 +63,7 @@
         </a>
         </div>
         {% else %}
-        <div class="card mb-4">
+        <div class="card mb-3">
             <div class="card-header">
                 <div class="media" style="display: flex;align-items: center;justify-content: center;">
                     <a href="{% url 'all_users' %}" class="ajax">
@@ -76,7 +76,7 @@
         </div>
         {% endif %}
         {% if user.get_pop_followers %}
-        <div class="card mb-4">
+        <div class="card mb-3">
           <a href="{% url 'frends' pk=user.pk %}" class="ajax">
             <div class="card-body py-2">
                 <div class="media">
@@ -98,7 +98,7 @@
           </a>
           </div>
           {% else %}
-          <div class="card mb-4">
+          <div class="card mb-3">
               <div class="card-header">
                   <div class="media" style="display: flex;align-items: center;justify-content: center;">
                       <a href="{% url 'all_users' %}" class="ajax">
@@ -112,7 +112,7 @@
           {% endif %}
 
       {% if user.get_pop_communities %}
-      <div class="card mb-4  ">
+      <div class="card mb-3">
         <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
           <div class="card-body py-2">
               <div class="media">
@@ -134,7 +134,7 @@
         </a>
           </div>
           {% else %}
-          <div class="card mb-4">
+          <div class="card mb-3">
               <div class="card-header">
                   <div class="media" style="display: flex;align-items: center;justify-content: center;">
                       <a href="{% url 'all_users' %}" class="ajax">
@@ -148,7 +148,7 @@
           {% endif %}
 
           {% if user.get_last_music %}
-          <div class="card mb-4 music_playlist" data-pk="{{ user.get_music_list_id }}">
+          <div class="card mb-3 music_playlist" data-pk="{{ user.get_music_list_id }}">
               <div class="card-header">
                   <div class="media">
                       <div class="media-body">
@@ -200,7 +200,7 @@
               {% endfor %}
           </div>
           {% else %}
-          <div class="card mb-4" style="">
+          <div class="card mb-3">
               <div class="card-header">
                   <div class="media" style="display: flex;align-items: center;justify-content: center;">
                       <a href="{% url 'all_music' %}" class="ajax">
@@ -214,7 +214,7 @@
           {% endif %}
 
           {% if user.get_profile_photos %}
-          <div class="card mb-4" style="">
+          <div class="card mb-3">
               <div class="card-header">
                 <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
                   <div class="media">
@@ -236,7 +236,7 @@
               </div>
           </div>
           {% else %}
-          <div class="card mb-4" style="">
+          <div class="card mb-3">
               <div class="card-header">
                   <div class="media" style="display: flex;align-items: center;justify-content: center;">
                       <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
@@ -258,12 +258,6 @@
 </div>
 </div>
 <script>
-ready(() => {
-  icon_5 = document.querySelector(".icon_v5");
-  tip = document.querySelector(".selected-tip");
-  updateSelected(icon_5);
-});
-
 var page = 2;
 var loaded = false;
 onscroll = function(){

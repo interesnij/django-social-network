@@ -1,10 +1,10 @@
 {% load liked_user %}
 
-<div class="row goods_stream infinite-container">
+<div class="row goods_stream">
 {% if goods_list %}
 {% for object in goods_list %}
-<div class="col-md-4 infinite-item">
-    <div class="card mb-4">
+<div class="col-md-4">
+    <div class="card mb-3">
         <div class="card-body pb-0 u_good_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
             <div class="row align-items-center no-gutters">
                 <div class="col">

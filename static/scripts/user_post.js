@@ -78,7 +78,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
     p = document.createElement("div");
-    p.classList.add("card", "mb-4");
+    p.classList.add("card", "mb-3");
     p.style.padding = "20px";
     p.style.display =  "block";
 

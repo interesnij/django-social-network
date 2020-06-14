@@ -3,7 +3,7 @@
 <div class="row" id="photos_container" style="margin-left: 0;margin-right: 0;">
 {% for object in photo_list %}
   <div class="col-sm-12 col-md-6 col-lg-4 u_photo_detail" photo-pk="{{ object.pk }}">
-      <div class="card rounded-0 border-0 mb-4">
+      <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}
           <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="">
         {% else %}
@@ -14,7 +14,7 @@
   {% endfor %}
 
 {% else %}
-<div class="card mb-4" style="align-items:center;justify-content:center;width:100%;">
+<div class="card mb-3 centered">
   <div class="card-body">
   <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
   </div>

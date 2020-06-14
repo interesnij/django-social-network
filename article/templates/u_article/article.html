@@ -1,6 +1,5 @@
-{% load staticfiles humanize thumbnail%}
 
-<div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}" community-id="{{ user.pk }}">
+<div class="card" style="display: block;" item-id="{{ object.uuid }}">
 
   {% include 'item_user/card_header.html' %}
 
@@ -11,7 +10,7 @@
             {% if object.article.g_image %}
             <img src="{{ object.article.g_image.url }}" alt="img">
             {% else %}
-            <img src="{% static 'images/no-image.jpg' %}" alt="img" />
+            <img src="/static/images/no-image.jpg" alt="img" />
             {% endif %}
         </figure>
         <div class="container">

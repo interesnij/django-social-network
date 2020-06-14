@@ -7,12 +7,12 @@
   }
 </style>
 <div class="container mt-3">
-  
+
   {% include 'mob_manage/menu.html' %}
 
             <form id="private_form" action="" method="post" class="contact-form">
                 {% csrf_token %}
-                <div class="card mb-4">
+                <div class="card mb-3">
                     <div class="card-header border-bottom">
                         <h5 class="content-color-primary mb-0">Настройки приватности -
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">

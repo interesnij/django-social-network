@@ -1,4 +1,4 @@
-<div class="card mb-4" item-uuid="{{ object.uuid }}">
+<div class="card mb-3" item-uuid="{{ object.uuid }}">
   {% include 'item_user/my_card_header.html' %}
 
     <div class="card-body fullscreen" style="cursor:pointer;margin-top: -30px;">
@@ -7,7 +7,7 @@
       {% endif %}
     </div>
 
-    {% include 'generic/attach/post_attach.html' %} 
+    {% include 'generic/attach/post_attach.html' %}
 
     {% if object.is_repost %}
       {% include 'item_user/repost.html' %}

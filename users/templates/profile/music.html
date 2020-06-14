@@ -1,6 +1,6 @@
 {% load liked_user get_key %}
 {% if user.get_last_music %}
-<div class="card mb-4 music_playlist" data-pk="{{ user.get_music_list_id }}">
+<div class="card mb-3 music_playlist" data-pk="{{ user.get_music_list_id }}">
     <div class="card-header">
       <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
         <div class="media">

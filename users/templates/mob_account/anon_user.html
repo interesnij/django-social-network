@@ -12,7 +12,7 @@
 
 <div class="container">
 <div class="user_page">
-      <div class="card mb-4">
+      <div class="card mb-3">
           <span style="margin:25px;line-height: 1.3;">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
             {% if user.get_online %}
@@ -37,7 +37,7 @@
       </div>
 
       {% if user.get_pop_connection %}
-      <div class="card mb-4">
+      <div class="card mb-3">
         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
           <div class="card-body py-2">
               <div class="media">
@@ -60,7 +60,7 @@
         </div>
         {% endif %}
         {% if user.get_pop_followers %}
-        <div class="card mb-4">
+        <div class="card mb-3">
           <a href="{% url 'frends' pk=user.pk %}" class="ajax">
             <div class="card-body py-2">
                 <div class="media">
@@ -84,7 +84,7 @@
           {% endif %}
 
       {% if user.get_pop_communities %}
-      <div class="card mb-4">
+      <div class="card mb-3">
         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
           <div class="card-body py-2">
               <div class="media">

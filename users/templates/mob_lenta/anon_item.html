@@ -12,26 +12,6 @@
   {% endif %}
 </span>
 
-{% if object.post %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
+<div class="mb-3" item-id="{{ object.uuid }}">
   {% include 'item_user/post_detail.html' %}
 </div>
-{% endif %}
-
-{% if object.article %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
-    {% include 'item_user/article.html' with article=article  %}
-</div>
-{% endif %}
-
-  {% if prev %}
-    <script>
-    	$('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' uuid=prev.uuid pk=user.pk %}");});
-    </script>
-   {% endif %}
-
-   {% if next %}
-    <script>
-      $('.next_item').on('click', function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
-    </script>
-    {% endif %}
