@@ -157,8 +157,8 @@ class PostCommunityDetail(TemplateView):
 			self.comments = item.get_comments(request.user)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
             from rest_framework.exceptions import PermissionDenied
-			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
-		return super(PostCommunityDetail,self).get(request,*args,**kwargs)
+            raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
+        return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(PostCommunityDetail,self).get_context_data(**kwargs)
