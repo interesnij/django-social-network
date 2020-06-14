@@ -54,27 +54,7 @@ loadScripts('/static/scripts/functions/preview.js')
 loadScripts('/static/scripts/functions/comment_attach.js')
 loadScripts('/static/scripts/functions/post_attach.js')
 loadScripts('/static/scripts/functions/audio_video.js')
-
-function create_reload_page(form, post_link, history_link) {
-	form_data = new FormData(form);
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', post_link, true );
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-          elem_ = document.createElement('span');
-          elem_.innerHTML = ajax_link.responseText;
-          ajax = elem_.querySelector("#reload_block");
-          rtr = document.getElementById('ajax');
-          rtr.innerHTML = ajax.innerHTML;
-          pk = rtr.querySelector(".pk_saver").getAttribute("data-pk");
-          window.scrollTo(0,0);
-          document.title = elem_.querySelector('title').innerHTML;
-          if_list(rtr);
-          window.history.pushState(null, "vfgffgfgf", history_link + pk + '/');
-      }
-    }
-    ajax_link.send(form_data);
-}
+loadScripts('/static/scripts/functions/reload.js')
 
 class ToastManager {
 	constructor(){
@@ -241,60 +221,6 @@ function addStyleSheets (href) {
   console.log("added!")
 }
 
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  document.querySelector("#draggable-header").onmousedown = dragMouseDown;
-	document.querySelector("#draggable-resize").onmousedown = resizeMouseDown;
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
-  }
-
-	function resizeMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    pos3 = 0;
-    pos4 = 0;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementResize;
-  }
-
-	function elementResize(e) {
-		e = e || window.event;
-    e.preventDefault();
-		var content = document.querySelector(".draggable");
-		var width = content.offsetWidth;
-		var height = content.offsetHeight;
-
-		pos1 = (e.clientX - width) - content.offsetLeft;
-    pos2 = (e.clientY - height) - content.offsetTop;
-
-		content.style.width = width + pos1 + 'px';
-		content.style.height = height + pos2 + 'px';
-	}
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
 function open_fullscreen(link, block) {
   var link_, elem;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -306,46 +232,6 @@ function open_fullscreen(link, block) {
     block.innerHTML = elem
   }};
   link_.send();
-}
-function if_list(block){
-  // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
-  if(block.querySelector('#news_load')){
-    var news_load, link;
-    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
-    list_load(block.querySelector("#news_load"), link);
-  }else if(block.querySelector('#lenta_load')){
-    var lenta_load, link;
-    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_load"), link);
-  }else if(block.querySelector('#lenta_community')){
-    var lenta_community, link;
-    lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_community"), link);
-  }else if(block.querySelector('#photo_load')){
-    var photo_load, link;
-    photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#photo_load"), link);
-  }else if(block.querySelector('#album_photo_load')){
-    var album_photo_load, link;
-    album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#album_photo_load"), link);
-  };
-}
-
-function list_load(block,link) {
-  // подгрузка списка
-  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
-}
-
-function msToTime(duration) {
-  var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60);
-
-  minutes = (minutes < 10) ? "0" + minutes : minutes;
-  seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-  return minutes + ":" + seconds;
 }
 
 function vote_reload(link_1, link_2, _like_block, _dislike_block){
@@ -445,27 +331,6 @@ function send_dislike(item, link){
     } entrou = true;
     setTimeout(function() { entrou = false; }, 1000);
     }};
-
-    function ajax_get_reload(url) {
-      var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        ajax_link.open( 'GET', url, true );
-        ajax_link.onreadystatechange = function () {
-          if ( this.readyState == 4 && this.status == 200 ) {
-            elem_ = document.createElement('span');
-            elem_.innerHTML = ajax_link.responseText;
-            ajax = elem_.querySelector("#reload_block");
-            rtr = document.getElementById('ajax');
-            rtr.innerHTML = ajax.innerHTML;
-            window.scrollTo(0,0);
-            title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, "vfgffgfgf", url);
-            document.title = title;
-            if_list(rtr);
-            load_chart()
-          }
-        }
-        ajax_link.send();
-    }
 
 if_list(document.getElementById('ajax'));
 load_chart()
