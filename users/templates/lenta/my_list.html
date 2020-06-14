@@ -1,6 +1,4 @@
 
-
-
 <div id="lenta_container">
   {% if object_list %}
     <div class="stream-update">
@@ -9,7 +7,7 @@
 
     <span class="stream">
       {% for object in object_list %}
-        {% include 'item_user/my_post.html'%}
+        {% include 'item_user/my_post.html' %}
       {% endfor %}
     </span>
     {% endif %}

@@ -1,17 +1,14 @@
 
-
-{% include 'item_community/moderator_post.html' %}
-
 <div class="infinite-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
 
-  <span class="community_stream" community-pk="{{ community.pk }}">
+  <span class="community_stream">
     {% if object_list %}
 
     {% for object in object_list %}
-        {% include 'item_community/moderator_post.html' with post=post %}
+        {% include 'item_community/moderator_post.html' %}
     {% endfor %}
 
     {% endif %}
