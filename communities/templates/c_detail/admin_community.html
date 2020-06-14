@@ -24,7 +24,17 @@
                 </figure>
                 <h3 class="mb-2">{{ community.name }}</h3>
                 <span style="position: absolute; top: 45px; left: 92px;">Статус</span>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    Вы подписаны
+                  </button>
+                  <div class="dropdown-menu">
+                    <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
+                    <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
+                  </div>
+                </div>
             </div>
+
                           <br><br>
                           <ul class="list-group list-group-flush w-100">
                               <li class="list-group-item px-0">
@@ -50,15 +60,6 @@
                                   </div>
                               </li>
                           </ul>
-                </div>
-                <div class="btn-group centered">
-                  <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                    Вы подписаны
-                  </button>
-                  <div class="dropdown-menu">
-                    <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
-                    <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
-                  </div>
                 </div>
             </div>
 
