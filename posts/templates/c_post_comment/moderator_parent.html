@@ -1,0 +1,66 @@
+{% load humanize liked_user thumbnail %}
+
+<div class="media comment">
+    <figure>
+        {% if comment.commenter.get_avatar %}
+          <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:40px;" alt="User Image" class="user-image">
+        {% else %}
+          <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        {% endif %}
+    </figure>
+    <div class="media-body">
+        <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
+            <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
+        </h5>
+        <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
+
+        {% include 'generic/attach/comment_attach.html' %}
+
+        <div class="">
+            <div class="row">
+                {% include 'c_post_comment/info.html' %}
+
+                    <div style="margin-top:10px;display:none">
+                        <form action="" method="post" class="replyComment_form">
+                            {% csrf_token %}
+
+                            <div class="row img_block" style="margin:10px"></div>
+
+                            <div class="row no-gutters" style="margin-top: 20px;">
+                              {% include 'c_item_comment/form_dropdown.html' %}
+
+                                <div class="col">
+                                    <div class="input-group input-group-sm">
+                                      <input type="hidden" name="uuid" value="{{ community.uuid }}">
+                                      <input type="hidden" name="pk" value="{{ comment.pk }}">
+
+                                      <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyComment" type="button">
+                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                      </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                      {% if comment.count_replies %}
+                    ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+                    <br><br>
+                      {% endif %}
+                    </span>
+
+                    <span class="stream_reply_comments">
+                      {% for reply in comment.get_replies %}
+                        {% include 'c_post_comment/moderator_reply.html' %}
+                        <br>
+                      {% endfor %}
+
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

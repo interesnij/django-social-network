@@ -1,0 +1,17 @@
+<div class="card mb-3" item-uuid="{{ object.uuid }}">
+  {% include 'post_user/my_card_header.html' %}
+
+    <div class="card-body fullscreen" style="cursor:pointer;margin-top: -30px;">
+      {% if object.text %}
+        <p class="">{{ object.text|linebreaks }}</p>
+      {% endif %}
+    </div>
+
+    {% include 'generic/attach/post_attach.html' %}
+
+    {% if object.is_repost %}
+      {% include 'post_user/repost.html' %}
+    {% endif %}
+
+    {% include 'post_user/info.html' %}
+</div>

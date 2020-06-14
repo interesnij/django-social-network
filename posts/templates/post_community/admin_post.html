@@ -1,0 +1,22 @@
+<div class="card mb-3" item-uuid="{{ object.uuid }}">
+
+    {% include 'post_community/admin_card_header.html' %}
+
+    {% if object.is_repost %}
+    {% include 'post_community/repost.html' %}
+    {% endif %}
+
+    <div class="card-body c_fullscreen" style="cursor:pointer">
+      {% if object.post.text %}
+        <p class="">{{ object.post.text|linebreaks }}</p>
+      {% endif %}
+      {% if object.post.image %}
+        <p class="">{{ object.post.image.url }}</p>
+      {% endif %}
+      {% if object.post.doc %}
+        <p class="">{{ object.post.doc }}</p>
+      {% endif %}
+    </div>
+
+    {% include 'post_community/info.html' %}
+</div>
