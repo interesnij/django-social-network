@@ -329,7 +329,7 @@ on('#ajax', 'click', '.music_load_one', function() {
   document.getElementById("create_loader").innerHTML="";
 });
 on('#ajax', 'click', '.music_load_several', function() {
-  _this = this.parentElement;
+  _this = this.previousElementSibling;
   if (document.body.querySelector(".current_file_dropdown")){
     music_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
