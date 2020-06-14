@@ -30,7 +30,7 @@ on('#ajax', 'click', '.c_all_likes', function() {
   pk = container.getAttribute('community-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_like/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_community_like/" + uuid + "/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.c_all_dislikes', function() {
   var container, uuid, pk, loader;
@@ -38,7 +38,7 @@ on('#ajax', 'click', '.c_all_dislikes', function() {
   pk = container.getAttribute('community-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_dislike/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.c_all_reposts', function() {
   var container, uuid, pk, loader;
@@ -46,7 +46,7 @@ on('#ajax', 'click', '.c_all_reposts', function() {
   pk = container.getAttribute('community-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '#community_article_add', function() {
@@ -68,7 +68,7 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   _this = parent.querySelector(".c_item_comments");
   this.className = '';
   this.classList.add("c_item_comments","comments_open");
-  list_load(this.parentElement.parentElement.parentElement.querySelector(".c_load_comments"), "/community/comment/" + uuid + "/" + pk + "/");
+  list_load(this.parentElement.parentElement.parentElement.querySelector(".c_load_comments"), "/posts/community/comment/" + uuid + "/" + pk + "/");
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;

@@ -1,3 +1,4 @@
+
 on('#ajax', 'click', '#good_image', function() {
   img = this.previousElementSibling.querySelector("#id_image")
   get_image_priview(this, img);
@@ -100,7 +101,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
 
-    if (document.querySelector(".is_attach")){
+    if (document.querySelector(".is_comment_attach")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
