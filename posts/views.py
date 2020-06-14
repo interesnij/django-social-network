@@ -68,15 +68,24 @@ class PostCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):
         from communities.models import Community
-        from posts.forms import PostCommunityForm
+        from posts.forms import PostForm
 
-        form_post=PostCommunityForm(request.POST, request.FILES)
+        form_post=PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            post=form_post.save(commit=False)
-            new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
-            return render_to_response('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
+            if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+                from common.post_attacher import get_post_attach
+
+                new_post = post.create_post(creator=request.user,
+                                            text=post.text,
+                                            community=community,
+                                            comments_enabled=post.comments_enabled,
+                                            status=post.status)
+                get_post_attach(request, new_post)
+                return render_to_response('post_community/admin_post.html', {'object': new_post,'request': request})
+            else:
+                return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
 

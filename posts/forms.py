@@ -7,12 +7,6 @@ class PostForm(forms.ModelForm):
 		fields = ['text']
 
 
-class PostCommunityForm(forms.ModelForm):
-	class Meta:
-		model = Post
-		fields = ['text', 'status', 'comments_enabled']
-
-
 class CommentForm(forms.ModelForm):
 	text=forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
 

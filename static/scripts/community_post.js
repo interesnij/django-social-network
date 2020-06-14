@@ -35,3 +35,30 @@ on('#ajax', 'change', '#sub_category', function() {
   link.send( null );
   };
 });
+
+
+on('#ajax', 'click', '.c_add_post', function() {
+  form_data = new FormData(document.forms.new_post);
+  form_post = document.querySelector("#commnity_post");
+  lenta_load = form_post.parentElement.nextElementSibling;
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/posts/add_post_community/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector('.id_text').value = "";
+    clear_attach_block();
+
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    new_post.querySelector(".card") ? (lenta_load.querySelector("#community_stream").prepend(new_post.querySelector(".card")),
+                                       toast_info("Запись опубликована"),
+                                       lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
+                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+  }};
+
+  link_.send(form_data);
+});
