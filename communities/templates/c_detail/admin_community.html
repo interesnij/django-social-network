@@ -13,13 +13,13 @@
 {% endif %}
 
 <div class="container-fluid mt-3 mb-3 pk_saver" community-pk="{{ community.pk }}">
-        <div class="container main-container card">
+        <div class="container main-container card" style="padding: 15px;">
           <div style="display: flex; flex-wrap: wrap;">
               <div class="col-lg-10 col-mb-8">
                           <h3 class="mb-2">{{ community.name }}</h3>
                           {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
                           <br><br>
-                          <ul class="list-group">
+                          <ul class="list-group list-group-flush w-100">
                               <li class="">
                                   <div class="media experience">
                                       <div class="icon-circle icon-40 bg-light-secondary mr-3">
