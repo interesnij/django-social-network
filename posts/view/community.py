@@ -45,7 +45,7 @@ class PostCommunityCommentCreate(View):
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, community=community, parent_comment=None, post=post, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_community_comment(request.user)
                 return render_to_response('c_post_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
