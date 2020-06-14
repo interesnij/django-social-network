@@ -1,4 +1,4 @@
-function loadScripts( src, callback ) {
+function loadScripts( src ) {
     var script = document.createElement("SCRIPT"),
         head = document.getElementsByTagName( "head" )[ 0 ],
         error = false;
@@ -10,9 +10,8 @@ function loadScripts( src, callback ) {
         if ( ( !this.readyState || this.readyState == "loaded" || this.readyState == "complete" ) ) {
             if ( !error ) {
                 removeListeners();
-                callback( true );
             } else {
-                callback( false );
+                null
             }
         }
     };
@@ -20,7 +19,6 @@ function loadScripts( src, callback ) {
     script.onerror = function() {
         error = true;
         removeListeners();
-        callback( false );
     }
 
     function errorHandle( msg, url, line ) {
@@ -28,7 +26,6 @@ function loadScripts( src, callback ) {
         if ( url == src ) {
             error = true;
             removeListeners();
-            callback( false );
         }
         return false;
     }
