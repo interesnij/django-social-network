@@ -1,3 +1,6 @@
+if_list(document.getElementById('ajax'));
+load_chart()
+
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
 on('body', 'click', '#add_multi_comments_photos', function(event) {
