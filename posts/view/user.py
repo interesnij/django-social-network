@@ -147,10 +147,11 @@ def user_item_abort_delete(request, uuid):
 
 
 class PostUserDetail(TemplateView):
-	template_name = "post_user/detail.html"
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = self.user.get_template_user(folder="post_user/", template="detail.html", request=request)
 		if self.item.creator != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.item.creator_id)
 			if self.item.creator.is_closed_profile():
