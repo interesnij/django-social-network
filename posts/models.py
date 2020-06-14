@@ -147,11 +147,11 @@ class Post(models.Model):
         return count_reposts
 
     def get_likes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(item=self)
+        reactions_query = user._make_get_votes_query(post=self)
         return PostVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(item=self)
+        reactions_query = user._make_get_votes_query(post=self)
         return PostVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
 
     def get_visiter_users(self):
