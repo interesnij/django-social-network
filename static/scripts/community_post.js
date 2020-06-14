@@ -37,7 +37,7 @@ on('#ajax', 'change', '#sub_category', function() {
 });
 
 
-on('#ajax', 'click', '.c_add_post', function() {
+on('#ajax', 'click', '#c_add_post', function() {
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#commnity_post");
   lenta_load = form_post.parentElement.nextElementSibling;
