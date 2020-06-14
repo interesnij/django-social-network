@@ -331,3 +331,4 @@ function send_dislike(item, link){
     } entrou = true;
     setTimeout(function() { entrou = false; }, 1000);
     }};
+load_chart()
