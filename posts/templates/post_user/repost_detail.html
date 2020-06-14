@@ -47,6 +47,7 @@
     {% if object.parent.text %}
       <p class="">{{ object.parent.text|linebreaks }}</p>
     {% endif %}
+    {% include 'generic/attach/post_attach.html' %}
 
   </div>
 {% endif %}

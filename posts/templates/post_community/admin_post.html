@@ -7,16 +7,11 @@
     {% endif %}
 
     <div class="card-body c_fullscreen" style="cursor:pointer">
-      {% if object.post.text %}
-        <p class="">{{ object.post.text|linebreaks }}</p>
-      {% endif %}
-      {% if object.post.image %}
-        <p class="">{{ object.post.image.url }}</p>
-      {% endif %}
-      {% if object.post.doc %}
-        <p class="">{{ object.post.doc }}</p>
+      {% if object.text %}
+        <p class="">{{ object.text|linebreaks }}</p>
       {% endif %}
     </div>
+    {% include 'generic/attach/post_attach.html' %}
 
     {% include 'post_community/info.html' %}
 </div>
