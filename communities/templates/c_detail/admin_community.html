@@ -13,10 +13,9 @@
 {% endif %}
 
 <div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
-    <div class="row">
         <div class="container main-container">
-          <div class="card mb-3 align-items-center">
-                      <div class="card-body">
+          <div class="row card">
+              <div class="col-12 col-md-12 col-lg-8">
                           <h3 class="mb-2">{{ community.name }}</h3>
                           {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
                           <br><br>
@@ -44,7 +43,8 @@
                                   </div>
                               </li>
                           </ul>
-
+                </div>
+                <div class="col-12 col-md-12 col-lg-4">
                   {% if community.get_avatar %}
                     <img src="{{ community.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
                   {% else %}
@@ -60,9 +60,8 @@
                       </div>
                   </div>
                 </div>
-          </div>
+            </div>
         </div>
-    </div>
 </div>
 
 <div class="container main-container">
