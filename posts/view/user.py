@@ -147,25 +147,14 @@ def user_item_abort_delete(request, uuid):
 
 
 class PostUserDetail(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+    def get(self,request,*args,**kwargs):
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_template_user(folder="post_user/", template="detail.html", request=request)
-		if self.item.creator != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.item.creator_id)
-			if self.item.creator.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.item.creator_id)
-			self.object = self.item
-		elif self.item.creator == request.user:
-			self.object = self.item
-		elif request.user.is_anonymous and self.item.creator.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.item.creator.is_closed_profile():
-			self.object = self.item
-		return super(PostUserDetail,self).get(request,*args,**kwargs)
+        return super(PostUserDetail,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context=super(PostUserDetail,self).get_context_data(**kwargs)
-		context["object"]=self.object
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(PostUserDetail,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        return context

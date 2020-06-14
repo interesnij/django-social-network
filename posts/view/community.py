@@ -151,14 +151,6 @@ class PostCommunityDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.community.get_template(folder="post_community/", template="detail.html", request=request)
-        if request.user.is_authenticated:
-            check_can_get_posts_for_community_with_name(request.user,self.community.name)
-            self.object = self.item
-        else if request.user.is_anonymous and self.community.is_public:
-            self.comments = item.get_comments(request.user)
-        else if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-            from rest_framework.exceptions import PermissionDenied
-            raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
