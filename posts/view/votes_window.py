@@ -10,14 +10,13 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
 from django.shortcuts import render_to_response
-from common.utils import is_mobile
 
 
 class PostUserLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для записи пользователя
     """
-    template_name="item_votes/u_like.html"
+    template_name="post_votes/u_like.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -44,7 +43,7 @@ class PostUserCommentLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для записи пользователя
     """
-    template_name="item_votes/u_comment_like.html"
+    template_name="post_votes/u_comment_like.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -71,7 +70,7 @@ class PostUserDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для комментария записи пользователя
     """
-    template_name="item_votes/u_dislike.html"
+    template_name="post_votes/u_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -98,7 +97,7 @@ class PostUserCommentDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для комментария записи пользователя
     """
-    template_name="item_votes/u_comment_dislike.html"
+    template_name="post_votes/u_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -126,7 +125,7 @@ class PostCommunityLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для записи сообщества
     """
-    template_name="item_votes/c_like.html"
+    template_name="post_votes/c_like.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -144,7 +143,7 @@ class PostCommunityDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для записи сообщества
     """
-    template_name="item_votes/c_dislike.html"
+    template_name="post_votes/c_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -162,7 +161,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для комментария записи сообщества
     """
-    template_name="item_votes/c_comment_like.html"
+    template_name="post_votes/c_comment_like.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -180,7 +179,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для комментария записи сообщества
     """
-    template_name="item_votes/c_comment_dislike.html"
+    template_name="post_votes/c_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -224,7 +223,7 @@ class AllPostUserLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/u_all_like.html", context)
+        return render_to_response("post_votes/u_all_like.html", context)
 
 class AllPostUserDislikeWindow(View):
     """
@@ -254,7 +253,7 @@ class AllPostUserDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/u_all_dislike.html", context)
+        return render_to_response("post_votes/u_all_dislike.html", context)
 
 class AllPostUserCommentDislikeWindow(View):
     """
@@ -284,7 +283,7 @@ class AllPostUserCommentDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/u_all_comment_dislike.html", context)
+        return render_to_response("post_votes/u_all_comment_dislike.html", context)
 
 class AllPostUserCommentLikeWindow(View):
     """
@@ -314,7 +313,7 @@ class AllPostUserCommentLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/u_all_comment_like.html", context)
+        return render_to_response("post_votes/u_all_comment_like.html", context)
 
 
 class AllPostCommunityLikeWindow(View):
@@ -337,7 +336,7 @@ class AllPostCommunityLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/c_all_like.html", context)
+        return render_to_response("post_votes/c_all_like.html", context)
 
 class AllPostCommunityDislikeWindow(View):
     """
@@ -359,7 +358,7 @@ class AllPostCommunityDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/c_all_dislike.html", context)
+        return render_to_response("post_votes/c_all_dislike.html", context)
 
 class AllPostCommunityCommentLikeWindow(View):
     """
@@ -381,7 +380,7 @@ class AllPostCommunityCommentLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/c_all_comment_like.html", context)
+        return render_to_response("post_votes/c_all_comment_like.html", context)
 
 class AllPostCommunityCommentDislikeWindow(View):
     """
@@ -403,7 +402,7 @@ class AllPostCommunityCommentDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/c_all_comment_dislike.html", context)
+        return render_to_response("post_votes/c_all_comment_dislike.html", context)
 
 class AllPostUserRepostWindow(View):
     """
@@ -424,7 +423,7 @@ class AllPostUserRepostWindow(View):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
             reposts = item.get_reposts()
-        return render_to_response("item_votes/u_all_repost.html", context)
+        return render_to_response("post_votes/u_all_repost.html", context)
 
 
 class AllPostCommunityRepostWindow(View):
@@ -447,4 +446,4 @@ class AllPostCommunityRepostWindow(View):
             context['reposts'] = current_page.page(1)
         except EmptyPage:
             context['reposts'] = current_page.page(current_page.num_pages)
-        return render_to_response("item_votes/c_all_repost.html", context)
+        return render_to_response("post_votes/c_all_repost.html", context)

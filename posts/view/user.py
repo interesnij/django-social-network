@@ -17,7 +17,7 @@ class PostUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_list_user(folder="u_item_comment/", template="comments.html", request=request)
+        self.template_name = self.user.get_template_list_user(folder="u_post_comment/", template="comments.html", request=request)
         return super(PostUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -53,7 +53,7 @@ class PostCommentUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_comment(request.user)
-                return render_to_response('u_item_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+                return render_to_response('u_post_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -80,7 +80,7 @@ class PostReplyUserCreate(View):
                 new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render_to_response('u_item_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+            return render_to_response('u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
         else:
             return HttpResponseBadRequest()
 
@@ -148,7 +148,7 @@ def user_item_abort_delete(request, uuid):
 
 
 class PostUserDetail(TemplateView):
-	template_name = "item_user/detail.html"
+	template_name = "post_user/detail.html"
 
 	def get(self,request,*args,**kwargs):
 		self.item = Post.objects.get(uuid=self.kwargs["uuid"])

@@ -19,7 +19,7 @@ class PostCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_template_list(folder="c_item_comment/", template="comments.html", request=request)
+        self.template_name = self.community.get_template_list(folder="c_post_comment/", template="comments.html", request=request)
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class PostCommunityCommentCreate(View):
 		form_post = CommentForm(request.POST, request.FILES)
 		community = Community.objects.get(pk=request.POST.get('id'))
 		item_uuid = request.POST.get('item')
-		item = Item.objects.get(uuid=item_uuid)
+		item = Post.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
 			photo=form_post.cleaned_data['photo']
@@ -66,7 +66,7 @@ class PostCommunityCommentCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_comment(request.user)
-			return render_to_response('c_item_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
+			return render_to_response('c_post_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 
@@ -102,7 +102,7 @@ class PostCommunityReplyCreate(View):
                 upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
             upload_photo2.item_comment.add(new_comment)
             new_comment.notification_community_reply_comment(request.user)
-            return render_to_response('c_item_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+            return render_to_response('c_post_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
         else:
             return HttpResponseBadRequest()
 
@@ -175,7 +175,7 @@ def community_item_abort_delete(request, pk, uuid):
 
 
 class PostCommunityDetail(TemplateView):
-	template_name = "item_community/detail.html"
+	template_name = "post_community/detail.html"
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(uuid=self.kwargs["uuid"])
