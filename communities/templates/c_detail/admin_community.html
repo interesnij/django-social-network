@@ -13,7 +13,7 @@
 {% endif %}
 
 <div class="container-fluid mt-3 mb-3 pk_saver" community-pk="{{ community.pk }}">
-        <div class="container main-container" style="padding: 15px;">
+        <div class="container main-container card" style="padding: 15px;">
             <div style="display: flex;">
                 <figure style="margin-right:15px">
                   {% if object.community.get_avatar %}
@@ -23,7 +23,7 @@
                   {% endif %}
                 </figure>
                 <h3 class="mb-2">{{ community.name }}</h3>
-                <span style="position: absolute; top: 60px; left: 105px;">Статус</span>
+                <span style="position: absolute; top: 45px; left: 92px;">Статус</span>
             </div>
                           <br><br>
                           <ul class="list-group list-group-flush w-100">
