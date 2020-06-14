@@ -12,9 +12,9 @@
 </div>
 {% endif %}
 
-<div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
+<div class="container-fluid mt-3 mb-3 pk_saver" community-pk="{{ community.pk }}">
         <div class="container main-container card">
-          <div class="row">
+          <div style="display: flex; flex-wrap: wrap;">
               <div class="col-lg-10 col-mb-8">
                           <h3 class="mb-2">{{ community.name }}</h3>
                           {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
@@ -31,7 +31,7 @@
                                       </div>
                                   </div>
                               </li>
-                              <li class="list-group-item px-0">
+                              <li class="">
                                   <div class="media experience">
                                       <div class="icon-circle icon-40 bg-light-secondary mr-3">
                                         <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
