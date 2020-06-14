@@ -62,3 +62,20 @@ on('#ajax', 'click', '#c_add_post', function() {
 
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '.c_itemComment', function() {
+  form = this.parentElement.parentElement.parentElement;
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/community/post-comment/');
+});
+
+on('#ajax', 'click', '.c_replyComment', function() {
+  form = this.parentElement.parentElement.parentElement.parentElement;
+  send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/posts/community/reply-comment/')
+  form.parentElement.style.display = "none";
+});
+
+on('#ajax', 'click', '.c_replyParentComment', function() {
+  form = this.parentElement.parentElement.parentElement.parentElement;
+  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/posts/community/reply-comment/')
+  form.parentElement.style.display = "none";
+});
