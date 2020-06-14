@@ -5,7 +5,7 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
-.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6);}
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
 
 .music-dropdown{
   background: #582A72 !important;
