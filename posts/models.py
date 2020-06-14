@@ -254,7 +254,7 @@ class PostComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
-    def create_comment(cls, commenter, item, parent_comment, text):
+    def create_comment(cls, commenter, post, parent_comment, text):
 
         comment = PostComment.objects.create(commenter=commenter, parent_comment=parent_comment, post=post, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
