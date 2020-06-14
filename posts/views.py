@@ -74,7 +74,7 @@ class PostCommunityCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            post=self.form_post.save(commit=False)
+            post=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
 
