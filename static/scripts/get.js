@@ -274,6 +274,9 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     block_divs_length = block_divs.length;
     photo_post_upload_attach(photo_list, block, 10 - block_divs_length);
     }
+    console.log(block_divs);
+    console.log(block_divs_length);
+    console.log(10 - block_divs_length);
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }
