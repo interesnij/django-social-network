@@ -68,7 +68,7 @@ function photo_post_attach(_this, block) {
 
 function photo_post_upload_attach(photo_list, block, count){
   is_full_attach();
-  for (var i = 0; i < count; i++) {
+  for (var i = 1; i < count; i++) {
     if (!block.querySelector(".select_photo" + i)){
       div = create_preview_photo("select_photo" + i,
                                   photo_list[i].querySelector("img").getAttribute('data-src'),
