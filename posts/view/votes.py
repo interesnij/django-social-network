@@ -7,6 +7,7 @@ from django.views import View
 from common.model.votes import PostVotes, PostCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
+from notifications.model.item import item_community_notification_handler, ItemCommunityNotification
 
 
 class PostUserLikeCreate(View):
@@ -223,7 +224,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
-            comment.notification_community_comment_like(request.user)
+            item_community_notification_handler(actor=request.user, recipient=None, community=community, post=comment.post, verb=ItemCommunityNotification.POST_COMMENT, comment=comment, key='social_update')
         likes = comment.likes_count()
         if likes:
             like_count = likes
