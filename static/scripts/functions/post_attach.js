@@ -73,7 +73,9 @@ function photo_post_upload_attach(photo_list, block, count){
       div = create_preview_photo("select_photo" + i+ 1,
                                   photo_list[i].querySelector("img").getAttribute('data-src'),
                                   photo_list[i].getAttribute("photo-uuid"));
+
       block.append(div);
+      block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
       add_file_attach();
       is_full_attach();
     }
