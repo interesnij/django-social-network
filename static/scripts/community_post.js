@@ -83,14 +83,14 @@ on('#ajax', 'click', '.c_replyParentComment', function() {
 on('#ajax', 'click', '.c_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/c_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_dislike(item, "/posts/votes/community_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/c_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
 });
@@ -98,7 +98,7 @@ on('#ajax', 'click', '.c_like2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_like(item, "/posts/votes/community_comment/" + comment_pk + "/" + pk + "/like/");
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
@@ -106,7 +106,7 @@ on('#ajax', 'click', '.c_dislike2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_dislike(item, "/posts/votes/community_comment/" + comment_pk + "/" + pk + "/dislike/");
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
