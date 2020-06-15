@@ -93,10 +93,6 @@ class Post(models.Model):
         comments_query.add(Q(is_deleted=False), Q.AND)
         return PostComment.objects.filter(comments_query)
 
-    def window_likes(self):
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
-        return likes[0:6]
-
     def get_fixed_for_user(self, user_id):
         try:
             item = Post.objects.get(creator__id=user_id,is_fixed=True)
@@ -138,6 +134,10 @@ class Post(models.Model):
     def dislikes_count(self):
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk")
         return dislikes.count()
+
+    def window_likes(self):
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        return likes[0:6]
 
     def window_dislikes(self):
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
