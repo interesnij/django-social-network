@@ -224,7 +224,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
-            item_community_notification_handler(actor=request.user, recipient=None, community=community, post=comment.post, verb=ItemCommunityNotification.POST_COMMENT, comment=comment, key='social_update')
+            item_community_notification_handler(actor=request.user, recipient=None, community=community, item=comment.post, verb=ItemCommunityNotification.POST_COMMENT, comment=comment, key='social_update')
         likes = comment.likes_count()
         if likes:
             like_count = likes
