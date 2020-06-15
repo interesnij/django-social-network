@@ -194,12 +194,12 @@ class PostCommunityDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             item.notification_community_dislike(request.user)
-        likes = item.likes.count()
+        likes = item.likes_count()
         if likes != 0:
             like_count = likes
         else:
             like_count = ""
-        dislikes = item.dislikes.count()
+        dislikes = item.dislikes_count()
         if dislikes != 0:
             dislike_count = dislikes
         else:

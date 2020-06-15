@@ -93,10 +93,6 @@ class Post(models.Model):
         comments_query.add(Q(is_deleted=False), Q.AND)
         return PostComment.objects.filter(comments_query)
 
-    def likes(self):
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
-
     def window_likes(self):
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)
         return likes[0:6]
@@ -127,9 +123,21 @@ class Post(models.Model):
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
 
+    def likes(self):
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        return likes
+
     def dislikes(self):
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
+
+    def likes_count(self):
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+        return likes.count()
+
+    def dislikes_count(self):
+        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+        return dislikes.count()
 
     def window_dislikes(self):
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
