@@ -981,7 +981,7 @@ class User(AbstractUser):
         return reactions_query
 
     def _make_get_votes_query_comment(self, comment):
-        reactions_query = Q(post_id=comment.pk)
+        reactions_query = Q(item_id=comment.pk)
         try:
             post_community = comment.post.community
         except:
