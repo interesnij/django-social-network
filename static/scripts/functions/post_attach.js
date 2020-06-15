@@ -66,6 +66,23 @@ function photo_post_attach(_this, block) {
   is_full_attach();
 }
 
+function photo_post_upload_attach(photo_list, block, count){
+  is_full_attach();
+  for (var i = 0; i < count; i++) {
+    if (!block.querySelector(".select_photo" + i){
+      div = create_preview_photo("select_photo" + i,
+                                  photo_list[i].querySelector("img").getAttribute('data-src'),
+                                  photo_list[i].getAttribute("photo-uuid"));
+      block.append(div);
+      add_file_attach();
+      is_full_attach();
+    }
+  }
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
+  }
+
+
 function video_post_attach(_this, block) {
   is_full_attach();
   counter = _this.getAttribute('video-counter');

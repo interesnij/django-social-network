@@ -65,9 +65,9 @@ function photo_comment_attach(_this, dropdown) {
   is_full_dropdown();
 }
 
-function photo_comment_upload_attach(response, dropdown){
+function photo_comment_upload_attach(photo_list, dropdown){
   is_full_dropdown();
-  photo_list = response.querySelectorAll(".u_photo_detail");
+
   img_block = dropdown.parentElement.previousElementSibling;
   if (img_block.querySelector(".select_photo1")){
     div = create_preview_photo("select_photo2", photo_list[0].querySelector("img").getAttribute('data-src'), photo_list[0].getAttribute("photo-uuid"))
