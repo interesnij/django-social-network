@@ -150,7 +150,7 @@ class PostCommunityLikeCreate(View):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        try:
+        try: 
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.LIKE:
                 likedislike.vote = PostVotes.LIKE
