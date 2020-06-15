@@ -215,11 +215,11 @@ class PostComment(models.Model):
         return dislikes
 
     def likes_count(self):
-        likes = PostVotes.objects.filter(item=self, vote__gt=0).values("pk")
+        likes = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
         return likes.count()
 
     def dislikes_count(self):
-        dislikes = PostVotes.objects.filter(item=self, vote__lt=0).values("pk")
+        dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
         return dislikes.count()
 
     def window_dislikes(self):
