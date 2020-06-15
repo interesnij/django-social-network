@@ -2,8 +2,8 @@
   display: flex; flex-wrap: wrap;
 }
 .attach_container div:nth-child(1),
-.attach_container div:nth-child(1),
-.attach_block div:nth-child(2),
+.attach_container div:nth-child(2),
+.attach_block div:nth-child(1),
 .attach_block div:nth-child(2){
   flex-basis: 50%;
 }
