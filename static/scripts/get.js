@@ -268,6 +268,7 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
+    console.log(photo_list);
 
     block = document.body.querySelector(".attach_block");
     block_divs = block.querySelectorAll("div");
