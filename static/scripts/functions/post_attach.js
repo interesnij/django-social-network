@@ -76,11 +76,11 @@ function photo_post_upload_attach(photo_list, block, count){
                                   photo_list[i].getAttribute("photo-uuid"));
 
       block.append(div);
-      block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
       add_file_attach();
       is_full_attach();
     }
   }
+  block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
   }

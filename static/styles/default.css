@@ -1,3 +1,10 @@
+.attach_container{
+  display: flex; flex-wrap: wrap;
+}
+.attach_container:nth-child(1),
+.attach_block:nth-child(1){
+  flex-basis: 21%;
+}
 
 .attach_toggle{
   border: 1px black solid;
@@ -9,7 +16,7 @@
   padding-right: 5px; padding-left: 5px;
   flex-grow: 1;
   max-width: 100%;
-  flex-basis: 50%;
+  flex-basis: 20%;
   position: relative;
 }
 .photo_3, .video_3, .good_3, .article_3 {
@@ -17,7 +24,7 @@
   padding-right: 5px; padding-left: 5px;
   flex-grow: 1;
   max-width: 100%;
-  flex-basis: 33.3%;
+  flex-basis: 20%;
   position: relative;
 }
 .music{
