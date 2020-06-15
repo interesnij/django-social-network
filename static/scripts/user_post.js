@@ -107,24 +107,6 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.send();
 });
 
-
-function send_change(span, _link, new_class, html){
-  parent = span.parentElement;
-  item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', _link + uuid + "/", true );
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    new_span = document.createElement("span");
-    new_span.classList.add(new_class, "dropdown-item");
-    new_span.innerHTML = html;
-    parent.innerHTML = "";
-    parent.append(new_span);
-  }};
-  link.send( null );
-}
-
 on('#ajax', 'click', '.item_user_fixed', function() {
   send_change(this, "/posts/user/fixed/", "item_user_unfixed", "Открепить")
 })
