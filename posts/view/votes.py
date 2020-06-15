@@ -30,14 +30,14 @@ class PostUserLikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             item.notification_user_like(request.user)
-        likes = item.get_likes_for_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = item.likes_count()
+        if likes != 0:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = item.get_dislikes_for_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = item.dislikes_count()
+        if dislikes != 0:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -64,14 +64,14 @@ class PostCommentUserLikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             comment.notification_user_comment_like(request.user)
-        likes = comment.get_likes_for_comment_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = comment.likes_count()
+        if likes != 0:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = comment.get_dislikes_for_comment_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = comment.dislikes_count()
+        if dislikes != 0:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -98,14 +98,14 @@ class PostUserDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             item.notification_user_dislike(request.user)
-        likes = item.get_likes_for_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = item.likes_count()
+        if likes != 0:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = item.get_dislikes_for_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = item.dislikes_count()
+        if dislikes != 0:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -132,14 +132,14 @@ class PostCommentUserDislikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             comment.notification_user_comment_dislike(request.user)
-        likes = comment.get_likes_for_comment_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = comment.likes_count()
+        if likes:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = comment.get_dislikes_for_comment_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = comment.dislikes_count()
+        if dislikes != 0:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -163,14 +163,14 @@ class PostCommunityLikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             item.notification_community_like(request.user)
-        likes = item.get_likes_for_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = item.likes_count()
+        if likes:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = item.get_dislikes_for_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = item.dislikes_count()
+        if dislikes:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -224,14 +224,14 @@ class PostCommentCommunityLikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             comment.notification_community_comment_like(request.user)
-        likes = comment.get_likes_for_comment_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = comment.likes_count()
+        if likes:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = comment.get_dislikes_for_comment_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = comment.dislikes_count()
+        if dislikes:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
@@ -255,14 +255,14 @@ class PostCommentCommunityDislikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             comment.notification_community_comment_dislike(request.user)
-        likes = comment.get_likes_for_comment_item(request.user)
-        if likes.count() != 0:
-            like_count = likes.count()
+        likes = comment.likes_count()
+        if likes:
+            like_count = likes
         else:
             like_count = ""
-        dislikes = comment.get_dislikes_for_comment_item(request.user)
-        if dislikes.count() != 0:
-            dislike_count = dislikes.count()
+        dislikes = comment.dislikes_count()
+        if dislikes:
+            dislike_count = dislikes
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")

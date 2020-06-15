@@ -25,13 +25,13 @@ class PostUserLikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.item.get_likes_for_item(request.user)[0:6]
+            self.likes = self.item.window_likes()
         elif self.user == request.user:
-            self.likes = self.item.get_likes_for_item(request.user)[0:6]
+            self.likes = self.item.window_likes()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.item.get_likes_for_item(request.user)[0:6]
+            self.likes = self.item.window_likes()
         return super(PostUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -52,13 +52,13 @@ class PostUserCommentLikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
+            self.likes = self.comment.window_likes()
         elif self.user == request.user:
-            self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
+            self.likes = self.comment.window_likes()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
+            self.likes = self.comment.window_likes()
         return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -79,13 +79,13 @@ class PostUserDislikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.item.get_dislikes_for_item(request.user)[0:6]
+            self.dislikes = self.item.window_dislikes()
         elif self.user == request.user:
-            self.dislikes = self.item.get_dislikes_for_item(request.user)[0:6]
+            self.dislikes = self.item.window_dislikes()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.item.get_dislikes_for_item(request.user)[0:6]
+            self.dislikes = self.item.window_dislikes()
         return super(PostUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -106,13 +106,13 @@ class PostUserCommentDislikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
+            self.dislikes = self.comment.window_dislikes()
         elif self.user == request.user:
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
+            self.dislikes = self.comment.window_dislikes()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
+            self.dislikes = self.comment.window_dislikes()
         return super(PostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -131,7 +131,7 @@ class PostCommunityLikeWindow(TemplateView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.item.get_likes_for_item(request.user)[0:6]
+        self.likes = self.item.window_likes()
         return super(PostCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -149,7 +149,7 @@ class PostCommunityDislikeWindow(TemplateView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.dislikes = self.item.get_dislikes_for_item(request.user)[0:6]
+        self.dislikes = self.item.window_dislikes()
         return super(PostCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -167,7 +167,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
+        self.likes = self.comment.window_likes()
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -185,7 +185,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
+        self.dislikes = self.comment.window_dislikes()
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -206,13 +206,13 @@ class AllPostUserLikeWindow(View):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            likes = item.get_likes_for_item(request.user)
+            likes = item.likes()
         elif user == request.user:
-            likes = item.get_likes_for_item(request.user)
+            likes = item.likes()
         elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
-            likes = item.get_likes_for_item(request.user)
+            likes = item.likes()
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
 
@@ -237,13 +237,13 @@ class AllPostUserDislikeWindow(View):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            dislikes = item.get_dislikes_for_item(request.user)
+            dislikes = item.dislikes()
         elif user == request.user:
-            dislikes = item.get_dislikes_for_item(request.user)
+            dislikes = item.dislikes()
         elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
-            dislikes = item.get_dislikes_for_item(request.user)
+            dislikes = item.dislikes()
         current_page = Paginator(dislikes, 15)
         page = request.GET.get('page')
         context['user'] = user
@@ -267,13 +267,13 @@ class AllPostUserCommentDislikeWindow(View):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            dislikes = comment.get_dislikes_for_comment_item(request.user)
+            dislikes = comment.dislikes()
         elif user == request.user:
-            dislikes = comment.get_dislikes_for_comment_item(request.user)
+            dislikes = comment.dislikes()
         elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
-            dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+            dislikes = self.comment.dislikes()
         current_page = Paginator(dislikes, 15)
         page = request.GET.get('page')
         context['user'] = user
@@ -297,13 +297,13 @@ class AllPostUserCommentLikeWindow(View):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            likes = comment.get_likes_for_comment_item(request.user)
+            likes = comment.dislikes()
         elif user == request.user:
-            likes = comment.get_likes_for_comment_item(request.user)
+            likes = comment.dislikes()
         elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
-            likes = comment.get_likes_for_comment_item(request.user)
+            likes = comment.dislikes()
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
         context['request_user'] = request.user
@@ -325,7 +325,7 @@ class AllPostCommunityLikeWindow(View):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        likes = item.get_likes_for_item(request.user)
+        likes = item.likes()
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
         context["community"]=community
@@ -347,7 +347,7 @@ class AllPostCommunityDislikeWindow(View):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        dislikes = item.get_dislikes_for_item(request.user)
+        dislikes = item.dislikes()
         current_page = Paginator(dislikes, 15)
         page = request.GET.get('page')
         context["community"]=community
@@ -369,7 +369,7 @@ class AllPostCommunityCommentLikeWindow(View):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        likes = comment.get_likes_for_comment_item(request.user)
+        likes = comment.likes()
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
         context["community"]=community
@@ -391,7 +391,7 @@ class AllPostCommunityCommentDislikeWindow(View):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        dislikes = self.comment.dislikes()
         current_page = Paginator(dislikes, 15)
         page = request.GET.get('page')
         context["community"]=community
