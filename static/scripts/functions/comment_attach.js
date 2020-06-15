@@ -93,6 +93,7 @@ function photo_comment_upload_attach(photo_list, dropdown){
     add_file_dropdown();
     is_full_dropdown();
 }
+img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
 }
 
 function video_comment_attach(_this, dropdown){
