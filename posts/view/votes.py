@@ -207,6 +207,7 @@ class PostCommunityDislikeCreate(View):
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
+
 class PostCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -224,7 +225,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
-            comment.notification_community_reply_like(request.user)
+            comment.notification_community_reply_like(request.user, community)
         likes = comment.likes_count()
         if likes:
             like_count = likes
@@ -255,7 +256,7 @@ class PostCommentCommunityDislikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
-            comment.notification_community_reply_dislike(request.user)
+            comment.notification_community_reply_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:
             like_count = likes

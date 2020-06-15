@@ -241,23 +241,17 @@ class PostComment(models.Model):
     def notification_user_comment_dislike(self, user):
         item_notification_handler(actor=user, recipient=self.commenter, verb=ItemNotification.DISLIKE_COMMENT, item=self.post, comment=self, key='social_update')
 
-    def notification_community_comment(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.post.community, item=self.post, verb=ItemCommunityNotification.POST_COMMENT, comment=self, key='social_update')
+    def notification_community_comment(self, user, community):
+        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.post, verb=ItemCommunityNotification.POST_COMMENT, comment=self, key='social_update')
 
-    def notification_community_reply_comment(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.parent_comment.post.community, item=self.parent_comment.post, verb=ItemCommunityNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+    def notification_community_reply_comment(self, user, community):
+        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.parent_comment.post, verb=ItemCommunityNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
 
-    def notification_community_comment_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.post.community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.post, key='social_update')
+    def notification_community_comment_like(self, user, community):
+        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.post, key='social_update')
 
-    def notification_community_comment_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.post.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.post, key='social_update')
-
-    def notification_community_reply_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.parent_comment.post.community, verb=ItemCommunityNotification.LIKE_REPLY_COMMENT, comment=self, item=self.post, key='social_update')
-
-    def notification_community_reply_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.parent_comment.post.community, verb=ItemCommunityNotification.DISLIKE_REPLY_COMMENT, comment=self, item=self.post, key='social_update')
+    def notification_community_comment_dislike(self, user, community):
+        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.post, key='social_update')
 
     @classmethod
     def create_comment(cls, commenter, post, parent_comment, text):
