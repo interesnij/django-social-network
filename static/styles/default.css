@@ -1,8 +1,8 @@
 .attach_container{
   display: flex; flex-wrap: wrap;
 }
-.attach_container:nth-child(1),
-.attach_block:nth-child(1){
+.attach_container:first-child,
+.attach_block:first-child{
   flex-basis: 21%;
 }
 
