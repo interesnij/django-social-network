@@ -3,6 +3,7 @@
 {% load thumbnail liked_user %}
 {% block content %}
 
+<div class="container main-container">
 <div class="row">
         <div class="col-12 col-md-8">
           <br>
@@ -125,15 +126,8 @@
           {% endif %}
     </div>
 </div>
-
+</div>
 <script>
- on('#ajax', 'click', 'my_manage_communities', function() {
-    if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
-      var tab = document.querySelector("#tabhome223-tab");
-      tab.classList.remove('my_manage_communities');
-      list_load(document.getElementById("load_manage_cat_list"),'/users/detail/manage_communities/{{ user.uuid }}')
-    }
-    });
 
     var page = 2;
     var loaded = false;
