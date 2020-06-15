@@ -41,7 +41,7 @@
                               </figure>
                               <div class="media-body">
                                   <h6 class="tag_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
-                                  <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
+                                  <a class="small">{{ object.tag }}</a>
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
                                         {% if not request.user|is_track_exists:object.id %}
@@ -77,7 +77,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="{% url 'tags_music' pk=tag.symbol.pk %}" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
+                        <a href="{% url 'tags_music' pk=tag.symbol.pk %}" class="ajax">Теги буквы {{ tag.symbol.name }}</a>
                       </h5>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="{% url 'all_music' %}" class="ajax">Вернуться в каталог музыки</a>
+                        <a href="{% url 'all_music' %}" class="ajax">Каталог</a>
                       </h5>
                     </div>
                 </div>
