@@ -13,6 +13,16 @@ class UserPhotosList(ListView):
 		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
+class UserPhotosCommentList(ListView):
+	template_name = 'load/photos_comments_load.html'
+	paginate_by = 30
+
+	def get(self,request,*args,**kwargs):
+		return super(UserPhotosCommentList,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		photos_list = self.request.user.get_photos().order_by('-created')
+		return photos_list
 
 class UserVideosList(ListView):
 	template_name = 'load/videos_load.html'

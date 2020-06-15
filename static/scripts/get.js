@@ -198,7 +198,7 @@ on('#ajax', 'click', '.select_photo', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_load/', loader)
+  open_fullscreen('/users/load/img_comment_load/', loader)
 });
 on('#ajax', 'click', '.select_video', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
@@ -234,9 +234,9 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
 })
 
 
-on('#ajax', 'change', '#photo_add_attach', function() {
+on('#ajax', 'change', '#photo_add_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_photos"));
+  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
 
