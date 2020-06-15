@@ -166,7 +166,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_posts_for_community_with_name(request.user,self.community.name)
         self.likes = self.comment.get_likes_for_comment_item(request.user)[0:6]
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -184,7 +184,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_posts_for_community_with_name(request.user,self.community.name)
         self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
