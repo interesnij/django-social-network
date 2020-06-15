@@ -3,7 +3,7 @@
 }
 .attach_container div:first-child,
 .attach_block div:first-child{
-  flex-basis: 100%;
+  flex-basis: 50%;
 }
 
 .attach_toggle{
