@@ -1,6 +1,7 @@
 {% load humanize liked_user thumbnail %}
 
 <div class="media comment">
+  <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
     <figure>
         {% if comment.commenter.get_avatar %}
           <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:40px;" alt="User Image" class="user-image">
@@ -8,9 +9,13 @@
           <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         {% endif %}
     </figure>
+  </a>
     <div class="media-body">
-        <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
-            <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
+        <h5 class="mt-0">
+          <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
+            <span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
+          </a>
+          <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
         <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
