@@ -225,7 +225,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
-            comment.notification_community_reply_like(request.user, community)
+            comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
         if likes:
             like_count = likes
@@ -256,7 +256,7 @@ class PostCommentCommunityDislikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
-            comment.notification_community_reply_dislike(request.user, community)
+            comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:
             like_count = likes
