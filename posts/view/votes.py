@@ -146,11 +146,11 @@ class PostCommentUserDislikeCreate(View):
 
 
 class PostCommunityLikeCreate(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        try: 
+        try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.LIKE:
                 likedislike.vote = PostVotes.LIKE
@@ -177,7 +177,7 @@ class PostCommunityLikeCreate(View):
 
 
 class PostCommunityDislikeCreate(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -207,7 +207,7 @@ class PostCommunityDislikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 class PostCommentCommunityLikeCreate(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -238,7 +238,7 @@ class PostCommentCommunityLikeCreate(View):
 
 
 class PostCommentCommunityDislikeCreate(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
