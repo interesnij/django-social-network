@@ -209,7 +209,7 @@ class PostCommunityDislikeCreate(View):
 class PostCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
@@ -240,7 +240,7 @@ class PostCommentCommunityLikeCreate(View):
 class PostCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
