@@ -167,7 +167,7 @@ on('#ajax', 'click', '.comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_load/', loader)
+  open_fullscreen('/users/load/img_comment_load/', loader)
 });
 on('#ajax', 'click', '.comment_video', function() {
   this.classList.add("current_file_dropdown");
@@ -198,7 +198,7 @@ on('#ajax', 'click', '.select_photo', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_comment_load/', loader)
+  open_fullscreen('/users/load/img_load/', loader)
 });
 on('#ajax', 'click', '.select_video', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
