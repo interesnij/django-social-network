@@ -17,20 +17,21 @@
   <body class="fixed-header">
     <div class="wrapper" id="video_id_saver" data-video="first_player">
         {% include "base_block/navbar.html" %}
+        <div class="row">
           <div class="col-md-1 col-lg-2 col-xl-2"></div>
-					<div class="">
- 					    {% include 'base_block/desctop_nav.html' %}
- 					</div>
-            <div class="col-md-8 col-lg-7 col-xl-6" id="ajax" style="padding-right:0px;padding-left:0px;">
-              <span id="reload_block">
+
+ 					{% include 'base_block/desctop_nav.html' %}
+
+          <div class="col-md-8 col-lg-7 col-xl-6" id="ajax" style="padding-right:0px;padding-left:0px;">
+            <span id="reload_block">
           	   {% block content %}
           	   {% endblock %}
 
                {% include "base_block/fullscreens.html" %}
-              </span>
-					   </div>
+            </span>
+					 </div>
 					<div class="col-md-0 col-lg-1 col-xl-2"></div>
-    </div>
+        </div>
     {% include "base_scripts.html" %}
   </body>
 </html>
