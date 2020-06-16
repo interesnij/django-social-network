@@ -111,7 +111,9 @@ on('#ajax', 'click', '.c_dislike2', function() {
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-
+on('body', 'click', '#community_avarat_btn', function(event) {
+  this.previousElementSibling.click();
+})
 on('#ajax', 'change', '#community_avatar_upload', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   form_data = new FormData(document.body.querySelector("#add_community_avarat"));

@@ -43,7 +43,7 @@
         </div>
         <div class="col-12 col-md-12 col-lg-4" style="margin-left: -7px;">
           <div class="card">
-          <figure style="padding-left:10px;padding-right:10px">
+          <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
               {% if community.get_avatar %}
               <img data-src="{{ community.get_avatar }}" class="lazyload" style="border-radius: 50px;width:100%" alt="image">
               {% else %}
@@ -55,7 +55,7 @@
           <form id="add_community_avarat" method="post">
             {% csrf_token %}
             <input type="file" id="community_avatar_upload" name="file" style="display:none">
-            <span id="community_avarat_btn">Загрузить аватар</span>
+            <span id="community_avarat_btn" style="cursor:pointer">Загрузить аватар</span>
           </form>
 
           <button type="button" class="btn btn-sm btn-secondary menu_drop" style="margin: 3px;">
