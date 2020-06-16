@@ -485,7 +485,7 @@ class User(AbstractUser):
         from gallery.models import Photo
         from moderation.models import ModeratedObject
 
-        photos_query = Q(creator_id=self.id, is_deleted=False, album_2__title="Фото со страницы", album_2__is_generic=True, album_2__community=None)
+        photos_query = Q(creator_id=self.id, is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)

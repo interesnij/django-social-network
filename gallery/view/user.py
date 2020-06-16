@@ -67,7 +67,7 @@ class UserAddAvatar(TemplateView):
         self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid() and self.user == request.user:
             avatar=self.form.save(commit=False)
-            new_avatar=avatar.create_avatar(creator=request.user, community=None, file=avatar.file, is_public=True, album_2=self.album )
+            new_avatar=avatar.create_avatar(creator=request.user, community=None, file=avatar.file, is_public=True, album=self.album )
             if request.is_ajax():
                 return HttpResponse ('!')
         else:

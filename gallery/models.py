@@ -37,11 +37,8 @@ class Album(models.Model):
     def get_cover_photo_for_avatars(self):
         if self.cover_photo:
             return self.cover_photo
-        elif Photo.objects.filter(album_2=self, is_deleted=False).exists():
-            photo = Photo.objects.filter(album_2=self, is_deleted=False).last()
-            return photo
         else:
-            return False
+            return Photo.objects.filter(album=self, is_generic=True, title="Фото со страницы").last()
     def get_cover_photo(self):
         if self.cover_photo:
             return self.cover_photo
@@ -52,10 +49,7 @@ class Album(models.Model):
             return False
 
     def count_photo(self):
-        if self.title == "Фото со страницы":
-            return self.album_2.filter(is_deleted=False).count()
-        else:
-            return self.album_1.filter(is_deleted=False).count()
+        return self.album.filter(is_deleted=False).count()
 
     def album_is_generic(self):
         if self.is_generic:
@@ -68,14 +62,13 @@ class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
-    album = models.ForeignKey(Album, related_name="album_1", blank=True, null=True, on_delete=models.CASCADE)
-    album_2 = models.ForeignKey(Album, related_name="album_2", blank=True, null=True, on_delete=models.CASCADE)
+    album = models.ManyToManyField(Album, related_name="album", blank=True)
     file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
     item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
@@ -86,13 +79,13 @@ class Photo(models.Model):
         verbose_name_plural = 'Фото'
 
     @classmethod
-    def create_photo(cls, creator, album_2=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
-        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description, item=item, )
+    def create_photo(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
+        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description, item=item, )
         return photo
 
     @classmethod
-    def create_avatar(cls, creator, album_2=None, file=None, community=None, created=None, is_public=None, description=None):
-        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description,)
+    def create_avatar(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None):
+        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description,)
         return photo
 
     def notification_user_repost(self, user):

@@ -101,8 +101,7 @@ class UserAddAvatarPhoto(View):
         except:
             album = Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
         if user == request.user:
-            photo.album_2 = album
-            photo.save(update_fields=['album_2'])
+            photo.save(update_fields=['album'])
         return HttpResponse("!")
 
 class UserRemoveAvatarPhoto(View):
@@ -111,7 +110,7 @@ class UserRemoveAvatarPhoto(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if user == request.user:
-            photo.album_2 = None
+            photo.album = None
             try:
                 album = Album.objects.get(creator=user, community=None, title="Сохраненные фото",  is_generic=True,)
             except:
