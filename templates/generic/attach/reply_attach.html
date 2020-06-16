@@ -6,7 +6,7 @@
   {% endfor %}
   {% for object in reply.comment_video.all %}
   <div class="col-md-6" album-pk="{{ object.album.pk }}">
-      <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="video">
+      <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="img">
       <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
   </div>
   {% endfor %}
@@ -17,7 +17,7 @@
       {{ object.title }}
     </span>
     {% if object.image %}
-      <img class="image_fit_small lazyload" style="width:100%" data-src="{{ object.image.url }}" alt="">
+      <img class="image_fit_small lazyload" style="width:100%" data-src="{{ object.image.url }}" alt="img">
     {% else %}
       <svg class="image_fit_small svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}
@@ -33,7 +33,7 @@
     <div class="text-center u_article_detail" style="cursor:pointer">
       <div class="align-items-center">
           {% if object.article.g_image %}
-            <img class="lazyload image_fit" data-src="{{ object.article.g_image.url }}" alt="">
+            <img class="lazyload image_fit" data-src="{{ object.article.g_image.url }}" alt="img">
           {% else %}
             <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
           {% endif %}
@@ -47,7 +47,7 @@
         <figure style="cursor:pointer">
           <a class="music_list_item">
             {% if object.artwork_url %}
-              <img style="width:30px;heigth:auto" src="{{ object.artwork_url }}" />
+              <img style="width:30px;heigth:auto" src="{{ object.artwork_url }}" alt="img" />
             {% else %}
               <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
             {% endif %}
