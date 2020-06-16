@@ -63,8 +63,3 @@ on('#ajax', 'click', '.u_item_comments', function() {
   list_load(parent.querySelector(".u_load_comments"), url);
   this.classList.toggle("comments_open");
 });
-on('#ajax', 'click', '.comments_open', function() {
-  parent = this.parentElement.parentElement.nextElementSibling;
-  parent.innerHTML="";
-  this.classList.toggle("comments_open");  this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
-});
