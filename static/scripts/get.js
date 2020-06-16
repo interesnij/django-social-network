@@ -5,9 +5,9 @@ on('body', 'click', '.clean_panel', function(event) {
   } else if (document.querySelector(".article_fullscreen").style.display == "block") {
     document.querySelector(".article_fullscreen").style.display = "none";
     document.getElementById("article_loader").innerHTML=""
-  } else if (document.querySelector(".open_0").style.display == "block") {
-    document.querySelector(".open_0").style.display = "none";
-    document.querySelector(".open_0").querySelector(".loader_0").innerHTML=""
+  } else if (document.querySelector(".item_fullscreen").style.display == "block") {
+    document.querySelector(".item_fullscreen").style.display = "none";
+    document.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
   }
 })
 
