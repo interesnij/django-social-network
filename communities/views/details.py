@@ -6,6 +6,7 @@ from common.checkers import check_can_get_posts_for_community_with_name
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
+from easy_thumbnails.files import get_thumbnailer
 
 
 class PostsCommunity(ListView):
@@ -62,6 +63,7 @@ class CommunityDetail(TemplateView):
 		from stst.models import CommunityNumbers
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		thumb_url = get_thumbnailer(self.community.get_avatar.file)['avatar'].url
 		try:
 			self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
 		except:
@@ -69,7 +71,7 @@ class CommunityDetail(TemplateView):
 		self.template_name = self.community.get_template(folder="c_detail/", template="community.html", request=request)
 
 		if request.user.is_authenticated:
-			MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+			MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 			if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 				CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
 			else:
@@ -77,8 +79,9 @@ class CommunityDetail(TemplateView):
 		return super(CommunityDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityDetail,self).get_context_data(**kwargs)
-		context["membersheeps"]=self.community.get_community_with_name_members(self.community.name)[0:6]
-		context["community"]=self.community
-		context["common_friends"]=self.common_friends
+		context = super(CommunityDetail,self).get_context_data(**kwargs)
+		context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
+		context["community"] = self.community
+		context["common_friends"] = self.common_friends
+		context["avatar"] = get_thumbnailer(self.community.get_avatar.file)['avatar'].url
 		return context
