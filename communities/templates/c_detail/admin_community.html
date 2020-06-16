@@ -16,57 +16,57 @@
 <div class="container main-container mt-3 pk_saver" community-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8" style="margin-right: -7px;">
-          <div class="container main-container card" style="padding: 15px;">
-                  <h3 class="mb-2">{{ community.name }}</h3>
-                  <span>Статус</span>
-                  <br><br>
-                  <ul class="list-group list-group-flush w-100">
-                      <li class="list-group-item px-0">
-                          <div class="media experience">
-                              <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                  <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24">
-                                      <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
-                                      <path d="M0 0h24v24H0z" fill="none" /></svg>
-                              </div>
-                              <div class="media-body">
-                                  <h6 class="my-0 content-color-primary">Описание</h6>
-                                  <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
-                              </div>
-                          </div>
-                      </li>
-          </div>
-          <br>
+            <div class="container main-container card" style="padding: 15px;">
+                <h3 class="mb-2">{{ community.name }}</h3>
+                <span>Статус</span>
+                <br><br>
+                <ul class="list-group list-group-flush w-100">
+                    <li class="list-group-item px-0">
+                        <div class="media experience">
+                            <div class="icon-circle icon-40 bg-light-secondary mr-3">
+                                <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+                                    <path d="M0 0h24v24H0z" fill="none" /></svg>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="my-0 content-color-primary">Описание</h6>
+                                <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
+                            </div>
+                        </div>
+                    </li>
+            </div>
+            <br>
             {% include 'detail_sections/new_post.html' %}
 
             <div id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 
         </div>
         <div class="col-12 col-md-12 col-lg-4" style="margin-left: -7px;">
-          <div class="card">
-          <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
-              {% if community.get_avatar %}
-              <img data-src="{{ community.get_avatar }}" class="lazyload" style="width:100%" alt="image">
-              {% else %}
-              <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
-                  <path d="M0 0h24v24H0z" fill="none" />
-                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
-              {% endif %}
-          </figure>
-          <form id="add_community_avatar" method="post">
-            {% csrf_token %}
-            <input type="file" id="community_avatar_upload" name="file" style="display:none">
-            <span id="community_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
-          </form>
+            <div class="card">
+                <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
+                    {% if community.get_avatar %}
+                    <img data-src="{{ community.get_avatar }}" class="lazyload" style="width:100%" alt="image">
+                    {% else %}
+                    <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
+                    {% endif %}
+                </figure>
+                <form id="add_community_avatar" method="post">
+                    {% csrf_token %}
+                    <input type="file" id="community_avatar_upload" name="file" style="display:none">
+                    <span id="community_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
+                </form>
 
-          <button type="button" class="btn btn-sm btn-secondary menu_drop" style="margin: 3px;">
-                Вы подписаны
-          </button>
-          <div class="dropdown-menu">
-                <span style="cursor:pointer" class="dropdown-item member_delete">Отписаться</span>
-                <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
-          </div>
-          </div>
-          <br>
+                <button type="button" class="btn btn-sm btn-secondary menu_drop" style="margin: 3px;">
+                    Вы подписаны
+                </button>
+                <div class="dropdown-menu">
+                    <span style="cursor:pointer" class="dropdown-item member_delete">Отписаться</span>
+                    <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
+                </div>
+            </div>
+            <br>
             {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
             {% endif %}
