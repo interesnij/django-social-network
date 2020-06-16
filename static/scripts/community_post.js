@@ -126,7 +126,8 @@ on('#ajax', 'change', '#community_avatar_upload', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     document.body.querySelector(".avatar_figure").innerHTML = "";
-    document.body.querySelector(".avatar_figure").append(response);
+    img = response.querySelector("img");
+    document.body.querySelector(".avatar_figure").append(img);
     }
   }
   link_.send(form_data);
