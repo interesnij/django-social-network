@@ -223,6 +223,11 @@ transform: translateX(-50%) translateY(-50%) scale(1.2);
   height: 200px;
   width:100%
 }
+.image_fit_70{
+  object-fit: cover;
+  height: 70px;
+  width:100%
+}
 .image_fit_small{
   object-fit: cover;
   height: 120px;
