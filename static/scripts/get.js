@@ -8,6 +8,18 @@ on('body', 'click', '.clean_panel', function(event) {
   } else if (document.querySelector(".item_fullscreen").style.display == "block") {
     document.querySelector(".item_fullscreen").style.display = "none";
     document.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.querySelector(".good_fullscreen").style.display == "block") {
+    document.querySelector(".good_fullscreen").style.display = "none";
+    document.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.querySelector(".article_fullscreen").style.display == "block") {
+    document.querySelector(".article_fullscreen").style.display = "none";
+    document.querySelector(".article_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.querySelector(".votes_fullscreen").style.display == "block") {
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.querySelector(".create_fullscreen").style.display == "block") {
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.querySelector(".create_fullscreen").querySelector(".loader_0").innerHTML=""
   }
 })
 
