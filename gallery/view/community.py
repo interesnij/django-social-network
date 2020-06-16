@@ -26,7 +26,7 @@ class CommunityAddAvatar(View):
                 _album = Album.objects.get(creator=request.user, is_generic=True, community=community, title="Фото со страницы")
             except:
                 _album = Album.objects.create(creator=request.user, is_generic=True, community=community, title="Фото со страницы", description="Фото со страницы сообщества")
-            photo = Photo.objects.create(file=p, creator=request.user, community=community)
+            photo = Photo.objects.create(file=photo_input, creator=request.user, community=community)
             _album.album.add(photo)
             return render_to_response('photo_community/admin_photo.html',{'object': photo, 'community': community, 'request': request})
         else:
