@@ -274,16 +274,16 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     block_divs = block.querySelectorAll("div");
     block_divs_length = block_divs.length;
     if (!block_divs.length){ count = 10 }
-    else if (!block_divs.length == 1){ count = [2,3,4,5,6,7,8,9,10] }
-    else if (!block_divs.length == 2){ count = [3,4,5,6,7,8,9,10] }
-    else if (!block_divs.length == 3){ count = [4,5,6,7,8,9,10] }
-    else if (!block_divs.length == 4){ count = [5,6,7,8,9,10] }
-    else if (!block_divs.length == 5){ count = [6,7,8,9,10] }
-    else if (!block_divs.length == 6){ count = [7,8,9,10] }
-    else if (!block_divs.length == 7){ count = [8,9,10] }
-    else if (!block_divs.length == 8){ count = [9,10] }
-    else if (!block_divs.length == 9){ count = [10] }
-    else if (!block_divs.length == 10){ return }
+    else if (block_divs.length == 1){ count = [2,3,4,5,6,7,8,9,10] }
+    else if (block_divs.length == 2){ count = [3,4,5,6,7,8,9,10] }
+    else if (block_divs.length == 3){ count = [4,5,6,7,8,9,10] }
+    else if (block_divs.length == 4){ count = [5,6,7,8,9,10] }
+    else if (block_divs.length == 5){ count = [6,7,8,9,10] }
+    else if (block_divs.length == 6){ count = [7,8,9,10] }
+    else if (block_divs.length == 7){ count = [8,9,10] }
+    else if (block_divs.length == 8){ count = [9,10] }
+    else if (block_divs.length == 9){ count = [10] }
+    else if (block_divs.length == 10){ return }
 
     photo_post_upload_attach(photo_list, block, count);
     console.log(block_divs);
