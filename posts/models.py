@@ -227,7 +227,7 @@ class PostComment(models.Model):
         return dislikes[0:6]
 
     def __str__(self):
-        return str(self.item)
+        return self.commenter.get_full_name()
 
     def notification_user_comment(self, user):
         item_notification_handler(user, self.commenter, verb=ItemNotification.POST_COMMENT, comment=self, item=self.post, key='social_update')
