@@ -273,7 +273,7 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     block = document.body.querySelector(".attach_block");
     block_divs = block.querySelectorAll("div");
     block_divs_length = block_divs.length;
-    if (!block_divs.length){ count = 10 }
+    if (!block_divs.length){ count = [1,2,3,4,5,6,7,8,9,10,] }
     else if (block_divs.length == 1){ count = [2,3,4,5,6,7,8,9,10,] }
     else if (block_divs.length == 2){ count = [3,4,5,6,7,8,9,10,] }
     else if (block_divs.length == 3){ count = [4,5,6,7,8,9,10,] }
@@ -285,7 +285,7 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     else if (block_divs.length == 9){ count = [10,] }
     else if (block_divs.length == 10){ return }
 
-    photo_post_upload_attach(photo_list, block, count);
+    photo_post_upload_attach(photo_list, block, count, block_divs_length);
     console.log(block_divs);
     console.log(block_divs_length);
     console.log(count);
