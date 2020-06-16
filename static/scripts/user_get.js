@@ -1,6 +1,6 @@
 on('#ajax', 'click', '.avatar_detail', function() {
   var uuid, pk, loader;
-  pk = this.getAttribute('photo-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('photo-pk');
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
