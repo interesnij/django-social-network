@@ -65,10 +65,10 @@ class UserAddAvatar(View):
         if user == request.user:
             photo_input = request.FILES.get('file')
             try:
-                _album = Album.objects.get(creator=user, is_generic=True, title="Фото со страницы")
+                _album = Album.objects.get(creator=user, is_generic=True, title="Фото со страницы", community=None)
             except:
                 _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
-            photo = Photo.objects.create(file=p, creator=user)
+            photo = Photo.objects.create(file=photo_input, creator=user)
             _album.album.add(photo)
             return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:

@@ -176,3 +176,25 @@ on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
   get_image_priview(this, img);
 });
+
+on('body', 'click', '#user_avatar_btn', function(event) {
+  this.previousElementSibling.click();
+})
+on('#ajax', 'change', '#user_avatar_upload', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_community_avatar"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_avatar/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    document.body.querySelector(".avatar_figure").innerHTML = "";
+    img = response.querySelector("img");
+    document.body.querySelector(".avatar_figure").append(img);
+    }
+  }
+  link_.send(form_data);
+})
