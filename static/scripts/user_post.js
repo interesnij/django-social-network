@@ -182,7 +182,7 @@ on('body', 'click', '#user_avatar_btn', function(event) {
 })
 on('#ajax', 'change', '#user_avatar_upload', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_community_avatar"));
+  form_data = new FormData(document.body.querySelector("#add_user_avatar"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/user/add_avatar/" + pk + "/", true );
 
