@@ -68,7 +68,7 @@ function photo_post_attach(_this, block) {
 
 function photo_post_upload_attach(photo_list, block, block_divs_length){
   is_full_attach();
-  for (var i = 0; i < block_divs_length; i++){ 
+  for (var i = 0; i < block_divs_length; i++){
     if (!block.querySelector(".select_photo1")){
       div = create_preview_photo("select_photo1",photo_list[i].querySelector("img").getAttribute('data-src'),photo_list[i].getAttribute("photo-uuid"));add_file_attach();block.append(div);
     } else if (!block.querySelector(".select_photo2")){

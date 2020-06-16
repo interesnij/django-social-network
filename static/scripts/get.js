@@ -246,9 +246,10 @@ on('#ajax', 'change', '#photo_add_comment_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
+    block_divs_length = photo_list.length;
 
     dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    photo_comment_upload_attach(photo_list, dropdown);
+    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
@@ -268,14 +269,12 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
-    console.log(photo_list);
 
     block = document.body.querySelector(".attach_block");
     block_divs = block.querySelectorAll("div");
     block_divs_length = photo_list.length;
 
     photo_post_upload_attach(photo_list, block, block_divs_length);
-    console.log(block_divs_length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
