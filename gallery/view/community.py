@@ -20,7 +20,7 @@ class CommunityAddAvatar(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if user == request.user:
+        if request.user.is_administrator_of_community_with_name(community.name):
             photo_input = request.FILES.get('file')
             try:
                 _album = Album.objects.get(creator=request.user, is_generic=True, community=community, title="Фото со страницы")
