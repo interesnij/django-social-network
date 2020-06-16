@@ -70,7 +70,7 @@ function photo_comment_upload_attach(photo_list, dropdown, block_divs_length){
 
   img_block = dropdown.parentElement.previousElementSibling;
   for (var i = 0; i < block_divs_length; i++){
-    if (!img_block.querySelector(".select_photo1"){
+    if (!img_block.querySelector(".select_photo1")){
       div = create_preview_photo("select_photo1", photo_list[i].querySelector("img").getAttribute('data-src'), photo_list[i].getAttribute("photo-uuid"))
     }
     else if(!img_block.querySelector(".select_photo2")){
