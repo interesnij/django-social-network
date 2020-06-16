@@ -20,15 +20,7 @@
               <div style="display: flex;">
                   <h3 class="mb-2">{{ community.name }}</h3>
                   <span style="position: absolute; top: 45px; left: 92px;">Статус</span>
-                  <div style="margin-left: auto; position: relative;margin-top: 15px;">
-                      <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                          Вы подписаны
-                      </button>
-                      <div class="dropdown-menu" style="margin-top: -11px;">
-                          <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
-                          <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
-                      </div>
-                  </div>
+
                   <ul class="list-group list-group-flush w-100">
                       <li class="list-group-item px-0">
                           <div class="media experience">
@@ -54,7 +46,8 @@
 
         </div>
         <div class="col-12 col-md-12 col-lg-4" style="margin-left: -7px;">
-          <figure style="margin-right:15px">
+          <div class="card">
+          <figure>
               {% if community.get_avatar %}
               <img data-src="{{ community.get_avatar }}" class="lazyload" style="border-radius: 50px;width:100%" alt="image">
               {% else %}
@@ -63,6 +56,14 @@
                   <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
               {% endif %}
           </figure>
+          <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                Вы подписаны
+          </button>
+          <div class="dropdown-menu" style="margin-top: -11px;">
+                <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
+                <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
+          </div>
+          </div>
             {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
             {% endif %}
