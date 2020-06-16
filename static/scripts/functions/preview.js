@@ -60,7 +60,7 @@ function create_preview_video(div_class, img_src, pk, counter){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
-  $icon_div = document.createElement("div");
+  $icon_div = document.createElement("span");
   $img.classList.add("image_fit");
   $img.src = img_src;
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
@@ -77,7 +77,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $input = document.createElement("span");
   $img = document.createElement("img");
   $figure = document.createElement("figure");
-  $media = document.createElement("div");
+  $media = document.createElement("span");
 
   media_body = _this.querySelector(".media-body");
 
