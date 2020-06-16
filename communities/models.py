@@ -223,7 +223,7 @@ class Community(models.Model):
     def get_avatar_photos(self):
         from gallery.models import Photo
 
-        photos_query = Q(is_deleted=False, community=self, album_2__title="Фото со страницы", album_2__is_generic=True)
+        photos_query = Q(is_deleted=False, album_2__title="Фото со страницы", album_2__is_generic=True, album_2__community=self)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)
