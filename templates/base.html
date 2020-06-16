@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/{{ request.user.color_settings.color }}.css" />
-    
+
     <link rel="stylesheet" href="{% static 'styles/video.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
 
@@ -19,7 +19,7 @@
     <div class="wrapper" id="video_id_saver" data-video="first_player">
         {% include "base_block/navbar.html" %}
         <div class="row">
-          <div class="col-md-1 col-lg-2 col-xl-2"></div>
+          <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
 
  					{% include 'base_block/desctop_nav.html' %}
 
@@ -31,7 +31,7 @@
                {% include "base_block/fullscreens.html" %}
             </span>
 					 </div>
-					<div class="col-md-0 col-lg-1 col-xl-2"></div>
+					<div class="col-md-0 col-lg-1 col-xl-2 clean_panel"></div>
         </div>
     {% include "base_scripts.html" %}
   </body>

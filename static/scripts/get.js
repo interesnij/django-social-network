@@ -1,3 +1,16 @@
+on('body', 'click', '.clean_panel', function(event) {
+  if (document.querySelector(".photo_fullscreen").style.display == "block") {
+    document.querySelector(".photo_fullscreen").style.display = "none";
+    document.getElementById("photo_loader").innerHTML=""
+  } else if (document.querySelector(".article_fullscreen").style.display == "block") {
+    document.querySelector(".article_fullscreen").style.display = "none";
+    document.getElementById("article_loader").innerHTML=""
+  } else if (document.querySelector(".open_0").style.display == "block") {
+    document.querySelector(".open_0").style.display = "none";
+    document.querySelector(".open_0").querySelector(".loader_0").innerHTML=""
+  }
+})
+
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
 on('body', 'click', '#add_multi_comments_photos', function(event) {
