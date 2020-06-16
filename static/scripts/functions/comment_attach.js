@@ -76,6 +76,7 @@ function photo_comment_upload_attach(photo_list, dropdown, block_divs_length){
     else if(!img_block.querySelector(".select_photo2")){
       div = create_preview_photo("select_photo2", photo_list[i].querySelector("img").getAttribute('data-src'), photo_list[i].getAttribute("photo-uuid"))
     }
+    img_block.append(div);
     add_file_dropdown()
     is_full_dropdown();
   }
