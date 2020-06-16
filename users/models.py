@@ -672,6 +672,10 @@ class User(AbstractUser):
             thumb = None
         return thumb
 
+    def get_avatar_id(self):
+        avatar = self.get_avatar_photos().order_by('-id')[0]
+        return avatar.pk
+
     def get_followers(self):
         followers_query = self._make_followers_query()
         return User.objects.filter(followers_query)
