@@ -46,7 +46,6 @@ class Community(models.Model):
     description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Описание" )
     rules = models.TextField(max_length=1000, blank=True, null=True, verbose_name="Правила")
     cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
-    avatar = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=100, width=100)])
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Фавориты")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
