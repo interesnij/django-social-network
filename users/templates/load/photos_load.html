@@ -20,13 +20,13 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" >
 {% for object in object_list %}
-  <div class="col-md-4 mb-3">
+  <div class="col-md-4 mb-3" style="margin-left: -7px; margin-right: -7px;">
     <div>
-          <img style="cursor:pointer"
-               class="lazyload image_fit_200 photo_load_one"
+          <img class="lazyload image_fit_200 photo_load_one"
                photo-uuid="{{ object.uuid }}"
                data-src="{{ object.file.url }}"
-               alt="img">
+               alt="img"
+               style="cursor:pointer">
     </div>
       <span class="item_attach_circle photo_load_several"
            tooltip="Выбрать несколько"
