@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles thumbnail %}
+{% load staticfiles %}
 
 {% block title %}Администраторы сообщества "Самые умные"{% endblock %}
 
@@ -35,7 +35,7 @@
                         <div class="media">
                             <figure>
                                 {% if request.user.get_avatar %}
-                                <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                <img src="{{ request.user.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
                                 <img class="thumb" src="{% static 'images/fuck_you.jpg' %}" />
                                 {% endif %}

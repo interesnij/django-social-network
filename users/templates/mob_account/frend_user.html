@@ -1,5 +1,5 @@
 {% extends "base_mobile.html" %}
-{% load liked_user humanize thumbnail %}
+{% load liked_user humanize %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -26,7 +26,7 @@
                   <a class="col">
                       <figure class="mx-auto mb-3" id="avatar_reload">
                         {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar.file.url }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
+                          <img src="{{ user.get_avatar }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
                         {% else %}
                           <svg fill="currentColor" class="svg_default" style="width:100%;height: auto;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                         {% endif %}
@@ -48,7 +48,7 @@
                   {% for object in user.get_pop_connection %}
                     <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                       {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                      <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
                       {% else %}
                       <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
                       {% endif %}
@@ -71,7 +71,7 @@
                     {% for object in user.get_pop_followers %}
                       <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                         {% if object.get_avatar %}
-                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                        <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
                         {% else %}
                         <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
                         {% endif %}
@@ -95,7 +95,7 @@
                       {% for object in user.get_pop_communities %}
                         <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                           {% if object.get_avatar %}
-                          <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                          <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
                           {% else %}
                           <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
                           {% endif %}

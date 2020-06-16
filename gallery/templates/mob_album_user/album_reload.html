@@ -1,6 +1,3 @@
-{% load staticfiles %}
-
-<link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
@@ -37,7 +34,6 @@
     <div id="album_photo_load" style="width: 100%;"></div>
   </div>
 
-{% include 'photo_user/album/dropzone.html' %}
 <script>
   var ready = (callback) => {
   if (document.readyState != "loading") callback();

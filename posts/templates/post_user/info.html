@@ -1,4 +1,4 @@
-{% load liked_user thumbnail %}
+{% load liked_user %}
 
 <div class="card-footer border-top py-2">
     <div class="row">
@@ -23,7 +23,7 @@
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                   {% if heart.user.get_avatar %}
-                    <img src="{{ heart.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
+                    <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
                   {% else %}
                     <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   {% endif %}
@@ -51,7 +51,7 @@
             <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
               <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                 {% if sheet.user.get_avatar %}
-                  <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
+                  <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
                   <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 {% endif %}
@@ -89,7 +89,7 @@
                 <a href="{% url 'user' pk=repost.creator.pk %}" class="ajax" style="padding-right:10px">
                   <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                     {% if repost.creator.get_avatar %}
-                      <img src="{{ repost.creator.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
+                      <img src="{{ repost.creator.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
                     {% else %}
                       <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     {% endif %}

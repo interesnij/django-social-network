@@ -12,22 +12,4 @@
   {% endif %}
 </span>
 
-{% if object.post %
-  {% include 'item_user/my_post_detail.html' %}
-{% endif %}
-
-{% if object.article %}
-    {% include 'item_user/my_article.html' with article=article  %}
-{% endif %}
-
-  {% if prev %}
-    <script>
-    	$('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' uuid=prev.uuid pk=user.pk %}");});
-    </script>
-   {% endif %}
-
-   {% if next %}
-    <script>
-      $('.next_item').on('click', function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
-    </script>
-    {% endif %}
+{% include 'item_user/my_post_detail.html' %}

@@ -1,10 +1,10 @@
 
 {% if object.article %}
-  {% include 'item_user/article.html' with article=article %}
+  {% include 'item_user/article.html' %}
 {% endif %}
 
 {% if object.post %}
-  {% include 'item_user/post.html' with post=post %}
+  {% include 'item_user/post.html' %}
 {% endif %}
 
 {% if object_list %}

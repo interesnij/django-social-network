@@ -1,10 +1,10 @@
-{% load staticfiles humanize %}
+{% load humanize %}
 <header class="main-header">
     <div class="container">
         <div class="align-items-center" style="display:flex;flex-wrap:wrap;">
           <div class="col-auto" style="padding-left: 0;">
               <a href="{% url 'main' %}" class="logo ajax" data-html="#ajax">
-                <img src="{% static 'images/logo-icon.png' %}" alt="">
+                <img src="/static/images/logo-icon.png" alt="">
                 <span style="margin-top:10px;float:left;"class="d-none d-sm-block">ТРЕЗВЫЙ.РУС</span>
               </a>
           </div>
@@ -46,7 +46,7 @@
                     <a class="btn header-color-secondary username drop">
                        <figure class="userpic">
                          {% if request.user.get_avatar %}
-                           <img src="{{ request.user.get_avatar.file.url }}" alt="">
+                           <img src="{{ request.user.get_avatar }}" alt="">
                          {% else %}
                            <svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                          {% endif %}

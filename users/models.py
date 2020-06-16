@@ -664,11 +664,13 @@ class User(AbstractUser):
             return queryset
 
     def get_avatar(self):
+        from easy_thumbnails.files import get_thumbnailer
         try:
             avatar = self.get_avatar_photos().order_by('-id')[0]
+            thumb = get_thumbnailer(avatar.file)['avatar'].url
         except:
-            avatar = None
-        return avatar
+            thumb = None
+        return thumb
 
     def get_followers(self):
         followers_query = self._make_followers_query()

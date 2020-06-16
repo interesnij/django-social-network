@@ -1,11 +1,11 @@
-{% load staticfiles thumbnail %}
+{% load staticfiles %}
 
 <div class="sidebar style_hide" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;overflow: auto;">
     <div class="media w-100 my-3">
         <a href="{% url 'user' pk=request.user.pk %}" class="ajax" data-html="#ajax">
           <figure class="rounded-circle align-self-start">
             {% if request.user.get_avatar %}
-              <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" alt="image" style="border-radius:50px;width:100%;">
+              <img src="{{ request.user.get_avatar }}" alt="image" style="border-radius:50px;width:100%;">
             {% else %}
               <svg fill="currentColor" style="width:100%;height:100%;" class="svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
             {% endif %}

@@ -1,13 +1,6 @@
 {% extends "base.html" %}
-{% load staticfiles liked_user %}
-{% block title %}
-{% if user == request.user %}
-Мои товары
-{% else %}
-Товары пользователя "{{ user.get_full_name }}"
-{% endif %}
-{% endblock %}
-{% block content %}
+{% load liked_user %}
+{% block title %}Мои товары{% block content %}
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">

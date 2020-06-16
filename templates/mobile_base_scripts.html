@@ -12,30 +12,6 @@
 <script defer src="{% static 'scripts/music_player.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/players_dark.js' %}" type="text/javascript"></script>
 <script>
-ready(() => {
-
-sidebar =  document.querySelector(".sidebar");icon_1 = document.querySelector(".icon_v1");icon_2 = document.querySelector(".icon_v2");icon_3 = document.querySelector(".icon_v3");icon_4 = document.querySelector(".icon_v4");icon_5 = document.querySelector(".icon_v5");tip = document.querySelector(".selected-tip");
-icon_1.addEventListener("click", (e) => {
-  if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
-  updateSelected(icon_1);
-});
-icon_2.addEventListener("click", (e) => {
-  if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
-  updateSelected(icon_2);
-});
-icon_3.addEventListener("click", (e) => {
-  if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
-  updateSelected(icon_3);
-});
-icon_4.addEventListener("click", (e) => {
-  if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
-  updateSelected(icon_4);
-});
-icon_5.addEventListener("click", (e) => {
-  updateSelected(icon_5);
-  document.querySelector(".sidebar").classList.toggle("style_hide");
-});
-});
 
 on('body', 'click', '.drop', function() {
   var block = this.nextElementSibling;
