@@ -84,6 +84,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $div.classList.add("col-md-12", "music", div_class);
   $div.style.display = "flex";
   $div.style.margin = "5px";
+  $div.style.flexBasis = "100%";
   $div.setAttribute('music-counter', counter);
 
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
