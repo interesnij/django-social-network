@@ -1,6 +1,5 @@
 
 <div id="lenta_container">
-  {% if object_list %}
     <div class="stream-update">
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
@@ -10,7 +9,6 @@
         {% include 'post_user/my_post.html' %}
       {% endfor %}
     </span>
-    {% endif %}
 </div>
 
 {% if not object and not object_list %}
