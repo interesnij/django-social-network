@@ -71,7 +71,7 @@ function photo_post_upload_attach(photo_list, block, count){
   for (i in count){
     if (!block.querySelector(".select_photo" + i)){
       div = create_preview_photo("select_photo" + i,
-                                  photo_list[i].querySelector("img").getAttribute('data-src'),
+                                  photo_list[i].querySelector("img").getAttribute('src'),
                                   photo_list[i].getAttribute("photo-uuid"));
 
       block.append(div);
