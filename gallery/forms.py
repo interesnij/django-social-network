@@ -9,12 +9,6 @@ class AlbumForm(forms.ModelForm):
 		fields = ['title', 'description', 'is_public', 'order', ]
 
 
-class AvatarUserForm(forms.ModelForm):
-
-    class Meta:
-        model = Photo
-        fields = ['file',]
-
 class PhotoDescriptionForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'height: auto;', 'rows': '4'}))
 	class Meta:

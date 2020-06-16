@@ -3,7 +3,7 @@ from users.models import User
 from gallery.models import Album, Photo
 from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 from django.views.generic import ListView
-from gallery.forms import AlbumForm, AvatarUserForm
+from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render_to_response
@@ -42,39 +42,6 @@ class UserAlbumView(TemplateView):
         return context
 
 
-class UserAddAvatar(TemplateView):
-    """
-    изменение аватара пользователя
-    """
-    template_name = "photo_user/user_add_avatar.html"
-
-    def get(self,request,*args,**kwargs):
-        self.form=AvatarUserForm()
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album=Album.objects.get(creator=request.user, title="Фото со страницы", is_generic=True, community=None)
-        return super(UserAddAvatar,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(UserAddAvatar,self).get_context_data(**kwargs)
-        context["form_avatar"]=self.form
-        context["user"]=self.user
-        context["album"]=self.album
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.album=Album.objects.get(creator=request.user, title="Фото со страницы", is_generic=True, community=None)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.form=AvatarUserForm(request.POST,request.FILES)
-        if self.form.is_valid() and self.user == request.user:
-            avatar=self.form.save(commit=False)
-            new_avatar=avatar.create_avatar(creator=request.user, community=None, file=avatar.file, is_public=True, album=self.album )
-            if request.is_ajax():
-                return HttpResponse ('!')
-        else:
-            return HttpResponse ('!!!')
-        return super(UserAddAvatar,self).get(request,*args,**kwargs)
-
-
 class PhotoUserCreate(View):
     """
     асинхронная мульти загрузка фотографий пользователя прямо в галерею
@@ -87,6 +54,25 @@ class PhotoUserCreate(View):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 photos += [photo,]
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
+
+
+class UserAddAvatar(View):
+    """
+    загрузка аватара пользователя
+    """
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user == request.user:
+            photo_input = request.FILES.get('file')
+            try:
+                _album = Album.objects.get(creator=user, is_generic=True, title="Фото со страницы")
+            except:
+                _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
+            photo = Photo.objects.create(file=p, creator=user)
+            _album.album.add(photo)
+            return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
+        else:
+            return HttpResponseBadRequest()
 
 
 class PhotoAttachUserCreate(View):

@@ -13,5 +13,5 @@ urlpatterns=[
 	url(r'^add_album_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoAlbumUserCreate.as_view(), name="photo_album_add_user"),
 	url(r'^add_album/(?P<pk>\d+)/$', AlbumUserCreate.as_view(), name="album_add_user"),
 
-	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view(), name='user_add_avatar'),
+	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
 ]

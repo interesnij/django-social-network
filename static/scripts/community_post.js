@@ -110,3 +110,22 @@ on('#ajax', 'click', '.c_dislike2', function() {
   send_dislike(item, "/posts/votes/community_comment/" + comment_pk + "/" + pk + "/dislike/");
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
+
+
+on('#ajax', 'change', '#community_avatar_upload', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  form_data = new FormData(document.body.querySelector("#add_community_avarat"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/community/add_avatar/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    document.body.querySelector(".avatar_figure").innerHTML = "";
+    document.body.querySelector(".avatar_figure").append(response);
+    }
+  }
+  link_.send(form_data);
+})
