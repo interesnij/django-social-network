@@ -45,8 +45,8 @@ function create_preview_photo(div_class, img_src, pk){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("u_photo_detail", "image_fit");
-  $img.src = img_src;
+  $img.classList.add("u_photo_detail", "image_fit", "lazyload");
+  $img.setAttribute("data-src", img_src);
   $img.setAttribute('photo-uuid', pk);
   $div.append(photo_preview_delete());
   $div.append($input);
