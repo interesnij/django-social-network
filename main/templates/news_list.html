@@ -9,18 +9,18 @@
 
           {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
           {% if object.community in request.user.get_staffed_communities %}
-            {% include 'item_community/moderator_post.html' %}
+            {% include 'post_community/moderator_post.html' %}
           {% else %}
-            {% include 'item_community/post.html' %}
+            {% include 'post_community/post.html' %}
           {% endif %}
 
       {% else %}
 
           {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
           {% if object.creator == request.user %}
-            {% include 'item_user/my_post.html' %}
+            {% include 'post_user/my_post.html' %}
           {% else %}
-            {% include 'item_user/post.html' %}
+            {% include 'post_user/post.html' %}
           {% endif %}
 
       {% endif %}
