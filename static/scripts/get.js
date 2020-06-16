@@ -272,11 +272,10 @@ on('#ajax', 'change', '#photo_add_post_attach', function() {
 
     block = document.body.querySelector(".attach_block");
     block_divs = block.querySelectorAll("div");
+    block_divs_length = photo_list.length;
 
-    photo_post_upload_attach(photo_list, block);
-    console.log(block_divs);
+    photo_post_upload_attach(photo_list, block, block_divs_length);
     console.log(block_divs_length);
-    console.log(count);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
