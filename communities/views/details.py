@@ -63,7 +63,6 @@ class CommunityDetail(TemplateView):
 		from stst.models import CommunityNumbers
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		thumb_url = get_thumbnailer(self.community.get_avatar.file)['avatar'].url
 		try:
 			self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
 		except:
