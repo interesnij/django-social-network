@@ -5,13 +5,9 @@
   </div>
 
   <span class="community_stream">
-    {% if object_list %}
-
     {% for object in object_list %}
         {% include 'post_community/moderator_post.html' %}
     {% endfor %}
-
-    {% endif %}
   </span>
 </div>
 

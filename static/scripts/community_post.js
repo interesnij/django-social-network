@@ -54,7 +54,7 @@ on('#ajax', 'click', '#c_add_post', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".card") ? (lenta_load.querySelector("#community_stream").prepend(new_post.querySelector(".card")),
+    new_post.querySelector(".card") ? (lenta_load.querySelector("#community_stream").prepend(new_post),
                                        toast_info("Запись опубликована"),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");
@@ -87,7 +87,7 @@ on('#ajax', 'click', '.c_like', function() {
   send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/c_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
-on('#ajax', 'click', '.c_dislike', function() { 
+on('#ajax', 'click', '.c_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
