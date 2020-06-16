@@ -82,5 +82,5 @@ class CommunityDetail(TemplateView):
 		context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
 		context["community"] = self.community
 		context["common_friends"] = self.common_friends
-		context["avatar"] = get_thumbnailer(self.community.get_avatar().file)['avatar'].url
+		context["avatar"] = self.community.get_avatar()
 		return context
