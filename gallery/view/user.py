@@ -89,20 +89,21 @@ class PhotoUserCreate(View):
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 
-class PhotoCommentUserCreate(View):
+class PhotoAttachUserCreate(View):
     """
-    мульти сохранение изображений для комментов с моментальным выводом в превью
+    мульти сохранение изображений  с моментальным выводом в превью
     """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if self.user == request.user:
             try:
-                album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
+                _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
             except:
-                album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
+                _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, album=album, creator=self.user)
+                photo = Photo.objects.create(file=p, creator=self.user)
+                _album.album.add(photo)
                 photos += [photo,]
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
