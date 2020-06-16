@@ -6,7 +6,6 @@ from common.checkers import check_can_get_posts_for_community_with_name
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
-from easy_thumbnails.files import get_thumbnailer
 
 
 class PostsCommunity(ListView):
