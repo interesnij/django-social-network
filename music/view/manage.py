@@ -88,7 +88,7 @@ class TrackAdd(View):
         except:
             my_list = SoundList.objects.create(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
         if not my_list.is_track_in_list(track.pk):
-            my_list.players.add(track) 
+            my_list.players.add(track)
         return HttpResponse("!")
 
 class TrackRemove(View):
@@ -99,5 +99,5 @@ class TrackRemove(View):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
         if my_list.is_track_in_list(track.pk):
-            my_list.track.remove(track)
+            my_list.players.remove(track)
         return HttpResponse("!")

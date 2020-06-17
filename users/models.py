@@ -321,8 +321,7 @@ class User(AbstractUser):
     def is_track_exists(self, track_id):
         from music.models import SoundList, SoundcloudParsing
 
-        return SoundList.objects.filter(creator=self, players__id=track_id).exists()
-        #SoundcloudParsing.objects.filter(list__in=playlists).exists()
+        return SoundList.objects.values("creator", "players").filter(creator=self, players__id=track_id).exists()
 
     def is_user_playlist(self):
         from music.models import UserTempSoundList
