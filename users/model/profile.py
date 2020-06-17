@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files import File
+from django.core.files.images import *
 from gallery.helpers import upload_to_photo_directory
 
 
@@ -17,8 +17,8 @@ class UserProfile(models.Model):
     facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
-    b_avatar = models.FileField(blank=True, upload_to=upload_to_photo_directory)
-    s_avatar = models.FileField(blank=True, upload_to=upload_to_photo_directory)
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_photo_directory)
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_photo_directory)
 
 
     def __str__(self):
@@ -34,9 +34,9 @@ class UserProfile(models.Model):
 
     def b_avatar(self, field):
         if field:
-            image = File.open(field)
+            image = Img.open(field)
             image = image.convert('RGB')
-            image = image.resize((250, 200), File.ANTIALIAS)
+            image = image.resize((250, 200), Img.ANTIALIAS)
             output = io.BytesIO()
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
