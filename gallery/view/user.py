@@ -70,6 +70,12 @@ class UserAddAvatar(View):
                 _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
             _album.album.add(photo)
+            try:
+                user_profile = UserProfile.objects.get(user=request.user)
+            except:
+                user_profile = UserProfile.objects.create(user=request.user)
+            user_profile.b_avatar = photo
+            user_profile.s_avatar = photo
             return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:
             return HttpResponseBadRequest()

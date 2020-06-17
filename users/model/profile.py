@@ -17,8 +17,8 @@ class UserProfile(models.Model):
     facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
-    b_avatar = ProcessedImageField(blank=True, related_name="big_avatar", format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=250, height=200)])
-    s_avatar = ProcessedImageField(blank=True, related_name="small_avatar", format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=50, height=50)])
+    b_avatar = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=250, height=200)])
+    s_avatar = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=50, height=50)])
 
 
     def __str__(self):
