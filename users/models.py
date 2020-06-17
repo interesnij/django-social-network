@@ -618,12 +618,12 @@ class User(AbstractUser):
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        music = self.get_music()
         list = []
         i = 1
-        while i < 6:
-            list += music[i]
-            i += 1
+        for music in self.get_music():
+            if i < 6:
+                list += [music,]
+                i += 1
         return list
 
     def get_video_count(self):
