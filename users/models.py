@@ -604,7 +604,7 @@ class User(AbstractUser):
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = Q(players=list, is_deleted=False)
         music_list = SoundcloudParsing.objects.filter(music_query)
-        result = music_list.order_by("players__track").reverse()
+        result = music_list.order_by("players__id").reverse()
         return result
 
 
