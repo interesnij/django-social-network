@@ -33,10 +33,10 @@ class User(AbstractUser):
             user_profile = UserProfile.objects.get(user=self)
         except:
             user_profile = UserProfile.objects.create(user=self)
-        #user_profile.s_avatar = photo_input
-        user_profile.s_avatar = get_thumbnailer(photo_input)['small_avatar'].url
+        user_profile.s_avatar = photo_input
+        get_thumbnailer(user_profile.s_avatar)['small_avatar'].url
         user_profile.save(update_fields=['s_avatar'])
-        return thumb
+        return user_profile.s_avatar
 
     def create_b_avatar(self, photo_input):
         from users.model.profile import UserProfile
