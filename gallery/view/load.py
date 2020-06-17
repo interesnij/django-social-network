@@ -19,24 +19,18 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.user.get_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
-        self.form_image = PhotoDescriptionForm(instance=self.photo)
-        self.avatar = self.photo.is_avatar(request.user)
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserPhoto,self).get_context_data(**kwargs)
-        context["object"]=self.photo
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        context["avatar"]=self.avatar
-        context["form_image"]=self.form_image
+        context["object"]=Photo.objects.get(uuid=self.kwargs["uuid"])
+        context["user"]=User.objects.get(pk=self.kwargs["pk"])
+        context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["avatar"]=self.photo.is_avatar(request.user)
+        context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 
@@ -50,7 +44,6 @@ class UserAlbumPhoto(TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.form_image = PhotoDescriptionForm(instance=self.photo)
         self.avatar = self.photo.is_avatar(request.user)
         self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         self.template_name = self.user.get_permission_list_user(folder="album_photo_user/", template="photo.html", request=request)
@@ -66,27 +59,29 @@ class UserAlbumPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
-        context["form_image"]=self.form_image
+        context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 
-class UserCommentPhoto(TemplateView):
+class UserWallPhoto(TemplateView):
     """
-    страница отдельного фото комментария к записям пользователя с разрещениями и без
+    страница отдельного фото альбома пользователя "Фото со стены"
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.album=Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
+        self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
-        return super(UserCommentPhoto,self).get(request,*args,**kwargs)
+        return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserCommentPhoto,self).get_context_data(**kwargs)
+        context=super(UserWallPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
-        context["user_form"]=PhotoDescriptionForm()
+        context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 
@@ -112,7 +107,7 @@ class UserDetailAvatar(TemplateView):
         context["user"] = self.user
         context["next"] = self.next
         context["prev"] = self.prev
-        context["user_form"]=PhotoDescriptionForm()
+        context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 class CommunityDetailAvatar(TemplateView):
@@ -137,5 +132,5 @@ class CommunityDetailAvatar(TemplateView):
         context["community"] = self.community
         context["next"] = self.next
         context["prev"] = self.prev
-        context["user_form"]=PhotoDescriptionForm()
+        context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
