@@ -22,9 +22,6 @@ class UserPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        self.avatar = self.photo.is_avatar(request.user)
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
@@ -32,9 +29,9 @@ class UserPhoto(TemplateView):
         context=super(UserPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
         context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        context["avatar"]=self.avatar
+        context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["avatar"]=self.photo.is_avatar(self.request.user)
         context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
@@ -49,11 +46,8 @@ class UserAlbumPhoto(TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.avatar = self.photo.is_avatar(request.user)
         self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         self.template_name = self.user.get_permission_list_user(folder="album_photo_user/", template="photo.html", request=request)
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -61,9 +55,9 @@ class UserAlbumPhoto(TemplateView):
         context["object"]=self.photo
         context["album"]=self.album
         context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        context["avatar"]=self.avatar
+        context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["avatar"]=self.photo.is_avatar(self.request.user)
         context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
@@ -79,14 +73,16 @@ class UserWallPhoto(TemplateView):
         self.album=Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
+        self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="wall_photo.html", request=request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserWallPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
         context["user_form"]=PhotoDescriptionForm(instance=self.photo)
+        context["avatar"]=self.photo.is_avatar(self.request.user)
+        context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return context
 
 
@@ -99,19 +95,16 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.avatar_photos = self.user.get_avatar_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
-        self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["user"] = self.user
-        context["next"] = self.next
-        context["prev"] = self.prev
+        context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
@@ -127,15 +120,13 @@ class CommunityDetailAvatar(TemplateView):
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.avatar_photos = self.community.get_avatar_photos()
         self.template_name = self.community.get_template_list(folder="photo_community/", template="photo.html", request=request)
-        self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(CommunityDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.community
-        context["next"] = self.next
-        context["prev"] = self.prev
+        context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
