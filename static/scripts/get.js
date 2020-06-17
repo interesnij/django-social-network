@@ -463,7 +463,6 @@ on('#ajax', 'click', '.music_list_item', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   var item_pk = item.getAttribute('data-pk');
   if (!document.body.classList.contains("item_" + item_pk)){
-    document.querySelector("body").className = "";
     document.querySelector("body").classList.add("item_" + item_pk);
     list = item.querySelectorAll(".music");
     for(i=0; i<count; i++) {
