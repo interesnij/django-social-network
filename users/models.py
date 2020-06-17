@@ -26,6 +26,25 @@ class User(AbstractUser):
     def get_full_name(self):
         return  str(self.first_name) + " " + str(self.last_name)
 
+    def create_s_avatar(self, photo_input):
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except:
+            user_profile = UserProfile.objects.create(user=request.user)
+        user_profile.s_avatar = photo_input
+        user_profile.save(update_fields=['s_avatar'])
+        return user_profile.s_avatar
+
+    def create_b_avatar(self, photo_input):
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except:
+            user_profile = UserProfile.objects.create(user=request.user)
+        user_profile.b_avatar = photo_input
+        user_profile.save(update_fields=['b_avatar'])
+        return user_profile.s_avatar
+
+
     def get_online(self):
         from datetime import datetime, timedelta
 
