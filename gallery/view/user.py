@@ -70,6 +70,8 @@ class UserAddAvatar(View):
                 _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
             _album.album.add(photo)
+
+            from users.model.profile import UserProfile
             try:
                 user_profile = UserProfile.objects.get(user=request.user)
             except:
