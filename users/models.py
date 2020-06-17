@@ -319,7 +319,7 @@ class User(AbstractUser):
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
 
     def is_track_exists(self, track_id):
-        return self.user_playlist.filter(track__id=track_id).exists()
+        return self.user_playlist.filter(player__id=track_id).exists()
 
     def is_user_playlist(self):
         from music.models import UserTempSoundList
