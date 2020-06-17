@@ -44,9 +44,9 @@
   {% endfor %}
   {% for music in object.item_music.all %}
   <div class="col-md-12 music">
-    <div class="media" music-counter="{{ forloop.counter0 }}">
+    <div class="media" music-counter="{{ forloop.counter0 }}" data-path="{{ music.uri }}" data-duration="{{ music.duration }}">
         <figure style="cursor:pointer">
-          <a class="music_list_post">
+          <a class="music_list_post music_thumb">
             {% if music.artwork_url %}
               <img style="width:30px;heigth:auto" src="{{ music.artwork_url }}" alt="img" />
             {% else %}
@@ -55,7 +55,7 @@
           </a>
         </figure>
         <div class="media-body">
-            <h6 class="music_list_post" style="cursor:pointer;padding-top: 6px;"><a>{{ music.title }}</a></h6>
+            <h6 class="music_list_post music_title" style="cursor:pointer;padding-top: 6px;"><a>{{ music.title }}</a></h6>
             <a class="small ajax" href="{% url 'tag_all_music' pk=music.tag.pk %}">{{ music.tag }}</a>
               <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                 <span style="cursor:pointer">
