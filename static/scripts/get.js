@@ -464,8 +464,10 @@ on('#ajax', 'click', '.music_list_post', function() {
   var item_pk = item.getAttribute('data-pk');
   if (!document.body.classList.contains("item_" + item_pk)){
     document.querySelector("body").classList.add("item_" + item_pk);
-    list = item.[...querySelectorAll(".music")];
-    for(i=0; i<list.length; i++) {
+    list = item.querySelectorAll(".music");
+    arrayNodes = Array.slice.call(list, 0);
+    arrayNodes.reverse();
+    for(i=0; i<arrayNodes.length; i++) {
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
       _title=list[i].querySelector(".music_title").innerHTML;
       _thumbPath=list[i].querySelector(".music_thumb").innerHTML || null;
