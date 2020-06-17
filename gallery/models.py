@@ -77,6 +77,7 @@ class Photo(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
+        ordering = ["-created"]
 
     @classmethod
     def create_photo(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
