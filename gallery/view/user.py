@@ -76,8 +76,8 @@ class UserAddAvatar(View):
                 user_profile = UserProfile.objects.get(user=request.user)
             except:
                 user_profile = UserProfile.objects.create(user=request.user)
-            user_profile.b_avatar = photo
-            user_profile.s_avatar = photo
+            user_profile.b_avatar = request.FILES.get('file')
+            user_profile.s_avatar = request.FILES.get('file')
             return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:
             return HttpResponseBadRequest()
