@@ -605,7 +605,7 @@ class User(AbstractUser):
         except:
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = Q(list=list, is_deleted=False)
-        music_list = SoundcloudParsing.objects.filter(music_query)
+        music_list = SoundcloudParsing.objects.values("list", "is_deleted").filter(music_query)
         return music_list
 
 
