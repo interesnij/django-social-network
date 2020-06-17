@@ -474,7 +474,7 @@ on('#ajax', 'click', '.music_list_post', function() {
       time = msToTime(_duration);
       music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
     }
-    music_player.playSpecificTrack(track_id)
+    music_player.playSpecificTrack("item_" + item_pk, track_id)
 
   }else{
     music_player.loadPlaylist(0);
