@@ -42,13 +42,17 @@ class User(AbstractUser):
 
     def create_b_avatar(self, photo_input):
         from users.model.profile import UserProfile
+        from easy_thumbnails.files import get_thumbnailer
         try:
             user_profile = UserProfile.objects.get(user=self)
         except:
             user_profile = UserProfile.objects.create(user=self)
         user_profile.b_avatar = photo_input
         user_profile.save(update_fields=['b_avatar'])
-        return user_profile.s_avatar
+        new_img = get_thumbnailer(user_profile.b_avatar)['small_avatar'].url.replace('media/', '')
+        user_profile.b_avatar = new_img
+        user_profile.save(update_fields=['b_avatar'])
+        return user_profile.b_avatar
 
     def get_avatar(self):
         from easy_thumbnails.files import get_thumbnailer
