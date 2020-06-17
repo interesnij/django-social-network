@@ -467,6 +467,7 @@ on('#ajax', 'click', '.music_list_post', function() {
     list = [].slice.call(item.querySelectorAll(".music"), 0).reverse();
     console.log(list.length);
     for(i=0; i<list.length; i++) {
+        console.log(list[i]);
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
       _title=list[i].querySelector(".music_title").innerHTML;
       _thumbPath=list[i].querySelector(".lazyload").getAttribute("data-src") || null;
