@@ -179,12 +179,12 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.focus();
 })
 
-on('#ajax', 'click', '.comment_image', function() {
+on('#ajax', 'click', '.wall_image', function() {
   var uuid, pk, loader;
   pk = this.getAttribute('photo-pk');
   uuid = this.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/comment/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
 });
 
 

@@ -1,7 +1,7 @@
 <div class="row" style="padding-bottom: 10px;">
   {% for object in reply.comment_photo.all %}
   <div class="col-md-6">
-      <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="comment_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
+      <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="wall_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
   </div>
   {% endfor %}
   {% for object in reply.comment_video.all %}
