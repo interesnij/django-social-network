@@ -466,7 +466,6 @@ on('#ajax', 'click', '.music_list_post', function() {
     document.querySelector("body").classList = "";
     document.querySelector("body").classList.add("item_" + item_pk);
     list = [].slice.call(item.querySelectorAll(".music"), 0).reverse();
-    console.log(list.length);
     for(i=0; i<list.length; i++) {
         console.log(list[i]);
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
@@ -475,8 +474,6 @@ on('#ajax', 'click', '.music_list_post', function() {
       _duration=list[i].getAttribute("data-duration");
       time = msToTime(_duration);
       music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
-      console.log(_source);
-      console.log(_title);
     }
     music_player.playSpecificTrack("item_" + item_pk, track_id);
     console.log(track_id)
