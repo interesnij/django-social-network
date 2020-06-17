@@ -17,8 +17,8 @@ class UserProfile(models.Model):
     facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
-    b_avatar = models.ImageField(blank=True, upload_to=upload_to_photo_directory)
-    s_avatar = models.ImageField(blank=True, upload_to=upload_to_photo_directory)
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_post_directory)
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_post_directory)
 
 
     def __str__(self):
