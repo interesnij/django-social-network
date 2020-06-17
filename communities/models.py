@@ -62,10 +62,44 @@ class Community(models.Model):
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаленное")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
+    b_avatar = models.ImageField(blank=True, upload_to="upload_to_community_avatar_directory")
+    s_avatar = models.ImageField(blank=True, upload_to="upload_to_community_avatar_directory")
 
     class Meta:
         verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
+
+    def create_s_avatar(self, photo_input):
+        from easy_thumbnails.files import get_thumbnailer
+
+        self.s_avatar = photo_input
+        self.save(update_fields=['s_avatar'])
+        new_img = get_thumbnailer(self.s_avatar)['small_avatar'].url.replace('media/', '')
+        self.s_avatar = new_img
+        self.save(update_fields=['s_avatar'])
+        return self.s_avatar
+
+    def create_b_avatar(self, photo_input):
+        from easy_thumbnails.files import get_thumbnailer
+
+        self.b_avatar = photo_input
+        self.save(update_fields=['b_avatar'])
+        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
+        self.b_avatar = new_img
+        self.save(update_fields=['b_avatar'])
+        return self.b_avatar
+
+    def get_b_avatar(self):
+        try:
+            return self.b_avatar.url
+        except:
+            return None
+
+    def get_avatar(self):
+        try:
+            return self.s_avatar.url
+        except:
+            return None
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
