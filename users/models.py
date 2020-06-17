@@ -27,6 +27,7 @@ class User(AbstractUser):
         return  str(self.first_name) + " " + str(self.last_name)
 
     def create_s_avatar(self, photo_input):
+        from users.model.profile import UserProfile
         try:
             user_profile = UserProfile.objects.get(user=request.user)
         except:
@@ -36,6 +37,7 @@ class User(AbstractUser):
         return user_profile.s_avatar
 
     def create_b_avatar(self, photo_input):
+        from users.model.profile import UserProfile
         try:
             user_profile = UserProfile.objects.get(user=request.user)
         except:

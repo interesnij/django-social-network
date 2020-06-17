@@ -71,11 +71,6 @@ class UserAddAvatar(View):
             photo = Photo.objects.create(file=photo_input, creator=user)
             _album.album.add(photo)
 
-            from users.model.profile import UserProfile
-            try:
-                user_profile = UserProfile.objects.get(user=request.user)
-            except:
-                user_profile = UserProfile.objects.create(user=request.user)
             request.user.create_s_avatar(photo_input)
             avatar = request.user.create_b_avatar(photo_input)
             return HttpResponse(avatar)
