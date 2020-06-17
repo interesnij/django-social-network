@@ -624,8 +624,9 @@ class User(AbstractUser):
             list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = Q(players=list, is_deleted=False)
 
-        music_list = SoundcloudParsing.objects.filter(music_query).order_by()
-        return music_list[0:5]
+        music_list = SoundcloudParsing.objects.filter(music_query)
+        music_list.reverse()[0:5]
+        return music_list
 
     def get_video_count(self):
         from video.models import Video, VideoAlbum
