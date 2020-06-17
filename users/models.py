@@ -34,7 +34,9 @@ class User(AbstractUser):
         except:
             user_profile = UserProfile.objects.create(user=self)
         user_profile.s_avatar = photo_input
-        get_thumbnailer(user_profile.s_avatar)['small_avatar'].url
+        user_profile.save(update_fields=['s_avatar'])
+        new_img = get_thumbnailer(user_profile.s_avatar)['small_avatar'].url
+        user_profile.s_avatar = new_img
         user_profile.save(update_fields=['s_avatar'])
         return user_profile.s_avatar
 
@@ -47,6 +49,15 @@ class User(AbstractUser):
         user_profile.b_avatar = photo_input
         user_profile.save(update_fields=['b_avatar'])
         return user_profile.s_avatar
+
+    def get_avatar(self):
+        from easy_thumbnails.files import get_thumbnailer
+        try:
+            avatar = self.get_avatar_photos().order_by('-id')[0]
+            thumb = get_thumbnailer(avatar.file)['avatar'].url
+        except:
+            thumb = None
+        return thumb
 
     def get_online(self):
         from datetime import datetime, timedelta
@@ -684,15 +695,6 @@ class User(AbstractUser):
         else:
             queryset = self.get_music()
             return queryset
-
-    def get_avatar(self):
-        from easy_thumbnails.files import get_thumbnailer
-        try:
-            avatar = self.get_avatar_photos().order_by('-id')[0]
-            thumb = get_thumbnailer(avatar.file)['avatar'].url
-        except:
-            thumb = None
-        return thumb
 
     def get_avatar_id(self):
         avatar = self.get_avatar_photos().order_by('-id')[0]
