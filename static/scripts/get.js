@@ -458,7 +458,7 @@ on('#ajax', 'click', '.genre_item', function() {
   }
 });
 
-on('#ajax', 'click', '.music_list_item', function() {
+on('#ajax', 'click', '.music_list_post', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   item = this.parentElement.parentElement.parentElement.parentElement;
   var item_pk = item.getAttribute('data-pk');
