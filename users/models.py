@@ -604,10 +604,9 @@ class User(AbstractUser):
             list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         except:
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-        music_query = Q(list=list, is_deleted=False)
-        music_list = SoundcloudParsing.objects.values("list", "is_deleted", "tag").filter(music_query)
-        return music_list
-
+        music_query = list.players_set.filter(is_deleted=False)
+        #music_list = SoundcloudParsing.objects.filter(music_query)
+        return music_query
 
     def get_music_count(self):
         from music.models import SoundList, SoundcloudParsing
