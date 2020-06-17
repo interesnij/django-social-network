@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files import Img
+from django.core.files import File
 from gallery.helpers import upload_to_photo_directory
 
 
@@ -34,7 +34,7 @@ class UserProfile(models.Model):
 
     def b_avatar(self, field):
         if field:
-            image = Img.open(field)
+            image = File.open(field)
             image = image.convert('RGB')
             image = image.resize((250, 200), Img.ANTIALIAS)
             output = io.BytesIO()
