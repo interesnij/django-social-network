@@ -107,8 +107,8 @@ class UserMusic(ListView):
 
     def get_queryset(self):
         music_list = self.user.get_music()
-        result = reversed(list(music_list))
-        return result
+        #result = reversed(list(music_list))
+        return music_list
 
 
 class UserVideo(ListView):

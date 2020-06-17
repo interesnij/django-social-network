@@ -56,7 +56,6 @@ class SoundSymbol(models.Model):
 
 class SoundList(models.Model):
     name = models.CharField(max_length=255)
-    track = models.ManyToManyField('music.SoundcloudParsing', related_name='players', blank="True")
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
@@ -139,6 +138,7 @@ class SoundcloudParsing(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
+    list = models.ManyToManyField(SoundList, related_name='players', blank="True")
 
     def __str__(self):
         return self.title
