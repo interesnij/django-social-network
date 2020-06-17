@@ -468,7 +468,7 @@ on('#ajax', 'click', '.music_list_post', function() {
     for(i=0; i<list.length; i++) {
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
       _title=list[i].querySelector(".music_title").innerHTML;
-      _thumbPath=list[i].querySelector("img").getAttribute("data-src") || null;
+      _thumbPath=list[i].querySelector(".lazyload").getAttribute("data-src") || null;
       _duration=list[i].getAttribute("data-duration");
       time = msToTime(_duration);
       music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
