@@ -62,8 +62,8 @@ class Community(models.Model):
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаленное")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
-    b_avatar = models.ImageField(blank=True, upload_to="upload_to_community_avatar_directory")
-    s_avatar = models.ImageField(blank=True, upload_to="upload_to_community_avatar_directory")
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
 
     class Meta:
         verbose_name = 'сообщество'
