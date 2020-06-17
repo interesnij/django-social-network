@@ -470,10 +470,12 @@ on('#ajax', 'click', '.music_list_post', function() {
         console.log(list[i]);
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
       _title=list[i].querySelector(".music_title").innerHTML;
-      _thumbPath=list[i].querySelector(".lazyloaded").getAttribute("data-src") || null;
+      _thumbPath=list[i].querySelector("img").getAttribute("data-src") || null;
       _duration=list[i].getAttribute("data-duration");
       time = msToTime(_duration);
       music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+      console.log(_source);
+      console.log(_title);
     }
     music_player.playSpecificTrack("item_" + item_pk, track_id);
     console.log(track_id)
