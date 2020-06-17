@@ -465,7 +465,8 @@ on('#ajax', 'click', '.music_list_post', function() {
   if (!document.body.classList.contains("item_" + item_pk)){
     document.querySelector("body").classList.add("item_" + item_pk);
     list = item.querySelectorAll(".music");
-    for(i=0; i<count; i++) {
+
+    for(i=0; i<list.length; i++) {
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
       _title=list[i].getAttribute("data-title");
       _thumbPath=list[i].getAttribute("data-thumbpath");
