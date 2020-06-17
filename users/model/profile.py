@@ -34,7 +34,8 @@ class UserProfile(models.Model):
 
     def b_avatar(self, field):
         if field:
-            image = field
+            image = File.open(field)
+            image = File.convert('RGB')
             image = image.resize((250, 200), File.ANTIALIAS)
             output = io.BytesIO()
             image.save(output, format='JPEG', quality=85)
