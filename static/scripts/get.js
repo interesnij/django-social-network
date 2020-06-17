@@ -479,7 +479,7 @@ on('#ajax', 'click', '.music_list_post', function() {
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-    setTimeout(function() {music_player.playSpecificTrack("list_" + item_pk, track_id)}, 50);
+    setTimeout(function() {music_player.playSpecificTrack("item_" + item_pk, track_id)}, 50);
   }
   }
 });
