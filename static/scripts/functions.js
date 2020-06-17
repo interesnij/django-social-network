@@ -235,7 +235,6 @@ function addStyleSheets (href) {
   $link.classList.add("my_color_settings");
   $link.href = href;
   $head.appendChild($link);
-  console.log("added!")
 }
 
 function open_fullscreen(link, block) {
