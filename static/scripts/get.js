@@ -474,8 +474,8 @@ on('#ajax', 'click', '.music_list_post', function() {
       time = msToTime(_duration);
       music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
     }
-    music_player.playSpecificTrack("item_" + item_pk, track_id)
-
+    music_player.playSpecificTrack("item_" + item_pk, track_id);
+    console.log(track_id)
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
