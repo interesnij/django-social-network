@@ -427,21 +427,7 @@ on('#ajax', 'click', '.genre_item', function() {
     setTimeout(function() {music_player.playSpecificTrack("genre_" + list_pk, track_id)}, 50);
   }
   }
-});
-
-on('#ajax', 'click', '.music_list_item', function() {
-  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
-  var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
-  if (!document.body.classList.contains("list_" + list_pk)){
-    save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
-  }else{
-    music_player.loadPlaylist(0);
-    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-      console.log("Плейдист загружен!");
-    setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
-  }
-  }
-});
+})
 
 
 on('#ajax', 'click', '#load_1', function(e) {
