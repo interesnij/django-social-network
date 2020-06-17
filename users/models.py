@@ -36,7 +36,7 @@ class User(AbstractUser):
         user_profile.s_avatar = photo_input
         user_profile.save(update_fields=['s_avatar'])
         new_img = get_thumbnailer(user_profile.s_avatar)['small_avatar'].url
-        user_profile.s_avatar.url = new_img[:19] + new_img[24:]
+        user_profile.s_avatar.url = new_img
         user_profile.save(update_fields=['s_avatar'])
         return user_profile.s_avatar
 
