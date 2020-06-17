@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from django.core.files.uploadedfile import *
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files import Img
 from gallery.helpers import upload_to_photo_directory
 
 
