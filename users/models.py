@@ -25,14 +25,7 @@ class User(AbstractUser):
 
     def get_full_name(self):
         return  str(self.first_name) + " " + str(self.last_name)
-def get_avatar(self):
-    from easy_thumbnails.files import get_thumbnailer
-    try:
-        avatar = self.get_avatar_photos().order_by('-id')[0]
-        thumb = get_thumbnailer(avatar.file)['avatar'].url
-    except:
-        thumb = None
-    return thumb
+
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
         from easy_thumbnails.files import get_thumbnailer
