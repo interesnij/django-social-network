@@ -107,7 +107,8 @@ class UserMusic(ListView):
 
     def get_queryset(self):
         music_list = self.user.get_music()
-        return music_list
+        result = reversed(list(music_list))
+        return result
 
 
 class UserVideo(ListView):
@@ -123,7 +124,7 @@ class UserVideo(ListView):
             self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
         except:
             self.album = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
-        if self.user == request.user: 
+        if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
