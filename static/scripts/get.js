@@ -460,14 +460,26 @@ on('#ajax', 'click', '.genre_item', function() {
 
 on('#ajax', 'click', '.music_list_item', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
-  var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
-  if (!document.body.classList.contains("list_" + list_pk)){
-    save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  var item_pk = item.getAttribute('data-pk');
+  if (!document.body.classList.contains("item_" + item_pk)){
+    document.querySelector("body").className = "";
+    document.querySelector("body").classList.add("item_" + item_pk);
+    list = item.querySelectorAll(".music");
+    for(i=0; i<count; i++) {
+      _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+      _title=list[i].getAttribute("data-title");
+      _thumbPath=list[i].getAttribute("data-thumbpath");
+      _duration=list[i].getAttribute("data-duration");
+      time = msToTime(_duration);
+      music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+    }
+    music_player.loadPlaylist(track_id);
+
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-      console.log("Плейлист загружен!");
-    setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
+    setTimeout(function() {music_player.playSpecificTrack("list_" + item_pk, track_id)}, 50);
   }
   }
 });
