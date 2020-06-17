@@ -8,7 +8,6 @@ from gallery.helpers import upload_to_photo_directory
 
 
 class UserProfile(models.Model):
-    id = models.AutoField(primary_key=True, db_index=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, db_index=False, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     bio = models.TextField(max_length=settings.PROFILE_BIO_MAX_LENGTH, blank=True, verbose_name="Биография")
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
