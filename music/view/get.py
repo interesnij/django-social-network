@@ -15,7 +15,7 @@ class TagMusicGet(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(TagMusicGet,self).get_context_data(**kwargs)
-        context["list"] = self.result
+        context["list"] = self.list_
         return context
 
 class GenreMusicGet(TemplateView):
@@ -30,7 +30,7 @@ class GenreMusicGet(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(GenreMusicGet,self).get_context_data(**kwargs)
-        context["list"] = self.result
+        context["list"] = self.list_
         return context
 
 class ListMusicGet(TemplateView):
