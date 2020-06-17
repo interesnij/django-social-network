@@ -38,7 +38,7 @@ class ListMusicGet(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(pk=self.kwargs["pk"])
-        self.list_ = SoundcloudParsing.objects.filter(players=self.list)
+        self.list_ = SoundcloudParsing.objects.filter(list=self.list)
         self.list_ = self.list_[0:100]
         self.result = reversed(list(self.list_))
         return super(ListMusicGet,self).get(request,*args,**kwargs)
