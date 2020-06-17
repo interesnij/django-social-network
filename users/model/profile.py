@@ -32,7 +32,7 @@ class UserProfile(models.Model):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-    def b_avatar(self, field):
+    def b_avatarr(self, field):
         if field:
             image = Image.open(field)
             image = image.convert('RGB')
@@ -44,7 +44,7 @@ class UserProfile(models.Model):
         else:
             return None
 
-    def s_avatar(self, field):
+    def s_avatarr(self, field):
         if field:
             image = Image.open(field)
             image = image.convert('RGB')
