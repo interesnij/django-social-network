@@ -257,15 +257,6 @@ class Community(models.Model):
         avatar_photos = Photo.objects.filter(photos_query)
         return avatar_photos
 
-    def get_avatar(self):
-        from easy_thumbnails.files import get_thumbnailer
-        try:
-            avatar = self.get_avatar_photos().order_by('-id')[0]
-            thumb = get_thumbnailer(avatar.file)['avatar'].url
-        except:
-            thumb = None
-        return thumb
-
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 
