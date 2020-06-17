@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from pilkit.processors import ResizeToFill, ResizeToFit
-from imagekit.models import ProcessedImageField
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from gallery.helpers import upload_to_photo_directory
 
 
@@ -17,8 +16,8 @@ class UserProfile(models.Model):
     facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
-    b_avatar = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=250, height=200)])
-    s_avatar = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_photo_directory,processors=[ResizeToFit(width=50, height=50)])
+    b_avatar = models.FileField(blank=True, upload_to=upload_to_photo_directory)
+    s_avatar = models.FileField(blank=True, upload_to=upload_to_photo_directory)
 
 
     def __str__(self):
@@ -31,6 +30,30 @@ class UserProfile(models.Model):
         else:
             ip = request.META.get('REMOTE_ADDR')
         return ip
+
+    def b_avatar(self, field):
+        if field:
+            image = Img.open(field)
+            image = image.convert('RGB')
+            image = image.resize((250, 200), Img.ANTIALIAS)
+            output = io.BytesIO()
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            return InMemoryUploadedFile(output, 'ImageField',field.name, 'image/jpeg', sys.getsizeof(output), None)
+        else:
+            return None
+
+    def s_avatar(self, field):
+        if field:
+            image = Img.open(field)
+            image = image.convert('RGB')
+            image = image.resize((50, 50), Img.ANTIALIAS)
+            output = io.BytesIO()
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            return InMemoryUploadedFile(output, 'ImageField',field.name, 'image/jpeg', sys.getsizeof(output), None)
+        else:
+            return None
 
     class Meta:
         verbose_name = 'Профиль пользователя'
