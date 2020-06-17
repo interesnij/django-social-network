@@ -22,7 +22,10 @@ class UserAdmin(admin.ModelAdmin):
     ]
     search_fields = ('last_name','first_name')
 
-
+class UserProfileAdmin(admin.ModelAdmin):
+    model = UserProfile
+    search_fields = ('name',)
+    list_display = ['user','b_avatar', 's_avatar']
 
 admin.site.register(User, UserAdmin)
 
@@ -31,4 +34,4 @@ admin.site.register(OneUserLocation)
 admin.site.register(TwoUserLocation)
 admin.site.register(ThreeUserLocation)
 admin.site.register(IPUser)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileAdmin)
