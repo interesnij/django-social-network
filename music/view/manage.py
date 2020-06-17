@@ -88,7 +88,7 @@ class TrackAdd(View):
         except:
             my_list = SoundList.objects.create(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
         if not my_list.is_track_in_list(track.pk):
-            my_list.track.add(track)
+            my_list.players.add(track) 
         return HttpResponse("!")
 
 class TrackRemove(View):
