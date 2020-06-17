@@ -22,6 +22,9 @@ class UserPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        self.avatar = self.photo.is_avatar(request.user)
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
@@ -29,9 +32,9 @@ class UserPhoto(TemplateView):
         context=super(UserPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
         context["user"]=self.user
-        context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["avatar"]=self.photo.is_avatar(self.request.user)
+        context["next"]=self.next
+        context["prev"]=self.prev
+        context["avatar"]=self.avatar
         context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
