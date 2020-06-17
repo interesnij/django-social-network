@@ -604,7 +604,8 @@ class User(AbstractUser):
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = Q(players=list, is_deleted=False)
         music_list = SoundcloudParsing.objects.filter(music_query)
-        return music_list
+        result = reversed(list(music_list))
+        return result
 
 
     def get_music_count(self):
