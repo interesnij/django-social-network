@@ -4,7 +4,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 import io, sys
-from posts.helpers import upload_to_post_directory
+from users.helpers import upload_to_user_directory
 
 
 class UserProfile(models.Model):
