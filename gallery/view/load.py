@@ -31,7 +31,7 @@ class UserPhoto(TemplateView):
         context["user"]=self.user
         context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["avatar"]=self.photo.is_avatar(request.user)
+        context["avatar"]=self.photo.is_avatar(self.request.user)
         context["form_image"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
