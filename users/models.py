@@ -625,8 +625,7 @@ class User(AbstractUser):
         music_query = Q(players=list, is_deleted=False)
 
         music_list = SoundcloudParsing.objects.filter(music_query)
-        music_list[0:5]
-        return music_list
+        return music_list.reverse()[:5]
 
     def get_video_count(self):
         from video.models import Video, VideoAlbum
