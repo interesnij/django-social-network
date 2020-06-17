@@ -618,17 +618,11 @@ class User(AbstractUser):
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-        except:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-        music_query = Q(players=list, is_deleted=False)
-
-        music_list = SoundcloudParsing.objects.filter(music_query)
+        music = self.get_music()
         list = []
         i = 1
         while i < 6:
-            list += music_list[i]
+            list += music[i]
             i += 1
         return list
 
