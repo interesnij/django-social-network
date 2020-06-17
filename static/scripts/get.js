@@ -464,7 +464,7 @@ on('#ajax', 'click', '.music_list_post', function() {
   var item_pk = item.getAttribute('data-pk');
   if (!document.body.classList.contains("item_" + item_pk)){
     document.querySelector("body").classList.add("item_" + item_pk);
-    list = item.querySelectorAll(".music");
+    list = item.querySelectorAll(".music").reverse();
 
     for(i=0; i<list.length; i++) {
       _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
