@@ -54,14 +54,21 @@ class User(AbstractUser):
         user_profile.save(update_fields=['b_avatar'])
         return user_profile.b_avatar
 
-    def get_avatar(self):
-        from easy_thumbnails.files import get_thumbnailer
+    def get_b_avatar(self):
+        from users.model.profile import UserProfile
         try:
-            avatar = self.get_avatar_photos().order_by('-id')[0]
-            thumb = get_thumbnailer(avatar.file)['avatar'].url
+            user_profile = UserProfile.objects.get(user=self)
+            return user_profile.b_avatar.url
         except:
-            thumb = None
-        return thumb
+            return None
+
+    def get_avatar(self):
+        from users.model.profile import UserProfile
+        try:
+            user_profile = UserProfile.objects.get(user=self)
+            return user_profile.s_avatar.url
+        except:
+            return None
 
     def get_online(self):
         from datetime import datetime, timedelta
