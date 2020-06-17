@@ -624,7 +624,7 @@ class User(AbstractUser):
             if i < 6:
                 list += [music,]
                 i += 1
-        return list
+        return list.reverse()
 
     def get_video_count(self):
         from video.models import Video, VideoAlbum
