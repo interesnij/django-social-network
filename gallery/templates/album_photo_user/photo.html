@@ -1,4 +1,4 @@
-{% load is_avatar humanize %}
+{% load humanize %}
 <span class="text-hide-xs">
   {% if prev %}
     <a class="prev_photo" href="{% url 'user_album_photo' uuid=user.uuid pk=prev.pk album_uuid=album.uuid %}">
@@ -28,7 +28,7 @@
     &nbsp;<br>
       <span id="btn_console">
         <span>
-          {% if object|it_is_avatar:request.user %}
+          {% if avatar %}
             Это ваш аватар - <span style="cursor:pointer" class="u_unset_avatar">убрать аватар</span>
           {% else %}
             <span style="cursor:pointer" class="u_set_avatar">Сделать аватаром</span>
