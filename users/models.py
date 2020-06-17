@@ -29,9 +29,9 @@ class User(AbstractUser):
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
         try:
-            user_profile = UserProfile.objects.get(user=request.user)
+            user_profile = UserProfile.objects.get(user=self)
         except:
-            user_profile = UserProfile.objects.create(user=request.user)
+            user_profile = UserProfile.objects.create(user=self)
         user_profile.s_avatar = photo_input
         user_profile.save(update_fields=['s_avatar'])
         return user_profile.s_avatar
