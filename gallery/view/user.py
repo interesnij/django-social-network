@@ -72,9 +72,8 @@ class UserAddAvatar(View):
             _album.album.add(photo)
 
             request.user.create_s_avatar(photo_input)
-            avatar = request.user.create_b_avatar(photo_input)
-            return HttpResponse()
-            #return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
+            request.user.create_b_avatar(photo_input)
+            return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:
             return HttpResponseBadRequest()
 

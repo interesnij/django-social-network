@@ -28,6 +28,8 @@ class CommunityAddAvatar(View):
                 _album = Album.objects.create(creator=request.user, is_generic=True, community=community, title="Фото со страницы", description="Фото со страницы сообщества")
             photo = Photo.objects.create(file=photo_input, creator=request.user, community=community)
             _album.album.add(photo)
+            community.create_s_avatar(photo_input)
+            community.create_b_avatar(photo_input)
             return render_to_response('photo_community/admin_photo.html',{'object': photo, 'community': community, 'request': request})
         else:
             return HttpResponseBadRequest()
@@ -122,21 +124,6 @@ class CommunityAlbomView(View):
 		return render_to_response('photo_user/album.html', context)
 
 
-class CommunityAlbomReload(TemplateView):
-	template_name="photo_community/album_reload.html"
-
-	def get(self,request,*args,**kwargs):
-		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-		self.photos = Photo.objects.filter(album=self.album)
-		return super(CommunityAlbomReload,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommunityAlbomReload,self).get_context_data(**kwargs)
-		context['album'] = self.album
-		context['photos'] = self.photos
-		return context
-
-
 class PhotoCommunityCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 	def post(self, request, *args, **kwargs):
@@ -180,19 +167,3 @@ class AlbumCommunityCreate(TemplateView):
 		else:
 			return HttpResponseBadRequest()
 		return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
-
-
-class CommunityAlbomGygView(TemplateView):
-	template_name="photo_community/gygyg.html"
-
-	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(uuid=self.kwargs["uuid"])
-		self.album = Album.objects.filter(creator=self.user)
-		self.new_url = self.album.last().uuid
-		return super(CommunityAlbomGygView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommunityAlbomGygView,self).get_context_data(**kwargs)
-		context["new_url"]=self.new_url
-		context["album"]=self.album
-		return context
