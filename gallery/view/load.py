@@ -129,10 +129,10 @@ class CommunityDetailAvatar(TemplateView):
         self.template_name = self.community.get_template_list(folder="photo_community/", template="photo.html", request=request)
         self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        return super(UserDetailAvatar,self).get(request,*args,**kwargs)
+        return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserDetailAvatar,self).get_context_data(**kwargs)
+        context=super(CommunityDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.community
         context["next"] = self.next
