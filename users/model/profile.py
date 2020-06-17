@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files import Image
+from django.core.files import File
 from gallery.helpers import upload_to_photo_directory
 
 
@@ -36,7 +36,7 @@ class UserProfile(models.Model):
         if field:
             image = field
             image = image.convert('RGB')
-            image = image.resize((250, 200), Image.ANTIALIAS)
+            image = image.resize((250, 200), File.ANTIALIAS)
             output = io.BytesIO()
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
