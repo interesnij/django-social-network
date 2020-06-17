@@ -79,7 +79,8 @@ class UserAddAvatar(View):
             user_profile.b_avatar = photo
             user_profile.s_avatar = photo
             user_profile.save()
-            return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
+            return HttpResponse(user_profile)
+            #return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:
             return HttpResponseBadRequest()
 
