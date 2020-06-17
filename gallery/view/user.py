@@ -78,7 +78,7 @@ class UserAddAvatar(View):
                 user_profile = UserProfile.objects.create(user=request.user)
             user_profile.b_avatar = photo_input
             user_profile.s_avatar = photo_input
-            user_profile.save()
+            user_profile.save(update_fields=['b_avatar', 's_avatar']) 
             return HttpResponse(user_profile)
             #return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
         else:
