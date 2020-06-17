@@ -7,6 +7,13 @@ on('#ajax', 'click', '.c_fullscreen', function() {
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.c_avatar_detail', function() {
+  uuid = this.getAttribute('photo-uuid');
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/c_avatar_detail/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('item-uuid');
@@ -62,7 +69,7 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
     dropdowns[i].classList.remove("current_file_dropdown");
   }} catch { null }
   parent = this.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk"); 
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".c_item_comments");
   this.className = '';

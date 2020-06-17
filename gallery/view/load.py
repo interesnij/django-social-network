@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 from gallery.forms import PhotoDescriptionForm
 from common.utils import is_mobile
+from communities.models import Community
 
 
 class UserPhoto(TemplateView):
@@ -96,8 +97,8 @@ class UserDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.avatar_photos = self.user.get_avatar_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
@@ -109,6 +110,31 @@ class UserDetailAvatar(TemplateView):
         context=super(UserDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["user"] = self.user
+        context["next"] = self.next
+        context["prev"] = self.prev
+        context["user_form"]=PhotoDescriptionForm()
+        return context
+
+class CommunityDetailAvatar(TemplateView):
+    """
+    страница отдельного фото аватаров (альбом "Фото со страницы") пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.community =  Community.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
+        self.avatar_photos = self.community.get_avatar_photos()
+        self.template_name = self.community.get_template_list(folder="photo_community/", template="photo.html", request=request)
+        self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        return super(UserDetailAvatar,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserDetailAvatar,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["community"] = self.community
         context["next"] = self.next
         context["prev"] = self.prev
         context["user_form"]=PhotoDescriptionForm()

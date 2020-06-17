@@ -45,7 +45,7 @@
             <div class="card">
                 <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
                     {% if community.get_b_avatar %}
-                    <img data-src="{{ community.get_b_avatar }}" class="lazyload" style="width:100%" alt="image">
+                    <img data-src="{{ community.get_b_avatar }}" <div class="mt-3 pk_saver" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload" style="width:100%" alt="image">
                     {% else %}
                     <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0z" fill="none" />

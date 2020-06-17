@@ -69,6 +69,10 @@ class Community(models.Model):
         verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
 
+    def get_avatar_uuid(self):
+        avatar = self.get_avatar_photos().order_by('-id')[0]
+        return avatar.uuid
+
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
 

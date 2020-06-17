@@ -527,7 +527,7 @@ class User(AbstractUser):
 
     def get_avatar_photos(self):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        #from moderation.models import ModeratedObject
 
         photos_query = Q(creator_id=self.id, is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -707,9 +707,9 @@ class User(AbstractUser):
             queryset = self.get_music()
             return queryset
 
-    def get_avatar_id(self):
+    def get_avatar_uuid(self):
         avatar = self.get_avatar_photos().order_by('-id')[0]
-        return avatar.pk
+        return avatar.uuid
 
     def get_followers(self):
         followers_query = self._make_followers_query()
