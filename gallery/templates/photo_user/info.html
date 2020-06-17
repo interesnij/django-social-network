@@ -73,32 +73,6 @@
             &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" class="u_photo_repost" data-target="#modal_community_repost" style="cursor:pointer">
               <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                <span class="repost-count">
-                  {% if object.count_reposts %}
-                  {{ object.count_reposts }}
-                  {% endif %}
-                </span>
-            </span>
-            <span class="repost_window">
-              {% if object.get_window_reposts %}
-            <div class="repost_pop" style="margin:15px">
-              <span class="c_all_reposts" style="cursor:pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
-              <br><br>
-              <span style="display: flex;">
-                {% for repost in object.get_window_reposts %}
-                <a href="{% url 'user' pk=repost.creator.pk %}" class="ajax" style="padding-right:10px">
-                  <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
-                    {% if repost.creator.get_avatar %}
-                      <img src="{{ repost.creator.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
-                    {% else %}
-                      <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                    {% endif %}
-                    </figure>
-                  </a>
-                  {% endfor %}
-                </span>
-            </div>
-            {% endif %}
             </span>
         </div>
     </div>

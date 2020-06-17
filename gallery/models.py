@@ -167,27 +167,6 @@ class Photo(models.Model):
         dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
 
-    def get_reposts(self):
-        parents = Photo.objects.filter(parent=self)
-        return parents
-
-    def get_window_reposts(self):
-        parents = Photo.objects.filter(parent=self)
-        return parents[0:6]
-
-    def count_reposts(self):
-        parents = self.get_reposts()
-        count_reposts = parents.count()
-        return count_reposts
-
-    def get_likes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(photo=self)
-        return PhotoVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
-
-    def get_dislikes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(photo=self)
-        return PhotoVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
-
 
 class PhotoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
