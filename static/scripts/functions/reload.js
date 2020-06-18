@@ -20,6 +20,7 @@ function create_reload_page(form, post_link, history_link) {
 }
 
 function scrolled(block, link, block_2){
+	// скрипты для работы с прокруткой: пагинация, просмотры и т.д.
 	onscroll = function(){
 		var box = block.querySelector('.last');
 		if(box && box.classList.contains("last")){
@@ -102,6 +103,7 @@ function list_load(block,link) {
 }
 
 function ajax_get_reload(url) {
+	// перезагрузка основного блока на страницу с указанным url
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', url, true );
     ajax_link.onreadystatechange = function () {
