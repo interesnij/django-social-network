@@ -19,14 +19,6 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
-function disableScrolling(){
-    var x=window.scrollX;
-    var y=window.scrollY;
-    window.onscroll=function(){window.scrollTo(x, y);};
-}
-function enableScrolling(){
-    window.onscroll=function(){};
-}
 
 function get_pagination(items, link, items_list) {
 	page = 2;
@@ -54,10 +46,21 @@ function get_pagination(items, link, items_list) {
 	    }
 			link_3.send();
 	  }}
-
 });
-
 }
+
+function show_pagination() {
+	end_list = document.querySelector("#end_list");
+	inViewport = elementInViewport(end_list);
+	if(inViewport){
+		if(document.querySelector('#lenta_load')){
+	    lenta_load = block.querySelector('#lenta_load');
+			link = lenta_load.getAttribute("data-link");
+	    list_load(lenta_load, link);
+	}
+}
+}
+show_pagination();
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
@@ -97,7 +100,7 @@ function if_list(block){
   };
 }
 if_list(document.getElementById('ajax'));
-create_pagination(document.getElementById('ajax'));
+//create_pagination(document.getElementById('ajax'));
 
 function list_load(block,link) {
   // подгрузка списка
@@ -119,7 +122,7 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
-				create_pagination(rtr);
+				//create_pagination(rtr);
         load_chart();
       }
     }
