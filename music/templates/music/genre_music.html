@@ -25,8 +25,8 @@
               </div>
               <div class="card-body">
                 {% if object_list %}
-                <div class="genre_playlist" data-pk="{{ genre.pk }}" id="tracks_container">
-                    <ul>
+                <div class="genre_playlist" data-pk="{{ genre.pk }}" id="music_genre_container">
+                    <ul id="genre_container" data-link="/music/genre/{{ genre.pk }}">
                       {% for object in object_list %}
                       <li class="list-group-item" music-counter="{{ forloop.counter0 }}">
                           <div class="media">
@@ -35,7 +35,7 @@
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
                                   {% else %}
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="width:50px;heigth:50px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                                    <svg fill="currentColor" style="width:50px;heigth:50px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
                                   {% endif %}
                                 </a>
                               </figure>
@@ -91,30 +91,5 @@
 {% if is_genre_playlist %}
   document.querySelector("body").classList.add('genre_' + {{ genre.pk }});
 {% endif %}
-
-var page = 2;
-var loaded = false;
-onscroll = function(){
-  try{
-  var items = document.querySelector(".ul_track_list");
-
-  if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
-  var height = document.documentElement.clientHeight-1;
-  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    if (loaded){return};
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/music/genre/{{ genre.pk }}/?page=' + page++, true );
-    link_3.send();
-    link_3.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      var elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
-      if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-      items.append(elem);
-    }
-  }
-}}
-}catch{return}
-}
 </script>
 {% endblock %}

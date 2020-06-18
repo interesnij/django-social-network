@@ -76,7 +76,7 @@ class AllTagMusicView(ListView):
 
 class GenreMusicView(ListView):
     template_name="music/genre_music.html"
-    paginate_by = 30
+    paginate_by = 3
     model = SoundcloudParsing
 
     def get(self,request,*args,**kwargs):
