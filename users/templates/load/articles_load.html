@@ -22,8 +22,8 @@
      <div class="jumbotron mb-3 bg-dark text-center has-background-img position-relative box-shadow">
          <div class="row align-items-center no-gutters">
                 <figure class="background-img article_load_one" style="cursor:pointer" item-uuid="{{ object.uuid }}">
-                  {% if object.article.g_image %}
-                    <img class="lazyload image_fit_200" data-src="{{ object.article.g_image.url }}" alt="">
+                  {% if object.g_image %}
+                    <img class="lazyload image_fit_200" data-src="{{ object.g_image.url }}" alt="">
                   {% else %}
                     <img class="lazyload" data-src="/static/images/no-image.jpg" />
                   {% endif %}
@@ -38,7 +38,7 @@
                 <div class="container article_info">
                   <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
                   <br>
-                  <h2 class="text-white article_title">{{ object.article.title}}</h2>
+                  <h2 class="text-white article_title">{{ object.title}}</h2>
                   <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
                   <hr class="my-3">
                   <a class="btn btn-primary">Читать</a>
