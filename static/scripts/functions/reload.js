@@ -123,7 +123,7 @@ function if_list(block){
   };
 }
 if_list(document.getElementById('ajax'));
-create_pagination();
+create_pagination(document.getElementById('ajax'));
 
 function list_load(block,link) {
   // подгрузка списка
