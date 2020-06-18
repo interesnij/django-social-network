@@ -101,8 +101,8 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
-				create_pagination(rtr)
-        load_chart()
+				create_pagination(rtr);
+        load_chart();
       }
     }
     ajax_link.send();
