@@ -63,7 +63,7 @@ function paggg(block, link, block_2){
 page = 2;
 loaded = false;
 function paginate(block, link, block_2){
-	if(items.getElementsByClassName('card').length === (page-1)*3){
+	if(block.getElementsByClassName('card').length === (page-1)*3){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 		link_3.open( 'GET', link + '/?page=' + page++, true );
@@ -73,11 +73,11 @@ function paginate(block, link, block_2){
 			var elem = document.createElement('span');
 			elem.innerHTML = link_3.responseText;
 			if(elem.getElementsByClassName('card').length < 3){loaded = true; return};
-			if (elem.querySelector(items_list)){
+			if (elem.querySelector(block_2)){
 				xxx = document.createElement("span");
-				xxx.innerHTML = elem.querySelector(items_list).innerHTML;
-				items.append(xxx)
-			} else {items.append(elem)}
+				xxx.innerHTML = elem.querySelector(block_2).innerHTML;
+				block.append(xxx)
+			} else {block.append(elem)}
 			}
 		}
 		link_3.send();
