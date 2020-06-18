@@ -48,8 +48,8 @@ function get_pagination(items, link, items_list) {
 	  }}
 });
 }
-
-function show_pagination() {
+onscroll = function(){
+	try{
 	end_list = document.querySelector("#end_list");
 	inViewport = elementInViewport(end_list);
 	if(inViewport){
@@ -60,6 +60,7 @@ function show_pagination() {
 	    list_load(lenta_load.querySelector("#lenta_load"), link);
 	}
 }
+} catch { null }
 }
 
 
