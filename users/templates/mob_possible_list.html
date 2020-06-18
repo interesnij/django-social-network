@@ -19,7 +19,7 @@
                         <button class="btn btn-outline-link" type="button">Искать</button>
                     </div>
                 </div>
-                <ul class="list-group" id="possible_container">
+                <ul class="list-group" id="possible_friends_container" data-link="/users/detail/possible/{{ user.pk }}">
                     {% if object_list %}
                     {% for object in object_list %}
                     <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">
@@ -60,35 +60,5 @@
         </div>
     </div>
 </div>
-
-<script>
-ready(() => {
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var all_users = document.getElementById("possible_container");
-    if(all_users.querySelectorAll('.list-group-item').length === (page-1)*30){
-    height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '{% url "possible_users" pk=request.user.pk %}?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        users_list = elem.querySelector(".list-group");
-        if(users_list.getElementsByClassName('list-group-item').length === 30){loaded = true};
-        all_users.append(users_list);
-        }
-      }
-    }
-  }
-  }catch{return};
-}
-});
-</script>
 
 {% endblock %}

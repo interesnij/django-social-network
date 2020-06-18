@@ -89,33 +89,4 @@
 
 </div>
 
-<script>
-
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var items = document.getElementById("community_stream");
-
-    if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/list/' + '{{ community.pk }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('infinite-item').length < 30){loaded = true;};
-        items.append(elem);
-        }
-      }
-    }}
-  }catch{return}
-  }
-
-</script>
-
 {% endblock %}

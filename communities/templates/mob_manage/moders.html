@@ -27,7 +27,7 @@
                     </div>
                 </div>
               {% if object_list %}
-                <ul class="list-group" id="moders-container">
+                <ul class="list-group" id="com_moders_container" data-link="/communities/manage/moders/{{ community.pk }}">
                     {% for object in object_list %}
                     <li class="list-group-item pag {% if forloop.last %}last{% endif %} li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
@@ -77,33 +77,4 @@
 </div>
 </div>
 
-<script>
- ready(() => {
-  var page = 2;
-  var loaded = false;
-
-  onscroll = function(){
- try{
-    var moders = document.getElementById("moders-container");
-    if(moders.getElementsByClassName('list-group-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/manage/moders/' + '{{ community.pk }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        var moders_list = elem.querySelector(".list-group");
-        if(moders_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-        moders.append(moders_list);
-        }
-      }
-    }}
-  }catch{return}
-}
-});
-</script>
 {% endblock %}

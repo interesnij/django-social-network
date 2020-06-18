@@ -1,5 +1,5 @@
 {% if object_list %}
-<div class="music-load row">
+<div class="music-load row" id="music_load_container" data-link="users/load/music_load">
 {% for object in object_list %}
   <div class="col-md-8 mx-auto pag {% if forloop.last %}last{% endif %}">
     <div class="media music_load_one mb-2" style="cursor:pointer" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}">

@@ -24,7 +24,7 @@
                     </h5>
                 </div>
               {% if object_list %}
-                <ul class="list-group" id="editors-container">
+                <ul class="list-group" id="com_editors_container" data-link="/communities/manage/editors/{{ community.pk }}">
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }} pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
@@ -74,33 +74,4 @@
 </div>
 </div>
 
-<script>
- ready(() => {
-  var page = 2;
-  var loaded = false;
-
-  onscroll = function(){
-  try{
-    var editors = document.getElementById("editors-container");
-    if(editors.getElementsByClassName('list-group-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/manage/editors/' + '{{ community.pk }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        var editors_list = elem.querySelector(".list-group");
-        if(editors_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-        editors.append(editors_list);
-        }
-      }
-    }}
-  }catch{return}
-}
-});
-</script>
 {% endblock %}

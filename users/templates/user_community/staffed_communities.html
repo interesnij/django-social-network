@@ -97,7 +97,7 @@
                   </div>
               </div>
               <div class="card-body px-0 py-0">
-                  <ul class="list-group border-top border-bottom list-group-flush">
+                  <ul id="staff_communities_container" data-link="/users/{{ user.pk }}/staff_communities">
                       {% for object in user.get_visited_communities %}
                       <li class="list-group-item">
                           <div class="media">
@@ -125,33 +125,5 @@
           {% endif %}
     </div>
 </div>
-
-<script>
-
-    var page = 2;
-    var loaded = false;
-    onscroll = function(){
-      try{
-      var items = document.getElementById("communities_container");
-
-      if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
-      var height = document.documentElement.clientHeight-1;
-      if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-        if (loaded){return};
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/users/{{ user.pk }}/staff_communities/?page=' + page++, true );
-        link_3.send();
-        link_3.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var elem = document.createElement('span');
-          elem.innerHTML = link_3.responseText;
-          if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-          items.append(elem);
-          }
-        }
-      }}
-    }catch{return}
-    }
-</script>
 
 {% endblock %}

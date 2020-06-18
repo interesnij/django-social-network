@@ -27,7 +27,7 @@
                         <button class="btn btn-outline-link" type="button">Искать</button>
                     </div>
                 </div>
-                <ul class="list-group" id="friends_container">
+                <ul class="list-group" id="online_friends_container" data-link="/friends/online/{{ user.pk }}">
                     {% if object_list %}
                     {% for object in object_list %}
                     <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">
@@ -68,32 +68,5 @@
         </div>
     </div>
 </div>
-
-<script>
-  var page = 2;
-  var loaded = false;
-      onscroll = function(){
-        try{
-        var friends = document.getElementById("friends_container");
-        if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
-        var height = document.documentElement.clientHeight-1;
-        if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-          if (loaded){return};
-          var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link_3.open( 'GET', '/friends/online/'  + '{{ user.pk }}/?page=' + page++, true );
-          link_3.send();
-          link_3.onreadystatechange = function () {
-          if ( this.readyState == 4 && this.status == 200 ) {
-            var elem = document.createElement('span');
-            elem.innerHTML = link_3.responseText;
-            var friends_list = elem.querySelector(".list-group");
-            if(friends_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-            friends.append(friends_list);
-            }
-          }
-        }}
-      }catch{return}
-  }
-</script>
 
 {% endblock %}

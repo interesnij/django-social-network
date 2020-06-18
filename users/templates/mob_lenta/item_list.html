@@ -1,7 +1,4 @@
 
-{% include 'item_user/post.html' %}
-
-{% if object_list %}
 
 <div class="card mb-3 fullscreen" style="display:none">
   <span class="item_fullscreen_hide">
@@ -15,14 +12,12 @@
     </div>
 
     <span class="stream">
-
       {% for object in object_list %}
         {% include 'item_user/post.html' %}
       {% endfor %}
     </span>
 </div>
 
-{% endif %}
 {% if not object and not object_list %}
 <div class="card mb-3 post_empty centered">
   <div class="card-body">

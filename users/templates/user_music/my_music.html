@@ -25,8 +25,8 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="music_playlist" id="tracks_container" data-pk="{{ user.get_music_list_id }}">
-                    <ul>
+                <div class="music_playlist" data-pk="{{ user.get_music_list_id }}">
+                    <ul id="user_tracks_container" data-link="/users/{{ user.pk }}/music">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
@@ -146,31 +146,6 @@
 </div>
 
 <script>
-
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var items = document.getElementById("tracks_container");
-
-    if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/users/{{ user.pk }}/music/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('list-group-item').length === 30){loaded = true;};
-        items.append(elem);
-        }
-      }
-    }}
-  }catch{return}
-  }
   {% if user.is_user_playlist %}
     document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
   {% endif %}

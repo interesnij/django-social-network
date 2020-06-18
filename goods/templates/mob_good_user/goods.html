@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="row" id="goods_container" data-uuid="{{ user.uuid }}" style="margin-left: 0;margin-right: 0;">
+            <div class="row" id="user_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/user/goods/{{ user.uuid }}">
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-6 u_good_detail pag {% if forloop.last %}last{% endif %}" data-id="{{ object.id }}" style="cursor:pointer">
@@ -81,32 +81,5 @@
 
       </div>
 </div>
-
-<script>
-
-  var page = 2;
-  var loaded = false;
-      onscroll = function(){
-       try{
-        var friends = document.getElementById("goods_container");
-        if(friends.querySelectorAll('.u_good_detail').length === (page-1)*30){
-        var height = document.documentElement.clientHeight-1;
-        if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-          if (loaded){return};
-          var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link_3.open( 'GET', '/goods/user/goods/{{ user.uuid }}/?page=' + page++, true );
-          link_3.send();
-          link_3.onreadystatechange = function () {
-          if ( this.readyState == 4 && this.status == 200 ) {
-            var elem = document.createElement('span');
-            elem.innerHTML = link_3.responseText;
-            if(elem.getElementsByClassName('u_good_detail').length < 30){loaded = true;};
-            friends.append(elem);
-            }
-          }
-        }}
-      }catch{return}
-  }
-</script>
 
 {% endblock %}

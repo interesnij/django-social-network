@@ -21,7 +21,7 @@
             <br><br>
             <div class="card-body px-0 py-0">
               {% if object_list %}
-              <ul class="list-group" id="all-users-container">
+              <ul class="list-group" id="all_users_container" data-link="/users/all-users">
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">
@@ -61,35 +61,5 @@
 
     </div>
 </div>
-
-<script>
-ready(() => {
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var all_users = document.getElementById("all-users-container");
-    if(all_users.querySelectorAll('.user').length === (page-1)*30){
-    height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '{% url "all_users" %}?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        users_list = elem.querySelector(".list-group");
-        if(users_list.getElementsByClassName('user').length === 30){loaded = true};
-        all_users.append(users_list);
-        }
-      }
-    }
-  }
-  }catch{return};
-}
-});
-</script>
 
 {% endblock %}
