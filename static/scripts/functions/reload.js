@@ -29,15 +29,13 @@ function enableScrolling(){
 }
 
 function get_pagination(items, link, items_list) {
-
-	page = 2;
-	loaded = false;
-	ajax = document.querySelector("#ajax");
 	document.addEventListener('scroll', function() {
 	console.log("scroooool");
+	page = 2;
 		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+			loaded = false;
 	    if (loaded){return};
 	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 	    link_3.open( 'GET', link + '/?page=' + page++, true );
