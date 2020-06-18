@@ -48,17 +48,17 @@ function get_pagination(items, link, items_list) {
 	  }}
 });
 }
-function paggg(){
+function paggg(block,block_2){
 	onscroll = function(){
-		var box = document.querySelector('.last');
+		var box = block.querySelector('.last');
 		if(box && box.classList.contains("last")){
 				inViewport = elementInViewport(box);
 				if(inViewport){
 					box.classList.remove("last");
 					console.log(i + " удалил класс last");
-					paginate(document.querySelector('#lenta_load'),
-									 document.querySelector('#lenta_load').getAttribute("data-link"),
-									 '#lenta_load')
+					paginate(block.querySelector('#lenta_load'),
+									 block.querySelector('#lenta_load').getAttribute("data-link"),
+								   block_2)
 		}};
 	}
 }
@@ -87,6 +87,8 @@ function paginate(items, link, items_list){
 	}
 }
 
+paggg(document.getElementById('ajax'), '#lenta_load')
+
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
@@ -111,7 +113,7 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		paggg()
+
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
