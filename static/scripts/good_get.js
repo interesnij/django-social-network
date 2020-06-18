@@ -130,7 +130,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       is_full_attach();
       pk = new_good.getAttribute('good-pk');
 
-      if (img_block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
+      if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
         new_good.setAttribute("tooltip", "Товар уже выбран");
         new_good.setAttribute("flow", "up");
         return
