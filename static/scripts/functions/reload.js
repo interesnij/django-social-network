@@ -48,22 +48,24 @@ function get_pagination(items, link, items_list) {
 	  }}
 });
 }
-page = 2;
-loaded = false;
-onscroll = function(){
-	var box = document.querySelector('.last');
-	if(box && box.classList.contains("last")){
-			inViewport = elementInViewport(box);
-			if(inViewport){
-				box.classList.remove("last");
-				console.log(i + " удалил класс last");
-				paginate(document.querySelector('#lenta_load'),
-								 document.querySelector('#lenta_load').getAttribute("data-link"),
-								 '#lenta_load')
-	}};
-
+function paggg(){
+	onscroll = function(){
+		var box = document.querySelector('.last');
+		if(box && box.classList.contains("last")){
+				inViewport = elementInViewport(box);
+				if(inViewport){
+					box.classList.remove("last");
+					console.log(i + " удалил класс last");
+					paginate(document.querySelector('#lenta_load'),
+									 document.querySelector('#lenta_load').getAttribute("data-link"),
+									 '#lenta_load')
+		}};
+	}
 }
+
 function paginate(items, link, items_list){
+	page = 2;
+	loaded = false;
 	if(items.getElementsByClassName('card').length === (page-1)*3){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -109,7 +111,7 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-
+		paggg()
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
