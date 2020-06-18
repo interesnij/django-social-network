@@ -129,6 +129,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       block = document.body.querySelector(".attach_block");
       is_full_attach();
       pk = new_good.getAttribute('good-pk');
+      title = new_good.querySelector(".good_title").innerHTML;
 
       if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
         new_good.setAttribute("tooltip", "Товар уже выбран");
