@@ -89,7 +89,7 @@ function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
 		_link = music_tag.getAttribute("data-link");
-    get_pagination(music_tag, _link, '#tag_container');
+		paggg(music_tag, _link, '#tag_container')
   } else if(block.querySelector('#lenta_load')){
 		lenta_load = block.querySelector('#lenta_load');
 		_link = lenta_load.getAttribute("data-link");
@@ -123,7 +123,7 @@ function if_list(block){
   };
 }
 if_list(document.getElementById('ajax'));
-//create_pagination(document.getElementById('ajax'));
+create_pagination();
 
 function list_load(block,link) {
   // подгрузка списка
@@ -147,8 +147,7 @@ function ajax_get_reload(url) {
         if_list(rtr);
 				//create_pagination(rtr);
         load_chart();
-				page = 2;
-				loaded = false;
+				create_pagination();
       }
     }
     ajax_link.send();
