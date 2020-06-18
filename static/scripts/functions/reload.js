@@ -19,9 +19,10 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
-function get_pagination(items, link, items_list) {
 page = 2;
 loaded = false;
+function get_pagination(items, link, items_list) {
+
 console.log("scroooool");
 //try{
 if(items.getElementsByClassName('card').length === (page-1)*3){
