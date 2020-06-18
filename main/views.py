@@ -19,7 +19,7 @@ class MainPageView(TemplateView):
 
 class NewsListView(ListView):
 	template_name="news_list.html"
-	paginate_by=30
+	paginate_by = 15
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:

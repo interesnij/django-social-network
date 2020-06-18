@@ -4,7 +4,7 @@ from django.views.generic import ListView
 
 class UserPhotosList(ListView):
 	template_name = 'load/photos_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserPhotosList,self).get(request,*args,**kwargs)
@@ -15,7 +15,7 @@ class UserPhotosList(ListView):
 
 class UserPhotosCommentList(ListView):
 	template_name = 'load/photos_comments_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserPhotosCommentList,self).get(request,*args,**kwargs)
@@ -26,7 +26,7 @@ class UserPhotosCommentList(ListView):
 
 class UserVideosList(ListView):
 	template_name = 'load/videos_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserVideosList,self).get(request,*args,**kwargs)
@@ -38,7 +38,7 @@ class UserVideosList(ListView):
 
 class UserMusicsList(ListView):
 	template_name = 'load/musics_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserMusicsList,self).get(request,*args,**kwargs)
@@ -50,7 +50,7 @@ class UserMusicsList(ListView):
 
 class UserArticlesList(ListView):
 	template_name = 'load/articles_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserArticlesList,self).get(request,*args,**kwargs)
@@ -62,7 +62,7 @@ class UserArticlesList(ListView):
 
 class UserGoodsList(ListView):
 	template_name = 'load/goods_load.html'
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		return super(UserGoodsList,self).get(request,*args,**kwargs)

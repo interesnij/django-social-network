@@ -11,8 +11,7 @@ from rest_framework.exceptions import PermissionDenied
 
 class UserGoods(ListView):
     template_name = None
-    model = Good
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])

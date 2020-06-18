@@ -11,8 +11,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 class PostUserCommentList(ListView):
     template_name = None
-    model = PostComment
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])

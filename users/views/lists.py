@@ -6,7 +6,7 @@ from posts.models import Post
 
 class UserVisitCommunities(ListView):
 	template_name = None
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="user_community/", template="visits.html", request=request)
@@ -19,7 +19,7 @@ class UserVisitCommunities(ListView):
 
 class UserVideoList(ListView):
 	template_name = None
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
@@ -46,7 +46,7 @@ class UserVideoList(ListView):
 
 class UserMusicList(ListView):
 	template_name = None
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
@@ -69,8 +69,7 @@ class UserMusicList(ListView):
 
 class AllPossibleUsersList(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
@@ -93,8 +92,7 @@ class AllPossibleUsersList(ListView):
 
 class PostListView(ListView):
 	template_name = None
-	model = Post
-	paginate_by = 3
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		try:
@@ -118,8 +116,7 @@ class PostListView(ListView):
 
 class AllUsers(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile

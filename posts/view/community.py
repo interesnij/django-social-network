@@ -12,8 +12,7 @@ from django.shortcuts import render_to_response
 
 class PostCommunityCommentList(ListView):
     template_name = None
-    model = PostComment
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])

@@ -6,8 +6,7 @@ from common.utils import is_mobile
 
 class CommunityMembersView(ListView):
 	template_name = None
-	model = Community
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -36,8 +35,7 @@ class CommunityMembersView(ListView):
 
 class CommunityFriendsView(ListView):
 	template_name = None
-	model = Community
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -65,8 +63,7 @@ class CommunityFriendsView(ListView):
 
 class AllCommunities(ListView):
 	template_name="all_communities.html"
-	model=Community
-	paginate_by=30
+	paginate_by=15
 
 	def get_queryset(self):
 		groups=Community.get_trending_communities()
@@ -80,8 +77,7 @@ class AllCommunities(ListView):
 
 class CommunityCategoryView(ListView):
 	template_name="cat.html"
-	model=Community
-	paginate_by=30
+	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])

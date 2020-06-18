@@ -33,8 +33,7 @@ class AllMusicView(TemplateView):
 
 class AllTagsMusicView(ListView):
     template_name="music/tags_music.html"
-    paginate_by = 30
-    model = SoundTags
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.symbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
@@ -54,8 +53,7 @@ class AllTagsMusicView(ListView):
 
 class AllTagMusicView(ListView):
     template_name="music/tag_music.html"
-    paginate_by = 3
-    model = SoundcloudParsing
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
@@ -76,8 +74,7 @@ class AllTagMusicView(ListView):
 
 class GenreMusicView(ListView):
     template_name="music/genre_music.html"
-    paginate_by = 3
-    #model = SoundcloudParsing
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])

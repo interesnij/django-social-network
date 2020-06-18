@@ -144,8 +144,7 @@ class AlbumUserCreate(TemplateView):
 
 class UserPhotosList(ListView):
     template_name = None
-    model = Photo
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -163,7 +162,7 @@ class UserPhotosList(ListView):
 
 class UserAlbumPhotosList(ListView):
     template_name = None
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])

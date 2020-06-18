@@ -29,8 +29,7 @@ class UserPostView(TemplateView):
 
 class UserCommunities(ListView):
     template_name = None
-    model = Community
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -50,8 +49,7 @@ class UserCommunities(ListView):
 
 class UserStaffCommunities(ListView):
     template_name = None
-    model = Community
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -86,7 +84,7 @@ class UserMobStaffed(TemplateView):
 
 class UserMusic(ListView):
     template_name = None
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         from music.models import SoundList
@@ -112,7 +110,7 @@ class UserMusic(ListView):
 
 class UserVideo(ListView):
     template_name = None
-    paginate_by = 30
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         from video.models import VideoAlbum

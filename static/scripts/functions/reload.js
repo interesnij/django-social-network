@@ -35,7 +35,7 @@ function scrolled(block, link, block_2){
 page = 2;
 loaded = false;
 function paginate(block, link, block_2){
-	if(block.getElementsByClassName('pag').length === (page-1)*3){
+	if(block.getElementsByClassName('pag').length === (page-1)*15){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 		link_3.open( 'GET', link + '/?page=' + page++, true );
@@ -44,7 +44,7 @@ function paginate(block, link, block_2){
 		if ( this.readyState == 4 && this.status == 200 ) {
 			var elem = document.createElement('span');
 			elem.innerHTML = link_3.responseText;
-			if(elem.getElementsByClassName('pag').length < 3){loaded = true; return};
+			if(elem.getElementsByClassName('pag').length < 15){loaded = true; return};
 			if (elem.querySelector(block_2)){
 				xxx = document.createElement("span");
 				xxx.innerHTML = elem.querySelector(block_2).innerHTML;

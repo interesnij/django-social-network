@@ -4,7 +4,7 @@ from quan.models import Question, QuestionsCategory
 
 class QuanCategoryView(ListView):
 	template_name = None
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:

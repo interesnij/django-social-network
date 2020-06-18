@@ -7,7 +7,7 @@ from django.views.generic import ListView
 
 class FollowsView(ListView):
 	template_name = None
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -25,8 +25,7 @@ class FollowsView(ListView):
 
 class FollowingsView(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile

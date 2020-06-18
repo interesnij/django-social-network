@@ -184,8 +184,7 @@ class CommunityPrivateView(TemplateView):
 
 class CommunityAdminView(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -204,8 +203,7 @@ class CommunityAdminView(ListView):
 
 class CommunityEditorsView(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -224,8 +222,7 @@ class CommunityEditorsView(ListView):
 
 class CommunityAdvertisersView(ListView):
 	template_name = None
-	model = User
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -244,8 +241,7 @@ class CommunityAdvertisersView(ListView):
 
 class CommunityModersView(ListView):
 	template_name="manage/moders.html"
-	model=User
-	paginate_by=30
+	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -265,7 +261,7 @@ class CommunityModersView(ListView):
 class CommunityBlackListView(ListView):
 	template_name="manage/black_list.html"
 	model=User
-	paginate_by=30
+	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -284,8 +280,7 @@ class CommunityBlackListView(ListView):
 
 class CommunityFollowsView(ListView):
 	template_name = None
-	model = CommunityFollow
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -304,8 +299,7 @@ class CommunityFollowsView(ListView):
 
 class CommunityMemberManageView(ListView):
 	template_name = None
-	model = Community
-	paginate_by = 30
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
