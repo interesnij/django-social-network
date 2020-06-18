@@ -19,12 +19,21 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
+function disableScrolling(){
+    var x=window.scrollX;
+    var y=window.scrollY;
+    window.onscroll=function(){window.scrollTo(x, y);};
+}
+function enableScrolling(){
+    window.onscroll=function(){};
+}
+
 function get_pagination(items, link, items_list) {
 
 	page = 2;
 	loaded = false;
 	ajax = document.querySelector("#ajax");
-	ajax.addEventListener('scroll', function() {
+	document.addEventListener('scroll', function() {
 	console.log("scroooool");
 	//try{
 		if(items.getElementsByClassName('card').length === (page-1)*3){
@@ -106,6 +115,8 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
+				disableScrolling();
+				enableScrolling();
 				create_pagination(rtr);
         load_chart();
       }
