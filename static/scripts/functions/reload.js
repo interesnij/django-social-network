@@ -68,7 +68,7 @@ function create_pagination(block){
 		lenta_load = block.querySelector('#lenta_load');
 		_link = lenta_load.getAttribute("data-link");
 		get_pagination(lenta_load, _link, '#lenta_load');
-	} else if(block.querySelector('#music_tag_container')){
+	} else if(block.querySelector('#music_genre_container')){
 		music_genre = block.querySelector('#genre_container');
 		_link = music_genre.getAttribute("data-link");
 		get_pagination(music_genre, _link, '#genre_container');
