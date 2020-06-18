@@ -35,7 +35,6 @@ function get_pagination(items, link, items_list) {
 	ajax = document.querySelector("#ajax");
 	document.addEventListener('scroll', function() {
 	console.log("scroooool");
-	//try{
 		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
@@ -56,8 +55,11 @@ function get_pagination(items, link, items_list) {
 	      }
 	    }
 	  }}
-	//}catch{return}
-})}
+
+});
+disableScrolling();
+enableScrolling();
+}
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
@@ -115,8 +117,6 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
-				disableScrolling();
-				enableScrolling();
 				create_pagination(rtr);
         load_chart();
       }
