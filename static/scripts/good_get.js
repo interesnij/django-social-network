@@ -101,48 +101,58 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
 
-    if (document.querySelector(".is_comment_attach")){
+    if (document.querySelector(".current_file_dropdown")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
-      xxx = new_good.querySelector(".new_image")
-      pk = xxx.getAttribute('good-pk');
+      pk = new_good.getAttribute("good-pk")
 
-        $input = document.createElement("span");
-        $img = document.createElement("img");
-        $title = document.createElement("span");
-
-        if (img_block.querySelector(".select_good2")){
-            is_full_dropdown()}
-        else if (img_block.querySelector(".select_good1")){
-            $div = document.createElement("div");
-            $div.classList.add("col-md-6", "select_good2");
-            $input.innerHTML = '<input type="hidden" name="select_good2" value="' + pk + '">';;
-          }
-        else {
-            $div = document.createElement("div", "select_good1");
-            $div.classList.add("col-md-6", "select_good1");
-            $input.innerHTML = '<input type="hidden" name="select_good" value="' + pk + '">';
-          }
-
-      $div.setAttribute('good-pk', pk);
-      $div.style.cursor = "pointer";
-      $div.classList.add("u_good_detail");
-
-      $img.classList.add("image_fit");
-      $img.src = xxx.querySelector("img").getAttribute('data-src');
-
+      if (img_block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
+        new_good.setAttribute("tooltip", "Товар уже выбран");
+        new_good.setAttribute("flow", "up");
+        return
+      };
+      new_good.classList.add("attach_toggle");
       title = new_good.querySelector(".good_title").innerHTML;
-      $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>'
+      if (!img_block.querySelector(".select_good1")){
+        div = create_preview_good("select_good1", new_good.querySelector("img").getAttribute('data-src'), pk, title)
+      } else if (!img_block.querySelector(".select_good2")){
+        div = create_preview_good("select_good2", new_good.querySelector("img").getAttribute('data-src'), pk, title)
+      }
+      img_block.append(div);
+      img_block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', img_block.append($good_input));
 
-      $div.append(get_delete_span());
-      $div.append($input);
-      $div.append($title);
-      $div.append($img);
-      img_block.append($div);
-      add_file_dropdown();
-      toast_info("Товар создан!")
-    } else {
+      add_file_dropdown()
+      is_full_dropdown();
+
+    } else if (document.querySelector(".attach_block")){
+      block = document.body.querySelector(".attach_block");
+      is_full_attach();
+      pk = new_good.getAttribute('good-pk');
+
+      if (img_block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
+        new_good.setAttribute("tooltip", "Товар уже выбран");
+        new_good.setAttribute("flow", "up");
+        return
+      };
+      new_good.classList.add("attach_toggle");
+      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", new_good.querySelector("img").getAttribute('data-src'), pk, title)}
+    block.append(div);
+    block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
+
+    add_file_attach()
+    is_full_attach();
+    }
+    else {
       goods = document.body.querySelector("#goods_container");
       new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
                                               goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
@@ -150,6 +160,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
+  toast_info("Товар создан!")
   }};
   link_.send(form_data);
 });
