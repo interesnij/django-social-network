@@ -60,10 +60,9 @@ function paggg(block, link, block_2){
 		}};
 	}
 }
-
-function paginate(items, link, items_list){
-	page = 2;
-	loaded = false;
+page = 2;
+loaded = false;
+function paginate(block, link, block_2){
 	if(items.getElementsByClassName('card').length === (page-1)*3){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -147,7 +146,10 @@ function ajax_get_reload(url) {
         if_list(rtr);
 				//create_pagination(rtr);
         load_chart();
-				create_pagination();
+
+				page = 2;
+				loaded = false;
+				create_pagination(rtr);
       }
     }
     ajax_link.send();
