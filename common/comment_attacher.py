@@ -36,7 +36,7 @@ def good_attach(value, comment):
 def article_attach(value, comment):
     try:
         _select_article = Article.objects.get(uuid=value)
-        _select_article.item_comment.add(comment)
+        _select_article.comment_attach.add(comment)
     except:
         raise ValidationError('Статья не найдена')
 
