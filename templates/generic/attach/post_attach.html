@@ -43,7 +43,7 @@
   </div>
   {% endfor %}
   {% for music in object.item_music.all %}
-  <div class="col-md-12 music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}">
+  <div class="col-md-12 music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;">
     <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
           <a class="music_list_post music_thumb">
