@@ -27,11 +27,7 @@ function scrolled(block, link, block_2){
 				inViewport = elementInViewport(box);
 				if(inViewport){
 					box.classList.remove("last");
-					console.log(i + " удалил класс last");
 					paginate(block, link, block_2);
-					console.log(block);
-					console.log(link);
-					console.log(block_2);
 		}};
 	}
 }
@@ -52,8 +48,7 @@ function paginate(block, link, block_2){
 				xxx = document.createElement("span");
 				xxx.innerHTML = elem.querySelector(block_2).innerHTML;
 				block.append(xxx);
-				console.log(xxx);
-			} else {block.append(elem);console.log(elem)}
+			} else {block.append(elem)}
 			}
 		}
 		link_3.send();
@@ -62,12 +57,7 @@ function paginate(block, link, block_2){
 
 function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
-if(block.querySelector('#tag_container')){
-	music_tag = block.querySelector('#tag_container');
-	scrolled(music_tag, music_tag.getAttribute("data-link"), '#tag_container')
-	console.log(music_tag);
-	console.log(music_tag.getAttribute("data-link"));
- }
+if(block.querySelector('#tag_container')){music_tag = block.querySelector('#tag_container');scrolled(music_tag, music_tag.getAttribute("data-link"), '#tag_container')}
 else if(block.querySelector('#lenta_load')){lenta_load = block.querySelector('#lenta_load'); scrolled(lenta_load, lenta_load.getAttribute("data-link"), '#lenta_load')}
 else if(block.querySelector('#genre_container')){music_genre = block.querySelector('#genre_container'); scrolled(music_genre, music_genre.getAttribute("data-link"), '#genre_container')}
 else if(block.querySelector('#all_communities_container')){all_communities = block.querySelector('#all_communities_container'); scrolled(all_communities, all_communities.getAttribute("data-link"), '#all_communities_container')}
