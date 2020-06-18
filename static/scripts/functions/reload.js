@@ -28,7 +28,10 @@ function scrolled(block, link, block_2){
 				if(inViewport){
 					box.classList.remove("last");
 					console.log(i + " удалил класс last");
-					paginate(block, link, block_2)
+					paginate(block, link, block_2);
+					console.log(block);
+					console.log(link);
+					console.log(block_2);
 		}};
 	}
 }
@@ -50,7 +53,7 @@ function paginate(block, link, block_2){
 				xxx.innerHTML = elem.querySelector(block_2).innerHTML;
 				block.append(xxx);
 				console.log(xxx);
-			} else {block.append(elem)}
+			} else {block.append(elem);console.log(elem)}
 			}
 		}
 		link_3.send();
