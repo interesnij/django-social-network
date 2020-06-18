@@ -34,7 +34,7 @@ function get_pagination(items, link, items_list) {
 	    link_3.open( 'GET', link + '/?page=' + page++, true );
 	    link_3.send();
 	    link_3.onreadystatechange = function () {
-	    if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
+	    if ( this.readyState == 4 && this.status == 200 ) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
 	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
@@ -45,6 +45,13 @@ function get_pagination(items, link, items_list) {
 	}catch{return}
 })}
 
+function create_pagination(block){
+	if(block.querySelector('#music_tag_container')){
+    music_tag = block.querySelector('#tag_container');
+		link = music_tag.getAttribute("data-link");
+    get_pagination(music_tag, link, music_tag);
+  }
+}
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
   if(block.querySelector('#news_load')){
@@ -68,6 +75,7 @@ function if_list(block){
   };
 }
 if_list(document.getElementById('ajax'));
+create_pagination(document.getElementById('ajax'));
 
 function list_load(block,link) {
   // подгрузка списка
@@ -89,6 +97,7 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
+				create_pagination(rtr)
         load_chart()
       }
     }

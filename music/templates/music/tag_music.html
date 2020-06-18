@@ -25,8 +25,8 @@
               </div>
               <div class="card-body">
                 {% if object_list %}
-                <div class="tag_playlist" data-pk="{{ tag.pk }}" id="tracks_container">
-                    <ul>
+                <div class="tag_playlist" data-pk="{{ tag.pk }}" id="music_tag_container">
+                    <ul id="tag_container" data-link="/music/tag/{{ tag.pk }}">
                       {% for object in object_list %}
                       <li class="list-group-item">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
