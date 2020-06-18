@@ -51,7 +51,7 @@ function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
 		link = music_tag.getAttribute("data-link");
-    get_pagination(music_tag, link, music_tag);
+    get_pagination(music_tag, link, '#tag_container');
   }
 }
 function if_list(block){
@@ -63,7 +63,7 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		get_pagination(lenta_load, link, lenta_load.querySelector(".stream"))
+		get_pagination(lenta_load, link, ".stream")
 
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
