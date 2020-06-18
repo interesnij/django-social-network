@@ -38,7 +38,7 @@ function get_pagination(items, link, items_list) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
 	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
-	      items.append(items_list);
+	      items.append(elem);
 	      }
 	    }
 	  }}
