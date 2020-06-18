@@ -43,8 +43,7 @@ function get_pagination(items, link, items_list) {
 	    }
 	  }}
 	}catch{return}
-};
-}
+})}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
