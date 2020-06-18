@@ -47,7 +47,7 @@ function paginate(block, link, block_2){
 		if ( this.readyState == 4 && this.status == 200 ) {
 			var elem = document.createElement('span');
 			elem.innerHTML = link_3.responseText;
-			if(elem.getElementsByClassName('pag').length < 15){loaded = true; return};
+			if(elem.getElementsByClassName('pag').length < 15){loaded = true};
 			if (elem.querySelector(block_2)){
 				xxx = document.createElement("span");
 				xxx.innerHTML = elem.querySelector(block_2).innerHTML;
