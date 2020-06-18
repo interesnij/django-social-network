@@ -23,7 +23,8 @@ function get_pagination(items, link, items_list) {
 
 	page = 2;
 	loaded = false;
-	window.addEventListener('scroll', function() {
+	ajax = document.querySelector("#ajax");
+	ajax.addEventListener('scroll', function() {
 	console.log("scroooool");
 	//try{
 		if(items.getElementsByClassName('card').length === (page-1)*3){
