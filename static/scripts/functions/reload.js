@@ -52,8 +52,8 @@ function get_pagination(items, link, items_list) {
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
-		link = music_tag.getAttribute("data-link");
-    get_pagination(music_tag, link, '#tag_container');
+		_link = music_tag.getAttribute("data-link");
+    get_pagination(music_tag, _link, '#tag_container');
   }
 }
 function if_list(block){
