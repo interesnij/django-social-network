@@ -19,43 +19,41 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
-page = 2;
-loaded = false;
 function get_pagination(items, link, items_list) {
 
-console.log("scroooool");
-//try{
-if(items.getElementsByClassName('card').length === (page-1)*3){
-var height = document.documentElement.clientHeight-1;
-if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-	if (loaded){return};
-	var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-	link_3.open( 'GET', link + '/?page=' + page++, true );
-	link_3.send();
-	link_3.onreadystatechange = function () {
-	if ( this.readyState == 4 && this.status == 200 ) {
-		var elem = document.createElement('span');
-		elem.innerHTML = link_3.responseText;
-		if(elem.getElementsByClassName('card').length < 3){loaded = false;};
-		if (elem.querySelector(items_list)){
-			xxx = document.createElement("span");
-			xxx.innerHTML = elem.querySelector(items_list).innerHTML;
-			items.append(xxx)
-		} else {items.append(elem)}
-		}
-	}
-}}
-//}catch{return}
-}
-window.addEventListener('scroll', get_pagination(items, link, items_list))
+	page = 2;
+	loaded = false;
+	window.addEventListener('scroll', function() {
+	console.log("scroooool");
+	//try{
+		if(items.getElementsByClassName('card').length === (page-1)*3){
+	  var height = document.documentElement.clientHeight-1;
+	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+	    if (loaded){return};
+	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+	    link_3.open( 'GET', link + '/?page=' + page++, true );
+	    link_3.send();
+	    link_3.onreadystatechange = function () {
+	    if ( this.readyState == 4 && this.status == 200 ) {
+	      var elem = document.createElement('span');
+	      elem.innerHTML = link_3.responseText;
+	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
+				if (elem.querySelector(items_list)){
+					xxx = document.createElement("span");
+					xxx.innerHTML = elem.querySelector(items_list).innerHTML;
+					items.append(xxx)
+				} else {items.append(elem)}
+	      }
+	    }
+	  }}
+	//}catch{return}
+})}
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
 		_link = music_tag.getAttribute("data-link");
     get_pagination(music_tag, _link, '#tag_container');
-		console.log(music_tag);
-		console.log(_link);
   }
 }
 function if_list(block){
@@ -67,9 +65,7 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		get_pagination(lenta_load, link, ".stream");
-		console.log(lenta_load);
-		console.log(link);
+		//get_pagination(lenta_load, link, ".stream")
 
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
