@@ -55,8 +55,7 @@ function get_pagination(items, link, items_list) {
 	  }}
 
 });
-disableScrolling();
-enableScrolling();
+
 }
 
 function create_pagination(block){
