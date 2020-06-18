@@ -31,7 +31,7 @@ function get_pagination(items, link, items_list) {
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
 	    if (loaded){return};
 	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-	    link_3.open( 'GET', link + '/?page=' + page++, true );
+	    link_3.open( 'GET', link + '/?page=' + page++, true ) || null;
 	    link_3.send();
 	    link_3.onreadystatechange = function () {
 	    if ( this.readyState == 4 && this.status == 200 ) {
