@@ -56,9 +56,7 @@ function paggg(block, link, block_2){
 				if(inViewport){
 					box.classList.remove("last");
 					console.log(i + " удалил класс last");
-					paginate(block.querySelector('#lenta_load'),
-									 link,
-								   block_2)
+					paginate(block, link, block_2)
 		}};
 	}
 }
