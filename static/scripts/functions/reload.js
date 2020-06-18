@@ -19,26 +19,52 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
+window.addEventListener('scroll', function() {
+  console.log("scroooool");
+});
+
+onscroll = function(){
+  try{
+
+  var items = document.getElementById("lenta_container");
+  if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
+  var height = document.documentElement.clientHeight-1;
+  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+    if (loaded){return};
+    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_3.open( 'GET', '/users/detail/list/{{ user.pk }}/?page=' + page++, true );
+    link_3.send();
+    link_3.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+      var elem = document.createElement('span');
+      elem.innerHTML = link_3.responseText;
+      items_list = elem.querySelector(".stream");
+      if(items_list.getElementsByClassName('infinite-item').length < 30){loaded = false;};
+      items.append(items_list);
+      }
+    }
+  }}
+}catch{return}
+};
+
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
   if(block.querySelector('#news_load')){
-    var news_load, link;
     news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
     list_load(block.querySelector("#news_load"), link);
   }else if(block.querySelector('#lenta_load')){
-    var lenta_load, link;
-    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
+    lenta_load = block.querySelector('#lenta_load');
+		link = lenta_load.getAttribute("data-link");
     list_load(block.querySelector("#lenta_load"), link);
+
+
   }else if(block.querySelector('#lenta_community')){
-    var lenta_community, link;
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
   }else if(block.querySelector('#photo_load')){
-    var photo_load, link;
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
   }else if(block.querySelector('#album_photo_load')){
-    var album_photo_load, link;
     album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#album_photo_load"), link);
   };
