@@ -48,18 +48,42 @@ function get_pagination(items, link, items_list) {
 	  }}
 });
 }
+page = 2;
+loaded = false;
 onscroll = function(){
-	end_list = document.querySelector("#end_list");
-	inViewport = elementInViewport(end_list);
-	if(inViewport){
-		if(document.querySelector('#lenta_load')){
-	    lenta_load = document.querySelector('#lenta_load');
-			link = lenta_load.getAttribute("data-link");
-	    list_load(lenta_load, link);
+	var box = document.querySelector('.last');
+	if(box){
+			inViewport = elementInViewport(box);
+			if(inViewport){
+				box.classList.remove("last");
+				console.log(i + " удалил класс last");
+				paginate(document.querySelector('#lenta_load'),
+								 document.querySelector('#lenta_load').getAttribute("data-link"),
+								 '#lenta_load')
+	}};
+
+}
+function paginate(items, link, items_list){
+	if(items.getElementsByClassName('card').length === (page-1)*3){
+		if (loaded){return};
+		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+		link_3.open( 'GET', link + '/?page=' + page++, true );
+
+		link_3.onreadystatechange = function () {
+		if ( this.readyState == 4 && this.status == 200 ) {
+			var elem = document.createElement('span');
+			elem.innerHTML = link_3.responseText;
+			if(elem.getElementsByClassName('card').length < 3){loaded = true; return};
+			if (elem.querySelector(items_list)){
+				xxx = document.createElement("span");
+				xxx.innerHTML = elem.querySelector(items_list).innerHTML;
+				items.append(xxx)
+			} else {items.append(elem)}
+			}
+		}
+		link_3.send();
 	}
 }
-}
-
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
@@ -122,6 +146,8 @@ function ajax_get_reload(url) {
         if_list(rtr);
 				//create_pagination(rtr);
         load_chart();
+				page = 2;
+				loaded = false;
       }
     }
     ajax_link.send();
