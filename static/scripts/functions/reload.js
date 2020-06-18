@@ -54,6 +54,8 @@ function create_pagination(block){
     music_tag = block.querySelector('#tag_container');
 		_link = music_tag.getAttribute("data-link");
     get_pagination(music_tag, _link, '#tag_container');
+		console.log(music_tag);
+		console.log(_link);
   }
 }
 function if_list(block){
@@ -65,7 +67,9 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		get_pagination(lenta_load, link, ".stream")
+		get_pagination(lenta_load, link, ".stream");
+		console.log(music_tag);
+		console.log(link);
 
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
@@ -101,7 +105,7 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
-				//create_pagination(rtr);
+				create_pagination(rtr);
         load_chart();
       }
     }
