@@ -25,7 +25,7 @@ function get_pagination(items, link, items_list) {
 	loaded = false;
 	window.addEventListener('scroll', function() {
 	console.log("scroooool");
-	try{
+	//try{
 		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
@@ -42,7 +42,7 @@ function get_pagination(items, link, items_list) {
 	      }
 	    }
 	  }}
-	}catch{return}
+	//}catch{return}
 })}
 
 function create_pagination(block){
