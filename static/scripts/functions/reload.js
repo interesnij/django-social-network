@@ -49,7 +49,6 @@ function get_pagination(items, link, items_list) {
 });
 }
 onscroll = function(){
-	try{
 	end_list = document.querySelector("#end_list");
 	inViewport = elementInViewport(end_list);
 	if(inViewport){
@@ -60,7 +59,6 @@ onscroll = function(){
 	    list_load(lenta_load.querySelector("#lenta_load"), link);
 	}
 }
-} catch { null }
 }
 
 
