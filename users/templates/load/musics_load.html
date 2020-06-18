@@ -1,7 +1,7 @@
 {% if object_list %}
 <div class="music-load row">
 {% for object in object_list %}
-  <div class="col-md-8 mx-auto">
+  <div class="col-md-8 mx-auto pag {% if forloop.last %}last{% endif %}">
     <div class="media music_load_one mb-2" style="cursor:pointer" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
             {% if object.artwork_url %}

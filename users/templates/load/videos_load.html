@@ -14,7 +14,7 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
-<div class="col-md-4" data-pk="{{ object.pk }}">
+<div class="col-md-4 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.pk }}">
   <div>
     {% if object.image %}
       <img class="lazyload image_fit_200 video_load_one"

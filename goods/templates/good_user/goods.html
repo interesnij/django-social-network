@@ -31,7 +31,7 @@
               <div class="row" id="goods_container" style="margin-left: 0;margin-right: 0;">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-6 u_good_detail" good-pk="{{ object.pk }}" style="cursor:pointer">
+              <div class="col-md-6 u_good_detail pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" style="cursor:pointer">
                       <div class="">
                           <div class="row align-items-center no-gutters">
                               <div class="col">

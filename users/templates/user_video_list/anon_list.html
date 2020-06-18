@@ -32,7 +32,7 @@
                 <div class="video_playlist" id="movies_container">
                   <div class="row movies_list_in_list" album-pk="{{ album.pk }}">
                       {% for object in object_list %}
-                      <div class="col-12 col-md-6 u_video_list_detail" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
+                      <div class="col-12 col-md-6 u_video_list_detail pag {% if forloop.last %}last{% endif %}" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
                         <div class="blog-header-img">
                           {% if object.image %}
                             <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.image.url }}" alt="">

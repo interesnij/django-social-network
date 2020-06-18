@@ -25,7 +25,7 @@
                 <ul class="list-group" id="members_container">
                     {% if object_list %}
                     {% for object in object_list %}
-                    <li class="list-group-item border-top">
+                    <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">
                         <div class="media">
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                 <figure>

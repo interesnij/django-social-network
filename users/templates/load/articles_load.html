@@ -18,7 +18,7 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
-<div class="article_3">
+<div class="article_3 pag {% if forloop.last %}last{% endif %}">
      <div class="jumbotron mb-3 bg-dark text-center has-background-img position-relative box-shadow">
          <div class="row align-items-center no-gutters">
                 <figure class="background-img article_load_one" style="cursor:pointer" item-uuid="{{ object.uuid }}">

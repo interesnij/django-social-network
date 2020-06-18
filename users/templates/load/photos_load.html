@@ -20,7 +20,7 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" >
 {% for object in object_list %}
-  <div class="col-md-4 mb-3" style="margin-left: -7px; margin-right: -7px;">
+  <div class="col-md-4 mb-3 pag {% if forloop.last %}last{% endif %}" style="margin-left: -7px; margin-right: -7px;">
     <div>
           <img class="lazyload image_fit_200 photo_load_one"
                photo-uuid="{{ object.uuid }}"

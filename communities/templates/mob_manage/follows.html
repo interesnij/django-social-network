@@ -28,7 +28,7 @@
               {% if object_list %}
                 <ul class="list-group" id="follows-container">
                     {% for object in object_list %}
-                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.user.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item pag {% if forloop.last %}last{% endif %} li_{{object.pk }}" data-uuid="{{ object.user.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                           <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                             <figure>
