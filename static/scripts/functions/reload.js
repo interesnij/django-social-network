@@ -20,34 +20,33 @@ function create_reload_page(form, post_link, history_link) {
 }
 
 function get_pagination(items, link, items_list) {
-
-	page = 2;
-	loaded = false;
-	window.addEventListener('scroll', function() {
-	console.log("scroooool");
-	//try{
-		if(items.getElementsByClassName('card').length === (page-1)*3){
-	  var height = document.documentElement.clientHeight-1;
-	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-	    if (loaded){return};
-	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-	    link_3.open( 'GET', link + '/?page=' + page++, true );
-	    link_3.send();
-	    link_3.onreadystatechange = function () {
-	    if ( this.readyState == 4 && this.status == 200 ) {
-	      var elem = document.createElement('span');
-	      elem.innerHTML = link_3.responseText;
-	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
-				if (elem.querySelector(items_list)){
-					xxx = document.createElement("span");
-					xxx.innerHTML = elem.querySelector(items_list).innerHTML;
-					items.append(xxx)
-				} else {items.append(elem)}
-	      }
-	    }
-	  }}
-	//}catch{return}
-})}
+page = 2;
+loaded = false;
+console.log("scroooool");
+//try{
+if(items.getElementsByClassName('card').length === (page-1)*3){
+var height = document.documentElement.clientHeight-1;
+if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+	if (loaded){return};
+	var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+	link_3.open( 'GET', link + '/?page=' + page++, true );
+	link_3.send();
+	link_3.onreadystatechange = function () {
+	if ( this.readyState == 4 && this.status == 200 ) {
+		var elem = document.createElement('span');
+		elem.innerHTML = link_3.responseText;
+		if(elem.getElementsByClassName('card').length < 3){loaded = false;};
+		if (elem.querySelector(items_list)){
+			xxx = document.createElement("span");
+			xxx.innerHTML = elem.querySelector(items_list).innerHTML;
+			items.append(xxx)
+		} else {items.append(elem)}
+		}
+	}
+}}
+//}catch{return}
+}
+window.addEventListener('scroll', get_pagination(items, link, items_list))
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
