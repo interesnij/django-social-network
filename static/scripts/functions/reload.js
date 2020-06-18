@@ -58,11 +58,10 @@ function show_pagination() {
 			link = lenta_load.getAttribute("data-link");
 			lenta_load.querySelector("#lenta_load");
 	    list_load(lenta_load.querySelector("#lenta_load"), link);
-
 	}
 }
 }
-show_pagination();
+
 
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
@@ -88,7 +87,7 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		get_pagination(lenta_load, link, ".stream")
+		show_pagination();
 
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
