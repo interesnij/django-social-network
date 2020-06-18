@@ -68,7 +68,7 @@ function if_list(block){
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
 		get_pagination(lenta_load, link, ".stream");
-		console.log(music_tag);
+		console.log(lenta_load);
 		console.log(link);
 
   }else if(block.querySelector('#lenta_community')){
