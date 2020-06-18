@@ -105,7 +105,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
       img_block = dropdown.parentElement.previousElementSibling;
-      data_pk = new_good.getAttribute("good-pk")
+      data_pk = new_good.querySelector(".new_image").getAttribute('good-pk');
 
       if (img_block.querySelector( '[good-pk=' + '"' + data_pk + '"]' )){
         new_good.setAttribute("tooltip", "Товар уже выбран");
@@ -115,9 +115,9 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       new_good.classList.add("attach_toggle");
       title = new_good.querySelector(".good_title").innerHTML;
       if (!img_block.querySelector(".select_good1")){
-        div = create_preview_good("select_good1", new_good.querySelector("img").getAttribute('data-src'), data_pk, title)
+        div = create_preview_good("select_good1", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)
       } else if (!img_block.querySelector(".select_good2")){
-        div = create_preview_good("select_good2", new_good.querySelector("img").getAttribute('data-src'), data_pk, title)
+        div = create_preview_good("select_good2", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)
       }
       img_block.append(div);
       img_block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', img_block.append($good_input));
@@ -137,16 +137,16 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
         return
       };
       new_good.classList.add("attach_toggle");
-      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", new_good.querySelector(".new_image").getAttribute('data-src'), data_pk, title)}
+      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
+      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
     block.append(div);
     block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
 
