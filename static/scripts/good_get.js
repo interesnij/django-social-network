@@ -159,6 +159,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
                                               goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
                : null;
   }
+  console.log(new_good);
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
   toast_info("Товар создан!")
