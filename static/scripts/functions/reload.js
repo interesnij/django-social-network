@@ -117,6 +117,8 @@ function ajax_get_reload(url) {
         document.title = title;
         if_list(rtr);
         load_chart();
+				page = 2;
+				loaded = false;
 				create_pagination(rtr);
       }
     }
