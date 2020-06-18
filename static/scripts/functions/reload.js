@@ -19,11 +19,12 @@ function create_reload_page(form, post_link, history_link) {
     ajax_link.send(form_data);
 }
 
-window.addEventListener('scroll', function() {
-  console.log("scroooool");
-	get_pagination(items, link, items_list) {
+function get_pagination(items, link, items_list) {
+
 	page = 2;
 	loaded = false;
+	window.addEventListener('scroll', function() {
+	console.log("scroooool");
 	try{
 		if(items.getElementsByClassName('item').length === (page-1)*30){
 	  var height = document.documentElement.clientHeight-1;
@@ -42,7 +43,7 @@ window.addEventListener('scroll', function() {
 	    }
 	  }}
 	}catch{return}
-	}
+};
 }
 
 function if_list(block){
