@@ -53,9 +53,8 @@ onscroll = function(){
 	inViewport = elementInViewport(end_list);
 	if(inViewport){
 		if(document.querySelector('#lenta_load')){
-	    lenta_load = block.querySelector('#lenta_load');
+	    lenta_load = document.querySelector('#lenta_load');
 			link = lenta_load.getAttribute("data-link");
-			lenta_load.querySelector("#lenta_load");
 	    list_load(lenta_load.querySelector("#lenta_load"), link);
 	}
 }
