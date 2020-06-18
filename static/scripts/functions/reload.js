@@ -48,7 +48,7 @@ function get_pagination(items, link, items_list) {
 	  }}
 });
 }
-function paggg(block, link, block_2){
+function paggg(block,block_2){
 	onscroll = function(){
 		var box = block.querySelector('.last');
 		if(box && box.classList.contains("last")){
@@ -56,7 +56,9 @@ function paggg(block, link, block_2){
 				if(inViewport){
 					box.classList.remove("last");
 					console.log(i + " удалил класс last");
-					paginate(block, link, block_2)
+					paginate(block.querySelector('#lenta_load'),
+									 block.querySelector('#lenta_load').getAttribute("data-link"),
+								   block_2)
 		}};
 	}
 }
@@ -85,22 +87,23 @@ function paginate(items, link, items_list){
 	}
 }
 
+paggg(document.getElementById('ajax'), '#lenta_load')
+
 function create_pagination(block){
 	if(block.querySelector('#music_tag_container')){
     music_tag = block.querySelector('#tag_container');
 		_link = music_tag.getAttribute("data-link");
-    paggg(block, _link, '#tag_container');
+    get_pagination(music_tag, _link, '#tag_container');
   } else if(block.querySelector('#lenta_load')){
 		lenta_load = block.querySelector('#lenta_load');
 		_link = lenta_load.getAttribute("data-link");
-		paggg(block, _link, '#lenta_load')
+		get_pagination(lenta_load, _link, '#lenta_load');
 	} else if(block.querySelector('#music_genre_container')){
 		music_genre = block.querySelector('#genre_container');
 		_link = music_genre.getAttribute("data-link");
-		paggg(block, _link, '#genre_container');
+		get_pagination(music_genre, _link, '#genre_container');
 	}
 }
-
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
   if(block.querySelector('#news_load')){
@@ -122,10 +125,8 @@ function if_list(block){
     list_load(block.querySelector("#album_photo_load"), link);
   };
 }
-
-create_pagination(document.getElementById('ajax'));
 if_list(document.getElementById('ajax'));
-
+//create_pagination(document.getElementById('ajax'));
 
 function list_load(block,link) {
   // подгрузка списка
@@ -147,7 +148,7 @@ function ajax_get_reload(url) {
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
         if_list(rtr);
-				create_pagination(rtr);
+				//create_pagination(rtr);
         load_chart();
 				page = 2;
 				loaded = false;
