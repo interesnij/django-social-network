@@ -37,7 +37,7 @@ function get_pagination(items, link, items_list) {
 	    if ( this.readyState == 4 && this.status == 200 ) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
-	      if(items_list.getElementsByClassName('infinite-item').length < 3){loaded = false;};
+	      if(items_list.getElementsByClassName('card').length < 3){loaded = false;};
 	      items.append(items_list);
 	      }
 	    }
