@@ -30,12 +30,12 @@ function enableScrolling(){
 
 function get_pagination(items, link, items_list) {
 	page = 2;
+	loaded = false;
 	document.addEventListener('scroll', function() {
 	console.log("scroooool");
 		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-			loaded = false;
 	    if (loaded){return};
 	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 	    link_3.open( 'GET', link + '/?page=' + page++, true );
@@ -44,7 +44,7 @@ function get_pagination(items, link, items_list) {
 	    if ( this.readyState == 4 && this.status == 200 ) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
-	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
+	      if(elem.getElementsByClassName('card').length < 3){loaded = true;};
 				if (elem.querySelector(items_list)){
 					xxx = document.createElement("span");
 					xxx.innerHTML = elem.querySelector(items_list).innerHTML;
