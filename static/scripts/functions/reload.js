@@ -44,7 +44,7 @@ function get_pagination(items, link, items_list) {
 	    if ( this.readyState == 4 && this.status == 200 ) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
-	      if(elem.getElementsByClassName('card').length < 3){disableScrolling(); console.log("скролл остановлен")};
+	      if(elem.getElementsByClassName('card').length == 3){disableScrolling(); console.log("скролл остановлен")};
 				if (elem.querySelector(items_list)){
 					xxx = document.createElement("span");
 					xxx.innerHTML = elem.querySelector(items_list).innerHTML;
