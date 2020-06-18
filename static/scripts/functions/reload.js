@@ -39,7 +39,8 @@ function get_pagination(items, link, items_list) {
 	      elem.innerHTML = link_3.responseText;
 	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
 				if (elem.querySelector(items_list)){
-					items.append(items_list)
+					xxx = elem.querySelector(items_list);
+					items.append(xxx)
 				} else {items.append(elem)}
 	      }
 	    }
