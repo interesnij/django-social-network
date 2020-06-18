@@ -26,7 +26,7 @@ function get_pagination(items, link, items_list) {
 	window.addEventListener('scroll', function() {
 	console.log("scroooool");
 	//try{
-		if(items.getElementsByClassName('item').length === (page-1)*3){
+		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
 	    if (loaded){return};
