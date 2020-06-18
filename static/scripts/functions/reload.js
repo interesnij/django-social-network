@@ -40,7 +40,7 @@ function get_pagination(items, link, items_list) {
 	      if(elem.getElementsByClassName('card').length < 3){loaded = false;};
 				if (elem.querySelector(items_list)){
 					xxx = document.createElement("span");
-					xxx.innerHTML = elem.querySelector(items_list);
+					xxx.innerHTML = elem.querySelector(items_list). innerHTML;
 					items.append(xxx)
 				} else {items.append(elem)}
 	      }
