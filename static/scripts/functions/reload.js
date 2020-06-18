@@ -56,7 +56,9 @@ function show_pagination() {
 		if(document.querySelector('#lenta_load')){
 	    lenta_load = block.querySelector('#lenta_load');
 			link = lenta_load.getAttribute("data-link");
-	    list_load(lenta_load, link);
+			lenta_load.querySelector("#lenta_load");
+	    list_load(lenta_load.querySelector("#lenta_load"), link);
+
 	}
 }
 }
