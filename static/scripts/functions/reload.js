@@ -26,7 +26,7 @@ function get_pagination(items, link, items_list) {
 	window.addEventListener('scroll', function() {
 	console.log("scroooool");
 	try{
-		if(items.getElementsByClassName('item').length === (page-1)*30){
+		if(items.getElementsByClassName('item').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
 	    if (loaded){return};
@@ -37,7 +37,7 @@ function get_pagination(items, link, items_list) {
 	    if ( this.readyState == 4 && this.status == 200 ) {
 	      var elem = document.createElement('span');
 	      elem.innerHTML = link_3.responseText;
-	      if(items_list.getElementsByClassName('infinite-item').length < 30){loaded = false;};
+	      if(items_list.getElementsByClassName('infinite-item').length < 3){loaded = false;};
 	      items.append(items_list);
 	      }
 	    }

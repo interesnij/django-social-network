@@ -94,7 +94,7 @@ class AllPossibleUsersList(ListView):
 class PostListView(ListView):
 	template_name = None
 	model = Post
-	paginate_by = 30
+	paginate_by = 3
 
 	def get(self,request,*args,**kwargs):
 		try:
