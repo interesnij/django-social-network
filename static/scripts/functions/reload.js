@@ -52,7 +52,7 @@ page = 2;
 loaded = false;
 onscroll = function(){
 	var box = document.querySelector('.last');
-	if(box.classList.contains("last")){
+	if(box && box.classList.contains("last")){
 			inViewport = elementInViewport(box);
 			if(inViewport){
 				box.classList.remove("last");
