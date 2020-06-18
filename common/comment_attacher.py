@@ -61,9 +61,9 @@ def get_comment_attach(request, comment):
 
     if request.POST.get('good'):
         if request.POST.get('select_good1'):
-            music_attach(request.POST.get('select_good1'), comment)
+            good_attach(request.POST.get('select_good1'), comment)
         if request.POST.get('select_good2'):
-            music_attach(request.POST.get('select_good2'), comment)
+            good_attach(request.POST.get('select_good2'), comment)
 
     if request.POST.get('article'):
         if request.POST.get('select_article1'):
