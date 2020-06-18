@@ -54,7 +54,11 @@ function create_pagination(block){
     music_tag = block.querySelector('#tag_container');
 		_link = music_tag.getAttribute("data-link");
     get_pagination(music_tag, _link, '#tag_container');
-  }
+  } else if(block.querySelector('#lenta_load')){
+		lenta_load = block.querySelector('#lenta_load');
+		_link = lenta_load.getAttribute("data-link");
+		get_pagination(lenta_load, _link, '#lenta_load');
+	}
 }
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
