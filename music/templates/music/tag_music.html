@@ -28,7 +28,7 @@
                 <div class="tag_playlist" data-pk="{{ tag.pk }}" id="music_tag_container">
                     <ul id="tag_container" data-link="/music/tag/{{ tag.pk }}">
                       {% for object in object_list %}
-                      <li class="list-group-item">
+                      <li class="list-group-item card">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
                               <figure style="cursor:pointer">
                                 <a class="tag_item">
