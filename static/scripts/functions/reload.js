@@ -21,31 +21,29 @@ function create_reload_page(form, post_link, history_link) {
 
 window.addEventListener('scroll', function() {
   console.log("scroooool");
-});
-
-onscroll = function(){
-  try{
-
-  var items = document.getElementById("lenta_container");
-  if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
-  var height = document.documentElement.clientHeight-1;
-  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    if (loaded){return};
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/users/detail/list/{{ user.pk }}/?page=' + page++, true );
-    link_3.send();
-    link_3.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      var elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
-      items_list = elem.querySelector(".stream");
-      if(items_list.getElementsByClassName('infinite-item').length < 30){loaded = false;};
-      items.append(items_list);
-      }
-    }
-  }}
-}catch{return}
-};
+	get_pagination(items, link, items_list) {
+	page = 2;
+	loaded = false;
+	try{
+		if(items.getElementsByClassName('item').length === (page-1)*30){
+	  var height = document.documentElement.clientHeight-1;
+	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+	    if (loaded){return};
+	    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+	    link_3.open( 'GET', link + '/?page=' + page++, true );
+	    link_3.send();
+	    link_3.onreadystatechange = function () {
+	    if ( this.readyState == 4 && this.status == 200 ) {
+	      var elem = document.createElement('span');
+	      elem.innerHTML = link_3.responseText;
+	      if(items_list.getElementsByClassName('infinite-item').length < 30){loaded = false;};
+	      items.append(items_list);
+	      }
+	    }
+	  }}
+	}catch{return}
+	}
+}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
@@ -55,8 +53,8 @@ function if_list(block){
   }else if(block.querySelector('#lenta_load')){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_load"), link);
-
+    list_load(lenta_load, link);
+		get_pagination(lenta_load, link, lenta_load.querySelector(".stream"))
 
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
