@@ -29,9 +29,9 @@ function enableScrolling(){
 }
 
 function get_pagination(items, link, items_list) {
+	page = 2;
 	document.addEventListener('scroll', function() {
 	console.log("scroooool");
-	page = 2;
 		if(items.getElementsByClassName('card').length === (page-1)*3){
 	  var height = document.documentElement.clientHeight-1;
 	  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
