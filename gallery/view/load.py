@@ -71,7 +71,7 @@ class UserWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.album=Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
-        self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
+        self.photos = request.user.get_photos_for_my_album(album_id=self.album.pk)
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="wall_photo.html", request=request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
