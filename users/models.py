@@ -907,7 +907,7 @@ class User(AbstractUser):
             template_name = "mob_" + template_name
         return template_name
 
-    def get_permission_list_user(user, folder, template, request):
+    def get_permission_list_user(self, folder, template, request):
         import re
 
         if self.pk == request.user.pk:
