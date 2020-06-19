@@ -179,7 +179,7 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.focus();
 })
 
-on('#ajax', 'click', '.wall_image', function() {
+on('#ajax', 'click', '.u_wall_image', function() {
   var uuid, pk, loader;
   pk = this.getAttribute('photo-pk');
   uuid = this.getAttribute('data-uuid');
