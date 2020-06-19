@@ -18,7 +18,7 @@
           <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
         </h5>
 
-        <p>{{ reply.text|safe }}</p>
+        <p>{{ reply.text|linesbreaks }}</p>
 
         {% include 'generic/attach/comment_attach.html' %}
 
@@ -27,7 +27,7 @@
                 <div class="col" data-pk="{{ reply.pk }}">
                   {% include 'c_post_comment/reply_info.html' %}
 
-                    <div style="margin-top:10px;display:none;margin-left:-50px;">
+                    <div style="display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
                             <div class="row img_block" style="margin:10px"></div>

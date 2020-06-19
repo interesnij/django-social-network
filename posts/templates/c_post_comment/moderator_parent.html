@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
-        <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
+        <p>{{ comment.text|linesbreaks }}</p>
 
         {% include 'generic/attach/comment_attach.html' %}
 
@@ -25,7 +25,7 @@
             <div class="row">
                 {% include 'c_post_comment/info.html' %}
 
-                    <div style="margin-top:10px;display:none">
+                    <div style="display:none">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
 

@@ -18,7 +18,7 @@
           <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
         </h5>
 
-        <p style="padding-bottom:10px;">{{ reply.text|safe }}</p>
+        <p>{{ reply.text|safe }}</p>
 
         {% include 'generic/attach/reply_attach.html' %}
 
