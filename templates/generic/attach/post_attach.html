@@ -54,9 +54,9 @@
             {% endif %}
           </a>
         </figure>
-        <div class="media-body">
+        <div class="media-body" style="display: flex;">
             <h6 class="music_list_post music_title" style="cursor:pointer;padding-top: 6px;"><a>{{ music.title }}</a></h6>
-              <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
+              <span class='span_btn' style="margin-left: auto;" data-pk="{{ object.pk }}">
                 <span style="cursor:pointer">
                   {% if not request.user|is_track_exists:music.id %}
                   <span class='track_add' title="Добавить">
