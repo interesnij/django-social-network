@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
-        <p>{{ comment.text|linebreaks }}</p>
+        <p>{{ comment.text }}</p>
 
         {% include 'generic/attach/comment_attach.html' %}
 

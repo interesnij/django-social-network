@@ -45,7 +45,7 @@
   <div class="card-body fullscreen" data-uuid="{{ object.creator.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer" >
 
     {% if object.parent.text %}
-      <p class="">{{ object.parent.text|linebreaks }}</p>
+      <p class="">{{ object.parent.text }}</p>
     {% endif %}
     {% include 'generic/attach/post_attach.html' %}
   </div>

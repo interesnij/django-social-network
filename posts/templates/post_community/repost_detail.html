@@ -44,7 +44,7 @@
   <div class="card-body">
 
     {% if object.parent.text %}
-      <p class="">{{ object.parent.text|linebreaks }}</p>
+      <p class="">{{ object.parent.text }}</p>
     {% endif %}
     {% include 'generic/attach/post_attach.html' %}
   </div>
