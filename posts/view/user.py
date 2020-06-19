@@ -3,10 +3,10 @@ from django.views.generic import ListView
 from users.models import User
 from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
-from posts.forms import CommentForm
 from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from posts.forms import CommentForm
 
 
 class PostUserCommentList(ListView):
@@ -22,8 +22,6 @@ class PostUserCommentList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostUserCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
-        #context['form_comment'] = CommentForm()
-        #context['form_reply'] = CommentForm() 
         context['user'] = self.user
         return context
 
@@ -51,7 +49,7 @@ class PostCommentUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_comment(request.user)
-                return render_to_response('u_post_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+                return render_to_response('u_post_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, 'request': request})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -78,7 +76,7 @@ class PostReplyUserCreate(View):
                 new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render_to_response('u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+            return render_to_response('u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, 'request': request})
         else:
             return HttpResponseBadRequest()
 

@@ -23,8 +23,6 @@ class PostCommunityCommentList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostCommunityCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
-        context['form_comment'] = CommentForm()
-        context['form_reply'] = CommentForm()
         context['community'] = self.community
         return context
 
