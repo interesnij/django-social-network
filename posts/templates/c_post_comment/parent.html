@@ -26,9 +26,38 @@
                 <div class="col" data-pk="{{ comment.pk }}">
                   {% include 'c_post_comment/info.html' %}
 
+                    <div style="display:none">
+                        <form action="" method="post" class="replyComment_form">
+                            {% csrf_token %}
+                            <div class="row img_block" style="margin:10px"></div>
+
+                            <div class="row no-gutters" style="margin-top: 20px;">
+                              {% include 'c_post_comment/form_dropdown.html' %}
+
+                                <div class="col">
+                                    <div class="input-group input-group-sm">
+                                      <input type="hidden" name="uuid" value="{{ community.uuid }}">
+                                      <input type="hidden" name="pk" value="{{ comment.pk }}">
+
+                                      <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyComment" type="button">
+                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                      </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                      {% if comment.count_replies %}
+                    ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+                      {% endif %}
+                    </span>
+
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'c_post_comment/reply.html' %}
+                        {% include 'c_post_comment/admin_reply.html' %}
                         <br>
                       {% endfor %}
 

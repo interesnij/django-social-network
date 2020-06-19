@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
-        <p>{{ comment.text|safe }}</p>
+        <p>{{ comment.text|linesbreaks }}</p>
 
         {% include 'generic/attach/comment_attach.html' %}
 
@@ -50,7 +50,6 @@
                     <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
                       {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
-                    <br><br>
                       {% endif %}
                     </span>
                     <span class="stream_reply_comments">
