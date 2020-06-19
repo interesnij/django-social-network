@@ -2,14 +2,10 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from posts.models import PostComment
 from gallery.models import Album, Photo
-from django.http import HttpResponse, HttpResponseBadRequest
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render_to_response
-from rest_framework.exceptions import PermissionDenied
 from gallery.forms import PhotoDescriptionForm
-from common.utils import is_mobile
 from communities.models import Community
+from common.get_template import get_permission_list_user
 
 
 class UserPhoto(TemplateView):
@@ -69,11 +65,10 @@ class UserWallPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        #self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(creator_id=self.photo.creator.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.photo.creator.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = request.user.get_permission_list_user(folder="photo_user/", template="wall_photo.html", request=request)
+        self.template_name = get_permission_list_user(request.user, "photo_user/", "wall_photo.html", request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
