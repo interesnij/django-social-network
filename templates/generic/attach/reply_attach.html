@@ -1,12 +1,12 @@
 <div class="row" style="padding-bottom: 10px;">
   {% for object in reply.comment_photo.all %}
   <div class="col-md-6">
-      <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="wall_image image_fit_small lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
+      <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
   </div>
   {% endfor %}
   {% for object in reply.comment_video.all %}
   <div class="col-md-6" album-pk="{{ object.album.pk }}">
-      <img class="image_fit_small lazyload" data-src="{{ object.image.url }}" alt="img">
+      <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
       <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
   </div>
   {% endfor %}
@@ -17,9 +17,9 @@
       {{ object.title }}
     </span>
     {% if object.image %}
-      <img class="image_fit_small lazyload" style="width:100%" data-src="{{ object.image.url }}" alt="img">
+      <img class="image_fit lazyload" style="width:100%" data-src="{{ object.image.url }}" alt="img">
     {% else %}
-      <svg class="image_fit_small svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      <svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}
     <h5 class="card-title mb-1 header-color-primary text-center" style="white-space: nowrap;">{{ object.title }}</h5>
   </div>

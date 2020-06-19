@@ -1,6 +1,9 @@
 ul{
   padding-inline-start: 0;
 }
+.collapse ul {
+  padding-inline-start: 40px;
+}
 
 .u_album_photo_detail,
 .u_photo_detail,
