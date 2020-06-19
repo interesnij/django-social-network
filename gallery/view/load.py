@@ -68,7 +68,7 @@ class UserWallPhoto(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(creator_id=self.photo.creator.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.photo.creator.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_permission_list_user(request.user, "photo_user/", "wall_photo.html", request)
+        self.template_name = get_permission_list_user(self.photo.creator, "photo_user/", "wall_photo.html", request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
