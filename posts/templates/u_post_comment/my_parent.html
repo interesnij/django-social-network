@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
                     {% include 'u_post_comment/info.html' %}
-                    <div style="margin-top:10px;display:none">
+                    <div style="display:none">
                         <form action="" method="post" class="comment_form replyComment_form">
                             {% csrf_token %}
                             <input type="hidden" name="uuid" value="{{ user.uuid }}">
