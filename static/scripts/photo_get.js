@@ -1,18 +1,15 @@
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   container = this.parentElement;
-  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   uuid2 = container.getAttribute('data-uuid2');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/", loader)
+  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid2 + "/", loader)
 });
 on('#ajax', 'click', '.u_photo_detail', function() {
-  var container, uuid, pk, loader;
   container = this.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/u_photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load/u_photo/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";

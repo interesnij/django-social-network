@@ -1,8 +1,7 @@
 on('#ajax', 'click', '.avatar_detail', function() {
   uuid = this.getAttribute('photo-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load/avatar_detail/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
