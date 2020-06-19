@@ -42,7 +42,7 @@
   </div>
   {% endfor %}
   {% for object in reply.comment_music.all %}
-  <div class="col-md-12 music_list_comment">
+  <div class="col-md-12">
     <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
           <a class="music_list_item">
@@ -53,8 +53,10 @@
             {% endif %}
           </a>
         </figure>
-        <div class="media-body">
-            <h6 class="music_list_item" style="cursor:pointer;padding-top: 6px;"><a>{{ object.title }}</a></h6>
+        <div class="media-body" style="display: flex;">
+            <h6 class="music_list_comment">
+              <a>{{ object.title }}</a>
+            </h6>
         </div>
     </div>
   </div>
