@@ -14,8 +14,8 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = self.photo.creator.get_photos()
         self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "photo.html", request)
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
