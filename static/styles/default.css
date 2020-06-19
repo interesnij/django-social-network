@@ -1,3 +1,17 @@
+.music_list_post,
+.music_list_comment{
+  cursor:pointer;
+  margin: 0 0 1em;
+  width: 84%;
+  overflow: hidden;
+  padding-top: 5px;
+}
+.music_list_post a,
+.music_list_comment a {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 ul{
   padding-inline-start: 0;
 }
