@@ -14,7 +14,7 @@ def get_permission_list_user(user, folder, template, request):
             check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
             template_name = folder + template
     elif request.user.is_anonymous and not user.is_closed_profile():
-        template_name = folder + template
+        template_name = folder + "anon_" + template
     elif request.user.is_anonymous and user.is_closed_profile():
         raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 
