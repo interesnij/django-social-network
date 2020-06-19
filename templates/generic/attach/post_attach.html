@@ -56,7 +56,6 @@
         </figure>
         <div class="media-body">
             <h6 class="music_list_post music_title" style="cursor:pointer;padding-top: 6px;"><a>{{ music.title }}</a></h6>
-            <a class="small ajax" href="{% url 'tag_all_music' pk=music.tag.pk %}">{{ music.tag }}</a>
               <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                 <span style="cursor:pointer">
                   {% if not request.user|is_track_exists:music.id %}
