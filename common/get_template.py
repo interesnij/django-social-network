@@ -5,7 +5,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 def get_permission_list_user(user, folder, template, request):
 
-    if user.pk == request.user.pk:
+    if user.pk == request.user.pk and request.user.is_authenticated:
         template_name = folder + "my_" + template
     elif user != request.user and request.user.is_authenticated:
         check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
