@@ -2,10 +2,9 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from posts.models import PostComment
 from gallery.models import Album, Photo
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from gallery.forms import PhotoDescriptionForm
 from communities.models import Community
-from common.get_template import get_permission_list_user
+from common.get_template import get_detail_template_user, get_detail_template_community
 
 
 class UserPhoto(TemplateView):
@@ -15,16 +14,14 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
+        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "photo.html", request)
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
-        context["user"]=self.user
         context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"]=self.photo.is_avatar(self.request.user)
@@ -39,18 +36,16 @@ class UserAlbumPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
-        self.template_name = self.user.get_permission_list_user(folder="album_photo_user/", template="photo.html", request=request)
+        self.photos = self.photo.creator.get_photos_for_my_album(album_id=self.album.pk)
+        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "album_photo.html", request)
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserAlbumPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
         context["album"]=self.album
-        context["user"]=self.user
         context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"]=self.photo.is_avatar(self.request.user)
@@ -68,7 +63,7 @@ class UserWallPhoto(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(creator_id=self.photo.creator.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.photo.creator.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_permission_list_user(self.photo.creator, "photo_user/", "wall_photo.html", request)
+        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "wall_photo.html", request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -88,16 +83,14 @@ class UserDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.avatar_photos = self.user.get_avatar_photos()
-        self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
+        self.avatar_photos = self.photo.creator.get_avatar_photos()
+        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "avatar_photo.html", request)
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["user"] = self.user
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"]=PhotoDescriptionForm(instance=self.photo)
@@ -110,17 +103,15 @@ class CommunityDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community =  Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.avatar_photos = self.community.get_avatar_photos()
-        self.template_name = self.community.get_template_list(folder="photo_community/", template="photo.html", request=request)
+        self.avatar_photos = self.photo.community.get_avatar_photos()
+        self.template_name = get_detail_template_community(self.photo.community, "photo_community/", "avatar_photo.html", request)
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(CommunityDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["community"] = self.community
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"]=PhotoDescriptionForm(instance=self.photo)
