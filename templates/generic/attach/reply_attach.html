@@ -1,4 +1,4 @@
-<div class="row" style="padding-bottom: 10px;">
+<div class="row">
   {% for object in reply.comment_photo.all %}
   <div class="col-md-6">
       <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
