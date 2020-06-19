@@ -22,8 +22,8 @@ class PostUserCommentList(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostUserCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
-        context['form_comment'] = CommentForm()
-        context['form_reply'] = CommentForm()
+        #context['form_comment'] = CommentForm()
+        #context['form_reply'] = CommentForm() 
         context['user'] = self.user
         return context
 
