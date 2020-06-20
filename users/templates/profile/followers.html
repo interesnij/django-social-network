@@ -5,8 +5,9 @@
       <a href="{% url 'follows' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
-                <h4 class="content-color-primary mb-0">Друзья </h4>
+                <h4 class="content-color-primary mb-0">Подписчики </h4>
             </div>
+            {{ user.count_followers }}
         </div>
       </a>
     </div>

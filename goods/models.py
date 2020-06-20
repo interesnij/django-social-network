@@ -49,7 +49,7 @@ class Good(models.Model):
 	community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	#moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='goods')
 

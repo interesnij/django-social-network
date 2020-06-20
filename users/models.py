@@ -371,10 +371,7 @@ class User(AbstractUser):
         return self.created_user.values('pk').count()
 
     def count_goods(self):
-        from goods.models import Good
-
-        goods = Good.objects.filter(creator__id=self.pk,is_deleted=False).count()
-        return goods
+        return self.good_creator.values('pk').count()
 
     def count_posts(self):
         return self.posts.values('pk').count()
