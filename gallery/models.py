@@ -108,13 +108,13 @@ class Photo(models.Model):
         photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=self.community, photo=self, comment=None)
 
     def get_comments(self):
-        comments_query = Q(post_id=self.pk)
+        comments_query = Q(photo_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 
     def count_comments(self):
-        parent_comments = PhotoComment.objects.filter(post_id=self.pk)
+        parent_comments = PhotoComment.objects.filter(photo_id=self.pk)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
