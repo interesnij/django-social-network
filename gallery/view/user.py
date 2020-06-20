@@ -16,7 +16,10 @@ class UserGalleryView(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.albums_list = self.user.get_albums().order_by('-created')
+        if self.user.pk == request.user.pk:
+            self.albums_list = self.user.get_my_albums().order_by('-created')
+        else:
+            self.albums_list = self.user.get_albums().order_by('-created')
         self.template_name = self.user.get_template_user(folder="gallery_user/", template="gallery.html", request=request)
         return super(UserGalleryView,self).get(request,*args,**kwargs)
 

@@ -261,6 +261,26 @@ class Community(models.Model):
         avatar_photos = Photo.objects.filter(photos_query)
         return avatar_photos
 
+    def get_albums(self):
+        from gallery.models import Album
+        from moderation.models import ModeratedObject
+
+        albums_query = Q(community=self, is_deleted=False, is_public=True, is_generic=False)
+        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
+        albums = Album.objects.filter(albums_query)
+        return albums
+
+    def get_admin_albums(self):
+        from gallery.models import Album
+        from moderation.models import ModeratedObject
+
+        albums_query = Q(is_deleted=False, community=None)
+        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
+        albums = Album.objects.filter(albums_query)
+        return albums
+
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 

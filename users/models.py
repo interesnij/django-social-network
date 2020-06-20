@@ -541,7 +541,7 @@ class User(AbstractUser):
         from gallery.models import Album
         from moderation.models import ModeratedObject
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, is_generic=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
