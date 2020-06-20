@@ -16,7 +16,7 @@
       <a href="{% url 'user' pk=object.pk %}" class="ajax">
           <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
       </a>
-      <a href="" class="small"></a>
+      <a href="{% url 'user' pk=object.pk %}" class="small">Перейти</a>
   </div>
 </div>
   {% endfor %}
