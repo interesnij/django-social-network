@@ -37,7 +37,7 @@ class UserAlbumPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"]) 
         self.photos = self.photo.creator.get_photos_for_my_album(album_id=self.album.pk)
         self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "album_photo.html", request)
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
