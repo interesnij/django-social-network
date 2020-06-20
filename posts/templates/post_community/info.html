@@ -15,7 +15,7 @@
           <span class="like_window">
             {% if object.window_likes %}
           <div class="like_pop" style="margin:15px">
-            <span class="c_all_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+            <span class="c_all_posts_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
               {% for heart in object.window_likes %}
@@ -43,7 +43,7 @@
           <span class="dislike_window">
             {% if object.window_dislikes %}
           <div class="dislike_pop" style="margin:15px">
-            <span class="c_all_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+            <span class="c_all_posts_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
               {% for sheet in object.window_dislikes %}
@@ -82,7 +82,7 @@
             <span class="repost_window">
               {% if object.get_window_reposts %}
             <div class="repost_pop" style="margin:15px">
-              <span class="c_all_reposts" style="cursor:pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
+              <span class="c_all_item_reposts" style="cursor:pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
               <br><br>
               <span style="display: flex;">
                 {% for repost in object.get_window_reposts %}

@@ -26,19 +26,33 @@ on('#ajax', 'click', '#article_add', function() {
   //setTimeout(function() { CKEDITOR.replace('id_content'); CKEDITOR.instances.id_content.updateElement(); }, 1000);
 });
 
-on('#ajax', 'click', '.u_all_likes', function() {
+on('#ajax', 'click', '.u_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_user_like/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.u_all_dislikes', function() {
+on('#ajax', 'click', '.u_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_user_dislike/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.u_all_reposts', function() {
+
+on('#ajax', 'click', '.u_all_posts_comment_likes', function() {
+  container = this.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('data-pk');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/posts/item_window/all_user_comment_like/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.u_all_posts_comment_dislikes', function() {
+  container = this.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('data-pk');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/posts/item_window/all_user_comment_dislike/" + pk + "/", loader)
+});
+
+on('#ajax', 'click', '.u_all_item_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");

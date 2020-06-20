@@ -31,23 +31,36 @@ on('#ajax', 'click', '.show_staff_window', function() {
   open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.c_all_likes', function() {
+on('#ajax', 'click', '.c_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_like/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.c_all_dislikes', function() {
+on('#ajax', 'click', '.c_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.c_all_reposts', function() {
+on('#ajax', 'click', '.c_all_item_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", loader)
+});
+
+on('#ajax', 'click', '.c_all_posts_comment_likes', function() {
+  container = this.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('data-pk');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/posts/item_window/all_community_comment_like/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.c_all_posts_comment_dislikes', function() {
+  container = this.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('data-pk');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/posts/item_window/all_community_comment_dislike/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '#community_article_add', function() {
