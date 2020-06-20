@@ -144,59 +144,23 @@ class PhotoCommunityNotification(models.Model):
             self.unread = True
             self.save()
 
-
-def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
+def photo_notification_handler(actor, recipient, verb, item, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
+    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
+    photo_notification_broadcast(actor, key, recipient=recipient.username)
 
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            PhotoNotification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-                photo=photo,
-            )
-        photo_notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for user in recipient:
-            PhotoNotification.objects.create(
-                actor=actor,
-                recipient=User.objects.get(username=user.username),
-                verb=verb,
-                photo=photo,
-            )
-
-    elif isinstance(recipient, get_user_model()):
-        PhotoNotification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-            photo=photo,
-        )
-        photo_notification_broadcast(
-            actor, key, recipient=recipient.username)
-
-    else:
-        pass
-
-def photo_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
+def photo_community_notification_handler(actor, community, recipient, item, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
         PhotoCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
-    photo_notification_broadcast(actor, key)
+    item_notification_broadcast(actor, key)
+
 
 def photo_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
-    payload = {
-            'type': 'receive',
-            'key': key,
-            'actor_name': actor.get_full_name(),
-            'recipient': recipient
-        }
+    payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}
     async_to_sync(channel_layer.group_send)('notifications', payload)
