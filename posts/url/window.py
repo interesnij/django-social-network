@@ -4,14 +4,14 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-	url(r'^u_like_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostUserLikeWindow.as_view()),
-	url(r'^u_dislike_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostUserDislikeWindow.as_view()),
-    url(r'^u_comment_like_window/(?P<comment_pk>\d+)/(?P<pk>\d+)/$', PostUserCommentLikeWindow.as_view()),
-	url(r'^u_comment_dislike_window/(?P<comment_pk>\d+)/(?P<pk>\d+)/$', PostUserCommentDislikeWindow.as_view()),
-	url(r'^c_like_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostCommunityLikeWindow.as_view()),
-	url(r'^c_dislike_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostCommunityDislikeWindow.as_view()),
-    url(r'^c_comment_like_window/(?P<comment_pk>\d+)/(?P<pk>\d+)/$', PostCommunityCommentLikeWindow.as_view()),
-	url(r'^c_comment_dislike_window/(?P<comment_pk>\d+)/(?P<pk>\d+)/$', PostCommunityCommentDislikeWindow.as_view()),
+	url(r'^u_like_window/(?P<uuid>[0-9a-f-]+)/$', PostUserLikeWindow.as_view()),
+	url(r'^u_dislike_window/(?P<uuid>[0-9a-f-]+)/$', PostUserDislikeWindow.as_view()),
+    url(r'^u_comment_like_window/(?P<comment_pk>\d+)/$', PostUserCommentLikeWindow.as_view()),
+	url(r'^u_comment_dislike_window/(?P<comment_pk>\d+)/$', PostUserCommentDislikeWindow.as_view()),
+	url(r'^c_like_window/(?P<pk>\d+)/$', PostCommunityLikeWindow.as_view()),
+	url(r'^c_dislike_window/(?P<pk>\d+)/$', PostCommunityDislikeWindow.as_view()),
+    url(r'^c_comment_like_window/(?P<comment_pk>\d+)/$', PostCommunityCommentLikeWindow.as_view()),
+	url(r'^c_comment_dislike_window/(?P<comment_pk>\d+)/$', PostCommunityCommentDislikeWindow.as_view()),
 
 	url(r'^all_user_like/(?P<uuid>[0-9a-f-]+)/$', AllPostUserLikeWindow.as_view()),
 	url(r'^all_user_dislike/(?P<uuid>[0-9a-f-]+)/$', AllPostUserDislikeWindow.as_view()),

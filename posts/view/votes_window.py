@@ -11,186 +11,118 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class PostUserLikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними лайками для записи пользователя
-    """
     template_name="post_votes/u_like.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.item.window_likes()
-        elif self.user == request.user:
-            self.likes = self.item.window_likes()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.item.window_likes()
+        self.template_name = self.item.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostUserLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
-        return context
-
-class PostUserCommentLikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними дизлайками для записи пользователя
-    """
-    template_name="post_votes/u_comment_like.html"
-
-    def get(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.comment.window_likes()
-        elif self.user == request.user:
-            self.likes = self.comment.window_likes()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.comment.window_likes()
-        return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(PostUserCommentLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
+        context["likes"] = self.item.window_likes()
+        context["text"] = "Оценили:"
         return context
 
 class PostUserDislikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними лайками для комментария записи пользователя
-    """
-    template_name="post_votes/u_dislike.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.item.window_dislikes()
-        elif self.user == request.user:
-            self.dislikes = self.item.window_dislikes()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.item.window_dislikes()
+        self.template_name = self.item.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostUserDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
+        context["dislikes"] = self.item.window_dislikes()
+        context["text"] = "Не оценили:"
         return context
 
-class PostUserCommentDislikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними дизлайками для комментария записи пользователя
-    """
-    template_name="post_votes/u_comment_dislike.html"
+
+class PostUserCommentLikeWindow(TemplateView):
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.comment.window_dislikes()
-        elif self.user == request.user:
-            self.dislikes = self.comment.window_dislikes()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.comment.window_dislikes()
+        self.template_name = self.comment.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
+        return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostUserCommentLikeWindow,self).get_context_data(**kwargs)
+        context["likes"] = self.comment.window_likes()
+        context["text"] = "Оценили:"
+        return context
+
+
+class PostUserCommentDislikeWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.template_name = self.comment.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostUserCommentDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
+        context["dislikes"] = self.comment.window_dislikes()
+        context["text"] = "Не оценили:"
         return context
 
-
 class PostCommunityLikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними лайками для записи сообщества
-    """
-    template_name="post_votes/c_like.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.item.window_likes()
+        self.template_name = self.item.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostCommunityLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
+        context["likes"] = self.item.window_likes()
+        context["text"] = "Оценили:"
         return context
 
 class PostCommunityDislikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними дизлайками для записи сообщества
-    """
-    template_name="post_votes/c_dislike.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.dislikes = self.item.window_dislikes()
+        self.template_name = self.item.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostCommunityDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
+        context["dislikes"] = self.item.window_dislikes()
+        context["text"] = "Не оценили:"
         return context
 
 class PostCommunityCommentLikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними лайками для комментария записи сообщества
-    """
-    template_name="post_votes/c_comment_like.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.likes = self.comment.window_likes()
+        self.template_name = self.comment.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostCommunityCommentLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
+        context["likes"] = self.comment.window_likes()
+        context["text"] = "Оценили:"
         return context
 
 class PostCommunityCommentDislikeWindow(TemplateView):
-    """
-    Перезагрузка окна с последними дизлайками для комментария записи сообщества
-    """
-    template_name="post_votes/c_comment_dislike.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.dislikes = self.comment.window_dislikes()
+        self.template_name = self.comment.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
+        context["dislikes"] = self.comment.window_dislikes()
+        context["text"] = "Не оценили:"
         return context
-
 
 class AllPostUserLikeWindow(ListView):
     template_name = None
