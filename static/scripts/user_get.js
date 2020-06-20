@@ -52,7 +52,7 @@ on('#ajax', 'click', '.u_all_reposts', function() {
 });
 
 on('#ajax', 'click', '.u_item_comments', function() {
-  clear_comment_dropdown()
+  clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = parent.getAttribute("item-uuid");

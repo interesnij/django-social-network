@@ -1,3 +1,21 @@
+function clear_comment_dropdown(){
+  try{
+  dropdowns = document.body.querySelectorAll(".current_file_dropdown");
+  for (var i = 0; i < dropdowns.length; i++) {
+    btn = dropdowns[i].parentElement.parentElement;
+    btn.classList.remove("files_two");
+    btn.classList.remove("files_one");
+    btn.classList.add("files_null");
+    btn.style.display = "block";
+    dropdowns[i].classList.remove("current_file_dropdown");
+  }} catch { null }
+  try{
+  img_blocks = document.body.querySelectorAll(".img_block");
+  for (var i = 0; i < img_blocks.length; i++) {
+    img_blocks[i].innerHTML = "";
+  }} catch { null }
+}
+
 on('body', 'click', '#register_ajax', function() {
   form_data = new FormData(document.querySelector("#signup"));
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
