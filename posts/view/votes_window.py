@@ -209,7 +209,7 @@ class AllPostUserLikeWindow(ListView):
         context['item'] = self.item
         return context
 
-    def get_queryset(self):
+    def get_queryset(self): 
         likes = self.item.get_liker(self.item.creator)
         return likes
 
