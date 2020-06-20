@@ -15,12 +15,12 @@ urlpatterns = [
 
 	url(r'^all_user_like/(?P<uuid>[0-9a-f-]+)/$', AllPostUserLikeWindow.as_view()),
 	url(r'^all_user_dislike/(?P<uuid>[0-9a-f-]+)/$', AllPostUserDislikeWindow.as_view()),
-    url(r'^all_user_comment_like/(?P<uuid>[0-9a-f-]+)/$', AllPostUserCommentLikeWindow.as_view()),
-	url(r'^all_user_comment_dislike/(?P<uuid>[0-9a-f-]+)/$', AllPostUserCommentDislikeWindow.as_view()),
+    url(r'^all_user_comment_like/(?P<pk>\d+)/$', AllPostUserCommentLikeWindow.as_view()),
+	url(r'^all_user_comment_dislike/(?P<pk>\d+)/$', AllPostUserCommentDislikeWindow.as_view()),
 	url(r'^all_community_like/(?P<uuid>[0-9a-f-]+)/$', AllPostCommunityLikeWindow.as_view()),
 	url(r'^all_community_dislike/(?P<uuid>[0-9a-f-]+)/$', AllPostCommunityDislikeWindow.as_view()),
-    url(r'^all_community_comment_like/(?P<uuid>[0-9a-f-]+)/$', AllPostCommunityCommentLikeWindow.as_view()),
-	url(r'^all_community_comment_dislike/(?P<uuid>[0-9a-f-]+)/$', AllPostCommunityCommentDislikeWindow.as_view()),
+    url(r'^all_community_comment_like/(?P<pk>\d+)/$', AllPostCommunityCommentLikeWindow.as_view()),
+	url(r'^all_community_comment_dislike/(?P<pk>\d+)/$', AllPostCommunityCommentDislikeWindow.as_view()),
 
 	url(r'^all_user_repost/(?P<uuid>[0-9a-f-]+)/$', AllPostUserRepostWindow.as_view()),
 	url(r'^all_community_repost/(?P<uuid>[0-9a-f-]+)/$', AllPostCommunityRepostWindow.as_view()),
