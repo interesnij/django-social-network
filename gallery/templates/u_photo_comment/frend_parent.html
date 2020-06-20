@@ -27,7 +27,7 @@
                 {% include 'u_photo_comment/info.html' %}
 
                     <div style="display:none">
-                        <form action="" method="post" class="replyComment_form">
+                        <form>
                             {% csrf_token %}
                             <input type="hidden" name="uuid" value="{{ user.uuid }}">
                             <input type="hidden" name="pk" value="{{ comment.pk }}">

@@ -10,7 +10,7 @@
 <span class="comment_like_window">
     {% if comment.window_likes %}
     <div class="comment_like_pop" style="margin:15px">
-        <span class="c_all_comment_likes" style="cursor:pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+        <span class="c_all_photo_comment_likes" style="cursor:pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
         <br><br>
         <span style="display: flex;">
             {% for heart in reply.window_likes %}
@@ -38,7 +38,7 @@
 <span class="comment_dislike_window">
 {% if reply.window_dislikes %}
 <div class="comment_dislike_pop" style="margin:15px">
-<span class="c_all_comment_dislikes" style="cursor:pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+<span class="c_all_photo_comment_dislikes" style="cursor:pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
 <br><br>
 <span style="display: flex;">
   {% for sheet in reply.window_dislikes %}
