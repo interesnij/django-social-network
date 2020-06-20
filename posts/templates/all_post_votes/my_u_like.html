@@ -10,11 +10,10 @@
     <div class="card-header">
         <div class="media">
             <div class="media-body">
-              <h5 class="mt-1">Запись одобрили</h5>
+              <h5 class="mt-1">Запись одобрили:</h5>
             </div>
         </div>
     </div>
-    <br><br>
     <div class="card-body px-0 py-0">
       <ul class="list-group" id="votes_container" data-link="">
           {% for object in object_list %}
@@ -23,7 +22,7 @@
                 <a href="{% url 'user' pk=object.pk %}" class="ajax">
                   <figure>
                     {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar.file }}" style="border-radius:50px;width:50px;" alt="image">
+                      <img src="{{ object.get_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                     {% else %}
                       <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     {% endif %}
