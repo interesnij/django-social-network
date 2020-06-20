@@ -144,18 +144,18 @@ class PhotoCommunityNotification(models.Model):
             self.unread = True
             self.save()
 
-def photo_notification_handler(actor, recipient, verb, item, comment, **kwargs):
+def photo_notification_handler(actor, recipient, verb, photo, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
+    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, photo=photo, comment=comment)
     photo_notification_broadcast(actor, key, recipient=recipient.username)
 
-def photo_community_notification_handler(actor, community, recipient, item, verb, comment, **kwargs):
+def photo_community_notification_handler(actor, community, recipient, photo, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
+        PhotoCommunityNotification.objects.create(actor=actor, community=community, photo=photo, comment=comment, recipient=user, verb=verb)
     item_notification_broadcast(actor, key)
 
 
