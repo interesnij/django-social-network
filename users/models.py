@@ -852,26 +852,12 @@ class User(AbstractUser):
     def get_template_user(self, folder, template, request):
         import re
 
-        if self.pk == request.user.pk:
-            if not request.user.is_phone_verified:
-                template_name = "main/phone_verification.html"
-            else:
-                template_name = folder + "my_" + template
-        elif request.user.pk != self.pk and request.user.is_authenticated:
-            if not request.user.is_phone_verified:
-                template_name = "main/phone_verification.html"
-            elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
-                template_name = folder + "block_" + template
-            elif self.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.pk):
-                    template_name = folder + "close_" + template
-                else:
-                    template_name = folder + "frend_" + template
-            else:
-                template_name = folder + template
-        elif request.user.is_anonymous and self.is_closed_profile():
-            template_name = folder + "close_" + template
-        elif request.user.is_anonymous and not self.is_closed_profile():
+    def get_default_template(self, folder, template, request):
+        import re
+
+        if request.user.is_authenticated:
+            template_name = folder + template
+        elif request.user.is_anonymous:
             template_name = folder + "anon_" + template
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
