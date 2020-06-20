@@ -2,7 +2,7 @@
 
 {% if dislikes %}
 <div class="comment_dislike_pop" style="margin:15px">
-    <span class="с_all_comment_dislikes" style="cursor:pointer">Не оценили: {{ dislikes.count }} {{ dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+    <span class="c_all_posts_comment_dislikes" style="cursor:pointer">Не оценили: {{ dislikes.count }} {{ dislikes.count|rupluralize:"человек,человека,людей" }}</span>
     <br><br>
     <span style="display: flex;">
         {% for sheet in dislikes %}
