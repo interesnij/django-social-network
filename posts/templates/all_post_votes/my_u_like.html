@@ -2,7 +2,7 @@
 
 <div id="music_load_container" data-link="posts/votes/user_like">
 {% for object in object_list %}
-<div class="media pag {% if forloop.last %}last{% endif %}">
+<div class="media col-md-8 mx-auto pag {% if forloop.last %}last{% endif %}">
   <a href="{% url 'user' pk=object.pk %}" class="ajax">
     <figure>
       {% if object.get_avatar %}
