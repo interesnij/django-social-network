@@ -210,8 +210,7 @@ class AllPostUserLikeWindow(ListView):
         return context
 
     def get_queryset(self):
-        likes = self.item.likes().values("user_id")
-        users = User.objects.filter(id__in=likes)
+        users = User.objects.filter(id__in=self.item.likes().values("user_id"))
         return users
 
 
