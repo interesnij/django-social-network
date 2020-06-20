@@ -168,7 +168,7 @@ class AllPostUserCommentLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.template_name = self.comment.commenter.get_permission_list_user(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -188,7 +188,7 @@ class AllPostUserCommentDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.template_name = self.comment.commenter.get_permission_list_user(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -247,7 +247,7 @@ class AllPostCommunityCommentLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.template_name = self.comment.post.community.get_template_list(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -267,7 +267,7 @@ class AllPostCommunityCommentDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.template_name = self.comment.post.community.get_template_list(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
