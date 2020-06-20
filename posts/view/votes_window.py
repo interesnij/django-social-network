@@ -3,11 +3,7 @@ from django.views.generic import ListView
 from users.models import User
 from posts.models import Post, PostComment
 from communities.models import Community
-from django.http import JsonResponse, HttpResponse
 from common.model.votes import PostVotes, PostCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from common.checkers import check_can_get_posts_for_community_with_name
-from rest_framework.exceptions import PermissionDenied
 
 
 class PostUserLikeWindow(TemplateView):
