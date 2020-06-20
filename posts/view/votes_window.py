@@ -44,7 +44,7 @@ class PostUserCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
+        self.template_name = self.comment.commenter.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -59,7 +59,7 @@ class PostUserCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
+        self.template_name = self.comment.commenter.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
