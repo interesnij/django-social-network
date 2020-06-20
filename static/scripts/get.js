@@ -180,9 +180,10 @@ on('#ajax', 'click', '.reply_comment', function() {
 })
 
 on('#ajax', 'click', '.u_wall_image', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = this.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/user_wall/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
 });
 
 
