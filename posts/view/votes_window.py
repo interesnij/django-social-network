@@ -22,6 +22,7 @@ class PostUserLikeWindow(TemplateView):
         context=super(PostUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.item.window_likes()
         context["text"] = "Оценили:"
+        context["class_name"] = "u_all_posts_likes"
         return context
 
 class PostUserDislikeWindow(TemplateView):
@@ -36,6 +37,7 @@ class PostUserDislikeWindow(TemplateView):
         context=super(PostUserDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.item.window_dislikes()
         context["text"] = "Не оценили:"
+        context["class_name"] = "u_all_posts_dislikes"
         return context
 
 
@@ -51,6 +53,7 @@ class PostUserCommentLikeWindow(TemplateView):
         context=super(PostUserCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
+        context["class_name"] = "u_all_posts_comment_likes"
         return context
 
 
@@ -66,6 +69,7 @@ class PostUserCommentDislikeWindow(TemplateView):
         context=super(PostUserCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
+        context["class_name"] = "u_all_posts_comment_dislikes"
         return context
 
 class PostCommunityLikeWindow(TemplateView):
@@ -80,6 +84,7 @@ class PostCommunityLikeWindow(TemplateView):
         context=super(PostCommunityLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.item.window_likes()
         context["text"] = "Оценили:"
+        context["class_name"] = "c_all_posts_likes"
         return context
 
 class PostCommunityDislikeWindow(TemplateView):
@@ -94,6 +99,7 @@ class PostCommunityDislikeWindow(TemplateView):
         context=super(PostCommunityDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.item.window_dislikes()
         context["text"] = "Не оценили:"
+        context["class_name"] = "u_all_posts_dislikes"
         return context
 
 class PostCommunityCommentLikeWindow(TemplateView):
@@ -108,6 +114,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
         context=super(PostCommunityCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
+        context["class_name"] = "c_all_posts_comment_likes"
         return context
 
 class PostCommunityCommentDislikeWindow(TemplateView):
@@ -122,7 +129,9 @@ class PostCommunityCommentDislikeWindow(TemplateView):
         context=super(PostCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
+        context["class_name"] = "c_all_posts_comment_dislikes"
         return context
+
 
 class AllPostUserLikeWindow(ListView):
     template_name = None
