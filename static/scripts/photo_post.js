@@ -23,15 +23,15 @@ on('#ajax', 'click', '.photo_user_on_comment', function() {
 })
 
 on('#ajax', 'click', '.u_photo_like', function() {
-  photo = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("photo-uuid");
+  photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = photo.getAttribute("photo-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
   vote_reload("/gallery/photo_window/u_like_window/" + uuid + "/", "/gallery/photo_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
-  photo = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("photo-uuid");
+  photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = photo.getAttribute("photo-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/gallery/photo_window/u_like_window/" + uuid + "/", "/gallery/photo_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
