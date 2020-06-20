@@ -75,6 +75,7 @@ class GoodNotification(models.Model):
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  GoodNotificationQS.as_manager()
     good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
@@ -129,6 +130,7 @@ class GoodCommunityNotification(models.Model):
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = GoodNotificationQS.as_manager()
     good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"
@@ -145,59 +147,25 @@ class GoodCommunityNotification(models.Model):
             self.save()
 
 
-def good_notification_handler(actor, recipient, verb, good, **kwargs):
+def good_notification_handler(actor, recipient, verb, good, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            GoodNotification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-                good=good,
-            )
-        good_notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for user in recipient:
-            GoodNotification.objects.create(
-                actor=actor,
-                recipient=User.objects.get(username=user.username),
-                verb=verb,
-                good=good,
-            )
-
-    elif isinstance(recipient, get_user_model()):
-        GoodNotification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-            good=good,
-        )
-        good_notification_broadcast(
-            actor, key, recipient=recipient.username)
-
-    else:
-        pass
+    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, good=good, comment=comment)
+    photo_notification_broadcast(actor, key, recipient=recipient.username)
 
 def good_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        GoodCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
-    good_notification_broadcast(actor, key)
+        PhotoCommunityNotification.objects.create(actor=actor, community=community, good=good, comment=comment, recipient=user, verb=verb)
+    item_notification_broadcast(actor, key)
 
 
 def good_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
-    payload = {
-            'type': 'receive',
-            'key': key,
-            'actor_name': actor.get_full_name(),
-            'recipient': recipient
-        }
+    payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}
+    async_to_sync(channel_layer.group_send)('notifications', payload)
+
     async_to_sync(channel_layer.group_send)('notifications', payload)
