@@ -99,21 +99,28 @@ class Photo(models.Model):
         photo_notification_handler(user, self.creator, verb=PhotoNotification.DISLIKE, key='social_update', photo=self, comment=None)
 
     def notification_community_repost(self, user):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoCommunityNotification.REPOST, key='social_update', community=self.community, photo=self, comment=None)
+        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.REPOST, key='social_update', community=self.community, photo=self, comment=None)
 
     def notification_community_like(self, user):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoCommunityNotification.LIKE, key='social_update', community=self.community, photo=self, comment=None)
+        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.LIKE, key='social_update', community=self.community, photo=self, comment=None)
 
     def notification_community_dislike(self, user):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoCommunityNotification.DISLIKE, key='social_update', community=self.community, photo=self, comment=None)
+        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=self.community, photo=self, comment=None)
 
-    def get_comments(self, user):
-        comments_query = self._make_get_comments_for_post_query(user=user)
+    def get_comments(self):
+        comments_query = Q(post_id=self.pk)
+        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        comments_query.add(Q(is_deleted=False), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 
-    def get_comment_replies(self, post_comment_id):
-        post_comment = PhotoComment.objects.get(pk=post_comment_id)
-        return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
+    def count_comments(self):
+        parent_comments = PhotoComment.objects.filter(post_id=self.pk)
+        parents_count = parent_comments.count()
+        i = 0
+        for comment in parent_comments:
+            i = i + comment.count_replies()
+        i = i + parents_count
+        return i
 
     def is_avatar(self, user):
         try:
@@ -129,31 +136,13 @@ class Photo(models.Model):
         comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
         return PostComment.objects.filter(comment_replies_query)
 
-    def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
-        comments_query = Q(photo_id=self.pk)
-        if post_comment_parent_id is None:
-            comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        else:
-            comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
-        post_community = self.community
-        if post_community:
-            if not user.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-                blocked_users_query_staff_members = Q(commenter__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
-                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
-                comments_query.add(blocked_users_query, Q.AND)
-                #comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-        else:
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-            comments_query.add(blocked_users_query, Q.AND)
-        #comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
-        return comments_query
-
     def likes(self):
         likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
         return likes
+
+    def likes_count(self):
+        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+        return likes.count()
 
     def window_likes(self):
         likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
@@ -162,6 +151,10 @@ class Photo(models.Model):
     def dislikes(self):
         dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
+
+    def dislikes_count(self):
+        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+        return dislikes.count()
 
     def window_dislikes(self):
         dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
@@ -188,28 +181,28 @@ class PhotoComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def notification_user_comment(self, user):
-        item_notification_handler(user, self.commenter, verb=PhotoNotification.POST_COMMENT, comment=self, photo=self.photo, key='social_update')
+        photo_notification_handler(user, self.commenter, verb=PhotoNotification.POST_COMMENT, comment=self, photo=self.photo, key='social_update')
 
     def notification_user_reply_comment(self, user):
-        item_notification_handler(user, self.commenter, verb=PhotoNotification.POST_COMMENT_REPLY, photo=self.parent_comment.photo, comment=self.parent_comment, key='social_update')
+        photo_notification_handler(user, self.commenter, verb=PhotoNotification.POST_COMMENT_REPLY, photo=self.parent_comment.photo, comment=self.parent_comment, key='social_update')
 
     def notification_user_comment_like(self, user):
-        item_notification_handler(actor=user, recipient=None, verb=PhotoNotification.LIKE_COMMENT, photo=self.photo, comment=self, key='social_update')
+        photo_notification_handler(actor=user, recipient=self.commenter, verb=PhotoNotification.LIKE_COMMENT, photo=self.photo, comment=self, key='social_update')
 
     def notification_user_comment_dislike(self, user):
-        item_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE_COMMENT, photo=self.photo, comment=self, key='social_update')
+        photo_notification_handler(actor=user, recipient=self.commenter, verb=PhotoNotification.DISLIKE_COMMENT, photo=self.photo, comment=self, key='social_update')
 
-    def notification_community_comment(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.photo.community, photo=self.photo, verb=PhotoCommunityNotification.POST_COMMENT, comment=self, key='social_update')
+    def notification_community_comment(self, user, community):
+        photo_notification_handler(actor=user, recipient=None, community=community, photo=self.photo, verb=PhotoNotification.POST_COMMENT, comment=self, key='social_update')
 
-    def notification_community_reply_comment(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.parent_comment.photo.community, photo=self.parent_comment.photo, verb=PhotoCommunityNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+    def notification_community_reply_comment(self, user, community):
+        photo_notification_handler(actor=user, recipient=None, community=community, photo=self.parent_comment.photo, verb=PhotoNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
 
-    def notification_community_comment_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.photo.community, verb=PhotoCommunityNotification.LIKE_COMMENT, comment=self, photo=self.photo, key='social_update')
+    def notification_community_comment_like(self, user, community):
+        photo_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.LIKE_COMMENT, comment=self, photo=self.photo, key='social_update')
 
-    def notification_community_comment_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.photo.community, verb=PhotoCommunityNotification.DISLIKE_COMMENT, comment=self, photo=self.photo, key='social_update')
+    def notification_community_comment_dislike(self, user, community):
+        photo_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.DISLIKE_COMMENT, comment=self, photo=self.photo, key='social_update')
 
     def get_replies(self):
         get_comments = PhotoComment.objects.filter(parent_comment=self).all()
@@ -234,19 +227,11 @@ class PhotoComment(models.Model):
         dislikes = PhotoCommentVotes.objects.filter(photo=self, vote__lt=0)
         return dislikes[0:6]
 
-    def get_likes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_query_comment(comment=self)
-        return PhotoCommentVotes.objects.filter(photo=self, vote__gt=0).filter(reactions_query)
-
-    def get_dislikes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_query_comment(comment=self)
-        return PhotoCommentVotes.objects.filter(photo=self, vote__lt=0).filter(reactions_query)
-
     def __str__(self):
         return str(self.item)
 
     @classmethod
-    def create_comment(cls, commenter, photo=None, parent_comment=None, text=None, created=None ):
+    def create_comment(cls, commenter, photo, parent_comment, text, created):
         comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text)
         channel_layer = get_channel_layer()
         payload = {

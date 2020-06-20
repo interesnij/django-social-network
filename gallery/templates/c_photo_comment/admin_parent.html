@@ -10,7 +10,7 @@
         {% endif %}
     </figure>
   </a>
-    <div class="media-body">
+    <div class="media-body" style="overflow: inherit;">
         <h5 class="mt-0">
           <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
             <span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
@@ -19,27 +19,28 @@
         </h5>
         <p>{{ comment.text }}</p>
 
-        {% include 'generic/attach/u_comment_attach.html' %}
+        {% include 'generic/attach/c_comment_attach.html' %}
 
         <div class="">
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
-                {% include 'u_post_comment/info.html' %}
+                  {% include 'c_photo_comment/info.html' %}
 
                     <div style="display:none">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
-                            <input type="hidden" name="uuid" value="{{ user.uuid }}">
-                            <input type="hidden" name="pk" value="{{ comment.pk }}">
                             <div class="row img_block" style="margin:10px"></div>
 
-                            <div class="row no-gutters" style="margin-top: 15px;">
-                              {% include 'u_post_comment/form_dropdown.html' %}
+                            <div class="row no-gutters" style="margin-top: 20px;">
+                              {% include 'c_photo_comment/form_dropdown.html' %}
+
                                 <div class="col">
                                     <div class="input-group input-group-sm">
+                                      <input type="hidden" name="uuid" value="{{ community.uuid }}">
+                                      <input type="hidden" name="pk" value="{{ comment.pk }}">
 
                                       <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
-                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyItemComment" type="button">
+                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyPhotoComment" type="button">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                       </button>
                                     </div>
@@ -56,7 +57,7 @@
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'u_post_comment/frend_reply.html' %}
+                        {% include 'c_photo_comment/admin_reply.html' %}
                         <br>
                       {% endfor %}
 

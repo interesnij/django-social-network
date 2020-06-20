@@ -24,7 +24,7 @@
         <div class="">
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
-                {% include 'u_post_comment/info.html' %}
+                {% include 'u_photo_comment/info.html' %}
 
                     <div style="display:none">
                         <form action="" method="post" class="replyComment_form">
@@ -34,12 +34,12 @@
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters" style="margin-top: 15px;">
-                              {% include 'u_post_comment/form_dropdown.html' %}
+                              {% include 'u_photo_comment/form_dropdown.html' %}
                                 <div class="col">
                                     <div class="input-group input-group-sm">
 
                                       <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
-                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyItemComment" type="button">
+                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyPhotoComment" type="button">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                       </button>
                                     </div>
@@ -56,7 +56,7 @@
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'u_post_comment/frend_reply.html' %}
+                        {% include 'u_photo_comment/frend_reply.html' %}
                         <br>
                       {% endfor %}
 

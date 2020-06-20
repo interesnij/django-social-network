@@ -52,13 +52,13 @@ on('#ajax', 'click', '.u_itemComment', function() {
   send_comment(form, form.parentElement.previousElementSibling, '/posts/user/post-comment/');
 });
 
-on('#ajax', 'click', '.u_replyComment', function() {
+on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
 });
 
-on('#ajax', 'click', '.u_replyParentComment', function() {
+on('#ajax', 'click', '.u_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";

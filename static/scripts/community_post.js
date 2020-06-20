@@ -68,13 +68,13 @@ on('#ajax', 'click', '.c_itemComment', function() {
   send_comment(form, form.parentElement.previousElementSibling, '/posts/community/post-comment/');
 });
 
-on('#ajax', 'click', '.c_replyComment', function() {
+on('#ajax', 'click', '.c_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/posts/community/reply-comment/')
   form.parentElement.style.display = "none";
 });
 
-on('#ajax', 'click', '.c_replyParentComment', function() {
+on('#ajax', 'click', '.c_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/posts/community/reply-comment/')
   form.parentElement.style.display = "none";
