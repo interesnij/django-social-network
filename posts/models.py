@@ -9,7 +9,6 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from notifications.model.item import *
 from common.model.votes import PostVotes, PostCommentVotes
-from users.models import User
 
 
 class Post(models.Model):
@@ -120,9 +119,11 @@ class Post(models.Model):
             new_fixed.save(update_fields=['is_fixed'])
 
     def likes(self):
-        #likes = PostVotes.objects.filter(parent=self, vote__gt=0)
-        liker_users = User.post_votes_creator.filter(parent=self, vote__gt=0)
-        return liker_users
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        return likes
+
+    def get_liker(user):
+        return user.post_votes_creator.filter(parent=self, vote__lt=0)
 
     def dislikes(self):
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
