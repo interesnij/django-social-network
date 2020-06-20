@@ -62,19 +62,19 @@ class CommunityFriendsView(ListView):
 
 
 class AllCommunities(ListView):
-	template_name="all_communities.html"
-	paginate_by=15
+	template_name = None
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_default_template(folder="c_list/", template="all_communities.html", request=request)
 
 	def get_queryset(self):
-		groups=Community.get_trending_communities()
+		groups = Community.get_trending_communities()
 		return groups
 
 	def get_context_data(self,**kwargs):
-		context=super(AllCommunities,self).get_context_data(**kwargs)
-		context["communities_categories"]=CommunityCategory.objects.only("pk")
+		context = super(AllCommunities,self).get_context_data(**kwargs)
+		context["communities_categories"] = CommunityCategory.objects.only("pk")
 		return context
 
 
