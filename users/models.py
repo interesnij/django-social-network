@@ -873,6 +873,7 @@ class User(AbstractUser):
             template_name = folder + "close_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
             template_name = folder + "anon_" + template
+        return template_name
 
     def get_default_template(self, folder, template, request):
         import re
