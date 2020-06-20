@@ -122,7 +122,7 @@ class Post(models.Model):
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)
         return likes
 
-    def get_liker(user):
+    def get_liker(self, user):
         return user.post_votes_creator.filter(parent=self, vote__lt=0)
 
     def dislikes(self):
