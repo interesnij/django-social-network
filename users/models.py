@@ -369,7 +369,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('user_id').count()
 
     def count_photos(self):
-        return self.photo_creator.values('creator_id').count()
+        return self.photo_creator.values('pk').count()
 
     def count_albums(self):
         return self.created_user.values('creator_id').count()
