@@ -126,14 +126,14 @@ on('#ajax', 'click', '.u_like', function() {
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/u_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/u_like_window/" + uuid + "/" + pk + "/", "/posts/item_window/u_dislike_window/" + uuid + "/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
+  vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.u_like2', function() {
   _this = this;
@@ -141,7 +141,7 @@ on('#ajax', 'click', '.u_like2', function() {
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_dislike2', function() {
   _this = this;
@@ -149,7 +149,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/" + pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/" + pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
 
