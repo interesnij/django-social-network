@@ -41,3 +41,17 @@ def get_detail_template_community(community, folder, template, request):
     if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         template_name = "mob_" + template_name
     return template_name
+
+
+def get_default_template(folder, template, request):
+    import re
+
+    if request.user.is_authenticated:
+        template_name = folder + template
+    elif request.user.is_anonymous:
+        template_name = folder + "anon_" + template
+
+    MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        template_name = "mob_" + template_name
+    return template_name

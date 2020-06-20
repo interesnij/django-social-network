@@ -66,7 +66,8 @@ class AllCommunities(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = request.user.get_default_template(folder="c_list/", template="all_communities.html", request=request)
+		from common.get_template import get_default_template
+		self.template_name = get_default_template(folder="c_list/", template="all_communities.html", request=request)
 
 	def get_queryset(self):
 		groups = Community.get_trending_communities()
