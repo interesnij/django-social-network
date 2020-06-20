@@ -1,3 +1,6 @@
+.faqnav .ajax{
+    padding-bottom: 0.6rem;
+  }
 .music_list_post,
 .music_list_comment{
   cursor:pointer;
