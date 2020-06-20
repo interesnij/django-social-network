@@ -28,7 +28,7 @@
                   {% include 'u_post_comment/reply_info.html' %}
 
                     <div style="display:none;margin-left:-50px;">
-                        <form action="" method="post" class="replyParentComment_button">
+                        <form>
                             {% csrf_token %}
                             <input type="hidden" name="uuid" value="{{ user.uuid }}">
                             <input type="hidden" name="pk" value="{{ comment.pk }}">

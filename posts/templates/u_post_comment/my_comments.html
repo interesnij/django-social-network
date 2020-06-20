@@ -6,7 +6,7 @@
     {% endfor %}
 </span>
 <div>
-  <form action="" method="post">
+  <form>
       {% csrf_token %}
       <input type="hidden" name="item" value="{{ parent.uuid }}">
       <input type="hidden" name="id" value="{{ user.pk }}">
