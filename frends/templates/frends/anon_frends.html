@@ -32,6 +32,7 @@
                                       <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
                                         {{ user.first_name|gent }} {{ user.last_name|gent }}
                                       </a>
+                                      <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_connections }}</small>
                                     </h5>
                                   </div>
                                   <br>

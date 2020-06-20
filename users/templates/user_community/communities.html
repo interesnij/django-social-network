@@ -16,10 +16,14 @@
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
-                    <div class="media-body"><h5 class="mt-1">Сообщества 
-                      <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                        {{ user.first_name|gent }} {{ user.last_name|gent }}
-                      </a></h5></div>
+                    <div class="media-body">
+                      <h5 class="mt-1">Сообщества
+                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                        </a>
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_community }}</small>
+                      </h5>
+                    </div>
                 </div>
             </div>
 

@@ -3,11 +3,11 @@
 <div class="card mb-3" style="">
     <div class="card-header">
         <div class="media">
+          <a href="{% url 'community_friends' pk=community.pk %}" class="ajax">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Друзья в группе  </h4>
             </div>
-            <a href="{% url 'community_friends' pk=community.pk %}" class="ajax">
-            </a>
+          </a>     
         </div>
     </div>
 
