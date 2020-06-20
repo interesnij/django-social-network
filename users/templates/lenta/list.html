@@ -1,14 +1,13 @@
 
-
-<div class="lenta-container">
+<div id="lenta_container">
     <div class="stream-update">
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
 
     <span class="stream">
-        {% for object in object_list %}
-          {% include 'post_user/post.html' %}
-        {% endfor %}
+      {% for object in object_list %}
+        {% include 'post_user/post.html' %}
+      {% endfor %}
     </span>
 </div>
 
