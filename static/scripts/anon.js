@@ -105,27 +105,28 @@ function open_fullscreen(link, block) {
   link_.send();
 }
 function if_list(block){
-  // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
+  // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
   if(block.querySelector('#news_load')){
-    var news_load, link;
     news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
     list_load(block.querySelector("#news_load"), link);
   }else if(block.querySelector('#lenta_load')){
-    var lenta_load, link;
-    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_load"), link);
+    lenta_load = block.querySelector('#lenta_load');
+		link = lenta_load.getAttribute("data-link");
+    list_load(lenta_load, link);
+		scrolled(lenta_load, link, '#lenta_load')
+
   }else if(block.querySelector('#lenta_community')){
-    var lenta_community, link;
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
+		scrolled(lenta_community, link, '#lenta_community')
   }else if(block.querySelector('#photo_load')){
-    var photo_load, link;
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
+		scrolled(photo_load, link, '#photo_load')
   }else if(block.querySelector('#album_photo_load')){
-    var album_photo_load, link;
     album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#album_photo_load"), link);
+		scrolled(album_photo_load, link, '#album_photo_load')
   };
 }
 
