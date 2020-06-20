@@ -62,24 +62,13 @@ on('#ajax', 'click', '#community_article_add', function() {
 });
 
 
-on('#ajax', 'click', '.c_item_comments.comments_close', function() {
-  try{
-  dropdowns = document.body.querySelectorAll(".current_file_dropdown");
-  for (var i = 0; i < dropdowns.length; i++) {
-    dropdowns[i].classList.remove("current_file_dropdown");
-  }} catch { null }
+on('#ajax', 'click', '.c_item_comments', function() {
+  clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
-  _this = parent.querySelector(".c_item_comments");
-  this.className = '';
-  this.classList.add("c_item_comments","comments_open");
-  list_load(this.parentElement.parentElement.parentElement.querySelector(".c_load_comments"), "/posts/community/comment/" + uuid + "/" + pk + "/");
-});
-on('#ajax', 'click', '.c_item_comments.comments_open', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  _this = parent.querySelector(".c_load_comments");
-  _this.innerHTML="";
-  this.className = '';
-  this.classList.add("c_item_comments","comments_close");
+  //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
+  url = "/posts/community/comment/" + uuid + "/" + pk + "/";
+  list_load(parent.querySelector(".c_load_comments"), url);
+  this.classList.toggle("comments_open");
 });
