@@ -119,12 +119,9 @@ class AllUsers(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.utils import is_mobile
+		from common.get_template import get_default_template
 
-		if is_mobile(request):
-			self.template_name = "mob_all_users.html"
-		else:
-			self.template_name = "all_users.html"
+		self.template_name = get_default_template(folder="u_list/", template="all_users.html", request=request)
 		return super(AllUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
