@@ -1,3 +1,5 @@
+function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
+
 function clear_comment_dropdown(){
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
