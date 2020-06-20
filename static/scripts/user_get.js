@@ -27,28 +27,22 @@ on('#ajax', 'click', '#article_add', function() {
 });
 
 on('#ajax', 'click', '.u_all_likes', function() {
-  var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/posts/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_user_like/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_all_dislikes', function() {
-  var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/posts/item_window/all_user_dislike/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_user_dislike/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_all_reposts', function() {
-  var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/posts/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/posts/item_window/all_user_reposts/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_item_comments', function() {

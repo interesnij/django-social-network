@@ -1,4 +1,4 @@
-лайки
+
 
 <div id="music_load_container" data-link="posts/votes/user_like">
 {% for object in object_list %}
@@ -16,7 +16,7 @@
       <a href="{% url 'user' pk=object.pk %}" class="ajax">
           <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
       </a>
-      <a href="" class="small">Написать сообщение</a>
+      <a href="" class="small"></a>
   </div>
 </div>
   {% endfor %}

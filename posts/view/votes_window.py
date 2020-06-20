@@ -194,36 +194,24 @@ class PostCommunityCommentDislikeWindow(TemplateView):
         return context
 
 
-class AllPostUserLikeWindow(View):
-    """
-    Окно со всеми лайками для записи пользователя
-    """
-    def get(self,request,*args,**kwargs):
-        context = {}
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            likes = item.likes()
-        elif user == request.user:
-            likes = item.likes()
-        elif request.user.is_anonymous and user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not user.is_closed_profile():
-            likes = item.likes()
-        current_page = Paginator(likes, 15)
-        page = request.GET.get('page')
+class AllPostUserLikeWindow(ListView):
+    template_name = None
+    paginate_by = 15
 
-        context['user'] = user
-        try:
-            context['likes'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['likes'] = current_page.page(1)
-        except EmptyPage:
-            context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response("post_votes/u_all_like.html", context)
+    def get(self,request,*args,**kwargs):
+        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = self.item.creator.get_permission_list_user(folder="all_post_votes/", template="u_like.html", request=request)
+        return super(AllPostUserLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(AllPostUserLikeWindow,self).get_context_data(**kwargs)
+        context['item'] = self.item
+        return context
+
+    def get_queryset(self):
+        likes = self.item.likes()
+        return likes
+
 
 class AllPostUserDislikeWindow(View):
     """
