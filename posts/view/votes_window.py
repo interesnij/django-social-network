@@ -1,4 +1,5 @@
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 from users.models import User
 from posts.models import Post, PostComment
 from communities.models import Community
