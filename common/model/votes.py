@@ -8,7 +8,7 @@ class PostVotes(models.Model):
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_votes_creator", on_delete=models.CASCADE, verbose_name="Пользователь")
     parent = models.ForeignKey('posts.Post', on_delete=models.CASCADE)
 
 class PostCommentVotes(models.Model):
@@ -17,7 +17,7 @@ class PostCommentVotes(models.Model):
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_comment_votes_creator", on_delete=models.CASCADE, verbose_name="Пользователь")
     item = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE)
 
 
