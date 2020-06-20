@@ -11,6 +11,14 @@ on('#ajax', 'click', '.u_photo_detail', function() {
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/u_photo/" + uuid + "/", loader)
 });
+
+on('#ajax', 'click', '.u_wall_image', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = this.getAttribute('data-uuid');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
 })

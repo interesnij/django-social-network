@@ -179,14 +179,6 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.focus();
 })
 
-on('#ajax', 'click', '.u_wall_image', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = this.getAttribute('data-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
-});
-
-
 on('#ajax', 'click', '.comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
