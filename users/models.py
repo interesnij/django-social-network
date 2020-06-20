@@ -353,26 +353,22 @@ class User(AbstractUser):
     ''''' количества всякие  196-216 '''''
 
     def count_followers(self):
-        followed_users = self.follows.values('followed_user_id')
-        followed_users_count = followed_users.count()
-        return followed_users_count
+        return self.follows.values('pk').count()
 
     def count_following(self):
-        followed_users = self.followers.values('user_id')
-        followed_users_count = followed_users.count()
-        return followed_users_count
+        return self.followers.values('pk').count()
 
     def count_connections(self):
-        return self.connections.values('user_id').count()
+        return self.connections.values('pk').count()
 
     def count_community(self):
-        return self.communities_memberships.values('user_id').count()
+        return self.communities_memberships.values('pk').count()
 
     def count_photos(self):
         return self.photo_creator.values('pk').count()
 
     def count_albums(self):
-        return self.created_user.values('creator_id').count()
+        return self.created_user.values('pk').count()
 
     def count_goods(self):
         from goods.models import Good
@@ -381,7 +377,7 @@ class User(AbstractUser):
         return goods
 
     def count_posts(self):
-        return self.posts.count()
+        return self.posts.values('pk').count()
 
 
     ''''' GET всякие  219-186 '''''
