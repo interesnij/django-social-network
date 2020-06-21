@@ -228,7 +228,7 @@ class PhotoComment(models.Model):
         return dislikes[0:6]
 
     def __str__(self):
-        return str(self.photo.creator)
+        return str(self.photo_comment.id)
 
     @classmethod
     def create_comment(cls, commenter, photo_comment, parent_comment, text):
