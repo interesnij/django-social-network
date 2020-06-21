@@ -4,13 +4,13 @@
       <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="u_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
   </div>
   {% endfor %}
-  {% for object in reply.comment_video.all %}
+  {% for object in reply.gallery_comment_video.all %}
   <div class="col-md-6" album-pk="{{ object.album.pk }}">
       <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
       <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
   </div>
   {% endfor %}
-  {% for object in reply.comment_music.all %}
+  {% for object in reply.gallery_comment_music.all %}
   <div class="col-md-12">
     <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
