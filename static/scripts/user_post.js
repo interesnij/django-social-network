@@ -69,7 +69,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
   */
 on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
+  uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/posts/user/delete/" + uuid + "/", true );
 
@@ -140,14 +140,14 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
+  uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
+  uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)

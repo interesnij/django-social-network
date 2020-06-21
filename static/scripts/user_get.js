@@ -7,14 +7,14 @@ on('#ajax', 'click', '.avatar_detail', function() {
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
 
 on('#ajax', 'click', '.u_article_detail', function() {
-  uuid = this.parentElement.getAttribute("item-uuid");
+  uuid = this.parentElement.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
@@ -28,13 +28,13 @@ on('#ajax', 'click', '#article_add', function() {
 
 on('#ajax', 'click', '.u_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_user_like/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_user_dislike/" + uuid + "/", loader)
 });
@@ -54,7 +54,7 @@ on('#ajax', 'click', '.u_all_posts_comment_dislikes', function() {
 
 on('#ajax', 'click', '.u_all_item_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_user_reposts/" + uuid + "/", loader)
 });
@@ -63,7 +63,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = parent.getAttribute("item-uuid");
+  uuid = parent.getAttribute("data-uuid");
   //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/posts/user/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
