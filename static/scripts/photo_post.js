@@ -39,8 +39,7 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 
 on('#ajax', 'click', '.u_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
-  x = form.querySelector("form");
-  form_data = new FormData(x);
+  form_data = new FormData(form.querySelector(".u_photo_description_form"));
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
