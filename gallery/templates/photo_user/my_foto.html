@@ -11,6 +11,7 @@
         {% endif %}
     </div>
     {% if album %}<a href="{% url 'user_album' pk=user.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>{% endif %}
+<span>
     <span>
       <span style="cursor:pointer" id="user_photo_remove">Удалить</span>
     </span>
@@ -47,6 +48,7 @@
             {% endif %}
           </span>
       </span>
+  </span>
     </div>
     <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
 
