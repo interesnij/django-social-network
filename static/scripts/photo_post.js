@@ -38,8 +38,9 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 })
 
 on('#ajax', 'click', '.u_photo_description', function() {
-  form = this.parentElement.parentElement;
-  form_data = new FormData(form.parentElement.querySelector("form"));
+  form = this.parentElement.parentElement.parentElement;
+  x = form.querySelector("form");
+  form_data = new FormData(x);
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -52,7 +53,7 @@ on('#ajax', 'click', '.u_photo_description', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    form.parentElement.previousElementSibling.innerHTML = new_post + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
+    form.previousElementSibling.innerHTML = new_post + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
   }}
   link_.send(form_data);
 });
