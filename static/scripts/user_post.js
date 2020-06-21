@@ -117,7 +117,7 @@ on('#ajax', 'click', '.u_post_unfixed', function() {
 on('#ajax', 'click', '.u_post_off_comment', function() {
   send_change(this, "/posts/user/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_item_comments").style.display = "block"
+  post.querySelector(".u_item_comments").style.display = "unset"
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
   send_change(this, "/posts/user/on_comment/", "u_post_off_comment", "Выкл. комментарии");
@@ -134,8 +134,8 @@ on('#ajax', 'click', '.u_post_off_votes', function() {
 on('#ajax', 'click', '.u_post_on_votes', function() {
   send_change(this, "/posts/user/on_votes/", "u_post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".like").style.display = "block";
-  post.querySelector(".dislike").style.display = "block";
+  post.querySelector(".like").style.display = "unset";
+  post.querySelector(".dislike").style.display = "unset";
 })
 
 on('#ajax', 'click', '.u_like', function() {
