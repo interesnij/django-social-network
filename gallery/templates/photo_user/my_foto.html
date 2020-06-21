@@ -87,15 +87,15 @@
       </span>
       <span id="block_description_form" style="display:none">
         <br>
-        <form class="u_photo_description_form" style="margin-top: 15px;">
+        <form class="u_photo_description_form">
             {% csrf_token %}
-                <div class="col">
+                <div class="">
                     <div class="input-group input-group-sm">
                       {{ user_form.description }}
                     </div>
                 </div>
-                <div class="col-auto">
-                    <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_photo_description" type="button">
+                <div class="text-right">
+                    <button class="u_photo_description" type="button">
                       <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     </button>
                 </div>
