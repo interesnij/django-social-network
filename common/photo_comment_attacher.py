@@ -15,14 +15,14 @@ def photo_attach(value, comment):
 def video_attach(value, comment):
     try:
         _select_video = Video.objects.get(pk=value, is_public=True)
-        _select_video.item_comment.add(comment)
+        _select_video.photo_comment.add(comment)
     except:
         raise ValidationError('Видео не найдено')
 
 def music_attach(value, comment):
     try:
         _select_music = SoundcloudParsing.objects.get(pk=value)
-        _select_music.item_comment.add(comment)
+        _select_music.photo_comment.add(comment)
     except:
         raise ValidationError('Аудиозапись не найдено')
 
