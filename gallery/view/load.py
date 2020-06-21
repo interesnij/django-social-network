@@ -25,7 +25,7 @@ class UserPhoto(TemplateView):
         context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"]=self.photo.is_avatar(self.request.user)
-        context["form_image"]=PhotoDescriptionForm(instance=self.photo)
+        context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 
@@ -49,7 +49,7 @@ class UserAlbumPhoto(TemplateView):
         context["next"]=self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"]=self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"]=self.photo.is_avatar(self.request.user)
-        context["form_image"]=PhotoDescriptionForm(instance=self.photo)
+        context["user_form"]=PhotoDescriptionForm(instance=self.photo)
         return context
 
 

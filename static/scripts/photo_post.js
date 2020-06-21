@@ -34,7 +34,7 @@ on('#ajax', 'click', '.u_photo_on_private', function() {
 })
 
 on('#ajax', 'click', '.u_photo_edit', function() {
-  this.parentElement.previousElementSibling.style.display = "block"
+  this.parentElement.nextElementSibling.style.display = "block"
 })
 
 on('#ajax', 'click', '#u_photo_description_btn', function() {
