@@ -9,7 +9,7 @@ from gallery.models import Photo, PhotoComment
 from django.shortcuts import render_to_response
 from users.models import User
 from django.views.generic import ListView
-from posts.forms import CommentForm
+from gallery.forms import CommentForm
 
 
 class PhotoUserCommentList(ListView):

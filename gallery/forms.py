@@ -1,4 +1,4 @@
-from gallery.models import Album, Photo
+from gallery.models import Album, Photo, PhotoComment
 from django import forms
 
 
@@ -20,3 +20,11 @@ class AvatarCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Photo
 		fields = ['file', ]
+
+
+class CommentForm(forms.ModelForm):
+	text=forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
+
+	class Meta:
+		model = PhotoComment
+		fields = ['text']
