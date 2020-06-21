@@ -237,7 +237,7 @@ class PhotoComment(models.Model):
     @classmethod
     def create_comment(cls, commenter, photo, parent_comment, text):
         comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
-        channel_layer = get_channel_layer()
+        channel_layer = get_channel_layer() 
         payload = {
                 "type": "receive",
                 "key": "comment_photo",
