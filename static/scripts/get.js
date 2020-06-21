@@ -1,5 +1,8 @@
 on('body', 'click', '.clean_panel', function(event) {
-  if (document.querySelector(".photo_fullscreen").style.display == "block") {
+  if (document.querySelector(".create_fullscreen").style.display == "block") {
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_fullscreen").innerHTML=""
+  } else if (document.querySelector(".photo_fullscreen").style.display == "block") {
     document.querySelector(".photo_fullscreen").style.display = "none";
     document.getElementById("photo_loader").innerHTML=""
   } else if (document.querySelector(".article_fullscreen").style.display == "block") {
