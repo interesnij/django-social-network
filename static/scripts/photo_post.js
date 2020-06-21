@@ -52,7 +52,7 @@ on('#ajax', 'click', '.u_photo_description', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    form.previousElementSibling.innerHTML = new_post + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
+    form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
   }}
   link_.send(form_data);
 });
