@@ -92,7 +92,7 @@ class UserPhotoDescription(View):
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
-            return HttpResponse(form_image.description)
+            return HttpResponse(form_image.cleaned_data["description"])
         return super(UserPhotoDescription,self).post(request,*args,**kwargs)
 
 
