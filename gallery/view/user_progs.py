@@ -38,7 +38,7 @@ class PhotoCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('id'))
-        photo = Photo.objects.get(uuid=request.POST.get('item'))
+        photo = Photo.objects.get(uuid=request.POST.get('photo'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
