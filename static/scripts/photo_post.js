@@ -49,7 +49,7 @@ on('#ajax', 'click', '.u_photo_on_votes', function() {
 on('#ajax', 'click', '.user_photo_remove', function() {
   send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_abort_remove btn_danger", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  this.parentElement.previousElementSibling.style.display = "none";
+  this.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
   post.style.opacity = "0.5";
   this.style.opacity = "1";
