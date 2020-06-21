@@ -8,7 +8,7 @@
 <div>
   <form>
       {% csrf_token %}
-      <input type="hidden" name="photo" value="{{ parent.uuid }}">
+      <input type="hidden" name="photo_comment" value="{{ parent.uuid }}">
       <input type="hidden" name="id" value="{{ user.pk }}">
 
       <div class="row img_block" style="margin-top: 10px"></div>
