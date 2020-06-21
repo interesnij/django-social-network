@@ -47,7 +47,7 @@ on('#ajax', 'click', '.u_photo_description', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    form_post.querySelector('#id_description').value = "";
+    form.querySelector('#id_description').value = "";
 
     elem = link_.responseText;
     new_post = document.createElement("span");
