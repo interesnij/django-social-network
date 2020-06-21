@@ -34,7 +34,7 @@ class UserAlbumView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(pk=self.kwargs["pk"], uuid=self.kwargs["uuid"])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_template_user(folder="album_user/", template="album.html", request=request)
         return super(UserAlbumView,self).get(request,*args,**kwargs)
 
