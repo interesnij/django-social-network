@@ -15,7 +15,7 @@
     </span>
     &nbsp;<br>
       <span id="btn_console">
-        {{ object.album }}
+        {% if object.album %}{{ object.album.title }}<br>{% endif %}
         <span>
           {% if avatar %}
             Это ваш аватар - <span style="cursor:pointer" class="u_unset_avatar">убрать аватар</span>
