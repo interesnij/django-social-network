@@ -95,7 +95,7 @@ class UserDetailAvatar(TemplateView):
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        context["album"] = Album.objects.get(creator=self.photo.user, is_generic=True, title="Фото со страницы", community=None)
+        context["album"] = Album.objects.get(creator=self.photo.creator, is_generic=True, title="Фото со страницы", community=None)
         return context
 
 class CommunityDetailAvatar(TemplateView):
