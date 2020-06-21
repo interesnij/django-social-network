@@ -101,11 +101,10 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 
 on('#ajax', 'click', '.u_photo_comments', function() {
   clear_comment_dropdown();
-  parent = this.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".data_display").getAttribute("user-pk");
-  uuid = parent.getAttribute("photo-uuid");
-  //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
+  data = document.body.querySelector(".data_display");
+  pk = data.getAttribute("user-pk");
+  uuid = data.getAttribute("photo-uuid");
   url = "/gallery/user_progs/comment/" + uuid + "/" + pk + "/";
-  list_load(parent.querySelector(".u_load_comments"), url);
+  list_load(document.body.querySelector(".u_load_comments"), url);
   this.classList.toggle("comments_open");
 });
