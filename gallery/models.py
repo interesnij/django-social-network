@@ -136,10 +136,6 @@ class Photo(models.Model):
         except:
             return None
 
-    def get_comment_replies_for_comment_with_post(self, post_comment):
-        comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
-        return PostComment.objects.filter(comment_replies_query)
-
     def likes(self):
         likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
         return likes
@@ -166,7 +162,7 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
@@ -213,7 +209,7 @@ class PhotoComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.replies.count()
+        return self.photo_comment_replies.count()
 
     def likes(self):
         likes = PhotoCommentVotes.objects.filter(photo=self, vote__gt=0)
@@ -237,7 +233,7 @@ class PhotoComment(models.Model):
     @classmethod
     def create_comment(cls, commenter, photo, parent_comment, text):
         comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
-        channel_layer = get_channel_layer() 
+        channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
                 "key": "comment_photo",
