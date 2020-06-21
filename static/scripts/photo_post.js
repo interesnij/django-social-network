@@ -33,6 +33,28 @@ on('#ajax', 'click', '.u_photo_on_private', function() {
   send_photo_change(this, "/gallery/user_progs/on_private/", "u_photo_off_private", "Выкл. приватность")
 })
 
+on('#ajax', 'click', '.u_photo_edit', function() {
+  this.parentElement.previousElementSibling.style.display = "block"
+})
+
+on('#ajax', 'click', '#u_photo_description_btn', function() {
+  form = this.parentElement.parentElement;
+  form_data = new FormData(form);
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/description/user_progs/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector('#id_description').value = "";
+
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    form.parentElement.previousElementSibling.innerHTML = new_post + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
+  link_.send(form_data);
+}}});
+
 on('#ajax', 'click', '.u_photo_off_votes', function() {
   send_photo_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

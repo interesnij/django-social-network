@@ -84,24 +84,15 @@ class PhotoReplyUserCreate(View):
             return HttpResponseBadRequest()
 
 
-class UserPhotoDescription(TemplateView):
-    template_name = "photo_user/photo/my_photo.html"
-    form_image=None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form_image=PhotoDescriptionForm(instance=self.photo)
-        return super(UserPhotoDescription,self).get(request,*args,**kwargs)
+class UserPhotoDescription(View):
+    form_image = None
 
     def post(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form_image=PhotoDescriptionForm(request.POST, instance=self.photo)
-        if self.form_image.is_valid():
+        self.form_image = PhotoDescriptionForm(request.POST, instance=self.photo)
+        if self.form_image.is_valid() and self.photo.creator.pk == requser.user.pk:
             self.form_image.save()
-            if request.is_ajax():
-                return HttpResponse ('!')
+            return HttpResponse(self.form_image.description)
         return super(UserPhotoDescription,self).post(request,*args,**kwargs)
 
 
