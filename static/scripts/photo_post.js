@@ -46,6 +46,22 @@ on('#ajax', 'click', '.u_photo_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 
+on('#ajax', 'click', '.user_photo_remove', function() {
+  send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_abort_remove btn_danger", "Отмена");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  this.parentElement.previousElementSibling.style.display = "none";
+  post.querySelector(".order-2").style.display = "none";
+  post.style.opacity = "0.5";
+  this.style.opacity = "1";
+})
+on('#ajax', 'click', '.user_photo_abort_remove', function() {
+  send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_remove", "Удалить");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  this.parentElement.previousElementSibling.style.display = "unset";
+  post.querySelector(".order-2").style.display = "unset";
+  post.style.opacity = "1";
+})
+
 on('#ajax', 'click', '.u_photo_like', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = photo.getAttribute("data-uuid");
