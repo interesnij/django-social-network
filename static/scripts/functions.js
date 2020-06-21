@@ -67,6 +67,23 @@ function send_change(span, _link, new_class, html){
   link.send( null );
 }
 
+function send_photo_change(span, _link, new_class, html){
+  parent = span.parentElement;
+  item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("data-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + uuid + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    new_span = document.createElement("span");
+    new_span.classList.add(new_class);
+    new_span.innerHTML = html;
+    parent.innerHTML = "";
+    parent.append(new_span);
+  }};
+  link.send( null );
+}
+
 loadScripts('/static/scripts/functions/preview.js')
 loadScripts('/static/scripts/functions/comment_attach.js')
 loadScripts('/static/scripts/functions/post_attach.js')

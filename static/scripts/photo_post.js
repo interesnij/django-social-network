@@ -16,31 +16,31 @@ on('#ajax', 'click', '.u_replyParentPostComment', function() {
 });
 
 on('#ajax', 'click', '.u_photo_off_comment', function() {
-  send_change(this, "/gallery/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
+  send_photo_change(this, "/gallery/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".u_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.u_photo_on_comment', function() {
-  send_change(this, "/gallery/user_progs/on_comment/", "u_photo_off_comment", "Выкл. комментарии");
+  send_photo_change(this, "/gallery/user_progs/on_comment/", "u_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".u_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.u_photo_off_private', function() {
-  send_change(this, "/gallery/user_progs/off_private/", "u_photo_on_private", "Вкл. приватность")
+  send_photo_change(this, "/gallery/user_progs/off_private/", "u_photo_on_private", "Вкл. приватность")
 })
 on('#ajax', 'click', '.u_photo_on_private', function() {
-  send_change(this, "/gallery/user_progs/on_private/", "u_photo_off_private", "Выкл. приватность")
+  send_photo_change(this, "/gallery/user_progs/on_private/", "u_photo_off_private", "Выкл. приватность")
 })
 
 on('#ajax', 'click', '.u_photo_off_votes', function() {
-  send_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
+  send_photo_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.u_photo_on_votes', function() {
-  send_change(this, "/gallery/user_progs/on_votes/", "u_photo_off_votes", "Выкл. реакции");
+  send_photo_change(this, "/gallery/user_progs/on_votes/", "u_photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
