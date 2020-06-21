@@ -14,9 +14,8 @@
     <span>
       <span style="cursor:pointer" id="user_photo_remove">Удалить</span>
     </span>
-    &nbsp;<br>
+    &nbsp;
       <span id="btn_console">
-
         <span>
           {% if avatar %}
             Это ваш аватар - <span style="cursor:pointer" class="u_unset_avatar">убрать аватар</span>
@@ -24,20 +23,27 @@
             <span style="cursor:pointer" class="u_set_avatar">Сделать аватаром</span>
           {% endif %}
         </span>
-        &nbsp;<br>
+        &nbsp;
           <span>
             {% if object.is_public %}
-            <span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>
+            <span style="cursor:pointer" class="u_photo_on_private">Вкл. приватность</span>
             {% else %}
-            <span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>
+            <span style="cursor:pointer" class="u_photo_off_private">Откл. приватность</span>
             {% endif %}
           </span>
-          &nbsp;<br>
+          &nbsp;
           <span>
             {% if object.comments_enabled %}
-              <span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>
+              <span style="cursor:pointer" class="u_photo_off_comment">Выкл. комментарии</span>
             {% else %}
-              <span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>
+              <span style="cursor:pointer" class="u_photo_on_comment">Вкл. комментарии</span>
+            {% endif %}
+          </span>
+          <span>
+            {% if object.votes_on %}
+              <span style="cursor:pointer" class="u_photo_off_votes">Выкл. реакции</span>
+            {% else %}
+              <span style="cursor:pointer" class="u_photo_on_votes">Вкл. реакции</span>
             {% endif %}
           </span>
       </span>

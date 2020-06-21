@@ -155,3 +155,20 @@ class PostUserDetail(TemplateView):
         context=super(PostUserDetail,self).get_context_data(**kwargs)
         context["object"]=self.item
         return context
+
+
+class UserOnVotesPost(View):
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if post.creator == request.user:
+            post.votes_on = True
+            post.save(update_fields=['votes_on'])
+        return HttpResponse("!")
+
+class UserOffVotesPost(View):
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if post.creator == request.user:
+            post.is_public = True
+            post.save(update_fields=['votes_on'])
+        return HttpResponse("!")

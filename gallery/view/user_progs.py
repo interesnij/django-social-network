@@ -104,71 +104,75 @@ class UserPhotoDescription(TemplateView):
                 return HttpResponse ('!')
         return super(UserPhotoDescription,self).post(request,*args,**kwargs)
 
+
 class UserPhotoDelete(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
             photo.is_deleted = True
             photo.save(update_fields=['is_deleted'])
         return HttpResponse("!")
 
 class UserPhotoAbortDelete(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
             photo.is_deleted = False
             photo.save(update_fields=['is_deleted'])
         return HttpResponse("!")
 
 
 class UserOpenCommentPhoto(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
         return HttpResponse("!")
 
 class UserCloseCommentPhoto(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
         return HttpResponse("!")
 
 
 class UserOnPrivatePhoto(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
             photo.is_public = False
             photo.save(update_fields=['is_public'])
         return HttpResponse("!")
 
-class UserOffPrivatePhoto(View):
-    success_url = "/"
+class UserOffPVotesPhoto(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if photo.creator == request.user:
+            photo.votes_on = False
+            photo.save(update_fields=['votes_on'])
+        return HttpResponse("!")
+
+class UserOnVotesPhoto(View):
+    def get(self,request,*args,**kwargs):
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        if photo.creator == request.user:
+            photo.votes_on = True
+            photo.save(update_fields=['votes_on'])
+        return HttpResponse("!")
+
+class UserOffPrivatePhoto(View):
+    def get(self,request,*args,**kwargs):
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        if photo.creator == request.user:
             photo.is_public = True
             photo.save(update_fields=['is_public'])
         return HttpResponse("!")
 
 
 class UserAddAvatarPhoto(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
@@ -181,7 +185,6 @@ class UserAddAvatarPhoto(View):
         return HttpResponse("!")
 
 class UserRemoveAvatarPhoto(View):
-    success_url = "/"
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])

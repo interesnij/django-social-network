@@ -34,6 +34,7 @@ class Post(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
+    votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 
     @classmethod
     def create_post(cls, creator, text, community, comments_enabled, status):

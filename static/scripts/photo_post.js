@@ -15,11 +15,25 @@ on('#ajax', 'click', '.u_replyParentPostComment', function() {
   form.parentElement.style.display = "none";
 });
 
-on('#ajax', 'click', '.photo_user_off_comment', function() {
-  send_change(this, "/gallery/user_progs/off_comment/", "photo_user_on_comment", "Включить комментарии")
+on('#ajax', 'click', '.u_photo_off_comment', function() {
+  send_change(this, "/gallery/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии")
 })
-on('#ajax', 'click', '.photo_user_on_comment', function() {
-  send_change(this, "/gallery/user_progs/on_comment/", "photo_user_off_comment", "Выключить комментарии")
+on('#ajax', 'click', '.u_photo_on_comment', function() {
+  send_change(this, "/gallery/user_progs/on_comment/", "u_photo_off_comment", "Выкл. комментарии")
+})
+
+on('#ajax', 'click', '.u_photo_off_private', function() {
+  send_change(this, "/gallery/user_progs/off_private/", "u_photo_on_private", "Вкл. приватность")
+})
+on('#ajax', 'click', '.u_photo_on_private', function() {
+  send_change(this, "/gallery/user_progs/on_private/", "u_photo_off_private", "Выкл. приватность")
+})
+
+on('#ajax', 'click', '.u_photo_off_votes', function() {
+  send_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции")
+})
+on('#ajax', 'click', '.u_photo_on_votes', function() {
+  send_change(this, "/gallery/user_progs/on_votes/", "u_photo_off_votes", "Выкл. реакции")
 })
 
 on('#ajax', 'click', '.u_photo_like', function() {

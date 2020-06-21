@@ -154,3 +154,20 @@ class PostCommunityDetail(TemplateView):
         context=super(PostCommunityDetail,self).get_context_data(**kwargs)
         context["object"]=self.object
         return context
+
+
+class CommunityOnVotesPost(View):
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_staff_of_community_with_name(post.community.name):
+            post.votes_on = True
+            post.save(update_fields=['votes_on'])
+        return HttpResponse("!")
+
+class CommunityOffVotesPost(View):
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_staff_of_community_with_name(post.community.name):
+            post.is_public = True
+            post.save(update_fields=['votes_on'])
+        return HttpResponse("!")

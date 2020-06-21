@@ -76,6 +76,7 @@ class Photo(models.Model):
     item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+    votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

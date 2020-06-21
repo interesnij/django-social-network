@@ -132,3 +132,64 @@ on('#ajax', 'change', '#community_avatar_upload', function() {
   }
   link_.send(form_data);
 })
+
+on('#ajax', 'click', '.c_post_fixed', function() {
+  send_change(this, "/posts/community/fixed/", "c_post_unfixed", "Открепить")
+})
+on('#ajax', 'click', '.c_post_unfixed', function() {
+  send_change(this, "/posts/community/unfixed/", "c_post_fixed", "Закрепить")
+})
+
+on('#ajax', 'click', '.c_post_off_comment', function() {
+  send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии")
+})
+on('#ajax', 'click', '.c_post_on_comment', function() {
+  send_change(this, "/posts/community/on_comment/", "c_post_off_comment", "Выкл. комментарии")
+})
+
+on('#ajax', 'click', '.c_post_off_votes', function() {
+  send_change(this, "/posts/community/off_votes/", "c_post_on_votes", "Вкл. реакции")
+})
+on('#ajax', 'click', '.c_post_on_votes', function() {
+  send_change(this, "/posts/community/on_votes/", "c_post_off_votes", "Выкл. реакции")
+})
+
+on('#ajax', 'click', '.c_post_remove', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/community/delete/" + uuid + "/", true );
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    item.style.display = "none";
+    document.querySelector(".item_fullscreen").style.display = "none";
+    p = document.createElement("div");
+    p.classList.add("card", "mb-3");
+    p.style.padding = "20px";
+    p.style.display =  "block";
+
+    p.innerHTML = "Запись удалена. <span class='c_post_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    item.parentElement.insertBefore(p, item);
+    item.style.display = "none";
+  }};
+
+  link.send( );
+});
+
+
+on('#ajax', 'click', '.c_post_abort_remove', function() {
+  item = this.parentElement.nextElementSibling;
+  item.style.display = "block";
+  uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/community/abort_delete/" + uuid + "/", true );
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+  }};
+
+  link.send();
+});

@@ -125,6 +125,7 @@ class Video(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+    votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')

@@ -67,7 +67,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
 /*!
    item post scripts for user
   */
-on('#ajax', 'click', '.item_user_remove', function() {
+on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -82,7 +82,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
     p.style.padding = "20px";
     p.style.display =  "block";
 
-    p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    p.innerHTML = "Запись удалена. <span class='u_post_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     item.parentElement.insertBefore(p, item);
     item.style.display = "none";
   }};
@@ -91,7 +91,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
 });
 
 
-on('#ajax', 'click', '.item_user_remove_abort', function() {
+on('#ajax', 'click', '.u_post_abort_remove', function() {
   item = this.parentElement.nextElementSibling;
   item.style.display = "block";
   uuid = this.getAttribute("data-uuid");
@@ -107,18 +107,25 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.send();
 });
 
-on('#ajax', 'click', '.item_user_fixed', function() {
+on('#ajax', 'click', '.u_post_fixed', function() {
   send_change(this, "/posts/user/fixed/", "item_user_unfixed", "Открепить")
 })
-on('#ajax', 'click', '.item_user_unfixed', function() {
+on('#ajax', 'click', '.u_post_unfixed', function() {
   send_change(this, "/posts/user/unfixed/", "item_user_fixed", "Закрепить")
 })
 
-on('#ajax', 'click', '.item_user_off_comment', function() {
-  send_change(this, "/posts/user/off_comment/", "item_user_on_comment", "Включить комментарии")
+on('#ajax', 'click', '.u_post_off_comment', function() {
+  send_change(this, "/posts/user/off_comment/", "item_user_on_comment", "Вкл. комментарии")
 })
-on('#ajax', 'click', '.item_user_on_comment', function() {
-  send_change(this, "/posts/user/on_comment/", "item_user_off_comment", "Выключить комментарии")
+on('#ajax', 'click', '.u_post_on_comment', function() {
+  send_change(this, "/posts/user/on_comment/", "item_user_off_comment", "Выкл. комментарии")
+})
+
+on('#ajax', 'click', '.u_photo_off_votes', function() {
+  send_change(this, "/posts/user/off_votes/", "u_post_on_votes", "Вкл. реакции")
+})
+on('#ajax', 'click', '.u_photo_on_votes', function() {
+  send_change(this, "/posts/user/on_votes/", "u_post_off_votes", "Выкл. реакции")
 })
 
 on('#ajax', 'click', '.u_like', function() {
