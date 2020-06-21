@@ -37,7 +37,7 @@ on('#ajax', 'click', '.u_photo_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 })
 
-on('#ajax', 'click', '#u_photo_description_btn', function() {
+on('#ajax', 'click', '.u_photo_description', function() {
   form = this.parentElement.parentElement;
   form_data = new FormData(form);
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
