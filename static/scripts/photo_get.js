@@ -102,8 +102,8 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 on('#ajax', 'click', '.u_photo_comments', function() {
   clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("user-pk");
-  uuid = parent.getAttribute("item-uuid");
+  pk = document.body.querySelector(".data_display").getAttribute("user-pk");
+  uuid = parent.getAttribute("photo-uuid");
   //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/gallery/user_progs/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".u_load_comments"), url);
