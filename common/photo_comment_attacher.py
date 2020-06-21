@@ -8,7 +8,7 @@ from article.models import Article
 def photo_attach(value, comment):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        _select_photo.gallery_comment_photo.add(comment)
+        _select_photo.photo_comment.add(comment)
     except:
         raise ValidationError('Фото не найдено')
 
