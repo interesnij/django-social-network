@@ -51,8 +51,7 @@ on('#ajax', 'click', '.user_photo_remove', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
-  post.style.opacity = "0.5";
-  this.style.opacity = "1";
+  post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
 })
 on('#ajax', 'click', '.user_photo_abort_remove', function() {
@@ -60,7 +59,7 @@ on('#ajax', 'click', '.user_photo_abort_remove', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
-  post.style.opacity = "1";
+  post.querySelector(".card").style.opacity = "1";
 })
 
 on('#ajax', 'click', '.u_photo_like', function() {
