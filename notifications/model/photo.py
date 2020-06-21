@@ -84,7 +84,7 @@ class PhotoNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return self.actor.get_full_name()
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -139,7 +139,7 @@ class PhotoCommunityNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
