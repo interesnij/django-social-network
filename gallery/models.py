@@ -112,13 +112,13 @@ class Photo(models.Model):
         photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=self.community, photo=self, comment=None)
 
     def get_comments(self):
-        comments_query = Q(photo_id=self.pk)
+        comments_query = Q(photo_comment_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 
     def count_comments(self):
-        parent_comments = PhotoComment.objects.filter(photo_id=self.pk)
+        parent_comments = PhotoComment.objects.filter(photo_comment_id=self.pk)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -169,7 +169,7 @@ class PhotoComment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
+    photo_comment = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
 
     class Meta:
@@ -231,8 +231,8 @@ class PhotoComment(models.Model):
         return str(self.item)
 
     @classmethod
-    def create_comment(cls, commenter, photo, parent_comment, text):
-        comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
+    def create_comment(cls, commenter, photo_comment, parent_comment, text):
+        comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo_comment=photo_comment, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",

@@ -38,7 +38,7 @@ class PhotoCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('id'))
-        photo = Photo.objects.get(uuid=request.POST.get('photo'))
+        photo_comment = Photo.objects.get(uuid=request.POST.get('photo'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
@@ -49,7 +49,7 @@ class PhotoCommentUserCreate(View):
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.photo_comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo=photo, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_comment(request.user)
                 return render_to_response('u_photo_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, 'request': request})
@@ -74,7 +74,7 @@ class PhotoReplyUserCreate(View):
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.photo_comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_reply_comment(request.user)
             else:
