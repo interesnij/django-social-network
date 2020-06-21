@@ -43,7 +43,7 @@ on('#ajax', 'click', '#u_photo_description_btn', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/description/user_progs/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/description/user_progs/" + uuid + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
