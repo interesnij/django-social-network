@@ -117,12 +117,12 @@ on('#ajax', 'click', '.u_post_unfixed', function() {
 on('#ajax', 'click', '.u_post_off_comment', function() {
   send_change(this, "/posts/user/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_item_comments").style.display = "unset"
+  post.querySelector(".u_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
   send_change(this, "/posts/user/on_comment/", "u_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_item_comments").style.display = "none"
+  post.querySelector(".u_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.u_post_off_votes', function() {
