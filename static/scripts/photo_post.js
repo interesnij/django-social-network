@@ -55,7 +55,7 @@ on('#ajax', 'click', '.user_photo_remove', function() {
   this.style.color = "#FF0000";
 })
 on('#ajax', 'click', '.user_photo_abort_remove', function() {
-  send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_remove", "Удалить");
+  send_photo_change(this, "/gallery/user_progs/abort_delete/", "user_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
