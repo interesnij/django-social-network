@@ -212,19 +212,19 @@ class PhotoComment(models.Model):
         return self.photo_comment_replies.count()
 
     def likes(self):
-        likes = PhotoCommentVotes.objects.filter(photo=self, vote__gt=0)
+        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
         return likes
 
     def window_likes(self):
-        likes = PhotoCommentVotes.objects.filter(photo=self, vote__gt=0)
+        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
-        dislikes = PhotoCommentVotes.objects.filter(photo=self, vote__lt=0)
+        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
         return dislikes
 
     def window_dislikes(self):
-        dislikes = PhotoCommentVotes.objects.filter(photo=self, vote__lt=0)
+        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
         return dislikes[0:6]
 
     def __str__(self):
