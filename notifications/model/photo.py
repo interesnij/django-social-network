@@ -84,7 +84,7 @@ class PhotoNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return self.actor
 
     def mark_as_unread(self):
         if not self.unread:
