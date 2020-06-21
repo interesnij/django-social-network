@@ -88,10 +88,10 @@ class UserPhotoDescription(View):
     form_image = None
 
     def post(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form_image = PhotoDescriptionForm(request.POST, instance=self.photo)
-        if self.form_image.is_valid() and self.photo.creator.pk == request.user.pk:
-            self.form_image.save()
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        form_image = PhotoDescriptionForm(request.POST, instance=photo)
+        if form_image.is_valid() and photo.creator.pk == request.user.pk:
+            form_image.save()
             return HttpResponse(form_image.description)
         return super(UserPhotoDescription,self).post(request,*args,**kwargs)
 
