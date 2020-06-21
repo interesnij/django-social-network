@@ -40,6 +40,7 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 on('#ajax', 'click', '#u_photo_description_btn', function() {
   form = this.parentElement.parentElement;
   form_data = new FormData(form);
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/description/user_progs/" + pk + "/", true );
