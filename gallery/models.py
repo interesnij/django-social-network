@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-#from django.contrib.contenttypes.fields import GenericRelation
+from django.db.models import Q
 from django.conf import settings
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
