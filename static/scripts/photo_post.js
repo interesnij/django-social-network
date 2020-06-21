@@ -53,7 +53,7 @@ on('#ajax', 'click', '.u_photo_description', function() {
     new_post.innerHTML = elem;
     form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
     form.style.display = "none";
-    form.querySelector('#id_description').value = new_post.innerHTM;
+    form.querySelector('#id_description').value = new_post.innerHTML;
   }}
   link_.send(form_data);
 });
