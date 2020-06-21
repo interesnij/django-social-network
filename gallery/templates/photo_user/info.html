@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-<div class="card-footer border-top py-2">
+<div class="border-top py-2">
     <div class="row">
         <div class="col interaction" id="interaction">
           <span class="like u_photo_like {% if object.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
