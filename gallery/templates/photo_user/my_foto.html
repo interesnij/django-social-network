@@ -11,40 +11,40 @@
         {% endif %}
     </div>
     {% if album %}<a href="{% url 'user_album' pk=user.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>{% endif %}
-<span>
+<span class="btn_settings_photo">
     <span>
-      <span style="cursor:pointer" id="user_photo_remove">Удалить</span>
+      <span class="user_photo_remove">Удалить</span>
     </span>
     &nbsp;
       <span id="btn_console">
         <span>
           {% if avatar %}
-            Это ваш аватар - <span style="cursor:pointer" class="u_unset_avatar">убрать аватар</span>
+            Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
           {% else %}
-            <span style="cursor:pointer" class="u_set_avatar">Сделать аватаром</span>
+            <span class="u_set_avatar">Сделать аватаром</span>
           {% endif %}
         </span>
         &nbsp;
           <span>
             {% if object.is_public %}
-            <span style="cursor:pointer" class="u_photo_on_private">Вкл. приватность</span>
+            <span class="u_photo_on_private">Вкл. приватность</span>
             {% else %}
-            <span style="cursor:pointer" class="u_photo_off_private">Откл. приватность</span>
+            <span class="u_photo_off_private">Откл. приватность</span>
             {% endif %}
           </span>
           &nbsp;
           <span>
             {% if object.comments_enabled %}
-              <span style="cursor:pointer" class="u_photo_off_comment">Выкл. комментарии</span>
+              <span class="u_photo_off_comment">Выкл. комментарии</span>
             {% else %}
-              <span style="cursor:pointer" class="u_photo_on_comment">Вкл. комментарии</span>
+              <span class="u_photo_on_comment">Вкл. комментарии</span>
             {% endif %}
           </span>
           <span>
             {% if object.votes_on %}
-              <span style="cursor:pointer" class="u_photo_off_votes">Выкл. реакции</span>
+              <span class="u_photo_off_votes">Выкл. реакции</span>
             {% else %}
-              <span style="cursor:pointer" class="u_photo_on_votes">Вкл. реакции</span>
+              <span class="u_photo_on_votes">Вкл. реакции</span>
             {% endif %}
           </span>
       </span>
