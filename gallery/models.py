@@ -8,6 +8,9 @@ from django.conf import settings
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
 from common.model.votes import PhotoVotes, PhotoCommentVotes
+from django.utils import timezone
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 
 class Album(models.Model):
@@ -71,6 +74,7 @@ class Photo(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
     item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
+    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:
@@ -231,8 +235,8 @@ class PhotoComment(models.Model):
         return str(self.item)
 
     @classmethod
-    def create_comment(cls, commenter, photo, parent_comment, text, created):
-        comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text)
+    def create_comment(cls, commenter, photo, parent_comment, text):
+        comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
