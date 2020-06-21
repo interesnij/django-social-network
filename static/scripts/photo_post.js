@@ -58,7 +58,7 @@ on('#ajax', 'click', '.user_photo_remove', function() {
 on('#ajax', 'click', '.user_photo_abort_remove', function() {
   send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  this.parentElement.previousElementSibling.style.display = "unset";
+  this.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.style.opacity = "1";
 })
