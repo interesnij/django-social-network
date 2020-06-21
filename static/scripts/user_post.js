@@ -108,17 +108,17 @@ on('#ajax', 'click', '.u_post_abort_remove', function() {
 });
 
 on('#ajax', 'click', '.u_post_fixed', function() {
-  send_change(this, "/posts/user/fixed/", "item_user_unfixed", "Открепить")
+  send_change(this, "/posts/user/fixed/", "u_post_unfixed", "Открепить")
 })
 on('#ajax', 'click', '.u_post_unfixed', function() {
-  send_change(this, "/posts/user/unfixed/", "item_user_fixed", "Закрепить")
+  send_change(this, "/posts/user/unfixed/", "u_post_fixed", "Закрепить")
 })
 
 on('#ajax', 'click', '.u_post_off_comment', function() {
-  send_change(this, "/posts/user/off_comment/", "item_user_on_comment", "Вкл. комментарии")
+  send_change(this, "/posts/user/off_comment/", "u_post_on_comment", "Вкл. комментарии")
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
-  send_change(this, "/posts/user/on_comment/", "item_user_off_comment", "Выкл. комментарии")
+  send_change(this, "/posts/user/on_comment/", "u_post_off_comment", "Выкл. комментарии")
 })
 
 on('#ajax', 'click', '.u_photo_off_votes', function() {
