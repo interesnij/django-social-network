@@ -53,8 +53,9 @@ on('#ajax', 'click', '.u_photo_description', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     form.parentElement.previousElementSibling.innerHTML = new_post + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
+  }}
   link_.send(form_data);
-}}});
+});
 
 on('#ajax', 'click', '.u_photo_off_votes', function() {
   send_photo_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
