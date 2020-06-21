@@ -169,6 +169,6 @@ class UserOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if post.creator == request.user:
-            post.is_public = True
+            post.votes_on = False
             post.save(update_fields=['votes_on'])
         return HttpResponse("!")
