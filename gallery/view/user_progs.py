@@ -138,16 +138,7 @@ class UserCloseCommentPhoto(View):
             photo.save(update_fields=['comments_enabled'])
         return HttpResponse("!")
 
-
-class UserOnPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
-            photo.is_public = False
-            photo.save(update_fields=['is_public'])
-        return HttpResponse("!")
-
-class UserOffPVotesPhoto(View):
+class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if photo.creator == request.user:
@@ -161,6 +152,14 @@ class UserOnVotesPhoto(View):
         if photo.creator == request.user:
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
+        return HttpResponse("!")
+
+class UserOnPrivatePhoto(View):
+    def get(self,request,*args,**kwargs):
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        if photo.creator == request.user:
+            photo.is_public = False
+            photo.save(update_fields=['is_public'])
         return HttpResponse("!")
 
 class UserOffPrivatePhoto(View):
