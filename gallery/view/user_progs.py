@@ -47,7 +47,7 @@ class PhotoCommentUserCreate(View):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
@@ -72,7 +72,7 @@ class PhotoReplyUserCreate(View):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment)

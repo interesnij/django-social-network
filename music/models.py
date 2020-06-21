@@ -138,6 +138,7 @@ class SoundcloudParsing(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
+    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
     list = models.ManyToManyField(SoundList, related_name='players', blank="True")
 
     def __str__(self):

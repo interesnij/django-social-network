@@ -128,6 +128,7 @@ class Video(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Создатель")
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
+    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_video')
 
     class Meta:
         verbose_name="Видео-ролики"

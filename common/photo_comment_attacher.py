@@ -26,20 +26,6 @@ def music_attach(value, comment):
     except:
         raise ValidationError('Аудиозапись не найдено')
 
-def good_attach(value, comment):
-    try:
-        _select_good = Good.objects.get(pk=value)
-        _select_good.item_comment.add(comment)
-    except:
-        raise ValidationError('Товар не найден')
-
-def article_attach(value, comment):
-    try:
-        _select_article = Article.objects.get(uuid=value)
-        _select_article.comment_attach.add(comment)
-    except:
-        raise ValidationError('Статья не найдена')
-
 def get_comment_attach(request, comment):
     if request.POST.get('photo'):
         if request.POST.get('select_photo1'):
@@ -58,15 +44,3 @@ def get_comment_attach(request, comment):
             music_attach(request.POST.get('select_music1'), comment)
         if request.POST.get('select_music2'):
             music_attach(request.POST.get('select_music2'), comment)
-
-    if request.POST.get('good'):
-        if request.POST.get('select_good1'):
-            good_attach(request.POST.get('select_good1'), comment)
-        if request.POST.get('select_good2'):
-            good_attach(request.POST.get('select_good2'), comment)
-
-    if request.POST.get('article'):
-        if request.POST.get('select_article1'):
-            article_attach(request.POST.get('select_article1'), comment)
-        if request.POST.get('select_article2'):
-            article_attach(request.POST.get('select_article2'), comment)
