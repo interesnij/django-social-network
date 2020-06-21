@@ -4656,6 +4656,10 @@ cursor: pointer;
   position: fixed;
   z-index: 200;
 }
+.create_open_300 {
+  position: fixed;
+  z-index: 300;
+}
 
 @media screen and (min-width: 621px) {
     .create_fullscreen,
