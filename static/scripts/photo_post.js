@@ -134,7 +134,7 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelector("#photos_container");
-    response = photo_list.innerHTML;
+    response.innerHTML = photo_list.innerHTML;
     document.body.querySelector("#photos_container").prepend(response);
   }}
   link_.send(form_data);
