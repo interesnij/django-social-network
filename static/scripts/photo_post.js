@@ -151,8 +151,10 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     response = document.createElement("span");
+    photo_list = document.createElement("div");
     response.innerHTML = elem;
-    photo_list = response.querySelector("#photos_container");
+    photo_list.innerHTML = response.querySelector("#photos_container").innerHTML;
+    photo_list.classList.add("row");
     document.body.querySelector("#photos_container").prepend(photo_list);
   }}
   link_.send(form_data);
