@@ -79,6 +79,21 @@ class PhotoUserCreate(View):
                 photos += [photo,]
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
+class PhotoAlbumUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя в альбом
+    """
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        photos = []
+        uploaded_file = request.FILES['file']
+        if self.user == request.user:
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(album=self.album, file=p, creator=self.user)
+                photos += [photo,]
+            return render_to_response('album_user/my_list.html',{'object_list': photos, 'album': album, 'user': request.user, 'request': request})
+
 class PhotoAttachUserCreate(View):
     """
     мульти сохранение изображений  с моментальным выводом в превью
@@ -97,18 +112,6 @@ class PhotoAttachUserCreate(View):
                 photos += [photo,]
             return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
-
-class PhotoAlbumUserCreate(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя в альбом
-    """
-    def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(pk=self.kwargs["pk"])
-        uploaded_file = request.FILES['file']
-        if self.user == request.user:
-            Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
-            return HttpResponse ('!')
 
 
 class AlbumUserCreate(TemplateView):

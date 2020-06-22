@@ -139,3 +139,22 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
   }}
   link_.send(form_data);
 });
+
+on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  form_data = new FormData(document.body.querySelector("#add_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_album_photo/" + pk + "/" + uuid + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelector("#photos_container");
+    response.innerHTML = photo_list.innerHTML;
+    document.body.querySelector("#photos_container").prepend(response);
+  }}
+  link_.send(form_data);
+});

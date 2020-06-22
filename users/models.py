@@ -308,7 +308,7 @@ class User(AbstractUser):
         return self.follows.filter(user__id=user_id).exists()
 
     def is_album_exists(self):
-        return self.created_user.filter(creator__id=self.pk, is_generic=False, community=None).exists()
+        return self.created_user.filter(creator__id=self.pk, community=None).exists()
 
     def is_photo_exists(self):
         return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
