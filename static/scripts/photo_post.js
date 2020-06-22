@@ -134,7 +134,8 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelector("#photos_container");
-    document.body.querySelector("#photos_container").append(photo_list);
+    response = photo_list.innerHTML;
+    document.body.querySelector("#photos_container").prepend(response);
   }}
   link_.send(form_data);
 });
