@@ -270,7 +270,7 @@ on('#ajax', 'click', '.music_list_post', function() {
 on('#ajax', 'click', '.music_list_comment', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   comment = this.parentElement.parentElement.parentElement.parentElement;
-  var comment_pk = item.getAttribute('data-pk');
+  var comment_pk = comment.getAttribute('data-pk');
   if (!document.body.classList.contains("comment_" + comment_pk)){
     document.querySelector("body").classList = "";
     document.querySelector("body").classList.add("comment_" + comment_pk);
