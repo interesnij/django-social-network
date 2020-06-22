@@ -75,7 +75,7 @@ function send_photo_change(span, _link, new_class, html){
   link.open( 'GET', _link + uuid + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    new_span = document.createElement("span");
+    new_span = document.createElement("a");
     new_span.classList.add(new_class);
     new_span.innerHTML = html;
     parent.innerHTML = "";

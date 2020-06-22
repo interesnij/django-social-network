@@ -14,7 +14,7 @@
 <span class="btn_settings_photo">
     <span>
       <span>
-        <span class="user_photo_remove">Удалить</span>
+        <a class="user_photo_remove">Удалить</a>
       </span>
     </span>
     &nbsp;
@@ -23,30 +23,30 @@
           {% if avatar %}
             Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
           {% else %}
-            <span class="u_set_avatar">Сделать аватаром</span>
+            <a class="u_set_avatar">Сделать аватаром</a>
           {% endif %}
         </span>
         &nbsp;
           <span>
             {% if object.is_public %}
-            <span class="u_photo_on_private">Вкл. приватность</span>
+            <a class="u_photo_on_private">Вкл. приватность</a>
             {% else %}
-            <span class="u_photo_off_private">Откл. приватность</span>
+            <a class="u_photo_off_private">Откл. приватность</a>
             {% endif %}
           </span>
           &nbsp;
           <span>
             {% if object.comments_enabled %}
-              <span class="u_photo_off_comment">Выкл. комментарии</span>
+              <a class="u_photo_off_comment">Выкл. комментарии</a>
             {% else %}
-              <span class="u_photo_on_comment">Вкл. комментарии</span>
+              <a class="u_photo_on_comment">Вкл. комментарии</a>
             {% endif %}
           </span>
           <span>
             {% if object.votes_on %}
-              <span class="u_photo_off_votes">Выкл. реакции</span>
+              <a class="u_photo_off_votes">Выкл. реакции</a>
             {% else %}
-              <span class="u_photo_on_votes">Вкл. реакции</span>
+              <a class="u_photo_on_votes">Вкл. реакции</a>
             {% endif %}
           </span>
       </span>
