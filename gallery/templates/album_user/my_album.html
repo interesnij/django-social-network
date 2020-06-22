@@ -11,12 +11,13 @@
   Фото: {{ album.count_photo }}
 
   {% if not album.is_generic %}
-  <span class="text-right">
-    <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
-    <button id="u_add_multi_photos" class="btn btn-outline-success" type="button">
-      Добавить фотографии
-    </button>
-  </span>
+  <form id="add_photos" method="post">
+      {% csrf_token %}
+        <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
+        <button id="u_add_multi_photos" class="btn btn-outline-success" type="button">
+          Добавить фотографии
+        </button>
+  </form>
   {% endif %}
 </div>
 
