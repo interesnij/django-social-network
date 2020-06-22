@@ -8,9 +8,8 @@ on('#ajax', 'click', '.c_fullscreen', function() {
 
 on('#ajax', 'click', '.c_avatar_detail', function() {
   uuid = this.getAttribute('photo-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/c_avatar_detail/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load/c_avatar_detail/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_article_detail', function() {
