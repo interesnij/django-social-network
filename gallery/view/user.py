@@ -45,20 +45,6 @@ class UserAlbumView(TemplateView):
         return context
 
 
-class PhotoUserCreate(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя прямо в галерею
-    """
-    def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        photos = []
-        if self.user == request.user:
-            for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=self.user)
-                photos += [photo,]
-            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
-
-
 class UserAddAvatar(View):
     """
     загрузка аватара пользователя
@@ -80,6 +66,18 @@ class UserAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
+class PhotoUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя прямо в галерею
+    """
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        photos = []
+        if self.user == request.user:
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, creator=self.user)
+                photos += [photo,]
+            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
 
 class PhotoAttachUserCreate(View):
     """

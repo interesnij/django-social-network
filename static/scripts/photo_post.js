@@ -117,3 +117,21 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   send_dislike(photo, "/gallery/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
   vote_reload("/gallery/photo_window/u_comment_like_window/" + comment_pk + "/", "/gallery/photo_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
+
+
+on('#ajax', 'change', '#u_gallery_photo_add', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelector("#photos_container");
+    document.body.querySelector("#photos_container").append(photo_list);
+  }
+  link_.send(form_data);
+});
