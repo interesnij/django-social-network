@@ -4746,18 +4746,13 @@ cursor: pointer;
 .dislike_window:hover,
 .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 
-.c_like:hover~.like_window,
-.c_dislike:hover~.dislike_window,
-.c_repost:hover~.repost_window,
-.u_like:hover~.like_window,
-.u_dislike:hover~.dislike_window,
-.u_repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
-.c_like2:hover~.comment_like_window,
-.c_dislike2:hover~.comment_dislike_window,
-.u_like2:hover~.comment_like_window,
-.u_dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
-.c_like, .c_dislike, .u_like, .u_dislike, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; }
-.like, .dislike { cursor:pointer; margin-right: 5px;}
+.like:hover~.like_window,
+.dislike:hover~.dislike_window,
+.repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
+
+.like2:hover~.comment_like_window,
+.dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
+.like, .dislike, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; margin-right: 10px;}
 
 .card-body img{
 width: 100%
@@ -4770,8 +4765,6 @@ width: 100%
 #article_loader iframe {
   width: 100% !important;
 }
-
-#article_add, #images_upload, #gallery, #link, #doc, #good, #question, #settings{ cursor:pointer; }
 
 .svg_default_30 { width: 30px; height: 30px;border-radius: 50%; padding: 3px; }
 .svg_default_40 { width: 40px; height: 40px;border-radius: 50%; padding: 4px; }

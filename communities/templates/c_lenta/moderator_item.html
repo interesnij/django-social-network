@@ -1,12 +1,12 @@
 
 <span class="text-hide-xs">
   {% if prev %}
-    <a class="prev_item" href="{% url 'community_item' uuid=prev.uuid pk=community.pk %}"">
+    <a class="prev_item btn_default" href="{% url 'community_item' uuid=prev.uuid pk=community.pk %}"">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
   {% if next %}
-    <a class="next_item" href="{% url 'community_item' uuid=next.uuid pk=community.pk %}">
+    <a class="next_item btn_default" href="{% url 'community_item' uuid=next.uuid pk=community.pk %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
