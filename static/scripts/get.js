@@ -267,6 +267,31 @@ on('#ajax', 'click', '.music_list_post', function() {
   }
 });
 
+on('#ajax', 'click', '.music_list_comment', function() {
+  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
+  comment = this.parentElement.parentElement.parentElement.parentElement;
+  var comment_pk = item.getAttribute('data-pk');
+  if (!document.body.classList.contains("comment_" + comment_pk)){
+    document.querySelector("body").classList = "";
+    document.querySelector("body").classList.add("comment_" + comment_pk);
+    list = [].slice.call(comment.querySelectorAll(".media"), 0).reverse();
+    for(i=0; i<list.length; i++) {
+      _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+      _title=list[i].querySelector(".music_title").innerHTML;
+      try{_thumbPath= list[i].querySelector("img").getAttribute("data-src")} catch {_thumbPath = "/static/images/no_track_img.jpg"};
+      _duration=list[i].getAttribute("data-duration");
+      time = msToTime(_duration);
+      music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+    }
+    music_player.playSpecificTrack("comment_" + comment_pk, track_id)
+  }else{
+    music_player.loadPlaylist(0);
+    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+    setTimeout(function() {music_player.playSpecificTrack("comment_" + comment_pk, track_id)}, 50);
+  }
+  }
+});
+
 on('#ajax', 'click', '.track_add', function(e) {
   block = this.parentElement;
   pk = block.parentElement.getAttribute("data-pk");
