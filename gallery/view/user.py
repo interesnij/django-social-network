@@ -93,7 +93,7 @@ class PhotoAlbumUserCreate(View):
                 photo = Photo.objects.create(file=p, creator=user)
                 _album.album.add(photo)
                 photos += [photo,]
-            return render_to_response('album_user/my_list.html',{'object_list': photos, 'album': album, 'user': request.user, 'request': request})
+            return render_to_response('album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user, 'request': request})
 
 class PhotoAttachUserCreate(View):
     """
