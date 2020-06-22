@@ -84,13 +84,14 @@ class PhotoAlbumUserCreate(View):
     асинхронная мульти загрузка фотографий пользователя в альбом
     """
     def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        _album = Album.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
-        if self.user == request.user:
+        if user == request.user:
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(album=self.album, file=p, creator=self.user)
+                photo = Photo.objects.create(file=p, creator=user)
+                _album.album.add(photo)
                 photos += [photo,]
             return render_to_response('album_user/my_list.html',{'object_list': photos, 'album': album, 'user': request.user, 'request': request})
 
