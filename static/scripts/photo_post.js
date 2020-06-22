@@ -118,6 +118,9 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   vote_reload("/gallery/photo_window/u_comment_like_window/" + comment_pk + "/", "/gallery/photo_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
+on('body', 'click', '#u_add_multi_photos', function(event) {
+  this.previousElementSibling.click();
+})
 
 on('#ajax', 'change', '#u_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -132,6 +135,6 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
     response.innerHTML = elem;
     photo_list = response.querySelector("#photos_container");
     document.body.querySelector("#photos_container").append(photo_list);
-  }
+  }}
   link_.send(form_data);
 });
