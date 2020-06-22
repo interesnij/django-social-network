@@ -12,7 +12,7 @@
   {% endfor %}
   {% for object in comment.gallery_comment_music.all %}
   <div class="col-md-12">
-    <div class="media" data-path="{{ object.uri }}" data-duration="{{ object.duration }}">
+    <div class="media" data-path="{{ object.uri }}" data-duration="{{ object.duration }}" music-counter="{{ forloop.counter0 }}">
         <figure style="cursor:pointer">
           <a class="music_list_comment">
             {% if object.artwork_url %}
