@@ -10,44 +10,44 @@
           <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
     </div>
-    {% if album %}<a href="{% url 'user_album' pk=user.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>{% endif %}
+    {% if album %}<a href="{% url 'community_album' pk=community.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>{% endif %}
 <span class="btn_settings_photo">
     <span>
       <span>
-        <a class="user_photo_remove">Удалить</a>
+        <a class="community_photo_remove">Удалить</a>
       </span>
     </span>
     &nbsp;
       <span id="btn_console">
         <span>
           {% if avatar %}
-            Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
+            Это ваш аватар - <span class="c_unset_avatar">убрать аватар</span>
           {% else %}
-            <a class="u_set_avatar">Сделать аватаром</a>
+            <a class="c_set_avatar">Сделать аватаром</a>
           {% endif %}
         </span>
         &nbsp;
           <span>
             {% if object.is_public %}
-            <a class="u_photo_on_private">Вкл. приватность</a>
+            <a class="c_photo_on_private">Вкл. приватность</a>
             {% else %}
-            <a class="u_photo_off_private">Откл. приватность</a>
+            <a class="c_photo_off_private">Откл. приватность</a>
             {% endif %}
           </span>
           &nbsp;
           <span>
             {% if object.comments_enabled %}
-              <a class="u_photo_off_comment">Выкл. комментарии</a>
+              <a class="c_photo_off_comment">Выкл. комментарии</a>
             {% else %}
-              <a class="u_photo_on_comment">Вкл. комментарии</a>
+              <a class="c_photo_on_comment">Вкл. комментарии</a>
             {% endif %}
           </span>
           &nbsp;
           <span>
             {% if object.votes_on %}
-              <a class="u_photo_off_votes">Выкл. реакции</a>
+              <a class="c_photo_off_votes">Выкл. реакции</a>
             {% else %}
-              <a class="u_photo_on_votes">Вкл. реакции</a>
+              <a class="c_photo_on_votes">Вкл. реакции</a>
             {% endif %}
           </span>
       </span>
@@ -57,10 +57,10 @@
 
       <div class="card-header">
           <div class="media">
-            <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+            <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
               <figure>
-                {% if object.creator.get_avatar %}
-                  <img src="{{ object.creator.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                {% if object.community.get_avatar %}
+                  <img src="{{ object.community.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
                   <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 {% endif %}
@@ -68,8 +68,8 @@
             </a>
               <div class="media-body">
                   <h6 class="mb-0">
-                    <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-                      {{ object.creator.get_full_name }} &nbsp;
+                    <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                      {{ object.community.name }} &nbsp;
                     </a>
                   </h6>
                   <p class="mb-0">{{ object.created|naturaltime }}</p>
@@ -81,14 +81,14 @@
         {% if object.description %}
         {{ object.description }}
         <br><br>
-          <span style="cursor:pointer" class="u_photo_edit">Редактировать</span>
+          <span style="cursor:pointer" class="c_photo_edit">Редактировать</span>
         {% else %}
-          <span style="cursor:pointer" class="u_photo_edit">Добавить описание</span>
+          <span style="cursor:pointer" class="c_photo_edit">Добавить описание</span>
         {% endif %}
       </span>
       <span id="block_description_form" style="display:none">
         <br>
-        <form class="u_photo_description_form">
+        <form class="c_photo_description_form">
             {% csrf_token %}
                 <div class="">
                     <div class="input-group input-group-sm">
@@ -96,14 +96,14 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <button class="btn u_photo_description" type="button">
+                    <button class="btn c_photo_description" type="button">
                       Добавить
                     </button>
                 </div>
         </form>
       </span>
       <br><br>
-      {% include 'photo_user/info.html' %}
+      {% include 'photo_community/info.html' %}
     </div>
   </div>
 </div>
