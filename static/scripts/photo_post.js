@@ -155,6 +155,8 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
     response.innerHTML = elem;
     photo_list.innerHTML = response.querySelector("#photos_container").innerHTML;
     photo_list.classList.add("row");
+    photo_list.style.marginLeft = "0";
+    photo_list.style.marginRight = "0";
     document.body.querySelector("#photos_container").prepend(photo_list);
   }}
   link_.send(form_data);
