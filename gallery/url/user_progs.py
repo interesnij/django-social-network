@@ -13,8 +13,6 @@ urlpatterns=[
     url(r'^off_private/(?P<uuid>[0-9a-f-]+)/$', UserOffPrivatePhoto.as_view()),
     url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', UserOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesPhoto.as_view()),
-    url(r'^add_avatar/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserAddAvatarPhoto.as_view()),
-    url(r'^remove_avatar/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserRemoveAvatarPhoto.as_view()),
 
     url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PhotoUserCommentList.as_view()),
     url(r'^post-comment/$', login_required(PhotoCommentUserCreate.as_view())),
