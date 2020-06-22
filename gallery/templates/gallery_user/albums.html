@@ -1,36 +1,8 @@
 
-<style>
-    .albom_description {
-        opacity: 0;
-        visibility: hidden;
-        position: absolute;
-        bottom: 25px;
-        margin-bottom: 10px;
-        display: flex;
-        transition: 0.5s;
-    }
-
-    .albom_description:hover {
-        z-index: 10;
-        opacity: 1;
-        visibility: visible;
-        background: #D6DAE1;
-        color: black;
-    }
-
-    .cover_block:hover .albom_description {
-        z-index: 10;
-        opacity: 1;
-        visibility: visible;
-        background: #D6DAE1;
-        color: black;
-    }
-</style>
-
 {% if albums_list %}
 <div class="row" style="margin-left: 0;margin-right: 0;">
     {% for object in albums_list %}
-    <div class="col-sm-12 col-md-6 col-lg-4 cover_block infinite-item">
+    <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
 
         <div class="card rounded-0 border-0 mb-3">
             <div class="card-header">
@@ -53,19 +25,11 @@
             </div>
             <div class="card-body">
               <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
-                {% if object.pk == avatars_album.pk %}
-                  {% if object.get_cover_photo_for_avatars %}
-                    <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
-                  {% else %}
-                    <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
-                {% else %}
                   {% if object.get_cover_photo %}
-                    <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_cover_photo.file.url }}" />
+                    <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
-                    <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    <svg class="svg_default image_fit_200" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                   {% endif %}
-                {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
               </a>
             </div>

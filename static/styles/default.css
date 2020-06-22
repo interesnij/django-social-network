@@ -1,3 +1,29 @@
+.albom_description {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    bottom: 25px;
+    margin-bottom: 10px;
+    display: flex;
+    transition: 0.5s;
+}
+
+.albom_description:hover {
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    background: #D6DAE1;
+    color: black;
+}
+
+.cover_block:hover .albom_description {
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    background: #D6DAE1;
+    color: black;
+}
+
 .user_photo_abort_remove{
   color: #FF0000
 }
@@ -32,7 +58,8 @@ ul{
 .u_photo_detail,
 .c_album_photo_detail,
 .c_photo_detail,
-.photo_load_one  {
+.photo_load_one,
+.cover_block  {
   cursor:pointer;
   margin-left: -7px;
   margin-right: -7px;

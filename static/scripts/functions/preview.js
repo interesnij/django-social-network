@@ -152,3 +152,40 @@ function create_preview_article(div_class, img_src, uuid, title){
   $div.append($title);
   return $div
 }
+
+on('#ajax', 'click', '.photo_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".photo") ? null : block.querySelector(".photo_input").parentElement.remove();
+
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
+on('#ajax', 'click', '.video_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".video") ? null : block.querySelector(".video_input").parentElement.remove();
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
+on('#ajax', 'click', '.music_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".music") ? null : block.querySelector(".music_input").parentElement.remove();
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
+on('#ajax', 'click', '.good_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".good") ? null : block.querySelector(".good_input").parentElement.remove();
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
+on('#ajax', 'click', '.article_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".article") ? null : block.querySelector(".article_input").parentElement.remove();
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
