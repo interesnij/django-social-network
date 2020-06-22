@@ -153,8 +153,7 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelector("#photos_container");
-    response.innerHTML = photo_list.innerHTML;
-    document.body.querySelector("#photos_container").prepend(response);
+    document.body.querySelector("#photos_container").prepend(photo_list);
   }}
   link_.send(form_data);
 });

@@ -1,9 +1,9 @@
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   container = this.parentElement;
-  uuid2 = container.getAttribute('data-uuid2');
+  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid2 + "/", loader)
+  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_photo_detail', function() {
   container = this.parentElement;
