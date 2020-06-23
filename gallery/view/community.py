@@ -86,7 +86,7 @@ class PhotoAlbumCommunityCreate(View):
         _album = Album.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
-        check_can_get_posts_for_community_with_name
+        check_can_get_posts_for_community_with_name(request.user, community.name)
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             _album.album.add(photo)
@@ -100,7 +100,7 @@ class PhotoAttachCommunityCreate(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photos = []
-        check_can_get_posts_for_community_with_name()
+        check_can_get_posts_for_community_with_name(request.user, community.name)
         try:
             _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
         except:
