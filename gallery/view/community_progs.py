@@ -29,7 +29,7 @@ class PhotoCommunityCommentList(ListView):
         return context
 
     def get_queryset(self):
-        check_can_get_posts_for_community_with_name(self.request.user, community.name)
+        check_can_get_posts_for_community_with_name(self.request.user, self.community.name)
         comments = self.photo.get_comments()
         return comments
 
