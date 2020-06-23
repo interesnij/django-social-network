@@ -1,28 +1,28 @@
 on('body', 'click', '.clean_panel', function(event) {
-  if (document.querySelector(".create_fullscreen").style.display == "block") {
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_fullscreen").innerHTML=""
-  } else if (document.querySelector(".photo_fullscreen").style.display == "block") {
-    document.querySelector(".photo_fullscreen").style.display = "none";
-    document.getElementById("photo_loader").innerHTML=""
-  } else if (document.querySelector(".article_fullscreen").style.display == "block") {
-    document.querySelector(".article_fullscreen").style.display = "none";
-    document.getElementById("article_loader").innerHTML=""
-  } else if (document.querySelector(".item_fullscreen").style.display == "block") {
-    document.querySelector(".item_fullscreen").style.display = "none";
-    document.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.querySelector(".good_fullscreen").style.display == "block") {
-    document.querySelector(".good_fullscreen").style.display = "none";
-    document.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.querySelector(".article_fullscreen").style.display == "block") {
-    document.querySelector(".article_fullscreen").style.display = "none";
-    document.querySelector(".article_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.querySelector(".votes_fullscreen").style.display == "block") {
-    document.querySelector(".votes_fullscreen").style.display = "none";
-    document.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
+  if (document.body.querySelector(".create_fullscreen").style.display == "block") {
+    document.body.querySelector(".create_fullscreen").style.display = "none";
+    document.body.getElementById("create_fullscreen").innerHTML=""
+  } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
+    document.body.querySelector(".photo_fullscreen").style.display = "none";
+    document.body.getElementById("photo_loader").innerHTML=""
+  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
+    document.body.querySelector(".article_fullscreen").style.display = "none";
+    document.body.getElementById("article_loader").innerHTML=""
+  } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
+    document.body.querySelector(".item_fullscreen").style.display = "none";
+    document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".good_fullscreen").style.display == "block") {
+    document.body.querySelector(".good_fullscreen").style.display = "none";
+    document.body.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
+    document.body.querySelector(".article_fullscreen").style.display = "none";
+    document.body.querySelector(".article_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
+    document.body.querySelector(".votes_fullscreen").style.display = "none";
+    document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
   } else if (document.querySelector(".create_fullscreen").style.display == "block") {
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.querySelector(".create_fullscreen").querySelector(".loader_0").innerHTML=""
+    document.body.querySelector(".create_fullscreen").style.display = "none";
+    document.body.querySelector(".create_fullscreen").querySelector(".loader_0").innerHTML=""
   }
 })
 

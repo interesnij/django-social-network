@@ -112,10 +112,18 @@ function if_list(block){
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
 		scrolled(photo_load, link, '#photo_load')
+  }else if(block.querySelector('#c_photo_load')){
+    photo_load = block.querySelector('#c_photo_load');link = photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#c_photo_load"), link);
+		scrolled(photo_load, link, '#c_photo_load')
   }else if(block.querySelector('#album_photo_load')){
     album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#album_photo_load"), link);
 		scrolled(album_photo_load, link, '#album_photo_load')
+  }else if(block.querySelector('#c_album_photo_load')){
+    album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#c_album_photo_load"), link);
+		scrolled(album_photo_load, link, '#c_album_photo_load')
   };
 }
 if_list(document.getElementById('ajax'));

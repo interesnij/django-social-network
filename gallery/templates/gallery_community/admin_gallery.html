@@ -5,7 +5,7 @@
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
         <div class="col-12 col-md-8">
-            <h5 class="mt-1">{{ community.name }} :: альбомы</h5> {% if not community.is_album_exists %}- альбомов нет{% endif %}
+            <h5 class="mt-1">{{ community.name }} - альбомы</h5> {% if not community.is_album_exists %}- альбомов нет{% endif %}
         </div>
         <div class="col-12 col-md-4">
           <button class="c_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
@@ -19,11 +19,11 @@
   {% include 'gallery_community/albums.html' %}
 </div>
 
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-12 col-md-8">
-            <h5 class="mt-1">Мои фотографии</h5>
-            Фото: {{ community.count_photos }}
+            <h5 class="mt-1">{{ community.name }} - фотографии</h5>
+            {{ community.count_photos }}
         </div>
         <div class="col-12 col-md-4">
           <form id="add_photos" method="post">
