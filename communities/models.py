@@ -225,7 +225,7 @@ class Community(models.Model):
         from gallery.models import Photo
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        photos_query = Q(is_deleted=False, album_id=album_id, is_public=True)
+        photos_query = Q(is_deleted=False, album__pk=album_id, is_public=True)
         #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
