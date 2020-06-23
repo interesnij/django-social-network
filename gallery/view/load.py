@@ -153,7 +153,7 @@ class CommunityAlbumPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
-        self.photos = self.photo.community.get_photos_for_my_album(album_id=self.album.pk)
+        self.photos = self.photo.community.get_photos_for_album(album_id=self.album.pk)
         self.template_name = get_detail_template_community(self.photo.community, "photo_community/", "album_photo.html", request)
         return super(CommunityAlbumPhoto,self).get(request,*args,**kwargs)
 
