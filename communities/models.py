@@ -107,6 +107,9 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
+        from music.models import SoundList
+        from video.models import VideoAlbum
+
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
         else:
@@ -114,6 +117,8 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
+        SoundList.objects.create(creator=creator, community_id=community.pk, is_generic=True, name="Основной плейлист")
+        VideoAlbum.objects.create(creator=creator, community_id=community.pk, is_generic=True, title="Все видео")
         return community
 
     @classmethod
