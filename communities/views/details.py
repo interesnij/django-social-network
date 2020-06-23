@@ -8,6 +8,62 @@ from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 
 
+class CommunityMusic(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from music.models import SoundList
+
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.playlist = SoundList.objects.get(community_id=self.community.pk, is_generic=True, name="Основной плейлист")
+        except:
+            self.playlist = None
+        self.template_name = self.user.get_template(folder="community_music/", template="music.html", request=request)
+        return super(CommunityMusic,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityMusic,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['playlist'] = self.playlist
+        return context
+
+    def get_queryset(self):
+        music_list = self.community.get_music()
+        return music_list
+
+
+class CommunityVideo(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from video.models import VideoAlbum
+
+        self.template_name = request.user.get_template_user(folder="community_video/", template="list.html", request=request)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
+        except:
+            self.album = None
+        if request.user.is_staff_of_community_with_name(self.community.name):
+            self.video_list = self.album.get_my_queryset()
+        else:
+            self.video_list = self.album.get_queryset()
+        return super(CommunityVideo,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityVideo,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['album'] = self.album
+        return context
+
+    def get_queryset(self):
+        video_list = self.video_list
+        return video_list
+
+
 class PostsCommunity(ListView):
 	template_name = None
 	paginate_by = 15
