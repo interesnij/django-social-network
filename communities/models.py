@@ -276,6 +276,9 @@ class Community(models.Model):
         albums = Album.objects.filter(albums_query)
         return albums
 
+    def count_photos(self):
+        return self.photo_community.values('pk').count()
+
     def get_profile_photos(self):
         from gallery.models import Photo
         from moderation.models import ModeratedObject

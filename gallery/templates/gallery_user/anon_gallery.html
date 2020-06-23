@@ -37,30 +37,4 @@
       <div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}"></div>
 </div>
 
-<script>
-
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var photos = document.getElementById("photos_container");
-    if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('u_photo_detail').length < 30){loaded = true;};
-        photos.append(elem);
-        }
-      }
-    }}
-  }catch{return}
-}
-</script>
 {% endblock %}
