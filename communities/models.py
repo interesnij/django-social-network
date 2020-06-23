@@ -270,7 +270,7 @@ class Community(models.Model):
         from gallery.models import Album
         from moderation.models import ModeratedObject
 
-        albums_query = Q(community=self, is_deleted=False, is_public=True, is_generic=False)
+        albums_query = Q(community=self, is_deleted=False, is_public=True)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
