@@ -106,7 +106,7 @@ on('#ajax', 'click', '.c_post_unfixed', function() {
   send_change(this, "/posts/community/unfixed/", "c_post_fixed", "Закрепить")
 })
 
-on('#ajax', 'click', '.c_post_off_comment', function() {
+on('#ajax', 'click', '.c_post_off_comment', function() { 
   send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии")
 })
 on('#ajax', 'click', '.c_post_on_comment', function() {
