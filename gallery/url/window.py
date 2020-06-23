@@ -8,8 +8,8 @@ urlpatterns = [
 	url(r'^u_dislike_window/(?P<uuid>[0-9a-f-]+)/$', PhotoUserDislikeWindow.as_view()),
     url(r'^u_comment_like_window/(?P<comment_pk>\d+)/$', PhotoUserCommentLikeWindow.as_view()),
 	url(r'^u_comment_dislike_window/(?P<comment_pk>\d+)/$', PhotoUserCommentDislikeWindow.as_view()),
-	url(r'^c_like_window/(?P<pk>\d+)/$', PhotoCommunityLikeWindow.as_view()),
-	url(r'^c_dislike_window/(?P<pk>\d+)/$', PhotoCommunityDislikeWindow.as_view()),
+	url(r'^c_like_window/(?P<uuid>[0-9a-f-]+)/$', PhotoCommunityLikeWindow.as_view()),
+	url(r'^c_dislike_window/(?P<uuid>[0-9a-f-]+)/$', PhotoCommunityDislikeWindow.as_view()),
     url(r'^c_comment_like_window/(?P<comment_pk>\d+)/$', PhotoCommunityCommentLikeWindow.as_view()),
 	url(r'^c_comment_dislike_window/(?P<comment_pk>\d+)/$', PhotoCommunityCommentDislikeWindow.as_view()),
 

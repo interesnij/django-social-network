@@ -72,7 +72,7 @@ class PhotoCommunityLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
         return super(PhotoCommunityLikeWindow,self).get(request,*args,**kwargs)
 
@@ -87,7 +87,7 @@ class PhotoCommunityDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
         return super(PhotoCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
