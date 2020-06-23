@@ -1,0 +1,35 @@
+
+<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <form action="" id="form_album_add" method="post">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Добавление альбома</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group ">
+                  <label>Название</label>
+                  <input data-error="Это поле обязательно" type="text" name="title" class="form-control" id="id_title" required>
+                </div>
+                <div class="form-group ">
+                  <label>Описание</label>
+                  <input type="text" name="description" class="form-control" id="id_description">
+                </div>
+                <div class="form-group ">
+                  <label>Порядковый номер</label>
+                  <input type="number" value="0" name="order" class="form-control" id="id_order">
+                </div>
+                <div class="form-group ">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
+                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
+                  </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button id="c_add_album" type="button" class="btn btn-success float-right">Создать</button>
+            </div>
+        </div>
+    </form>
+</div>

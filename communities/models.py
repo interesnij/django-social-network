@@ -239,7 +239,7 @@ class Community(models.Model):
         photos = Photo.objects.filter(photos_query)
         return photos
 
-    def get_photos(self):
+    def get_photos(self): 
         from moderation.models import ModeratedObject
         from gallery.models import Photo
 
