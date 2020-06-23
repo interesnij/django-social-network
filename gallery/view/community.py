@@ -71,7 +71,7 @@ class PhotoCommunityCreate(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photos = []
-        check_can_get_posts_for_community_with_name()
+        check_can_get_posts_for_community_with_name(request.user, community.name)
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             photos += [photo,]
