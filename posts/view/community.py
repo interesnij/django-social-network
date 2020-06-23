@@ -82,7 +82,7 @@ def post_update_interactions(request):
     return JsonResponse(data)
 
 
-def community_fixed(request, pk, uuid):
+def community_fixed(request, uuid):
 	item = Post.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.get_fixed_for_community(pk)
@@ -90,7 +90,7 @@ def community_fixed(request, pk, uuid):
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
-def community_unfixed(request, pk, uuid):
+def community_unfixed(request, uuid):
 	item = Post.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.is_fixed=False
@@ -99,7 +99,7 @@ def community_unfixed(request, pk, uuid):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def community_off_comment(request, pk, uuid):
+def community_off_comment(request, uuid):
     item = Post.objects.get(uuid=uuid)
     if request.user.is_staff_of_community_with_name(item.community.name):
         item.comments_enabled=False
@@ -108,7 +108,7 @@ def community_off_comment(request, pk, uuid):
     else:
         return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
-def community_on_comment(request, pk, uuid):
+def community_on_comment(request, uuid):
 	item = Post.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.comments_enabled=True
