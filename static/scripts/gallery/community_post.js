@@ -127,7 +127,7 @@ on('body', 'click', '#c_add_multi_photos', function(event) {
 
 on('#ajax', 'change', '#c_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  form_data = new FormData(document.body.querySelector("#add_photos"));
+  form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_photo/" + pk + "/", true );
 
