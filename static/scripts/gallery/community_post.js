@@ -92,32 +92,28 @@ on('#ajax', 'click', '.community_photo_abort_remove', function() {
 
 on('#ajax', 'click', '.c_photo_like', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  send_like(photo, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  send_like(photo, "/gallery/votes/community_like/" + pk + "/");
+  vote_reload("/gallery/photo_window/c_like_window/" + pk + "/", "/gallery/photo_window/c_dislike_window/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  send_dislike(photo, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  send_dislike(photo, "/gallery/votes/community_dislike/" + pk + "/");
+  vote_reload("/gallery/photo_window/c_like_window/" + pk + "/", "/gallery/photo_window/c_dislike_window/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_like2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  send_like(photo, "/gallery/votes/community_comment/" + comment_pk + "/" + pk + "/like/");
+  send_like(photo, "/gallery/votes/community_comment/" + comment_pk + "/like/");
   vote_reload("/gallery/photo_window/c_comment_like_window/" + comment_pk + "/", "/gallery/photo_window/c_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_dislike2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  send_dislike(photo, "/gallery/votes/community_comment/" + comment_pk + "/" + pk + "/dislike/");
+  send_dislike(photo, "/gallery/votes/community_comment/" + comment_pk + "/" + "/dislike/");
   vote_reload("/gallery/photo_window/c_comment_like_window/" + comment_pk + "/", "/gallery/photo_window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
