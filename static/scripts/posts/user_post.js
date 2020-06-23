@@ -1,4 +1,8 @@
-
+on('#ajax', 'click', '#article_add', function() {
+  var pk = this.getAttribute('data-pk');
+  open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
+  //setTimeout(function() { CKEDITOR.replace('id_content'); CKEDITOR.instances.id_content.updateElement(); }, 1000);
+});
 
 on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
@@ -169,75 +173,6 @@ on('#ajax', 'click', '.u_dislike2', function() {
   vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-
-on('#ajax', 'click', '.color_change', function() {
-  var span = this;
-  var color = this.getAttribute('data-color');
-  var input = span.querySelector(".custom-control-input");
-  var list = document.querySelector(".theme-color");
-  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/color/" + color + "/", true );
-  link_.send();
-  link_.onreadystatechange = function () {
-  if ( link_.readyState == 4 && link_.status == 200 ) {
-    var uncheck=document.getElementsByTagName('input');
-    for(var i=0;i<uncheck.length;i++)
-    {uncheck[i].checked=false;}
-    input.checked = true;
-    addStyleSheets("/static/styles/color/" + color + ".css");
-  }
-};
-});
-
-on('#ajax', 'click', '#holder_article_image', function() {
-  img = this.previousElementSibling.querySelector("#id_g_image")
-  get_image_priview(this, img);
-});
-
-on('body', 'click', '#user_avatar_btn', function(event) {
-  this.previousElementSibling.click();
-})
-on('#ajax', 'change', '#user_avatar_upload', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_user_avatar"));
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_avatar/" + pk + "/", true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    document.body.querySelector(".avatar_figure").innerHTML = "";
-    img = response.querySelector("img");
-    document.body.querySelector(".avatar_figure").append(img);
-    }
-  }
-  link_.send(form_data);
-})
-
-on('#ajax', 'change', '#photo_add_comment_attach', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".u_photo_detail");
-    block_divs_length = photo_list.length;
-
-    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
-    }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
-  }
-  link_.send(form_data);
-});
 
 on('#ajax', 'change', '#photo_add_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

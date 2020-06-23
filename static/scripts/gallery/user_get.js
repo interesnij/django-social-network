@@ -1,3 +1,9 @@
+on('#ajax', 'click', '.avatar_detail', function() {
+  uuid = this.getAttribute('photo-uuid');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/avatar_detail/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   container = this.parentElement;
   uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");

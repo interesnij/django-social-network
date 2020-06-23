@@ -304,3 +304,9 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
 });
+
+loadScripts('/static/scripts/lib/lazysizes.min.js')
+loadScripts('/static/scripts/posts/community_get.js')
+loadScripts('/static/scripts/posts/user_get.js')
+loadScripts('/static/scripts/good_get.js')
+loadScripts('/static/scripts/gallery/user_get.js')

@@ -1,15 +1,17 @@
+// скрипты галереи для пользователя
+
 on('#ajax', 'click', '.u_photoComment', function() {
   form = this.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/post-comment/');
 });
 
-on('#ajax', 'click', '.u_replyPostComment', function() {
+on('#ajax', 'click', '.u_replyPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/gallery/user_progs/reply-comment/')
   form.parentElement.style.display = "none";
 });
 
-on('#ajax', 'click', '.u_replyParentPostComment', function() {
+on('#ajax', 'click', '.u_replyParentPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/gallery/user_progs/reply-comment/')
   form.parentElement.style.display = "none";
@@ -161,5 +163,50 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
     document.body.querySelector("#photos_container").prepend(photo_list);
   }}
+  link_.send(form_data);
+});
+
+on('body', 'click', '#user_avatar_btn', function(event) {
+  this.previousElementSibling.click();
+})
+on('#ajax', 'change', '#user_avatar_upload', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_user_avatar"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_avatar/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    document.body.querySelector(".avatar_figure").innerHTML = "";
+    img = response.querySelector("img");
+    document.body.querySelector(".avatar_figure").append(img);
+    }
+  }
+  link_.send(form_data);
+})
+
+on('#ajax', 'change', '#photo_add_comment_attach', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".u_photo_detail");
+    block_divs_length = photo_list.length;
+
+    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
+    }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
   link_.send(form_data);
 });

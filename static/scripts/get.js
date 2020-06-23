@@ -28,9 +28,6 @@ on('body', 'click', '.clean_panel', function(event) {
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
-on('body', 'click', '#add_multi_comments_photos', function(event) {
-  this.previousElementSibling.click();
-})
 
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
@@ -146,75 +143,6 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.focus();
 })
 
-on('#ajax', 'click', '.comment_photo', function() {
-  this.classList.add("current_file_dropdown");
-  document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_comment_load/', loader)
-});
-on('#ajax', 'click', '.comment_video', function() {
-  this.classList.add("current_file_dropdown");
-  clear_attach_block();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/video_load/', loader)
-});
-on('#ajax', 'click', '.comment_music', function() {
-  this.classList.add("current_file_dropdown");
-  clear_attach_block();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/music_load/', loader)
-});
-on('#ajax', 'click', '.comment_good', function() {
-  this.classList.add("current_file_dropdown");
-  clear_attach_block();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/good_load/', loader)
-});
-on('#ajax', 'click', '.comment_article', function() {
-  this.classList.add("current_file_dropdown");
-  clear_attach_block();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/article_load/', loader)
-});
-
-on('#ajax', 'click', '.select_photo', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
-  clear_comment_dropdown();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_load/', loader)
-});
-on('#ajax', 'click', '.select_video', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
-  clear_comment_dropdown();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/video_load/', loader)
-});
-on('#ajax', 'click', '.select_music', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
-  clear_comment_dropdown();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/music_load/', loader)
-});
-on('#ajax', 'click', '.select_good', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
-  clear_comment_dropdown();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/good_load/', loader)
-});
-on('#ajax', 'click', '.select_article', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
-  clear_comment_dropdown();
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/article_load/', loader)
-});
-
-on('#ajax', 'click', '.delete_thumb', function(e) {
-  e.preventDefault();
-  this.nextElementSibling.remove();
-  block = document.createElement("div");
-  this.parentElement.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>";
-  this.remove();
-})
 
 on('#ajax', 'click', '.tag_item', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
