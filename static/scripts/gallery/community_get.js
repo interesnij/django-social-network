@@ -30,7 +30,6 @@ on('#ajax', 'click', '.c_photos_add', function() {
 })
 
 on('#ajax', 'click', '.c_albums_add', function() {
-  var container, uuid, loader;
   container = this.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute('community-pk');
   loader = document.getElementById("create_loader");
