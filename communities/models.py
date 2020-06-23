@@ -301,7 +301,7 @@ class Community(models.Model):
 
         #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
-        music_query = Q(players=list, is_deleted=False)
+        music_query = Q(list=list, is_deleted=False)
         #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
@@ -311,7 +311,7 @@ class Community(models.Model):
 
         #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
-        music_query = Q(players=list, is_deleted=False)
+        music_query = Q(list=list, is_deleted=False)
         #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
