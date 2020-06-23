@@ -180,5 +180,5 @@ class CommunityAlbumPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.community.get_photos_for_album(album=self.album.pk).order_by('-created')
+        photo_list = self.community.get_photos_for_album(album_id=self.album.pk).order_by('-created')
         return photo_list
