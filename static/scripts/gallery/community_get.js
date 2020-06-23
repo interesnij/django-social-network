@@ -109,7 +109,7 @@ on('#ajax', 'click', '.c_photo_comments', function() {
   data = document.body.querySelector(".data_display");
   pk = data.getAttribute("community-pk");
   uuid = data.getAttribute("data-uuid");
-  url = "/gallery/user_progs/comment/" + uuid + "/" + pk + "/";
+  url = "/gallery/community_progs/comment/" + uuid + "/" + pk + "/";
   list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });
