@@ -117,20 +117,18 @@ def community_on_comment(request, uuid):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def community_item_delete(request, pk, uuid):
+def community_item_delete(request, uuid):
 	item = Post.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
+	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.is_deleted=True
 		item.save(update_fields=['is_deleted'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
-def community_item_abort_delete(request, pk, uuid):
+def community_item_abort_delete(request, uuid):
 	item = Post.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
+	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.is_deleted=False
 		item.save(update_fields=['is_deleted'])
 		return HttpResponse("!")
