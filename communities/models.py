@@ -239,7 +239,7 @@ class Community(models.Model):
         photos = Photo.objects.filter(photos_query)
         return photos
 
-    def get_photos(self): 
+    def get_photos(self):
         from moderation.models import ModeratedObject
         from gallery.models import Photo
 
@@ -275,6 +275,9 @@ class Community(models.Model):
         #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
+
+    def is_album_exists(self):
+        return self.album_community.filter(community=self, is_deleted=False).exists()
 
     def count_photos(self):
         return self.photo_community.values('is_deleted').filter(is_deleted=False).count()
