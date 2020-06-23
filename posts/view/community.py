@@ -84,8 +84,7 @@ def post_update_interactions(request):
 
 def community_fixed(request, pk, uuid):
 	item = Post.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
+	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.get_fixed_for_community(pk)
 		return HttpResponse("!")
 	else:
@@ -93,8 +92,7 @@ def community_fixed(request, pk, uuid):
 
 def community_unfixed(request, pk, uuid):
 	item = Post.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
+	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.is_fixed=False
 		item.save(update_fields=['is_fixed'])
 		return HttpResponse("!")
@@ -103,8 +101,7 @@ def community_unfixed(request, pk, uuid):
 
 def community_off_comment(request, pk, uuid):
     item = Post.objects.get(uuid=uuid)
-    community = Community.objects.get(pk=pk)
-    if request.user.is_staff_of_community_with_name(community.name):
+    if request.user.is_staff_of_community_with_name(item.community.name):
         item.comments_enabled=False
         item.save(update_fields=['comments_enabled'])
         return HttpResponse("!")
@@ -113,8 +110,7 @@ def community_off_comment(request, pk, uuid):
 
 def community_on_comment(request, pk, uuid):
 	item = Post.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
+	if request.user.is_staff_of_community_with_name(item.community.name):
 		item.comments_enabled=True
 		item.save(update_fields=['comments_enabled'])
 		return HttpResponse("!")
