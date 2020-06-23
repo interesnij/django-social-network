@@ -106,11 +106,11 @@ class Photo(models.Model):
     def notification_community_repost(self, user):
         photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.REPOST, key='social_update', community=self.community, photo=self, comment=None)
 
-    def notification_community_like(self, user):
-        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.LIKE, key='social_update', community=self.community, photo=self, comment=None)
+    def notification_community_like(self, user, community):
+        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.LIKE, key='social_update', community=community, photo=self, comment=None)
 
-    def notification_community_dislike(self, user):
-        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=self.community, photo=self, comment=None)
+    def notification_community_dislike(self, user), community:
+        photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=community, photo=self, comment=None)
 
     def get_comments(self):
         comments_query = Q(photo_comment_id=self.pk)

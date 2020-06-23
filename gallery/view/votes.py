@@ -20,7 +20,7 @@ class PhotoUserLikeCreate(View):
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.LIKE: 
+            if likedislike.vote is not PhotoVotes.LIKE:
                 likedislike.vote = PhotoVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
@@ -163,7 +163,7 @@ class PhotoCommunityLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-            item.notification_community_like(request.user)
+            item.notification_community_like(request.user, community)
         likes = item.likes_count()
         if likes:
             like_count = likes
@@ -194,7 +194,7 @@ class PhotoCommunityDislikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
-            item.notification_community_dislike(request.user)
+            item.notification_community_dislike(request.user, community)
         likes = item.likes_count()
         if likes != 0:
             like_count = likes
