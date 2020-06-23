@@ -138,7 +138,7 @@ class AlbumCommunityCreate(TemplateView):
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user, community=self.community)
+            new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
             return render_to_response('album_community/admin_album.html',{'album': new_album, 'community': self.community, 'request': request})
         else:
             return HttpResponseBadRequest()
