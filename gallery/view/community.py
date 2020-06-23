@@ -39,7 +39,7 @@ class CommunityGalleryView(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        albums_list = self.community.get_albums().order_by('-created')
+        self.albums_list = self.community.get_albums().order_by('-created')
         self.template_name = self.community.get_template(folder="gallery_community/", template="gallery.html", request=request)
         return super(CommunityGalleryView,self).get(request,*args,**kwargs)
 
