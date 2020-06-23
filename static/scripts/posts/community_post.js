@@ -132,7 +132,7 @@ on('#ajax', 'click', '.c_post_on_votes', function() {
 
 on('#ajax', 'click', '.c_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("item-uuid");
+  uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/posts/community/delete/" + uuid + "/", true );
 
