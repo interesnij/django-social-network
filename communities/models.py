@@ -271,6 +271,16 @@ class Community(models.Model):
         albums = Album.objects.filter(albums_query)
         return albums
 
+    def get_profile_photos(self):
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
+
+        photos_query = Q(community=self, is_deleted=False, is_public=True)
+        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos[0:6]
+
     def get_admin_albums(self):
         from gallery.models import Album
         from moderation.models import ModeratedObject
@@ -304,8 +314,18 @@ class Community(models.Model):
     def get_music_list_id(self):
         from music.models import SoundList
 
-        list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
+        list = SoundList.objects.get(community_id=self.pk, is_generic=True, name="Основной плейлист")
         return list.pk
+
+    def get_last_video(self):
+        from video.models import Video, VideoAlbum
+        try:
+            list = VideoAlbum.objects.get(community_id=self.pk, is_generic=True, title="Все видео")
+            video_query = Q(album=list, is_deleted=False, is_public=True)
+            video_list = Video.objects.filter(video_query).order_by("-created")
+            return video_list[0:2]
+        try:
+            return None
 
     def get_template(self, folder, template, request):
         import re
