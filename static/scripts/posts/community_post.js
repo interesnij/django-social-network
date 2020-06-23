@@ -106,18 +106,28 @@ on('#ajax', 'click', '.c_post_unfixed', function() {
   send_change(this, "/posts/community/unfixed/", "c_post_fixed", "Закрепить")
 })
 
-on('#ajax', 'click', '.c_post_off_comment', function() { 
-  send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии")
+on('#ajax', 'click', '.c_post_off_comment', function() {
+  send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".c_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_post_on_comment', function() {
-  send_change(this, "/posts/community/on_comment/", "c_post_off_comment", "Выкл. комментарии")
+  send_change(this, "/posts/community/on_comment/", "c_post_off_comment", "Выкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".c_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.c_post_off_votes', function() {
-  send_change(this, "/posts/community/off_votes/", "c_post_on_votes", "Вкл. реакции")
+  send_change(this, "/posts/community/off_votes/", "c_post_on_votes", "Вкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "none";
+  post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.c_post_on_votes', function() {
-  send_change(this, "/posts/community/on_votes/", "c_post_off_votes", "Выкл. реакции")
+  send_change(this, "/posts/community/on_votes/", "c_post_off_votes", "Выкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "unset";
+  post.querySelector(".dislike").style.display = "unset";
 })
 
 on('#ajax', 'click', '.c_post_remove', function() {

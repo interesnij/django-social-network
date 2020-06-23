@@ -164,6 +164,6 @@ class CommunityOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(post.community.name):
-            post.is_public = True
+            post.votes_on = False
             post.save(update_fields=['votes_on'])
         return HttpResponse("!")
