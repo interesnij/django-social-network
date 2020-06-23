@@ -95,14 +95,14 @@ on('#ajax', 'click', '.c_photo_like', function() {
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("community-pk");
   send_like(photo, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/gallery/photo_window/c_like_window/" + pk + "/", "/gallery/photo_window/c_dislike_window/" + pk + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("community-pk");
   send_dislike(photo, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  vote_reload("/gallery/photo_window/c_like_window/" + pk + "/", "/gallery/photo_window/c_dislike_window/" + pk + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_like2', function() {
   _this = this;
