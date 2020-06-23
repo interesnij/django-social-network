@@ -158,7 +158,7 @@ def photo_community_notification_handler(actor, community, recipient, photo, ver
     persons = community.get_staff_members()
     for user in persons:
         PhotoCommunityNotification.objects.create(actor=actor, community=community, photo=photo, comment=comment, recipient=user, verb=verb)
-    item_notification_broadcast(actor, key)
+    photo_notification_broadcast(actor, key)
 
 
 def photo_notification_broadcast(actor, key, **kwargs):
