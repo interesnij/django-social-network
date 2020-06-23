@@ -109,7 +109,7 @@ class Photo(models.Model):
     def notification_community_like(self, user, community):
         photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.LIKE, key='social_update', community=community, photo=self, comment=None)
 
-    def notification_community_dislike(self, user), community:
+    def notification_community_dislike(self, user, community):
         photo_notification_handler(actor=user, recipient=None, verb=PhotoNotification.DISLIKE, key='social_update', community=community, photo=self, comment=None)
 
     def get_comments(self):
