@@ -41,7 +41,7 @@ on('#ajax', 'click', '.c_photo_edit', function() {
 })
 
 
-on('#ajax', 'click', '#с_add_album', function() {
+on('#ajax', 'click', '#c_add_album', function() {
   form = document.body.querySelector("#form_album_add");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
@@ -64,52 +64,52 @@ on('#ajax', 'click', '#с_add_album', function() {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", '/gallery/community/album/' + pk + '/' + uuid + '/');
         toast_info("Альбом изображений создан!");
-        album_photo_load =  rtr.querySelector("#с_album_photo_load");
+        album_photo_load =  rtr.querySelector("#c_album_photo_load");
         list_load(album_photo_load, album_photo_load.getAttribute("data-link"));
       }
     }
     ajax_link.send(form_data);
 });
 
-on('#ajax', 'click', '.с_all_photo_likes', function() {
+on('#ajax', 'click', '.c_all_photo_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('photo-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_community_like/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.с_all_photo_dislikes', function() {
+on('#ajax', 'click', '.c_all_photo_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('photo-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_community_dislike/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.с_all_photo_comment_likes', function() {
+on('#ajax', 'click', '.c_all_photo_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_community_comment_like/" + pk + "/", loader)
 });
-on('#ajax', 'click', '.с_all_photo_comment_dislikes', function() {
+on('#ajax', 'click', '.c_all_photo_comment_dislikes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_community_comment_dislike/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.с_all_photo_reposts', function() {
+on('#ajax', 'click', '.c_all_photo_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_community_reposts/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.с_photo_comments', function() {
+on('#ajax', 'click', '.c_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
   pk = data.getAttribute("community-pk");
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/user_progs/comment/" + uuid + "/" + pk + "/";
-  list_load(data.querySelector(".с_load_comments"), url);
+  list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });
