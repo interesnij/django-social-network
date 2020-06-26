@@ -349,6 +349,8 @@ class User(AbstractUser):
         except:
             return False
 
+    def is_administrator(self):
+        return self.user_staff.filter(level=ADMINISTRATOR).exists()
 
     ''''' количества всякие  196-216 '''''
 
