@@ -145,7 +145,7 @@ class UserStaff(models.Model):
     MODERATOR = 'M'
     EDITOR = 'E'
     ADVERTISER = 'R'
-    SUPPORT = 'R'
+    SUPPORT = 'S'
     LEVEL = (
         (ADMINISTRATOR, 'Администратор'),
         (MODERATOR, 'Модератор'),
@@ -177,7 +177,7 @@ class CommunityStaff(models.Model):
         (SUPPORT, 'Поддержка'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_community_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -196,7 +196,7 @@ class PostUserStaff(models.Model):
         (EDITOR, 'Редактор'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -215,7 +215,7 @@ class GoodUserStaff(models.Model):
         (EDITOR, 'Редактор'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -234,7 +234,7 @@ class PhotoUserStaff(models.Model):
         (EDITOR, 'Редактор'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -253,7 +253,7 @@ class VideoUserStaff(models.Model):
         (EDITOR, 'Редактор'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -272,7 +272,7 @@ class MusicUserStaff(models.Model):
         (EDITOR, 'Редактор'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='music_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, verbose_name="Уровень доступа")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()

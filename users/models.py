@@ -351,7 +351,63 @@ class User(AbstractUser):
 
     def is_administrator(self):
         from users.model.profile import UserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="A").exists() 
+        if self.user_staff.level == "A":
+            return True
+        else:
+            return False
+    def is_moderator(self):
+        from users.model.profile import UserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+    def is_editor(self):
+        from users.model.profile import UserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+    def is_advertiser(self):
+        from users.model.profile import UserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="R").exists()
+    def is_support(self):
+        from users.model.profile import UserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="S").exists()
+    def is_staff_user(self):
+        if self.is_administrator() or self.is_editor() or self.is_moderator() or self.is_superuser:
+            return True
+        else:
+            return False
+
+    def is_community_administrator(self):
+        from users.model.profile import CommunityStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="A").exists()
+    def is_community_moderator(self):
+        from users.model.profile import CommunityStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+    def is_community_editor(self):
+        from users.model.profile import CommunityStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+    def is_community_advertiser(self):
+        from users.model.profile import CommunityStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="R").exists()
+    def is_community_support(self):
+        from users.model.profile import CommunityStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="S").exists()
+    def is_staff_community(self):
+        if self.is_community_administrator() or self.is_community_editor() or self.is_community_moderator() or self.is_superuser:
+            return True
+        else:
+            return False
+
+    def is_good_administrator(self):
+        from users.model.profile import GoodUserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="A").exists()
+    def is_good_moderator(self):
+        from users.model.profile import GoodUserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+    def is_good_editor(self):
+        from users.model.profile import GoodUserStaff
+        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+    def is_staff_good(self):
+        if self.is_good_administrator() or self.is_good_editor() or self.is_good_moderator() or self.is_superuser:
+            return True
+        else:
+            return False
 
     ''''' количества всякие  196-216 '''''
 
