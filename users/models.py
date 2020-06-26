@@ -351,10 +351,7 @@ class User(AbstractUser):
 
     def is_administrator(self):
         from users.model.profile import UserStaff
-        if self.user_staff.level == "A":
-            return True
-        else:
-            return "False"
+        return UserStaff.objects.filter(user__id=self.pk, level="A").exists()
     def is_moderator(self):
         from users.model.profile import UserStaff
         return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
