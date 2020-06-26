@@ -440,7 +440,7 @@ class User(AbstractUser):
             return True
 
     def is_work_administrator(self):
-        return self.can_work_staff_user.can_work_administrator.exists()
+        return self.can_work_staff_user.can_work_administrator
     def is_audio_moderator(self):
         if self.audio_user_staff.level == "M":
             return True
