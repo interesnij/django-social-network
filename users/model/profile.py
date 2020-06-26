@@ -307,8 +307,8 @@ class CanWorkStaffCommunity(models.Model):
         return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Создатель персонала'
-        verbose_name_plural = 'Создатели персонала'
+        verbose_name = 'Создатель персонала сообщетсв'
+        verbose_name_plural = 'Создатели персонала сообщетсв'
 
 class CanWorkStaffPostUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_post_user', verbose_name="Создатель персонала в записях")

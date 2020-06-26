@@ -353,58 +353,103 @@ class User(AbstractUser):
         if self.user_staff.level == "A":
             return True
     def is_moderator(self):
-        from users.model.profile import UserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+        if self.user_staff.level == "M":
+            return True
     def is_editor(self):
-        from users.model.profile import UserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+        if self.user_staff.level == "E":
+            return True
     def is_advertiser(self):
-        from users.model.profile import UserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="R").exists()
+        if self.user_staff.level == "R":
+            return True
     def is_support(self):
-        from users.model.profile import UserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="S").exists()
+        if self.user_staff.level == "S":
+            return True
     def is_staff_user(self):
         if self.is_administrator() or self.is_editor() or self.is_moderator() or self.is_superuser:
             return True
-        else:
-            return False
 
     def is_community_administrator(self):
-        from users.model.profile import CommunityStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="A").exists()
+        if self.user_community_staff.level == "A":
+            return True
     def is_community_moderator(self):
-        from users.model.profile import CommunityStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+        if self.user_community_staff.level == "M":
+            return True
     def is_community_editor(self):
-        from users.model.profile import CommunityStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+        if self.user_community_staff.level == "E":
+            return True
     def is_community_advertiser(self):
-        from users.model.profile import CommunityStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="R").exists()
+        if self.user_community_staff.level == "R":
+            return True
     def is_community_support(self):
-        from users.model.profile import CommunityStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="S").exists()
+        if self.user_community_staff.level == "S":
+            return True
     def is_staff_community(self):
         if self.is_community_administrator() or self.is_community_editor() or self.is_community_moderator() or self.is_superuser:
             return True
-        else:
-            return False
 
     def is_good_administrator(self):
-        from users.model.profile import GoodUserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="A").exists()
+        if self.good_user_staff.level == "A":
+            return True
     def is_good_moderator(self):
-        from users.model.profile import GoodUserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="M").exists()
+        if self.good_user_staff.level == "M":
+            return True
     def is_good_editor(self):
-        from users.model.profile import GoodUserStaff
-        return UserStaff.objects.filter(user__id=self.pk, level="E").exists()
+        if self.good_user_staff.level == "E":
+            return True
     def is_staff_good(self):
         if self.is_good_administrator() or self.is_good_editor() or self.is_good_moderator() or self.is_superuser:
             return True
-        else:
-            return False
+
+    def is_photo_administrator(self):
+        if self.photo_user_staff.level == "A":
+            return True
+    def is_photo_moderator(self):
+        if self.photo_user_staff.level == "M":
+            return True
+    def is_photo_editor(self):
+        if self.photo_user_staff.level == "E":
+            return True
+    def is_staff_photo(self):
+        if self.is_photo_administrator() or self.is_photo_editor() or self.is_photo_moderator() or self.is_superuser:
+            return True
+
+    def is_video_administrator(self):
+        if self.video_user_staff.level == "A":
+            return True
+    def is_video_moderator(self):
+        if self.video_user_staff.level == "M":
+            return True
+    def is_video_editor(self):
+        if self.video_user_staff.level == "E":
+            return True
+    def is_staff_video(self):
+        if self.is_video_administrator() or self.is_video_editor() or self.is_video_moderator() or self.is_superuser:
+            return True
+
+    def is_audio_administrator(self):
+        if self.audio_user_staff.level == "A":
+            return True
+    def is_audio_moderator(self):
+        if self.audio_user_staff.level == "M":
+            return True
+    def is_audio_editor(self):
+        if self.audio_user_staff.level == "E":
+            return True
+    def is_staff_audio(self):
+        if self.is_audio_administrator() or self.is_audio_editor() or self.is_audio_moderator() or self.is_superuser:
+            return True
+
+    def is_work_administrator(self):
+        return self.can_work_staff_user.can_work_administrator.exists()
+    def is_audio_moderator(self):
+        if self.audio_user_staff.level == "M":
+            return True
+    def is_audio_editor(self):
+        if self.audio_user_staff.level == "E":
+            return True
+    def is_staff_audio(self):
+        if self.is_audio_administrator() or self.is_audio_editor() or self.is_audio_moderator() or self.is_superuser:
+            return True
 
     ''''' количества всякие  196-216 '''''
 
