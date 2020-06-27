@@ -440,7 +440,8 @@ class User(AbstractUser):
             return True
 
     def is_work_administrator(self):
-        return self.can_work_staff_user.can_work_administrator
+        if self.can_work_staff_user.can_work_administrator:
+            return True
     def is_work_moderator(self):
         return self.can_work_staff_user.can_work_moderator
     def is_work_editor(self):
