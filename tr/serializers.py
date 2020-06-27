@@ -51,5 +51,4 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.save()
         get_first_location(request, user)
-        VideoAlbum.objects.get(creator_id=user.id, is_generic=True, title="Все видео")
         return user
