@@ -446,11 +446,23 @@ class User(AbstractUser):
         except:
             return False
     def is_work_moderator(self):
-        return self.can_work_staff_user.can_work_moderator
+        try:
+            self.can_work_staff_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_editor(self):
-        return self.can_work_staff_user.can_work_editor
+        try:
+            self.can_work_staff_user.can_work_editor
+            return True
+        except:
+            return False
     def is_work_advertiser(self):
-        return self.can_work_staff_user.can_work_advertiser
+        try:
+            self.can_work_staff_user.can_work_advertiser
+            return True
+        except:
+            return False
     def is_staff_work(self):
         if self.is_work_administrator() or self.is_work_editor() or self.is_work_moderator() or self.is_work_advertiser() or self.is_superuser:
             return True
