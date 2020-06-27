@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Новости{% endblock %}
 {% block meta %}
-<meta property="og:url" content="" />
-<link rel="stylesheet" href="/static/styles/swiper.min.css" />
+<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="" />
 <meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/static/images/I.jpg" />
@@ -32,36 +31,5 @@
         </div>
     </div>
 </div>
-<script>
-
-var page = 2;
-var loaded = false;
-onscroll = function(){
-  try{
-  if(news_load.querySelectorAll('.infinite-item').length === (page-1)*30){
-  height = document.documentElement.clientHeight-1;
-  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    if (loaded){return};
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
-    link_3.onload = function(e) {if (this.status != 200) { console.log("ошибочка"); loaded = true; }};
-    if(!loaded){link_3.send()};
-
-    link_3.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      var elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
-      if(elem.getElementsByClassName('infinite-item').length === 30){loaded = true;};
-      var stream_load = document.getElementById("stream");
-
-      stream_load.append(elem);
-      }
-    }
-  }
-}
-}catch{return}
-}
-</script>
-
 
 {% endblock %}
