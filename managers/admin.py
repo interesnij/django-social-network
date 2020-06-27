@@ -8,7 +8,7 @@ admin.site.register(PostUserStaff)
 admin.site.register(GoodUserStaff)
 admin.site.register(PhotoUserStaff)
 admin.site.register(VideoUserStaff)
-admin.site.register(MusicUserStaff)
+admin.site.register(AudioUserStaff)
 
 admin.site.register(CanWorkStaffUser)
 admin.site.register(CanWorkStaffCommunity)

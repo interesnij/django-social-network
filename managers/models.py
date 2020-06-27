@@ -124,7 +124,7 @@ class VideoUserStaff(models.Model):
         verbose_name = 'Полномочия в видеозаписях пользователей'
         verbose_name_plural = 'Полномочия в видеозаписях пользователей'
 
-class MusicUserStaff(models.Model):
+class AudioUserStaff(models.Model):
     ADMINISTRATOR = 'A'
     MODERATOR = 'M'
     EDITOR = 'E'
