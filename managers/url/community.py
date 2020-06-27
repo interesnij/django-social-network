@@ -7,7 +7,7 @@ from managers.view.community import (
                                 CommunityEditorCreate,
                                 CommunityEditorDelete,
                                 CommunityAdvertiserCreate,
-                                CommunityAdvertiserDelete
+                                CommunityAdvertiserDelete,
 
                                 CommunityWorkerAdminCreate,
                                 CommunityWorkerAdminDelete,
