@@ -451,10 +451,8 @@ class User(AbstractUser):
         return self.can_work_staff_user.can_work_editor
     def is_work_advertiser(self):
         return self.can_work_staff_user.can_work_advertiser
-    def is_work_support(self):
-        return self.can_work_staff_user.can_work_support
     def is_staff_work(self):
-        if self.is_work_administrator() or self.is_work_editor() or self.is_work_moderator() or self.is_work_support() or self.is_work_advertiser() or self.is_superuser:
+        if self.is_work_administrator() or self.is_work_editor() or self.is_work_moderator() or self.is_work_advertiser() or self.is_superuser:
             return True
 
     def is_work_community_administrator(self):
@@ -465,10 +463,8 @@ class User(AbstractUser):
         return self.can_work_staff_community.can_work_editor
     def is_work_advertiser(self):
         return self.can_work_staff_community.can_work_advertiser
-    def is_work_support(self):
-        return self.can_work_staff_community.can_work_support
     def is_staff_work(self):
-        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_support() or self.is_work_community_advertiser()  or self.is_superuser:
+        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_advertiser()  or self.is_superuser:
             return True
 
     def is_work_post_administrator(self):
@@ -477,7 +473,7 @@ class User(AbstractUser):
         return self.can_work_staff_post_user.can_work_moderator
     def is_work_post_editor(self):
         return self.can_work_staff_post_user.can_work_editor
-    def is_staff_work(self):
+    def is_staff_post(self):
         if self.is_work_post_administrator() or self.is_work_post_editor() or self.is_work_post_moderator() or self.is_superuser:
             return True
 
