@@ -473,7 +473,7 @@ class User(AbstractUser):
         return self.can_work_staff_community.can_work_moderator
     def is_work_community_editor(self):
         return self.can_work_staff_community.can_work_editor
-    def is_work_advertiser(self):
+    def is_work_community_advertiser(self):
         return self.can_work_staff_community.can_work_advertiser
     def is_staff_community_work(self):
         if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_advertiser()  or self.is_superuser:
