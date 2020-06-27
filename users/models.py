@@ -16,7 +16,7 @@ class User(AbstractUser):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False, )
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
-    phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
+    phone = models.CharField(max_length=17, blank=True, unique=True, verbose_name='Телефон')
     USERNAME_FIELD = 'phone'
 
     class Meta:
@@ -1027,6 +1027,8 @@ class User(AbstractUser):
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
+            elif request.user.is_work_administrator():
+                template_name = folder + "staff_" + template
             elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = folder + "block_" + template
             elif self.is_closed_profile():
