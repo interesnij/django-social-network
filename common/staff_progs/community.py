@@ -1,5 +1,5 @@
 from managers.models import CommunityStaff, CanWorkStaffCommunity
-from logs.model.staff_user_community import CommunityWorkerManageLog, CommunityCreateWorkerManageLog
+from logs.model.user_community import CommunityWorkerManageLog, CommunityCreateWorkerManageLog
 
 
 def add_community_administrator(user, request_user):

@@ -1,5 +1,5 @@
 from managers.models import PostUserStaff, CanWorkStaffPostUser
-from logs.model.staff_user_community import PostWorkerManageLog, PostCreateWorkerManageLog
+from logs.model.posts import PostWorkerManageLog, PostCreateWorkerManageLog
 
 
 def add_post_administrator(user, request_user):

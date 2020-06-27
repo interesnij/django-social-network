@@ -1,5 +1,5 @@
 from managers.models import UserStaff, CanWorkStaffUser
-from logs.model.staff_user_community import UserWorkerManageLog, UserCreateWorkerManageLog
+from logs.model.user_community import UserWorkerManageLog, UserCreateWorkerManageLog
 
 
 def add_user_administrator(user, request_user):

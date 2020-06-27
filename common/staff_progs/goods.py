@@ -1,5 +1,5 @@
 from managers.models import GoodUserStaff, CanWorkStaffGoodUser
-from logs.model.staff_goods import GoodWorkerManageLog, GoodCreateWorkerManageLog
+from logs.model.goods import GoodWorkerManageLog, GoodCreateWorkerManageLog
 
 
 def add_good_administrator(user, request_user):
