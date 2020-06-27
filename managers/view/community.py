@@ -1,7 +1,6 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse
-from logs.models import CommunityWorkerLog, CommunityManageCreatorLog
 from common.staff_progs.community import *
 
 
