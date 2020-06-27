@@ -1043,7 +1043,7 @@ class User(AbstractUser):
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
-            elif request.user.is_administrator():
+            elif request.user.is_administrator() or request.user.is_superuser:
                 template_name = folder + "staff_admin_" + template
             elif request.user.is_advertiser():
                 template_name = folder + "staff_advertiser_" + template
