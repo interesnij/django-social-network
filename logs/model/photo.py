@@ -19,7 +19,7 @@ class PhotoManageLog(models.Model):
         (UNSUSPENDED, 'Разморожен'),
     )
 
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Запись")
+    photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE, verbose_name="Запись")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="photo_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)

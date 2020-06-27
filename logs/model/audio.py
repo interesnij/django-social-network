@@ -19,7 +19,7 @@ class AudioManageLog(models.Model):
         (UNSUSPENDED, 'Разморожен'),
     )
 
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Запись")
+    audio = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, verbose_name="Запись")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="audio_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)

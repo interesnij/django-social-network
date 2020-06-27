@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.conf import settings
-from communities.models import Community
 
 
 class UserManageLog(models.Model):
@@ -55,7 +54,7 @@ class CommunityManageLog(models.Model):
         (NO_WARNING_BANNER, 'Убран предупреждающий баннер'),
     )
 
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, verbose_name="Сообщество")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
