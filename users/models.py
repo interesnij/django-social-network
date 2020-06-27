@@ -441,14 +441,80 @@ class User(AbstractUser):
 
     def is_work_administrator(self):
         return self.can_work_staff_user.can_work_administrator
-    def is_audio_moderator(self):
-        if self.audio_user_staff.level == "M":
+    def is_work_moderator(self):
+        return self.can_work_staff_user.can_work_moderator
+    def is_work_editor(self):
+        return self.can_work_staff_user.can_work_editor
+    def is_work_advertiser(self):
+        return self.can_work_staff_user.can_work_advertiser
+    def is_work_support(self):
+        return self.can_work_staff_user.can_work_support
+    def is_staff_work(self):
+        if self.is_work_administrator() or self.is_work_editor() or self.is_work_moderator() or self.is_work_support() or self.is_work_advertiser() or self.is_superuser:
             return True
-    def is_audio_editor(self):
-        if self.audio_user_staff.level == "E":
+
+    def is_work_community_administrator(self):
+        return self.can_work_staff_community.can_work_administrator
+    def is_work_community_moderator(self):
+        return self.can_work_staff_community.can_work_moderator
+    def is_work_community_editor(self):
+        return self.can_work_staff_community.can_work_editor
+    def is_work_advertiser(self):
+        return self.can_work_staff_community.can_work_advertiser
+    def is_work_support(self):
+        return self.can_work_staff_community.can_work_support
+    def is_staff_work(self):
+        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_support() or self.is_work_community_advertiser()  or self.is_superuser:
             return True
-    def is_staff_audio(self):
-        if self.is_audio_administrator() or self.is_audio_editor() or self.is_audio_moderator() or self.is_superuser:
+
+    def is_work_post_administrator(self):
+        return self.can_work_staff_post_user.can_work_administrator
+    def is_work_post_moderator(self):
+        return self.can_work_staff_post_user.can_work_moderator
+    def is_work_post_editor(self):
+        return self.can_work_staff_post_user.can_work_editor
+    def is_staff_work(self):
+        if self.is_work_post_administrator() or self.is_work_post_editor() or self.is_work_post_moderator() or self.is_superuser:
+            return True
+
+    def is_work_good_administrator(self):
+        return self.can_work_staff_good_user.can_work_administrator
+    def is_work_good_moderator(self):
+        return self.can_work_staff_good_user.can_work_moderator
+    def is_work_good_editor(self):
+        return self.can_work_staff_good_user.can_work_editor
+    def is_staff_good(self):
+        if self.is_work_good_administrator() or self.is_work_good_editor() or self.is_work_good_moderator() or self.is_superuser:
+            return True
+
+    def is_work_photo_administrator(self):
+        return self.can_work_staff_photo_user.can_work_administrator
+    def is_work_photo_moderator(self):
+        return self.can_work_staff_photo_user.can_work_moderator
+    def is_work_photo_editor(self):
+        return self.can_work_staff_photo_user.can_work_editor
+    def is_staff_photo(self):
+        if self.is_work_photo_administrator() or self.is_work_photo_editor() or self.is_work_photo_moderator() or self.is_superuser:
+            return True
+
+    def is_work_video_administrator(self):
+        return self.can_work_staff_video_user.can_work_administrator
+    def is_work_video_moderator(self):
+        return self.can_work_staff_video_user.can_work_moderator
+    def is_work_video_editor(self):
+        return self.can_work_staff_video_user.can_work_editor
+    def is_staff_video(self):
+        if self.is_work_video_administrator() or self.is_work_video_editor() or self.is_work_video_moderator() or self.is_superuser:
+            return True
+
+    def is_work_music_administrator(self):
+        return self.can_work_staff_music_user.can_work_administrator
+    def is_work_music_moderator(self):
+        return self.can_work_staff_music_user.can_work_moderator
+    def is_work_music_editor(self):
+        return self.can_work_staff_music_user.can_work_editor
+    def is_staff_music(self):
+        if self.is_work_music_administrator() or self.is_music_video_editor() or self.is_work_music_moderator() or self.is_superuser:
             return True
 
     ''''' количества всякие  196-216 '''''
