@@ -146,13 +146,44 @@ class ProfileUserView(TemplateView):
         from stst.models import UserNumbers
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
 
-        if request.user.is_authenticated and request.user.pk != self.user.pk:
-            MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
+        if self.user.pk == request.user.pk:
+            if not request.user.is_phone_verified:
+                self.template_name = "main/phone_verification.html"
             else:
+                self.template_name = "account/my_user.html"
+        elif request.user.pk != self.user.pk and request.user.is_authenticated:
+            if not request.user.is_phone_verified:
+                self.template_name = "main/phone_verification.html"
+            elif request.user.is_administrator() or request.user.is_superuser:
+                self.template_name = "account/staff_admin_user.html"
+            elif request.user.is_advertiser():
+                self.template_name = "account/staff_advertiser_user.html"
+            elif request.user.is_editor():
+                self.template_name = "account/staff_editor_user.html"
+            elif request.user.is_moderator():
+                self.template_name = "account/staff_moderator_user.html"
+            elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
+                self.template_name = "account/block_user.html"
+            elif user.is_closed_profile():
+                if not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                    self.template_name = "account/close_user.html"
+                else:
+                    self.template_name = "account/frend_user.html"
+            else:
+                self.template_name = "account/user.html"
+        elif request.user.is_anonymous and user.is_closed_profile():
+            self.template_name = "account/close_user.html"
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            self.template_name = "account/anon_user.html"
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
+            if request.user.is_authenticated and request.user.pk != self.user.pk:
+                UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
+        else:
+            if request.user.is_authenticated and request.user.pk != self.user.pk:
                 UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 

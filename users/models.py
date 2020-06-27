@@ -357,91 +357,143 @@ class User(AbstractUser):
             return False
 
     def is_moderator(self):
-        if self.user_staff.level == "M":
+        try:
+            self.user_staff.level == "M"
             return True
+        except:
+            return False
     def is_editor(self):
-        if self.user_staff.level == "E":
+        try:
+            self.user_staff.level == "E"
             return True
+        except:
+            return False
     def is_advertiser(self):
-        if self.user_staff.level == "R":
+        try:
+            self.user_staff.level == "R"
             return True
-    def is_support(self):
-        if self.user_staff.level == "S":
-            return True
-    def is_staff_user(self):
-        if self.is_administrator() or self.is_editor() or self.is_moderator() or self.is_superuser:
-            return True
+        except:
+            return False
 
     def is_community_administrator(self):
-        if self.user_community_staff.level == "A":
+        try:
+            self.user_community_staff.level == "A"
             return True
+        except:
+            return False
     def is_community_moderator(self):
-        if self.user_community_staff.level == "M":
+        try:
+            self.user_community_staff.level == "M"
             return True
+        except:
+            return False
     def is_community_editor(self):
-        if self.user_community_staff.level == "E":
+        try:
+            self.user_community_staff.level == "E"
             return True
+        except:
+            return False
     def is_community_advertiser(self):
-        if self.user_community_staff.level == "R":
+        try:
+            self.user_community_staff.level == "R"
             return True
-    def is_community_support(self):
-        if self.user_community_staff.level == "S":
+        except:
+            return False
+
+    def is_post_administrator(self):
+        try:
+            self.post_user_staff.level == "A"
             return True
-    def is_staff_community(self):
-        if self.is_community_administrator() or self.is_community_editor() or self.is_community_moderator() or self.is_superuser:
+        except:
+            return False
+    def is_post_moderator(self):
+        try:
+            self.post_user_staff.level == "M"
             return True
+        except:
+            return False
+    def is_post_editor(self):
+        try:
+            self.post_user_staff.level == "E"
+            return True
+        except:
+            return False
 
     def is_good_administrator(self):
-        if self.good_user_staff.level == "A":
+        try:
+            self.good_user_staff.level == "A"
             return True
+        except:
+            return False
     def is_good_moderator(self):
-        if self.good_user_staff.level == "M":
+        try:
+            self.good_user_staff.level == "M"
             return True
+        except:
+            return False
     def is_good_editor(self):
-        if self.good_user_staff.level == "E":
+        try:
+            self.good_user_staff.level == "E"
             return True
-    def is_staff_good(self):
-        if self.is_good_administrator() or self.is_good_editor() or self.is_good_moderator() or self.is_superuser:
-            return True
+        except:
+            return False
 
     def is_photo_administrator(self):
-        if self.photo_user_staff.level == "A":
+        try:
+            self.photo_user_staff.level == "A"
             return True
+        except:
+            return False
     def is_photo_moderator(self):
-        if self.photo_user_staff.level == "M":
+        try:
+            self.photo_user_staff.level == "M"
             return True
+        except:
+            return False
     def is_photo_editor(self):
-        if self.photo_user_staff.level == "E":
+        try:
+            self.photo_user_staff.level == "E"
             return True
-    def is_staff_photo(self):
-        if self.is_photo_administrator() or self.is_photo_editor() or self.is_photo_moderator() or self.is_superuser:
-            return True
+        except:
+            return False
 
     def is_video_administrator(self):
-        if self.video_user_staff.level == "A":
+        try:
+            self.video_user_staff.level == "A"
             return True
+        except:
+            return False
     def is_video_moderator(self):
-        if self.video_user_staff.level == "M":
+        try:
+            self.video_user_staff.level == "M"
             return True
+        except:
+            return False
     def is_video_editor(self):
-        if self.video_user_staff.level == "E":
+        try:
+            self.video_user_staff.level == "E"
             return True
-    def is_staff_video(self):
-        if self.is_video_administrator() or self.is_video_editor() or self.is_video_moderator() or self.is_superuser:
-            return True
+        except:
+            return False
 
     def is_audio_administrator(self):
-        if self.audio_user_staff.level == "A":
+        try:
+            self.audio_user_staff.level == "A"
             return True
+        except:
+            return False
     def is_audio_moderator(self):
-        if self.audio_user_staff.level == "M":
+        try:
+            self.audio_user_staff.level == "M"
             return True
+        except:
+            return False
     def is_audio_editor(self):
-        if self.audio_user_staff.level == "E":
+        try:
+            self.audio_user_staff.level == "E"
             return True
-    def is_staff_audio(self):
-        if self.is_audio_administrator() or self.is_audio_editor() or self.is_audio_moderator() or self.is_superuser:
-            return True
+        except:
+            return False
 
     def is_work_administrator(self):
         try:
@@ -467,9 +519,6 @@ class User(AbstractUser):
             return True
         except:
             return False
-    def is_staff_work(self):
-        if self.is_work_administrator() or self.is_work_editor() or self.is_work_moderator() or self.is_work_advertiser() or self.is_superuser:
-            return True
 
     def is_work_community_administrator(self):
         return self.can_work_staff_community.can_work_administrator
@@ -1043,14 +1092,6 @@ class User(AbstractUser):
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
-            elif request.user.is_administrator() or request.user.is_superuser:
-                template_name = folder + "staff_admin_" + template
-            elif request.user.is_advertiser():
-                template_name = folder + "staff_advertiser_" + template
-            elif request.user.is_editor():
-                template_name = folder + "staff_editor_" + template
-            elif request.user.is_moderator():
-                template_name = folder + "staff_moderator_" + template
             elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = folder + "block_" + template
             elif self.is_closed_profile():

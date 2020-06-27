@@ -41,7 +41,7 @@ class CommunityVideo(ListView):
     def get(self,request,*args,**kwargs):
         from video.models import VideoAlbum
 
-        self.template_name = request.user.get_template_user(folder="community_video/", template="list.html", request=request)
+        self.template_name = request.user.get_template(folder="community_video/", template="list.html", request=request)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         try:
             self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
