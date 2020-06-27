@@ -9,7 +9,7 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-Я полномочия имею
+
 <div class="mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ user.uuid }}" style="margin-right: -7px;">
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
@@ -36,6 +36,10 @@
                         <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
                         <a class="dropdown-item user_block" href="#">Заблокировать</a>
                         <a class="dropdown-item" href="#">Пожаловаться</a>
+                        <a class="dropdown-item dropdown-divider"></a>
+                        <a class="dropdown-item" href="#">Удалить</a>
+                        <a class="dropdown-item" href="#">Заморозить</a>
+                        <a class="dropdown-item" href="#">Баннер - Страница опасна</a>
                     </div>
                 </div>
               </span>
@@ -48,6 +52,10 @@
                     <div class="dropdown-menu" data-pk="{{ user.pk }}">
                         <a class="dropdown-item user_unblock" href="#">Разблокировать</a>
                         <a class="dropdown-item" href="#">Пожаловаться</a>
+                        <a class="dropdown-item dropdown-divider"></a>
+                        <a class="dropdown-item" href="#">Удалить</a>
+                        <a class="dropdown-item" href="#">Заморозить</a>
+                        <a class="dropdown-item" href="#">Баннер - Страница опасна</a>
                     </div>
                 </div>
               </span>
@@ -62,6 +70,10 @@
                         <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
                         <a class="dropdown-item user_block" href="#">Заблокировать</a>
                         <a class="dropdown-item" href="#">Пожаловаться</a>
+                        <a class="dropdown-item dropdown-divider"></a>
+                        <a class="dropdown-item" href="#">Удалить</a>
+                        <a class="dropdown-item" href="#">Заморозить</a>
+                        <a class="dropdown-item" href="#">Баннер - Страница опасна</a>
                     </div>
                 </div>
               </span>
@@ -76,6 +88,10 @@
                         <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
                         <a class="dropdown-item user_block" href="#">Заблокировать</a>
                         <a class="dropdown-item" href="#">Пожаловаться</a>
+                        <a class="dropdown-item dropdown-divider"></a>
+                        <a class="dropdown-item" href="#">Удалить</a>
+                        <a class="dropdown-item" href="#">Заморозить</a>
+                        <a class="dropdown-item" href="#">Баннер - Страница опасна</a>
                     </div>
                 </div>
               </span>
@@ -89,10 +105,13 @@
                 <div class="dropdown-menu" data-pk="{{ user.pk }}">
                   <a class="dropdown-item user_block" href="#">Заблокировать</a>
                   <a class="dropdown-item" href="#">Пожаловаться</a>
+                  <a class="dropdown-item dropdown-divider"></a>
+                  <a class="dropdown-item" href="#">Удалить</a>
+                  <a class="dropdown-item" href="#">Заморозить</a>
+                  <a class="dropdown-item" href="#">Баннер - Страница опасна</a>
                 </div>
               </span>
               {% endif %}
-
 
               <span class="centered">
                 <a data-js="new_message" href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>

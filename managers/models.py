@@ -7,13 +7,11 @@ class UserStaff(models.Model):
     MODERATOR = 'M'
     EDITOR = 'E'
     ADVERTISER = 'R'
-    SUPPORT = 'S'
     LEVEL = (
         (ADMINISTRATOR, 'Администратор'),
         (MODERATOR, 'Модератор'),
         (EDITOR, 'Редактор'),
         (ADVERTISER, 'Рекламодатель'),
-        (SUPPORT, 'Поддержка'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -30,13 +28,11 @@ class CommunityStaff(models.Model):
     MODERATOR = 'M'
     EDITOR = 'E'
     ADVERTISER = 'R'
-    SUPPORT = 'R'
     LEVEL = (
         (ADMINISTRATOR, 'Администратор'),
         (MODERATOR, 'Модератор'),
         (EDITOR, 'Редактор'),
         (ADVERTISER, 'Рекламодатель'),
-        (SUPPORT, 'Поддержка'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_community_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")

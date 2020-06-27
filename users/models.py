@@ -1039,8 +1039,14 @@ class User(AbstractUser):
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
-            elif request.user.is_staff_work():
-                template_name = folder + "staff_" + template
+            elif request.user.is_administrator() or request.user.is_superuser:
+                template_name = folder + "staff_admin_" + template
+            elif request.user.is_advertiser():
+                template_name = folder + "staff_advertiser_" + template
+            elif request.user.is_editor():
+                template_name = folder + "staff_editor_" + template
+            elif request.user.is_moderator():
+                template_name = folder + "staff_moderator_" + template
             elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = folder + "block_" + template
             elif self.is_closed_profile():
