@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from users.models import User
 from common.utils import get_first_location
-from video.models import VideoAlbum
+from users.model.settings import UserColorSettings
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -51,4 +51,5 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.save()
         get_first_location(request, user)
+        UserColorSettings.objects.create(user=user, color='white')
         return user
