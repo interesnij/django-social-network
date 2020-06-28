@@ -1245,6 +1245,9 @@ class User(AbstractUser):
             template_name = folder + "close_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
             template_name = folder + "anon_" + template
+        OBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
         return template_name
 
     def get_template_list_user(self, folder, template, request):
