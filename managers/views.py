@@ -24,7 +24,7 @@ class ManagersView(TemplateView):
             self.template_name = "manager/editors.html"
         elif self.user.is_moderator() or self.user.is_community_moderator() or self.user.is_post_moderator() or self.user.is_good_moderator() or self.user.is_photo_moderator() or self.user.is_audio_moderator() or self.user.is_video_moderator():
             self.template_name = "manager/moderators.html"
-        OBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(ManagersView,self).get(request,*args,**kwargs)
@@ -34,12 +34,11 @@ class SuperManagersView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_supermanager_template(folder="manager/", template="supermanager.html", request=request)
         if request.user.is_supermanager:
             self.template_name = "manager/supermanager.html"
         else:
             self.template_name = "about.html"
-        OBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(SuperManagersView,self).get(request,*args,**kwargs)
