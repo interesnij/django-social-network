@@ -381,25 +381,25 @@ class User(AbstractUser):
 
     def is_community_administrator(self):
         try:
-            if self.user_community_staff.level == "A"
+            if self.user_community_staff.level == "A":
                 return True
         except:
             return False
     def is_community_moderator(self):
         try:
-            if self.user_community_staff.level == "M"
+            if self.user_community_staff.level == "M":
                 return True
         except:
             return False
     def is_community_editor(self):
         try:
-            if self.user_community_staff.level == "E"
+            if self.user_community_staff.level == "E":
                 return True
         except:
             return False
     def is_community_advertiser(self):
         try:
-            if self.user_community_staff.level == "R"
+            if self.user_community_staff.level == "R":
                 return True
         except:
             return False
@@ -412,19 +412,19 @@ class User(AbstractUser):
 
     def is_post_administrator(self):
         try:
-            if self.post_user_staff.level == "A"
+            if self.post_user_staff.level == "A":
                 return True
         except:
             return False
     def is_post_moderator(self):
         try:
-            if self.post_user_staff.level == "M"
+            if self.post_user_staff.level == "M":
                 return True
         except:
             return False
     def is_post_editor(self):
         try:
-            if self.post_user_staff.level == "E"
+            if self.post_user_staff.level == "E":
                 return True
         except:
             return False
@@ -437,19 +437,19 @@ class User(AbstractUser):
 
     def is_good_administrator(self):
         try:
-            if self.good_user_staff.level == "A"
+            if self.good_user_staff.level == "A":
                 return True
         except:
             return False
     def is_good_moderator(self):
         try:
-            if self.good_user_staff.level == "M"
+            if self.good_user_staff.level == "M":
                 return True
         except:
             return False
     def is_good_editor(self):
         try:
-            if self.good_user_staff.level == "E"
+            if self.good_user_staff.level == "E":
                 return True
         except:
             return False
@@ -462,19 +462,19 @@ class User(AbstractUser):
 
     def is_photo_administrator(self):
         try:
-            if self.photo_user_staff.level == "A"
+            if self.photo_user_staff.level == "A":
                 return True
         except:
             return False
     def is_photo_moderator(self):
         try:
-            if self.photo_user_staff.level == "M"
+            if self.photo_user_staff.level == "M":
                 return True
         except:
             return False
     def is_photo_editor(self):
         try:
-            if self.photo_user_staff.level == "E"
+            if self.photo_user_staff.level == "E":
                 return True
         except:
             return False
@@ -487,19 +487,19 @@ class User(AbstractUser):
 
     def is_video_administrator(self):
         try:
-            if self.video_user_staff.level == "A"
+            if self.video_user_staff.level == "A":
                 return True
         except:
             return False
     def is_video_moderator(self):
         try:
-            if self.video_user_staff.level == "M"
+            if self.video_user_staff.level == "M":
                 return True
         except:
             return False
     def is_video_editor(self):
         try:
-            if self.video_user_staff.level == "E"
+            if self.video_user_staff.level == "E":
                 return True
         except:
             return False
@@ -512,19 +512,19 @@ class User(AbstractUser):
 
     def is_audio_administrator(self):
         try:
-            if self.audio_user_staff.level == "A"
+            if self.audio_user_staff.level == "A":
                 return True
         except:
             return False
     def is_audio_moderator(self):
         try:
-            if self.audio_user_staff.level == "M"
+            if self.audio_user_staff.level == "M":
                 return True
         except:
             return False
     def is_audio_editor(self):
         try:
-            if self.audio_user_staff.level == "E"
+            if self.audio_user_staff.level == "E":
                 return True
         except:
             return False
@@ -537,25 +537,25 @@ class User(AbstractUser):
 
     def is_work_administrator(self):
         try:
-            if self.can_work_staff_user.can_work_administrator
+            if self.can_work_staff_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_moderator(self):
         try:
-            if self.can_work_staff_user.can_work_moderator
+            if self.can_work_staff_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_editor(self):
         try:
-            if self.can_work_staff_user.can_work_editor
+            if self.can_work_staff_user.can_work_editor:
                 return True
         except:
             return False
     def is_work_advertiser(self):
         try:
-            if self.can_work_staff_user.can_work_advertiser
+            if self.can_work_staff_user.can_work_advertiser:
                 return True
         except:
             return False
@@ -568,25 +568,25 @@ class User(AbstractUser):
 
     def is_work_community_administrator(self):
         try:
-            if self.can_work_staff_community.can_work_administrator
+            if self.can_work_staff_community.can_work_administrator:
                 return True
         except:
             return False
     def is_work_community_moderator(self):
         try:
-            if self.can_work_staff_community.can_work_moderator
+            if self.can_work_staff_community.can_work_moderator:
                 return True
         except:
             return False
     def is_work_community_editor(self):
         try:
-            if self.can_work_staff_community.can_work_editor
+            if self.can_work_staff_community.can_work_editor:
                 return True
         except:
             return False
     def is_work_community_advertiser(self):
         try:
-            if self.can_work_staff_community.can_work_advertiser
+            if self.can_work_staff_community.can_work_advertiser:
                 return True
         except:
             return False
@@ -599,19 +599,19 @@ class User(AbstractUser):
 
     def is_work_post_administrator(self):
         try:
-            if self.can_work_staff_post_user.can_work_administrator
+            if self.can_work_staff_post_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_post_moderator(self):
         try:
-            if self.can_work_staff_post_user.can_work_moderator
+            if self.can_work_staff_post_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_post_editor(self):
         try:
-            if self.can_work_staff_post_user.can_work_editor
+            if self.can_work_staff_post_user.can_work_editor:
                 return True
         except:
             return False
@@ -624,19 +624,19 @@ class User(AbstractUser):
 
     def is_work_good_administrator(self):
         try:
-            if self.can_work_staff_good_user.can_work_administrator
+            if self.can_work_staff_good_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_good_moderator(self):
         try:
-            if self.can_work_staff_good_user.can_work_moderator
+            if self.can_work_staff_good_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_good_editor(self):
         try:
-            if self.can_work_staff_good_user.can_work_editor
+            if self.can_work_staff_good_user.can_work_editor:
                 return True
         except:
             return False
@@ -649,19 +649,19 @@ class User(AbstractUser):
 
     def is_work_photo_administrator(self):
         try:
-            if self.can_work_staff_photo_user.can_work_administrator
+            if self.can_work_staff_photo_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_photo_moderator(self):
         try:
-            if self.can_work_staff_photo_user.can_work_moderator
+            if self.can_work_staff_photo_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_photo_editor(self):
         try:
-            if self.can_work_staff_photo_user.can_work_editor
+            if self.can_work_staff_photo_user.can_work_editor:
                 return True
         except:
             return False
@@ -674,19 +674,19 @@ class User(AbstractUser):
 
     def is_work_video_administrator(self):
         try:
-            if self.can_work_staff_video_user.can_work_administrator
+            if self.can_work_staff_video_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_video_moderator(self):
         try:
-            if self.can_work_staff_video_user.can_work_moderator
+            if self.can_work_staff_video_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_video_editor(self):
         try:
-            if self.can_work_staff_video_user.can_work_editor
+            if self.can_work_staff_video_user.can_work_editor:
                 return True
         except:
             return False
@@ -699,19 +699,19 @@ class User(AbstractUser):
 
     def is_work_music_administrator(self):
         try:
-            if self.can_work_staff_music_user.can_work_administrator
+            if self.can_work_staff_music_user.can_work_administrator:
                 return True
         except:
             return False
     def is_work_music_moderator(self):
         try:
-            if self.can_work_staff_music_user.can_work_moderator
+            if self.can_work_staff_music_user.can_work_moderator:
                 return True
         except:
             return False
     def is_work_music_editor(self):
         try:
-            if self.can_work_staff_music_user.can_work_editor
+            if self.can_work_staff_music_user.can_work_editor:
                 return True
         except:
             return False
