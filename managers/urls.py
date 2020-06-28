@@ -4,8 +4,8 @@ from managers.views import MainManagersView, ManagersView, SuperManagersView
 
 urlpatterns = [
     url(r'^$', MainManagersView.as_view(), name='main_manager'),
-    url(r'^officer/(?P<pk>\d+)/^$', ManagersView.as_view(), name='managers'),
-    url(r'high_officer/(?P<pk>\d+)/^$', SuperManagersView.as_view(), name='super_managers'),
+    url(r'^(?P<pk>\d+)/$', ManagersView.as_view(), name='managers'),
+    url(r'^high_officer/(?P<pk>\d+)/$', SuperManagersView.as_view(), name='super_managers'),
 
     url(r'^user/', include('managers.url.user')),
     url(r'^community/', include('managers.url.community')),
