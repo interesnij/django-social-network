@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Администрирование|Главная{% endblock %}
 {% block content %}
-
+1{{ request.user.is_user_administrator }}<br>
+2{{ request.user.is_user_advertiser }}<br>
+3{{ request.user.is_user_editor }}<br>
+4{{ request.user.is_user_moderator }}<br>
 <div class="container mt-4 main-container">
           <div class="container mt-4 main-container card">
             <h1 class="mb-0 text-center">Вы админ</h1>
