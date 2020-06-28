@@ -72,13 +72,8 @@ class AllPossibleUsersList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.utils import is_mobile
-
 		self.user = request.user
-		if is_mobile(request):
-			self.template_name = "mob_possible_list.html"
-		else:
-			self.template_name = "possible_list.html"
+		self.template_name = self.user.get_settings_template(folder="u_list/", template="possible_list.html", request=request)
 		return super(AllPossibleUsersList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

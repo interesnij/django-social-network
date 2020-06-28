@@ -28,13 +28,8 @@ class FollowingsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.utils import is_mobile
-
 		self.user = request.user
-		if is_mobile(request):
-			self.template_name = "mob_followings.html"
-		else:
-			self.template_name = "followings.html"
+		self.template_name = self.user.get_settings_template(folder="follows/", template="followings.html", request=request)
 		return super(FollowingsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

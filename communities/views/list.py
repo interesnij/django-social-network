@@ -1,7 +1,6 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
-from common.utils import is_mobile
 
 
 class CommunityMembersView(ListView):

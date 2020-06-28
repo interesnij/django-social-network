@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from notifications.model.user import UserNotification, UserCommunityNotification
-from common.utils import is_mobile
 
 
 class UserNotificationListView(LoginRequiredMixin, ListView):

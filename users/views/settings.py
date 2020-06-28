@@ -3,7 +3,6 @@ from users.model.profile import UserProfile
 from users.model.settings import *
 from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
-from common.utils import is_mobile
 
 
 class UserGeneralChange(TemplateView):

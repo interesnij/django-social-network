@@ -5,7 +5,6 @@ from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
-from common.utils import is_mobile
 
 
 class CommunityMusic(ListView):
