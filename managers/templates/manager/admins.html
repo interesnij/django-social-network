@@ -51,22 +51,22 @@
           <div class="card">
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                {% if requets.user.is_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Пользователи</a>
                 {% endif %}
-                {% if requets.user.is_community_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_community_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Сообщества</a>
                 {% endif %}
-                {% if requets.user.is_post_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_post_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Записи</a>
                 {% endif %}
-                {% if requets.user.is_photo_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_photo_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Изображения</a>
                 {% endif %}
-                {% if requets.user.is_audio_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_audio_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Аудиозаписи</a>
                 {% endif %}
-                {% if requets.user.is_video_administrator or requets.user.is_superuser %}
+                {% if requet.user.is_video_administrator or requet.user.is_superuser %}
                   <a class="ajax" href="">Видеозаписи</a>
                 {% endif %}
               </div>
