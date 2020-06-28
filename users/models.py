@@ -362,13 +362,13 @@ class User(AbstractUser):
             return False
     def is_user_editor(self):
         try:
-            self.user_staff.level == "E"
+            self.user_staff.level.ADMIN
             return True
         except:
             return False
     def is_user_advertiser(self):
         try:
-            self.user_staff.level == "R"
+            self.user_staff.level.ADVERTISER
             return True
         except:
             return False
