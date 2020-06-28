@@ -350,25 +350,25 @@ class User(AbstractUser):
 
     def is_user_administrator(self):
         try:
-            self.user_staff.level = "A"
+            self.user_staff.level == "A"
             return True
         except:
             return False
     def is_user_moderator(self):
         try:
-            self.user_staff.level.MODERATOR
+            self.user_staff.level == "M"
             return True
         except:
             return False
     def is_user_editor(self):
         try:
-            self.user_staff.level.EDITOR
+            self.user_staff.level == "E"
             return True
         except:
             return False
     def is_user_advertiser(self):
         try:
-            self.user_staff.level.ADVERTISER
+            self.user_staff.level == "R"
             return True
         except:
             return False
