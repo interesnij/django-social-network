@@ -17,7 +17,7 @@ class ManagersView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_administrator() or self.user.is_community_administrator() or self.user.is_post_administrator() or self.user.is_good_administrator() or self.user.is_photo_administrator() or self.user.is_audio_administrator() or self.user.is_video_administrator():
-            self.template_name = "manager/admins.html"
+            self.template_name = "manager/admins.html" 
         elif self.user.is_user_advertiser() or self.user.is_community_advertiser():
             self.template_name = "manager/advertisers.html"
         elif self.user.is_user_editor() or self.user.is_community_editor() or self.user.is_post_editor() or self.user.is_good_editor() or self.user.is_photo_editor() or self.user.is_audio_editor() or self.user.is_video_editor():
