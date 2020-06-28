@@ -20,7 +20,6 @@ class UserProfile(models.Model):
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
 
-
     def __str__(self):
         return self.user.last_name
 

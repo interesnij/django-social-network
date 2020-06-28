@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render_to_response
@@ -142,7 +143,6 @@ class ProfileUserView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        import re
         from stst.models import UserNumbers
 
         self.user=User.objects.get(pk=self.kwargs["pk"])

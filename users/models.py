@@ -3,17 +3,17 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-#from django.contrib.contenttypes.fields import GenericRelation
 from common.checkers import *
 from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
 
 
 class User(AbstractUser):
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
-    is_email_verified = models.BooleanField(default=False, verbose_name='Почта подтверждена')
     is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False, )
+    is_deleted = models.BooleanField(default=False, verbose_name="Удален")
+    is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для офицеров")
+    is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
+    is_suspended = models.BooleanField(default=False, verbose_name="Заморожен")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
@@ -315,7 +315,6 @@ class User(AbstractUser):
 
     def is_suspended(self):
         from moderation.models import ModerationPenalty
-
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
 
     def is_track_exists(self, track_id):
@@ -355,7 +354,6 @@ class User(AbstractUser):
             return True
         except:
             return False
-
     def is_moderator(self):
         try:
             self.user_staff.level == "M"
@@ -372,6 +370,13 @@ class User(AbstractUser):
         try:
             self.user_staff.level == "R"
             return True
+        except:
+            return False
+
+    def is_user_manager(self):
+        try:
+            if self.user_staff.level != "" or self.user.is_superuser:
+                return True
         except:
             return False
 
@@ -399,6 +404,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_community_manager(self):
+        if self.is_community_administrator() or self.is_community_moderator() or self.is_community_editor() or self.is_community_advertiser():
+            return True
 
     def is_post_administrator(self):
         try:
@@ -418,6 +426,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_post_manager(self):
+        if self.is_post_administrator() or self.is_post_moderator() or self.is_post_editor():
+            return True
 
     def is_good_administrator(self):
         try:
@@ -437,6 +448,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_good_manager(self):
+        if self.is_good_administrator() or self.is_good_moderator() or self.is_good_editor():
+            return True
 
     def is_photo_administrator(self):
         try:
@@ -456,6 +470,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_photo_manager(self):
+        if self.is_photo_administrator() or self.is_photo_moderator() or self.is_photo_editor():
+            return True
 
     def is_video_administrator(self):
         try:
@@ -475,6 +492,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_video_manager(self):
+        if self.is_video_administrator() or self.is_video_moderator() or self.is_video_editor():
+            return True
 
     def is_audio_administrator(self):
         try:
@@ -494,6 +514,9 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_audio_manager(self):
+        if self.is_audio_administrator() or self.is_audio_moderator() or self.is_audio_editor():
+            return True
 
     def is_work_administrator(self):
         try:
@@ -519,66 +542,145 @@ class User(AbstractUser):
             return True
         except:
             return False
+    def is_user_supermanager(self):
+        if self.is_work_administrator() or self.is_work_moderator() or self.is_work_editor():
+            return True
 
     def is_work_community_administrator(self):
-        return self.can_work_staff_community.can_work_administrator
+        try:
+            self.can_work_staff_community.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_community_moderator(self):
-        return self.can_work_staff_community.can_work_moderator
+        try:
+            self.can_work_staff_community.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_community_editor(self):
-        return self.can_work_staff_community.can_work_editor
+        try:
+            self.can_work_staff_community.can_work_editor
+            return True
+        except:
+            return False
     def is_work_community_advertiser(self):
-        return self.can_work_staff_community.can_work_advertiser
-    def is_staff_community_work(self):
-        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_advertiser()  or self.is_superuser:
+        try:
+            self.can_work_staff_community.can_work_advertiser
+            return True
+        except:
+            return False
+    def is_community_supermanager(self):
+        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_advertiser():
             return True
 
     def is_work_post_administrator(self):
-        return self.can_work_staff_post_user.can_work_administrator
+        try:
+            self.can_work_staff_post_user.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_post_moderator(self):
-        return self.can_work_staff_post_user.can_work_moderator
+        try:
+            self.can_work_staff_post_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_post_editor(self):
-        return self.can_work_staff_post_user.can_work_editor
-    def is_staff_post(self):
-        if self.is_work_post_administrator() or self.is_work_post_editor() or self.is_work_post_moderator() or self.is_superuser:
+        try:
+            self.can_work_staff_post_user.can_work_editor
+            return True
+        except:
+            return False
+    def is_post_supermanager(self):
+        if self.is_work_post_administrator() or self.is_work_post_editor() or self.is_work_post_moderator():
             return True
 
     def is_work_good_administrator(self):
-        return self.can_work_staff_good_user.can_work_administrator
+        try:
+            self.can_work_staff_good_user.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_good_moderator(self):
-        return self.can_work_staff_good_user.can_work_moderator
+        try:
+            self.can_work_staff_good_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_good_editor(self):
-        return self.can_work_staff_good_user.can_work_editor
-    def is_staff_good(self):
-        if self.is_work_good_administrator() or self.is_work_good_editor() or self.is_work_good_moderator() or self.is_superuser:
+        try:
+            self.can_work_staff_good_user.can_work_editor
+            return True
+        except:
+            return False
+    def is_good_supermanager(self):
+        if self.is_work_good_administrator() or self.is_work_good_editor() or self.is_work_good_moderator():
             return True
 
     def is_work_photo_administrator(self):
-        return self.can_work_staff_photo_user.can_work_administrator
+        try:
+            self.can_work_staff_photo_user.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_photo_moderator(self):
-        return self.can_work_staff_photo_user.can_work_moderator
+        try:
+            self.can_work_staff_photo_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_photo_editor(self):
-        return self.can_work_staff_photo_user.can_work_editor
-    def is_staff_photo(self):
-        if self.is_work_photo_administrator() or self.is_work_photo_editor() or self.is_work_photo_moderator() or self.is_superuser:
+        try:
+            self.can_work_staff_photo_user.can_work_editor
+            return True
+        except:
+            return False
+    def is_photo_supermanager(self):
+        if self.is_work_photo_administrator() or self.is_work_photo_editor() or self.is_work_photo_moderator():
             return True
 
     def is_work_video_administrator(self):
-        return self.can_work_staff_video_user.can_work_administrator
+        try:
+            self.can_work_staff_video_user.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_video_moderator(self):
-        return self.can_work_staff_video_user.can_work_moderator
+        try:
+            self.can_work_staff_video_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_video_editor(self):
-        return self.can_work_staff_video_user.can_work_editor
-    def is_staff_video(self):
-        if self.is_work_video_administrator() or self.is_work_video_editor() or self.is_work_video_moderator() or self.is_superuser:
+        try:
+            self.can_work_staff_video_user.can_work_editor
+            return True
+        except:
+            return False
+    def is_video_supermanager(self):
+        if self.is_work_video_administrator() or self.is_work_video_editor() or self.is_work_video_moderator():
             return True
 
     def is_work_music_administrator(self):
-        return self.can_work_staff_music_user.can_work_administrator
+        try:
+            self.can_work_staff_music_user.can_work_administrator
+            return True
+        except:
+            return False
     def is_work_music_moderator(self):
-        return self.can_work_staff_music_user.can_work_moderator
+        try:
+            self.can_work_staff_music_user.can_work_moderator
+            return True
+        except:
+            return False
     def is_work_music_editor(self):
-        return self.can_work_staff_music_user.can_work_editor
-    def is_staff_music(self):
+        try:
+            self.can_work_staff_music_user.can_work_editor
+            return True
+        except:
+            return False
+    def is_music_supermanager(self):
         if self.is_work_music_administrator() or self.is_music_video_editor() or self.is_work_music_moderator() or self.is_superuser:
             return True
 
