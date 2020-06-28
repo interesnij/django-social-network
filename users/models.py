@@ -12,7 +12,7 @@ class User(AbstractUser):
     is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
     is_deleted = models.BooleanField(default=False, verbose_name="Удален")
     is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для офицеров")
-    is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
+    is_supermanager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
     is_suspended = models.BooleanField(default=False, verbose_name="Заморожен")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
