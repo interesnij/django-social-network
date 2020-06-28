@@ -1,5 +1,6 @@
 from managers.models import PostUserStaff, CanWorkStaffPostUser
 from logs.model.posts import PostWorkerManageLog, PostCreateWorkerManageLog
+from common.utils import check_manager_state, check_supermanager_state
 
 
 def add_post_administrator(user, request_user):
@@ -34,6 +35,7 @@ def remove_post_administrator(user, request_user):
         user.post_user_staff.level = ""
         user.post_user_staff.save(update_fields=['level'])
         PostWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_manager_state()
     except:
         pass
 
@@ -42,6 +44,7 @@ def remove_post_moderator(user, request_user):
         user.post_user_staff.level = ""
         user.post_user_staff.save(update_fields=['level'])
         PostWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_manager_state()
     except:
         pass
 
@@ -50,6 +53,7 @@ def remove_post_editor(user, request_user):
         user.post_user_staff.level = ""
         user.post_user_staff.save(update_fields=['level'])
         PostWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_manager_state()
     except:
         pass
 
@@ -86,6 +90,7 @@ def remove_post_administrator_worker(user, request_user):
         user.can_work_staff_post_user.is_administrator = False
         user.can_work_staff_post_user.save(update_fields=['is_administrator'])
         PostCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_supermanager_state()
     except:
         pass
 
@@ -94,6 +99,7 @@ def remove_post_moderator_worker(user, request_user):
         user.can_work_staff_post_user.is_moderator = False
         user.can_work_staff_post_user.save(update_fields=['is_moderator'])
         PostCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -102,5 +108,6 @@ def remove_post_editor_worker(user, request_user):
         user.can_work_staff_post_user.is_editor = False
         user.can_work_staff_post_user.save(update_fields=['is_editor'])
         PostCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_supermanager_state()
     except:
         pass

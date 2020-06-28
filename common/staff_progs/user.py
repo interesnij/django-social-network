@@ -1,5 +1,6 @@
 from managers.models import UserStaff, CanWorkStaffUser
 from logs.model.user_community import UserWorkerManageLog, UserCreateWorkerManageLog
+from common.utils import check_manager_state, check_supermanager_state
 
 
 def add_user_administrator(user, request_user):
@@ -51,6 +52,7 @@ def remove_user_moderator(user, request_user):
         user.user_staff.level = ""
         user.user_staff.save(update_fields=['level'])
         UserWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_manager_state()
     except:
         pass
 
@@ -59,6 +61,7 @@ def remove_user_editor(user, request_user):
         user.user_staff.level = ""
         user.user_staff.save(update_fields=['level'])
         UserWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_manager_state()
     except:
         pass
 
@@ -67,6 +70,7 @@ def remove_user_advertiser(user, request_user):
         user.user_staff.level = ""
         user.user_staff.save(update_fields=['level'])
         UserWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADVERTISER)
+        check_manager_state()
     except:
         pass
 
@@ -112,6 +116,7 @@ def remove_user_administrator_worker(user, request_user):
         user.can_work_staff_user.is_administrator = False
         user.can_work_staff_user.save(update_fields=['is_administrator'])
         UserCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_supermanager_state()
     except:
         pass
 
@@ -120,6 +125,7 @@ def remove_user_moderator_worker(user, request_user):
         user.can_work_staff_user.is_moderator = False
         user.can_work_staff_user.save(update_fields=['is_moderator'])
         UserCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -128,6 +134,7 @@ def remove_user_editor_worker(user, request_user):
         user.can_work_staff_user.is_editor = False
         user.can_work_staff_user.save(update_fields=['is_editor'])
         UserCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -136,5 +143,6 @@ def remove_user_advertiser_worker(user, request_user):
         user.can_work_staff_user.is_advertiser = False
         user.can_work_staff_user.save(update_fields=['is_advertiser'])
         UserCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADVERTISER)
+        check_supermanager_state()
     except:
         pass

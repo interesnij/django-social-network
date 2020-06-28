@@ -372,7 +372,6 @@ class User(AbstractUser):
             return True
         except:
             return False
-
     def is_user_manager(self):
         try:
             if self.user_staff.level:
@@ -405,8 +404,11 @@ class User(AbstractUser):
         except:
             return False
     def is_community_manager(self):
-        if self.is_community_administrator() or self.is_community_moderator() or self.is_community_editor() or self.is_community_advertiser():
-            return True
+        try:
+            if self.user_community_staff.level:
+                return True
+        except:
+            return False
 
     def is_post_administrator(self):
         try:
@@ -427,8 +429,11 @@ class User(AbstractUser):
         except:
             return False
     def is_post_manager(self):
-        if self.is_post_administrator() or self.is_post_moderator() or self.is_post_editor():
-            return True
+        try:
+            if self.post_user_staff.level:
+                return True
+        except:
+            return False
 
     def is_good_administrator(self):
         try:
@@ -449,8 +454,11 @@ class User(AbstractUser):
         except:
             return False
     def is_good_manager(self):
-        if self.is_good_administrator() or self.is_good_moderator() or self.is_good_editor():
-            return True
+        try:
+            if self.good_user_staff.level:
+                return True
+        except:
+            return False
 
     def is_photo_administrator(self):
         try:
@@ -471,8 +479,11 @@ class User(AbstractUser):
         except:
             return False
     def is_photo_manager(self):
-        if self.is_photo_administrator() or self.is_photo_moderator() or self.is_photo_editor():
-            return True
+        try:
+            if self.photo_user_staff.level:
+                return True
+        except:
+            return False
 
     def is_video_administrator(self):
         try:
@@ -493,8 +504,11 @@ class User(AbstractUser):
         except:
             return False
     def is_video_manager(self):
-        if self.is_video_administrator() or self.is_video_moderator() or self.is_video_editor():
-            return True
+        try:
+            if self.video_user_staff.level:
+                return True
+        except:
+            return False
 
     def is_audio_administrator(self):
         try:
@@ -515,8 +529,11 @@ class User(AbstractUser):
         except:
             return False
     def is_audio_manager(self):
-        if self.is_audio_administrator() or self.is_audio_moderator() or self.is_audio_editor():
-            return True
+        try:
+            if self.audio_user_staff.level:
+                return True
+        except:
+            return False
 
     def is_work_administrator(self):
         try:
@@ -543,8 +560,11 @@ class User(AbstractUser):
         except:
             return False
     def is_user_supermanager(self):
-        if self.is_work_administrator() or self.is_work_moderator() or self.is_work_editor():
-            return True
+        try:
+            if self.can_work_staff_user.level:
+                return True
+        except:
+            return False
 
     def is_work_community_administrator(self):
         try:
@@ -571,8 +591,11 @@ class User(AbstractUser):
         except:
             return False
     def is_community_supermanager(self):
-        if self.is_work_community_administrator() or self.is_work_community_editor() or self.is_work_community_moderator() or self.is_work_community_advertiser():
-            return True
+        try:
+            if self.can_work_staff_community.level:
+                return True
+        except:
+            return False
 
     def is_work_post_administrator(self):
         try:
@@ -592,9 +615,12 @@ class User(AbstractUser):
             return True
         except:
             return False
-    def is_post_supermanager(self):
-        if self.is_work_post_administrator() or self.is_work_post_editor() or self.is_work_post_moderator():
-            return True
+    def is_work_supermanager(self):
+        try:
+            if self.can_work_staff_post_user.level:
+                return True
+        except:
+            return False
 
     def is_work_good_administrator(self):
         try:
@@ -614,9 +640,12 @@ class User(AbstractUser):
             return True
         except:
             return False
-    def is_good_supermanager(self):
-        if self.is_work_good_administrator() or self.is_work_good_editor() or self.is_work_good_moderator():
-            return True
+    def is_work_supermanager(self):
+        try:
+            if self.can_work_staff_good_user.level:
+                return True
+        except:
+            return False
 
     def is_work_photo_administrator(self):
         try:
@@ -637,8 +666,11 @@ class User(AbstractUser):
         except:
             return False
     def is_photo_supermanager(self):
-        if self.is_work_photo_administrator() or self.is_work_photo_editor() or self.is_work_photo_moderator():
-            return True
+        try:
+            if self.can_work_staff_photo_user.level:
+                return True
+        except:
+            return False
 
     def is_work_video_administrator(self):
         try:
@@ -659,8 +691,11 @@ class User(AbstractUser):
         except:
             return False
     def is_video_supermanager(self):
-        if self.is_work_video_administrator() or self.is_work_video_editor() or self.is_work_video_moderator():
-            return True
+        try:
+            if self.can_work_staff_video_user.level:
+                return True
+        except:
+            return False
 
     def is_work_music_administrator(self):
         try:
@@ -681,8 +716,11 @@ class User(AbstractUser):
         except:
             return False
     def is_music_supermanager(self):
-        if self.is_work_music_administrator() or self.is_music_video_editor() or self.is_work_music_moderator() or self.is_superuser:
-            return True
+        try:
+            if self.can_work_staff_music_user.level:
+                return True
+        except:
+            return False
 
     ''''' количества всякие  196-216 '''''
 

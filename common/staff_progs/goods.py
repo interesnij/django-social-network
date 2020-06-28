@@ -1,5 +1,6 @@
 from managers.models import GoodUserStaff, CanWorkStaffGoodUser
 from logs.model.goods import GoodWorkerManageLog, GoodCreateWorkerManageLog
+from common.utils import check_manager_state, check_supermanager_state
 
 
 def add_good_administrator(user, request_user):
@@ -34,6 +35,7 @@ def remove_good_administrator(user, request_user):
         user.good_user_staff.level = ""
         user.good_user_staff.save(update_fields=['level'])
         GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_manager_state()
     except:
         pass
 
@@ -42,6 +44,7 @@ def remove_post_moderator(user, request_user):
         user.good_user_staff.level = ""
         user.good_user_staff.save(update_fields=['level'])
         GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_manager_state()
     except:
         pass
 
@@ -50,6 +53,7 @@ def remove_good_editor(user, request_user):
         user.good_user_staff.level = ""
         user.good_user_staff.save(update_fields=['level'])
         GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_manager_state()
     except:
         pass
 
@@ -86,6 +90,7 @@ def remove_good_administrator_worker(user, request_user):
         user.can_work_staff_good_user.is_administrator = False
         user.can_work_staff_good_user.save(update_fields=['is_administrator'])
         GoodCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_supermanager_state()
     except:
         pass
 
@@ -94,6 +99,7 @@ def remove_good_moderator_worker(user, request_user):
         user.can_work_staff_good_user.is_moderator = False
         user.can_work_staff_good_user.save(update_fields=['is_moderator'])
         GoodCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -102,5 +108,6 @@ def remove_good_editor_worker(user, request_user):
         user.can_work_staff_good_user.is_editor = False
         user.can_work_staff_good_user.save(update_fields=['is_editor'])
         GoodCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_supermanager_state()
     except:
         pass

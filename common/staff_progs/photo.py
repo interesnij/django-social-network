@@ -1,5 +1,6 @@
 from managers.models import PhotoUserStaff, CanWorkStaffPhotoUser
 from logs.model.photo import PhotoWorkerManageLog, PhotoCreateWorkerManageLog
+from common.utils import check_manager_state, check_supermanager_state
 
 
 def add_photo_administrator(user, request_user):
@@ -34,6 +35,7 @@ def remove_photo_administrator(user, request_user):
         user.photo_user_staff.level = ""
         user.photo_user_staff.save(update_fields=['level'])
         PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_manager_state()
     except:
         pass
 
@@ -42,6 +44,7 @@ def remove_photo_moderator(user, request_user):
         user.photo_user_staff.level = ""
         user.photo_user_staff.save(update_fields=['level'])
         PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_manager_state()
     except:
         pass
 
@@ -50,6 +53,7 @@ def remove_photo_editor(user, request_user):
         user.photo_user_staff.level = ""
         user.photo_user_staff.save(update_fields=['level'])
         PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_manager_state()
     except:
         pass
 
@@ -86,6 +90,7 @@ def remove_photo_administrator_worker(user, request_user):
         user.can_work_staff_photo_user.is_administrator = False
         user.can_work_staff_photo_user.save(update_fields=['is_administrator'])
         PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_supermanager_state()
     except:
         pass
 
@@ -94,6 +99,7 @@ def remove_photo_moderator_worker(user, request_user):
         user.can_work_staff_photo_user.is_moderator = False
         user.can_work_staff_photo_user.save(update_fields=['is_moderator'])
         PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -102,5 +108,6 @@ def remove_photo_editor_worker(user, request_user):
         user.can_work_staff_photo_user.is_editor = False
         user.can_work_staff_photo_user.save(update_fields=['is_editor'])
         PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_supermanager_state()
     except:
         pass

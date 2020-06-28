@@ -1,5 +1,6 @@
 from managers.models import CommunityStaff, CanWorkStaffCommunity
 from logs.model.user_community import CommunityWorkerManageLog, CommunityCreateWorkerManageLog
+from common.utils import check_manager_state, check_supermanager_state
 
 
 def add_community_administrator(user, request_user):
@@ -43,6 +44,7 @@ def remove_community_administrator(user, request_user):
         user.user_community_staff.level = ""
         user.user_community_staff.save(update_fields=['level'])
         CommunityWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_manager_state()
     except:
         pass
 
@@ -51,6 +53,7 @@ def remove_community_moderator(user, request_user):
         user.user_community_staff.level = ""
         user.user_community_staff.save(update_fields=['level'])
         CommunityWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_manager_state()
     except:
         pass
 
@@ -59,6 +62,7 @@ def remove_community_editor(user, request_user):
         user.user_community_staff.level = ""
         user.user_community_staff.save(update_fields=['level'])
         CommunityWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_manager_state()
     except:
         pass
 
@@ -67,6 +71,7 @@ def remove_community_advertiser(user, request_user):
         user.user_community_staff.level = ""
         user.user_community_staff.save(update_fields=['level'])
         CommunityWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADVERTISER)
+        check_manager_state()
     except:
         pass
 
@@ -112,6 +117,7 @@ def remove_community_administrator_worker(user, request_user):
         user.can_work_staff_community.is_administrator = False
         user.can_work_staff_community.save(update_fields=['is_administrator'])
         CommunityCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADMIN)
+        check_supermanager_state()
     except:
         pass
 
@@ -120,6 +126,7 @@ def remove_community_moderator_worker(user, request_user):
         user.can_work_staff_community.is_moderator = False
         user.can_work_staff_community.save(update_fields=['is_moderator'])
         CommunityCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_MODERATOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -128,6 +135,7 @@ def remove_community_editor_worker(user, request_user):
         user.can_work_staff_community.is_editor = False
         user.can_work_staff_community.save(update_fields=['is_editor'])
         CommunityCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_EDITOR)
+        check_supermanager_state()
     except:
         pass
 
@@ -136,5 +144,6 @@ def remove_community_advertiser_worker(user, request_user):
         user.can_work_staff_community.is_advertiser = False
         user.can_work_staff_community.save(update_fields=['is_advertiser'])
         CommunityCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=DELETE_ADVERTISER)
+        check_supermanager_state()
     except:
         pass
