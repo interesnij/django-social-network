@@ -3,13 +3,13 @@ from users.models import User
 import re
 
 
-class ManagersView(TemplateView):
+class MainManagersView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         if request.user.is_authenticated:
             self.template_name = "managers.html"
-        return super(ManagersView,self).get(request,*args,**kwargs)
+        return super(MainManagersView,self).get(request,*args,**kwargs)
 
 class ManagersView(TemplateView):
     template_name = None
