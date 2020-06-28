@@ -33,21 +33,19 @@
               быть таким управленцем - большая отвественность. <br>
               Нужно быть беспристрастным, грамотным, осознанным человеком, с развитым чувством справедливости и моральными качествами.
               <br><br>
-              Вам доступно:
-              1. Удалять, изменять, замораживать те сущности, которые Вам подвластно администрировать.
-              2. Видеть закрытые аккаунты и скрытые участки профиля пользователя (если Вы имеете права доступа к управлению профилей пользователя),
+              <span style="font-weight:bold">Вам доступно:</span><br>
+              1. Удалять, изменять, замораживать те сущности, которые Вам подвластно администрировать.<br>
+              2. Видеть закрытые аккаунты и скрытые участки профиля пользователя (если Вы имеете права доступа к управлению профилей пользователя),<br>
               а также приватные и закрытые сообщества и их сркрытые участки (если Вы имеете права доступа к управлению сообществ).
-              3. В случае прецедентов просматривать логи действий пользователей в отношении администрируемых сущностей.
+              3. В случае прецедентов просматривать логи действий пользователей в отношении администрируемых сущностей.<br>
               4. В случае прав доступа к управлению профилем пользователя, Вам доступно влиять на рекламные предложения профиля, сообщества -
-              на рекламные предложения сообществ.
-              <br><br>
-              Выбирайте подвластные Вам отделы для администрирования справа на панели меню.
+              на рекламные предложения сообществ.<br>
             </p>
         </div>
   </div>
   <div class="container mt-4 main-container">
     <div class="row">
-      {% if request.user.is_administrator or request.user.is_superuser %}
+      {% if request.user.is_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
@@ -66,7 +64,7 @@
         </div>
       </div>
       {% endif %}
-      {% if request.user.is_community_administrator or request.user.is_superuser %}
+      {% if request.user.is_community_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
@@ -85,7 +83,7 @@
         </div>
       </div>
       {% endif %}
-      {% if request.user.is_post_administrator or request.user.is_superuser %}
+      {% if request.user.is_post_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
@@ -104,7 +102,7 @@
         </div>
       </div>
       {% endif %}
-      {% if request.user.is_photo_administrator or request.user.is_superuser %}
+      {% if request.user.is_photo_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
@@ -123,7 +121,7 @@
         </div>
       </div>
       {% endif %}
-      {% if request.user.is_audio_administrator or request.user.is_superuser %}
+      {% if request.user.is_audio_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
@@ -142,7 +140,7 @@
         </div>
       </div>
       {% endif %}
-      {% if request.user.is_audio_administrator or request.user.is_superuser %}
+      {% if request.user.is_audio_administrator %}
       <div class="col-12 col-md-6">
         <div class="card mb-4 box-shadow-large">
           <div class="card-body text-center">
