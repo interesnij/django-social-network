@@ -375,7 +375,7 @@ class User(AbstractUser):
 
     def is_user_manager(self):
         try:
-            if self.user_staff.level != "" or self.user.is_superuser:
+            if self.user_staff.level != "":
                 return True
         except:
             return False
