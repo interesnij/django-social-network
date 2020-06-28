@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Администрирование|Главная{% endblock %}
+{% block meta %}
+<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/static/images/I.jpg" />
+{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8">
+          <div class="container mt-4 main-container text-center card">
+            <h1 class="mb-0">Вы админ</h1>
+            <h5 class="text-warning mb-4">
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+            </h5>
+            <p class="content-color-secondary">
+              Вы администратор соцсети трезвый.рус. Это высокое звание в градации системы полномочий ресурса. Пожалуйста, помните, что
+              быть таким управленцем - большая отвественность. <br>
+              Нужно быть беспристрастным, грамотным, осознанным человеком, с развитым чувством справедливости и моральными качествами.
+              <br><br>
+              Вам доступно:
+              1. Удалять, изменять, замораживать те сущности, которые Вам подвластно администрировать.
+              2. Видеть закрытые аккаунты и скрытые участки профиля пользователя (если Вы имеете права доступа к управлению профилей пользователя),
+              а также приватные и закрытые сообщества и их сркрытые участки (если Вы имеете права доступа к управлению сообществ).
+              3. В случае прецедентов просматривать логи действий пользователей в отношении администрируемых сущностей.
+              4. В случае прав доступа к управлению профилем пользователя, Вам доступно влиять на рекламные предложения профиля, сообщества -
+              на рекламные предложения сообществ.
+              <br><br>
+              Выбирайте подвластные Вам отделы для администрирования справа на панели меню.
+            </p>
+        </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="nav flex-column nav-pills faqnav">
+                {% if requets.user.is_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Пользователи</a>
+                {% endif %}
+                {% if requets.user.is_community_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Сообщества</a>
+                {% endif %}
+                {% if requets.user.is_post_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Записи</a>
+                {% endif %}
+                {% if requets.user.is_photo_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Изображения</a>
+                {% endif %}
+                {% if requets.user.is_audio_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Аудиозаписи</a>
+                {% endif %}
+                {% if requets.user.is_video_administrator or requets.user.is_superuser %}
+                  <a class="ajax" href="">Видеозаписи</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
