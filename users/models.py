@@ -355,10 +355,9 @@ class User(AbstractUser):
         except:
             return False
     def is_user_moderator(self):
-        try:
-            if self.user_staff.level == "M":
-                return True
-        except:
+        if self.user_staff.level == "M":
+            return True
+        else:
             return False
     def is_user_editor(self):
         try:
