@@ -19,4 +19,15 @@ urlpatterns = [
     url(r'^good_editor/(?P<pk>\d+)/$', login_required(GoodEditorList.as_view())),
     url(r'^audio_editor/(?P<pk>\d+)/$', login_required(AudioEditorList.as_view())),
     url(r'^video_editor/(?P<pk>\d+)/$', login_required(VideoEditorList.as_view())),
+
+    url(r'^user_moderator/(?P<pk>\d+)/$', login_required(UserModeratorList.as_view())),
+    url(r'^community_moderator/(?P<pk>\d+)/$', login_required(CommunityModeratorList.as_view())),
+    url(r'^post_moderator/(?P<pk>\d+)/$', login_required(PostModeratorList.as_view())),
+    url(r'^photo_moderator/(?P<pk>\d+)/$', login_required(PhotoModeratorList.as_view())),
+    url(r'^good_moderator/(?P<pk>\d+)/$', login_required(GoodModeratorList.as_view())),
+    url(r'^audio_moderator/(?P<pk>\d+)/$', login_required(AudioModeratorList.as_view())),
+    url(r'^video_moderator/(?P<pk>\d+)/$', login_required(VideoModeratorList.as_view())),
+
+    url(r'^user_advertiser/(?P<pk>\d+)/$', login_required(UserAdvertiserList.as_view())),
+    url(r'^community_advertiser/(?P<pk>\d+)/$', login_required(CommunityAdvertiserList.as_view())),
 ]

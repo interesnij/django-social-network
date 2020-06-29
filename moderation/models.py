@@ -373,7 +373,6 @@ class ModerationReport(models.Model):
         ]
 
 
-
 class ModerationPenalty(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderation_penalties', verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
