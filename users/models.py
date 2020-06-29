@@ -1153,7 +1153,7 @@ class User(AbstractUser):
     def _get_timeline_posts_v2(self):
         from posts.models import Post
         from managers.model.post import ModeratedObjectPost
-        
+
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #own_posts_query.add(reported_posts_exclusion_query, Q.AND)
@@ -1333,14 +1333,6 @@ class User(AbstractUser):
             template_name = "mob_" + template_name
         return template_name
 
-    def unfavorite_community_with_name(self, community_name):
-        from communities.models import Community
-
-        check_can_unfavorite_community_with_name(user=self, community_name=community_name)
-        community_to_unfavorite = Community.objects.get(name=community_name)
-        self.favorite_communities.remove(community_to_unfavorite)
-        return community_to_unfavorite
-
     def get_target_users(self):
         from stst.models import UserNumbers
         v_s = UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")
@@ -1394,49 +1386,8 @@ class User(AbstractUser):
 
         check_can_leave_community_with_name(user=self, community_name=community_name)
         community_to_leave = Community.objects.get(name=community_name)
-        if self.has_favorite_community_with_name(community_name):
-            self.unfavorite_community_with_name(community_name=community_name)
         community_to_leave.remove_member(self)
         return community_to_leave
-
-    def _make_get_votes_query(self, post):
-        reactions_query = Q(parent_id=post.pk)
-        post_community = post.community
-        if post_community:
-            if not self.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
-                blocked_users_query_staff_members = Q(user__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(user__communities_memberships__is_moderator=True), Q.AND)
-                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
-                reactions_query.add(blocked_users_query, Q.AND)
-        else:
-            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
-            reactions_query.add(blocked_users_query, Q.AND)
-        return reactions_query
-
-    def _make_get_votes_query_comment(self, comment):
-        reactions_query = Q(item_id=comment.pk)
-        try:
-            post_community = comment.post.community
-        except:
-            post_community = comment.parent_comment.post.community
-        if post_community:
-            if not self.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
-                blocked_users_query_staff_members = Q(user__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(user__communities_memberships__is_moderator=True), Q.AND)
-                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
-                reactions_query.add(blocked_users_query, Q.AND)
-        else:
-            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
-            reactions_query.add(blocked_users_query, Q.AND)
-        return reactions_query
-
-    def has_favorite_community_with_name(self, community_name):
-        return self.favorite_communities.filter(name=community_name).exists()
-
-    def has_excluded_community_with_name(self, community_name):
-        return self.top_posts_community_exclusions.filter(community__name=community_name).exists()
 
     def has_blocked_user_with_id(self, user_id):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
@@ -1460,3 +1411,19 @@ class User(AbstractUser):
         ids = [use['target'] for use in v_s]
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
+
+    ''''' модерация '''''
+    def get_approved_users(self):
+        # оштрафованные пользователи
+        from managers.model.user import ModeratedUser
+        v_s = ModeratedUser.objects.all().values('user_id')
+        ids = [user['user_id'] for user in v_s]
+        query = []
+        for user_id in ids:
+            query = query + [User.objects.get(id=user_id), ]
+        return query
+    def get_penalty_users(self):
+        # пользователи, на которых пожаловались
+        users = User.objects.filter(moderated_object__reports__reporter_id=self.pk)
+        return users
+    ''''' конец модерации '''''

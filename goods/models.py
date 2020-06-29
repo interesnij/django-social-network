@@ -160,14 +160,6 @@ class Good(models.Model):
 		count_reposts = parents.count()
 		return count_reposts
 
-	def get_likes_for_item(self, user):
-		reactions_query = user._make_get_votes_query(good=self)
-		return GoodVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
-
-	def get_dislikes_for_item(self, user):
-		reactions_query = user._make_get_votes_query(good=self)
-		return GoodVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
-
 
 class GoodComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
@@ -236,14 +228,6 @@ class GoodComment(models.Model):
     def window_dislikes(self):
         dislikes = GoodCommentVotes.objects.filter(good=self, vote__lt=0)
         return dislikes[0:6]
-
-    def get_likes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_query_comment(comment=self)
-        return GoodCommentVotes.objects.filter(good=self, vote__gt=0).filter(reactions_query)
-
-    def get_dislikes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_query_comment(comment=self)
-        return GoodCommentVotes.objects.filter(good=self, vote__lt=0).filter(reactions_query)
 
     def __str__(self):
         return str(self.good)
