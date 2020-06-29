@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from posts.models import User
+from users.models import User
 from managers.models import ModerationCategory
 
 
