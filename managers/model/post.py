@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from posts.models import Post, PostComment
-from moderation.models import ModerationCategory
+from managers.models import ModerationCategory
 
 
 class ModeratedPost(models.Model):
@@ -28,7 +28,7 @@ class ModeratedPost(models.Model):
     @classmethod
     def _get_or_create_moderated_object(cls, post, post_comment, category_id):
         try:
-            moderated_object = cls.objects.get(post=post, post_comment=post_comment, object_id=post.pk)
+            moderated_object = cls.objects.get(post=post, post_comment=post_comment)
         except cls.DoesNotExist:
             moderated_object = cls.create_moderated_object(post=post, post_comment=post_comment, category_id=category_id)
         return moderated_object
@@ -49,7 +49,7 @@ class ModeratedPost(models.Model):
 
     @property
     def reports_count(self):
-        return self.reports.count()
+        return self.post_reports.count()
 
     def is_verified(self):
         return self.verified
@@ -83,8 +83,7 @@ class ModeratedPost(models.Model):
                 penalty_targets = [self.post_comment.commenter]
             for penalty_target in penalty_targets:
                 duration_of_penalty = None
-                penalties_count = penalty_target.count_moderation_penalties_for_moderation_severity(
-                    moderation_severity=moderation_severity) + 1
+                penalties_count = penalty_target.count_post_penalties_for_moderation_severity(moderation_severity=moderation_severity) + 1
 
                 if moderation_severity == ModerationCategory.SEVERITY_CRITICAL:
                     duration_of_penalty = timezone.timedelta(weeks=5000)
@@ -101,7 +100,7 @@ class ModeratedPost(models.Model):
     def unverify_with_actor_with_id(self, actor_id):
         current_verified = self.verified
         self.verified = False
-        self.user_penalties.all().delete()
+        self.post_penalties.all().delete()
         moderation_severity = self.category.severity
         self.save()
 
@@ -116,7 +115,7 @@ class ModeratedPost(models.Model):
         self.save()
 
     def get_reporters(self):
-        return User.objects.filter(post_reports__moderated_object_id=self.pk).all()
+        return User.objects.filter(post_reports__moderated_post_id=self.pk).all()
 
 
 class PostModerationReport(models.Model):
@@ -144,6 +143,8 @@ class ModerationPenaltyPost(models.Model):
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Объект")
 
     TYPE_SUSPENSION = 'S'
+    TYPE_DELETED = 'D'
+    TYPE_BANNER = 'D'
     TYPES = (
         (TYPE_SUSPENSION, 'Приостановлено'),
     )

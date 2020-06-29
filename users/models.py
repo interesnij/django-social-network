@@ -70,6 +70,36 @@ class User(AbstractUser):
         except:
             return None
 
+    def count_post_penalties_for_moderation_severity(self, moderation_severity):
+        return self.post_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_photo_penalties_for_moderation_severity(self, moderation_severity):
+        return self.photo_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_good_penalties_for_moderation_severity(self, moderation_severity):
+        return self.good_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_audio_penalties_for_moderation_severity(self, moderation_severity):
+        return self.audio_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_video_penalties_for_moderation_severity(self, moderation_severity):
+        return self.video_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_user_penalties_for_moderation_severity(self, moderation_severity):
+        return self.user_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+    def count_community_penalties_for_moderation_severity(self, moderation_severity):
+        return self.community_penalties.filter(moderated_object__category__severity=moderation_severity).count()
+
+    def get_longest_post_penalties(self):
+        return self.post_penalties.order_by('expiration')[0:1][0]
+    def get_longest_photo_penalties(self):
+        return self.photo_penalties.order_by('expiration')[0:1][0]
+    def get_longest_goodt_penalties(self):
+        return self.good_penalties.order_by('expiration')[0:1][0]
+    def get_longest_audio_penalties(self):
+        return self.post_penalties.order_by('expiration')[0:1][0]
+    def get_longest_video_penalties(self):
+        return self.post_penalties.order_by('expiration')[0:1][0]
+    def get_longest_user_penalties(self):
+        return self.user_penalties.order_by('expiration')[0:1][0]
+    def get_longest_community_penalties(self):
+        return self.community_penalties.order_by('expiration')[0:1][0]
+
     def get_online(self):
         from datetime import datetime, timedelta
 
@@ -314,8 +344,8 @@ class User(AbstractUser):
         return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
 
     def is_suspended(self):
-        from moderation.models import ModerationPenalty
-        return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
+        from managers.model.user import ModerationPenaltyUser
+        return self.user_penalties.filter(type=ModerationPenaltyUser.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
 
     def is_track_exists(self, track_id):
         from music.models import SoundList, SoundcloudParsing
@@ -751,7 +781,7 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
-        from moderation.models import ModeratedObject
+        from managers.model.user import ModeratedObjectUser
 
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
@@ -763,7 +793,7 @@ class User(AbstractUser):
         return frends[0:5]
 
     def get_all_connection(self):
-        from moderation.models import ModeratedObject
+        from managers.model.user import ModeratedObjectUser
 
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
@@ -807,7 +837,7 @@ class User(AbstractUser):
 
     def get_posts(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -816,7 +846,7 @@ class User(AbstractUser):
         return posts
     def get_draft_posts(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -825,7 +855,7 @@ class User(AbstractUser):
         return posts
     def get_archive_posts(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -835,7 +865,7 @@ class User(AbstractUser):
 
     def get_articles(self):
         from article.models import Article
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
 
         articles_query = Q(creator_id=self.id, is_deleted=False)
         #exclude_reported_and_approved_articles_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -845,7 +875,7 @@ class User(AbstractUser):
 
     def get_photos(self):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -855,7 +885,7 @@ class User(AbstractUser):
 
     def get_profile_photos(self):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -865,7 +895,7 @@ class User(AbstractUser):
 
     def get_my_photos(self):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -875,7 +905,7 @@ class User(AbstractUser):
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__pk=album_id, is_deleted=False, is_public=True)
@@ -884,7 +914,7 @@ class User(AbstractUser):
         return photos
     def get_photos_for_my_album(self, album_id):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__id=album_id, is_deleted=False)
@@ -894,7 +924,7 @@ class User(AbstractUser):
 
     def get_avatar_photos(self):
         from gallery.models import Photo
-        #from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -904,7 +934,7 @@ class User(AbstractUser):
 
     def get_albums(self):
         from gallery.models import Album
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, is_generic=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -914,7 +944,7 @@ class User(AbstractUser):
 
     def get_my_albums(self):
         from gallery.models import Album
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -1091,7 +1121,7 @@ class User(AbstractUser):
 
     def _get_timeline_posts(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
 
         posts_select_related = ('creator', 'community')
         posts_only = ('id', 'created', 'creator__id', 'community__id')
@@ -1122,7 +1152,8 @@ class User(AbstractUser):
 
     def _get_timeline_posts_v2(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
+        
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         #own_posts_query.add(reported_posts_exclusion_query, Q.AND)

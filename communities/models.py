@@ -175,7 +175,7 @@ class Community(models.Model):
 
     def get_posts(self):
         from posts.models import Post
-        from moderation.models import ModeratedObject
+        #from managers.model.post import ModeratedObjectPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -183,7 +183,7 @@ class Community(models.Model):
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
-        from moderation.models import ModeratedObject
+        #from managers.model.post import ModeratedObjectPost
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
@@ -192,7 +192,7 @@ class Community(models.Model):
         posts = Post.objects.filter(posts_query)
         return posts
     def get_archive_posts(self):
-        from moderation.models import ModeratedObject
+        from managers.model.post import ModeratedObjectPost
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
@@ -202,7 +202,7 @@ class Community(models.Model):
         return posts
 
     def get_goods(self):
-        from moderation.models import ModeratedObject
+        from managers.model.good import ModeratedObjectGood
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
@@ -211,7 +211,7 @@ class Community(models.Model):
         goods = Good.objects.filter(goods_query)
         return goods
     def get_admin_goods(self):
-        from moderation.models import ModeratedObject
+        from managers.model.good import ModeratedObjectGood
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False)
@@ -221,7 +221,7 @@ class Community(models.Model):
         return goods
 
     def get_photos_for_album(self, album_id):
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
         from gallery.models import Photo
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -230,7 +230,7 @@ class Community(models.Model):
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_admin_album(self, album_id):
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
         from gallery.models import Photo
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -240,7 +240,7 @@ class Community(models.Model):
         return photos
 
     def get_photos(self):
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, is_public=True, community=self)
@@ -268,7 +268,7 @@ class Community(models.Model):
 
     def get_albums(self):
         from gallery.models import Album
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -284,7 +284,7 @@ class Community(models.Model):
 
     def get_profile_photos(self):
         from gallery.models import Photo
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         photos_query = Q(community=self, is_deleted=False, is_public=True)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -294,7 +294,7 @@ class Community(models.Model):
 
     def get_admin_albums(self):
         from gallery.models import Album
-        from moderation.models import ModeratedObject
+        from managers.model.photo import ModeratedObjectPhoto
 
         albums_query = Q(is_deleted=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)

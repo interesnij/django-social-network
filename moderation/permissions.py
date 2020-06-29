@@ -19,9 +19,7 @@ def check_user_is_not_suspended(user):
         is_suspended = user.is_suspended()
         if is_suspended:
             longest_suspension = user.get_longest_moderation_suspension()
-
             raise PermissionDenied(
-                _('Ваша учетная запись была приостановлена и будет реанимирована в %' % naturaltime(
-                    longest_suspension.expiration)))
+                'Ваша учетная запись была приостановлена и будет реанимирована в %' % naturaltime(longest_suspension.expiration)))
 
     return True

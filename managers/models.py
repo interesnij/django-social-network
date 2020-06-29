@@ -239,3 +239,24 @@ class CanWorkStaffAudioUser(models.Model):
     class Meta:
         verbose_name = 'Создатель персонала аудиозаписей'
         verbose_name_plural = 'Создатели персонала аудиозаписей'
+
+
+class ModerationCategory(models.Model):
+    name = models.CharField(max_length=32, blank=False, null=False, verbose_name="Название")
+    title = models.CharField(max_length=64, blank=False, null=False, verbose_name="Заголовок")
+    description = models.CharField(max_length=255, blank=False, null=False, verbose_name="Описание")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    order = models.PositiveIntegerField(editable=False, verbose_name="Порядковый номер")
+
+    SEVERITY_CRITICAL = 'C'
+    SEVERITY_HIGH = 'H'
+    SEVERITY_MEDIUM = 'M'
+    SEVERITY_LOW = 'L'
+    SEVERITIES = (
+        (SEVERITY_CRITICAL, 'Критический'),
+        (SEVERITY_HIGH, 'Высокий'),
+        (SEVERITY_MEDIUM, 'Средний'),
+        (SEVERITY_LOW, 'Низкий'),
+    )
+
+    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость")

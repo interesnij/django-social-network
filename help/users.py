@@ -208,8 +208,7 @@ class User(AbstractUser):
         return self.posts.count()
 
     def count_moderation_penalties_for_moderation_severity(self, moderation_severity):
-        return self.moderation_penalties.filter(
-            moderated_object__category__severity=moderation_severity).count()
+        return self.moderation_penalties.filter(moderated_object__category__severity=moderation_severity).count()
 
     def count_unread_notifications(self):
         return self.notifications.filter(read=False).count()

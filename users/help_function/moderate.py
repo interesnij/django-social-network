@@ -224,16 +224,6 @@ def has_reported_moderated_object_with_id(self, moderated_object_id):
                                            moderated_object__object_type=ModeratedObject.OBJECT_TYPE_MODERATED_OBJECT
                                            ).exists()
 
-
-def get_longest_moderation_suspension(self):
-    return self.moderation_penalties.order_by('expiration')[0:1][0]
-
-
-def is_suspended(self):
-    return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION,
-                                            expiration__gt=timezone.now()).exists()
-
-
 def count_moderation_penalties_for_moderation_severity(self, moderation_severity):
     return self.moderation_penalties.filter(
         moderated_object__category__severity=moderation_severity).count()
