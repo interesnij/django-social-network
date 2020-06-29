@@ -70,9 +70,9 @@ class ModeratedObject(models.Model):
 
     object_type = models.CharField(max_length=5, choices=OBJECT_TYPES, verbose_name="Тип модерируемого объекта")
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
+    #content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    #object_id = models.PositiveIntegerField()
+    #content_object = GenericForeignKey()
 
     @classmethod
     def create_moderated_object(cls, object_type, content_object, category_id, community_id=None):
