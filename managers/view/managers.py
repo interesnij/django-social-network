@@ -45,109 +45,109 @@ class CommunityAdminList(ListView):
         return list
 
 class PostAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_administrator or self.user.is_superuser:
             self.template_name = "manager/post_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(PostAdminList,self).get(request,*args,**kwargs)
+        return super(PostAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(PostAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(PostAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		posts = []
-		return posts
+    def get_queryset(self):
+        list = []
+        return list
 
 class PhotoAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_administrator or self.user.is_superuser:
             self.template_name = "manager/photo_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(PhotoAdminList,self).get(request,*args,**kwargs)
+        return super(PhotoAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(PhotoAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(PhotoAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		photos = []
-		return photos
+    def get_queryset(self):
+        list = []
+        return list
 
 class GoodAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_administrator or self.user.is_superuser:
             self.template_name = "manager/good_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(GoodAdminList,self).get(request,*args,**kwargs)
+        return super(GoodAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(GoodAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(GoodAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		goods = []
-		return goods
+    def get_queryset(self):
+        list = []
+        return list
 
 class AudioAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_administrator or self.user.is_superuser:
             self.template_name = "manager/audio_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(AudioAdminList,self).get(request,*args,**kwargs)
+        return super(AudioAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(AudioAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(AudioAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		audios = []
-		return audios
+    def get_queryset(self):
+        list = []
+        return list
 
 class VideoAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_administrator or self.user.is_superuser:
             self.template_name = "manager/video_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(VideoAdminList,self).get(request,*args,**kwargs)
+        return super(VideoAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(VideoAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(VideoAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		videos = []
-		return videos
+    def get_queryset(self):
+        list = []
+        return list
 
 
 class UserEditorList(ListView):
