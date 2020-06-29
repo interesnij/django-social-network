@@ -3,25 +3,25 @@ from django.views.generic import ListView
 
 
 class UserAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_administrator or self.user.is_superuser:
             self.template_name = "manager/user_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(UserAdminList,self).get(request,*args,**kwargs)
+        return super(UserAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		users = []
-		return users
+    def get_queryset(self):
+        users = []
+        return users
 
 class CommunityAdminList(ListView):
 	template_name = None
