@@ -106,6 +106,7 @@ class ModeratedUser(models.Model):
 class UserModerationReport(models.Model):
     # жалобы на пользователя.
     PORNO = 'P'
+    NO_CHILD = 'NC'
     SPAM = 'S'
     BROKEN = 'B'
     FRAUD = 'P'
