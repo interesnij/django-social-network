@@ -1424,6 +1424,6 @@ class User(AbstractUser):
         return query
     def get_penalty_users(self):
         # пользователи, на которых пожаловались
-        users = User.objects.filter(moderated_user__reports__reporter_id=self.pk)
+        users = User.objects.filter(moderated_user__user_reports__reporter_id=self.pk)
         return users
     ''''' конец модерации '''''
