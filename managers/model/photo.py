@@ -126,6 +126,7 @@ class PhotoModerationReport(models.Model):
     PETS_ABUSE = 'PA'
     MISREPRESENTATION = "MI"
     EXTREMISM = "EX"
+    NO_CHILD = 'NC'
     TYPE = (
         (PORNO, 'Порнография'),
         (NO_CHILD, 'Для взрослых'),
