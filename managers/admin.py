@@ -1,5 +1,6 @@
 from django.contrib import admin
 from managers.models import *
+from managers.model.user import *
 
 
 admin.site.register(UserStaff)
@@ -17,3 +18,7 @@ admin.site.register(CanWorkStaffGoodUser)
 admin.site.register(CanWorkStaffPhotoUser)
 admin.site.register(CanWorkStaffVideoUser)
 admin.site.register(CanWorkStaffAudioUser)
+
+admin.site.register(ModeratedUser)
+admin.site.register(UserModerationReport)
+admin.site.register(ModerationPenaltyUser)
