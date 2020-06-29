@@ -151,151 +151,151 @@ class VideoAdminList(ListView):
 
 
 class UserEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_editor or self.user.is_superuser:
             self.template_name = "manager/user_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(UserEditorList,self).get(request,*args,**kwargs)
+        return super(UserEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		users = []
-		return users
+    def get_queryset(self):
+        list = []
+        return list
 
 class CommunityEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_editor or self.user.is_superuser:
             self.template_name = "manager/community_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(CommunityEditorList,self).get(request,*args,**kwargs)
+        return super(CommunityEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(CommunityEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(CommunityEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		communities = []
-		return communities
+    def get_queryset(self):
+        list = []
+        return list
 
 class PostEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_editor or self.user.is_superuser:
             self.template_name = "manager/post_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(PostEditorList,self).get(request,*args,**kwargs)
+        return super(PostEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(PostEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(PostEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		posts = []
-		return posts
+    def get_queryset(self):
+        list = []
+        return list
 
 class PhotoEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_editor or self.user.is_superuser:
             self.template_name = "manager/photo_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(PhotoEditorList,self).get(request,*args,**kwargs)
+        return super(PhotoEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(PhotoEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(PhotoEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		photos = []
-		return photos
+    def get_queryset(self):
+        list = []
+        return list
 
 class GoodEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_editor or self.user.is_superuser:
             self.template_name = "manager/good_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(GoodEditorList,self).get(request,*args,**kwargs)
+        return super(GoodEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(GoodEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(GoodEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		goods = []
-		return goods
+    def get_queryset(self):
+        list = []
+        return list
 
 class AudioEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_editor or self.user.is_superuser:
             self.template_name = "manager/audio_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(AudioEditorList,self).get(request,*args,**kwargs)
+        return super(AudioEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(AudioEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(AudioEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		audios = []
-		return audios
+    def get_queryset(self):
+        list = []
+        return list
 
 class VideoEditorList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_editor or self.user.is_superuser:
             self.template_name = "manager/video_editor_list.html"
         else:
             self.template_name = "about.html"
-		return super(VideoEditorList,self).get(request,*args,**kwargs)
+        return super(VideoEditorList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(VideoEditorList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(VideoEditorList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		videos = []
-		return videos
+    def get_queryset(self):
+        list = []
+        return list
 
 
 class UserModeratorList(ListView):
