@@ -20,29 +20,29 @@ class UserAdminList(ListView):
         return context
 
     def get_queryset(self):
-        users = []
-        return users
+        list = []
+        return list
 
 class CommunityAdminList(ListView):
-	template_name = None
-	paginate_by = 15
+    template_name = None
+    paginate_by = 15
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_administrator or self.user.is_superuser:
             self.template_name = "manager/community_admin_list.html"
         else:
             self.template_name = "about.html"
-		return super(CommunityAdminList,self).get(request,*args,**kwargs)
+        return super(CommunityAdminList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(CommunityAdminList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(CommunityAdminList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		communities = []
-		return communities
+    def get_queryset(self):
+        list = []
+        return list
 
 class PostAdminList(ListView):
 	template_name = None
