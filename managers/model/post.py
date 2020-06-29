@@ -14,38 +14,32 @@ class ModeratedPost(models.Model):
         (STATUS_APPROVED, 'Одобренный'),
         (STATUS_REJECTED, 'Отвергнутый'),
     )
-    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Одобрено")
+    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, verbose_name="Одобрено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
+    category = models.ForeignKey(ModerationCategory, blank=True, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
     post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, verbose_name="Запись")
     post_comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, blank=True, verbose_name="Запись")
 
     @classmethod
-    def create_moderated_object(cls, post, post_comment, category_id):
-        return cls.objects.create(post=post, post_comment=post_comment, category_id=category_id)
+    def create_moderated_object(cls, post, post_comment):
+        return cls.objects.create(post=post, post_comment=post_comment)
 
     @classmethod
-    def _get_or_create_moderated_object(cls, post, post_comment, category_id):
+    def _get_or_create_moderated_object(cls, post, post_comment):
         try:
             moderated_object = cls.objects.get(post=post, post_comment=post_comment)
         except cls.DoesNotExist:
-            moderated_object = cls.create_moderated_object(post=post, post_comment=post_comment, category_id=category_id)
+            moderated_object = cls.create_moderated_object(post=post, post_comment=post_comment)
         return moderated_object
 
     @classmethod
-    def get_or_create_moderated_object_for_post(cls, post, category_id):
-        community_id = None
-        if post.community:
-            community_id = post.community.pk
-        return cls._get_or_create_moderated_object(post=post, category_id=category_id)
+    def get_or_create_moderated_object_for_post(cls, post):
+        return cls._get_or_create_moderated_object(post=post)
 
     @classmethod
-    def get_or_create_moderated_object_for_post_comment(cls, post_comment, category_id):
-        community_id = None
-        if post_comment.post.community:
-            community_id = post_comment.post.community.pk
-        return cls._get_or_create_moderated_object(post_comment=post_comment, category_id=category_id, community_id=community_id)
+    def get_or_create_moderated_object_for_post_comment(cls, post_comment):
+        return cls._get_or_create_moderated_object(post_comment=post_comment)
 
     @property
     def reports_count(self):
@@ -60,20 +54,17 @@ class ModeratedPost(models.Model):
     def is_pending(self):
         return self.status == ModeratedPost.STATUS_PENDING
 
-    def update_with_actor_with_id(self, actor_id, description, category_id):
-        if description is not None:
-            current_description = self.description
-            self.description = description
-
-        if category_id is not None:
-            current_category_id = self.category_id
-            self.category_id = category_id
+    def update_with_actor_with_id(self, description, category_id):
+        current_description = self.description
+        self.description = description
+        current_category_id = self.category_id
+        self.category_id = category_id
         self.save()
 
-    def verify_with_actor_with_id(self, actor_id):
+    def verify_with_actor_with_id(self, severity):
         current_verified = self.verified
         self.verified = True
-        moderation_severity = self.category.severity
+        moderation_severity = severity
         penalty_targets = None
 
         if self.is_approved():
@@ -97,19 +88,19 @@ class ModeratedPost(models.Model):
                 ModerationPenaltyPost.create_suspension_moderation_penalty(moderated_object=self, user_id=penalty_target.pk, expiration=moderation_expiration)
         self.save()
 
-    def unverify_with_actor_with_id(self, actor_id):
+    def unverify_with_actor_with_id(self):
         current_verified = self.verified
         self.verified = False
         self.post_penalties.all().delete()
-        moderation_severity = self.category.severity
+        moderation_severity = severity
         self.save()
 
-    def approve_with_actor_with_id(self, actor_id):
+    def approve_with_actor_with_id(self):
         current_status = self.status
         self.status = ModeratedPost.STATUS_APPROVED
         self.save()
 
-    def reject_with_actor_with_id(self, actor_id):
+    def reject_with_actor_with_id(self):
         current_status = self.status
         self.status = ModeratedPost.STATUS_REJECTED
         self.save()
@@ -119,21 +110,56 @@ class ModeratedPost(models.Model):
 
 
 class PostModerationReport(models.Model):
+    PORNO = 'P'
+    SPAM = 'S'
+    BROKEN = 'B'
+    FRAUD = 'P'
+    CLON = 'K'
+    OLD_PAGE = 'OP'
+    DRUGS = 'D'
+    NO_MORALITY = 'NM'
+    PORNO = 'P'
+    ARMS_SALE = 'AS'
+    VIOLENCE = 'V'
+    PERSECUTION = 'PE'
+    SUICIDE = 'SU'
+    PETS_ABUSE = 'PA'
+    MISREPRESENTATION = "MI"
+    EXTREMISM = "EX"
+    TYPE = (
+        (PORNO, 'Порнография'),
+        (NO_CHILD, 'Для взрослых'),
+        (SPAM, 'Рассылка спама'),
+        (BROKEN, 'Оскорбительное поведение'),
+        (FRAUD, 'Мошенничество'),
+        (CLON, 'Клон моей страницы'),
+        (OLD_PAGE, 'Моя старая страница'),
+        (DRUGS, 'Наркотики'),
+        (NO_MORALITY, 'Не нравственный контент'),
+        (ARMS_SALE, 'Продажа оружия'),
+        (VIOLENCE, 'Насилие'),
+        (PERSECUTION, 'Призыв к травле'),
+        (SUICIDE, 'Призыв к суициду'),
+        (PETS_ABUSE, 'Жестокое обращение c животными'),
+        (MISREPRESENTATION, 'Введение в заблуждение'),
+        (EXTREMISM, 'Экстремизм'),
+    )
+
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Объект")
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Категория")
     description = models.CharField(max_length=300, blank=False, null=True,verbose_name="Описание")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
     @classmethod
-    def create_post_moderation_report(cls, reporter_id, post, category_id, description):
+    def create_post_moderation_report(cls, reporter_id, post, description):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post, category_id=category_id)
-        post_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id, description=description, moderated_object=moderated_object)
+        post_moderation_report = cls.objects.create(reporter_id=reporter_id, description=description, moderated_object=moderated_object)
         return post_moderation_report
 
     @classmethod
-    def create_post_comment_moderation_report(cls, reporter_id, post_comment, category_id, description):
+    def create_post_comment_moderation_report(cls, reporter_id, post_comment, description):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post_comment(post_comment=post_comment, category_id=category_id)
-        post_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id, description=description, moderated_object=moderated_object)
+        post_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, description=description, moderated_object=moderated_object)
         return post_comment_moderation_report
 
 

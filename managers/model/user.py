@@ -6,6 +6,7 @@ from managers.models import ModerationCategory
 
 
 class ModeratedUser(models.Model):
+    # рассмотрение жалобы на пользователя. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
     STATUS_PENDING = 'P'
     STATUS_APPROVED = 'A'
     STATUS_REJECTED = 'R'
@@ -14,55 +15,54 @@ class ModeratedUser(models.Model):
         (STATUS_APPROVED, 'Одобренный'),
         (STATUS_REJECTED, 'Отвергнутый'),
     )
-    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Одобрено")
+    description = models.CharField(max_length=300, blank=True, null=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
+    category = models.ForeignKey(ModerationCategory, blank=True, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, verbose_name="Пользователь")
 
     @classmethod
-    def create_moderated_object(cls, user, category_id):
-        return cls.objects.create(user=user, category_id=category_id)
+    def create_moderated_object(cls, user):
+        return cls.objects.create(user=user)
 
     @classmethod
-    def _get_or_create_moderated_object(cls, user, category_id):
+    def _get_or_create_moderated_object(cls, user):
         try:
             moderated_object = cls.objects.get(user=user)
         except cls.DoesNotExist:
-            moderated_object = cls.create_moderated_object(user=user, category_id=category_id)
+            moderated_object = cls.create_moderated_object(user=user)
         return moderated_object
 
     @classmethod
-    def get_or_create_moderated_object_for_user(cls, user, category_id):
-        return cls._get_or_create_moderated_object(user=user, category_id=category_id)
+    def get_or_create_moderated_object_for_user(cls, user):
+        return cls._get_or_create_moderated_object(user=user)
 
     @property
     def reports_count(self):
+        # кол-во жалоб на пользователя
         return self.reports.count()
 
     def is_verified(self):
+        # проверен ли пользователь
         return self.verified
 
     def is_approved(self):
+        # Жалоба удовлетворена
         return self.status == ModeratedUser.STATUS_APPROVED
 
     def is_pending(self):
+        # Жалоба рассматривается
         return self.status == ModeratedUser.STATUS_PENDING
 
     def update_with_actor_with_id(self, actor_id, description, category_id):
-        if description is not None:
-            current_description = self.description
-            self.description = description
-
-        if category_id is not None:
-            current_category_id = self.category_id
-            self.category_id = category_id
+        self.description = description
+        self.category_id = category_id
         self.save()
 
-    def verify_with_actor_with_id(self, actor_id):
+    def verify_with_actor_with_id(self, actor_id, severity):
         current_verified = self.verified
         self.verified = True
-        moderation_severity = self.category.severity
+        moderation_severity = severity
         penalty_targets = None
 
         if self.is_approved():
@@ -84,19 +84,17 @@ class ModeratedUser(models.Model):
                 ModerationPenaltyUser.create_suspension_moderation_penalty(moderated_object=self, user_id=penalty_target.pk, expiration=moderation_expiration)
         self.save()
 
-    def unverify_with_actor_with_id(self, actor_id):
-        current_verified = self.verified
+    def unverify_with_actor_with_id(self):
         self.verified = False
         self.user_penalties.all().delete()
-        moderation_severity = self.category.severity
         self.save()
 
-    def approve_with_actor_with_id(self, actor_id):
+    def approve_with_actor_with_id(self):
         current_status = self.status
         self.status = ModeratedUser.STATUS_APPROVED
         self.save()
 
-    def reject_with_actor_with_id(self, actor_id):
+    def reject_with_actor_with_id(self):
         current_status = self.status
         self.status = ModeratedUser.STATUS_REJECTED
         self.save()
@@ -106,26 +104,47 @@ class ModeratedUser(models.Model):
 
 
 class UserModerationReport(models.Model):
+    # жалобы на пользователя.
+    PORNO = 'P'
+    SPAM = 'S'
+    BROKEN = 'B'
+    FRAUD = 'P'
+    CLON = 'K'
+    OLD_PAGE = 'OP'
+    DRUGS = 'D'
+    NO_MORALITY = 'NM'
+    PORNO = 'P'
+    TYPE = (
+        (PORNO, 'Порнография'),
+        (NO_CHILD, 'Для взрослых'),
+        (SPAM, 'Рассылка спама'),
+        (BROKEN, 'Оскорбительное поведение'),
+        (FRAUD, 'Мошенничество'),
+        (CLON, 'Клон моей страницы'),
+        (OLD_PAGE, 'Моя старая страница'),
+        (DRUGS, 'Наркотики'),
+        (NO_MORALITY, 'Не нравственный контент'),
+    )
+
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Объект")
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Категория")
-    description = models.CharField(max_length=300, blank=False, null=True,verbose_name="Описание")
+    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
     @classmethod
-    def create_user_moderation_report(cls, reporter_id, user, category_id, description):
-        moderated_object = ModeratedUser.get_or_create_moderated_object_for_user(user=user, category_id=category_id)
-        user_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id, description=description, moderated_object=moderated_object)
+    def create_user_moderation_report(cls, reporter_id, user, description):
+        moderated_object = ModeratedUser.get_or_create_moderated_object_for_user(user=user)
+        user_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return user_moderation_report
 
 
 class ModerationPenaltyUser(models.Model):
+    # сами санкции против пользователя. Пока только заморозка на разное время.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Объект")
 
     TYPE_SUSPENSION = 'S'
-    TYPE_DELETED = 'D'
-    TYPE_BANNER = 'D'
     TYPES = (
         (TYPE_SUSPENSION, 'Приостановлено'),
     )
