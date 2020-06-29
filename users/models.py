@@ -781,7 +781,7 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
-        from managers.model.user import ModeratedObjectUser
+        from managers.model.user import ModeratedUser
 
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
@@ -793,7 +793,7 @@ class User(AbstractUser):
         return frends[0:5]
 
     def get_all_connection(self):
-        from managers.model.user import ModeratedObjectUser
+        from managers.model.user import ModeratedUser
 
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
@@ -837,7 +837,7 @@ class User(AbstractUser):
 
     def get_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -846,7 +846,7 @@ class User(AbstractUser):
         return posts
     def get_draft_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -855,7 +855,7 @@ class User(AbstractUser):
         return posts
     def get_archive_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
         #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -865,7 +865,7 @@ class User(AbstractUser):
 
     def get_articles(self):
         from article.models import Article
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         articles_query = Q(creator_id=self.id, is_deleted=False)
         #exclude_reported_and_approved_articles_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -875,7 +875,7 @@ class User(AbstractUser):
 
     def get_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -885,7 +885,7 @@ class User(AbstractUser):
 
     def get_profile_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -895,7 +895,7 @@ class User(AbstractUser):
 
     def get_my_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -905,7 +905,7 @@ class User(AbstractUser):
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__pk=album_id, is_deleted=False, is_public=True)
@@ -914,7 +914,7 @@ class User(AbstractUser):
         return photos
     def get_photos_for_my_album(self, album_id):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__id=album_id, is_deleted=False)
@@ -924,7 +924,7 @@ class User(AbstractUser):
 
     def get_avatar_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=None)
         #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -934,7 +934,7 @@ class User(AbstractUser):
 
     def get_albums(self):
         from gallery.models import Album
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, is_generic=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -944,7 +944,7 @@ class User(AbstractUser):
 
     def get_my_albums(self):
         from gallery.models import Album
-        from managers.model.photo import ModeratedObjectPhoto
+        from managers.model.photo import ModeratedPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -1121,7 +1121,7 @@ class User(AbstractUser):
 
     def _get_timeline_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         posts_select_related = ('creator', 'community')
         posts_only = ('id', 'created', 'creator__id', 'community__id')
@@ -1152,7 +1152,7 @@ class User(AbstractUser):
 
     def _get_timeline_posts_v2(self):
         from posts.models import Post
-        from managers.model.post import ModeratedObjectPost
+        from managers.model.post import ModeratedPost
 
         #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
