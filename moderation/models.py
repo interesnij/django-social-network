@@ -1,6 +1,4 @@
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from posts.models import Post, PostComment
@@ -34,10 +32,8 @@ class ModerationCategory(models.Model):
 
 class ModeratedObject(models.Model):
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='moderated_objects', null=True, blank=False, verbose_name="Сообщество")
-    description = models.CharField(max_length=300,
-                                   blank=False, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False,
-                                   blank=False, null=False, verbose_name="Одобрено")
+    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Одобрено")
 
     STATUS_PENDING = 'P'
     STATUS_APPROVED = 'A'
@@ -88,9 +84,6 @@ class ModeratedObject(models.Model):
 
     @classmethod
     def _get_or_create_moderated_object(cls, object_type, content_object, category_id, community_id=None):
-        """"
-        Универсальный метод получает объект модерации, если его нет-создает
-        """
         try:
             moderated_object = cls.objects.get(object_type=object_type, object_id=content_object.pk,
                                                community_id=community_id)
@@ -103,9 +96,6 @@ class ModeratedObject(models.Model):
 
     @classmethod
     def get_or_create_moderated_object_for_post(cls, post, category_id):
-        """"
-        Создание или получение объекта модерации к записи
-        """
         community_id = None
 
         if post.community:
@@ -116,9 +106,6 @@ class ModeratedObject(models.Model):
 
     @classmethod
     def get_or_create_moderated_object_for_post_comment(cls, post_comment, category_id):
-        """"
-        Создание или получение объекта модерации к комментарию записи
-        """
         community_id = None
 
         if post_comment.post.community:
@@ -130,74 +117,12 @@ class ModeratedObject(models.Model):
                                                    community_id=community_id)
 
     @classmethod
-    def get_or_create_moderated_object_for_article(cls, article, category_id):
-        """"
-        Создание или получение объекта модерации к статье
-        """
-        community_id = None
-
-        if article.community:
-            community_id = article.community.pk
-
-        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_ARTICLE, content_object=article,
-                                                   category_id=category_id, community_id=community_id)
-
-    @classmethod
-    def get_or_create_moderated_object_for_article_comment(cls, article_comment, category_id):
-        """"
-        Создание или получение объекта модерации к комментрию статьи
-        """
-        community_id = None
-
-        if article_comment.post.community:
-            community_id = article_comment.article.community.pk
-
-        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_ARTICLE_COMMENT,
-                                                   content_object=article_comment,
-                                                   category_id=category_id,
-                                                   community_id=community_id)
-
-    @classmethod
-    def get_or_create_moderated_object_for_good(cls, good, category_id):
-        """"
-        Создание или получение объекта модерации к товару
-        """
-        community_id = None
-
-        if good.community:
-            community_id = good.community.pk
-
-        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_GOOD, content_object=good,
-                                                   category_id=category_id, community_id=community_id)
-
-    @classmethod
-    def get_or_create_moderated_object_for_good_comment(cls, good_comment, category_id):
-        """"
-        Создание или получение объекта модерации к комментрию товара
-        """
-        community_id = None
-
-        if good_comment.good.community:
-            community_id = good_comment.good.community.pk
-
-        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_GOOD_COMMENT,
-                                                   content_object=good_comment,
-                                                   category_id=category_id,
-                                                   community_id=community_id)
-
-    @classmethod
     def get_or_create_moderated_object_for_community(cls, community, category_id):
-        """"
-        Создание или получение объекта модерации к сообществу
-        """
         return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_COMMUNITY, content_object=community,
                                                    category_id=category_id)
 
     @classmethod
     def get_or_create_moderated_object_for_user(cls, user, category_id):
-        """"
-        Создание или получение объекта модерации к пользователю
-        """
         return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_USER, content_object=user,
                                                    category_id=category_id)
 
@@ -400,16 +325,6 @@ class ModerationReport(models.Model):
         article_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
                                                     description=description, moderated_object=moderated_object)
         return article_moderation_report
-
-    @classmethod
-    def create_article_comment_moderation_report(cls, reporter_id, article_comment, category_id, description):
-        moderated_object = ModeratedObject.get_or_create_moderated_object_for_article_comment(
-            article_comment=article_comment,
-            category_id=category_id
-        )
-        article_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
-                                                            description=description, moderated_object=moderated_object)
-        return article_comment_moderation_report
 
     @classmethod
     def create_good_moderation_report(cls, reporter_id, good, category_id, description):
