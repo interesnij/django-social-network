@@ -1422,7 +1422,7 @@ class User(AbstractUser):
         for user_id in ids:
             query = query + [User.objects.get(id=user_id), ]
         return query
-    def get_penalty_users(self):
+    def get_penalty_users(self): 
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser
         x = self.moderated_user.filter(user_id=self.pk, verified=True)

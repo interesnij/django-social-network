@@ -20,7 +20,7 @@ class UserAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = self.user.get_penalty_users()
+        list = []
         return list
 
 class CommunityAdminList(ListView):
