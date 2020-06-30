@@ -1426,10 +1426,10 @@ class User(AbstractUser):
         # оштрафованные пользователи
         from managers.model.user import ModeratedUser, ModerationPenaltyUser
         x = ModeratedUser.objects.filter(user=self)
-        penalty_list = ModerationPenaltyUser.objects.filter(moderated_object=x)
+        #penalty_list = ModerationPenaltyUser.objects.filter(moderated_object=x)
         #ids = [user['id'] for user in penalty_list]
         #query = []
         #for user_id in ids:
         #    query = query + [User.objects.get(id=user_id), ]
-        return penalty_list
+        return x
     ''''' конец модерации '''''
