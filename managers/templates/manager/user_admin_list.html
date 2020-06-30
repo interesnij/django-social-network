@@ -29,7 +29,7 @@
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">
-                        <a href="{% url 'user' pk=object.usert.pk %}" class="ajax">
+                        <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                           <figure>
                             {% if object.user.get_avatar %}
                               <img src="{{ object.user.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
