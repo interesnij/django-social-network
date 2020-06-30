@@ -19,6 +19,8 @@ admin.site.register(CanWorkStaffPhotoUser)
 admin.site.register(CanWorkStaffVideoUser)
 admin.site.register(CanWorkStaffAudioUser)
 
+admin.site.register(ModerationCategory)
+
 admin.site.register(ModeratedUser)
 admin.site.register(UserModerationReport)
 admin.site.register(ModerationPenaltyUser)
