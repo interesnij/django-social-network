@@ -1424,8 +1424,8 @@ class User(AbstractUser):
         return query
     def get_penalty_users(self):
         # оштрафованные пользователи
-        from managers.model.user import ModeratedUser, ModerationPenaltyUser
-        x = ModeratedUser.objects.filter(user=self)
+        from managers.model.user import ModerationPenaltyUser
+        x = ModerationPenaltyUser.objects.only("pk")
         #penalty_list = ModerationPenaltyUser.objects.filter(moderated_object=x)
         #ids = [user['id'] for user in penalty_list]
         #query = []
