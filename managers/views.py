@@ -17,7 +17,7 @@ class ManagersView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_manager:
-            self.template_name = "manager/manager_list.html"
+            self.template_name = "manager_list/managers.html"
         else:
             self.template_name = "about.html"
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
@@ -31,7 +31,7 @@ class SuperManagersView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_supermanager:
-            self.template_name = "supermanager/supermanager.html"
+            self.template_name = "manager_list/supermanagers.html"
         else:
             self.template_name = "about.html"
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)

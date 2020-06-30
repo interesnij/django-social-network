@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from managers.view.managers import *
+from managers.view.penalty_list import *
 from django.contrib.auth.decorators import login_required
 
 

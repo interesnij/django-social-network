@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^progs_video/', include('managers.url.progs_video')),
     url(r'^progs_audio/', include('managers.url.progs_audio')),
 
-    url(r'^list/', include('managers.url.manager_page')),
+    url(r'^penalty_list/', include('managers.url.penalty_list')),
 ]
