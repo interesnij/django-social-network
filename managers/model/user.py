@@ -159,9 +159,9 @@ class ModerationPenaltyUser(models.Model):
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
 
     @classmethod
-    def create_suspension_penalty(cls, user_id, manager_id=manager_id, moderated_object, expiration):
+    def create_suspension_penalty(cls, user_id, manager_id, moderated_object, expiration):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.SUSPENSION, expiration=expiration)
-    def create_block_penalty(cls, user_id, manager_id=manager_id, moderated_object):
+    def create_block_penalty(cls, user_id, manager_id, moderated_object):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BLOCK)
-    def create_banner_penalty(cls, user_id, manager_id=manager_id, moderated_object):
+    def create_banner_penalty(cls, user_id, manager_id, moderated_object):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BANNER)
