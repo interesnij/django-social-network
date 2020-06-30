@@ -150,13 +150,23 @@ class ProfileUserView(TemplateView):
         if self.user.pk == request.user.pk:
             if not request.user.is_phone_verified:
                 self.template_name = "main/phone_verification.html"
+            elif self.user.is_suspended():
+                self.template_name = "main/you_suspended.html"
+            elif self.user.is_blocked():
+                self.template_name = "main/you_global_block.html"
             else:
                 self.template_name = "account/my_user.html"
         elif request.user.pk != self.user.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 self.template_name = "main/phone_verification.html"
+            elif self.user.is_suspended():
+                self.template_name = "main/user_suspended.html"
+            elif self.user.is_blocked():
+                self.template_name = "main/user_global_block.html"
+            elif self.user.is_have_warning_banner():
+                self.template_name = "account/user_have_warning_banner.html"
             elif request.user.is_user_manager() or request.user.is_superuser:
-                self.template_name = "account/staff_user.html" 
+                self.template_name = "account/staff_user.html"
             elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                 self.template_name = "account/block_user.html"
             elif user.is_closed_profile():

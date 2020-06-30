@@ -70,36 +70,6 @@ class User(AbstractUser):
         except:
             return None
 
-    def count_post_penalties_for_moderation_severity(self, moderation_severity):
-        return self.post_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_photo_penalties_for_moderation_severity(self, moderation_severity):
-        return self.photo_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_good_penalties_for_moderation_severity(self, moderation_severity):
-        return self.good_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_audio_penalties_for_moderation_severity(self, moderation_severity):
-        return self.audio_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_video_penalties_for_moderation_severity(self, moderation_severity):
-        return self.video_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_user_penalties_for_moderation_severity(self, moderation_severity):
-        return self.user_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-    def count_community_penalties_for_moderation_severity(self, moderation_severity):
-        return self.community_penalties.filter(moderated_object__category__severity=moderation_severity).count()
-
-    def get_longest_post_penalties(self):
-        return self.post_penalties.order_by('expiration')[0:1][0]
-    def get_longest_photo_penalties(self):
-        return self.photo_penalties.order_by('expiration')[0:1][0]
-    def get_longest_goodt_penalties(self):
-        return self.good_penalties.order_by('expiration')[0:1][0]
-    def get_longest_audio_penalties(self):
-        return self.post_penalties.order_by('expiration')[0:1][0]
-    def get_longest_video_penalties(self):
-        return self.post_penalties.order_by('expiration')[0:1][0]
-    def get_longest_user_penalties(self):
-        return self.user_penalties.order_by('expiration')[0:1][0]
-    def get_longest_community_penalties(self):
-        return self.community_penalties.order_by('expiration')[0:1][0]
-
     def get_online(self):
         from datetime import datetime, timedelta
 
@@ -344,8 +314,11 @@ class User(AbstractUser):
         return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
 
     def is_suspended(self):
-        from managers.model.user import ModerationPenaltyUser
-        return self.user_penalties.filter(type=ModerationPenaltyUser.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
+        return self.user_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
+    def is_blocked(self):
+        return self.user_penalties.filter(type="B").exists()
+    def is_have_warning_banner(self):
+        return self.user_penalties.filter(type="BA").exists()
 
     def is_track_exists(self, track_id):
         from music.models import SoundList, SoundcloudParsing
@@ -1258,11 +1231,21 @@ class User(AbstractUser):
         if self.pk == request.user.pk:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
+            elif self.user.is_suspended():
+                self.template_name = "main/you_suspended.html"
+            elif self.user.is_blocked():
+                self.template_name = "main/you_global_block.html"
             else:
                 template_name = folder + "my_" + template
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
+            elif self.user.is_suspended():
+                self.template_name = "main/user_suspended.html"
+            elif self.user.is_blocked():
+                self.template_name = "main/user_global_block.html"
+            elif self.user.is_have_warning_banner():
+                self.template_name = "account/user_have_warning_banner.html"
             elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = folder + "block_" + template
             elif self.is_closed_profile():
