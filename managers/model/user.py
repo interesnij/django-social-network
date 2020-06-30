@@ -165,3 +165,13 @@ class ModerationPenaltyUser(models.Model):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BLOCK)
     def create_banner_penalty(cls, user_id, manager_id, moderated_object):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BANNER)
+
+    def is_suspend(self):
+        # Объект заморожен
+        return self.status == ModerationPenaltyUser.SUSPENSION
+    def is_bloked(self):
+        # Объект блокирован
+        return self.status == ModerationPenaltyUser.BLOCK
+    def is_banner(self):
+        # Объект блокирован
+        return self.status == ModerationPenaltyUser.BANNER
