@@ -141,3 +141,65 @@ class UserWorkerAdvertiserDelete(View):
         if request.user.is_superuser:
             remove_user_advertiser_worker(user, request.user)
         return HttpResponse("")
+
+
+class UserSuspensionCreate(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        severity_int = self.kwargs["number"]
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=moderate_obj.user.pk, severity_int=self.kwargs["number"])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class UserSuspensionDelete(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.delete_suspend(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+        return HttpResponse("")
+
+class UserBlockCreate(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        severity_int = self.kwargs["number"]
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.create_block(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class UserBlockDelete(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.delete_block(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+        return HttpResponse("")
+
+class UserWarningBannerCreate(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        severity_int = self.kwargs["number"]
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.create_warning_banner(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class UserWarningBannerDelete(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.delete_warning_banner(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+        return HttpResponse("")
+
+class UserRejectedCreate(View):
+    def get(self,request,*args,**kwargs):
+        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        severity_int = self.kwargs["number"]
+        if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj.reject_moderation(manager_id=request.user.pk, user_id=moderate_obj.user.pk)
+            return HttpResponse("")
+        else:
+            return HttpResponse("")

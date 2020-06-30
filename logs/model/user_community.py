@@ -8,19 +8,27 @@ class UserManageLog(models.Model):
     UNREMOVE = 'UR'
     BLOCK = 'B'
     UNBLOCK = 'UB'
-    SUSPENDED = 'S'
+    SEVERITY_CRITICAL = 'C'
+    SEVERITY_HIGH = 'H'
+    SEVERITY_MEDIUM = 'M'
+    SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
     WARNING_BANNER = 'WB'
     NO_WARNING_BANNER = 'NWB'
+    REJECT = 'R'
     ACTION_TYPES = (
         (REMOVE, 'Удален'),
         (UNREMOVE, 'Восстановлен'),
         (BLOCK, 'Заблокирован'),
         (UNBLOCK, 'Разблокирован'),
-        (SUSPENDED, 'Заморожен'),
+        (SEVERITY_CRITICAL, 'Вечная заморозка'),
+        (SEVERITY_HIGH, 'Долгая заморозка'),
+        (SEVERITY_MEDIUM, 'Средняя заморозка'),
+        (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
         (WARNING_BANNER, 'Выставлен предупреждающий баннер'),
         (NO_WARNING_BANNER, 'Убран предупреждающий баннер'),
+        (REJECT, 'Жалоба отклонена'),
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")

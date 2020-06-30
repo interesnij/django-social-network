@@ -1,23 +1,5 @@
 from django.conf.urls import url
-from managers.view.user import (
-                                UserAdminCreate,
-                                UserAdminDelete,
-                                UserModerCreate,
-                                UserModerDelete,
-                                UserEditorCreate,
-                                UserEditorDelete,
-                                UserAdvertiserCreate,
-                                UserAdvertiserDelete,
-
-                                UserWorkerAdminCreate,
-                                UserWorkerAdminDelete,
-                                UserWorkerModerCreate,
-                                UserWorkerModerDelete,
-                                UserWorkerEditorCreate,
-                                UserWorkerEditorDelete,
-                                UserWorkerAdvertiserCreate,
-                                UserWorkerAdvertiserDelete
-                            )
+from managers.view.user import *
 from django.contrib.auth.decorators import login_required
 
 
@@ -38,5 +20,13 @@ urlpatterns = [
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(UserWorkerEditorCreate.as_view())),
     url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(UserWorkerEditorDelete.as_view())),
     url(r'^add_worker_advertiser/(?P<pk>\d+)/$', login_required(UserWorkerAdvertiserCreate.as_view())),
-    url(r'^delete_worker_advertiser/(?P<pk>\d+)/$', login_required(UserWorkerAdvertiserDelete.as_view()))
+    url(r'^delete_worker_advertiser/(?P<pk>\d+)/$', login_required(UserWorkerAdvertiserDelete.as_view())),
+
+    url(r'^create_suspension/(?P<pk>\d+)/(?P<number>\d+)/$', login_required(UserSuspensionCreate.as_view())),
+    url(r'^delete_suspension/(?P<pk>\d+)/$', login_required(UserSuspensionDelete.as_view())),
+    url(r'^create_block/(?P<pk>\d+)/$', login_required(UserBlockCreate.as_view())),
+    url(r'^delete_block/(?P<pk>\d+)/$', login_required(UserBlockDelete.as_view())),
+    url(r'^create_warning_banner/(?P<pk>\d+)/$', login_required(UserWarningBannerCreate.as_view())),
+    url(r'^delete_warning_banner/(?P<pk>\d+)/$', login_required(UserWarningBannerDelete.as_view())),
+    url(r'^create_rejected/(?P<pk>\d+)/$', login_required(UserRejectedCreate.as_view())),
 ]

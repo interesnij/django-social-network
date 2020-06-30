@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Модерируемые пользователи{% endblock %}
+{% load liked_user %}
 {% block content %}
 
-{{ user.get_penalty_users }}
 <div class="row">
     <div class="col-12">
         <br>
@@ -40,7 +40,7 @@
                         </a>
                         <div class="media-body">
                             <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
-                                <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                                <h6 class="my-0 mt-1">{{ object.user.get_full_name }} ({{ object.reports_count }} {{ object.reports_count|rupluralize:"жалоба,жалобы,жалоб" }})</h6>
                             </a>
                             {% for report in object.user_reports.all %}
                               <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
@@ -50,7 +50,7 @@
                                 <a href="#" class="user_suspension_create">Заморозить</a>
                               | <a href="#" class="user_block_create">Заблокировать</a>
                               | <a href="#" class="user_banner_create">Повесить баннер</a>
-                              | <a href="#" class="user_rejected_create">Отказать в санкциях</a>
+                              | <a href="#" class="user_rejected_create">Отклонить</a>
                               </div>
                         </div>
                       </div>
