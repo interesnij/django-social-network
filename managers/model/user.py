@@ -144,7 +144,7 @@ class UserModerationReport(models.Model):
 class ModerationPenaltyUser(models.Model):
     # сами санкции против пользователя. Пока только заморозка на разное время.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Оштрафованный пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_penalties', verbose_name="Оштрафованный пользователь")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_penalties', verbose_name="Менеджер")
     expiration = models.DateTimeField(null=True, verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_moderated_object', verbose_name="Объект")
 
