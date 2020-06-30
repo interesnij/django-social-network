@@ -1426,7 +1426,7 @@ class User(AbstractUser):
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser
         x = self.moderated_user.filter(user_id=self.pk, verified=True)
-        penalty_list = ModerationPenaltyUser.filter(moderated_object=x).values("user_id")
+        penalty_list = ModerationPenaltyUser.objects.filter(moderated_object=x).values("user_id")
         ids = [user['user_id'] for user in penalty_list]
         query = []
         for user_id in ids:
