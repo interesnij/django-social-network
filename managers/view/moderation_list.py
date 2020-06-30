@@ -2,7 +2,7 @@ from users.models import User
 from django.views.generic import ListView
 
 
-class PenaltyUserAdminList(ListView):
+class ModerationUserAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -12,10 +12,10 @@ class PenaltyUserAdminList(ListView):
             self.template_name = "penalty_list/user_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyUserAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationUserAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyUserAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationUserAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -23,7 +23,7 @@ class PenaltyUserAdminList(ListView):
         list = self.user.get_penalty_users()
         return list
 
-class PenaltyCommunityAdminList(ListView):
+class ModerationCommunityAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -33,10 +33,10 @@ class PenaltyCommunityAdminList(ListView):
             self.template_name = "penalty_list/community_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyCommunityAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationCommunityAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyCommunityAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationCommunityAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -44,7 +44,7 @@ class PenaltyCommunityAdminList(ListView):
         list = []
         return list
 
-class PenaltyPostAdminList(ListView):
+class ModerationPostAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -54,10 +54,10 @@ class PenaltyPostAdminList(ListView):
             self.template_name = "penalty_list/post_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPostAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationPostAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPostAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationPostAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -65,7 +65,7 @@ class PenaltyPostAdminList(ListView):
         list = []
         return list
 
-class PenaltyPhotoAdminList(ListView):
+class ModerationPhotoAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -75,10 +75,10 @@ class PenaltyPhotoAdminList(ListView):
             self.template_name = "penalty_list/photo_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPhotoAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationPhotoAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPhotoAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationPhotoAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -86,7 +86,7 @@ class PenaltyPhotoAdminList(ListView):
         list = []
         return list
 
-class PenaltyGoodAdminList(ListView):
+class ModerationGoodAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -96,10 +96,10 @@ class PenaltyGoodAdminList(ListView):
             self.template_name = "penalty_list/good_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyGoodAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationGoodAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyGoodAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationGoodAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -107,7 +107,7 @@ class PenaltyGoodAdminList(ListView):
         list = []
         return list
 
-class PenaltyAudioAdminList(ListView):
+class ModerationAudioAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -117,10 +117,10 @@ class PenaltyAudioAdminList(ListView):
             self.template_name = "penalty_list/audio_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyAudioAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationAudioAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyAudioAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationAudioAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -128,7 +128,7 @@ class PenaltyAudioAdminList(ListView):
         list = []
         return list
 
-class PenaltyVideoAdminList(ListView):
+class ModerationVideoAdminList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -138,10 +138,10 @@ class PenaltyVideoAdminList(ListView):
             self.template_name = "penalty_list/video_admin_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyVideoAdminList,self).get(request,*args,**kwargs)
+        return super(ModerationVideoAdminList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyVideoAdminList,self).get_context_data(**kwargs)
+        context = super(ModerationVideoAdminList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -150,7 +150,7 @@ class PenaltyVideoAdminList(ListView):
         return list
 
 
-class PenaltyUserEditorList(ListView):
+class ModerationUserEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -160,10 +160,10 @@ class PenaltyUserEditorList(ListView):
             self.template_name = "penalty_list/user_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyUserEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationUserEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyUserEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationUserEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -171,7 +171,7 @@ class PenaltyUserEditorList(ListView):
         list = self.user.get_penalty_users()
         return list
 
-class PenaltyCommunityEditorList(ListView):
+class ModerationCommunityEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -181,10 +181,10 @@ class PenaltyCommunityEditorList(ListView):
             self.template_name = "penalty_list/community_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyCommunityEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationCommunityEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyCommunityEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationCommunityEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -192,7 +192,7 @@ class PenaltyCommunityEditorList(ListView):
         list = []
         return list
 
-class PenaltyPostEditorList(ListView):
+class ModerationPostEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -202,10 +202,10 @@ class PenaltyPostEditorList(ListView):
             self.template_name = "penalty_list/post_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPostEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationPostEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPostEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationPostEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -213,7 +213,7 @@ class PenaltyPostEditorList(ListView):
         list = []
         return list
 
-class PenaltyPhotoEditorList(ListView):
+class ModerationPhotoEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -223,10 +223,10 @@ class PenaltyPhotoEditorList(ListView):
             self.template_name = "penalty_list/photo_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPhotoEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationPhotoEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPhotoEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationPhotoEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -234,7 +234,7 @@ class PenaltyPhotoEditorList(ListView):
         list = []
         return list
 
-class PenaltyGoodEditorList(ListView):
+class ModerationGoodEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -244,10 +244,10 @@ class PenaltyGoodEditorList(ListView):
             self.template_name = "penalty_list/good_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyGoodEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationGoodEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyGoodEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationGoodEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -255,7 +255,7 @@ class PenaltyGoodEditorList(ListView):
         list = []
         return list
 
-class PenaltyAudioEditorList(ListView):
+class ModerationAudioEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -265,10 +265,10 @@ class PenaltyAudioEditorList(ListView):
             self.template_name = "penalty_list/audio_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyAudioEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationAudioEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyAudioEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationAudioEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -276,7 +276,7 @@ class PenaltyAudioEditorList(ListView):
         list = []
         return list
 
-class PenaltyVideoEditorList(ListView):
+class ModerationVideoEditorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -286,10 +286,10 @@ class PenaltyVideoEditorList(ListView):
             self.template_name = "penalty_list/video_editor_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyVideoEditorList,self).get(request,*args,**kwargs)
+        return super(ModerationVideoEditorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyVideoEditorList,self).get_context_data(**kwargs)
+        context = super(ModerationVideoEditorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -298,7 +298,7 @@ class PenaltyVideoEditorList(ListView):
         return list
 
 
-class PenaltyUserModeratorList(ListView):
+class ModerationUserModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -308,10 +308,10 @@ class PenaltyUserModeratorList(ListView):
             self.template_name = "penalty_list/user_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyUserModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationUserModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyUserModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationUserModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -319,7 +319,7 @@ class PenaltyUserModeratorList(ListView):
         list = self.user.get_penalty_users()
         return list
 
-class PenaltyCommunityModeratorList(ListView):
+class ModerationCommunityModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -329,10 +329,10 @@ class PenaltyCommunityModeratorList(ListView):
             self.template_name = "penalty_list/community_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyCommunityModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationCommunityModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyCommunityModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationCommunityModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -340,7 +340,7 @@ class PenaltyCommunityModeratorList(ListView):
         list = []
         return list
 
-class PenaltyPostModeratorList(ListView):
+class ModerationPostModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -350,10 +350,10 @@ class PenaltyPostModeratorList(ListView):
             self.template_name = "penalty_list/post_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPostModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationPostModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPostModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationPostModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -361,7 +361,7 @@ class PenaltyPostModeratorList(ListView):
         list = []
         return list
 
-class PenaltyPhotoModeratorList(ListView):
+class ModerationPhotoModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -371,10 +371,10 @@ class PenaltyPhotoModeratorList(ListView):
             self.template_name = "penalty_list/photo_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyPhotoModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationPhotoModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyPhotoModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationPhotoModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -382,7 +382,7 @@ class PenaltyPhotoModeratorList(ListView):
         list = []
         return list
 
-class PenaltyGoodModeratorList(ListView):
+class ModerationGoodModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -392,10 +392,10 @@ class PenaltyGoodModeratorList(ListView):
             self.template_name = "penalty_list/good_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyGoodModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationGoodModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyGoodModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationGoodModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -403,7 +403,7 @@ class PenaltyGoodModeratorList(ListView):
         list = []
         return list
 
-class PenaltyAudioModeratorList(ListView):
+class ModerationAudioModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -413,10 +413,10 @@ class PenaltyAudioModeratorList(ListView):
             self.template_name = "penalty_list/audio_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyAudioModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationAudioModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyAudioModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationAudioModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -424,7 +424,7 @@ class PenaltyAudioModeratorList(ListView):
         list = []
         return list
 
-class PenaltyVideoModeratorList(ListView):
+class ModerationVideoModeratorList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -434,10 +434,10 @@ class PenaltyVideoModeratorList(ListView):
             self.template_name = "penalty_list/video_moderator_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyVideoModeratorList,self).get(request,*args,**kwargs)
+        return super(ModerationVideoModeratorList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyVideoModeratorList,self).get_context_data(**kwargs)
+        context = super(ModerationVideoModeratorList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -445,7 +445,7 @@ class PenaltyVideoModeratorList(ListView):
         list = []
         return list
 
-class PenaltyUserAdvertiserList(ListView):
+class ModerationUserAdvertiserList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -455,10 +455,10 @@ class PenaltyUserAdvertiserList(ListView):
             self.template_name = "penalty_list/user_advertiser_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyUserAdvertiserList,self).get(request,*args,**kwargs)
+        return super(ModerationUserAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyUserAdvertiserList,self).get_context_data(**kwargs)
+        context = super(ModerationUserAdvertiserList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
@@ -466,7 +466,7 @@ class PenaltyUserAdvertiserList(ListView):
         list = []
         return list
 
-class PenaltyCommunityAdvertiserList(ListView):
+class ModerationCommunityAdvertiserList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -476,10 +476,10 @@ class PenaltyCommunityAdvertiserList(ListView):
             self.template_name = "penalty_list/community_advertiser_list.html"
         else:
             self.template_name = "about.html"
-        return super(PenaltyCommunityAdvertiserList,self).get(request,*args,**kwargs)
+        return super(ModerationCommunityAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PenaltyCommunityAdvertiserList,self).get_context_data(**kwargs)
+        context = super(ModerationCommunityAdvertiserList,self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
 
