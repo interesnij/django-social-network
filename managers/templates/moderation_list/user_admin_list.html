@@ -44,7 +44,7 @@
                             </a>
                             <span class="small">
                               {% for report in object.user_reports.all %}
-                                {{ report.type }} {% if not forloop.last %}, {% endif %}
+                                {{ report.get_type_display  }} {% if not forloop.last %}, {% endif %}
                               {% endfor %}
                             </span>
                         </div>
