@@ -1397,7 +1397,7 @@ class User(AbstractUser):
 
     ''''' модерация '''''
     def get_longest_user_penalties(self):
-        return self.user_penalties.order_by('expiration')[0:1][0]
+        return self.user_penalties.expiration
     def get_longest_community_penalties(self):
         return self.community_penalties.order_by('expiration')[0:1][0]
 
