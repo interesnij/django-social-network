@@ -8,11 +8,15 @@ from managers.models import ModerationCategory
 class ModeratedUser(models.Model):
     # рассмотрение жалобы на пользователя. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
     STATUS_PENDING = 'P'
-    STATUS_APPROVED = 'A'
+    STATUS_SUSPEND = 'S'
+    STATUS_BLOCKED = 'B'
+    STATUS_BANNER_GET = 'BG'
     STATUS_REJECTED = 'R'
     STATUSES = (
         (STATUS_PENDING, 'На рассмотрении'),
-        (STATUS_APPROVED, 'Одобренный'),
+        (STATUS_SUSPEND, 'Объект заморожен'),
+        (STATUS_BLOCKED, 'Объект заблокирован'),
+        (STATUS_BANNER_GET, 'Объекту присвоен баннер'),
         (STATUS_REJECTED, 'Отвергнутый'),
     )
     description = models.CharField(max_length=300, blank=True, null=True, verbose_name="Описание")
@@ -45,56 +49,54 @@ class ModeratedUser(models.Model):
     def is_verified(self):
         # проверен ли пользователь
         return self.verified
-
-    def is_approved(self):
-        # Жалоба удовлетворена
-        return self.status == ModeratedUser.STATUS_APPROVED
-
+    def is_suspend(self):
+        # Объект заморожен
+        return self.status == ModeratedUser.STATUS_SUSPEND
     def is_pending(self):
         # Жалоба рассматривается
         return self.status == ModeratedUser.STATUS_PENDING
+    def is_bloked(self):
+        # Объект блокирован
+        return self.status == ModeratedUser.STATUS_BLOCKED
+    def is_banner(self):
+        # Объект блокирован
+        return self.status == ModeratedUser.STATUS_BANNER_GET
 
-    def update_with_actor_with_id(self, actor_id, description, category_id):
+    def update_moderation(self, description, category_id):
         self.description = description
         self.category_id = category_id
         self.save()
 
-    def verify_with_actor_with_id(self, actor_id, severity):
-        current_verified = self.verified
+    def post_approved_suspension(self, manager, user, severity):
         self.verified = True
-        moderation_severity = severity
-        penalty_targets = None
-
-        if self.is_approved():
-            if isinstance(self.user, User):
-                penalty_targets = [self.user]
-            for penalty_target in penalty_targets:
-                duration_of_penalty = None
-                penalties_count = penalty_target.count_user_penalties_for_moderation_severity(moderation_severity=moderation_severity) + 1
-
-                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL:
-                    duration_of_penalty = timezone.timedelta(weeks=5000)
-                elif moderation_severity == ModerationCategory.SEVERITY_HIGH:
-                    duration_of_penalty = timezone.timedelta(days=penalties_count ** 4)
-                elif moderation_severity == ModerationCategory.SEVERITY_MEDIUM:
-                    duration_of_penalty = timezone.timedelta(hours=penalties_count ** 3)
-                elif moderation_severity == ModerationCategory.SEVERITY_LOW:
-                    duration_of_penalty = timezone.timedelta(minutes=penalties_count ** 2)
-                moderation_expiration = timezone.now() + duration_of_penalty
-                ModerationPenaltyUser.create_suspension_moderation_penalty(moderated_object=self, user_id=penalty_target.pk, expiration=moderation_expiration)
+        if self.is_suspend():
+            if severity == ModerationCategory.SEVERITY_CRITICAL:
+                duration_of_penalty = timezone.timedelta(weeks=5000)
+            elif severity == ModerationCategory.SEVERITY_HIGH:
+                duration_of_penalty = timezone.timedelta(days=30)
+            elif severity == ModerationCategory.SEVERITY_MEDIUM:
+                duration_of_penalty = timezone.timedelta(days=7)
+            elif severity == ModerationCategory.SEVERITY_LOW:
+                duration_of_penalty = timezone.timedelta(hours=6)
+            moderation_expiration = timezone.now() + duration_of_penalty
+            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.SUSPENSION, manager=manager, user_id=user.pk, expiration=moderation_expiration)
+        elif self.is_bloked():
+            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.BLOCK, manager=manager, user_id=user.pk)
+        elif self.is_banner():
+            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.BANNER, manager=manager, user_id=user.pk)
         self.save()
 
-    def unverify_with_actor_with_id(self):
+    def unverify_moderation(self):
         self.verified = False
         self.user_penalties.all().delete()
         self.save()
 
-    def approve_with_actor_with_id(self):
+    def suspend_moderation(self):
         current_status = self.status
-        self.status = ModeratedUser.STATUS_APPROVED
+        self.status = ModeratedUser.STATUS_SUSPEND
         self.save()
 
-    def reject_with_actor_with_id(self):
+    def reject_moderation(self):
         current_status = self.status
         self.status = ModeratedUser.STATUS_REJECTED
         self.save()
@@ -142,15 +144,24 @@ class UserModerationReport(models.Model):
 class ModerationPenaltyUser(models.Model):
     # сами санкции против пользователя. Пока только заморозка на разное время.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Оштрафованный пользователь")
-    expiration = models.DateTimeField(null=True,verbose_name="Окончание")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Оштрафованный пользователь")
+    expiration = models.DateTimeField(null=True, verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_moderated_object', verbose_name="Объект")
 
-    TYPE_SUSPENSION = 'S'
+    SUSPENSION = 'S'
+    BLOCK = 'B'
+    BANNER = 'BA'
     TYPES = (
-        (TYPE_SUSPENSION, 'Приостановлено'),
+        (SUSPENSION, 'Приостановлено'),
+        (BLOCK, 'Заблокировано'),
+        (BANNER, 'Вывешен баннер'),
     )
-    type = models.CharField(max_length=5, choices=TYPES,verbose_name="Тип")
+    type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
 
     @classmethod
-    def create_suspension_moderation_penalty(cls, user_id, moderated_object, expiration):
-        return cls.objects.create(moderated_object=moderated_object, user_id=user_id, type=cls.TYPE_SUSPENSION, expiration=expiration)
+    def create_suspension_penalty(cls, user_id, manager_id=manager_id, moderated_object, expiration):
+        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.SUSPENSION, expiration=expiration)
+    def create_block_penalty(cls, user_id, manager_id=manager_id, moderated_object):
+        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BLOCK)
+    def create_banner_penalty(cls, user_id, manager_id=manager_id, moderated_object):
+        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, user_id=user_id, type=cls.BANNER)
