@@ -1431,5 +1431,5 @@ class User(AbstractUser):
         #query = []
         #for user_id in ids:
         #    query = query + [User.objects.get(id=user_id), ]
-        return penalty_list
+        return x
     ''''' конец модерации '''''
