@@ -1396,6 +1396,11 @@ class User(AbstractUser):
         return count
 
     ''''' модерация '''''
+    def get_longest_user_penalties(self):
+        return self.user_penalties.order_by('expiration')[0:1][0]
+    def get_longest_community_penalties(self):
+        return self.community_penalties.order_by('expiration')[0:1][0]
+
     def get_approved_users(self):
         # пользователи, на которых пожаловались
         from managers.model.user import ModeratedUser
@@ -1409,10 +1414,5 @@ class User(AbstractUser):
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser
         x = ModerationPenaltyUser.objects.filter(manager__id=self.pk)
-        #penalty_list = ModerationPenaltyUser.objects.filter(moderated_object=x)
-        #ids = [user['id'] for user in penalty_list]
-        #query = []
-        #for user_id in ids:
-        #    query = query + [User.objects.get(id=user_id), ]
         return x
     ''''' конец модерации '''''
