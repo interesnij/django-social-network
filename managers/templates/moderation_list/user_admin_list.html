@@ -45,7 +45,7 @@
                               {% for report in object.user_reports.all %}
                               <span>
                                 {{ forloop.counter }}. {{ report.get_type_display }}<br>
-                                  {{ report.description }}
+                                  {{ report.description }}<br>
                               </span>
                               {% endfor %}
                               <div class="border-top">
