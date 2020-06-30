@@ -1401,15 +1401,11 @@ class User(AbstractUser):
     def get_longest_community_penalties(self):
         return self.community_penalties.filter(user=self)[0].expiration
 
-    def get_approved_users(self):
+    def get_moderation_users(self):
         # пользователи, на которых пожаловались
         from managers.model.user import ModeratedUser
-        v_s = ModeratedUser.objects.all().values('user_id')
-        ids = [user['user_id'] for user in v_s]
-        query = []
-        for user_id in ids:
-            query = query + [User.objects.get(id=user_id), ]
-        return query
+        return ModeratedUser.objects.filter(verified=False)
+
     def get_penalty_users(self):
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser

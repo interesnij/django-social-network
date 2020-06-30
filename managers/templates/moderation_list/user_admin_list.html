@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Штраф-лист пользователей{% endblock %}
+{% block title %}Модерируемые пользователи{% endblock %}
 {% block content %}
 
 {{ user.get_penalty_users }}
@@ -7,7 +7,7 @@
     <div class="col-12 col-md-8">
         <br>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск по штраф-листу">
+            <input type="text" class="form-control" placeholder="Поиск по списку">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                      <h5 class="mt-1">Штраф-лист пользователей</h5>
+                      <h5 class="mt-1">Модерируемые пользователи</h5>
                       <small class="content-color-secondary float-right mr-2 mt-1"></small>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
               {% if object_list %}
 
-              <ul class="list-group" id="penalty_users_container" data-link="/managers/penalty_list/user_admin/{{ user.pk }}">
+              <ul class="list-group" id="moderation_users_container" data-link="/managers/moderation_list/user_admin/{{ user.pk }}">
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">

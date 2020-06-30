@@ -259,3 +259,10 @@ class ModerationCategory(models.Model):
     )
 
     severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория модерации'
+        verbose_name_plural = 'Категории модерации'

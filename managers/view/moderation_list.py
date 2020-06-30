@@ -9,7 +9,7 @@ class ModerationUserAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/user_admin_list.html"
+            self.template_name = "moderation_list/user_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationUserAdminList,self).get(request,*args,**kwargs)
@@ -20,7 +20,7 @@ class ModerationUserAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = self.user.get_penalty_users()
+        list = self.user.get_moderation_users()
         return list
 
 class ModerationCommunityAdminList(ListView):
@@ -30,7 +30,7 @@ class ModerationCommunityAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/community_admin_list.html"
+            self.template_name = "moderation_list/community_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationCommunityAdminList,self).get(request,*args,**kwargs)
@@ -51,7 +51,7 @@ class ModerationPostAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/post_admin_list.html"
+            self.template_name = "moderation_list/post_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPostAdminList,self).get(request,*args,**kwargs)
@@ -72,7 +72,7 @@ class ModerationPhotoAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/photo_admin_list.html"
+            self.template_name = "moderation_list/photo_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPhotoAdminList,self).get(request,*args,**kwargs)
@@ -93,7 +93,7 @@ class ModerationGoodAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/good_admin_list.html"
+            self.template_name = "moderation_list/good_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationGoodAdminList,self).get(request,*args,**kwargs)
@@ -114,7 +114,7 @@ class ModerationAudioAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/audio_admin_list.html"
+            self.template_name = "moderation_list/audio_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationAudioAdminList,self).get(request,*args,**kwargs)
@@ -135,7 +135,7 @@ class ModerationVideoAdminList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_administrator or self.user.is_superuser:
-            self.template_name = "penalty_list/video_admin_list.html"
+            self.template_name = "moderation_list/video_admin_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationVideoAdminList,self).get(request,*args,**kwargs)
@@ -157,7 +157,7 @@ class ModerationUserEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/user_editor_list.html"
+            self.template_name = "moderation_list/user_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationUserEditorList,self).get(request,*args,**kwargs)
@@ -168,7 +168,7 @@ class ModerationUserEditorList(ListView):
         return context
 
     def get_queryset(self):
-        list = self.user.get_penalty_users()
+        list = self.user.get_moderation_users()
         return list
 
 class ModerationCommunityEditorList(ListView):
@@ -178,7 +178,7 @@ class ModerationCommunityEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/community_editor_list.html"
+            self.template_name = "moderation_list/community_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationCommunityEditorList,self).get(request,*args,**kwargs)
@@ -199,7 +199,7 @@ class ModerationPostEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/post_editor_list.html"
+            self.template_name = "moderation_list/post_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPostEditorList,self).get(request,*args,**kwargs)
@@ -220,7 +220,7 @@ class ModerationPhotoEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/photo_editor_list.html"
+            self.template_name = "moderation_list/photo_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPhotoEditorList,self).get(request,*args,**kwargs)
@@ -241,7 +241,7 @@ class ModerationGoodEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/good_editor_list.html"
+            self.template_name = "moderation_list/good_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationGoodEditorList,self).get(request,*args,**kwargs)
@@ -262,7 +262,7 @@ class ModerationAudioEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/audio_editor_list.html"
+            self.template_name = "moderation_list/audio_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationAudioEditorList,self).get(request,*args,**kwargs)
@@ -283,7 +283,7 @@ class ModerationVideoEditorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_editor or self.user.is_superuser:
-            self.template_name = "penalty_list/video_editor_list.html"
+            self.template_name = "moderation_list/video_editor_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationVideoEditorList,self).get(request,*args,**kwargs)
@@ -305,7 +305,7 @@ class ModerationUserModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/user_moderator_list.html"
+            self.template_name = "moderation_list/user_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationUserModeratorList,self).get(request,*args,**kwargs)
@@ -316,7 +316,7 @@ class ModerationUserModeratorList(ListView):
         return context
 
     def get_queryset(self):
-        list = self.user.get_penalty_users()
+        list = self.user.get_moderation_users()
         return list
 
 class ModerationCommunityModeratorList(ListView):
@@ -326,7 +326,7 @@ class ModerationCommunityModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/community_moderator_list.html"
+            self.template_name = "moderation_list/community_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationCommunityModeratorList,self).get(request,*args,**kwargs)
@@ -347,7 +347,7 @@ class ModerationPostModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/post_moderator_list.html"
+            self.template_name = "moderation_list/post_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPostModeratorList,self).get(request,*args,**kwargs)
@@ -368,7 +368,7 @@ class ModerationPhotoModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/photo_moderator_list.html"
+            self.template_name = "moderation_list/photo_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationPhotoModeratorList,self).get(request,*args,**kwargs)
@@ -389,7 +389,7 @@ class ModerationGoodModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/good_moderator_list.html"
+            self.template_name = "moderation_list/good_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationGoodModeratorList,self).get(request,*args,**kwargs)
@@ -410,7 +410,7 @@ class ModerationAudioModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/audio_moderator_list.html"
+            self.template_name = "moderation_list/audio_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationAudioModeratorList,self).get(request,*args,**kwargs)
@@ -431,7 +431,7 @@ class ModerationVideoModeratorList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_moderator or self.user.is_superuser:
-            self.template_name = "penalty_list/video_moderator_list.html"
+            self.template_name = "moderation_list/video_moderator_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationVideoModeratorList,self).get(request,*args,**kwargs)
@@ -452,7 +452,7 @@ class ModerationUserAdvertiserList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_advertiser or self.user.is_superuser:
-            self.template_name = "penalty_list/user_advertiser_list.html"
+            self.template_name = "moderation_list/user_advertiser_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationUserAdvertiserList,self).get(request,*args,**kwargs)
@@ -473,7 +473,7 @@ class ModerationCommunityAdvertiserList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_advertiser or self.user.is_superuser:
-            self.template_name = "penalty_list/community_advertiser_list.html"
+            self.template_name = "moderation_list/community_advertiser_list.html"
         else:
             self.template_name = "about.html"
         return super(ModerationCommunityAdvertiserList,self).get(request,*args,**kwargs)
