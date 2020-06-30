@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^post_admin/(?P<pk>\d+)/$', login_required(ModerationPostAdminList.as_view())),
     url(r'^photo_admin/(?P<pk>\d+)/$', login_required(ModerationPhotoAdminList.as_view())),
     url(r'^good_admin/(?P<pk>\d+)/$', login_required(ModerationGoodAdminList.as_view())),
-    url(r'^audio_admin/(?P<pk>\d+)/$', login_required(ModerationuAdioAdminList.as_view())),
+    url(r'^audio_admin/(?P<pk>\d+)/$', login_required(ModerationAudioAdminList.as_view())),
     url(r'^video_admin/(?P<pk>\d+)/$', login_required(ModerationVideoAdminList.as_view())),
 
     url(r'^user_editor/(?P<pk>\d+)/$', login_required(ModerationUserEditorList.as_view())),
