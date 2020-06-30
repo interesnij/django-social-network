@@ -67,7 +67,7 @@ class ModeratedUser(models.Model):
         self.category_id = category_id
         self.save()
 
-    def post_approved_suspension(self, manager, user, severity):
+    def post_approved(self, manager_id, user_id, severity):
         self.verified = True
         if self.is_suspend():
             if severity == ModerationCategory.SEVERITY_CRITICAL:
@@ -79,11 +79,11 @@ class ModeratedUser(models.Model):
             elif severity == ModerationCategory.SEVERITY_LOW:
                 duration_of_penalty = timezone.timedelta(hours=6)
             moderation_expiration = timezone.now() + duration_of_penalty
-            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.SUSPENSION, manager=manager, user_id=user.pk, expiration=moderation_expiration)
+            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.SUSPENSION, manager_id=manager.pk, user_id=user.pk, expiration=moderation_expiration)
         elif self.is_bloked():
-            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.BLOCK, manager=manager, user_id=user.pk)
+            ModerationPenaltyUser.create_block_penalty(moderated_object=self, type=ModerationPenaltyUser.BLOCK, manager_id=manager.pk, user_id=user.pk)
         elif self.is_banner():
-            ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.BANNER, manager=manager, user_id=user.pk)
+            ModerationPenaltyUser.create_banner_penalty(moderated_object=self, type=ModerationPenaltyUser.BANNER, manager_id=manager.pk, user_id=user.pk)
         self.save()
 
     def unverify_moderation(self):
