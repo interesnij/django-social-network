@@ -42,7 +42,7 @@
                             <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                             </a>
-                            <span class="small">
+                            <span>
                               {% for report in object.user_reports.all %}
                                 {{ forloop.counter }}. {{ report.get_type_display }}<br>
                                   {{ report.description }}<br>
