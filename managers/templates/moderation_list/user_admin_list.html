@@ -43,10 +43,10 @@
                                 <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                             </a>
                             {% for report in object.user_reports.all %}
-                              <p>{{ forloop.counter }}. {{ report.get_type_display }}</p>
-                              <p>{{ report.description }}</p>
+                              <p class="mb-2">{{ forloop.counter }}. {{ report.get_type_display }}</p>
+                              <p class="mb-2">{{ report.description }}</p>
                             {% endfor %}
-                              <div class="border-top">
+                              <div class="py-2 border-top">
                                 <a href="#" class="user_suspension_create">Заморозить</a>
                               | <a href="#" class="user_block_create">Заблокировать</a>
                               | <a href="#" class="user_banner_create">Повесить баннер</a>
