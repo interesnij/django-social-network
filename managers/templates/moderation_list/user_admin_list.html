@@ -42,10 +42,11 @@
                             <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                             </a>
-                            <span>
                               {% for report in object.user_reports.all %}
+                              <span>
                                 {{ forloop.counter }}. {{ report.get_type_display }}<br>
-                                  {{ report.description }}<br>
+                                  {{ report.description }}
+                              </span>
                               {% endfor %}
                               <div class="border-top">
                                 <a href="#" class="user_suspension_create">Заморозить</a>
@@ -53,7 +54,6 @@
                               | <a href="#" class="user_banner_create">Повесить баннер</a>
                               | <a href="#" class="user_rejected_create">Отказать в санкциях</a>
                               </div>
-                            </span>
                         </div>
                       </div>
                   </li>
