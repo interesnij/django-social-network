@@ -45,7 +45,7 @@ class ModeratedUser(models.Model):
     @property
     def reports_count(self):
         # кол-во жалоб на пользователя
-        return self.reports.count()
+        return self.user_reports.count()
 
     def is_verified(self):
         # проверен ли пользователь
