@@ -43,14 +43,11 @@
                                 <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                             </a>
                             {% if object.is_suspend %}
-                              <span>Приостановлен до {{ object.expiration }}</span><br>
-                              <a href="#" class="small change_user_pending">Сменить санкции</a>| <a href="#" class="small remove_user_suspend">Отменить санкции</a>
+                              <span class="small">Приостановлен до {{ object.expiration }}</span> (<a href="#" class="small change_user_pending">Сменить санкции</a> | <a href="#" class="small remove_user_suspend">Отменить санкции</a>)
                             {% elif object.is_bloked %}
-                              <span>Заблокирован</span><br>
-                              <a href="#" class="small change_user_pending">Сменить санкции</a>| <a href="#" class="small remove_user_bloсk">Разблокировать</a>
+                              <span class="small">Заблокирован</span> (<a href="#" class="small change_user_pending">Сменить санкции</a> | <a href="#" class="small remove_user_bloсk">Разблокировать</a>)
                             {% elif object.is_banner %}
-                              <span>Применен баннер предупреждения</span><br>
-                              <a href="#" class="small change_user_pending">Сменить санкции</a>| <a href="#" class="small remove_user_warning_banner">Убрать баннер</a>
+                              <span class="small">Применен баннер предупреждения</span> (<a href="#" class="small change_user_pending">Сменить санкции</a> | <a href="#" class="small remove_user_warning_banner">Убрать баннер</a>)
                             {% else %}
                               <span class="small">Санкции не применены</span>
                             {% endif %}
