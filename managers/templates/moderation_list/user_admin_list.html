@@ -4,7 +4,7 @@
 
 {{ user.get_penalty_users }}
 <div class="row">
-    <div class="col-12 col-md-8">
+    <div class="col-12">
         <br>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по списку">
@@ -45,8 +45,14 @@
                             <span class="small">
                               {% for report in object.user_reports.all %}
                                 {{ forloop.counter }}. {{ report.get_type_display }}<br>
-                                {{ report.description }}<br><br>
+                                  {{ report.description }}<br><br>
                               {% endfor %}
+                              <div class="card-footer border-top py-2">
+                                <a href="#" class="small user_suspension_create">Заморозить</a>
+                              | <a href="#" class="small user_block_create">Заблокировать</a>
+                              | <a href="#" class="small user_banner_create">Повесить баннер</a>
+                              | <a href="#" class="small user_rejected_create">Отказать в санкциях</a>
+                              </div>
                             </span>
                         </div>
                       </div>
@@ -66,11 +72,6 @@
 
             </div>
         </div>
-    </div>
-
-    <div class="col-12 col-md-4">
-        <br>
-
     </div>
 </div>
 
