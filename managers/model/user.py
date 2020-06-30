@@ -122,7 +122,7 @@ class ModeratedUser(models.Model):
         self.save()
 
     def get_reporters(self):
-        return User.objects.filter(reports__moderated_user_id=self.pk).all()
+        return User.objects.filter(user_reports__moderated_user_id=self.pk).all()
 
     def __str__(self):
         return self.user.get_full_name()
