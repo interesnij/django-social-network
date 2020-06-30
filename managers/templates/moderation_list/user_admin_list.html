@@ -45,7 +45,7 @@
                             <span class="small">
                               {% for report in object.user_reports.all %}
                                 {{ forloop.counter }}. {{ report.get_type_display }}<br>
-                                  {{ report.description }}<br><br>
+                                  {{ report.description }}<br>
                               {% endfor %}
                               <div class="border-top">
                                 <a href="#" class="user_suspension_create">Заморозить</a>
