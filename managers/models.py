@@ -246,7 +246,6 @@ class ModerationCategory(models.Model):
     title = models.CharField(max_length=64, blank=False, null=False, verbose_name="Заголовок")
     description = models.CharField(max_length=255, blank=False, null=False, verbose_name="Описание")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    order = models.PositiveIntegerField(editable=False, verbose_name="Порядковый номер")
 
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
