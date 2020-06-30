@@ -1414,7 +1414,7 @@ class User(AbstractUser):
 
     ''''' модерация '''''
     def get_approved_users(self):
-        # оштрафованные пользователи
+        # пользователи, на которых пожаловались
         from managers.model.user import ModeratedUser
         v_s = ModeratedUser.objects.all().values('user_id')
         ids = [user['user_id'] for user in v_s]
@@ -1423,7 +1423,13 @@ class User(AbstractUser):
             query = query + [User.objects.get(id=user_id), ]
         return query
     def get_penalty_users(self):
-        # пользователи, на которых пожаловались
-        users = User.objects.filter(user_penalties__user_id=self.pk)
-        return users
+        # оштрафованные пользователи
+        from managers.model.user import ModerationPenaltyUser
+        x = self.moderated_user.filter(user_id=self.pk, verified=True)
+        penalty_list = ModerationPenaltyUser.filter(moderated_object=x).values("user_id")
+        ids = [user['user_id'] for user in penalty_list]
+        query = []
+        for user_id in ids:
+            query = query + [User.objects.get(id=user_id), ]
+        return query
     ''''' конец модерации '''''
