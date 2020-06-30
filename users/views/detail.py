@@ -155,14 +155,8 @@ class ProfileUserView(TemplateView):
         elif request.user.pk != self.user.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 self.template_name = "main/phone_verification.html"
-            elif request.user.is_administrator() or request.user.is_superuser:
-                self.template_name = "account/staff_admin_user.html"
-            elif request.user.is_advertiser():
-                self.template_name = "account/staff_advertiser_user.html"
-            elif request.user.is_editor():
-                self.template_name = "account/staff_editor_user.html"
-            elif request.user.is_moderator():
-                self.template_name = "account/staff_moderator_user.html"
+            elif request.user.is_user_manager() or request.user.is_superuser:
+                self.template_name = "account/staff_user.html" 
             elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                 self.template_name = "account/block_user.html"
             elif user.is_closed_profile():
