@@ -104,6 +104,13 @@ class ModeratedUser(models.Model):
     def get_reporters(self):
         return User.objects.filter(reports__moderated_user_id=self.pk).all()
 
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Модерируемый пользователь'
+        verbose_name_plural = 'Модерируемые пользователи'
+
 
 class UserModerationReport(models.Model):
     # жалобы на пользователя.
@@ -140,6 +147,13 @@ class UserModerationReport(models.Model):
         user_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return user_moderation_report
 
+    def __str__(self):
+        return self.reporter.get_full_name()
+
+    class Meta:
+        verbose_name = 'Жалоба пользователя'
+        verbose_name_plural = 'Жалобы пользователей'
+
 
 class ModerationPenaltyUser(models.Model):
     # сами санкции против пользователя. Пока только заморозка на разное время.
@@ -175,3 +189,10 @@ class ModerationPenaltyUser(models.Model):
     def is_banner(self):
         # Объект блокирован
         return self.type == ModerationPenaltyUser.BANNER
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Оштрафованный пользователь'
+        verbose_name_plural = 'Оштрафованные пользователи'
