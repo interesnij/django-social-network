@@ -168,10 +168,10 @@ class ModerationPenaltyUser(models.Model):
 
     def is_suspend(self):
         # Объект заморожен
-        return self.status == ModerationPenaltyUser.SUSPENSION
+        return self.type == ModerationPenaltyUser.SUSPENSION
     def is_bloked(self):
         # Объект блокирован
-        return self.status == ModerationPenaltyUser.BLOCK
+        return self.type == ModerationPenaltyUser.BLOCK
     def is_banner(self):
         # Объект блокирован
-        return self.status == ModerationPenaltyUser.BANNER
+        return self.type == ModerationPenaltyUser.BANNER
