@@ -4,12 +4,9 @@
 
 <div class="row justify-content-center">
   <div class="card">
-    <div class="card-header border-bottom">
-        <h5 class="content-color-primary mb-0">Приостановка пользователя</h5>
-    </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-3 col-md-4">
+            <div class="col-lg-2 col-md-4">
               <a href="{% url 'user' pk=user.pk %}" class="ajax">
                 {% if user.get_avatar %}
                   <img style="width:100%;height:auto" src="{{ user.get_avatar }}" alt="">
@@ -18,14 +15,13 @@
                 {% endif %}
               </a>
             </div>
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-10 col-md-8">
               <a href="{% url 'user' pk=user.pk %}" class="ajax">
                   <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
               </a>
               <p style="padding-top:10px;">Вы собираетесь приостановить страницу этого пользователя.</p>
             </div>
         </div>
-        <br><br><hr>
         <div class="form-group">
             <div class="custom-control custom-radio">
                 <input type="radio" name="number1" value="1" class="custom-control-input" id="suspend_1">
