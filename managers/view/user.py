@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from common.staff_progs.user import *
 from managers.forms import UserModeratedForm
 from django.views.generic.base import TemplateView
+from managers.model.user import ModeratedUser
 
 
 class UserAdminCreate(View):
