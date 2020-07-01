@@ -23,7 +23,6 @@ class ModeratedUser(models.Model):
     description = models.CharField(max_length=300, blank=True, null=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    category = models.ForeignKey(ModerationCategory, blank=True, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderated_user', blank=True, verbose_name="Пользователь")
 
     @classmethod
@@ -67,13 +66,13 @@ class ModeratedUser(models.Model):
         self.verified = True
         severity = None
         if severity_int == 4:
-            duration_of_penalty = timezone.timedelta(weeks=5000)
+            duration_of_penalty = timezone.timedelta(days=30)
             severity = "C"
         elif severity_int == 3:
-            severity_int = timezone.timedelta(days=30)
+            severity_int = timezone.timedelta(days=7)
             severity = "H"
         elif severity_int == 2:
-            duration_of_penalty = timezone.timedelta(days=7)
+            duration_of_penalty = timezone.timedelta(days=3)
             severity = "M"
         elif severity_int == 1:
             duration_of_penalty = timezone.timedelta(hours=6)

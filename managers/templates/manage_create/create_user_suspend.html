@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<form id="user_suspend_form">
+  {% csrf_token %}
+
+<div class="row justify-content-center">
+  <div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="content-color-primary mb-0">Приостановка пользователя</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+              <a href="{% url 'user' pk=user.pk %}" class="ajax">
+                {% if user.get_avatar %}
+                  <img style="width:100%;height:auto" src="{{ user.get_avatar }}" alt="">
+                {% else %}
+                  <svg fill="currentColor" class="svg_default" style="width:100%;height:auto" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                {% endif %}
+              </a>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <a href="{% url 'user' pk=user.pk %}" class="ajax">
+                  <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
+              </a>
+              <p style="padding-top:10px;">Вы собираетесь приостановить страницу этого пользователя.</p>
+            </div>
+        </div>
+        <br><br><hr>
+        <div class="form-group">
+            <div class="custom-control custom-radio">
+                <input type="radio" name="number1" value="1" class="custom-control-input" id="suspend_1">
+                <label class="custom-control-label" for="suspend_1"><h6>Малый срок</h6></label>
+                <p style="padding-top:10px;font-size:15px">Пользователь "заморозится" на 6 часов</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="number2" value="2" class="custom-control-input" id="suspend_2">
+                <label class="custom-control-label" for="suspend_2"><h6>Средний срок</h6></label>
+                <p style="padding-top:10px;font-size:15px">Пользователь "заморозится" на 3 дня</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="number3" value="3" class="custom-control-input" id="suspend_3">
+                <label class="custom-control-label" for="suspend_3"><h6>Большой срок</h6></label>
+                <p style="padding-top:10px;font-size:15px">Пользователь "заморозится" на 7 дней</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="number4" value="4" class="custom-control-input" id="suspend_4">
+                <label class="custom-control-label" for="suspend_4"><h6>Максимальный срок</h6></label>
+                <p style="padding-top:10px;font-size:15px">Пользователь "заморозится" на 30 дней</p>
+            </div>
+            <hr>
+        </div>
+        <div class="form-group">
+          <input name="description" class="form-control bg-light-secondary border-0" rows="4" placeholder="Опишите причину остановки аккаунта">
+        </div>
+        <br><hr>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success float-right create_user_suspend_btn">Применить</button>
+    </div>
+  </div>
+</div>
+</form>

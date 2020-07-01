@@ -2,6 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.user import *
+from managers.forms import UserModeratedForm
 
 
 class UserAdminCreate(View):
@@ -145,13 +146,27 @@ class UserWorkerAdvertiserDelete(View):
 
 class UserSuspensionCreate(View):
     def get(self,request,*args,**kwargs):
-        moderate_obj = ModeratedUser.objects.get(pk=self.kwargs["pk"])
-        severity_int = self.kwargs["number"]
-        if request.user.is_user_manager or request.user.is_superuser:
-            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=moderate_obj.user.pk, severity_int=self.kwargs["number"])
-            return HttpResponse("")
+        form = UserModeratedForm(request.POST)
+        user = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+
+        if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
+            mod = form.save(commit=False)
+            if request.POST.get('number1'):
+                severity_int = request.POST.get('number1')
+            if request.POST.get('number2'):
+                severity_int = request.POST.get('number2')
+            if request.POST.get('number3'):
+                severity_int = request.POST.get('number3')
+            if request.POST.get('number4'):
+                severity_int = request.POST.get('number4')
+            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
+            moderate_obj.status = ModeratedUser.STATUS_SUSPEND
+            moderate_obj.description = mod.description
+            moderate_obj.save()
+            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=user.pk, severity_int=severity_int)
+            return HttpResponse("ok")
         else:
-            return HttpResponse("")
+            return HttpResponse("bad request")
 
 class UserSuspensionDelete(View):
     def get(self,request,*args,**kwargs):
@@ -203,3 +218,20 @@ class UserRejectedCreate(View):
             return HttpResponse("")
         else:
             return HttpResponse("")
+
+
+class UserSuspendWindow(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            self.template_name = "manage_create/create_user_suspend.html"
+        else:
+            self.template_name = "about.html"
+		return super(UserSuspendWindow,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserSuspendWindow,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		return context
