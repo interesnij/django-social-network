@@ -3,6 +3,7 @@ from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.user import *
 from managers.forms import UserModeratedForm
+from django.views.generic.base import TemplateView
 
 
 class UserAdminCreate(View):
