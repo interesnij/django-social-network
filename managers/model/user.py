@@ -79,7 +79,7 @@ class ModeratedUser(models.Model):
             duration_of_penalty = timezone.timedelta(hours=6)
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
-        ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.SUSPENSION, manager_id=manager.pk, user_id=user.pk, expiration=moderation_expiration)
+        ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, type=ModerationPenaltyUser.SUSPENSION, manager_id=manager_id, user_id=user_id, expiration=moderation_expiration)
         UserManageLog.objects.create(user=user,manager=manager,action_type=severity)
         self.save()
     def create_block(self, manager_id, user_id):
