@@ -14,7 +14,7 @@
 
 {% include 'base_block/audio_playlist.html' %}
 
-{% if requset.user.is_manager or requset.user.is_superuser %}
+{% if request.user.is_manager or request.user.is_superuser %}
   <script defer src="{% static 'scripts/manager.js' %}" type="text/javascript"></script>
 {% endif %}
 
