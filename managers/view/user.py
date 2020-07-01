@@ -221,17 +221,17 @@ class UserRejectedCreate(View):
 
 
 class UserSuspendWindow(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
             self.template_name = "manage_create/create_user_suspend.html"
         else:
             self.template_name = "about.html"
-		return super(UserSuspendWindow,self).get(request,*args,**kwargs)
+        return super(UserSuspendWindow,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserSuspendWindow,self).get_context_data(**kwargs)
-		context["user"] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserSuspendWindow,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        return context
