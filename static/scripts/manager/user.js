@@ -1,6 +1,6 @@
 
 on('#ajax', 'click', '.user_suspend', function() {
-  container = this.parentElement;
+  this.parentElement.classList.remove("show");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
