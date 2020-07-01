@@ -66,16 +66,16 @@ class ModeratedUser(models.Model):
         self.verified = True
         severity = None
         duration_of_penalty = None
-        if severity_int == 4:
+        if severity_int == '4':
             duration_of_penalty = timezone.timedelta(days=30)
             severity = "C"
-        elif severity_int == 3:
+        elif severity_int == '3':
             severity_int = timezone.timedelta(days=7)
             severity = "H"
-        elif severity_int == 2:
+        elif severity_int == '2':
             duration_of_penalty = timezone.timedelta(days=3)
             severity = "M"
-        elif severity_int == 1:
+        elif severity_int == '1':
             duration_of_penalty = timezone.timedelta(hours=6)
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
