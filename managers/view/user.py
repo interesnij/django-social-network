@@ -146,7 +146,7 @@ class UserWorkerAdvertiserDelete(View):
 
 
 class UserSuspensionCreate(View):
-    def get(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
         form = UserModeratedForm(request.POST)
         user = ModeratedUser.objects.get(pk=self.kwargs["pk"])
 
