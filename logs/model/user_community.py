@@ -32,7 +32,7 @@ class UserManageLog(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
@@ -63,7 +63,7 @@ class CommunityManageLog(models.Model):
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
@@ -95,7 +95,7 @@ class UserWorkerManageLog(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
@@ -126,7 +126,7 @@ class UserCreateWorkerManageLog(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_creator_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
@@ -158,7 +158,7 @@ class CommunityWorkerManageLog(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
@@ -189,7 +189,7 @@ class CommunityCreateWorkerManageLog(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manag", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_creator_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
