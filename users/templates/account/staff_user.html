@@ -29,7 +29,7 @@
               {% if request.user|is_frend_user:user.pk %}
               <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    <button type="button" class="btn btn-sm btn-secondary drop">
                         У Вас в друзьях
                     </button>
                     <div class="dropdown-menu btn-secondary" style="margin-top:-50px;margin-left:22px;">
@@ -46,7 +46,7 @@
               {% elif request.user|is_blocked_user:user.pk %}
               <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    <button type="button" class="btn btn-sm btn-secondary drop">
                         Заблокирован
                     </button>
                     <div class="dropdown-menu" style="margin-top:-50px;margin-left:22px;">
@@ -63,7 +63,7 @@
               {% elif request.user|is_request_follow:user.pk %}
               <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    <button type="button" class="btn btn-sm btn-secondary drop">
                         Вы подписаны
                     </button>
                     <div class="dropdown-menu" style="margin-top:-50px;margin-left:22px;">
@@ -81,7 +81,7 @@
               {% elif request.user|is_user_follow:userr.pk %}
               <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                    <button type="button" class="btn btn-sm btn-secondary drop">
                         Ваш подписчик
                     </button>
                     <div class="dropdown-menu" style="margin-top:-50px;margin-left:22px;">
