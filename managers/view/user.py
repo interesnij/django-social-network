@@ -149,7 +149,7 @@ class UserWorkerAdvertiserDelete(View):
 class UserSuspensionCreate(View):
     def post(self,request,*args,**kwargs):
         form = UserModeratedForm(request.POST)
-        user = ModeratedUser.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(pk=self.kwargs["pk"])
 
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
             mod = form.save(commit=False)
