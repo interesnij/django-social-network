@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<form id="user_suspend_form">
+<form id="user_suspend_form" method="post">
   {% csrf_token %}
 
 <div class="row justify-content-center">
@@ -31,10 +31,11 @@
               <option value="4">Заморозить на 30 дней</option>
           </select>
         </div>
+        <br>
         <div class="form-group">
-          <input name="description" class="form-control bg-light-secondary border-0" placeholder="Опишите причину остановки аккаунта">
+          <textarea name="description" class="form-control bg-light-secondary border-0" rows="2" placeholder="Опишите причину заморозки аккаунта"></textarea>
         </div>
-        <br><hr>
+        <br>
     </div>
     <div class="card-footer">
         <button class="btn btn-success float-right create_user_suspend_btn">Применить</button>

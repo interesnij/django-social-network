@@ -152,19 +152,12 @@ class UserSuspensionCreate(View):
 
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
             mod = form.save(commit=False)
-            if request.POST.get('number1'):
-                severity_int = request.POST.get('number1')
-            if request.POST.get('number2'):
-                severity_int = request.POST.get('number2')
-            if request.POST.get('number3'):
-                severity_int = request.POST.get('number3')
-            if request.POST.get('number4'):
-                severity_int = request.POST.get('number4')
+            number = request.POST.get('number')
             moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
             moderate_obj.status = ModeratedUser.STATUS_SUSPEND
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=user.pk, severity_int=severity_int)
+            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=user.pk, severity_int=number)
             return HttpResponse("ok")
         else:
             return HttpResponse("bad request")
