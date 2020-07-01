@@ -65,6 +65,7 @@ class ModeratedUser(models.Model):
     def create_suspend(self, manager_id, user_id, severity_int):
         self.verified = True
         severity = None
+        duration_of_penalty = None
         if severity_int == 4:
             duration_of_penalty = timezone.timedelta(days=30)
             severity = "C"
