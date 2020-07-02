@@ -30,6 +30,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     toast_info("Аккаунт приостановлен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
+    this_page_reload('/users/' + pk + '/');
   }};
 
   link_.send(form_data);
@@ -47,6 +48,7 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     toast_info("Аккаунт заблокирован!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
+    this_page_reload('/users/' + pk + '/');
   }};
 
   link_.send(form_data);
@@ -64,6 +66,7 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     toast_info("Предупреждающий баннер применен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
+    this_page_reload('/users/' + pk + '/');
   }};
 
   link_.send(form_data);

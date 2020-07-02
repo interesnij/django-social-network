@@ -158,3 +158,20 @@ function ajax_get_reload(url) {
     }
     ajax_link.send();
 }
+
+function this_page_reload(url) {
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url, true );
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.getElementById('ajax');
+        rtr.innerHTML = ajax.innerHTML;
+        window.scrollTo(0,0);
+        if_list(rtr);
+      }
+    }
+    ajax_link.send();
+}

@@ -209,6 +209,7 @@ function ajax_get_reload(url) {
     ajax_link.send();
 }
 
+
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
   var url = this.getAttribute('href');
