@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.user import *
-from managers.forms import UserModeratedForm
+from managers.forms import UserModeratedForm, UserReportForm
 from django.views.generic.base import TemplateView
 from managers.model.user import ModeratedUser
 
@@ -206,6 +206,19 @@ class UserWarningBannerCreate(View):
         else:
             return HttpResponse("")
 
+class UserClaimCreate(View):
+    def post(self,request,*args,**kwargs):
+        from managers.model.user import UserModerationReport
+
+        user = User.objects.get(pk=self.kwargs["pk"])
+        form = UserReportForm(request.POST)
+        if form.is_valid() and request.user.is_authenticated:
+            mod = form.save(commit=False)
+            UserModerationReport.create_user_moderation_report(reporter_id=request.user.pk, user=user, description=mod.description, type=request.POST.get('type'))
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
 class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
@@ -268,5 +281,21 @@ class UserWarningBannerdWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserWarningBannerdWindow,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        return context
+
+class UserClaimWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            self.template_name = "manage_create/create_claim.html"
+        else:
+            self.template_name = "about.html"
+        return super(UserClaimWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserClaimWindow,self).get_context_data(**kwargs)
         context["user"] = self.user
         return context

@@ -18,6 +18,8 @@ on('#ajax', 'click', '.user_warning_banner', function() {
 })
 
 on('#ajax', 'click', '.create_user_suspend_btn', function() {
+  this = _this;
+  parent = _this.parentElement;
   form_data = new FormData(document.querySelector("#user_suspend_form"));
   form_post = document.querySelector("#user_suspend_form");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -30,7 +32,11 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     toast_info("Аккаунт приостановлен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    this_page_reload('/users/' + pk + '/');
+    if (parent.classList.contains("dropdown-item")){
+    this_page_reload('/users/' + pk + '/')
+  } else {
+
+  }
   }};
 
   link_.send(form_data);

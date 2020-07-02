@@ -140,12 +140,13 @@ class UserModerationReport(models.Model):
     NO_CHILD = 'NC'
     SPAM = 'S'
     BROKEN = 'B'
-    FRAUD = 'P'
+    FRAUD = 'F'
     CLON = 'K'
     OLD_PAGE = 'OP'
     DRUGS = 'D'
     NO_MORALITY = 'NM'
-    PORNO = 'P'
+    RHETORIC_HATE = "RH"
+    UNETHICAL = "U"
     TYPE = (
         (PORNO, 'Порнография'),
         (NO_CHILD, 'Для взрослых'),
@@ -156,6 +157,8 @@ class UserModerationReport(models.Model):
         (OLD_PAGE, 'Моя старая страница'),
         (DRUGS, 'Наркотики'),
         (NO_MORALITY, 'Не нравственный контент'),
+        (RHETORIC_HATE, 'Риторика ненависти'),
+        (UNETHICAL, 'Неэтичное поведение'),
     )
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Репортер")
@@ -164,7 +167,7 @@ class UserModerationReport(models.Model):
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
     @classmethod
-    def create_user_moderation_report(cls, reporter_id, user, description):
+    def create_user_moderation_report(cls, reporter_id, user, description, type):
         moderated_object = ModeratedUser.get_or_create_moderated_object_for_user(user=user)
         user_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return user_moderation_report
@@ -173,8 +176,8 @@ class UserModerationReport(models.Model):
         return self.reporter.get_full_name()
 
     class Meta:
-        verbose_name = 'Жалоба пользователя'
-        verbose_name_plural = 'Жалобы пользователей'
+        verbose_name = 'Жалоба на пользователя'
+        verbose_name_plural = 'Жалобы на пользователей'
 
 
 class ModerationPenaltyUser(models.Model):
