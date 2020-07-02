@@ -171,7 +171,7 @@ class UserSuspensionDelete(View):
         return HttpResponse("")
 
 class UserBlockCreate(View):
-    def get(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         form = UserModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
@@ -192,7 +192,7 @@ class UserBlockDelete(View):
         return HttpResponse("")
 
 class UserWarningBannerCreate(View):
-    def get(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         form = UserModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
