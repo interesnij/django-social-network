@@ -31,4 +31,6 @@ urlpatterns = [
     url(r'^create_rejected/(?P<pk>\d+)/$', login_required(UserRejectedCreate.as_view())),
 
     url(r'^suspend_window/(?P<pk>\d+)/$', login_required(UserSuspendWindow.as_view())),
+    url(r'^block_window/(?P<pk>\d+)/$', login_required(UserBlockWindow.as_view())),
+    url(r'^warning_banner_window/(?P<pk>\d+)/$', login_required(UserWarningBannerdWindow.as_view())),
 ]

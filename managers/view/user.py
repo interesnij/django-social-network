@@ -230,3 +230,35 @@ class UserSuspendWindow(TemplateView):
         context = super(UserSuspendWindow,self).get_context_data(**kwargs)
         context["user"] = self.user
         return context
+
+class UserBlockWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            self.template_name = "manage_create/create_user_block.html"
+        else:
+            self.template_name = "about.html"
+        return super(UserBlockWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserBlockWindow,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        return context
+
+class UserWarningBannerdWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_user_manager or request.user.is_superuser:
+            self.template_name = "manage_create/create_user_warning_banner.html"
+        else:
+            self.template_name = "about.html"
+        return super(UserWarningBannerdWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserWarningBannerdWindow,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        return context
