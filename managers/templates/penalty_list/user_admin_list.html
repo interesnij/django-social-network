@@ -24,9 +24,9 @@
 
               {% if object_list %}
 
-              <ul class="list-group" id="penalty_users_container" data-link="/managers/penalty_list/user_admin/{{ user.pk }}" data-pk="{{ object.user.pk }}">
+              <ul class="list-group" id="penalty_users_container" data-link="/managers/penalty_list/user_admin/{{ user.pk }}" >
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}" data-pk="{{ object.pk }}">
                       <div class="media">
                         <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                           <figure>
@@ -37,19 +37,22 @@
                             {% endif %}
                           </figure>
                         </a>
-                        <div class="media-body py-2">
+                        <div class="media-body btn_console">
                             <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                             </a>
                             {% if object.is_suspend %}
                               <span class="small">До {{ object.expiration }}</span>
-                              (<a href="#" class="small remove_user_suspend">Отменить остановку</a>)
+                              (<a href="#" class="small remove_user_suspend">Отменить остановку</a> |
+                               <a href="#" class="small user_unverify">Отменить проверку</a>)
                             {% elif object.is_bloked %}
                               <span class="small">Заблокирован</span>
-                              (<a href="#" class="small remove_user_bloсk">Отменить блокировку</a>)
+                              (<a href="#" class="small remove_user_bloсk">Отменить блокировку</a> |
+                               <a href="#" class="small user_unverify">Отменить проверку</a>)
                             {% elif object.is_banner %}
                               <span class="small">Баннер предупреждения</span>
-                              (<a href="#" class="small remove_user_warning_banner">Убрать баннер</a>)
+                              (<a href="#" class="small remove_user_warning_banner">Убрать баннер</a> |
+                               <a href="#" class="small user_unverify">Отменить проверку</a>)
                             {% else %}
                               <span class="small">Санкции не применены</span>
                             {% endif %}

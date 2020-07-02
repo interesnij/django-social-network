@@ -299,3 +299,12 @@ class UserClaimWindow(TemplateView):
         context = super(UserClaimWindow,self).get_context_data(**kwargs)
         context["user"] = self.user
         return context
+
+
+class UserUnverify(View):
+
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["user_pk"])
+        obj = User.objects.get(pk=self.kwargs["obj_pk"])
+        obj.unverify_moderation(manager_id=request.user.pk, user_id=user.pk)
+        return HttpResponse("")

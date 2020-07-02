@@ -106,9 +106,10 @@ class ModeratedUser(models.Model):
         obj.delete()
         UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.NO_WARNING_BANNER)
 
-    def unverify_moderation(self):
+    def unverify_moderation(self, manager_id, user_id):
         self.verified = False
         self.user_penalties.all().delete()
+        UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.UNVERIFY)
         self.save()
 
     def suspend_moderation(self):

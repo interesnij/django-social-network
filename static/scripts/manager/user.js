@@ -4,7 +4,7 @@ on('#ajax', 'click', '.user_suspend', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk");
+    pk = li.getAttribute("user-pk");
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -16,7 +16,7 @@ on('#ajax', 'click', '.user_blocker', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk");
+    pk = li.getAttribute("user-pk");
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -28,7 +28,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk");
+    pk = li.getAttribute("user-pk");
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -44,7 +44,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("data-pk")
+    pk = li.getAttribute("user-pk")
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -57,8 +57,8 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("py-2")){
-      li.remove();
+    }else if (parent.classList.contains("btn_console")){
+      li.style.display = "none";
     }
   }};
 
@@ -67,7 +67,12 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
 on('#ajax', 'click', '.create_user_blocker_btn', function() {
   form_data = new FormData(document.querySelector("#user_blocker_form"));
   form_post = document.querySelector("#user_blocker_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = document.body.querySelector(".changed");
+    pk = li.getAttribute("user-pk")
+  }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_user/create_block/" + pk + "/", true );
@@ -79,8 +84,8 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("py-2")){
-      li.remove();
+    }else if (parent.classList.contains("btn_console")){
+      li.style.display = "none";
     }
   }};
 
@@ -89,7 +94,12 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
 on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
   form_data = new FormData(document.querySelector("#user_warning_banner_form"));
   form_post = document.querySelector("#user_warning_banner_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = document.body.querySelector(".changed");
+    pk = li.getAttribute("user-pk")
+  }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_user/create_warning_banner/" + pk + "/", true );
@@ -101,10 +111,26 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("py-2")){
-      li.remove();
+    }else if (parent.classList.contains("btn_console")){
+      li.style.display = "none";
     }
   }};
 
   link_.send(form_data);
+});
+
+on('#ajax', 'click', '.user_unverify', function() {
+  li = this.parentElement.parentElement.parentElement;
+  user_pk = li.getAttribute("user-pk");
+  obj_pk = li.getAttribute("data-pk");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/managers/progs_user/unverify/" + user_pk + "/" + obj_pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Верификация отменена!");
+    li.style.display = "none";
+  }};
+
+  link_.send();
 });

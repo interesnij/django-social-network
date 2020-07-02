@@ -27,7 +27,7 @@
 
               <ul class="list-group" id="moderation_users_container" data-link="/managers/moderation_list/user_admin/{{ user.pk }}">
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.user.pk }}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}">
                       <div class="media">
                         <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                           <figure>
@@ -46,7 +46,7 @@
                               <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
                               <p class="mb-2">{{ report.description }}</p>
                             {% endfor %}
-                              <div class="py-2 border-top">
+                              <div class="py-2 border-top btn_console">
                                 <a href="#" class="user_suspend">Заморозить</a>
                               | <a href="#" class="user_blocker">Заблокировать</a>
                               | <a href="#" class="user_warning_banner">Повесить баннер</a>

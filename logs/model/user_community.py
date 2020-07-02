@@ -16,6 +16,7 @@ class UserManageLog(models.Model):
     WARNING_BANNER = 'WB'
     NO_WARNING_BANNER = 'NWB'
     REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (REMOVE, 'Удален'),
         (UNREMOVE, 'Восстановлен'),
@@ -29,6 +30,7 @@ class UserManageLog(models.Model):
         (WARNING_BANNER, 'Выставлен предупреждающий баннер'),
         (NO_WARNING_BANNER, 'Убран предупреждающий баннер'),
         (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
