@@ -22,7 +22,12 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   parent = _this.parentElement;
   form_data = new FormData(document.querySelector("#user_suspend_form"));
   form_post = document.querySelector("#user_suspend_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = parent.parentElement.parentElement.parentElement;
+    pk = li.getAttribute("data-pk")
+  }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_user/create_suspension/" + pk + "/", true );
@@ -32,11 +37,11 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     toast_info("Аккаунт приостановлен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    if (parent.classList.contains("dropdown-item")){
+    if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-  } else {
-
-  }
+    }else if (parent.classList.contains("py-2")){
+    li.remove()
+    }
   }};
 
   link_.send(form_data);
