@@ -1,18 +1,33 @@
 on('#ajax', 'click', '.user_suspend', function() {
   this.parentElement.classList.remove("show");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = parent.parentElement.parentElement.parentElement;
+    pk = li.getAttribute("data-pk")
+  }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_blocker', function() {
   this.parentElement.classList.remove("show");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = parent.parentElement.parentElement.parentElement;
+    pk = li.getAttribute("data-pk")
+  }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_warning_banner', function() {
   this.parentElement.classList.remove("show");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  try{
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }catch {
+    li = parent.parentElement.parentElement.parentElement;
+    pk = li.getAttribute("data-pk")
+  }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/warning_banner_window/" + pk, loader)
 })
