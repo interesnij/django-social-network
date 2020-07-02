@@ -70,7 +70,7 @@ class ModeratedUser(models.Model):
             duration_of_penalty = timezone.timedelta(days=30)
             severity = "C"
         elif severity_int == '3':
-            severity_int = timezone.timedelta(days=7)
+            duration_of_penalty = timezone.timedelta(days=7)
             severity = "H"
         elif severity_int == '2':
             duration_of_penalty = timezone.timedelta(days=3)
@@ -84,11 +84,11 @@ class ModeratedUser(models.Model):
         self.save()
     def create_block(self, manager_id, user_id):
         self.verified = True
-        ModerationPenaltyUser.create_block_penalty(moderated_object=self, type=ModerationPenaltyUser.BLOCK, manager_id=manager.pk, user_id=user.pk)
+        ModerationPenaltyUser.create_block_penalty(moderated_object=self, manager_id=manager.pk, user_id=user.pk)
         UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.BLOCK)
     def create_warning_banner(self, manager_id, user_id):
         self.verified = True
-        ModerationPenaltyUser.create_banner_penalty(moderated_object=self, type=ModerationPenaltyUser.BANNER, manager_id=manager.pk, user_id=user.pk)
+        ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager.pk, user_id=user.pk)
         UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.WARNING_BANNER)
 
     def delete_suspend(self, manager_id, user_id):
