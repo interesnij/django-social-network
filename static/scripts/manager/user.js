@@ -149,3 +149,18 @@ on('#ajax', 'click', '.user_unverify', function() {
 
   link_.send();
 });
+
+on('#ajax', 'click', '.user_reject', function() {
+  li = this.parentElement.parentElement.parentElement;
+  pk = li.getAttribute("data-pk");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/managers/progs_user/create_rejected/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Объект жалоб отменен!");
+    li.style.display = "none";
+  }};
+
+  link_.send();
+});

@@ -230,6 +230,7 @@ class UserRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj = ModeratedUser.objects.get(user=user)
             moderate_obj.reject_moderation(manager_id=request.user.pk, user_id=user.pk)
             return HttpResponse("")
         else:
