@@ -175,6 +175,7 @@ class UserBlockCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         form = UserModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
+            mod = form.save(commit=False)
             moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
             moderate_obj.status = ModeratedUser.STATUS_BLOCKED
             moderate_obj.description = mod.description
@@ -196,6 +197,7 @@ class UserWarningBannerCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         form = UserModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
+            mod = form.save(commit=False)
             moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
             moderate_obj.status = ModeratedUser.STATUS_BANNER_GET
             moderate_obj.description = mod.description
