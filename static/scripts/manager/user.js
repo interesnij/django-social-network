@@ -51,12 +51,11 @@ on('#ajax', 'click', '.user_warning_banner', function() {
 })
 
 on('#ajax', 'click', '.create_user_suspend_btn', function() {
-  parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_suspend_form"));
   form_post = document.querySelector("#user_suspend_form");
-  try{
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  if (document.body.querySelector(".pk_saver")){
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }else if {
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("user-pk");
   }
@@ -69,9 +68,9 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     toast_info("Аккаунт приостановлен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    if (parent.classList.contains("dropdown-menu")) {
-    this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("btn_console")){
+    if (li.querySelector(".dropdown-menu")) {
+      this_page_reload('/users/' + pk + '/')
+    }else if (li.querySelector(".btn_console")){
       li.remove();
     }
   }};
@@ -82,11 +81,11 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
   parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_blocker_form"));
   form_post = document.querySelector("#user_blocker_form");
-  try{
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  if (document.body.querySelector(".pk_saver")){
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }else if {
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("user-pk")
+    pk = li.getAttribute("user-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -97,9 +96,9 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     toast_info("Аккаунт заблокирован!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    if (parent.classList.contains("dropdown-menu")) {
-    this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("btn_console")){
+    if (li.querySelector(".dropdown-menu")) {
+      this_page_reload('/users/' + pk + '/')
+    }else if (li.querySelector(".btn_console")){
       li.remove();
     }
   }};
@@ -110,11 +109,11 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
   parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_warning_banner_form"));
   form_post = document.querySelector("#user_warning_banner_form");
-  try{
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  if (document.body.querySelector(".pk_saver")){
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  }else if {
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("user-pk")
+    pk = li.getAttribute("user-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -125,9 +124,9 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     toast_info("Предупреждающий баннер применен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    if (parent.classList.contains("dropdown-menu")) {
-    this_page_reload('/users/' + pk + '/')
-  }else if (parent.classList.contains("btn_console")){
+    if (li.querySelector(".dropdown-menu")) {
+      this_page_reload('/users/' + pk + '/')
+    }else if (li.querySelector(".btn_console")){
       li.remove();
     }
   }};
