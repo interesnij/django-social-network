@@ -1,9 +1,10 @@
 on('#ajax', 'click', '.user_suspend', function() {
+  _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(this.parentElement.contains("btn_console")){
-    li = this.parentElement.parentElement.parentElement.parentElement;
+  }else if(_this.parentElement.contains("btn_console")){
+    li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
@@ -15,11 +16,12 @@ on('#ajax', 'click', '.user_suspend', function() {
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_blocker', function() {
+  _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(this.parentElement.contains("btn_console")){
-    li = this.parentElement.parentElement.parentElement.parentElement;
+  }else if(_this.parentElement.contains("btn_console")){
+    li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
@@ -31,11 +33,12 @@ on('#ajax', 'click', '.user_blocker', function() {
   open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_warning_banner', function() {
+  _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(this.parentElement.contains("btn_console")){
-    li = this.parentElement.parentElement.parentElement.parentElement;
+  }else if(_this.parentElement.contains("btn_console")){
+    li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
