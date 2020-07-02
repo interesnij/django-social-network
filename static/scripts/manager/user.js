@@ -150,7 +150,7 @@ on('#ajax', 'click', '.user_unverify', function() {
   link_.send();
 });
 
-on('#ajax', 'click', '.user_reject', function() {
+on('#ajax', 'click', '.user_rejected', function() {
   li = this.parentElement.parentElement.parentElement;
   pk = li.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
