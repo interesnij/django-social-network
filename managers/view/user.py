@@ -173,7 +173,12 @@ class UserSuspensionDelete(View):
 class UserBlockCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_user_manager or request.user.is_superuser:
+        form = UserModeratedForm(request.POST)
+        if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
+            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
+            moderate_obj.status = ModeratedUser.STATUS_BLOCKED
+            moderate_obj.description = mod.description
+            moderate_obj.save()
             moderate_obj.create_block(manager_id=request.user.pk, user_id=user.pk)
             return HttpResponse("")
         else:
@@ -189,7 +194,11 @@ class UserBlockDelete(View):
 class UserWarningBannerCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_user_manager or request.user.is_superuser:
+        form = UserModeratedForm(request.POST)
+        if form.is_valid() and (request.user.is_user_manager or request.user.is_superuser):
+            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
+            moderate_obj.status = ModeratedUser.STATUS_BANNER_GET
+            moderate_obj.description = mod.description
             moderate_obj.create_warning_banner(manager_id=request.user.pk, user_id=user.pk)
             return HttpResponse("")
         else:
