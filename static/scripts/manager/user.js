@@ -3,7 +3,7 @@ on('#ajax', 'click', '.user_suspend', function() {
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(_this.parentElement.contains("btn_console")){
+  }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
@@ -20,7 +20,7 @@ on('#ajax', 'click', '.user_blocker', function() {
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(_this.parentElement.contains("btn_console")){
+  }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
@@ -37,7 +37,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if(_this.parentElement.contains("btn_console")){
+  }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
