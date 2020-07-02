@@ -80,29 +80,29 @@ class ModeratedUser(models.Model):
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
         ModerationPenaltyUser.create_suspension_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id, expiration=moderation_expiration)
-        UserManageLog.objects.create(user_id=user_id,manager_id=manager_id,action_type=severity)
+        UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=severity)
         self.save()
     def create_block(self, manager_id, user_id):
         self.verified = True
-        ModerationPenaltyUser.create_block_penalty(moderated_object=self, manager_id=manager.pk, user_id=user.pk)
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.BLOCK)
+        ModerationPenaltyUser.create_block_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
+        UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.BLOCK)
     def create_warning_banner(self, manager_id, user_id):
         self.verified = True
-        ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager.pk, user_id=user.pk)
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.WARNING_BANNER)
+        ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
+        UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.WARNING_BANNER)
 
     def delete_suspend(self, manager_id, user_id):
-        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user.pk)
+        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.UNSUSPENDED)
+        UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.UNSUSPENDED)
     def delete_block(self, manager_id, user_id):
-        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user.pk)
+        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.UNBLOCK)
+        UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.UNBLOCK)
     def delete_warning_banner(self, manager_id, user_id):
-        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user.pk)
+        obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.NO_WARNING_BANNER)
+        UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.NO_WARNING_BANNER)
 
     def unverify_moderation(self):
         self.verified = False
@@ -118,7 +118,7 @@ class ModeratedUser(models.Model):
         self.verified = True
         current_status = self.status
         self.status = ModeratedUser.STATUS_REJECTED
-        UserManageLog.objects.create(user=user,manager=manager,action_type=UserManageLog.REJECT)
+        UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.REJECT)
         self.save()
 
     def get_reporters(self):
