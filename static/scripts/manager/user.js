@@ -55,7 +55,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   form_post = document.querySelector("#user_suspend_form");
   if (document.body.querySelector(".pk_saver")){
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if {
+  }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("user-pk");
   }
@@ -83,7 +83,7 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
   form_post = document.querySelector("#user_blocker_form");
   if (document.body.querySelector(".pk_saver")){
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if {
+  }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("user-pk");
   }
@@ -111,7 +111,7 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
   form_post = document.querySelector("#user_warning_banner_form");
   if (document.body.querySelector(".pk_saver")){
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }else if {
+  }else if (document.body.querySelector(".changed")) {
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("user-pk");
   }
