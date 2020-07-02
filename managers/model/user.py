@@ -85,11 +85,11 @@ class ModeratedUser(models.Model):
     def create_block(self, manager_id, user_id):
         self.verified = True
         ModerationPenaltyUser.create_block_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
-        UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.BLOCK)
+        UserManageLog.objects.create(user_id=user_id, manager=manager, action_type=UserManageLog.BLOCK)
     def create_warning_banner(self, manager_id, user_id):
         self.verified = True
         ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
-        UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.WARNING_BANNER)
+        UserManageLog.objects.create(user_id=user_id, manager=manager, action_type=UserManageLog.WARNING_BANNER)
 
     def delete_suspend(self, manager_id, user_id):
         obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
