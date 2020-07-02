@@ -1,8 +1,8 @@
 on('#ajax', 'click', '.user_suspend', function() {
-  this.parentElement.classList.remove("show");
-  try{
+  if (document.body.querySelector(".pk_saver")){
+    this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     li.classList.add("changed")
@@ -11,10 +11,10 @@ on('#ajax', 'click', '.user_suspend', function() {
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_blocker', function() {
-  this.parentElement.classList.remove("show");
-  try{
+  if (document.body.querySelector(".pk_saver")){
+    this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     li.classList.add("changed")
@@ -23,10 +23,10 @@ on('#ajax', 'click', '.user_blocker', function() {
   open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_warning_banner', function() {
-  this.parentElement.classList.remove("show");
-  try{
+  if (document.body.querySelector(".pk_saver")){
+    this.parentElement.classList.remove("show");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-  }catch {
+  }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
     li.classList.add("changed")
@@ -36,8 +36,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
 })
 
 on('#ajax', 'click', '.create_user_suspend_btn', function() {
-  _this = this;
-  parent = _this.parentElement;
+  parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_suspend_form"));
   form_post = document.querySelector("#user_suspend_form");
   try{
@@ -57,8 +56,8 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("btn_console")){
-      li.style.display = "none";
+    }else if (this.parentElement.classList.contains("btn_console")){
+      li.remove();
     }
   }};
 
@@ -84,8 +83,8 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("btn_console")){
-      li.style.display = "none";
+    }else if (this.parentElement.classList.contains("btn_console")){
+      li.remove();
     }
   }};
 
@@ -111,8 +110,8 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (parent.classList.contains("btn_console")){
-      li.style.display = "none";
+  }else if (this.parentElement.classList.contains("btn_console")){
+      li.remove();
     }
   }};
 
