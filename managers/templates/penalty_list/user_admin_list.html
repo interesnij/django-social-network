@@ -24,7 +24,7 @@
 
               <ul class="list-group" id="penalty_users_container" data-link="/managers/penalty_list/user_admin/{{ user.pk }}" >
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}" data-pk="{{ object.pk }}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}" data-pk="{{ object.user_moderated_object.pk }}">
                       <div class="media">
                         <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                           <figure>
