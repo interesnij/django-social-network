@@ -3,7 +3,7 @@ on('#ajax', 'click', '.user_suspend', function() {
   try{
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
-    li = parent.parentElement.parentElement.parentElement;
+    li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("data-pk")
   }
   loader = document.getElementById("create_loader");
@@ -14,7 +14,7 @@ on('#ajax', 'click', '.user_blocker', function() {
   try{
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
-    li = parent.parentElement.parentElement.parentElement;
+    li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("data-pk")
   }
   loader = document.getElementById("create_loader");
@@ -25,7 +25,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
   try{
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
-    li = parent.parentElement.parentElement.parentElement;
+    li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("data-pk")
   }
   loader = document.getElementById("create_loader");
