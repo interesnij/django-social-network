@@ -305,6 +305,6 @@ class UserUnverify(View):
 
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["user_pk"])
-        obj = User.objects.get(pk=self.kwargs["obj_pk"])
+        obj = ModeratedUser.objects.get(pk=self.kwargs["obj_pk"])
         obj.unverify_moderation(manager_id=request.user.pk, user_id=user.pk)
         return HttpResponse("")
