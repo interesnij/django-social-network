@@ -96,14 +96,17 @@ class ModeratedUser(models.Model):
     def delete_suspend(self, manager_id, user_id):
         obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
+        self.delete()
         UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.UNSUSPENDED)
     def delete_block(self, manager_id, user_id):
         obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
+        self.delete()
         UserManageLog.objects.create(user=user, manager=manager, action_type=UserManageLog.UNBLOCK)
     def delete_warning_banner(self, manager_id, user_id):
         obj = ModerationPenaltyUser.objects.get(moderated_object=self, user_id=user_id)
         obj.delete()
+        self.delete()
         UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.NO_WARNING_BANNER)
 
     def unverify_moderation(self, manager_id, user_id):

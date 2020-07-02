@@ -302,7 +302,6 @@ class UserClaimWindow(TemplateView):
 
 
 class UserUnverify(View):
-
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["user_pk"])
         obj = ModeratedUser.objects.get(pk=self.kwargs["obj_pk"])

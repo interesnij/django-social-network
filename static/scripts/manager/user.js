@@ -5,6 +5,10 @@ on('#ajax', 'click', '.user_suspend', function() {
   }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
+    list = document.querySelectorAll('.pag');
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("changed");
+    }
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -17,6 +21,10 @@ on('#ajax', 'click', '.user_blocker', function() {
   }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
+    list = document.querySelectorAll('.pag');
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("changed");
+    }
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -29,6 +37,10 @@ on('#ajax', 'click', '.user_warning_banner', function() {
   }else if(this.parentElement.contains("btn_console")){
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
+    list = document.querySelectorAll('.pag');
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("changed");
+    }
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
@@ -43,7 +55,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("user-pk")
+    pk = li.getAttribute("user-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
