@@ -18,7 +18,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
 })
 
 on('#ajax', 'click', '.create_user_suspend_btn', function() {
-  this = _this;
+  _this = this;
   parent = _this.parentElement;
   form_data = new FormData(document.querySelector("#user_suspend_form"));
   form_post = document.querySelector("#user_suspend_form");
