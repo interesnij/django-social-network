@@ -71,7 +71,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (this.parentElement.classList.contains("btn_console")){
+    }else if (parent.classList.contains("btn_console")){
       li.remove();
     }
   }};
@@ -79,6 +79,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   link_.send(form_data);
 });
 on('#ajax', 'click', '.create_user_blocker_btn', function() {
+  parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_blocker_form"));
   form_post = document.querySelector("#user_blocker_form");
   try{
@@ -98,7 +99,7 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-    }else if (this.parentElement.classList.contains("btn_console")){
+    }else if (parent.classList.contains("btn_console")){
       li.remove();
     }
   }};
@@ -106,6 +107,7 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
   link_.send(form_data);
 });
 on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
+  parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_warning_banner_form"));
   form_post = document.querySelector("#user_warning_banner_form");
   try{
@@ -125,7 +127,7 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     document.getElementById("create_loader").innerHTML="";
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
-  }else if (this.parentElement.classList.contains("btn_console")){
+  }else if (parent.classList.contains("btn_console")){
       li.remove();
     }
   }};
