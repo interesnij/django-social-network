@@ -4,7 +4,8 @@ on('#ajax', 'click', '.user_suspend', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk")
+    pk = li.getAttribute("data-pk");
+    li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
@@ -15,7 +16,8 @@ on('#ajax', 'click', '.user_blocker', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk")
+    pk = li.getAttribute("data-pk");
+    li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
@@ -26,7 +28,8 @@ on('#ajax', 'click', '.user_warning_banner', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("data-pk")
+    pk = li.getAttribute("data-pk");
+    li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_user/warning_banner_window/" + pk, loader)
@@ -40,7 +43,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   try{
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }catch {
-    li = parent.parentElement.parentElement.parentElement;
+    li = document.body.querySelector(".changed");
     pk = li.getAttribute("data-pk")
   }
 
@@ -55,7 +58,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     if (parent.classList.contains("dropdown-menu")) {
     this_page_reload('/users/' + pk + '/')
     }else if (parent.classList.contains("py-2")){
-    li.remove()
+      li.remove();
     }
   }};
 
@@ -74,7 +77,11 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     toast_info("Аккаунт заблокирован!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    this_page_reload('/users/' + pk + '/');
+    if (parent.classList.contains("dropdown-menu")) {
+    this_page_reload('/users/' + pk + '/')
+    }else if (parent.classList.contains("py-2")){
+      li.remove();
+    }
   }};
 
   link_.send(form_data);
@@ -92,7 +99,11 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     toast_info("Предупреждающий баннер применен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    this_page_reload('/users/' + pk + '/');
+    if (parent.classList.contains("dropdown-menu")) {
+    this_page_reload('/users/' + pk + '/')
+    }else if (parent.classList.contains("py-2")){
+      li.remove();
+    }
   }};
 
   link_.send(form_data);
