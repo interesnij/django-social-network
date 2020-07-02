@@ -151,7 +151,7 @@ on('#ajax', 'click', '.user_unverify', function() {
 });
 
 on('#ajax', 'click', '.user_rejected', function() {
-  li = this.parentElement.parentElement.parentElement;
+  li = this.parentElement.parentElement.parentElement.parentElement;
   pk = li.getAttribute("user-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_user/create_rejected/" + pk + "/", true );
