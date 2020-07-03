@@ -111,12 +111,12 @@ class PostCommunity(TemplateView):
 
 
 class CommunityDetail(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		from stst.models import CommunityNumbers
+    def get(self,request,*args,**kwargs):
+        from stst.models import CommunityNumbers
 
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if request.user.is_authenticated:
             if request.user.is_member_of_community_with_name(self.community.name):
@@ -155,11 +155,11 @@ class CommunityDetail(TemplateView):
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
-		return super(CommunityDetail,self).get(request,*args,**kwargs)
+        return super(CommunityDetail,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(CommunityDetail,self).get_context_data(**kwargs)
-		context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
-		context["community"] = self.community
-		context["common_friends"] = self.common_friends
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(CommunityDetail,self).get_context_data(**kwargs)
+        context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
+        context["community"] = self.community
+        context["common_friends"] = self.common_friends
+        return context
