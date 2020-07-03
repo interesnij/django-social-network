@@ -14,63 +14,60 @@
 
 <div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
     <div class="row">
-        <div class="container main-container">
-            <div class="row align-items-center">
-                <div class="col-12 col-xs-12 col-md-9">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h3 class="mb-2">{{ community.name }}</h3>
-                            {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
-                            <br><br>
-                            <ul class="list-group list-group-flush w-100">
-                                <li class="list-group-item px-0">
-                                    <div class="media experience">
-                                        <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="my-0 content-color-primary">Описание</h6>
-                                            <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xs-12 col-md-3">
-                    {% if community.get_avatar %}
-                      <img src="{{ community.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
-                    {% else %}
-                      <svg fill="currentColor" class="rounded box-shadow-large svg_default" style="width:100%;height: auto;" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                    {% endif %}
-                    <br><br>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container main-container">
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-8" style="margin-right: -7px;">
-          <div class="card mb-3" style="align-items: center;justify-content:center;">
+      <div class="col-12 col-md-12 col-lg-8" style="margin-right: -7px;">
+        <div class="container main-container card" style="padding: 15px;">
+          <h3 class="mb-2">{{ community.name }}</h3>
+          <span>Статус</span>
+          <br><br>
+          <ul class="list-group list-group-flush w-100">
+              <li class="list-group-item px-0">
+                  <div class="media experience">
+                      <div class="icon-circle icon-40 bg-light-secondary mr-3">
+                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+                              <path d="M0 0h24v24H0z" fill="none" /></svg>
+                      </div>
+                      <div class="media-body">
+                          <h6 class="my-0 content-color-primary">Описание</h6>
+                          <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
+                      </div>
+                  </div>
+              </li>
+            </ul>
+      </div>
+      <div class="card mb-3" style="align-items: center;justify-content:center;">
             <div class="card-body">
             <svg class="thumb_big svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
             </div>
             <h6 style="margin-bottom: 20px;margin: 20px;">Только подписчики сообщества могут просматривать записи</h6>
-          </div>
+        </div>
         </div>
         <div class="col-12 col-md-12 col-lg-4" style="margin-left: -7px;">
-          {% if common_friends %}
-            {% include 'detail_sections/frends_member.html' %}
-          {% endif %}
+          <div class="card">
+              <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
+                  {% if community.get_b_avatar %}
+                  <img data-src="{{ community.get_b_avatar }}" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload c_avatar_detail" style="width:100%;cursor:pointer" alt="image">
+                  {% else %}
+                  <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
+                      <path d="M0 0h24v24H0z" fill="none" />
+                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
+                  {% endif %}
+              </figure>
 
+              <div class="btn-group centered">
+                  <button type="button" class="btn btn-sm btn-secondary menu_drop">
+                      Вы подписаны
+                  </button>
+                  <div class="dropdown-menu" style="width:100%">
+                      <span class="dropdown-item member_delete">Отписаться</span>
+                  </div>
+              </div>
+          </div>
+          <br>
           {% include 'detail_sections/membersheeps.html' %}
 
         </div>
     </div>
-</div
+</div>
 
 {% endblock %}
