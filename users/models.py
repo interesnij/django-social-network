@@ -377,7 +377,7 @@ class User(AbstractUser):
             return False
     def is_user_manager(self):
         try:
-            if self.user_staff.level:
+            if self.user_staff.level and self.user_staff.level != "R":
                 return True
         except:
             return False
