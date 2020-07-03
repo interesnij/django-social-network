@@ -1,8 +1,10 @@
 from django.views import View
+from django.views.generic.base import TemplateView
 from users.models import User
 from communities.models import Community
 from django.http import HttpResponse
 from common.staff_progs.community import *
+from managers.model.community import ModeratedCommunity
 
 
 
