@@ -51,14 +51,14 @@ on('#ajax', 'click', '.c_like', function() {
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
   send_dislike(item, "/posts/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.c_like2', function() {
   _this = this;

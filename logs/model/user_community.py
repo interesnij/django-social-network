@@ -53,6 +53,8 @@ class CommunityManageLog(models.Model):
     UNSUSPENDED = 'US'
     WARNING_BANNER = 'WB'
     NO_WARNING_BANNER = 'NWB'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (REMOVE, 'Удалено'),
         (UNREMOVE, 'Восстановлено'),
@@ -62,6 +64,8 @@ class CommunityManageLog(models.Model):
         (UNSUSPENDED, 'Разморожено'),
         (WARNING_BANNER, 'Выставлен предупреждающий баннер'),
         (NO_WARNING_BANNER, 'Убран предупреждающий баннер'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, verbose_name="Сообщество")
