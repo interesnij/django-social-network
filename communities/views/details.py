@@ -5,6 +5,7 @@ from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
+import re
 
 
 class CommunityMusic(ListView):
@@ -113,22 +114,47 @@ class CommunityDetail(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		import re
 		from stst.models import CommunityNumbers
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
-		except:
-			self.common_friends = None
-		self.template_name = self.community.get_template(folder="c_detail/", template="community.html", request=request)
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if request.user.is_authenticated:
+            if request.user.is_member_of_community_with_name(self.community.name):
+                if request.user.is_administrator_of_community_with_name(self.community.name):
+                    self.template_name = "c_detail/admin_community.html"
+                elif request.user.is_moderator_of_community_with_name(self.community.name):
+                    self.template_name = "c_detail/moderator_community.html"
+                elif request.user.is_editor_of_community_with_name(self.community.name):
+                    self.template_name = "c_detail/editor_community.html"
+                elif request.user.is_advertiser_of_community_with_name(self.community.name):
+                    self.template_name = "c_detail/advertiser_community.html"
+                else:
+                    self.template_name = "c_detail/member_community.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                self.template_name = "c_detail/follow_community.html"
+            elif request.user.is_banned_from_community_with_name(self.community.name):
+                self.template_name = "c_detail/block_community.html"
+            elif self.community.is_public():
+                self.template_name = "c_detail/public_community.html"
+            elif self.community.is_closed():
+                self.template_name = "c_detail/close_community.html"
+            elif self.community.is_private():
+                self.template_name = "c_detail/private_community.html"
+            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
+            else:
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
+        elif request.user.is_anonymous:
+            if self.community.is_public():
+                self.template_name = "c_detail/anon_public_community.html"
+            elif self.community.is_closed():
+                self.template_name = "c_detail/anon_close_community.html"
+            elif self.community.is_private():
+                self.template_name = "c_detail/anon_private_community.html"
 
-		if request.user.is_authenticated:
-			MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-			if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-				CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
-			else:
-				CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
 		return super(CommunityDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
