@@ -15,19 +15,19 @@ on('#ajax', 'click', '.c_article_detail', function() {
 
 on('#ajax', 'click', '.c_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_like/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.c_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.c_all_item_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", loader)
 });
@@ -49,7 +49,7 @@ on('#ajax', 'click', '.c_item_comments', function() {
   clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
-  uuid = parent.getAttribute("item-uuid");
+  uuid = parent.getAttribute("data-uuid");
   //this.parentElement.parentElement.nextElementSibling.classList.toggle("comments_open");
   url = "/posts/community/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".c_load_comments"), url);

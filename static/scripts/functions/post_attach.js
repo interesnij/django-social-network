@@ -196,8 +196,8 @@ function good_post_attach(_this, block) {
 
 function article_post_attach(_this, block) {
   is_full_attach();
-  uuid = _this.getAttribute('item-uuid');
-  if (block.querySelector( '[item-uuid=' + '"' + uuid + '"' + ']' )){
+  uuid = _this.getAttribute('data-uuid');
+  if (block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Статья уже выбрана");
     _this.parentElement.setAttribute("flow", "up");
     return

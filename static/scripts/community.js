@@ -24,7 +24,26 @@ on('#ajax', 'click', '#add_community_btn', function() {
     form.querySelector("#sub_category").style.border = "1px #FF0000 solid";
     toast_error("Тематика - обязательное поле!")
   } else {toast_info("Сообщество создано!")};
-  create_reload_page(form, "/communities/progs/add/", '/communities/')
+
+  	form_data = new FormData(form);
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/communities/progs/add/', true );
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            elem_ = document.createElement('span');
+            elem_.innerHTML = ajax_link.responseText;
+            ajax = elem_.querySelector("#reload_block");
+            rtr = document.getElementById('ajax');
+            rtr.innerHTML = ajax.innerHTML;
+            pk = rtr.querySelector(".pk_saver").getAttribute("community-pk");
+            window.scrollTo(0,0);
+            document.title = elem_.querySelector('title').innerHTML;
+            if_list(rtr);
+            window.history.pushState(null, "vfgffgfgf", "/communities/" + pk + "/");
+        }
+      }
+      ajax_link.send(form_data);
+  }
 });
 
 on('#ajax', 'change', '#sub_category', function() {

@@ -100,7 +100,7 @@ on('#ajax', 'click', '.u_all_photo_comment_dislikes', function() {
 
 on('#ajax', 'click', '.u_all_photo_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('item-uuid');
+  uuid = container.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_user_reposts/" + uuid + "/", loader)
 });

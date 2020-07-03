@@ -167,10 +167,10 @@ function good_comment_attach(_this, dropdown){
 
 function article_comment_attach(_this, dropdown){
   is_full_dropdown(dropdown);
-  uuid = _this.getAttribute('item-uuid');
+  uuid = _this.getAttribute('data-uuid');
   img_block = dropdown.parentElement.previousElementSibling;
 
-  if (img_block.querySelector( '[item-uuid=' + '"' + uuid + '"' + ']' )){
+  if (img_block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
     _this.setAttribute("tooltip", "Статья уже выбрана");
     _this.setAttribute("flow", "up");
     return

@@ -408,7 +408,7 @@ class User(AbstractUser):
             return False
     def is_community_manager(self):
         try:
-            if self.user_community_staff.level:
+            if self.user_community_staff.level and self.user_community_staff.level != "R":
                 return True
         except:
             return False
@@ -1398,8 +1398,6 @@ class User(AbstractUser):
     ''''' модерация '''''
     def get_longest_user_penalties(self):
         return self.user_penalties.filter(user=self)[0].expiration
-    def get_longest_community_penalties(self):
-        return self.community_penalties.filter(user=self)[0].expiration
 
     def get_moderation_users(self):
         # пользователи, на которых пожаловались

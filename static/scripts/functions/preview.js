@@ -129,7 +129,7 @@ function create_preview_article(div_class, img_src, uuid, title){
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "article", div_class);
   $title = document.createElement("span");
-  $div.setAttribute('item-uuid', uuid);
+  $div.setAttribute('data-uuid', uuid);
   $div.style.cursor = "pointer";
 
   $input = document.createElement("span");

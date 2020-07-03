@@ -104,7 +104,7 @@ on('body', 'click', '.prev_photo', function(event) {
 on('#ajax', 'click', '.item_stat_f', function() {
   var parent, pk, uuid, loader
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-uuid");
+  uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("stat_loader");
   open_fullscreen("/stat/item/" + uuid + "/", loader)
 });
