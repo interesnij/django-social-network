@@ -31,10 +31,10 @@
                     <button type="button" class="btn btn-sm btn-secondary menu_drop">
                         У Вас в друзьях
                     </button>
-                    <div class="dropdown-menu btn-secondary" style="margin-top:-50px;margin-left:30px;">
-                        <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
-                        <a class="dropdown-item user_block" href="#">Заблокировать</a>
-                        <a class="dropdown-item user_claim" href="#">Пожаловаться</a>
+                    <div class="dropdown-menu btn-secondary" style="margin-top:-50px;width:100%">
+                        <span class="dropdown-item connect_delete">Убрать из друзей</span>
+                        <span class="dropdown-item user_block">Заблокировать</span>
+                        <span class="dropdown-item user_claim">Пожаловаться</span>
                     </div>
                 </div>
               </span>
@@ -44,9 +44,9 @@
                     <button type="button" class="btn btn-sm btn-secondary menu_drop">
                         Заблокирован
                     </button>
-                    <div class="dropdown-menu" style="margin-top:-50px;margin-left:30px;">
-                        <a class="dropdown-item user_unblock" href="#">Разблокировать</a>
-                        <a class="dropdown-item user_claim" href="#">Пожаловаться</a>
+                    <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+                        <span class="dropdown-item user_unblock">Разблокировать</span>
+                        <span class="dropdown-item user_claim">Пожаловаться</span>
                     </div>
                 </div>
               </span>
@@ -57,10 +57,10 @@
                     <button type="button" class="btn btn-sm btn-secondary menu_drop">
                         Вы подписаны
                     </button>
-                    <div class="dropdown-menu" style="margin-top:-50px;margin-left:30px;">
-                        <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
-                        <a class="dropdown-item user_block" href="#">Заблокировать</a>
-                        <a class="dropdown-item user_claim" href="#">Пожаловаться</a>
+                    <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+                        <span class="dropdown-item follow_delete">Отменить подписку</span>
+                        <span class="dropdown-item user_block">Заблокировать</span>
+                        <span class="dropdown-item user_claim">Пожаловаться</span>
                     </div>
                 </div>
               </span>
@@ -71,30 +71,30 @@
                     <button type="button" class="btn btn-sm btn-secondary menu_drop">
                         Ваш подписчик
                     </button>
-                    <div class="dropdown-menu" style="margin-top:-50px;margin-left:30px;">
-                        <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
-                        <a class="dropdown-item user_block" href="#">Заблокировать</a>
-                        <a class="dropdown-item user_claim" href="#">Пожаловаться</a>
+                    <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+                        <span class="dropdown-item connect_create">Добавить в друзья</span>
+                        <span class="dropdown-item user_block">Заблокировать</span>
+                        <span class="dropdown-item user_claim">Пожаловаться</span>
                     </div>
                 </div>
               </span>
 
               {% else %}
               <span style="margin-bottom: 10px;" class="centered">
-                <button class="btn btn-sm btn-success success-gradient follow_create" data-pk="{{ user.pk }}">Добавить в друзья</button>
+                <button class="btn btn-sm btn-success success-gradient follow_create">Добавить в друзья</button>
                 <button style="margin-left:5px;" type="button" class="btn btn-sm btn-success success-gradient menu_drop">
                   <svg style="width: 17px;height: 17px; "fill="#FFFFF8" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 </button>
-                <div class="dropdown-menu" style="margin-top:-50px;margin-left:30px;">
-                  <a class="dropdown-item user_block" href="#">Заблокировать</a>
-                  <a class="dropdown-item user_claim" href="#">Пожаловаться</a>
+                <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+                  <span class="dropdown-item user_block">Заблокировать</span>
+                  <span class="dropdown-item user_claim">Пожаловаться</span>
                 </div>
               </span>
               {% endif %}
 
 
               <span class="centered">
-                <a data-js="new_message" href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
+                <span class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</span>
               </span>
 
           </div>
