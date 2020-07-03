@@ -81,8 +81,11 @@
         </div>
     </div>
 </div>
-<script>
+{% if user.is_have_warning_banner %}
+Повешен баннер!
+{% endif %}
 
+<script>
   onscroll = function(){
     var box = document.querySelectorAll('.infinite-item');
     for (var i = 0; i < box.length; i++) {

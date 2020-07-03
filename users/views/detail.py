@@ -163,8 +163,6 @@ class ProfileUserView(TemplateView):
                 self.template_name = "main/user_suspended.html"
             elif self.user.is_blocked():
                 self.template_name = "main/user_global_block.html"
-            elif self.user.is_have_warning_banner():
-                self.template_name = "account/user_have_warning_banner.html"
             elif request.user.is_user_manager() or request.user.is_superuser:
                 self.template_name = "account/staff_user.html"
             elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
