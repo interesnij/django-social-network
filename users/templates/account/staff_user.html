@@ -37,9 +37,17 @@
                         <span class="dropdown-item user_block">Заблокировать</span>
                         <span class="dropdown-item user_blocker" style="font-weight: bold;">Блокировать</span>
                         <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
-                        <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% if user.is_have_warning_banner %}
+                          <span class="dropdown-item user_remove_warning_banner" style="font-weight: bold;">Применен баннер</span>
+                        {% else %}
+                          <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                        {% endif %}
+                        {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+                        {% endif %}
+                        {% if request.user.is_user_advertiser or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% endif %}
                     </div>
                 </div>
               </span>
@@ -53,9 +61,17 @@
                         <span class="dropdown-item user_unblock">Разблокировать</span>
                         <span class="dropdown-item user_blocker" style="font-weight: bold;">Заблокировать</span>
                         <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
-                        <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% if user.is_have_warning_banner %}
+                          <span class="dropdown-item user_remove_warning_banner" style="font-weight: bold;">Применен баннер</span>
+                        {% else %}
+                          <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                        {% endif %}
+                        {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+                        {% endif %}
+                        {% if request.user.is_user_advertiser or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% endif %}
                     </div>
                 </div>
               </span>
@@ -71,9 +87,17 @@
                         <span class="dropdown-item user_block">Заблокировать</span>
                         <span class="dropdown-item user_blocker" style="font-weight: bold;">Блокировать</span>
                         <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
-                        <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% if user.is_have_warning_banner %}
+                          <span class="dropdown-item user_remove_warning_banner" style="font-weight: bold;">Применен баннер</span>
+                        {% else %}
+                          <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                        {% endif %}
+                        {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+                        {% endif %}
+                        {% if request.user.is_user_advertiser or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% endif %}
                     </div>
                 </div>
               </span>
@@ -89,9 +113,17 @@
                         <span class="dropdown-item user_block">Заблокировать</span>
                         <span class="dropdown-item user_blocker" style="font-weight: bold;">Блокировать</span>
                         <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
-                        <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-                        <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% if user.is_have_warning_banner %}
+                          <span class="dropdown-item user_remove_warning_banner" style="font-weight: bold;">Применен баннер</span>
+                        {% else %}
+                          <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                        {% endif %}
+                        {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+                        {% endif %}
+                        {% if request.user.is_user_advertiser or request.user.is_user_admin or request.user.is_superuser %}
+                          <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                        {% endif %}
                     </div>
                 </div>
               </span>
@@ -106,9 +138,17 @@
                   <span class="dropdown-item user_block">Заблокировать</span>
                   <span class="dropdown-item user_blocker" style="font-weight: bold;">Блокировать</span>
                   <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
-                  <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                  <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-                  <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                  {% if user.is_have_warning_banner %}
+                    <span class="dropdown-item user_remove_warning_banner" style="font-weight: bold;">Применен баннер</span>
+                  {% else %}
+                    <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                  {% endif %}
+                  {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+                    <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+                  {% endif %}
+                  {% if request.user.is_user_advertiser or request.user.is_user_admin or request.user.is_superuser %}
+                    <span class="dropdown-item" style="font-weight: bold;">Рекламные посты</span>
+                  {% endif %}
                 </div>
               </span>
               {% endif %}
