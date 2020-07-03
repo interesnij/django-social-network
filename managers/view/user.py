@@ -167,6 +167,7 @@ class UserSuspensionDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj = ModeratedUser.objects.get(user=user)
             moderate_obj.delete_suspend(manager_id=request.user.pk, user_id=user.pk)
         return HttpResponse("")
 
@@ -189,6 +190,7 @@ class UserBlockDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj = ModeratedUser.objects.get(user=user)
             moderate_obj.delete_block(manager_id=request.user.pk, user_id=user.pk)
         return HttpResponse("")
 
@@ -223,6 +225,7 @@ class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
+            moderate_obj = ModeratedUser.objects.get(user=user)
             moderate_obj.delete_warning_banner(manager_id=request.user.pk, user_id=user.pk)
         return HttpResponse("")
 
