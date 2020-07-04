@@ -5,7 +5,7 @@
 <div class="row justify-content-center">
   <div class="card">
     <div class="card-body">
-      <div class="" data-uuid="{{ object.uuid }}">
+      <div style="border: 1px black solid;" data-uuid="{{ object.uuid }}">
 
         {% if object.community %}
         <div class="card-header">
@@ -79,6 +79,7 @@
 
         {% endif %}
       </div>
+      <br>
         <div class="form-group">
           <label>Выберите причину жалобы</label>
           <select class="form-control" name="type">
