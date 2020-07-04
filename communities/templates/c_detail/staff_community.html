@@ -57,15 +57,15 @@
                     Подписаться
                 </button>
                 <div class="card mt-1 mb-1" style="padding: 10px;">
-                  <span class="community_blocker" style="font-weight: bold;">Блокировать</span>
-                  <span class="community_suspend" style="font-weight: bold;">Остановка</span>
+                  <span class="community_blocker" style="cursor:pointer">Блокировать</span>
+                  <span class="community_suspend" style="cursor:pointer">Остановка</span>
                   {% if community.is_have_warning_banner %}
-                    <a href="/managers/penalty_list/community_admin/{{ community.pk}}" class="ajax" style="font-weight: bold;">Применен баннер</a>
+                    <a href="/managers/penalty_list/community_admin/{{ community.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
                   {% else %}
-                    <span class="community_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                    <span class="community_warning_banner" style="cursor:pointer">Повесить баннер</span>
                   {% endif %}
                   {% if request.user.is_community_editor or request.user.is_community_admin or request.user.is_superuser %}
-                    <span class="" style="font-weight: bold;">Редактировать</span>
+                    <span class="" style="cursor:pointer">Редактировать</span>
                   {% endif %}
                 </div>
           </div>
