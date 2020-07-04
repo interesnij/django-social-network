@@ -118,7 +118,12 @@ class CommunityDetail(TemplateView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if request.user.is_authenticated:
+
+        if self.community.is_suspended():
+            self.template_name = "c_detail/community_suspended.html"
+        elif self.community.is_blocked():
+            self.template_name = "c_detail/community_blocked.html"
+        elif request.user.is_authenticated:
             if request.user.is_member_of_community_with_name(self.community.name):
                 if request.user.is_administrator_of_community_with_name(self.community.name):
                     self.template_name = "c_detail/admin_community.html"
@@ -128,10 +133,14 @@ class CommunityDetail(TemplateView):
                     self.template_name = "c_detail/editor_community.html"
                 elif request.user.is_advertiser_of_community_with_name(self.community.name):
                     self.template_name = "c_detail/advertiser_community.html"
+                elif request.user.is_community_manager():
+                    self.template_name = "c_detail/staff_community.html"
                 else:
                     self.template_name = "c_detail/member_community.html"
             elif request.user.is_follow_from_community_with_name(self.community.pk):
                 self.template_name = "c_detail/follow_community.html"
+            elif request.user.is_community_manager():
+                self.template_name = "c_detail/staff_community.html"
             elif request.user.is_banned_from_community_with_name(self.community.name):
                 self.template_name = "c_detail/block_community.html"
             elif self.community.is_public():
