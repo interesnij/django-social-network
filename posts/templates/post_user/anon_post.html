@@ -1,0 +1,17 @@
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
+    {% include 'post_user/anon_card_header.html' %}
+
+    {% if object.is_repost %}
+    {% include 'post_user/repost.html' %}
+    {% endif %}
+
+    <div class="card-body fullscreen" style="cursor:pointer">
+
+      {% if object.text %}
+        <p class="">{{ object.text }}</p>
+      {% endif %}
+    </div>
+    {% include 'generic/attach/u_post_attach.html' %}
+
+    {% include 'post_user/info.html' %}
+</div>

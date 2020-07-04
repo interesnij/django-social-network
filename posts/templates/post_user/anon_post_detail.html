@@ -1,0 +1,18 @@
+<div class="card mb-3" data-uuid="{{ object.uuid }}">
+
+    {% include 'post_user/anon_card_header.html' %}
+
+    {% if object.is_repost %}
+    {% include 'post_user/repost_detail.html' %}
+    {% endif %}
+
+    <div class="card-body">
+      {% if object.text %}
+        <p class="">{{ object.post.text }}</p>
+      {% endif %}
+
+      {% include 'generic/attach/u_post_attach.html' %}
+    </div>
+
+    {% include 'post_user/info.html' %}
+</div>

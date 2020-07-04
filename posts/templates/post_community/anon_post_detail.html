@@ -1,0 +1,17 @@
+<div class="card mb-3" item-uuid="{{ object.uuid }}">
+
+    {% include 'post_community/anon_card_header.html' %}
+
+    {% if object.is_repost %}
+    {% include 'post_community/repost.html' %}
+    {% endif %}
+
+    <div class="card-body">
+      {% if object.text %}
+        <p class="">{{ object.text }}</p>
+      {% endif %}
+    </div>
+    {% include 'generic/attach/c_post_attach.html' %}
+
+    {% include 'post_community/info.html' %}
+</div>
