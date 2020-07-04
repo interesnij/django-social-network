@@ -56,16 +56,18 @@
                 <button type="button" class="btn btn-sm btn-secondary member_create" style="margin: 3px;margin-top:10px">
                     Подписаться
                 </button>
-                <span class="community_blocker" style="font-weight: bold;">Блокировать</span>
-                <span class="community_suspend" style="font-weight: bold;">Остановка</span>
-                {% if community.is_have_warning_banner %}
-                  <a href="/managers/penalty_list/community_admin/{{ community.pk}}" class="ajax" style="font-weight: bold;">Применен баннер</a>
-                {% else %}
-                  <span class="community_warning_banner" style="font-weight: bold;">Повесить баннер</span>
-                {% endif %}
-                {% if request.user.is_community_editor or request.user.is_community_admin or request.user.is_superuser %}
-                  <span class="" style="font-weight: bold;">Редактировать</span>
-                {% endif %}
+                <div class="card">
+                  <span class="community_blocker" style="font-weight: bold;">Блокировать</span>
+                  <span class="community_suspend" style="font-weight: bold;">Остановка</span>
+                  {% if community.is_have_warning_banner %}
+                    <a href="/managers/penalty_list/community_admin/{{ community.pk}}" class="ajax" style="font-weight: bold;">Применен баннер</a>
+                  {% else %}
+                    <span class="community_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+                  {% endif %}
+                  {% if request.user.is_community_editor or request.user.is_community_admin or request.user.is_superuser %}
+                    <span class="" style="font-weight: bold;">Редактировать</span>
+                  {% endif %}
+                <div>
           </div>
             <br>
             {% if common_friends %}
