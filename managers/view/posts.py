@@ -199,35 +199,19 @@ class PostSuspendWindow(TemplateView):
         context["post"] = self.post
         return context
 
-class PostBlockWindow(TemplateView):
+class PostDeleteWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_post_block.html"
+            self.template_name = "manage_create/create_post_delete.html"
         else:
             self.template_name = "about.html"
-        return super(PostBlockWindow,self).get(request,*args,**kwargs)
+        return super(PostDeleteWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PostBlockWindow,self).get_context_data(**kwargs)
-        context["post"] = self.post
-        return context
-
-class PostWarningBannerdWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_post_warning_banner.html"
-        else:
-            self.template_name = "about.html"
-        return super(PostWarningBannerdWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(PostWarningBannerdWindow,self).get_context_data(**kwargs)
+        context = super(PostDeleteWindow,self).get_context_data(**kwargs)
         context["post"] = self.post
         return context
 
