@@ -59,8 +59,8 @@ class CommunityManageLog(models.Model):
     REJECT = 'R'
     UNVERIFY = 'UV'
     ACTION_TYPES = (
-        (REMOVE, 'Удалено'),
-        (UNREMOVE, 'Восстановлено'),
+        (DELETED, 'Удалено'),
+        (UNDELETED, 'Восстановлено'),
         (BLOCK, 'Заблокировано'),
         (UNBLOCK, 'Разблокировано'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
