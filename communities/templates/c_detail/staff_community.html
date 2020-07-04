@@ -60,7 +60,7 @@
                   <span class="community_blocker" style="cursor:pointer">Блокировать</span>
                   <span class="community_suspend" style="cursor:pointer">Остановка</span>
                   {% if community.is_have_warning_banner %}
-                    <a href="/managers/penalty_list/community_admin/{{ community.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
+                    <a href="/managers/penalty_list/community_admin/{{ request.user.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
                   {% else %}
                     <span class="community_warning_banner" style="cursor:pointer">Повесить баннер</span>
                   {% endif %}
