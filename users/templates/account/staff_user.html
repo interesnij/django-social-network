@@ -187,10 +187,14 @@
   </span>
   <div id="create_loader" style="margin-top:30px;padding:10%; border: 1px black solid">
     <div class="card-header border-bottom">
-        <h6 class="card-title mb-0">Аккаунт может быть опасен</h6>
+        <h4 class="card-title mb-0">Аккаунт может быть опасен</h4>
     </div>
     <div class="card-body">
-      <p class="context-menu-promise">Комментарий управленца: {{ user.get_moderated_description|linebreaks }}</p>
+      {% if user.get_moderated_description %}
+        <p class="context-menu-promise">Комментарий управленца: {{ user.get_moderated_description|linebreaks }}</p>
+      {% else %}
+        <p class="context-menu-promise">Модератор не дал объяснений</p>
+      {% endif %}
     </div>
     <div class="card-footer">
         <a class="context-menu-promise btn btn-success" style="color:white !important">Подробнее</a>
