@@ -190,7 +190,7 @@
         <h6 class="card-title mb-0">Аккаунт может быть опасен</h6>
     </div>
     <div class="card-body">
-      <p class="context-menu-promise">Причина применения баннера: {{ user.moderateduser }}</p>
+      <p class="context-menu-promise">Причина применения баннера: {{ user.get_moderated_description }}</p>
     </div>
     <div class="card-footer">
         <a class="context-menu-promise btn btn-success" style="color:white !important">Подробнее</a>

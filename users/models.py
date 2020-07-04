@@ -1398,6 +1398,8 @@ class User(AbstractUser):
     ''''' модерация '''''
     def get_longest_user_penalties(self):
         return self.user_penalties.filter(user=self)[0].expiration
+    def get_moderated_description(self):
+        return self.moderated_user.filter(user=self).description
 
     def get_moderation_users(self):
         # пользователи, на которых пожаловались
