@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.posts import *
-from posts.models import Post
+from post.models import Post
 from managers.forms import PostModeratedForm, PostReportForm
 
 
