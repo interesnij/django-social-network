@@ -196,7 +196,7 @@ class PostSuspendWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(PostSuspendWindow,self).get_context_data(**kwargs)
-        context["post"] = self.post
+        context["object"] = self.post
         return context
 
 class PostDeleteWindow(TemplateView):
@@ -212,7 +212,7 @@ class PostDeleteWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(PostDeleteWindow,self).get_context_data(**kwargs)
-        context["post"] = self.post
+        context["object"] = self.post
         return context
 
 class PostClaimWindow(TemplateView):
@@ -228,7 +228,7 @@ class PostClaimWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(PostClaimWindow,self).get_context_data(**kwargs)
-        context["post"] = self.post
+        context["object"] = self.post
         return context
 
 
