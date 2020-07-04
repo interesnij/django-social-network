@@ -183,7 +183,7 @@ class CommunityModerationReport(models.Model):
 class ModerationPenaltyCommunity(models.Model):
     # сами санкции против сообщества.
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='community_penalties', verbose_name="Оштрафованный сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_penalties', verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_manager_penalties', verbose_name="Менеджер")
     expiration = models.DateTimeField(null=True, verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedCommunity, on_delete=models.CASCADE, related_name='community_moderated_object', verbose_name="Объект")
 
