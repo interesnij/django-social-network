@@ -669,6 +669,8 @@ class Community(models.Model):
     ''''' модерация '''''
     def get_longest_community_penalties(self):
         return self.community_penalties.filter(community=self)[0].expiration
+    def get_moderated_description(self):
+        return self.moderated_community.filter(user=self)[0].description
     def is_suspended(self):
         return self.community_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
     def is_blocked(self):
