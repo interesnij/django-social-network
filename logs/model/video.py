@@ -53,8 +53,8 @@ class VideoWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера видеороликов"
-        verbose_name_plural = "Логи менеджеров видеороликов"
+        verbose_name = "Лог суперменеджера видеороликов"
+        verbose_name_plural = "Логи суперменеджеров видеороликов"
         ordering=["-created"]
 
 class VideoCreateWorkerManageLog(models.Model):
@@ -80,6 +80,6 @@ class VideoCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера видеороликов"
-        verbose_name_plural = "Логи создателей менеджеров видеороликов"
+        verbose_name = "Лог создателя суперменеджера видеороликов"
+        verbose_name_plural = "Логи создателей суперменеджеров видеороликов"
         ordering=["-created"]

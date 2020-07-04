@@ -53,8 +53,8 @@ class AudioWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера аудиозаписей"
-        verbose_name_plural = "Логи менеджеров аудиозаписей"
+        verbose_name = "Лог суперменеджера аудиозаписей"
+        verbose_name_plural = "Логи супеменеджеров аудиозаписей"
         ordering=["-created"]
 
 class AudioCreateWorkerManageLog(models.Model):
@@ -80,6 +80,6 @@ class AudioCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера аудиозаписей"
-        verbose_name_plural = "Логи создателей менеджеров аудиозаписей"
+        verbose_name = "Лог создателя суперменеджера аудиозаписей"
+        verbose_name_plural = "Логи создателей суперменеджеров аудиозаписей"
         ordering=["-created"]

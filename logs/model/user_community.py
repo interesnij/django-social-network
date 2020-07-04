@@ -75,8 +75,8 @@ class CommunityManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера пользоватетей"
-        verbose_name_plural = "Логи менеджеров пользоватетей"
+        verbose_name = "Лог менеджера сообществ"
+        verbose_name_plural = "Логи менеджеров сообществ"
         ordering=["-created"]
 
 
@@ -107,8 +107,8 @@ class UserWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера пользоватетей"
-        verbose_name_plural = "Логи менеджеров пользоватетей"
+        verbose_name = "Лог суперменеджера пользоватетей"
+        verbose_name_plural = "Логи суперменеджеров пользоватетей"
         ordering=["-created"]
 
 class UserCreateWorkerManageLog(models.Model):
@@ -138,8 +138,8 @@ class UserCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера пользоватетей"
-        verbose_name_plural = "Логи создателей менеджеров пользоватетей"
+        verbose_name = "Лог создателя суперменеджера пользоватетей"
+        verbose_name_plural = "Логи создателей суперменеджеров пользоватетей"
         ordering=["-created"]
 
 
@@ -170,8 +170,8 @@ class CommunityWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера сообществ"
-        verbose_name_plural = "Логи менеджеров сообществ"
+        verbose_name = "Лог суперменеджера сообществ"
+        verbose_name_plural = "Логи суперменеджеров сообществ"
         ordering=["-created"]
 
 class CommunityCreateWorkerManageLog(models.Model):
@@ -201,6 +201,6 @@ class CommunityCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера сообществ"
-        verbose_name_plural = "Логи создателей менеджеров сообществ"
+        verbose_name = "Лог создателя суперменеджера сообществ"
+        verbose_name_plural = "Логи создателей суперменеджеров сообществ"
         ordering=["-created"]

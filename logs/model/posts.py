@@ -51,8 +51,8 @@ class PostWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера записей"
-        verbose_name_plural = "Логи менеджеров записей"
+        verbose_name = "Лог суперменеджера записей"
+        verbose_name_plural = "Логи суперменеджеров записей"
         ordering=["-created"]
 
 class PostCreateWorkerManageLog(models.Model):
@@ -78,6 +78,6 @@ class PostCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера записей"
-        verbose_name_plural = "Логи создателей менеджеров записей"
+        verbose_name = "Лог создателя суперменеджера записей"
+        verbose_name_plural = "Логи создателей суперменеджеров записей"
         ordering=["-created"]

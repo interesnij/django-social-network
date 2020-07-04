@@ -53,8 +53,8 @@ class GoodWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера товаров"
-        verbose_name_plural = "Логи менеджеров товаров"
+        verbose_name = "Лог суперменеджера товаров"
+        verbose_name_plural = "Логи суперменеджеров товаров"
         ordering=["-created"]
 
 class GoodCreateWorkerManageLog(models.Model):
@@ -80,6 +80,6 @@ class GoodCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера товаров"
-        verbose_name_plural = "Логи создателей менеджеров товаров"
+        verbose_name = "Лог создателя суперменеджера товаров"
+        verbose_name_plural = "Логи создателей суперменеджеров товаров"
         ordering=["-created"]

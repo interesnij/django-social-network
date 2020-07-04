@@ -53,8 +53,8 @@ class PhotoWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера фотографий"
-        verbose_name_plural = "Логи менеджеров фотографий"
+        verbose_name = "Лог суперменеджера фотографий"
+        verbose_name_plural = "Логи суперменеджеров фотографий"
         ordering=["-created"]
 
 class PhotoCreateWorkerManageLog(models.Model):
@@ -80,6 +80,6 @@ class PhotoCreateWorkerManageLog(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог создателя менеджера фотографий"
-        verbose_name_plural = "Логи создателей менеджеров фотографий"
+        verbose_name = "Лог создателя суперменеджера фотографий"
+        verbose_name_plural = "Логи создателей суперменеджеров фотографий"
         ordering=["-created"]
