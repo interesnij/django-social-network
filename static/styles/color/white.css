@@ -7,48 +7,10 @@ a {
 .border-top {
     border-top: 1px solid rgba(127,127,127, 0.7) !important;
 }
-.music-dropdown{
-  background: #ffffff !important;
+.border{
+  border: 1px solid rgba(127,127,127, 0.7) !important;
 }
 .form-control::placeholder{color:rgba(0, 0, 0, 0.6);font-style: italic;}
-
-#ajax .jp-playlist-current{
-  border: 1px solid #000000 !important;
-  background-image: url(/static/images/music_visual_day.gif);
-  }
-
-.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
-    background-color: #5f7fa2 !important;
-    color:#FFFFFF !important;
-}
-
-div.jp-interface {
-    background-color: #D5D5D5;
-}
-div.jp-video div.jp-interface {
-    border-top:1px solid #111111;
-}
-div.jp-progress {
-    background-color: #ddd;
-}
-div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
-    color:#252525;
-}
-.jp-no-solution {
-    background-color:#eee;
-    border:2px solid #fff;
-    color:#000;
-}
-.jp-no-solution a {
-    color:#000;
-}
-.jp-playlist .track_item_li {
-  background-color:#FFFFFF;
-}
-.jp-playlist ul{
-  background-color:#FFFFFF;
-}
-
 
 body {
   background-color: #f0f2f6;

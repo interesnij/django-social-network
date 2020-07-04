@@ -7,51 +7,10 @@ a {
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
 
-.music-dropdown{
-  background: #582A72 !important;
-}
 .form-control::placeholder{color: rgba(255, 255, 255, 0.6);font-style: italic;}
-#ajax .jp-playlist-current{
-    border: 1px solid #ffffff !important;
-    background-image: url(/static/images/music_visual_night.gif);
-  }
-
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current, .jp-playlist .jp-playlist-current a{
-    background-color: #271531;
-    color: rgba(255, 255, 255, 0.7) !important
+.border{
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
-
-div.jp-interface {
-    background-color: #E0E0E0;
-}
-div.jp-video div.jp-interface {
-    border-top:1px solid #271531;
-}
-div.jp-progress {
-    background-color: #ddd;
-}
-.jp-playlist .jp-playlist-current{
-    background-color: #271531 !important;
-    color:#FFFFFF;
-}
-div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
-    color:#252525;
-}
-.jp-no-solution {
-    background-color:#eee;
-    border:2px solid #fff;
-    color:#000;
-}
-.jp-no-solution a {
-    color:#000;
-}
-.jp-playlist .track_item_li {
-  background-color:#582A72;
-}
-.jp-playlist ul{
-  background-color:#582A72;
-}
-
 body {
 background-color: #271531;
   font-size: 1em;

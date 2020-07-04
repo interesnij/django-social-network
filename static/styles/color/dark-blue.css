@@ -10,47 +10,9 @@ a:hover{
   color:#ffffff !important;
 }
 .form-control::placeholder{color: rgba(255, 255, 255, 0.6);font-style: italic;}
-.music-dropdown{
-  background: #233160 !important;
+.border{
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
-
-#ajax .jp-playlist-current{
-  border: 1px solid white !important;
-  background-image: url(/static/images/music_visual_day.gif);
-  }
-
-.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
-    background-color: #0f152f !important;
-    color: rgba(255, 255, 255, 0.7) !important
-}
-
-div.jp-interface {
-    background-color: #0f152f;
-}
-div.jp-video div.jp-interface {
-    border-top:1px solid #0f152f;
-}
-div.jp-progress {
-    background-color: #ddd;
-}
-div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
-    color:#252525;
-}
-.jp-no-solution {
-    background-color:#eee;
-    border:2px solid #fff;
-    color:#000;
-}
-.jp-no-solution a {
-    color:#000;
-}
-.jp-playlist .track_item_li {
-  background-color:#233160;
-}
-.jp-playlist ul{
-  background-color:#233160;
-}
-
 body {
   background-color: #0f152f;
   font-size: 1em;
