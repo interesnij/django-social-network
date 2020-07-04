@@ -176,8 +176,8 @@ class CommunityModerationReport(models.Model):
         return self.reporter.get_full_name()
 
     class Meta:
-        verbose_name = 'Жалоба на пользователя'
-        verbose_name_plural = 'Жалобы на пользователей'
+        verbose_name = 'Жалоба на сообщество'
+        verbose_name_plural = 'Жалобы на сообщество'
 
 
 class ModerationPenaltyCommunity(models.Model):

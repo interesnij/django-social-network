@@ -41,7 +41,7 @@ class PenaltyCommunityAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_communities()
         return list
 
 class PenaltyPostAdminList(ListView):
@@ -189,7 +189,7 @@ class PenaltyCommunityEditorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_communities()
         return list
 
 class PenaltyPostEditorList(ListView):
@@ -337,7 +337,7 @@ class PenaltyCommunityModeratorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_communities()
         return list
 
 class PenaltyPostModeratorList(ListView):
