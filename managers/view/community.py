@@ -205,6 +205,7 @@ class CommunityWarningBannerCreate(View):
             moderate_obj = ModeratedCommunity.get_or_create_moderated_object_for_community(community)
             moderate_obj.status = ModeratedCommunity.STATUS_BANNER_GET
             moderate_obj.description = mod.description
+            moderate_obj.save()
             moderate_obj.create_warning_banner(manager_id=request.user.pk, community_id=community.pk)
             return HttpResponse("")
         else:
