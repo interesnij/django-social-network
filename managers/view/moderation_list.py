@@ -41,7 +41,7 @@ class ModerationCommunityAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_communities()
         return list
 
 class ModerationPostAdminList(ListView):
@@ -189,7 +189,7 @@ class ModerationCommunityEditorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_communities()
         return list
 
 class ModerationPostEditorList(ListView):
@@ -337,7 +337,7 @@ class ModerationCommunityModeratorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_communities()
         return list
 
 class ModerationPostModeratorList(ListView):

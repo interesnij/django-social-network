@@ -665,6 +665,8 @@ class Community(models.Model):
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
 
+
+    ''''' модерация '''''
     def get_longest_community_penalties(self):
         return self.community_penalties.filter(community=self)[0].expiration
     def is_suspended(self):
@@ -673,6 +675,8 @@ class Community(models.Model):
         return self.community_penalties.filter(type="B").exists()
     def is_have_warning_banner(self):
         return self.community_penalties.filter(type="BA").exists()
+
+    ''''' конец модерации '''''
 
 
 class CommunityMembership(models.Model):

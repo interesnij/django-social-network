@@ -1408,4 +1408,14 @@ class User(AbstractUser):
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser
         return ModerationPenaltyUser.objects.filter(manager__id=self.pk)
+
+    def get_moderation_communities(self):
+        # сообщества, на которых пожаловались
+        from managers.model.community import ModeratedCommunity
+        return ModeratedCommunity.objects.filter(verified=False)
+
+    def get_penalty_communities(self):
+        # оштрафованные сообщества
+        from managers.model.community import ModerationPenaltyCommunity
+        return ModerationPenaltyCommunity.objects.filter(manager__id=self.pk)
     ''''' конец модерации '''''
