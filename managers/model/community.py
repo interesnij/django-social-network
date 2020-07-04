@@ -80,7 +80,7 @@ class ModeratedCommunity(models.Model):
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
         ModerationPenaltyCommunity.create_suspension_penalty(moderated_object=self, manager_id=manager_id, community_id=community_id, expiration=moderation_expiration)
-        UserManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=severity)
+        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=severity)
         self.save()
     def create_block(self, manager_id, community_id):
         self.verified = True
