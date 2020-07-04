@@ -294,7 +294,7 @@ class UserClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_claim.html"
+            self.template_name = "manage_create/create_user_claim.html"
         else:
             self.template_name = "about.html"
         return super(UserClaimWindow,self).get(request,*args,**kwargs)
