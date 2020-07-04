@@ -75,7 +75,7 @@ class ModeratedPost(models.Model):
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
         ModerationPenaltyPost.create_suspension_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id, expiration=moderation_expiration)
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.SUSPENDED)
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=severity)
         self.save()
     def create_deleted(self, manager_id, post_id):
         self.verified = True
@@ -184,7 +184,6 @@ class ModerationPenaltyPost(models.Model):
 
     SUSPENSION = 'S'
     DELETE = 'D'
-    BANNER = 'BA'
     TYPES = (
         (SUSPENSION, 'Приостановлено'),
         (DELETE, 'Удалено'),

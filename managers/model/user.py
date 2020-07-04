@@ -115,11 +115,6 @@ class ModeratedUser(models.Model):
         UserManageLog.objects.create(user_id=user_id, manager_id=manager_id, action_type=UserManageLog.UNVERIFY)
         self.save()
 
-    def suspend_moderation(self):
-        current_status = self.status
-        self.status = ModeratedUser.STATUS_SUSPEND
-        self.save()
-
     def reject_moderation(self, manager_id, user_id):
         self.verified = True
         current_status = self.status

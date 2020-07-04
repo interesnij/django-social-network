@@ -4,8 +4,8 @@ from django.conf import settings
 
 
 class UserManageLog(models.Model):
-    REMOVE = 'R'
-    UNREMOVE = 'UR'
+    DELETED = 'D'
+    UNDELETED = 'UD'
     BLOCK = 'B'
     UNBLOCK = 'UB'
     SEVERITY_CRITICAL = 'C'
@@ -18,8 +18,8 @@ class UserManageLog(models.Model):
     REJECT = 'R'
     UNVERIFY = 'UV'
     ACTION_TYPES = (
-        (REMOVE, 'Удален'),
-        (UNREMOVE, 'Восстановлен'),
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
         (BLOCK, 'Заблокирован'),
         (UNBLOCK, 'Разблокирован'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
@@ -45,11 +45,14 @@ class UserManageLog(models.Model):
         ordering=["-created"]
 
 class CommunityManageLog(models.Model):
-    REMOVE = 'R'
-    UNREMOVE = 'UR'
+    DELETED = 'D'
+    UNDELETED = 'UD'
     BLOCK = 'B'
     UNBLOCK = 'UB'
-    SUSPENDED = 'S'
+    SEVERITY_CRITICAL = 'C'
+    SEVERITY_HIGH = 'H'
+    SEVERITY_MEDIUM = 'M'
+    SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
     WARNING_BANNER = 'WB'
     NO_WARNING_BANNER = 'NWB'
@@ -60,7 +63,10 @@ class CommunityManageLog(models.Model):
         (UNREMOVE, 'Восстановлено'),
         (BLOCK, 'Заблокировано'),
         (UNBLOCK, 'Разблокировано'),
-        (SUSPENDED, 'Заморожено'),
+        (SEVERITY_CRITICAL, 'Вечная заморозка'),
+        (SEVERITY_HIGH, 'Долгая заморозка'),
+        (SEVERITY_MEDIUM, 'Средняя заморозка'),
+        (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожено'),
         (WARNING_BANNER, 'Выставлен предупреждающий баннер'),
         (NO_WARNING_BANNER, 'Убран предупреждающий баннер'),

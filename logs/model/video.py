@@ -4,18 +4,24 @@ from django.conf import settings
 
 
 class VideoManageLog(models.Model):
-    REMOVE = 'R'
-    UNREMOVE = 'UR'
+    DELETED = 'D'
+    UNDELETED = 'UD'
     BLOCK = 'B'
     UNBLOCK = 'UB'
-    SUSPENDED = 'S'
+    SEVERITY_CRITICAL = 'C'
+    SEVERITY_HIGH = 'H'
+    SEVERITY_MEDIUM = 'M'
+    SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
     ACTION_TYPES = (
-        (REMOVE, 'Удален'),
-        (UNREMOVE, 'Восстановлен'),
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
         (BLOCK, 'Заблокирован'),
         (UNBLOCK, 'Разблокирован'),
-        (SUSPENDED, 'Заморожен'),
+        (SEVERITY_CRITICAL, 'Вечная заморозка'),
+        (SEVERITY_HIGH, 'Долгая заморозка'),
+        (SEVERITY_MEDIUM, 'Средняя заморозка'),
+        (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
     )
 
