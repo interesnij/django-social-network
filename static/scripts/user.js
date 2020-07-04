@@ -47,8 +47,7 @@ on('#ajax', 'click', '.create_user_claim_btn', function() {
 });
 
 on('#ajax', 'click', '.post_claim', function() {
-  this.parentElement.classList.remove("show");
-  uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_post/claim_window/" + uuid, loader)
 })
