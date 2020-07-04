@@ -121,11 +121,9 @@ class ModeratedPost(models.Model):
 class PostModerationReport(models.Model):
     # жалобы на пользователя.
     PORNO = 'P'
-    SPAM = 'S'
+    NO_CHILD = 'NC'
     BROKEN = 'B'
     FRAUD = 'P'
-    CLON = 'K'
-    OLD_PAGE = 'OP'
     DRUGS = 'D'
     NO_MORALITY = 'NM'
     PORNO = 'P'
@@ -136,15 +134,12 @@ class PostModerationReport(models.Model):
     PETS_ABUSE = 'PA'
     MISREPRESENTATION = "MI"
     EXTREMISM = "EX"
-    NO_CHILD = 'NC'
+    RHETORIC_HATE = "RH"
     TYPE = (
         (PORNO, 'Порнография'),
         (NO_CHILD, 'Для взрослых'),
-        (SPAM, 'Рассылка спама'),
-        (BROKEN, 'Оскорбительное поведение'),
+        (BROKEN, 'Оскорбительное содержание'),
         (FRAUD, 'Мошенничество'),
-        (CLON, 'Клон моей страницы'),
-        (OLD_PAGE, 'Моя старая страница'),
         (DRUGS, 'Наркотики'),
         (NO_MORALITY, 'Не нравственный контент'),
         (ARMS_SALE, 'Продажа оружия'),
@@ -153,6 +148,7 @@ class PostModerationReport(models.Model):
         (SUICIDE, 'Призыв к суициду'),
         (PETS_ABUSE, 'Жестокое обращение c животными'),
         (MISREPRESENTATION, 'Введение в заблуждение'),
+        (RHETORIC_HATE, 'Риторика ненависти'),
         (EXTREMISM, 'Экстремизм'),
     )
 
