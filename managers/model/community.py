@@ -199,13 +199,28 @@ class ModerationPenaltyCommunity(models.Model):
 
     @classmethod
     def create_suspension_penalty(cls, community_id, manager_id, moderated_object, expiration):
-        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.SUSPENSION, expiration=expiration)
+        try:
+            obj = cls.objects.get(moderated_object=moderated_object)
+            obj.delete()
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.SUSPENSION, expiration=expiration)
+        except:
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.SUSPENSION, expiration=expiration)
     @classmethod
     def create_block_penalty(cls, community_id, manager_id, moderated_object):
-        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BLOCK)
+        try:
+            obj = cls.objects.get(moderated_object=moderated_object)
+            obj.delete()
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BLOCK)
+        except:
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BLOCK)
     @classmethod
     def create_banner_penalty(cls, community_id, manager_id, moderated_object):
-        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BANNER)
+        try:
+            obj = cls.objects.get(moderated_object=moderated_object)
+            obj.delete()
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BANNER)
+        except:
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, community_id=community_id, type=cls.BANNER)
 
     def is_suspend(self):
         # Объект заморожен
