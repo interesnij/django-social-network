@@ -5,6 +5,7 @@ from communities.models import Community
 from django.http import HttpResponse
 from common.staff_progs.community import *
 from managers.model.community import ModeratedCommunity
+from managers.forms import CommunityModeratedForm, CommunityReportForm
 
 
 
