@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Штраф-лист сообществ | Редактор{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по штраф-листу">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">Штраф-лист сообществ | Редактор</h5>
+                      <small class="content-color-secondary float-right mr-2 mt-1"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+
+              {% if object_list %}
+
+              <ul class="list-group" id="penalty_community_editor_container" data-link="/managers/penalty_list/community_admin/{{ community.pk }}" >
+                  {% for object in object_list %}
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" community-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
+                      <div class="media">
+                        <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                          <figure>
+                            {% if object.community.get_avatar %}
+                              <img src="{{ object.community.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+                            {% else %}
+                              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                            {% endif %}
+                          </figure>
+                        </a>
+                        <div class="media-body btn_console">
+                            <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                                <h6 class="my-0 mt-1">{{ object.community.name }}</h6>
+                            </a>
+                            {% if object.is_suspend %}
+                              <span class="small">До {{ object.expiration }}</span>
+                              (<a href="#" class="small remove_community_suspend">Отменить остановку</a> |
+                               <a href="#" class="small community_unverify">Отменить проверку</a>)
+                            {% elif object.is_bloked %}
+                              <span class="small">Заблокирован</span>
+                              (<a href="#" class="small remove_community_bloсk">Отменить блокировку</a> |
+                               <a href="#" class="small community_unverify">Отменить проверку</a>)
+                            {% elif object.is_banner %}
+                              <span class="small">Баннер предупреждения</span>
+                              (<a href="#" class="small remove_community_warning_banner">Убрать баннер</a> |
+                               <a href="#" class="small community_unverify">Отменить проверку</a>)
+                            {% else %}
+                              <span class="small">Санкции не применены</span>
+                            {% endif %}
+                        </div>
+                      </div>
+                  </li>
+                  {% endfor %}
+              </ul>
+
+              {% else %}
+              <div class="card centered">
+                <div class="card-body">
+                <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </div>
+                <h6 style="margin: 20px;text-align: center;"> Штраф-лист пуст...</h6>
+              </div>
+
+              {% endif %}
+
+            </div>
+        </div>
+</div>
+{% endblock %}
