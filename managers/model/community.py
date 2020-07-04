@@ -26,11 +26,11 @@ class ModeratedCommunity(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='moderated_community', blank=True, verbose_name="Сообщество")
 
     @classmethod
-    def create_moderated_object(cls, user):
+    def create_moderated_object(cls, community):
         return cls.objects.create(community=community)
 
     @classmethod
-    def _get_or_create_moderated_object(cls, user):
+    def _get_or_create_moderated_object(cls, community):
         try:
             moderated_object = cls.objects.get(community=community)
         except cls.DoesNotExist:
@@ -38,7 +38,7 @@ class ModeratedCommunity(models.Model):
         return moderated_object
 
     @classmethod
-    def get_or_create_moderated_object_for_user(cls, user):
+    def get_or_create_moderated_object_for_community(cls, community):
         return cls._get_or_create_moderated_object(community=community)
 
     @property
