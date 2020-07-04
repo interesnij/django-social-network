@@ -39,7 +39,7 @@ on('#ajax', 'click', '.community_warning_banner', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("user-pk");
+    pk = li.getAttribute("community-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");

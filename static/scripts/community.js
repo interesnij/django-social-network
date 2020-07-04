@@ -43,7 +43,6 @@ on('#ajax', 'click', '#add_community_btn', function() {
         }
       }
       ajax_link.send(form_data);
-  }
 });
 
 on('#ajax', 'change', '#sub_category', function() {
@@ -63,4 +62,29 @@ on('#ajax', 'change', '#sub_category', function() {
   };
   link.send( null );
   };
+});
+
+on('#ajax', 'click', '.community_claim', function() {
+  this.parentElement.classList.remove("show");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/managers/progs_community/claim_window/" + pk, loader)
+})
+on('#ajax', 'click', '.create_community_claim_btn', function() {
+  form_data = new FormData(document.querySelector("#community_claim_form"));
+  form_post = document.querySelector("#community_claim_form");
+  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/managers/progs_community/create_claim/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Жалоба отправлена!");
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+
+  }};
+
+  link_.send(form_data);
 });
