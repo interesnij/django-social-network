@@ -27,7 +27,7 @@
 
               <ul class="list-group" id="moderation_community_moderator_container" data-link="/managers/moderation_list/community_admin/{{ community.pk }}">
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.community.pk }}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" community-pk="{{ object.community.pk }}">
                       <div class="media">
                         <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                           <figure>
