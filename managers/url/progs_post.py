@@ -1,19 +1,5 @@
 from django.conf.urls import url
-from managers.view.posts import (
-                                PostAdminCreate,
-                                PostAdminDelete,
-                                PostModerCreate,
-                                PostModerDelete,
-                                PostEditorCreate,
-                                PostEditorDelete,
-
-                                PostWorkerAdminCreate,
-                                PostWorkerAdminDelete,
-                                PostWorkerModerCreate,
-                                PostWorkerModerDelete,
-                                PostWorkerEditorCreate,
-                                PostWorkerEditorDelete
-                            )
+from managers.view.posts import *
 from django.contrib.auth.decorators import login_required
 
 
@@ -30,5 +16,17 @@ urlpatterns = [
     url(r'^add_worker_moderator/(?P<pk>\d+)/$', login_required(PostWorkerModerCreate.as_view())),
     url(r'^delete_worker_moderator/(?P<pk>\d+)/$', login_required(PostWorkerModerDelete.as_view())),
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(PostWorkerEditorCreate.as_view())),
-    url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(PostWorkerEditorDelete.as_view()))
+    url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(PostWorkerEditorDelete.as_view())),
+
+    url(r'^create_suspension/(?P<uuid>[0-9a-f-]+)/$', login_required(PostSuspensionCreate.as_view())),
+    url(r'^delete_suspension/(?P<uuid>[0-9a-f-]+)/$', login_required(PostSuspensionDelete.as_view())),
+    url(r'^create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteCreate.as_view())),
+    url(r'^delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteDelete.as_view())),
+    url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(PostRejectedCreate.as_view())),
+    url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimCreate.as_view())),
+    url(r'^unverify/(?P<post_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(PostUnverify.as_view())),
+
+    url(r'^suspend_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostSuspendWindow.as_view())),
+    url(r'^delete_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteWindow.as_view())),
+    url(r'^claim_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimWindow.as_view())),
 ]
