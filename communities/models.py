@@ -606,50 +606,6 @@ class Community(models.Model):
         CommunityInvite = get_community_invite_model()
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
 
-    def create_user_ban_log(self, source_user, target_user):
-        return self._create_log(action_type='B', source_user=source_user, target_user=target_user)
-
-    def create_user_unban_log(self, source_user, target_user):
-        return self._create_log(action_type='U', source_user=source_user, target_user=target_user)
-
-    def create_add_administrator_log(self, source_user, target_user):
-        return self._create_log(action_type='AA', source_user=source_user, target_user=target_user)
-
-    def create_remove_administrator_log(self, source_user, target_user):
-        return self._create_log(action_type='RA', source_user=source_user, target_user=target_user)
-
-    def create_add_moderator_log(self, source_user, target_user):
-        return self._create_log(action_type='AM', source_user=source_user, target_user=target_user)
-
-    def create_remove_moderator_log(self, source_user, target_user):
-        return self._create_log(action_type='RM', source_user=source_user, target_user=target_user)
-
-    def create_remove_post_log(self, source_user, target_user):
-        return self._create_log(action_type='RP', source_user=source_user, target_user=target_user)
-
-    def create_remove_post_comment_log(self, source_user, target_user):
-        return self._create_log(action_type='RPC', source_user=source_user, target_user=target_user)
-
-    def create_remove_post_comment_reply_log(self, source_user, target_user):
-        return self._create_log(action_type='RPCR', source_user=source_user, target_user=target_user)
-
-    def create_disable_post_comments_log(self, source_user, target_user, post):
-        return self._create_log(action_type='DPC', post=post, source_user=source_user, target_user=target_user)
-
-    def create_enable_post_comments_log(self, source_user, target_user, post):
-        return self._create_log(action_type='EPC', post=post, source_user=source_user, target_user=target_user)
-
-    def create_open_post_log(self, source_user, target_user, post):
-        return self._create_log(action_type='OP', post=post, source_user=source_user, target_user=target_user)
-
-    def create_close_post_log(self, source_user, target_user, post):
-        return self._create_log(action_type='CP', post=post, source_user=source_user, target_user=target_user)
-
-    def _create_log(self, action_type, source_user, target_user, post=None):
-        from moderation.models import CommunityModeratorUserActionLog
-
-        return CommunityModeratorUserActionLog.create_community_log(community=self, post=post, target_user=target_user, action_type=action_type, source_user=source_user)
-
     def __str__(self):
         return self.name
 

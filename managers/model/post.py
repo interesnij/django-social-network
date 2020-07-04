@@ -1,115 +1,125 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from posts.models import Post, PostComment
+from users.models import User
 from managers.models import ModerationCategory
+from logs.model.posts import PostManageLog
 
 
 class ModeratedPost(models.Model):
+    # рассмотрение жалобы на запись. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
     STATUS_PENDING = 'P'
-    STATUS_APPROVED = 'A'
+    STATUS_SUSPEND = 'S'
+    STATUS_DELETED = 'D'
     STATUS_REJECTED = 'R'
     STATUSES = (
-        (STATUS_PENDING, 'На рассмотрении'),
-        (STATUS_APPROVED, 'Одобренный'),
-        (STATUS_REJECTED, 'Отвергнутый'),
+        (STATUS_PENDING, 'Запись рассматривается'),
+        (STATUS_SUSPEND, 'Запись заморожена'),
+        (STATUS_DELETED, 'Запись удалена'),
+        (STATUS_REJECTED, 'Запись отвергнута'),
     )
-    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, verbose_name="Одобрено")
+    description = models.TextField(max_length=300, blank=True, null=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    category = models.ForeignKey(ModerationCategory, blank=True, on_delete=models.CASCADE, related_name='moderated_post', verbose_name="Категория")
-    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, verbose_name="Запись")
-    post_comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, blank=True, verbose_name="Запись")
+    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
 
     @classmethod
-    def create_moderated_object(cls, post, post_comment):
-        return cls.objects.create(post=post, post_comment=post_comment)
+    def create_moderated_object(cls, post):
+        return cls.objects.create(post=post)
 
     @classmethod
-    def _get_or_create_moderated_object(cls, post, post_comment):
+    def _get_or_create_moderated_object(cls, post):
         try:
-            moderated_object = cls.objects.get(post=post, post_comment=post_comment)
+            moderated_object = cls.objects.get(post=post)
         except cls.DoesNotExist:
-            moderated_object = cls.create_moderated_object(post=post, post_comment=post_comment)
+            moderated_object = cls.create_moderated_object(post=post)
         return moderated_object
 
     @classmethod
     def get_or_create_moderated_object_for_post(cls, post):
         return cls._get_or_create_moderated_object(post=post)
 
-    @classmethod
-    def get_or_create_moderated_object_for_post_comment(cls, post_comment):
-        return cls._get_or_create_moderated_object(post_comment=post_comment)
-
     @property
     def reports_count(self):
+        # кол-во жалоб на пользователя
         return self.post_reports.count()
 
     def is_verified(self):
+        # проверен ли пользователь
         return self.verified
-
-    def is_approved(self):
-        return self.status == ModeratedPost.STATUS_APPROVED
-
+    def is_suspend(self):
+        # Объект заморожен
+        return self.status == ModeratedPost.STATUS_SUSPEND
     def is_pending(self):
+        # Жалоба рассматривается
         return self.status == ModeratedPost.STATUS_PENDING
+    def is_deleted(self):
+        # Объект блокирован
+        return self.status == ModeratedPost.STATUS_DELETED
 
-    def update_with_actor_with_id(self, description, category_id):
-        current_description = self.description
-        self.description = description
-        current_category_id = self.category_id
-        self.category_id = category_id
-        self.save()
-
-    def verify_with_actor_with_id(self, severity):
-        current_verified = self.verified
+    def create_suspend(self, manager_id, post_id, severity_int):
         self.verified = True
-        moderation_severity = severity
-        penalty_targets = None
-
-        if self.is_approved():
-            if isinstance(self.post, Post):
-                penalty_targets = [self.post.creator]
-            elif isinstance(self.post_comment, PostComment):
-                penalty_targets = [self.post_comment.commenter]
-            for penalty_target in penalty_targets:
-                duration_of_penalty = None
-                penalties_count = penalty_target.count_post_penalties_for_moderation_severity(moderation_severity=moderation_severity) + 1
-
-                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL:
-                    duration_of_penalty = timezone.timedelta(weeks=5000)
-                elif moderation_severity == ModerationCategory.SEVERITY_HIGH:
-                    duration_of_penalty = timezone.timedelta(days=penalties_count ** 4)
-                elif moderation_severity == ModerationCategory.SEVERITY_MEDIUM:
-                    duration_of_penalty = timezone.timedelta(hours=penalties_count ** 3)
-                elif moderation_severity == ModerationCategory.SEVERITY_LOW:
-                    duration_of_penalty = timezone.timedelta(minutes=penalties_count ** 2)
-                moderation_expiration = timezone.now() + duration_of_penalty
-                ModerationPenaltyPost.create_suspension_moderation_penalty(moderated_object=self, user_id=penalty_target.pk, expiration=moderation_expiration)
+        severity = None
+        duration_of_penalty = None
+        if severity_int == '4':
+            duration_of_penalty = timezone.timedelta(days=30)
+            severity = "C"
+        elif severity_int == '3':
+            duration_of_penalty = timezone.timedelta(days=7)
+            severity = "H"
+        elif severity_int == '2':
+            duration_of_penalty = timezone.timedelta(days=3)
+            severity = "M"
+        elif severity_int == '1':
+            duration_of_penalty = timezone.timedelta(hours=6)
+            severity = "L"
+        moderation_expiration = timezone.now() + duration_of_penalty
+        ModerationPenaltyPost.create_suspension_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id, expiration=moderation_expiration)
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.SUSPENDED)
         self.save()
+    def create_deleted(self, manager_id, post_id):
+        self.verified = True
+        self.save()
+        ModerationPenaltyPost.create_block_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id)
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.DELETED)
 
-    def unverify_with_actor_with_id(self):
-        current_verified = self.verified
+    def delete_suspend(self, manager_id, post_id):
+        obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
+        obj.delete()
+        self.delete()
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.UNSUSPENDED)
+    def delete_deleted(self, manager_id, post_id):
+        obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
+        obj.delete()
+        self.delete()
+        PostManageLog.objects.create(post=post, manager=manager, action_type=PostManageLog.UNDELETED)
+
+    def unverify_moderation(self, manager_id, post_id):
         self.verified = False
-        self.post_penalties.all().delete()
-        moderation_severity = severity
+        self.post_moderated_object.all().delete()
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.UNVERIFY)
         self.save()
 
-    def approve_with_actor_with_id(self):
-        current_status = self.status
-        self.status = ModeratedPost.STATUS_APPROVED
-        self.save()
-
-    def reject_with_actor_with_id(self):
+    def reject_moderation(self, manager_id, post_id):
+        self.verified = True
         current_status = self.status
         self.status = ModeratedPost.STATUS_REJECTED
+        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.REJECT)
         self.save()
 
     def get_reporters(self):
-        return User.objects.filter(post_reports__moderated_post_id=self.pk).all()
+        return User.objects.filter(user_reports__moderated_post_id=self.pk).all()
+
+    def __str__(self):
+        return self.post.created
+
+    class Meta:
+        verbose_name = 'Проверяемая запись'
+        verbose_name_plural = 'Проверяемые записи'
 
 
 class PostModerationReport(models.Model):
+    # жалобы на пользователя.
     PORNO = 'P'
     SPAM = 'S'
     BROKEN = 'B'
@@ -146,37 +156,58 @@ class PostModerationReport(models.Model):
         (EXTREMISM, 'Экстремизм'),
     )
 
-    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Репортер")
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Объект")
-    description = models.CharField(max_length=300, blank=False, null=True,verbose_name="Описание")
+    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
     @classmethod
-    def create_post_moderation_report(cls, reporter_id, post, description):
-        moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post, category_id=category_id)
-        post_moderation_report = cls.objects.create(reporter_id=reporter_id, description=description, moderated_object=moderated_object)
+    def create_post_moderation_report(cls, reporter_id, post, description, type):
+        moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post)
+        post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return post_moderation_report
 
-    @classmethod
-    def create_post_comment_moderation_report(cls, reporter_id, post_comment, description):
-        moderated_object = ModeratedPost.get_or_create_moderated_object_for_post_comment(post_comment=post_comment, category_id=category_id)
-        post_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, description=description, moderated_object=moderated_object)
-        return post_comment_moderation_report
+    def __str__(self):
+        return self.reporter.get_full_name()
+
+    class Meta:
+        verbose_name = 'Жалоба на запись'
+        verbose_name_plural = 'Жалобы на записи'
 
 
 class ModerationPenaltyPost(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованный пользователь")
-    expiration = models.DateTimeField(null=True,verbose_name="Окончание")
-    moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Объект")
+    # сами санкции против пользователя. Пока только заморозка на разное время.
+    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованная запись")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_post_penalties', verbose_name="Менеджер")
+    expiration = models.DateTimeField(null=True, verbose_name="Окончание")
+    moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_moderated_object', verbose_name="Объект")
 
-    TYPE_SUSPENSION = 'S'
-    TYPE_DELETED = 'D'
-    TYPE_BANNER = 'D'
+    SUSPENSION = 'S'
+    DELETE = 'D'
+    BANNER = 'BA'
     TYPES = (
-        (TYPE_SUSPENSION, 'Приостановлено'),
+        (SUSPENSION, 'Приостановлено'),
+        (DELETE, 'Удалено'),
     )
-    type = models.CharField(max_length=5, choices=TYPES,verbose_name="Тип")
+    type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
 
     @classmethod
-    def create_suspension_moderation_penalty(cls, user_id, moderated_object, expiration):
-        return cls.objects.create(moderated_object=moderated_object, user_id=user_id, type=cls.TYPE_SUSPENSION, expiration=expiration)
+    def create_suspension_penalty(cls, post_id, manager_id, moderated_object, expiration):
+        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, post_id=post_id, type=cls.SUSPENSION, expiration=expiration)
+    @classmethod
+    def create_delete_penalty(cls, post_id, manager_id, moderated_object):
+        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, post_id=post_id, type=cls.DELETE)
+
+    def is_suspend(self):
+        # Объект заморожен
+        return self.type == ModerationPenaltyPost.SUSPENSION
+    def is_deleted(self):
+        # Объект блокирован
+        return self.type == ModerationPenaltyPost.DELETE
+
+    def __str__(self):
+        return self.post.created
+
+    class Meta:
+        verbose_name = 'Оштрафованная запись'
+        verbose_name_plural = 'Оштрафованные записи'

@@ -6,15 +6,13 @@ from django.conf import settings
 class PostManageLog(models.Model):
     REMOVE = 'R'
     UNREMOVE = 'UR'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
+    DELETED = 'D'
+    UNDELETED = 'UD'
     SUSPENDED = 'S'
     UNSUSPENDED = 'US'
     ACTION_TYPES = (
         (REMOVE, 'Удален'),
         (UNREMOVE, 'Восстановлен'),
-        (BLOCK, 'Заблокирован'),
-        (UNBLOCK, 'Разблокирован'),
         (SUSPENDED, 'Заморожен'),
         (UNSUSPENDED, 'Разморожен'),
     )
