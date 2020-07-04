@@ -191,7 +191,7 @@
     </div>
     <div class="card-body">
       {% if user.get_moderated_description %}
-        <p class="context-menu-promise">Комментарий управленца: {{ user.get_moderated_description|linebreaks }}</p>
+        <p class="context-menu-promise"> <span style="text-decoration:underline;">Комментарий управленца<span>: {{ user.get_moderated_description|linebreaks }}</p>
       {% else %}
         <p class="context-menu-promise">Модератор не дал объяснений</p>
       {% endif %}
