@@ -84,6 +84,18 @@
         <br>
           <button class="btn btn-outline-success user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="{{ user.pk }}">Создать сообщество</button>
 
+          <br>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="{% url 'all_communities' %}" class="ajax">Все сообщества</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
           {% if user.get_visited_communities %}
           <div class="card mb-2">
               <div class="card-header">
