@@ -2,6 +2,7 @@ from django.contrib import admin
 from managers.models import *
 from managers.model.user import *
 from managers.model.community import *
+from managers.model.post import *
 
 
 admin.site.register(UserStaff)
@@ -29,3 +30,7 @@ admin.site.register(ModerationPenaltyUser)
 admin.site.register(ModeratedCommunity)
 admin.site.register(CommunityModerationReport)
 admin.site.register(ModerationPenaltyCommunity)
+
+admin.site.register(ModeratedPost)
+admin.site.register(PostModerationReport)
+admin.site.register(ModerationPenaltyPost)

@@ -80,7 +80,7 @@ class ModeratedPost(models.Model):
     def create_deleted(self, manager_id, post_id):
         self.verified = True
         self.save()
-        ModerationPenaltyPost.create_block_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id)
+        ModerationPenaltyPost.create_delete_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id)
         PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.DELETED)
 
     def delete_suspend(self, manager_id, post_id):
