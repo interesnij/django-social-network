@@ -1,4 +1,4 @@
-on('#ajax', 'click', '.post_suspend', function() {
+on('#ajax', 'click', '.post_suspend_window', function() {
   _this = this;
   if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
     uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
@@ -14,7 +14,7 @@ on('#ajax', 'click', '.post_suspend', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_post/suspend_window/" + uuid, loader)
 })
-on('#ajax', 'click', '.post_manage_delete', function() {
+on('#ajax', 'click', '.post_delete_window', function() {
   _this = this;
   if(_this.parentElement.classList.contains("btn_console")){
     div = _this.parentElement.parentElement.parentElement.parentElement;
@@ -35,11 +35,12 @@ on('#ajax', 'click', '.create_post_suspend_btn', function() {
   _this = this;
   form_data = new FormData(document.querySelector("#post_suspend_form"));
   form_post = document.querySelector("#post_suspend_form");
-  if (_this.getAttribute){
-    uuid = this.getAttribute("data-uuid");
-  }else if (document.body.querySelector(".changed")){
-    li = document.body.querySelector(".changed");
-    pk = li.getAttribute("data-uuid");
+  if (document.body.querySelector(".changed")){
+    div = document.body.querySelector(".changed");
+    pk = div.getAttribute("data-uuid");
+  } else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    div = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+    pk = div.getAttribute("data-uuid");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -50,11 +51,7 @@ on('#ajax', 'click', '.create_post_suspend_btn', function() {
     toast_info("Пост заморожен!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-  //  if (document.body.querySelector(".pk_saver")) {
-  //    this_page_reload('/users/' + pk + '/')
-  //  }else if (li.querySelector(".btn_console")){
-  //    li.remove();
-  //  }
+    div.remove();
   }};
   link_.send(form_data);
 });
@@ -62,11 +59,12 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
   _this = this;
   form_data = new FormData(document.querySelector("#post_delete_form"));
   form_post = document.querySelector("#post_delete_form");
-  if (_this.getAttribute){
-    uuid = _this.getAttribute("data-uuid");
-  }else if (document.body.querySelector(".changed")){
-    li = document.body.querySelector(".changed");
-    pk = li.getAttribute("data-uuid");
+  if (document.body.querySelector(".changed")){
+    div = document.body.querySelector(".changed");
+    pk = div.getAttribute("data-uuid");
+  } else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    div = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+    pk = div.getAttribute("data-uuid");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -77,11 +75,7 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
     toast_info("Пост удален!");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-  //  if (document.body.querySelector(".pk_saver")) {
-  //    this_page_reload('/users/' + pk + '/')
-  //  }else if (li.querySelector(".btn_console")){
-  //    li.remove();
-  //  }
+    div.remove();
   }};
 
   link_.send(form_data);
