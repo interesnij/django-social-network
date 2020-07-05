@@ -65,10 +65,10 @@
 
                           <div class="card-header">
                               <div class="media">
-                                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                                <a href="{% url 'user' pk=object.post.creator.pk %}" class="ajax">
                                   <figure>
-                                    {% if object.creator.get_avatar %}
-                                      <img src="{{ object.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+                                    {% if object.post.creator.get_avatar %}
+                                      <img src="{{ object.post.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                                     {% else %}
                                       <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                     {% endif %}
@@ -76,21 +76,21 @@
                                 </a>
                                   <div class="media-body">
                                       <h6 class="mb-0">
-                                        <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-                                          {{ object.creator.get_full_name }} &nbsp;
+                                        <a href="{% url 'user' pk=object.post.creator.pk %}" class="ajax">
+                                          {{ object.post.creator.get_full_name }} &nbsp;
                                         </a>
                                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                                       </h6>
-                                      <p class="mb-0">{{ object.created|naturaltime }}</p>
+                                      <p class="mb-0">{{ object.post.created|naturaltime }}</p>
                                   </div>
                               </div>
                           </div>
-                            {% if object.is_repost %}
+                            {% if object.post.is_repost %}
                               {% include 'post_user/repost_detail.html' %}
                             {% endif %}
 
                             <div class="card-body">
-                                <p class="">{{ object.text }}</p>
+                                <p class="">{{ object.post.text }}</p>
 
                               {% include 'generic/attach/u_post_attach.html' %}
                             </div>
