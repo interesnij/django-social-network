@@ -13,7 +13,6 @@ admin.site.register(PostWorkerManageLog)
 admin.site.register(PostCreateWorkerManageLog)
 
 admin.site.register(AudioManageLog)
-admin.site.register(AudioCommentManageLog)
 admin.site.register(AudioWorkerManageLog)
 admin.site.register(AudioCreateWorkerManageLog)
 
