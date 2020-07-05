@@ -1,11 +1,11 @@
 on('#ajax', 'click', '.post_suspend', function() {
   _this = this;
-  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+  if (_this.getAttribute){
     uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
-    list = document.querySelectorAll('.pag');
+    list = document.querySelectorAll('.pag'); 
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");
     }
