@@ -97,7 +97,7 @@ on('#ajax', 'click', '.post_unverify', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Верификация отменена!");
-    li.style.display = "none";
+    div.style.display = "none";
   }};
 
   link_.send();

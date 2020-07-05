@@ -27,7 +27,7 @@
 
               <div id="moderation_post_admin_container" data-link="/managers/penalty_list/post_admin/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.pk }}">
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.moderated_object.pk }}">
                       <div class="media">
                         <div class="media-body">
 
