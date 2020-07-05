@@ -27,7 +27,7 @@
 
               <div id="moderation_post_admin_container" data-link="/managers/penalty_list/post_admin/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}">
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.pk }}">
                       <div class="media">
                         <div class="media-body">
 
@@ -224,7 +224,7 @@
                           {% endif %}
 
                             <div class="media-body btn_console">
-                                {% if object.is_suspend %} 
+                                {% if object.is_suspend %}
                                   <span class="">До {{ object.expiration }}</span>
                                   (<a href="#" class="remove_post_suspend">Отменить остановку</a> |
                                    <a href="#" class="post_unverify">Отменить проверку</a>)
