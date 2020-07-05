@@ -54,7 +54,7 @@ on('#ajax', 'click', '.post_claim', function() {
 on('#ajax', 'click', '.create_post_claim_btn', function() {
   form_data = new FormData(document.querySelector("#post_claim_form"));
   form_post = document.querySelector("#post_claim_form");
-  uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_post/create_claim/" + uuid + "/", true );
