@@ -50,7 +50,7 @@ class PenaltyPostList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user.is_post_mamager or self.user.is_superuser:
+        if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "penalty_list/post_list.html"
         else:
             self.template_name = "about.html"
@@ -71,7 +71,7 @@ class PenaltyPostCommentList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user.is_post_mamager or self.user.is_superuser:
+        if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "penalty_list/post_comment_list.html"
         else:
             self.template_name = "about.html"
