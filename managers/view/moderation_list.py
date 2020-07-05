@@ -41,7 +41,7 @@ class ModerationCommunityAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = self.user.get_moderation_communities() 
+        list = self.user.get_moderation_communities()
         return list
 
 class ModerationPostAdminList(ListView):
@@ -62,7 +62,7 @@ class ModerationPostAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_posts()
         return list
 
 class ModerationPhotoAdminList(ListView):
@@ -210,7 +210,7 @@ class ModerationPostEditorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_posts()
         return list
 
 class ModerationPhotoEditorList(ListView):
@@ -358,7 +358,7 @@ class ModerationPostModeratorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_posts()
         return list
 
 class ModerationPhotoModeratorList(ListView):

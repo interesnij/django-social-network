@@ -1405,7 +1405,6 @@ class User(AbstractUser):
         # пользователи, на которых пожаловались
         from managers.model.user import ModeratedUser
         return ModeratedUser.objects.filter(verified=False)
-
     def get_penalty_users(self):
         # оштрафованные пользователи
         from managers.model.user import ModerationPenaltyUser
@@ -1415,9 +1414,17 @@ class User(AbstractUser):
         # сообщества, на которых пожаловались
         from managers.model.community import ModeratedCommunity
         return ModeratedCommunity.objects.filter(verified=False)
-
     def get_penalty_communities(self):
         # оштрафованные сообщества
         from managers.model.community import ModerationPenaltyCommunity
         return ModerationPenaltyCommunity.objects.filter(manager__id=self.pk)
+
+    def get_moderation_posts(self):
+        # записи, на которых пожаловались
+        from managers.model.post import ModeratedPost
+        return ModeratedPost.objects.filter(verified=False)
+    def get_penalty_posts(self):
+        # оштрафованные записи
+        from managers.model.post import ModerationPenaltyPost
+        return ModerationPenaltyPost.objects.filter(manager__id=self.pk)
     ''''' конец модерации '''''

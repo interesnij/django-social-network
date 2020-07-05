@@ -62,7 +62,7 @@ class PenaltyPostAdminList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_posts()
         return list
 
 class PenaltyPhotoAdminList(ListView):
@@ -210,7 +210,7 @@ class PenaltyPostEditorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_posts()
         return list
 
 class PenaltyPhotoEditorList(ListView):
@@ -358,7 +358,7 @@ class PenaltyPostModeratorList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_posts()
         return list
 
 class PenaltyPhotoModeratorList(ListView):
