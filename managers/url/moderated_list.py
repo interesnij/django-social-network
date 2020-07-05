@@ -15,7 +15,6 @@ urlpatterns = [
     url(r'^post_comment/(?P<pk>\d+)/$', login_required(ModerationPostCommentList.as_view())),
     url(r'^photo_comment/(?P<pk>\d+)/$', login_required(ModerationPhotoCommentList.as_view())),
     url(r'^good_comment/(?P<pk>\d+)/$', login_required(ModerationGoodCommentList.as_view())),
-    url(r'^audio_comment/(?P<pk>\d+)/$', login_required(ModerationAudioCommentList.as_view())),
     url(r'^video_comment/(?P<pk>\d+)/$', login_required(ModerationVideoCommentList.as_view())),
 
     url(r'^user_advertiser/(?P<pk>\d+)/$', login_required(ModerationUserAdvertiserList.as_view())),
