@@ -167,6 +167,8 @@ class PostClaimCreate(View):
         form = PostReportForm(request.POST)
         if form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
+            if not mod.description:
+                mod.description = "Без описания"
             PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=mod.description, type=request.POST.get('type'))
             return HttpResponse("")
         else:
