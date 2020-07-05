@@ -118,7 +118,7 @@ class ModeratedPost(models.Model):
         verbose_name_plural = 'Проверяемые записи'
 
 
-class ModeratedCommentPost(models.Model):
+class ModeratedPostComment(models.Model):
     STATUS_PENDING = 'P'
     STATUS_DELETED = 'D'
     STATUS_REJECTED = 'R'
@@ -155,9 +155,9 @@ class ModeratedCommentPost(models.Model):
     def is_verified(self):
         return self.verified
     def is_pending(self):
-        return self.status == ModeratedCommentPost.STATUS_PENDING
+        return self.status == ModeratedPostComment.STATUS_PENDING
     def is_deleted(self):
-        return self.status == ModeratedCommentPost.STATUS_DELETED
+        return self.status == ModeratedPostComment.STATUS_DELETED
 
     def create_deleted(self, manager_id, comment_id):
         self.verified = True
@@ -282,7 +282,7 @@ class PostCommentModerationReport(models.Model):
     )
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Репортер")
-    moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_comment_reports', null=False, verbose_name="Объект")
+    moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
