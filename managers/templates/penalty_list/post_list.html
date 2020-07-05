@@ -225,15 +225,15 @@
 
                             <div class="media-body btn_console">
                                 {% if object.is_suspend %}
-                                  <span class="small">До {{ object.expiration }}</span>
-                                  (<a href="#" class="small remove_post_suspend">Отменить остановку</a> |
-                                   <a href="#" class="small post_unverify">Отменить проверку</a>)
+                                  <span class="">До {{ object.expiration }}</span>
+                                  (<a href="#" class="remove_post_suspend">Отменить остановку</a> |
+                                   <a href="#" class="post_unverify">Отменить проверку</a>)
                                 {% elif object.is_deleted %}
-                                  <span class="small">Удалено</span>
-                                  (<a href="#" class="small remove_post_delete">Восстановить</a> |
-                                   <a href="#" class="small post_unverify">Отменить проверку</a>)
+                                  <span class="">Удалено</span>
+                                  (<a href="#" class="remove_post_delete">Восстановить</a> |
+                                   <a href="#" class="post_unverify">Отменить проверку</a>)
                                 {% else %}
-                                  <span class="small">Санкции не применены</span>
+                                  <span class="">Санкции не применены</span>
                                 {% endif %}
                             </div>
                         </div>
