@@ -111,7 +111,7 @@ class ModeratedPost(models.Model):
         return User.objects.filter(user_reports__moderated_post_id=self.pk).all()
 
     def __str__(self):
-        return self.post.created
+        return self.post.creator.get_full_name()
 
     class Meta:
         verbose_name = 'Проверяемая запись'
@@ -188,7 +188,7 @@ class ModeratedPostComment(models.Model):
         return User.objects.filter(user_reports__moderated_post_comment_id=self.pk).all()
 
     def __str__(self):
-        return self.post.created
+        return self.comment.commenter.get_full_name()
 
     class Meta:
         verbose_name = 'Проверяемый комментарий к записи'
@@ -330,7 +330,7 @@ class ModerationPenaltyPost(models.Model):
         return self.type == ModerationPenaltyPost.DELETE
 
     def __str__(self):
-        return self.post.created
+        return self.post.creator.get_full_name()
 
     class Meta:
         verbose_name = 'Оштрафованная запись'
@@ -359,7 +359,7 @@ class ModerationPenaltyPostComment(models.Model):
         return self.type == ModerationPenaltyPostComment.DELETE
 
     def __str__(self):
-        return self.comment.created
+        return self.comment.comment.get_full_name()
 
     class Meta:
         verbose_name = 'Оштрафованный комментарий к записи'
