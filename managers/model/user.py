@@ -129,8 +129,8 @@ class ModeratedUser(models.Model):
         return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Модерируемый пользователь'
-        verbose_name_plural = 'Модерируемые пользователи'
+        verbose_name = 'Проверяемый пользователь'
+        verbose_name_plural = 'Проверяемые пользователи'
 
 
 class UserModerationReport(models.Model):

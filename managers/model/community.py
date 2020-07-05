@@ -134,8 +134,8 @@ class ModeratedCommunity(models.Model):
         return self.community.name
 
     class Meta:
-        verbose_name = 'Модерируемое сообщество'
-        verbose_name_plural = 'Модерируемые сообщества'
+        verbose_name = 'Проверяемое сообщество'
+        verbose_name_plural = 'Проверяемые сообщества'
 
 
 class CommunityModerationReport(models.Model):
