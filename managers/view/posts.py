@@ -165,7 +165,7 @@ class PostClaimCreate(View):
 
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         form = PostReportForm(request.POST)
-        if form.is_valid() and request.user.is_authenticated:
+        if request.user.is_authenticated:
             mod = form.save(commit=False)
             if not mod.description:
                 description = "Без описания"
