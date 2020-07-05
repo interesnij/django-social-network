@@ -164,7 +164,7 @@ class PostClaimCreate(View):
         from managers.model.post import PostModerationReport
 
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        form = UserReportForm(request.POST)
+        form = PostReportForm(request.POST)
         if form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
             PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=mod.description, type=request.POST.get('type'))
