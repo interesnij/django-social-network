@@ -1,7 +1,7 @@
 on('#ajax', 'click', '.post_suspend', function() {
   _this = this;
-  if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
@@ -16,8 +16,8 @@ on('#ajax', 'click', '.post_suspend', function() {
 })
 on('#ajax', 'click', '.post_manage_delete', function() {
   _this = this;
-  if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
     pk = li.getAttribute("user-pk");
@@ -34,8 +34,8 @@ on('#ajax', 'click', '.post_manage_delete', function() {
 on('#ajax', 'click', '.create_post_suspend_btn', function() {
   form_data = new FormData(document.querySelector("#post_suspend_form"));
   form_post = document.querySelector("#post_suspend_form");
-  if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("data-uuid");
@@ -61,8 +61,8 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
   parent = this.parentElement;
   form_data = new FormData(document.querySelector("#user_delete_form"));
   form_post = document.querySelector("#post_delete_form");
-  if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
     pk = li.getAttribute("data-uuid");

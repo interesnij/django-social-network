@@ -176,7 +176,7 @@ class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            moderate_obj = ModeratedUser.objects.get(user=user)
+            moderate_obj = ModeratedPost.objects.get(post=post)
             moderate_obj.reject_moderation(manager_id=request.user.pk, post_id=post.pk)
             return HttpResponse("")
         else:
@@ -235,6 +235,6 @@ class PostClaimWindow(TemplateView):
 class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["post_uuid"])
-        obj = ModeratedUser.objects.get(pk=self.kwargs["obj_pk"])
+        obj = ModeratedPost.objects.get(pk=self.kwargs["obj_pk"])
         obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
         return HttpResponse("")
