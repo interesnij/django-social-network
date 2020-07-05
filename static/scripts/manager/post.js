@@ -120,7 +120,7 @@ on('#ajax', 'click', '.remove_post_delete', function() {
   li = this.parentElement.parentElement.parentElement.parentElement;
   uuid = li.getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/managers/progs_post/delete_block/" + uuid + "/", true );
+  link_.open( 'GET', "/managers/progs_post/delete_delete/" + uuid + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
