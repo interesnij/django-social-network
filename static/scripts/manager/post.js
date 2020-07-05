@@ -28,7 +28,7 @@ on('#ajax', 'click', '.post_manage_delete', function() {
     li.classList.add("changed")
   }
   loader = document.getElementById("create_loader");
-  open_fullscreen("/managers/progs_post/block_window/" + uuid, loader)
+  open_fullscreen("/managers/progs_post/delete_window/" + uuid, loader)
 })
 
 on('#ajax', 'click', '.create_post_suspend_btn', function() {

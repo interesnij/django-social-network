@@ -249,7 +249,7 @@ class CommunitySuspendWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_community_suspend.html"
+            self.template_name = "manage_create/community_suspend.html"
         else:
             self.template_name = "about.html"
         return super(CommunitySuspendWindow,self).get(request,*args,**kwargs)
@@ -265,7 +265,7 @@ class CommunityBlockWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_community_block.html"
+            self.template_name = "manage_create/community_block.html"
         else:
             self.template_name = "about.html"
         return super(CommunityBlockWindow,self).get(request,*args,**kwargs)
@@ -281,7 +281,7 @@ class CommunityWarningBannerdWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_community_warning_banner.html"
+            self.template_name = "manage_create/community_warning_banner.html"
         else:
             self.template_name = "about.html"
         return super(CommunityWarningBannerdWindow,self).get(request,*args,**kwargs)
@@ -297,7 +297,7 @@ class CommunityClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_community_claim.html"
+            self.template_name = "manage_create/community_claim.html"
         else:
             self.template_name = "about.html"
         return super(CommunityClaimWindow,self).get(request,*args,**kwargs)

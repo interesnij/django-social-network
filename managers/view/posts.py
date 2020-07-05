@@ -189,7 +189,7 @@ class PostSuspendWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_post_suspend.html"
+            self.template_name = "manage_create/post_suspend.html"
         else:
             self.template_name = "about.html"
         return super(PostSuspendWindow,self).get(request,*args,**kwargs)
@@ -205,7 +205,7 @@ class PostDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_post_delete.html"
+            self.template_name = "manage_create/post_delete.html"
         else:
             self.template_name = "about.html"
         return super(PostDeleteWindow,self).get(request,*args,**kwargs)
@@ -221,7 +221,7 @@ class PostClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/create_post_claim.html"
+            self.template_name = "manage_create/post_claim.html"
         else:
             self.template_name = "about.html"
         return super(PostClaimWindow,self).get(request,*args,**kwargs)
