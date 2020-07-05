@@ -88,9 +88,9 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
 });
 
 on('#ajax', 'click', '.post_unverify', function() {
-  li = this.parentElement.parentElement.parentElement;
-  post_uuid = li.getAttribute("data-uuid");
-  obj_pk = li.getAttribute("data-pk");
+  div = this.parentElement.parentElement.parentElement.parentElement;
+  post_uuid = div.getAttribute("data-uuid");
+  obj_pk = div.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_post/unverify/" + post_uuid + "/" + obj_pk + "/", true );
 
@@ -104,7 +104,7 @@ on('#ajax', 'click', '.post_unverify', function() {
 });
 
 on('#ajax', 'click', '.remove_post_suspend', function() {
-  li = this.parentElement.parentElement.parentElement;
+  li = this.parentElement.parentElement.parentElement.parentElement;
   uuid = li.getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_post/delete_suspension/" + uuid + "/", true );
@@ -117,7 +117,7 @@ on('#ajax', 'click', '.remove_post_suspend', function() {
   link_.send();
 });
 on('#ajax', 'click', '.remove_post_delete', function() {
-  li = this.parentElement.parentElement.parentElement;
+  li = this.parentElement.parentElement.parentElement.parentElement;
   uuid = li.getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_post/delete_block/" + uuid + "/", true );
