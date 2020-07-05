@@ -65,7 +65,7 @@
                                   <img data-uuid="{{ photo.uuid }}" photo-pk="{{ photo.creator.pk }}" class="c_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
                               </div>
                               {% endfor %}
-                              {% for video in object.item_video.all %}
+                              {% for video in object.post.item_video.all %}
                               <div class="video" album-pk="{{ video.video_album.pk }}">
                                   <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
                                   <div class="video_icon_play_v2 c_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
