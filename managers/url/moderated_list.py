@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^photo/(?P<pk>\d+)/$', login_required(ModerationPhotoList.as_view())),
     url(r'^good/(?P<pk>\d+)/$', login_required(ModerationGoodList.as_view())),
     url(r'^audio/(?P<pk>\d+)/$', login_required(ModerationAudioList.as_view())),
-    url(r'^video/(?P<pk>\d+)/$', login_required(ModerationAdminList.as_view())),
+    url(r'^video/(?P<pk>\d+)/$', login_required(ModerationVideoList.as_view())),
 
     url(r'^post_comment/(?P<pk>\d+)/$', login_required(ModerationPostCommentList.as_view())),
     url(r'^photo_comment/(?P<pk>\d+)/$', login_required(ModerationPhotoCommentList.as_view())),
