@@ -11,6 +11,8 @@ class PostManageLog(models.Model):
     SEVERITY_MEDIUM = 'M'
     SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
@@ -19,6 +21,8 @@ class PostManageLog(models.Model):
         (SEVERITY_MEDIUM, 'Средняя заморозка'),
         (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, verbose_name="Запись")
@@ -30,6 +34,30 @@ class PostManageLog(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Лог менеджера записи"
         verbose_name_plural = "Логи менеджеров записей"
+        ordering=["-created"]
+
+
+class PostCommentManageLog(models.Model):
+    DELETED = 'D'
+    UNDELETED = 'UD'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
+    ACTION_TYPES = (
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
+    )
+
+    comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, verbose_name="Комментарий к записи")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Лог менеджера комментария"
+        verbose_name_plural = "Логи менеджеров комментариев"
         ordering=["-created"]
 
 class PostWorkerManageLog(models.Model):

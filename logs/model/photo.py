@@ -6,23 +6,23 @@ from django.conf import settings
 class PhotoManageLog(models.Model):
     DELETED = 'R'
     UNDELETED = 'UR'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
     SEVERITY_MEDIUM = 'M'
     SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
-        (BLOCK, 'Заблокирован'),
-        (UNBLOCK, 'Разблокирован'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
         (SEVERITY_HIGH, 'Долгая заморозка'),
         (SEVERITY_MEDIUM, 'Средняя заморозка'),
         (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     photo = models.ForeignKey('gallery.Photo', on_delete=models.CASCADE, verbose_name="Запись")
@@ -35,6 +35,30 @@ class PhotoManageLog(models.Model):
         verbose_name = "Лог менеджера фотографий"
         verbose_name_plural = "Логи менеджеров фотографий"
         ordering=["-created"]
+
+class PhotoCommentManageLog(models.Model):
+    DELETED = 'R'
+    UNDELETED = 'UR'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
+    ACTION_TYPES = (
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
+    )
+
+    comment = models.ForeignKey('gallery.PhotoComment', on_delete=models.CASCADE, verbose_name="Комментарий к фотографии")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="photo_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Лог менеджера комментария фотографии"
+        verbose_name_plural = "Логи менеджеров комментарий фотографий"
+        ordering=["-created"]
+
 
 class PhotoWorkerManageLog(models.Model):
     CREATE_ADMIN = 'CA'

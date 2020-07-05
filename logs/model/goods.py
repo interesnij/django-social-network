@@ -6,23 +6,23 @@ from django.conf import settings
 class GoodManageLog(models.Model):
     DELETED = 'R'
     UNDELETED = 'UR'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
     SEVERITY_MEDIUM = 'M'
     SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
-        (BLOCK, 'Заблокирован'),
-        (UNBLOCK, 'Разблокирован'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
         (SEVERITY_HIGH, 'Долгая заморозка'),
         (SEVERITY_MEDIUM, 'Средняя заморозка'),
         (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     post = models.ForeignKey('goods.Good', on_delete=models.CASCADE, verbose_name="Запись")
@@ -35,6 +35,30 @@ class GoodManageLog(models.Model):
         verbose_name = "Лог менеджера товаров"
         verbose_name_plural = "Логи менеджеров товаров"
         ordering=["-created"]
+
+class GoodCommentManageLog(models.Model):
+    DELETED = 'R'
+    UNDELETED = 'UR'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
+    ACTION_TYPES = (
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
+    )
+
+    comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, verbose_name="Комментарий к товару")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Лог менеджера комментария товаров"
+        verbose_name_plural = "Логи комментариев менеджеров товаров"
+        ordering=["-created"]
+
 
 class GoodWorkerManageLog(models.Model):
     CREATE_ADMIN = 'CA'

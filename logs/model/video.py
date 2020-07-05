@@ -6,23 +6,23 @@ from django.conf import settings
 class VideoManageLog(models.Model):
     DELETED = 'D'
     UNDELETED = 'UD'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
     SEVERITY_MEDIUM = 'M'
     SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
-        (BLOCK, 'Заблокирован'),
-        (UNBLOCK, 'Разблокирован'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
         (SEVERITY_HIGH, 'Долгая заморозка'),
         (SEVERITY_MEDIUM, 'Средняя заморозка'),
         (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     video = models.ForeignKey('video.Video', on_delete=models.CASCADE, verbose_name="Запись")
@@ -35,6 +35,24 @@ class VideoManageLog(models.Model):
         verbose_name = "Лог менеджера видеороликов"
         verbose_name_plural = "Логи менеджеров видеороликов"
         ordering=["-created"]
+
+
+class VideoCommentManageLog(models.Model):
+    DELETED = 'D'
+    UNDELETED = 'UD'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
+    ACTION_TYPES = (
+        (DELETED, 'Удален'),
+        (UNDELETED, 'Восстановлен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
+    )
+
+    comment = models.ForeignKey('video.VideoComment', on_delete=models.CASCADE, verbose_name="Комментарий к видеоролику")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
 class VideoWorkerManageLog(models.Model):
     CREATE_ADMIN = 'CA'

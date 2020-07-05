@@ -6,23 +6,23 @@ from django.conf import settings
 class AudioManageLog(models.Model):
     DELETED = 'R'
     UNDELETED = 'UR'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
     SEVERITY_MEDIUM = 'M'
     SEVERITY_LOW = 'L'
     UNSUSPENDED = 'US'
+    REJECT = 'R'
+    UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
-        (BLOCK, 'Заблокирован'),
-        (UNBLOCK, 'Разблокирован'),
         (SEVERITY_CRITICAL, 'Вечная заморозка'),
         (SEVERITY_HIGH, 'Долгая заморозка'),
         (SEVERITY_MEDIUM, 'Средняя заморозка'),
         (SEVERITY_LOW, 'Краткая заморозка'),
         (UNSUSPENDED, 'Разморожен'),
+        (REJECT, 'Жалоба отклонена'),
+        (UNVERIFY, 'Проверка убрана'),
     )
 
     audio = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, verbose_name="Запись")
@@ -35,6 +35,7 @@ class AudioManageLog(models.Model):
         verbose_name = "Лог менеджера аудиозаписей"
         verbose_name_plural = "Логи менеджеров аудиозаписей"
         ordering=["-created"]
+
 
 class AudioWorkerManageLog(models.Model):
     CREATE_ADMIN = 'CA'

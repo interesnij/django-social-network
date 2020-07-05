@@ -8,22 +8,27 @@ from logs.model.video import *
 
 
 admin.site.register(PostManageLog)
+admin.site.register(PostCommentManageLog)
 admin.site.register(PostWorkerManageLog)
 admin.site.register(PostCreateWorkerManageLog)
 
 admin.site.register(AudioManageLog)
+admin.site.register(AudioCommentManageLog)
 admin.site.register(AudioWorkerManageLog)
 admin.site.register(AudioCreateWorkerManageLog)
 
 admin.site.register(GoodManageLog)
+admin.site.register(GoodCommentManageLog)
 admin.site.register(GoodWorkerManageLog)
 admin.site.register(GoodCreateWorkerManageLog)
 
 admin.site.register(PhotoManageLog)
+admin.site.register(PhotoCommentManageLog)
 admin.site.register(PhotoWorkerManageLog)
 admin.site.register(PhotoCreateWorkerManageLog)
 
 admin.site.register(VideoManageLog)
+admin.site.register(VideoCommentManageLog)
 admin.site.register(VideoWorkerManageLog)
 admin.site.register(VideoCreateWorkerManageLog)
 

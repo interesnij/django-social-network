@@ -1423,8 +1423,17 @@ class User(AbstractUser):
         # записи, на которых пожаловались
         from managers.model.post import ModeratedPost
         return ModeratedPost.objects.filter(verified=False)
+    def get_moderation_post_comments(self):
+        # записи, на которых пожаловались
+        from managers.model.post import ModeratedPostComment
+        return ModeratedPostComment.objects.filter(verified=False)
+
     def get_penalty_posts(self):
         # оштрафованные записи
         from managers.model.post import ModerationPenaltyPost
         return ModerationPenaltyPost.objects.filter(manager__id=self.pk)
+    def get_penalty_post_comments(self):
+        # оштрафованные записи
+        from managers.model.post import ModerationPenaltyPostComment
+        return ModerationPenaltyPostComment.objects.filter(manager__id=self.pk)
     ''''' конец модерации '''''
