@@ -31,7 +31,7 @@
                 </span>
                 <span class="dropdown-item post_suspend_window">Остановить</span>
                 <span class="dropdown-item post_delete_window">Удалить</span>
-                {% if request.user.is_post_editor or if request.user.is_post_admin or request.user_is_superuser %}
+                {% if request.user.is_post_editor or if request.user.is_post_administrator or request.user_is_superuser %}
                   <span class="dropdown-item post_edit_window">Изменить</span>
                 {% endif %}
             </div>
