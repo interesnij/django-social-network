@@ -174,24 +174,24 @@ class Community(models.Model):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
-        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
-        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_archive_posts(self):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
-        #exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
 
