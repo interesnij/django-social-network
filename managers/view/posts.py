@@ -168,9 +168,9 @@ class PostClaimCreate(View):
         if form.is_valid():
             mod = form.save(commit=False)
             PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=mod.description, type=request.POST.get('type'))
-            return HttpResponse("")
+            return HttpResponse("!")
         else:
-            return HttpResponse("")
+            return HttpResponse("?")
 
 class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
