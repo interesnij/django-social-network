@@ -161,7 +161,7 @@ class PostDeleteDelete(View):
 
 class PostClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.user import PostModerationReport
+        from managers.model.post import PostModerationReport
 
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         form = PostReportForm(request.POST)
