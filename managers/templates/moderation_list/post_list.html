@@ -45,7 +45,7 @@
                                   <div class="media-body">
                                       <h6 class="mb-0">
                                         <a href="{% url 'community_detail' pk=object.post.community.pk %}" class="ajax">
-                                          {{ object.community.name }} &nbsp;
+                                          {{ object.post.community.name }} &nbsp;
                                         </a>
                                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                                       </h6>
