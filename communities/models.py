@@ -172,6 +172,7 @@ class Community(models.Model):
 
     def get_posts(self):
         from posts.models import Post
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
         exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
@@ -180,6 +181,7 @@ class Community(models.Model):
         return posts
     def get_draft_posts(self):
         from posts.models import Post
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
@@ -188,6 +190,7 @@ class Community(models.Model):
         return posts
     def get_archive_posts(self):
         from posts.models import Post
+        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
         exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
