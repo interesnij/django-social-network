@@ -7,7 +7,6 @@ from logs.model.posts import PostManageLog
 
 
 class ModeratedPost(models.Model):
-    # рассмотрение жалобы на запись. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
     STATUS_PENDING = 'P'
     STATUS_SUSPEND = 'S'
     STATUS_DELETED = 'D'
@@ -18,8 +17,8 @@ class ModeratedPost(models.Model):
         (STATUS_DELETED, 'Запись удалена'),
         (STATUS_REJECTED, 'Запись отвергнута'),
     )
-    description = models.TextField(max_length=300, blank=True, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
+    description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
 
@@ -234,14 +233,11 @@ class PostModerationReport(models.Model):
     description = models.CharField(max_length=300, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
-    @classmethod 
+    @classmethod
     def create_post_moderation_report(cls, reporter_id, post, description, type):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post)
-        if reporter_id != post.creator.pk:
-            post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
-            return post_moderation_report
-        else:
-            pass
+        post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
+        return post_moderation_report 
 
     def __str__(self):
         return self.reporter.get_full_name()
