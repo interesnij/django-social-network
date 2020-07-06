@@ -187,7 +187,7 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
+    id = models.BigIntegerField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
