@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Оштрафованные записи | Администратор{% endblock %}
+{% block title %}Оштрафованные записи{% endblock %}
 {% load liked_user humanize %}
 {% block content %}
 
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                      <h5 class="mt-1">Оштрафованные записи | Администратор</h5>
+                      <h5 class="mt-1">Оштрафованные записи</h5>
                       <small class="content-color-secondary float-right mr-2 mt-1"></small>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
 
                           {% endif %}
 
-                            <div class="media-body btn_console border-top"> 
+                            <div class="media-body btn_console border-top">
                                 {% if object.is_suspend %}
                                   <span class="">До {{ object.expiration }}</span>
                                   (<a href="#" class="remove_post_suspend">Отменить остановку</a> |
