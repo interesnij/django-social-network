@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from users.models import User
-from logs.model.user_community import CommunityManageLog
+from logs.model.manage_user_community import CommunityManageLog
 from communities.models import Community
 
 
@@ -83,39 +83,39 @@ class ModeratedCommunity(models.Model):
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
         ModerationPenaltyCommunity.create_suspension_penalty(moderated_object=self, manager_id=manager_id, community_id=community_id, expiration=moderation_expiration)
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=severity)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=severity)
         self.save()
     def create_block(self, manager_id, community_id):
         self.verified = True
         self.save()
         ModerationPenaltyCommunity.create_block_penalty(moderated_object=self, manager_id=manager_id, community_id=community_id)
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=CommunityManageLog.BLOCK)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.BLOCK)
     def create_warning_banner(self, manager_id, community_id):
         self.verified = True
         self.save()
         ModerationPenaltyCommunity.create_banner_penalty(moderated_object=self, manager_id=manager_id, community_id=community_id)
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=CommunityManageLog.WARNING_BANNER)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.WARNING_BANNER)
 
     def delete_suspend(self, manager_id, community_id):
         obj = ModerationPenaltyCommunity.objects.get(moderated_object=self, community_id=community_id)
         obj.delete()
         self.delete()
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=CommunityManageLog.UNSUSPENDED)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.UNSUSPENDED)
     def delete_block(self, manager_id, community_id):
         obj = ModerationPenaltyCommunity.objects.get(moderated_object=self, community_id=community_id)
         obj.delete()
         self.delete()
-        CommunityManageLog.objects.create(community=community, manager=manager, action_type=CommunityManageLog.UNBLOCK)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.UNBLOCK)
     def delete_warning_banner(self, manager_id, community_id):
         obj = ModerationPenaltyCommunity.objects.get(moderated_object=self, community_id=community_id)
         obj.delete()
         self.delete()
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=CommunityManageLog.NO_WARNING_BANNER)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.NO_WARNING_BANNER)
 
     def unverify_moderation(self, manager_id, community_id):
         self.verified = False
         self.community_moderated_object.all().delete()
-        CommunityManageLog.objects.create(community_id=community_id, manager_id=manager_id, action_type=CommunityManageLog.UNVERIFY)
+        CommunityManageLog.objects.create(community=community_id, manager=manager_id, action_type=CommunityManageLog.UNVERIFY)
         self.save()
 
     def suspend_moderation(self):

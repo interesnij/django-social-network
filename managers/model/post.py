@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 from users.models import User
 from managers.models import ModerationCategory
-from logs.model.posts import PostManageLog
+from logs.model.manage_posts import PostManageLog
 
 
 class ModeratedPost(models.Model):
@@ -77,36 +77,36 @@ class ModeratedPost(models.Model):
             severity = "L"
         moderation_expiration = timezone.now() + duration_of_penalty
         ModerationPenaltyPost.create_suspension_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id, expiration=moderation_expiration)
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=severity)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=severity)
         self.save()
     def create_deleted(self, manager_id, post_id):
         self.verified = True
         self.save()
         ModerationPenaltyPost.create_delete_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id)
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.DELETED)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.DELETED)
 
     def delete_suspend(self, manager_id, post_id):
         obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
         obj.delete()
         self.delete()
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.UNSUSPENDED)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.UNSUSPENDED)
     def delete_deleted(self, manager_id, post_id):
         obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
         obj.delete()
         self.delete()
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.UNDELETED)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.UNDELETED)
 
     def unverify_moderation(self, manager_id, post_id):
         self.verified = False
         self.post_moderated_object.all().delete()
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.UNVERIFY)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.UNVERIFY)
         self.save()
 
     def reject_moderation(self, manager_id, post_id):
         self.verified = True
         current_status = self.status
         self.status = ModeratedPost.STATUS_REJECTED
-        PostManageLog.objects.create(post_id=post_id, manager_id=manager_id, action_type=PostManageLog.REJECT)
+        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.REJECT)
         self.save()
 
     def get_reporters(self):
@@ -166,25 +166,25 @@ class ModeratedPostComment(models.Model):
         self.verified = True
         self.save()
         ModerationPenaltyPostComment.create_block_penalty(moderated_object=self, manager_id=manager_id, comment_id=comment_id)
-        PostCommentManageLog.objects.create(comment_id=comment_id, manager_id=manager_id, action_type=PostCommentManageLog.DELETED)
+        PostCommentManageLog.objects.create(comment=comment_id, manager=manager_id, action_type=PostCommentManageLog.DELETED)
 
     def delete_deleted(self, manager_id, comment_id):
         obj = ModerationPenaltyPostComment.objects.get(moderated_object=self, comment_id=comment_id)
         obj.delete()
         self.delete()
-        PostCommentManageLog.objects.create(comment_id=comment_id, manager=manager, action_type=PostCommentManageLog.UNDELETED)
+        PostCommentManageLog.objects.create(comment=comment_id, manager=manager_id, action_type=PostCommentManageLog.UNDELETED)
 
     def unverify_moderation(self, manager_id, comment_id):
         self.verified = False
         self.post_comment_moderated_object.all().delete()
-        PostCommentManageLog.objects.create(comment_id=comment_id, manager_id=manager_id, action_type=PostCommentManageLog.UNVERIFY)
+        PostCommentManageLog.objects.create(comment=comment_id, manager=manager_id, action_type=PostCommentManageLog.UNVERIFY)
         self.save()
 
     def reject_moderation(self, manager_id, comment_id):
         self.verified = True
         current_status = self.status
         self.status = ModeratedPostComment.STATUS_REJECTED
-        PostCommentManageLog.objects.create(comment_id=comment_id, manager_id=manager_id, action_type=PostCommentManageLog.REJECT)
+        PostCommentManageLog.objects.create(comment=comment_id, manager=manager_id, action_type=PostCommentManageLog.REJECT)
         self.save()
 
     def get_reporters(self):
