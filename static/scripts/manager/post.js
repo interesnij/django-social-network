@@ -1,15 +1,15 @@
 on('#ajax', 'click', '.post_suspend_window', function() {
   _this = this;
-  if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
+  if(_this.parentElement.classList.contains("btn_console")){
+    div = _this.parentElement.parentElement.parentElement.parentElement;
     uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  }else if(_this.parentElement.classList.contains("btn_console")){
-    li = _this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("user-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");
     }
-    li.classList.add("changed")
+    div.classList.add("changed")
+  }else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_post/suspend_window/" + uuid, loader)
@@ -24,8 +24,8 @@ on('#ajax', 'click', '.post_delete_window', function() {
       list[i].classList.remove("changed");
     }
     div.classList.add("changed")
-  }else if (_this.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  }else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_post/delete_window/" + uuid, loader)
