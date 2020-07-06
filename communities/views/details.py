@@ -112,7 +112,21 @@ class PostCommunity(TemplateView):
         self.items = self.community.get_posts()
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        self.template_name = self.community.get_template_list(folder="c_lenta/", template="item.html", request=request)
+
+        if request.user.is_authenticated:
+            if request.user.is_staff_of_community_with_name(self.community.name):
+                self.template_name = "c_lenta/admin_item.html"
+            elif request.user.is_post_manager():
+                self.template_name = "c_lenta/staff_item.html"
+            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+                self.template_name = "c_lenta/item.html"
+        elif request.user.is_anonymous:
+            if self.is_public():
+                self.template_name = "c_lenta/item.html"
+
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
