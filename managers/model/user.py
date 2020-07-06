@@ -33,6 +33,8 @@ class ModeratedUser(models.Model):
     def _get_or_create_moderated_object(cls, user):
         try:
             moderated_object = cls.objects.get(user=user)
+            moderated_object.verified = False
+            moderated_object.save(update_fields=['verified'])
         except cls.DoesNotExist:
             moderated_object = cls.create_moderated_object(user=user)
         return moderated_object

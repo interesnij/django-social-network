@@ -1,7 +1,10 @@
+import re
 from users.models import User
 from django.views.generic import ListView
 from django.shortcuts import render_to_response
 from posts.models import Post
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from rest_framework.exceptions import PermissionDenied
 
 
 class UserVisitCommunities(ListView):
@@ -95,7 +98,26 @@ class PostListView(ListView):
 		except:
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+
+		if request.user.is_authenticated:
+			if self.user.pk == request.user.pk:
+				self.template_name = "lenta/my_list.html"
+			elif request.user.is_post_manager():
+				self.template_name = "lenta/staff_list.html"
+			elif self.user != request.user:
+				check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+				if self.user.is_closed_profile():
+					check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+				self.template_name = "lenta/list.html"
+		elif request.user.is_anonymous:
+			if self.user.is_closed_profile():
+				raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+			else:
+				self.template_name = "lenta/anon_list.html"
+
+		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + template_name
 		return super(PostListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

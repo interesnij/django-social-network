@@ -33,6 +33,8 @@ class ModeratedCommunity(models.Model):
     def _get_or_create_moderated_object(cls, community):
         try:
             moderated_object = cls.objects.get(community=community)
+            moderated_object.verified = False
+            moderated_object.save(update_fields=['verified'])
         except cls.DoesNotExist:
             moderated_object = cls.create_moderated_object(community=community)
         return moderated_object
