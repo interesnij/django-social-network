@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from posts.models import Post
 from communities.models import Community, CommunityMembership
@@ -5,7 +6,7 @@ from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
-import re
+from common.chekers import check_can_get_posts_for_community_with_name
 
 
 class CommunityMusic(ListView):
@@ -70,11 +71,24 @@ class PostsCommunity(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_template_list(folder="c_lenta/", template="list.html", request=request)
 		try:
 			self.fixed = Post.objects.get(community=community, is_fixed=True)
 		except:
 			self.fixed = None
+        if request.user.is_authenticated:
+            if request.user.is_staff_of_community_with_name(self.community.name):
+                self.template_name = "c_lenta/admin_list.html"
+            elif request.user.is_post_manager():
+                self.template_name = "c_lenta/staff_list.html"
+            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+                self.template_name = "c_lenta/list.html"
+        elif request.user.is_anonymous:
+            if self.is_public():
+                self.template_name = "c_lenta/list.html"
+
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
 		return super(PostsCommunity,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
