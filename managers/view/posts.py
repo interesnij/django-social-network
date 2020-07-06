@@ -164,14 +164,10 @@ class PostClaimCreate(View):
         from managers.model.post import PostModerationReport
 
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        form = PostReportForm(request.POST)
-        if form.is_valid():
-            mod = form.save(commit=False)
-            description = request.POST.get('description')
-            PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=description, type=request.POST.get('type'))
-            return HttpResponse("!")
-        else:
-            return HttpResponse("?")
+        description = request.POST.get('description')
+        type = request.POST.get('type')
+        PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=description, type=type)
+        return HttpResponse("!")
 
 class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
