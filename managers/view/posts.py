@@ -161,16 +161,16 @@ class PostDeleteDelete(View):
 
 class PostClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.post import PostModerationReport
+        from managers.model.user import PostModerationReport
 
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         form = PostReportForm(request.POST)
-        if form.is_valid() and request.user.is_authenticated:
+        if form.is_valid():
             mod = form.save(commit=False)
             PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=mod.description, type=request.POST.get('type'))
-            return HttpResponse("!")
+            return HttpResponse("")
         else:
-            return HttpResponse("?")
+            return HttpResponse("")
 
 class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
