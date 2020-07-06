@@ -231,14 +231,17 @@ class PostModerationReport(models.Model):
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Объект")
-    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
+    description = models.CharField(max_length=300, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
     @classmethod
     def create_post_moderation_report(cls, reporter_id, post, description, type):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post)
-        post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
-        return post_moderation_report
+        if reporter_id != post.creator.pk:
+            post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
+            return post_moderation_report
+        else:
+            pass
 
     def __str__(self):
         return self.reporter.get_full_name()
