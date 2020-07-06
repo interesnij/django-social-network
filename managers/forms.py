@@ -29,3 +29,4 @@ class PostModeratedForm(forms.ModelForm):
 class PostReportForm(forms.ModelForm):
 	class Meta:
 		model = PostModerationReport
+		fields = ['description']
