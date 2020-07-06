@@ -30,6 +30,8 @@ class ModeratedPost(models.Model):
     def _get_or_create_moderated_object(cls, post):
         try:
             moderated_object = cls.objects.get(post=post)
+            moderated_object.verified = False
+            moderated_object.save(update_fields=['verified'])
         except cls.DoesNotExist:
             moderated_object = cls.create_moderated_object(post=post)
         return moderated_object
@@ -237,7 +239,7 @@ class PostModerationReport(models.Model):
     def create_post_moderation_report(cls, reporter_id, post, description, type):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post)
         post_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
-        return post_moderation_report 
+        return post_moderation_report
 
     def __str__(self):
         return self.reporter.get_full_name()
