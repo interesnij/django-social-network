@@ -33,7 +33,7 @@
                           {% if object.post.community %}
                           <div class="card-header">
                               <div class="media">
-                                <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                                <a href="{% url 'community_detail' pk=object.post.community.pk %}" class="ajax">
                                   <figure>
                                     {% if object.post.community.get_avatar %}
                                       <img src="{{ object.post.community.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">

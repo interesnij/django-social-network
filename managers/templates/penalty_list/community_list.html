@@ -37,7 +37,7 @@
                         </a>
                         <div class="media-body btn_console">
                             <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
-                                <h6 class="my-0 mt-1">{{ object.community.name }}</h6>
+                                <h6 class="my-0 mt-1">{{ object.post.community.name }}</h6>
                             </a>
                             {% if object.is_suspend %}
                               <span class="small">До {{ object.expiration }}</span>
