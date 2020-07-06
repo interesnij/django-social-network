@@ -17,24 +17,24 @@ class UserPostView(TemplateView):
         self.posts = self.user.get_posts()
 
         if request.user.is_authenticated:
-			if self.user.pk == request.user.pk:
-				self.template_name = "lenta/my_post.html"
-			elif request.user.is_post_manager():
-				self.template_name = "lenta/staff_post.html"
-			elif self.user != request.user:
-				check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-				if self.user.is_closed_profile():
-					check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-				self.template_name = "lenta/post.html"
-		elif request.user.is_anonymous:
-			if self.user.is_closed_profile():
-				raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-			else:
-				self.template_name = "lenta/anon_post.html"
+            if self.user.pk == request.user.pk:
+                self.template_name = "lenta/my_post.html"
+            elif request.user.is_post_manager():
+                self.template_name = "lenta/staff_post.html"
+            elif self.user != request.user:
+                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+                if self.user.is_closed_profile():
+                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+                self.template_name = "lenta/post.html"
+        elif request.user.is_anonymous:
+            if self.user.is_closed_profile():
+                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            else:
+                self.template_name = "lenta/anon_post.html"
 
-		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + template_name
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
         self.prev = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
         return super(UserPostView,self).get(request,*args,**kwargs)
