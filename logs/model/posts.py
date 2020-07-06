@@ -26,7 +26,7 @@ class PostManageLog(models.Model):
     )
 
     post = models.PositiveIntegerField(default=0, verbose_name="Запись")
-    manager = models.PositiveIntegerField(default=0, on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
