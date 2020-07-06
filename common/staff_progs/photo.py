@@ -1,5 +1,5 @@
 from managers.models import PhotoUserStaff, CanWorkStaffPhotoUser
-from logs.model.photo import PhotoWorkerManageLog, PhotoCreateWorkerManageLog
+from logs.model.manage_photo import PhotoWorkerManageLog, PhotoCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 
 

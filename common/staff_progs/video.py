@@ -1,5 +1,5 @@
 from managers.models import VideoUserStaff, CanWorkStaffVideoUser
-from logs.model.video import VideoWorkerManageLog, VideoCreateWorkerManageLog
+from logs.model.manage_video import VideoWorkerManageLog, VideoCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 
 

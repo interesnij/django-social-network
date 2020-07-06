@@ -1,5 +1,5 @@
 from managers.models import CommunityStaff, CanWorkStaffCommunity
-from logs.model.user_community import CommunityWorkerManageLog, CommunityCreateWorkerManageLog
+from logs.model.manage_user_community import CommunityWorkerManageLog, CommunityCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 
 

@@ -1,5 +1,5 @@
 from managers.models import AudioUserStaff, CanWorkStaffAudioUser
-from logs.model.audio import AudioWorkerManageLog, AudioCreateWorkerManageLog
+from logs.model.manage_audio import AudioWorkerManageLog, AudioCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 
 

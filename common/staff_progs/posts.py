@@ -1,5 +1,5 @@
 from managers.models import PostUserStaff, CanWorkStaffPostUser
-from logs.model.posts import PostWorkerManageLog, PostCreateWorkerManageLog
+from logs.model.manage_posts import PostWorkerManageLog, PostCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 
 
