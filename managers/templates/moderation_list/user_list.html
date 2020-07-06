@@ -25,7 +25,7 @@
 
               {% if object_list %}
 
-              <ul class="list-group" id="moderation_users_admin_container" data-link="/managers/moderation_list/user_admin/{{ user.pk }}">
+              <ul class="list-group" id="moderation_users_container" data-link="/managers/moderation_list/user_admin/{{ user.pk }}">
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}">
                       <div class="media">
