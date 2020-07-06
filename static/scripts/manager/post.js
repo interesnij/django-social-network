@@ -64,6 +64,8 @@ on('#ajax', 'click', '.create_post_suspend_btn', function() {
 });
 
 on('#ajax', 'click', '.create_post_delete_btn', function() {
+  var moderation_container, container_object, _this;
+
   _this = this;
   form_data = new FormData(document.querySelector("#post_delete_form"));
   form_post = document.querySelector("#post_delete_form");
