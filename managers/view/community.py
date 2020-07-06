@@ -192,7 +192,7 @@ class CommunityBlockDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager or request.user.is_superuser:
-            moderate_obj = ModeratedCommunity.objects.get(community=community)
+            moderate_obj = ModeratedCommunity.objects.get(community_id=self.kwargs["pk"])
             moderate_obj.delete_block(manager_id=request.user.pk, community_id=community.pk)
         return HttpResponse("")
 
