@@ -24,6 +24,7 @@ class ModeratedCommunity(models.Model):
     verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='moderated_community', blank=True, verbose_name="Сообщество")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_moderated_object(cls, community):
@@ -167,6 +168,7 @@ class CommunityModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedCommunity, on_delete=models.CASCADE, related_name='community_reports', null=False, verbose_name="Сообщество")
     description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_community_moderation_report(cls, reporter_id, community, description, type):
@@ -198,6 +200,7 @@ class ModerationPenaltyCommunity(models.Model):
         (BANNER, 'Вывешен баннер'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_suspension_penalty(cls, community_id, manager_id, moderated_object, expiration):

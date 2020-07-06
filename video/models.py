@@ -33,7 +33,7 @@ class VideoCategory(models.Model):
 
 
 class VideoTags(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     order = models.IntegerField(default=0)
 
@@ -78,6 +78,7 @@ class VideoAlbum(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -130,6 +131,7 @@ class Video(models.Model):
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_video')
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name="Видео-ролики"
@@ -170,6 +172,7 @@ class VideoComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )

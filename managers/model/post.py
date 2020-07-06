@@ -21,6 +21,7 @@ class ModeratedPost(models.Model):
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_moderated_object(cls, post):
@@ -132,6 +133,7 @@ class ModeratedPostComment(models.Model):
     verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, related_name='moderated_post_comment', blank=True, verbose_name="Комментарий к записи")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_moderated_object(cls, comment):
@@ -234,6 +236,7 @@ class PostModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_post_moderation_report(cls, reporter_id, post, description, type):
@@ -284,6 +287,7 @@ class PostCommentModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_post_comment_moderation_report(cls, reporter_id, comment, description, type):
@@ -313,6 +317,7 @@ class ModerationPenaltyPost(models.Model):
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_suspension_penalty(cls, post_id, manager_id, moderated_object, expiration):
@@ -348,6 +353,7 @@ class ModerationPenaltyPostComment(models.Model):
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_delete_penalty(cls, post_id, manager_id, moderated_object):

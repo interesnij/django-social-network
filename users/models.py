@@ -18,6 +18,7 @@ class User(AbstractUser):
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
     USERNAME_FIELD = 'phone'
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = 'пользователь'

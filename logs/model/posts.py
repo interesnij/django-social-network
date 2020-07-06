@@ -29,6 +29,7 @@ class PostManageLog(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -53,6 +54,7 @@ class PostCommentManageLog(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -80,6 +82,7 @@ class PostWorkerManageLog(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -107,6 +110,7 @@ class PostCreateWorkerManageLog(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_create_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

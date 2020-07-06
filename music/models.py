@@ -125,7 +125,7 @@ class UserTempSoundList(models.Model):
 
 class SoundcloudParsing(models.Model):
     #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
-    id = models.IntegerField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     artwork_url = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)

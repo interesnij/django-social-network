@@ -20,6 +20,7 @@ class ModeratedPhoto(models.Model):
     category = models.ForeignKey(ModerationCategory, blank=True, on_delete=models.CASCADE, related_name='moderated_photo', verbose_name="Категория")
     photo = models.ForeignKey("gallery.Photo", on_delete=models.CASCADE, blank=True, verbose_name="Фотография")
     photo_comment = models.ForeignKey("gallery.PhotoComment", on_delete=models.CASCADE, blank=True, verbose_name="Комментарий к фотографии")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_moderated_object(cls, photo, photo_comment):
@@ -150,6 +151,7 @@ class PhotoModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedPhoto, on_delete=models.CASCADE, related_name='photo_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=False, null=True,verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_photo_moderation_report(cls, reporter_id, photo, description):
@@ -168,6 +170,7 @@ class ModerationPenaltyPhoto(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_penalties', verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedPhoto, on_delete=models.CASCADE, related_name='photo_penalties', verbose_name="Объект")
+    id = models.BigAutoField(primary_key=True)
 
     TYPE_SUSPENSION = 'S'
     TYPE_DELETED = 'D'

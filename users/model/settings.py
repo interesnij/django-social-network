@@ -87,6 +87,7 @@ class UserColorSettings(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
     color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
+    id = models.BigAutoField(primary_key=True)
 
 
 class UserPrivate(models.Model):

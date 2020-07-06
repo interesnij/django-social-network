@@ -24,6 +24,7 @@ class ModeratedUser(models.Model):
     verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderated_user', blank=True, verbose_name="Пользователь")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_moderated_object(cls, user):
@@ -166,6 +167,7 @@ class UserModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_user_moderation_report(cls, reporter_id, user, description, type):
@@ -197,6 +199,7 @@ class ModerationPenaltyUser(models.Model):
         (BANNER, 'Вывешен баннер'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_suspension_penalty(cls, user_id, manager_id, moderated_object, expiration):

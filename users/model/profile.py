@@ -19,6 +19,7 @@ class UserProfile(models.Model):
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
+    id = models.BigAutoField(primary_key=True)
 
     def __str__(self):
         return self.user.last_name

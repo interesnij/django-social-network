@@ -14,7 +14,6 @@ from channels.layers import get_channel_layer
 
 
 class Album(models.Model):
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='albums')
     community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
@@ -77,6 +76,7 @@ class Photo(models.Model):
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -171,7 +171,7 @@ class PhotoComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     photo_comment = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
