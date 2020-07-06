@@ -146,6 +146,8 @@ class PostDeleteCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_deleted(manager_id=request.user.pk, post_id=post.pk)
+            post.is_deleted = False
+            post.save(update_fields=['is_deleted'])
             return HttpResponse("")
         else:
             return HttpResponse("")
@@ -156,6 +158,8 @@ class PostDeleteDelete(View):
         if request.user.is_post_manager or request.user.is_superuser:
             moderate_obj = ModeratedPost.objects.get(post=post)
             moderate_obj.delete_deleted(manager_id=request.user.pk, post_id=post.pk)
+            post.is_deleted = True
+            post.save(update_fields=['is_deleted'])
         return HttpResponse("")
 
 
