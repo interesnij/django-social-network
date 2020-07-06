@@ -167,7 +167,8 @@ class PostClaimCreate(View):
         form = PostReportForm(request.POST)
         if form.is_valid():
             mod = form.save(commit=False)
-            PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=mod.description, type=request.POST.get('type'))
+            description = request.POST.get('description')
+            PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=description, type=request.POST.get('type'))
             return HttpResponse("!")
         else:
             return HttpResponse("?")
