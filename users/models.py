@@ -813,7 +813,7 @@ class User(AbstractUser):
         from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
-        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        exclude_moderated_posts_query = ~Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND)
         posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
@@ -822,7 +822,7 @@ class User(AbstractUser):
         from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
-        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        exclude_moderated_posts_query = ~Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND)
         posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
@@ -831,7 +831,7 @@ class User(AbstractUser):
         from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
-        exclude_moderated_posts_query = ~Q(Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND) | Q(moderated_post__status=ModeratedPost.STATUS_DELETED))
+        exclude_moderated_posts_query = ~Q(moderated_post__status=ModeratedPost.STATUS_SUSPEND)
         posts_query.add(exclude_moderated_posts_query, Q.AND)
         posts = Post.objects.filter(posts_query)
         return posts
