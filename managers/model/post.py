@@ -234,7 +234,7 @@ class PostModerationReport(models.Model):
     description = models.CharField(max_length=300, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
 
-    @classmethod
+    @classmethod 
     def create_post_moderation_report(cls, reporter_id, post, description, type):
         moderated_object = ModeratedPost.get_or_create_moderated_object_for_post(post=post)
         if reporter_id != post.creator.pk:
