@@ -161,7 +161,7 @@ class CommunityModerationReport(models.Model):
         (UNETHICAL, 'Неэтичный контент'),
     )
 
-    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_reports', null=False, verbose_name="Репортер")
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedCommunity, on_delete=models.CASCADE, related_name='community_reports', null=False, verbose_name="Сообщество")
     description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
