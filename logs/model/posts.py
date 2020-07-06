@@ -25,8 +25,8 @@ class PostManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, verbose_name="Запись")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    post = models.PositiveIntegerField(default=0, verbose_name="Запись")
+    manager = models.PositiveIntegerField(default=0, on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -50,8 +50,8 @@ class PostCommentManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, verbose_name="Комментарий к записи")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    comment = models.PositiveIntegerField(default=0, verbose_name="Комментарий к записи")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -78,8 +78,8 @@ class PostWorkerManageLog(models.Model):
         (DELETE_MODERATOR, 'Удален модератор записей'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -106,8 +106,8 @@ class PostCreateWorkerManageLog(models.Model):
         (DELETE_MODERATOR, 'Удален создатель модераторов записей'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_create_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)

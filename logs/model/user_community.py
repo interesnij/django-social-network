@@ -33,8 +33,8 @@ class UserManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -75,8 +75,8 @@ class CommunityManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -108,8 +108,8 @@ class UserWorkerManageLog(models.Model):
         (DELETE_ADVERTISER, 'Удален менеджер рекламодателей пользователей'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -140,8 +140,8 @@ class UserCreateWorkerManageLog(models.Model):
         (DELETE_ADVERTISER, 'Удален создатель менеджеров рекламодателей пользователей'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_creator_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -173,8 +173,8 @@ class CommunityWorkerManageLog(models.Model):
         (DELETE_ADVERTISER, 'Удален менеджер рекламодателей сообществ'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    manager = models.PositiveIntegerField(default=0, on_delete=models.CASCADE, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -205,8 +205,8 @@ class CommunityCreateWorkerManageLog(models.Model):
         (DELETE_ADVERTISER, 'Удален создатель менеджеров рекламодателей сообществ'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Сообщество")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="community_creator_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)

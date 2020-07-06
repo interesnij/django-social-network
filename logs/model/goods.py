@@ -25,8 +25,8 @@ class GoodManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    post = models.ForeignKey('goods.Good', on_delete=models.CASCADE, verbose_name="Запись")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    post = models.PositiveIntegerField(default=0, verbose_name="Запись")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -49,8 +49,8 @@ class GoodCommentManageLog(models.Model):
         (UNVERIFY, 'Проверка убрана'),
     )
 
-    comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, verbose_name="Комментарий к товару")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_comment_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    comment = models.PositiveIntegerField(default=0, verbose_name="Комментарий к товару")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -78,8 +78,8 @@ class GoodWorkerManageLog(models.Model):
         (DELETE_MODERATOR, 'Удален модератор товаров'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_worker_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
@@ -106,8 +106,8 @@ class GoodCreateWorkerManageLog(models.Model):
         (DELETE_MODERATOR, 'Удален создатель модераторов товаров'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_create_manager", on_delete=models.CASCADE, verbose_name="Менеджер")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
     id = models.BigAutoField(primary_key=True)
