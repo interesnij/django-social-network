@@ -50,7 +50,7 @@
                                         </a>
                                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                                       </h6>
-                                      <p class="mb-0">{{ object.created|naturaltime }}</p>
+                                      <p class="mb-0">{{ object.post.created|naturaltime }}</p>
                                   </div>
                               </div>
                           </div>
@@ -58,7 +58,7 @@
                               {% include 'post_community/repost.html' %}
                             {% endif %}
 
-                            <div class="card-body"><p class="">{{ object.text }}</p></div>
+                            <div class="card-body"><p class="">{{ object.post.text }}</p></div>
 
                             <div class="attach_container" data-pk="{{ object.post.pk }}">
                               {% for photo in object.post.item_photo.all %}
