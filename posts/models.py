@@ -187,7 +187,7 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    id = models.BigIntegerField(unique=True, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
