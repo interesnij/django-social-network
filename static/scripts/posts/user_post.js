@@ -189,7 +189,7 @@ on('#ajax', 'click', '.u_post_comment_delete', function() {
     div = document.createElement("div");
     div.classList.add("media", "comment");
 
-    div.innerHTML = "<p>Комментарий удален. <span class='u_comment_abort_remove' style='cursor:pointer' data-pk='" + comment_pk + "'>Восстановить</span></p>";
+    div.innerHTML = "<p class='u_comment_abort_remove' style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
     comment.parentElement.insertBefore(div, comment);
     comment.style.display = "none";
   }};
