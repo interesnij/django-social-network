@@ -12,39 +12,36 @@
         </span>
         <span class="stream_reply_comments">
             {% for reply in comment.get_replies %}
-              {% include 'c_photo_comment/admin_reply.html' %}
+              {% include 'u_photo_comment/staff_reply.html' %}
               <br>
             {% endfor %}
         </span>
       </div>
     {% else %}
-      {% include 'c_photo_comment/admin_parent.html' %}
+      {% include 'u_photo_comment/staff_parent.html' %}
     {% endif %}
   {% endfor %}
 </span>
-
 <div>
-
   <form>
       {% csrf_token %}
-      <div class="row img_block" style="margin:10px"></div>
+      <input type="hidden" name="photo_comment" value="{{ parent.uuid }}">
+      <input type="hidden" name="id" value="{{ user.pk }}">
+
+      <div class="row img_block" style="margin-top: 10px"></div>
       <div class="row no-gutters">
 
-        {% include 'c_photo_comment/form_dropdown.html' %}
-
+        {% include 'u_photo_comment/form_dropdown.html' %}
           <div class="col">
-            <input type="hidden" name="photo_comment" value="{{ parent.uuid }}">
-            <input type="hidden" name="id" value="{{ community.pk }}">
               <div class="input-group input-group-sm">
                 <input type="text" name="text" class="form-control text-comment form-control-rounded">
               </div>
           </div>
           <div class="col-auto">
-              <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_photoComment" type="button">
+              <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_photoComment" type="button">
                 <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
               </button>
           </div>
       </div>
   </form>
-
 </div>

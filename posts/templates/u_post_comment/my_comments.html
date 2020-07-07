@@ -11,10 +11,10 @@
           </span>
           <span class="stream_reply_comments">
               {% for reply in comment.get_replies %}
-                {% include 'u_post_comment/reply.html' %}
+                {% include 'u_post_comment/my_reply.html' %}
                 <br>
               {% endfor %}
-          </span>
+          </span> 
         </div>
       {% else %}
         {% include 'u_post_comment/my_parent.html' %}

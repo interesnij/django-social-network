@@ -81,7 +81,7 @@
                 {% endif %}
                 </span>
 
-                    <span style="cursor:pointer;display: flex; margin-bottom: 10px;" class="show_replies content-color-primary">
+                    <span style="cursor:pointer;display: flex;" class="show_replies content-color-primary">
                       {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
                       {% endif %}
@@ -89,10 +89,15 @@
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'u_post_comment/anon_reply.html' %}
-                        <br>
+                        {% if reply.is_deleted %}
+                          <div class="comment border-bottom">
+                            <p style="text-decoration:underline;display: flex;">Комментарий удален</p>
+                          </div>
+                        {% else %}
+                          {% include 'u_post_comment/anon_reply.html' %}
+                          <br>
+                        {% endif %}
                       {% endfor %}
-
                     </span>
                 </div>
             </div>

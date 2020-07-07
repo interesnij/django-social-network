@@ -115,7 +115,6 @@ class Photo(models.Model):
     def get_comments(self):
         comments_query = Q(photo_comment_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 
     def count_comments(self):
