@@ -23,12 +23,12 @@
 
         <div class="">
             <div class="row">
-                {% include 'c_post_comment/info.html' %}
+                <div class="col" data-pk="{{ comment.pk }}">
+                  {% include 'c_post_comment/staff_info.html' %}
 
                     <div style="display:none">
                         <form>
                             {% csrf_token %}
-
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters" style="margin-top: 20px;">
@@ -57,7 +57,7 @@
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'c_post_comment/moderator_reply.html' %}
+                        {% include 'c_post_comment/staff_reply.html' %}
                         <br>
                       {% endfor %}
 

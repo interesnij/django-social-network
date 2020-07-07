@@ -6,7 +6,7 @@
         {% if reply.commenter.get_avatar %}
           <img src="{{ reply.commenter.get_avatar }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
         {% else %}
-          <svg fill="currentColor" class="svg_default svg_default_30" xviewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         {% endif %}
     </figure>
   </a>
@@ -24,7 +24,7 @@
         <div class="">
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
-                  {% include 'c_post_comment/reply_info.html' %}
+                  {% include 'c_post_comment/staff_reply_info.html' %}
 
                     <div style="display:none;margin-left:-50px;">
                         <form>
