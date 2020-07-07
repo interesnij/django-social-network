@@ -58,7 +58,7 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     def count_comments(self):
-        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
+        parent_comments = PostComment.objects.filter(post_id=self.pk)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
