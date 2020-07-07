@@ -60,6 +60,7 @@ on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
+  console.log(form.parentElement.parentElement.querySelector(".stream_reply_comments"))
 });
 
 on('#ajax', 'click', '.u_replyParentItemComment', function() {
