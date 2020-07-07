@@ -177,11 +177,11 @@ on('#ajax', 'click', '.u_dislike2', function() {
   vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-on('#ajax', 'click', '.u_post_comment_delete', function() {
+function comment_delete(link, _class){
   data = this.parentElement.parentElement;
   comment_pk = data.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/delete_comment/" + comment_pk + "/", true );
+  link.open( 'GET', "link" + comment_pk + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     comment = data.parentElement.parentElement.parentElement.parentElement;
@@ -189,11 +189,14 @@ on('#ajax', 'click', '.u_post_comment_delete', function() {
     div = document.createElement("div");
     div.classList.add("media", "comment");
 
-    div.innerHTML = "<p class='u_comment_abort_remove' style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
+    div.innerHTML = "<p class='" + _class + "'style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
     comment.parentElement.insertBefore(div, comment);
     comment.style.display = "none";
   }};
   link.send( );
+}
+on('#ajax', 'click', '.u_post_comment_delete', function() {
+  comment_delete("/posts/user/delete_comment/", "u_comment_abort_remove")
 })
 on('#ajax', 'click', '.u_comment_abort_remove', function() {
   comment = this.parentElement.nextElementSibling;
