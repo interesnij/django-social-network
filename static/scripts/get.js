@@ -136,10 +136,11 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('#ajax', 'click', '.reply_comment', function() {
-  var objectUser = this.previousElementSibling.innerHTML;
-  var form = this.nextElementSibling.nextElementSibling;
+  _this = this;
+  var objectUser = _this.previousElementSibling.innerHTML;
+  var form = _this.nextElementSibling.nextElementSibling;
   form.value = objectUser + ', ';
-  this.nextElementSibling.style.display = "block";
+  _this.nextElementSibling.style.display = "block";
   form.focus();
 })
 
