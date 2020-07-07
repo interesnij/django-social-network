@@ -177,8 +177,8 @@ on('#ajax', 'click', '.u_dislike2', function() {
   vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-function comment_delete(link, _class){
-  data = this.parentElement.parentElement;
+function comment_delete(_this, link, _class){
+  data = _this.parentElement.parentElement;
   comment_pk = data.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "link" + comment_pk + "/", true );
@@ -196,7 +196,7 @@ function comment_delete(link, _class){
   link.send( );
 }
 on('#ajax', 'click', '.u_post_comment_delete', function() {
-  comment_delete("/posts/user/delete_comment/", "u_comment_abort_remove")
+  comment_delete(this, "/posts/user/delete_comment/", "u_comment_abort_remove")
 })
 on('#ajax', 'click', '.u_comment_abort_remove', function() {
   comment = this.parentElement.nextElementSibling;
