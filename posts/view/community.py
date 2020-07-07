@@ -26,6 +26,8 @@ class PostCommunityCommentList(ListView):
                 self.template_name = "c_post_comment/staff_comments.html"
             elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
                 self.template_name = "c_post_comment/comments.html"
+            else:
+                self.template_name = "c_post_comment/comments.html"
         elif request.user.is_anonymous:
             if self.is_public():
                 self.template_name = "c_post_comment/anon_comments.html"
