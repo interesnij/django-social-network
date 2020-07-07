@@ -8,8 +8,8 @@ urlpatterns = [
 	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostUserCommentList.as_view()),
     url(r'^post-comment/$', login_required(PostCommentUserCreate.as_view())),
     url(r'^reply-comment/$', login_required(PostReplyUserCreate.as_view())),
-	url(r'^delete_comment/$', login_required(PostCommentUserDelete.as_view())),
-	url(r'^abort_delete_comment/$', login_required(PostCommentUserAbortDelete.as_view())),
+	url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PostCommentUserDelete.as_view())),
+	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(PostCommentUserAbortDelete.as_view())),
 
 	url(r'^fixed/(?P<uuid>[0-9a-f-]+)/$', login_required(user_fixed)),
     url(r'^unfixed/(?P<uuid>[0-9a-f-]+)/$', login_required(user_unfixed)),

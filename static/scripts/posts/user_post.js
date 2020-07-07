@@ -68,7 +68,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, block.parentElement, '/posts/user/reply-comment/')
-  form.parentElement.style.display = "none"; 
+  form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
 
@@ -96,6 +96,37 @@ on('#ajax', 'click', '.u_post_remove', function() {
   }};
 
   link.send( );
+});
+on('#ajax', 'click', '.u_post_comment_delete', function() {
+  data = this.parentElement.parentElement;
+  comment_pk = data.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/user/delete_comment/" + comment_pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    comment = data.parentElement.parentElement.parentElement.parentElement;
+    comment.style.display = "none";
+    div = document.createElement("div");
+    div.classList.add("media", "comment");
+
+    div.innerHTML = "Комментарий удален. <span class='u_comment_abort_remove' style='cursor:pointer' data-pk='" + comment_pk + "'>Восстановить</span>";
+    comment.parentElement.insertBefore(div, comment);
+    comment.style.display = "none";
+  }};
+  link.send( );
+})
+on('#ajax', 'click', '.u_comment_abort_remove', function() {
+  comment = this.parentElement.nextElementSibling;
+  comment.style.display = "block";
+  pk = this.getAttribute("data-pk");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/user/abort_delete_comment/" + pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+  }};
+  link.send();
 });
 
 
@@ -160,6 +191,7 @@ on('#ajax', 'click', '.u_dislike', function() {
   send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
+
 on('#ajax', 'click', '.u_like2', function() {
   _this = this;
   item = _this.parentElement;
