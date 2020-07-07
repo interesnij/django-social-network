@@ -141,7 +141,7 @@
                         {% for reply in comment.get_replies %}
                           {% if reply.is_deleted %}
                             <div class="comment border-bottom">
-                              <p style="text-decoration:underline;display: flex; padding: 15px 10px 0 10px;">Комментарий удален</p>
+                              <p style="text-decoration:underline;display: flex;">Комментарий удален</p>
                             </div>
                           {% else %}
                             {% include 'u_post_comment/my_reply.html' %}
