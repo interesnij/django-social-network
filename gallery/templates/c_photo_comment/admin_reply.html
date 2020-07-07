@@ -1,6 +1,6 @@
 {% load humanize %}
 
-<div class="media reply">
+<div class="media reply border-bottom">
   <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
     <figure>
         {% if reply.commenter.get_avatar %}
