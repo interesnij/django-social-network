@@ -83,7 +83,7 @@
                     &nbsp;&nbsp;
                     <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
 
-                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                    <span style="cursor:pointer;display: flex; margin-bottom: 10px;" class="show_replies content-color-primary">
                       {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
                       {% endif %}

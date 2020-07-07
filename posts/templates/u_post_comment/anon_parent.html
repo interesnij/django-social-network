@@ -1,6 +1,6 @@
 {% load humanize liked_user %}
 
-<div class="media comment">
+<div class="media comment border-bottom">
   <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
     <figure>
         {% if comment.commenter.get_avatar %}
@@ -81,7 +81,7 @@
                 {% endif %}
                 </span>
 
-                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                    <span style="cursor:pointer;display: flex; margin-bottom: 10px;" class="show_replies content-color-primary">
                       {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
                       {% endif %}
