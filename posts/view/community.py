@@ -21,14 +21,14 @@ class PostCommunityCommentList(ListView):
 
         if request.user.is_authenticated:
             if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_post_comment/comments.html"
+                self.template_name = "c_post_comment/admin_comments.html"
             elif request.user.is_post_manager():
-                self.template_name = "c_post_comment/comments.html"
+                self.template_name = "c_post_comment/staff_comments.html"
             elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
                 self.template_name = "c_post_comment/comments.html"
         elif request.user.is_anonymous:
             if self.is_public():
-                self.template_name = "c_post_comment/comments.html"
+                self.template_name = "c_post_comment/anon_comments.html"
 
         MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
