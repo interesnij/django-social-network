@@ -3,7 +3,7 @@
     {% for comment in object_list %}
       {% if comment.is_deleted %}
         <div class="comment border-bottom">
-          <p style="text-decoration:underline;display: flex; padding: 15px 10px 0 10px;margin: 0;">Комментарий удален</p>
+          <p style="text-decoration:underline;display: flex; padding-left:10px;margin: 0;">Комментарий удален</p>
           <span style="cursor:pointer;" class="show_replies content-color-primary">
               {% if comment.count_replies %}
               ---- {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
