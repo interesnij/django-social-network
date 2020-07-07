@@ -137,7 +137,7 @@ on('#ajax', 'click', '.show_replies', function() {
 
 on('#ajax', 'click', '.reply_comment', function() {
   var objectUser = this.previousElementSibling.innerHTML;
-  var form = this.nextElementSibling.nextElementSibling.querySelector(".text-comment");
+  var form = this.nextElementSibling.nextElementSibling;
   form.value = objectUser + ', ';
   this.nextElementSibling.style.display = "block";
   form.focus();
