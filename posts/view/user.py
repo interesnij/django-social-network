@@ -100,6 +100,26 @@ class PostReplyUserCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class PostCommentUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == comment.commenter.pk:
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class PostCommentUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == comment.commenter.pk:
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
 
 def post_update_interactions(request):
     data_point = request.POST['id_value']
@@ -144,23 +164,26 @@ def user_on_comment(request, uuid):
 	else:
 		return HttpResponse("Пожалуйста, включайте комментарии к своим записям!")
 
-def user_item_delete(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user == item.creator:
-		item.is_deleted=True
-		item.save(update_fields=['is_deleted'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
-def user_item_abort_delete(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user == item.creator:
-		item.is_deleted=False
-		item.save(update_fields=['is_deleted'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
+class PostUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.pk == item.creator.pk:
+            item.is_deleted = True
+            item.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class PostUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.pk == item.creator.pk:
+            item.is_deleted = False
+            item.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
 
 
 class PostUserDetail(TemplateView):
