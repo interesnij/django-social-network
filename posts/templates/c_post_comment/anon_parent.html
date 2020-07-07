@@ -80,8 +80,6 @@
                 </div>
                 {% endif %}
                 </span>
-                    &nbsp;&nbsp;
-                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
 
                     <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
                       {% if comment.count_replies %}
@@ -94,7 +92,6 @@
                         {% include 'c_post_comment/anon_reply.html' %}
                         <br>
                       {% endfor %}
-
                     </span>
                 </div>
             </div>
