@@ -5,7 +5,7 @@
       {% if comment.is_deleted %}
         <div class="media comment border-bottom">
           <p style="text-decoration:underline;padding:15px">Комментарий удален</p>
-          <span style="cursor:pointer" class="show_replies content-color-primary">
+          <span style="cursor:pointer;display: flex; margin-bottom: 10px;" class="show_replies content-color-primary">
               {% if comment.count_replies %}
               ---- {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
               {% endif %}
