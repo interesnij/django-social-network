@@ -38,7 +38,7 @@
                         <span class="dropdown-item user_blocker" style="font-weight: bold;">Блокировать</span>
                         <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
                         {% if user.is_have_warning_banner %}
-                          <a href="/managers/penalty_list/user_admin/{{ request.user.pk}}" class="dropdown-item ajax" style="font-weight: bold;">Применен баннер</a>
+                          <a href="/managers/penalty_list/user/{{ request.user.pk}}" class="dropdown-item ajax" style="font-weight: bold;">Применен баннер</a>
                         {% else %}
                           <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
                         {% endif %}
