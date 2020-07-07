@@ -8,14 +8,18 @@ on('#ajax', 'click', '.c_photoComment', function() {
 
 on('#ajax', 'click', '.c_replyPostComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.parentElement.querySelector(".stream_reply_comments"), '/gallery/community_progs/reply-comment/')
+  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
+  send_comment(form, block, '/gallery/community_progs/reply-comment/')
   form.parentElement.style.display = "none";
+  block.classList.add("replies_open")
 });
 
 on('#ajax', 'click', '.c_replyParentPostComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/gallery/community_progs/reply-comment/')
+  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  send_comment(form, block, '/gallery/community_progs/reply-comment/')
   form.parentElement.style.display = "none";
+  block.classList.add("replies_open") 
 });
 
 on('#ajax', 'click', '.c_photo_off_comment', function() {
