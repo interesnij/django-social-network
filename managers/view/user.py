@@ -205,7 +205,7 @@ class UserWarningBannerCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_warning_banner(manager_id=request.user.pk, user_id=user.pk)
-            return HttpResponse("")
+            return HttpResponse("") 
         else:
             return HttpResponse("")
 

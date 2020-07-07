@@ -90,7 +90,7 @@ class ModeratedUser(models.Model):
         self.save()
         ModerationPenaltyUser.create_block_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
         UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.BLOCK)
-    def create_warning_banner(self, manager, user_id):
+    def create_warning_banner(self, manager_id, user_id):
         self.verified = True
         self.save()
         ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager_id, user_id=user_id)
