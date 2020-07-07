@@ -16,8 +16,9 @@
               {% endfor %}
           </span>
         </div>
+      {% else %}
+        {% include 'u_post_comment/my_parent.html' %}
       {% endif %}
-    {% include 'u_post_comment/my_parent.html' %}
     {% endfor %}
 </span>
 <div>
