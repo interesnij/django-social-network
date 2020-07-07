@@ -139,7 +139,13 @@
                     </span>
                     <span class="stream_reply_comments">
                         {% for reply in comment.get_replies %}
-                        {% include 'u_post_comment/my_reply.html' %}
+                          {% if reply.is_deleted %}
+                            <div class="comment border-bottom">
+                              <p style="text-decoration:underline;display: flex; padding: 15px 10px 0 10px;">Комментарий удален</p>
+                            </div>
+                          {% else %}
+                            {% include 'u_post_comment/my_reply.html' %}
+                          {% endif %}
                         {% endfor %}
 
                     </span>
