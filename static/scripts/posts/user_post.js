@@ -181,7 +181,7 @@ function comment_delete(_this, link, _class){
   data = _this.parentElement.parentElement;
   comment_pk = data.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "link" + comment_pk + "/", true );
+  link.open( 'GET', link + comment_pk + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     comment = data.parentElement.parentElement.parentElement.parentElement;
