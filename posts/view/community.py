@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
@@ -17,7 +18,21 @@ class PostCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_template_list(folder="c_post_comment/", template="comments.html", request=request)
+
+        if request.user.is_authenticated:
+            if request.user.is_staff_of_community_with_name(self.community.name):
+                self.template_name = "c_post_comment/comments.html"
+            elif request.user.is_post_manager():
+                self.template_name = "c_post_comment/comments.html"
+            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+                self.template_name = "c_post_comment/comments.html"
+        elif request.user.is_anonymous:
+            if self.is_public():
+                self.template_name = "c_post_comment/comments.html"
+
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
