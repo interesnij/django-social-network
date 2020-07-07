@@ -198,18 +198,21 @@ function comment_delete(_this, _link, _class){
 on('#ajax', 'click', '.u_post_comment_delete', function() {
   comment_delete(this, "/posts/user/delete_comment/", "u_comment_abort_remove")
 })
-on('#ajax', 'click', '.u_comment_abort_remove', function() {
-  comment = this.parentElement.nextElementSibling;
+function comment_abort_delete(_this, _link){
+  comment = _this.parentElement.nextElementSibling;
   comment.style.display = "flex";
-  pk = this.getAttribute("data-pk");
-  block = this.parentElement;
+  pk = _this.getAttribute("data-pk");
+  block = _this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/abort_delete_comment/" + pk + "/", true );
+  link.open( 'GET', _link + pk + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
   }};
   link.send();
+}
+on('#ajax', 'click', '.u_comment_abort_remove', function() {
+  comment_abort_delete(this, "/posts/user/abort_delete_comment/")
 });
 
 on('#ajax', 'change', '#photo_add_post_attach', function() {
