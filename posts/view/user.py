@@ -16,7 +16,26 @@ class PostUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_list_user(folder="u_post_comment/", template="comments.html", request=request)
+
+        if request.user.is_authenticated:
+			if self.user.pk == request.user.pk:
+				self.template_name = "u_post_comment/my_comments.html"
+			elif request.user.is_post_manager():
+				self.template_name = "u_post_comment/staff_comments.html"
+			elif self.user != request.user:
+				check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+				if self.user.is_closed_profile():
+					check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+				self.template_name = "u_post_comment/comments.html"
+		elif request.user.is_anonymous:
+			if self.user.is_closed_profile():
+				raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+			else:
+				self.template_name = "u_post_comment/anon_comments.html"
+
+		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + template_name
         return super(PostUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
