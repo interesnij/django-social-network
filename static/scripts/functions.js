@@ -1,3 +1,34 @@
+function comment_delete(_this, _link, _class){
+  data = _this.parentElement.parentElement;
+  comment_pk = data.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + comment_pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    comment = data.parentElement.parentElement.parentElement.parentElement;
+    comment.style.display = "none";
+    div = document.createElement("div");
+    div.classList.add("media", "comment");
+
+    div.innerHTML = "<p class='" + _class + "'style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
+    comment.parentElement.insertBefore(div, comment);
+    comment.style.display = "none";
+  }};
+  link.send( );
+}
+function comment_abort_delete(_this, _link){
+  comment = _this.parentElement.nextElementSibling;
+  comment.style.display = "flex";
+  pk = _this.getAttribute("data-pk");
+  block = _this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+  }};
+  link.send();
+}
 
 function send_change(span, _link, new_class, html){
   parent = span.parentElement;

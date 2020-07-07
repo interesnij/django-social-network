@@ -58,7 +58,7 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     def count_comments(self):
-        parent_comments = PostComment.objects.filter(post_id=self.pk)
+        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -90,7 +90,6 @@ class Post(models.Model):
     def get_comments(self):
         comments_query = Q(post_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
         return PostComment.objects.filter(comments_query)
 
     def get_fixed_for_user(self, user_id):
