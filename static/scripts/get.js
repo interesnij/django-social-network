@@ -136,9 +136,9 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('#ajax', 'click', '.reply_comment', function() {
-  div = _this.nextElementSibling.nextElementSibling;
+  div = this.nextElementSibling.nextElementSibling;
   input = div.querySelector(".text-comment");
-  input.value = _this.previousElementSibling.innerHTML + ', ';
+  input.value = this.previousElementSibling.innerHTML + ', ';
   div.style.display = "block";
   input.focus();
 })
