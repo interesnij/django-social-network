@@ -59,7 +59,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
 on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, '/posts/user/reply-comment/')
+  send_comment(form, block, '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
@@ -67,7 +67,7 @@ on('#ajax', 'click', '.u_replyItemComment', function() {
 on('#ajax', 'click', '.u_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block, '/posts/user/reply-comment/')
+  send_comment(form, block.parentElement, '/posts/user/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
