@@ -16,7 +16,7 @@ on('#ajax', 'click', '.u_replyPhotoComment', function() {
 on('#ajax', 'click', '.u_replyParentPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block, '/gallery/user_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/gallery/user_progs/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });

@@ -17,9 +17,9 @@ on('#ajax', 'click', '.c_replyPostComment', function() {
 on('#ajax', 'click', '.c_replyParentPostComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block, '/gallery/community_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/gallery/community_progs/reply-comment/')
   form.parentElement.style.display = "none";
-  block.classList.add("replies_open") 
+  block.classList.add("replies_open")
 });
 
 on('#ajax', 'click', '.c_photo_off_comment', function() {

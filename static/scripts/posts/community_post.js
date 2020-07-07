@@ -45,7 +45,7 @@ on('#ajax', 'click', '.c_replyItemComment', function() {
 on('#ajax', 'click', '.c_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block, '/posts/community/reply-comment/')
+  send_comment(form, block.parentElement, '/posts/community/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
