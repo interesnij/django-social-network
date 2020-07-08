@@ -4691,15 +4691,15 @@ cursor: pointer;
 .video_fullscreen,
 .good_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto; }
 
-.article_open_100 {
+.open_100 {
   position: fixed;
   z-index: 100;
 }
-.photo_open_200 {
+.open_200 {
   position: fixed;
   z-index: 200;
 }
-.create_open_300 {
+.open_300 {
   position: fixed;
   z-index: 300;
 }
@@ -4724,6 +4724,10 @@ cursor: pointer;
     .video_fullscreen_resized{left:auto;right: 0;height:290px;width:360px;padding: 0;top: 50px;}
 }
 
+@media screen and (min-width: 621px) {
+    .worker_fullscreen{left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;}
+}
+
 .photo_fullscreen_hide,
 .create_fullscreen_hide,
 .community_fullscreen_hide,
@@ -4732,7 +4736,8 @@ cursor: pointer;
 .article_fullscreen_hide,
 .good_fullscreen_hide,
 .stat_fullscreen_hide,
-.votes_fullscreen_hide {
+.votes_fullscreen_hide,
+.worker_fullscreen_hide {
   cursor: pointer;
   position: absolute;
   right: 40px;

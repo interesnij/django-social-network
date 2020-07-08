@@ -81,8 +81,8 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Жалоба отправлена!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
 
   }};
 

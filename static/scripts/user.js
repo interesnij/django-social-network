@@ -26,7 +26,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 on('#ajax', 'click', '.user_claim', function() {
   this.parentElement.classList.remove("show");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_user/claim_window/" + pk, loader)
 })
 on('#ajax', 'click', '.create_user_claim_btn', function() {
@@ -40,15 +40,15 @@ on('#ajax', 'click', '.create_user_claim_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Жалоба отправлена!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
   }};
   link_.send(form_data);
 });
 
 on('#ajax', 'click', '.post_claim', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_post/claim_window/" + uuid, loader)
 })
 on('#ajax', 'click', '.create_post_claim_btn', function() {
@@ -62,8 +62,8 @@ on('#ajax', 'click', '.create_post_claim_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Жалоба отправлена!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
   }};
   link_.send(form_data);
 });

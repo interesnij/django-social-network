@@ -12,7 +12,7 @@ on('#ajax', 'click', '.user_suspend', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_blocker', function() {
@@ -29,7 +29,7 @@ on('#ajax', 'click', '.user_blocker', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
 })
 on('#ajax', 'click', '.user_warning_banner', function() {
@@ -46,7 +46,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_user/warning_banner_window/" + pk, loader)
 })
 
@@ -66,8 +66,8 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Аккаунт приостановлен!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
       this_page_reload('/users/' + pk + '/')
     }else if (li.querySelector(".btn_console")){
@@ -94,8 +94,8 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Аккаунт заблокирован!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
       this_page_reload('/users/' + pk + '/')
     }else if (li.querySelector(".btn_console")){
@@ -122,8 +122,8 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Предупреждающий баннер применен!");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
       this_page_reload('/users/' + pk + '/')
     }else if (li.querySelector(".btn_console")){
