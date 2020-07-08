@@ -4631,6 +4631,9 @@ margin-right: -15px;
 background-color: rgba(0, 0, 0, 0.06) !important;
 color: #888888;
 }
+.stream_comments:first-child{
+  margin-top: 15px
+}
 .style_removed_object,
 .style_removed_object {
 color: rgba(0, 0, 0, 0.4);
