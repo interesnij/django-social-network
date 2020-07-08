@@ -1,4 +1,16 @@
+on('#ajax', 'click', '.u_manage_wall_image', function() {
+  uuid = this.getAttribute('data-uuid');
+  pk = this.parentElement.getAttribute("data-pk");
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
+});
 
+on('#ajax', 'click', '.c_manage_wall_image', function() {
+  uuid = this.getAttribute('data-uuid');
+  pk = this.parentElement.getAttribute("data-pk");
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/community_wall/" + pk + "/" + uuid + "/", loader)
+});
 
 on('#ajax', 'click', '.post_suspend_window', function() {
   _this = this;
