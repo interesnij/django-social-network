@@ -49,7 +49,7 @@ class PhotoCommentCommunityCreate(View):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
-                new_comment.notification_community_comment(request.user, community)
+                new_comment.notification_community_comment(request.user, community) 
                 return render(request, 'c_photo_comment/my_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()

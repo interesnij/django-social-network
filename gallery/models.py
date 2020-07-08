@@ -193,16 +193,16 @@ class PhotoComment(models.Model):
         photo_notification_handler(actor=user, recipient=self.commenter, verb=PhotoNotification.DISLIKE_COMMENT, photo=self.photo_comment, comment=self, key='social_update')
 
     def notification_community_comment(self, user, community):
-        photo_notification_handler(actor=user, recipient=None, community=community, photo=self.photo_comment, verb=PhotoNotification.POST_COMMENT, comment=self, key='social_update')
+        photo_community_notification_handler(actor=user, recipient=None, community=community, photo=self.photo_comment, verb=PhotoNotification.POST_COMMENT, comment=self, key='social_update')
 
     def notification_community_reply_comment(self, user, community):
-        photo_notification_handler(actor=user, recipient=None, community=community, photo=self.parent_comment.photo_comment, verb=PhotoNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+        photo_community_notification_handler(actor=user, recipient=None, community=community, photo=self.parent_comment.photo_comment, verb=PhotoNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
 
     def notification_community_comment_like(self, user, community):
-        photo_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.LIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
+        photo_community_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.LIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
 
     def notification_community_comment_dislike(self, user, community):
-        photo_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.DISLIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
+        photo_community_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotification.DISLIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
 
     def get_replies(self):
         get_comments = PhotoComment.objects.filter(parent_comment=self).all()
