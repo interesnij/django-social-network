@@ -68,7 +68,6 @@ class PostCommunityCommentCreate(View):
         else:
             return HttpResponseBadRequest()
 
-
 class PostCommunityReplyCreate(View):
     def post(self,request,*args,**kwargs):
         form_post=CommentForm(request.POST, request.FILES)
@@ -92,66 +91,77 @@ class PostCommunityReplyCreate(View):
             return HttpResponseBadRequest()
 
 
-def post_update_interactions(request):
-    data_point = request.POST['id_value']
-    item = Post.objects.get(uuid=data_point)
-    data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
-    return JsonResponse(data)
+class PostCommentCommentDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            community = comment.post.community
+        except:
+            community = comment.parent_comment.post.community
+        if request.user.is_staff_of_community_with_name(community.name):
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
+class PostCommentCommentAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            community = comment.post.community
+        except:
+            community = comment.parent_comment.post.community
+        if request.user.is_staff_of_community_with_name(community.name):
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
-def community_fixed(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(item.community.name):
-		item.get_fixed_for_community(pk)
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
+class PostCommunityFixed(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.is_fixed = True
+            item.save(update_fields=['is_fixed'])
+        return HttpResponse("")
 
-def community_unfixed(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(item.community.name):
-		item.is_fixed=False
-		item.save(update_fields=['is_fixed'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
+class PostCommunityUnFixed(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.is_fixed = False
+            item.save(update_fields=['is_fixed'])
+        return HttpResponse("")
 
-def community_off_comment(request, uuid):
-    item = Post.objects.get(uuid=uuid)
-    if request.user.is_staff_of_community_with_name(item.community.name):
-        item.comments_enabled=False
-        item.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
-    else:
-        return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
+class PostCommunityOffComment(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.comments_enabled = False
+            item.save(update_fields=['comments_enabled'])
+        return HttpResponse("")
 
-def community_on_comment(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(item.community.name):
-		item.comments_enabled=True
-		item.save(update_fields=['comments_enabled'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
+class PostCommunityOnComment(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.comments_enabled = True
+            item.save(update_fields=['comments_enabled'])
+        return HttpResponse("")
 
-def community_item_delete(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(item.community.name):
-		item.is_deleted=True
-		item.save(update_fields=['is_deleted'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
+class PostCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.is_deleted = True
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
-def community_item_abort_delete(request, uuid):
-	item = Post.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(item.community.name):
-		item.is_deleted=False
-		item.save(update_fields=['is_deleted'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
-
+class PostCommunityAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=uuid)
+        if request.user.is_staff_of_community_with_name(item.community.name):
+            item.is_deleted = False
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
 class PostCommunityDetail(TemplateView):
     template_name = None
@@ -182,3 +192,10 @@ class CommunityOffVotesPost(View):
             post.votes_on = False
             post.save(update_fields=['votes_on'])
         return HttpResponse("!")
+
+
+def post_update_interactions(request):
+    data_point = request.POST['id_value']
+    item = Post.objects.get(uuid=data_point)
+    data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
+    return JsonResponse(data)
