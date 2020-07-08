@@ -12,7 +12,7 @@
             {% endif %}
         </figure>
     </a>
-    <div class="media-body">
+    <div class="media-body" style="overflow: inherit;">
         <h5 class="mt-0">
             <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
                 <span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
