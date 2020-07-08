@@ -49,8 +49,8 @@ class PhotoCommentCommunityCreate(View):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
-                new_comment.notification_community_comment(request.user, community) 
-                return render(request, 'c_photo_comment/my_parent.html',{'comment': new_comment, 'community': community})
+                new_comment.notification_community_comment(request.user, community)
+                return render(request, 'c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -74,7 +74,7 @@ class PhotoReplyCommunityCreate(View):
                 new_comment.notification_community_reply_comment(request.user, community)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'c_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+            return render(request, 'c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 
