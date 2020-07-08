@@ -78,6 +78,30 @@ class PhotoReplyCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class PhotoCommentCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            community = comment.post.community
+        except:
+            community = comment.parent_comment.post.community
+        if request.user.is_staff_of_community_with_name(community.name):
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PhotoCommentCommunityAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            community = comment.post.community
+        except:
+            community = comment.parent_comment.post.community
+        if request.user.is_staff_of_community_with_name(community.name):
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
 
 class CommunityPhotoDescription(View):
     form_image = None
