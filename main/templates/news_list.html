@@ -9,7 +9,7 @@
 
           {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
           {% if object.community in request.user.get_staffed_communities %}
-            {% include 'post_community/moderator_post.html' %}
+            {% include 'post_community/admin_post.html' %}
           {% else %}
             {% include 'post_community/post.html' %}
           {% endif %}
