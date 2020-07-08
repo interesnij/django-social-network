@@ -127,6 +127,7 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.getElementById("video_loader").innerHTML=""
 });
 on('body', 'click', '.create_fullscreen_hide', function() {document.querySelector(".create_fullscreen").style.display = "none";document.getElementById("create_loader").innerHTML=""});
+on('#ajax', 'click', '.worker_fullscreen_hide', function() {document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
 
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
