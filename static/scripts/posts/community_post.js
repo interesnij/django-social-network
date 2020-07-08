@@ -51,9 +51,9 @@ on('#ajax', 'click', '.c_replyParentItemComment', function() {
 });
 
 on('#ajax', 'click', '.c_post_comment_delete', function() {
-  comment_delete(this, "/posts/community/delete_comment/", "c_comment_abort_remove")
+  comment_delete(this, "/posts/community/delete_comment/", "c_post_comment_abort_remove")
 })
-on('#ajax', 'click', '.c_comment_abort_remove', function() {
+on('#ajax', 'click', '.c_post_comment_abort_remove', function() {
   comment_abort_delete(this, "/posts/community/abort_delete_comment/")
 });
 

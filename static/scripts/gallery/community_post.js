@@ -33,6 +33,14 @@ on('#ajax', 'click', '.c_photo_on_comment', function() {
   post.querySelector(".c_photo_comments").style.display = "unset"
 })
 
+on('#ajax', 'click', '.c_photo_comment_delete', function() {
+  comment_delete(this, "/gallery/community_progs/delete_comment/", "c_photo_comment_abort_remove")
+})
+on('#ajax', 'click', '.c_photo_comment_abort_remove', function() {
+  comment_abort_delete(this, "/gallery/community_progs/abort_delete_comment/")
+});
+
+
 on('#ajax', 'click', '.u_photo_off_private', function() {
   send_photo_change(this, "/gallery/community_progs/off_private/", "c_photo_on_private", "Вкл. приватность")
 })

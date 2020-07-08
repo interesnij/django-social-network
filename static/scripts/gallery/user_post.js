@@ -32,6 +32,13 @@ on('#ajax', 'click', '.u_photo_on_comment', function() {
   post.querySelector(".u_photo_comments").style.display = "unset"
 })
 
+on('#ajax', 'click', '.u_photo_comment_delete', function() {
+  comment_delete(this, "/gallery/user_progs/delete_comment/", "u_photo_comment_abort_remove")
+})
+on('#ajax', 'click', '.u_photo_comment_abort_remove', function() {
+  comment_abort_delete(this, "/gallery/user_progs/abort_delete_comment/")
+});
+
 on('#ajax', 'click', '.u_photo_off_private', function() {
   send_photo_change(this, "/gallery/user_progs/off_private/", "u_photo_on_private", "Вкл. приватность")
 })

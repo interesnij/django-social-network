@@ -83,6 +83,25 @@ class PhotoReplyUserCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class PhotoCommentUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == comment.commenter.pk:
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class PhotoCommentUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == comment.commenter.pk:
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
 
 class UserPhotoDescription(View):
     form_image = None

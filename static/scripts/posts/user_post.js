@@ -177,10 +177,10 @@ on('#ajax', 'click', '.u_dislike2', function() {
   vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-on('#ajax', 'click', '.u_post_comment_delete', function() { 
-  comment_delete(this, "/posts/user/delete_comment/", "u_comment_abort_remove")
+on('#ajax', 'click', '.u_post_comment_delete', function() {
+  comment_delete(this, "/posts/user/delete_comment/", "u_post_comment_abort_remove")
 })
-on('#ajax', 'click', '.u_comment_abort_remove', function() {
+on('#ajax', 'click', '.u_post_comment_abort_remove', function() {
   comment_abort_delete(this, "/posts/user/abort_delete_comment/")
 });
 
