@@ -1,6 +1,9 @@
 .btn_default {
   cursor:pointer
 }
+.stream_comments{
+  max-height: 500px;overflow: auto;
+}
 .albom_description {
     opacity: 0;
     visibility: hidden;
