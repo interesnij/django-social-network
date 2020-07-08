@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from posts.forms import CommentForm
+from django.views.decorators.csrf import csrf_protect
 
 
 class PostUserCommentList(ListView):
@@ -52,13 +53,11 @@ class PostUserCommentList(ListView):
 
 class PostCommentUserCreate(View):
 
+    @csrf_protect
     def post(self,request,*args,**kwargs):
-        from common.utils import get_or_create_csrf_token
-
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(pk=request.POST.get('id'))
         post = Post.objects.get(uuid=request.POST.get('item'))
-        get_or_create_csrf_token(request)
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
@@ -80,13 +79,12 @@ class PostCommentUserCreate(View):
 
 
 class PostReplyUserCreate(View):
-    def post(self,request,*args,**kwargs):
-        from common.utils import get_or_create_csrf_token
 
+    @csrf_protect
+    def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(uuid=request.POST.get('uuid'))
         parent = PostComment.objects.get(pk=request.POST.get('pk'))
-        get_or_create_csrf_token(request)
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
