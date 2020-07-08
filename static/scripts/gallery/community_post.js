@@ -6,7 +6,7 @@ on('#ajax', 'click', '.c_photoComment', function() {
   send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/post-comment/');
 });
 
-on('#ajax', 'click', '.c_replyPostComment', function() {
+on('#ajax', 'click', '.c_replyPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
   send_comment(form, block, '/gallery/community_progs/reply-comment/')
@@ -14,7 +14,7 @@ on('#ajax', 'click', '.c_replyPostComment', function() {
   block.classList.add("replies_open")
 });
 
-on('#ajax', 'click', '.c_replyParentPostComment', function() {
+on('#ajax', 'click', '.c_replyParentPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, block.parentElement, '/gallery/community_progs/reply-comment/')
