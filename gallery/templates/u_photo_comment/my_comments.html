@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-<span class="stream_comments">
+<span class="stream_comments" style="max-height: 500px;overflow: auto;">
   {% for comment in object_list %}
     {% if comment.is_deleted %}
       <div class="comment border-bottom">
