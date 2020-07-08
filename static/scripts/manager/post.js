@@ -1,3 +1,5 @@
+
+
 on('#ajax', 'click', '.post_suspend_window', function() {
   _this = this;
   if(_this.parentElement.classList.contains("btn_console")){

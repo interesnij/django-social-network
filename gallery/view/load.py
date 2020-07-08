@@ -60,8 +60,8 @@ class UserWallPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
         self.template_name = get_detail_template_user(self.user, "photo_user/", "wall_photo.html", request)
