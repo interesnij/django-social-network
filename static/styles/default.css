@@ -4,7 +4,7 @@
 .photo_stream_comments{
   overflow: auto;
   max-height: 500px;
-  display: block;
+  display: block
 }
 .albom_description {
     opacity: 0;
