@@ -52,8 +52,6 @@
                       </div>
                       {% endif %}
                   </span>
-
-                  &nbsp;&nbsp;
                   <span class="dislike c_dislike2 {% if comment.dislikes|user_in:request.user %}btn_danger{% else %}btn_default{% endif %}" title="Не нравится">
                       <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                       <span class="dislikes_count">{% if comment.dislikes.count %}{{ comment.dislikes.count }}{% endif %}</span>
@@ -80,7 +78,6 @@
                   </div>
                   {% endif %}
                   </span>
-                    &nbsp;&nbsp;
                     <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
                     <span class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
                         ответить
@@ -94,7 +91,7 @@
                       <span class="u_photo_comment_delete btn_default" flow="up" tooltip="Удалить">
                         <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                       </span>
-                      {% endif %}
+                      {% else %}
                       <span class="c_photo_comment_delete btn_default" flow="up" tooltip="Удалить">
                         <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                       </span>
