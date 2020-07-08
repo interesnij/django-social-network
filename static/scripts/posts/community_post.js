@@ -50,6 +50,13 @@ on('#ajax', 'click', '.c_replyParentItemComment', function() {
   block.classList.add("replies_open")
 });
 
+on('#ajax', 'click', '.c_post_comment_delete', function() {
+  comment_delete(this, "/posts/community/delete_comment/", "c_comment_abort_remove")
+})
+on('#ajax', 'click', '.c_comment_abort_remove', function() {
+  comment_abort_delete(this, "/posts/community/abort_delete_comment/")
+});
+
 on('#ajax', 'click', '.c_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
