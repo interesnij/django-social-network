@@ -4,6 +4,7 @@ from users.models import User
 from django.views.generic import ListView
 from music.models import SoundcloudParsing
 from communities.models import Community
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
 class UserPostView(TemplateView):
