@@ -91,7 +91,7 @@ class PostCommunityReplyCreate(View):
             return HttpResponseBadRequest()
 
 
-class PostCommentCommentDelete(View):
+class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         try:
@@ -103,7 +103,7 @@ class PostCommentCommentDelete(View):
             comment.save(update_fields=['is_deleted'])
         return HttpResponse("")
 
-class PostCommentCommentAbortDelete(View):
+class PostCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         try:
