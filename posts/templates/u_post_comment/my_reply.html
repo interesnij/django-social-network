@@ -114,8 +114,8 @@
                     <div style="display:none;margin-left:-50px;">
                         <form>
                             {% csrf_token %}
-                            <input type="hidden" name="uuid" value="{{ user.uuid }}">
-                            <input type="hidden" name="pk" value="{{ comment.pk }}">
+                            <input type="hidden" name="pk" value="{{ user.pk }}">
+                            <input type="hidden" name="post_comment" value="{{ comment.pk }}">
                             <div class="row img_block"></div>
 
                             <div class="row no-gutters" style="margin-top: 15px;">

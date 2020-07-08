@@ -112,8 +112,8 @@
 
                                 <div class="col">
                                     <div class="input-group input-group-sm">
-                                      <input type="hidden" name="uuid" value="{{ community.uuid }}">
-                                      <input type="hidden" name="pk" value="{{ comment.pk }}">
+                                      <input type="hidden" name="pk" value="{{ community.pk }}">
+                                      <input type="hidden" name="post_comment" value="{{ comment.pk }}">
 
                                       <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                                       <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyItemComment" type="button">

@@ -14,7 +14,7 @@
                 {% include 'u_post_comment/my_reply.html' %}
                 <br>
               {% endfor %}
-          </span> 
+          </span>
         </div>
       {% else %}
         {% include 'u_post_comment/my_parent.html' %}
@@ -24,8 +24,8 @@
 <div>
   <form>
       {% csrf_token %}
-      <input type="hidden" name="item" value="{{ parent.uuid }}">
-      <input type="hidden" name="id" value="{{ user.pk }}">
+      <input type="hidden" name="uuid" value="{{ parent.uuid }}">
+      <input type="hidden" name="pk" value="{{ user.pk }}">
 
       <div class="row img_block" style="margin-top: 10px"></div>
       <div class="row no-gutters" style="margin-top: 20px;">

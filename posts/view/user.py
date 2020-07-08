@@ -54,8 +54,8 @@ class PostCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk=request.POST.get('id'))
-        post = Post.objects.get(uuid=request.POST.get('item'))
+        user = User.objects.get(pk=request.POST.get('pk'))
+        post = Post.objects.get(uuid=request.POST.get('uuid'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
@@ -80,8 +80,8 @@ class PostReplyUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(uuid=request.POST.get('uuid'))
-        parent = PostComment.objects.get(pk=request.POST.get('pk'))
+        user = User.objects.get(pk=request.POST.get('pk'))
+        parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)

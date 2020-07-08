@@ -27,8 +27,8 @@
 
   <form>
       {% csrf_token %}
-      <input type="hidden" name="photo_comment" value="{{ parent.uuid }}">
-      <input type="hidden" name="id" value="{{ user.pk }}">
+      <input type="hidden" name="photo_comment" value="{{ parent.pk }}">
+      <input type="hidden" name="pk" value="{{ user.pk }}">
       <div class="row img_block" style="margin:10px"></div>
 
       <div class="row no-gutters">

@@ -38,7 +38,7 @@ class PhotoCommentCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
-        community = Community.objects.get(pk=request.POST.get('id'))
+        community = Community.objects.get(pk=request.POST.get('pk'))
         photo_comment = Photo.objects.get(pk=request.POST.get('photo_comment'))
 
         if form_post.is_valid():
@@ -61,7 +61,7 @@ class PhotoReplyCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        parent = PhotoComment.objects.get(pk=request.POST.get('comment_pk'))
+        parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)

@@ -51,9 +51,8 @@ class PostCommunityCommentList(ListView):
 class PostCommunityCommentCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
-        community = Community.objects.get(pk=request.POST.get('id'))
-        item_uuid = request.POST.get('item')
-        post = Post.objects.get(uuid=item_uuid)
+        community = Community.objects.get(pk=request.POST.get('pk'))
+        post = Post.objects.get(uuid=request.POST.get('uuid'))
         if form_post.is_valid():
             check_can_get_posts_for_community_with_name(request.user,community.name)
             comment=form_post.save(commit=False)
@@ -71,10 +70,8 @@ class PostCommunityCommentCreate(View):
 class PostCommunityReplyCreate(View):
     def post(self,request,*args,**kwargs):
         form_post=CommentForm(request.POST, request.FILES)
-        uuid = request.POST.get('uuid')
-        pk = request.POST.get('pk')
-        community=Community.objects.get(uuid=uuid)
-        parent = PostComment.objects.get(pk=pk)
+        community=Community.objects.get(pk=request.POST.get('pk'))
+        parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if form_post.is_valid():
             check_can_get_posts_for_community_with_name(request.user,community.name)
