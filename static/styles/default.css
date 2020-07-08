@@ -4689,6 +4689,7 @@ cursor: pointer;
 .item_fullscreen,
 .stat_fullscreen,
 .video_fullscreen,
+.worker_fullscreen,
 .good_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto; }
 
 .open_100 {
