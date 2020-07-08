@@ -58,9 +58,9 @@ class PostCommentUserCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(pk=request.POST.get('id'))
         post = Post.objects.get(uuid=request.POST.get('item'))
+        get_or_create_csrf_token(request)
 
         if form_post.is_valid():
-            get_or_create_csrf_token(request)
             comment=form_post.save(commit=False)
 
             if request.user.pk != user.pk:
@@ -86,9 +86,9 @@ class PostReplyUserCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(uuid=request.POST.get('uuid'))
         parent = PostComment.objects.get(pk=request.POST.get('pk'))
+        get_or_create_csrf_token(request)
 
         if form_post.is_valid():
-            get_or_create_csrf_token(request)
             comment=form_post.save(commit=False)
 
             if request.user != user:
