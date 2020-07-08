@@ -123,7 +123,7 @@ class PostCommentUserAbortDelete(View):
 
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.is_fixed = True
             item.save(update_fields=['is_fixed'])
@@ -133,7 +133,7 @@ class PostUserFixed(View):
 
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
@@ -144,7 +144,7 @@ class PostUserUnFixed(View):
 
 class PostCommunityOffComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
@@ -154,7 +154,7 @@ class PostCommunityOffComment(View):
 
 class PostCommunityOnComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])

@@ -117,7 +117,7 @@ class PostCommentCommunityAbortDelete(View):
 
 class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.is_fixed = True
             item.save(update_fields=['is_fixed'])
@@ -125,7 +125,7 @@ class PostCommunityFixed(View):
 
 class PostCommunityUnFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
@@ -133,7 +133,7 @@ class PostCommunityUnFixed(View):
 
 class PostCommunityOffComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
@@ -141,7 +141,7 @@ class PostCommunityOffComment(View):
 
 class PostCommunityOnComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
@@ -149,7 +149,7 @@ class PostCommunityOnComment(View):
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
@@ -157,7 +157,7 @@ class PostCommunityDelete(View):
 
 class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=uuid)
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_staff_of_community_with_name(item.community.name):
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
