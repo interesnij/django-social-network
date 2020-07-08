@@ -5,7 +5,7 @@ from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from goods.forms import GoodForm
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 
 
@@ -76,7 +76,7 @@ class GoodUserCreate(TemplateView):
             new_good=self.form.save(commit=False)
             new_good.creator=self.user
             new_good=self.form.save()
-            html = render_to_response('good_base/new_good.html',{'object': new_good,'request': request})
+            html = render(request, 'good_base/new_good.html',{'object': new_good})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
@@ -110,7 +110,7 @@ class GoodUserCreateAttach(TemplateView):
             new_good=self.form.save(commit=False)
             new_good.creator=self.user
             new_good=self.form.save()
-            html = render_to_response('good_user/good.html',{'object': new_good,'request': request})
+            html = render(request, 'good_user/good.html',{'object': new_good})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()

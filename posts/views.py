@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 from posts.models import Post
 from django.http import HttpResponseBadRequest
 from django.views import View
@@ -52,7 +52,7 @@ class PostUserCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             status=post.status)
                 get_post_attach(request, new_post)
-                return render_to_response('post_user/my_post.html', {'object': new_post,'request': request})
+                return render(request, 'post_user/my_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -84,7 +84,7 @@ class PostCommunityCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             status=post.status)
                 get_post_attach(request, new_post)
-                return render_to_response('post_community/admin_post.html', {'object': new_post,'request': request})
+                return render(request, 'post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:

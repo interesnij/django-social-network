@@ -1,7 +1,6 @@
 import re
 from users.models import User
 from django.views.generic import ListView
-from django.shortcuts import render_to_response
 from posts.models import Post
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied

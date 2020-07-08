@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from gallery.models import Photo, PhotoComment
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
 from gallery.forms import CommentForm
@@ -52,7 +52,7 @@ class PhotoCommentUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_comment(request.user)
-                return render_to_response('u_photo_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, 'request': request})
+                return render(request, 'u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -79,7 +79,7 @@ class PhotoReplyUserCreate(View):
                 new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render_to_response('u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, 'request': request})
+            return render(request, 'u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 

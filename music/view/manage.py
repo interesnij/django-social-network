@@ -4,6 +4,7 @@ from django.views import View
 from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render
 
 
 class UserPlaylistCreate(View):
@@ -22,7 +23,7 @@ class UserPlaylistCreate(View):
             new_playlist = form_post.save(commit=False)
             new_playlist.creator = request.user
             new_playlist.save()
-            return render_to_response('user_music/my_list.html',{'playlist': new_playlist, 'user': request.user, 'request': request})
+            return render(request, 'user_music/my_list.html',{'playlist': new_playlist, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 

@@ -4,7 +4,7 @@ from video.models import VideoAlbum, Video
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from video.forms import AlbumForm, VideoForm
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 
 class UserVideoListCreate(View):
@@ -23,7 +23,7 @@ class UserVideoListCreate(View):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
-            return render_to_response('user_video_list/my_list.html',{'album': new_album, 'user': request.user, 'request': request})
+            return render(request, 'user_video_list/my_list.html',{'album': new_album, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -49,7 +49,7 @@ class UserVideoAttachCreate(View):
             new_video.creator = request.user
             new_video.save()
             my_list.video_album.add(new_video)
-            return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
+            return render(request, 'video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
 
@@ -78,6 +78,6 @@ class UserVideoInListCreate(View):
                 for album in albums:
                     album.video_album.add(new_video)
 
-            return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
+            return render(request, 'video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()

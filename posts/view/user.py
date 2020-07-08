@@ -4,7 +4,6 @@ from django.views.generic import ListView
 from users.models import User
 from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from posts.forms import CommentForm

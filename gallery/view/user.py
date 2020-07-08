@@ -5,7 +5,7 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 
 class UserGalleryView(TemplateView):
@@ -61,7 +61,7 @@ class UserAddAvatar(View):
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
-            return render_to_response('photo_user/my_photo.html',{'object': photo, 'user': request.user, 'request': request})
+            return render(request, 'photo_user/my_photo.html',{'object': photo, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -76,7 +76,7 @@ class PhotoUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 photos += [photo,]
-            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
+            return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
 
 class PhotoAlbumUserCreate(View):
     """
@@ -92,7 +92,7 @@ class PhotoAlbumUserCreate(View):
                 photo = Photo.objects.create(file=p, creator=user)
                 _album.album.add(photo)
                 photos += [photo,]
-            return render_to_response('album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user, 'request': request})
+            return render(request, 'album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user})
 
 class PhotoAttachUserCreate(View):
     """
@@ -110,7 +110,7 @@ class PhotoAttachUserCreate(View):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.album.add(photo)
                 photos += [photo,]
-            return render_to_response('gallery_user/my_list.html',{'object_list': photos, 'user': request.user, 'request': request})
+            return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
 
 
 
@@ -140,7 +140,7 @@ class AlbumUserCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
-            return render_to_response('album_user/my_album.html',{'album': new_album, 'user': self.user, 'request': request})
+            return render(request, 'album_user/my_album.html',{'album': new_album, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)

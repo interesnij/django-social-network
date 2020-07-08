@@ -8,7 +8,7 @@ from posts.forms import CommentForm
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import ValidationError
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 
 class PostCommunityCommentList(ListView):
@@ -62,7 +62,7 @@ class PostCommunityCommentCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_community_comment(request.user, community)
-                return render_to_response('c_post_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
+                return render(request, 'c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -85,7 +85,7 @@ class PostCommunityReplyCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text, post=None)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_community_reply_comment(request.user, community)
-                return render_to_response('c_post_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+                return render(request, 'c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()
         else:

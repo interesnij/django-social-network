@@ -7,7 +7,7 @@ from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 
 
@@ -27,7 +27,7 @@ class CommunityAddAvatar(View):
             _album.album.add(photo)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
-            return render_to_response('photo_community/admin_photo.html',{'object': photo, 'community': community, 'request': request})
+            return render(request, 'photo_community/admin_photo.html',{'object': photo, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -75,7 +75,7 @@ class PhotoCommunityCreate(View):
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             photos += [photo,]
-        return render_to_response('gallery_community/admin_list.html',{'object_list': photos, 'community': community, 'request': request})
+        return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
 
 class PhotoAlbumCommunityCreate(View):
     """
@@ -91,7 +91,7 @@ class PhotoAlbumCommunityCreate(View):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             _album.album.add(photo)
             photos += [photo,]
-        return render_to_response('album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community, 'request': request})
+        return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
 
 class PhotoAttachCommunityCreate(View):
     """
@@ -109,7 +109,7 @@ class PhotoAttachCommunityCreate(View):
             photo = Photo.objects.create(file=p, creator=request.user)
             _album.album.add(photo)
             photos += [photo,]
-        return render_to_response('gallery_community/admin_list.html',{'object_list': photos, 'community': community, 'request': request})
+        return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
 
 
 
@@ -139,7 +139,7 @@ class AlbumCommunityCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
-            return render_to_response('album_community/admin_album.html',{'album': new_album, 'community': self.community, 'request': request})
+            return render(request, 'album_community/admin_album.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)

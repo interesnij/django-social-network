@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from gallery.models import Photo, PhotoComment
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.views.generic import ListView
 from gallery.forms import CommentForm
 from communities.models import Community
@@ -50,7 +50,7 @@ class PhotoCommentCommunityCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text, community=community)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_community_comment(request.user, community)
-                return render_to_response('c_photo_comment/my_parent.html',{'comment': new_comment, 'community': community, 'request': request})
+                return render(request, 'c_photo_comment/my_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -74,7 +74,7 @@ class PhotoReplyCommunityCreate(View):
                 new_comment.notification_community_reply_comment(request.user, community)
             else:
                 return HttpResponseBadRequest()
-            return render_to_response('c_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'community': community, 'request': request})
+            return render(request, 'c_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 
