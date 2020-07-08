@@ -51,7 +51,8 @@ class PhotoCommentUserCreate(View):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment)
-                new_comment.notification_user_comment(request.user)
+                if request.user.pk != photo_comment.creator.pk:
+                    new_comment.notification_user_comment(request.user)
                 return render(request, 'u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -76,7 +77,8 @@ class PhotoReplyUserCreate(View):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment)
-                new_comment.notification_user_reply_comment(request.user)
+                if request.user.pk != parent.commenter.pk:
+                    new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
             return render(request, 'u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})

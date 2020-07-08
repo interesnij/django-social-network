@@ -2,7 +2,9 @@
   cursor:pointer
 }
 .photo_stream_comments{
-  max-height: 500px;overflow: auto;
+  overflow: auto;
+  max-height: 500px;
+  display: block;
 }
 .albom_description {
     opacity: 0;
