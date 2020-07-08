@@ -5,7 +5,9 @@ a {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
-
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .form-control::placeholder{color: rgba(255, 255, 255, 0.6);font-style: italic;}
 .border{
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
