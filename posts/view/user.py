@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from posts.forms import CommentForm
-from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render
 
 
 class PostUserCommentList(ListView):
@@ -53,7 +53,6 @@ class PostUserCommentList(ListView):
 
 class PostCommentUserCreate(View):
 
-    @csrf_protect
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(pk=request.POST.get('id'))
@@ -71,7 +70,7 @@ class PostCommentUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment)
                 new_comment.notification_user_comment(request.user)
-                return render_to_response('u_post_comment/my_parent.html',{'comment': new_comment, 'request_user': request.user, 'request': request})
+                return render(request, 'u_post_comment/my_parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -80,7 +79,6 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
 
-    @csrf_protect
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(uuid=request.POST.get('uuid'))
@@ -100,7 +98,7 @@ class PostReplyUserCreate(View):
                 new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render_to_response('u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, 'request': request})
+            return render(request, 'u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 
