@@ -140,7 +140,7 @@
               <div class="attach_container"">
                 {% for photo in object.item_photo.all %}
                 <div class="photo">
-                    <img class="image_fit lazyload" alt="img">
+                    <img class="image_fit lazyload" data-src="{{ photo.file.url }}" alt="img">
                 </div>
                 {% endfor %}
                 {% for video in object.item_video.all %}
