@@ -39,7 +39,7 @@ class PhotoCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        photo_comment = Photo.objects.get(pk=request.POST.get('photo_comment'))
+        photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)

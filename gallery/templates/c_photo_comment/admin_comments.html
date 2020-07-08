@@ -33,7 +33,7 @@
         {% include 'c_photo_comment/form_dropdown.html' %}
 
           <div class="col">
-            <input type="hidden" name="photo_comment" value="{{ parent.pk }}">
+            <input type="hidden" name="uuid" value="{{ parent.uuid }}">
             <input type="hidden" name="pk" value="{{ community.pk }}">
               <div class="input-group input-group-sm">
                 <input type="text" name="text" class="form-control text-comment form-control-rounded">
