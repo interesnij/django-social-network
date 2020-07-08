@@ -13,8 +13,8 @@
     </div>
 
     {% for object in user.get_last_music %}
-    <div class="card border-top border-bottom" style="padding:7px;">
-        <div class="card-body">
+    <div class="card border-top border-bottom">
+        <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter0 }}">
                 <figure style="cursor:pointer">
                   <a class="music_list_item">
