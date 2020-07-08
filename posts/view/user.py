@@ -53,11 +53,14 @@ class PostUserCommentList(ListView):
 class PostCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
+        from common.utils import get_or_create_csrf_token
+
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(pk=request.POST.get('id'))
         post = Post.objects.get(uuid=request.POST.get('item'))
 
         if form_post.is_valid():
+            get_or_create_csrf_token(request)
             comment=form_post.save(commit=False)
 
             if request.user.pk != user.pk:
@@ -78,11 +81,14 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
+        from common.utils import get_or_create_csrf_token
+
         form_post = CommentForm(request.POST, request.FILES)
         user = User.objects.get(uuid=request.POST.get('uuid'))
         parent = PostComment.objects.get(pk=request.POST.get('pk'))
 
         if form_post.is_valid():
+            get_or_create_csrf_token(request)
             comment=form_post.save(commit=False)
 
             if request.user != user:
