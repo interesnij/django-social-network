@@ -307,6 +307,9 @@ class User(AbstractUser):
     def is_followers_user_view(self, user_id):
         return self.follows.filter(user__id=user_id, view=True).exists()
 
+    def has_blocked_user_with_id(self, user_id):
+        return self.blocked_by_users.filter(blocker_id=user_id).exists() 
+
     def get_buttons_profile(self, user_id):
         if self.is_authenticated:
             if self.has_blocked_user_with_id(user_id):
@@ -1412,9 +1415,6 @@ class User(AbstractUser):
         community_to_leave = Community.objects.get(name=community_name)
         community_to_leave.remove_member(self)
         return community_to_leave
-
-    def has_blocked_user_with_id(self, user_id):
-        return self.user_blocks.filter(blocked_user_id=user_id).exists() 
 
     def get_last_location(self):
         from users.model.profile import OneUserLocation, TwoUserLocation, ThreeUserLocation
