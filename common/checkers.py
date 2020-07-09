@@ -840,7 +840,7 @@ def check_can_block_user_with_id(user, user_id):
 
 
 def check_can_unblock_user_with_id(user, user_id):
-    if not user.has_blocked_user_with_id(user_id=user__id):
+    if not user.has_blocked_user_with_id(user_id=user_id):
         raise ValidationError('Вы не можете разблокировать учетную запись, которую вы не заблокировали')
 
 
