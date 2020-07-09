@@ -75,7 +75,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
 /*!
    item post scripts for user
   */
-on('.post_container', 'click', '.u_post_remove', function() {
+on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -83,14 +83,19 @@ on('.post_container', 'click', '.u_post_remove', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    item.style.display = "none";
-    document.querySelector(".item_fullscreen").style.display = "none";
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
     p.style.display =  "block";
-
     p.innerHTML = "Запись удалена. <span class='u_post_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    document.querySelector(".item_fullscreen").style.display = "none"
+    ?
+    item.parentElement.insertBefore(p, item);
+    item.style.display = "none";
+    :
+    document.querySelector(".item_fullscreen").style.display = "none";
+    block = document.body.querySelector(".post_container");
+    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
     item.parentElement.insertBefore(p, item);
     item.style.display = "none";
   }};
