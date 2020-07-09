@@ -64,10 +64,10 @@ class CommonFrendsListView(ListView):
 class ConnectCreate(View):
 
 	def get(self,request,*args,**kwargs):
-		self.target_user = User.objects.get(pk=self.kwargs["pk"])
-		new_frend = request.user.frend_user(self.target_user)
-		request.user.notification_connect(new_frend)
-		return HttpResponse("!")
+		target_user = User.objects.get(pk=self.kwargs["pk"])
+		new_frend = request.user.frend_user(target_user)
+		request.user.notification_connect(target_user)
+		return HttpResponse("")
 
 
 class ConnectDelete(View):
@@ -75,4 +75,4 @@ class ConnectDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		request.user.unfrend_user(self.target_user)
-		return HttpResponse("!")
+		return HttpResponse("")
