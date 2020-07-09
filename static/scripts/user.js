@@ -79,6 +79,18 @@ on('#ajax', 'click', '.follow_create', function() {
   }};
   link_.send();
 })
+on('#ajax', 'click', '.follow_delete', function() {
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/follows/delete/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/users/' + pk + '/');
+    toast_info("Подписка отменена!");
+  }};
+  link_.send();
+})
+
 on('#ajax', 'click', '.connect_create', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -88,7 +100,7 @@ on('#ajax', 'click', '.connect_create', function() {
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
   }};
-  link_.send(); 
+  link_.send();
 })
 on('#ajax', 'click', '.follow_view', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
