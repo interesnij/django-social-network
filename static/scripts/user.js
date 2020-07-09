@@ -86,8 +86,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.timeout = 30000;
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
 
-  if ( this.readyState == 1 ){console.log("Запрос начат")}
-  else if ( this.readyState == 4 && this.status == 200 ) {
+  if ( this.readyState == 4 && this.status == 200 ) {
     console.log("Запрос звершен");
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
