@@ -13,13 +13,13 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_following %}
+   {% if user.count_followers %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'follows' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_following }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_following|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_followers }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
        </div>
      </div>
