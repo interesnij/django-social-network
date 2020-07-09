@@ -338,10 +338,10 @@ class User(AbstractUser):
                 return "button/staff_frend_user.html"
             elif self.has_blocked_user_with_id(user_id):
                 return "button/staff_blocked_user.html"
-            elif self.is_following_user_with_id(user_id):
-                return "button/staff_following_user.html"
             elif self.is_followers_user_view(user_id):
                 return "button/staff_follow_view_user.html"
+            elif self.is_following_user_with_id(user_id):
+                return "button/staff_following_user.html"
             elif self.is_followers_user_with_id(user_id):
                 return "button/staff_follow_user.html"
             else:
