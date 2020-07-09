@@ -75,7 +75,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
 /*!
    item post scripts for user
   */
-on('.pag', 'click', '.u_post_remove', function() {
+on('.post_container', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
