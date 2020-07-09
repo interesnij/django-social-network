@@ -8,7 +8,7 @@ class Follow(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     def notification_follow(self, user):
-        from notifications.model.user import UserNotification
+        from notifications.model.user import UserNotification, notification_handler
 
         notification_handler(user, self.followed_user, UserNotification.CONNECTION_REQUEST, key='notification')
 
@@ -30,7 +30,7 @@ class CommunityFollow(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     def notification_community_follow(self, user):
-        from notifications.model.user import UserCommunityNotification
+        from notifications.model.user import UserCommunityNotification, community_notification_handler
 
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
 
