@@ -85,12 +85,12 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
-
+  link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     console.log("Запрос завершен");
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
-  };
+  }};
   link_.ontimeout = function() {
   alert( 'Извините, запрос превысил максимальное время' );
   }
