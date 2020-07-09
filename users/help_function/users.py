@@ -210,10 +210,10 @@ def count_posts_for_user_with_id(self, id):
     return count
 
 def count_followers(self):
-    return Follow.objects.filter(followed_user__id=self.pk).count()
+    return Follow.objects.filter(user__id=self.pk).count()
 
 def count_following(self):
-    return Follow.objects.filter(user__id=self.pk).count()
+    return Follow.objects.filter(followed_user__id=self.pk).count()
 
 def count_connections(self):
     return self.connections.count()
