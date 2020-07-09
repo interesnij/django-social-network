@@ -88,8 +88,7 @@ on('#ajax', 'click', '.u_post_remove', function() {
     p.style.padding = "20px";
     p.style.display =  "block";
     p.innerHTML = "Запись удалена. <span class='u_post_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
-    document.querySelector(".item_fullscreen").style.display = "none"
-    ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
+    document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_container"),
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
