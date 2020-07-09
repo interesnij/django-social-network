@@ -773,6 +773,12 @@ class User(AbstractUser):
     def count_followers(self):
         return self.followers.values('pk').count()
 
+    def is_no_view_followers(self):
+        return self.followers.filter(view=False).exists()
+
+    def count_no_view_followers(self):
+        return self.followers.filter(view=False).values('pk').count()
+
     def count_following(self):
         return self.follows.values('pk').count()
 

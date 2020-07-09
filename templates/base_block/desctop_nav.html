@@ -30,7 +30,7 @@
         <div class="icon-20">
           <svg class="svg_default" style="margin-bottom:5px" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         </div>
-          &nbsp;Друзья
+          &nbsp;Друзья {% if request.user.is_no_view_followers %}{{ request.user.count_no_view_followers }}{% endif %}
         </a>
         <a class="ajax" href="{% url 'communities' pk=request.user.pk %}">
           <div class="icon-20">
