@@ -87,12 +87,15 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
 
   if ( this.readyState == 4 && this.status == 200 ) {
-    console.log("Запрос звершен");
+    console.log("Запрос завершен");
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
   };
   link_.ontimeout = function() {
   alert( 'Извините, запрос превысил максимальное время' );
+  }
+  link_.loadstart = function() {
+    console.log("Запрос начат");
   }
   link_.send();
 })
