@@ -729,10 +729,10 @@ class User(AbstractUser):
     ''''' количества всякие  196-216 '''''
 
     def count_followers(self):
-        return self.follows.values('pk').count()
+        return self.followers.values('pk').count()
 
     def count_following(self):
-        return self.followers.values('pk').count()
+        return self.follows.values('pk').count()
 
     def count_connections(self):
         return self.connections.values('pk').count()
