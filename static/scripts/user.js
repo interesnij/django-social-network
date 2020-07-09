@@ -67,3 +67,15 @@ on('#ajax', 'click', '.create_post_claim_btn', function() {
   }};
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '.follow_create', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/follows/add/suspend_window/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/users/' + pk + '/');
+    toast_info("Подписка оформлена!");
+  }};
+  link_.send();
+})
