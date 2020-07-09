@@ -308,11 +308,14 @@ class User(AbstractUser):
         return self.follows.filter(user__id=user_id, view=True).exists()
 
     def has_blocked_user_with_id(self, user_id):
-        return self.blocked_by_users.filter(blocked_user_id=user_id).exists() 
+        return self.user_blocks.filter(blocker_id=user_id).exists()
+
+    def is_blocked_user_with_id(self, user_id):
+        return self.blocked_by_users.filter(blocked_user_id=user_id).exists()
 
     def get_buttons_profile(self, user_id):
         if self.is_authenticated:
-            if self.has_blocked_user_with_id(user_id):
+            if self.is_blocked_user_with_id(user_id):
                 return "button/blocked_user.html"
             elif self.is_connected_with_user_with_id(user_id):
                 return "button/frend_user.html"
@@ -329,7 +332,7 @@ class User(AbstractUser):
 
     def get_staff_buttons_profile(self, user_id):
         if self.is_authenticated:
-            if self.has_blocked_user_with_id(user_id):
+            if self.is_blocked_user_with_id(user_id):
                 return "button/staff_blocked_user.html"
             elif self.is_connected_with_user_with_id(user_id):
                 return "button/staff_frend_user.html"
