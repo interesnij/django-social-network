@@ -310,22 +310,39 @@ class User(AbstractUser):
     def is_followers_user_view(self, user_id):
         return self.followers.filter(user__id=user_id, view=True).exists()
 
-    def get_buttons_block(self, user_id):
+    def get_buttons_profile(self, user_id):
         if self.is_authenticated:
             if self.is_connected_with_user_with_id(user_id):
-                return "frend_user"
+                return "button/frend_user.html"
             elif self.has_blocked_user_with_id(user_id):
-                return "blocked_user"
+                return "button/blocked_user.html"
             elif self.is_following_user_with_id(user_id):
-                return "following_user"
+                return "button/following_user.html"
             elif self.is_followers_user_view(user_id):
-                return "follow_view_user"
+                return "button/follow_view_user.html"
             elif self.is_followers_user_with_id(user_id):
-                return "follow_user"
+                return "button/follow_user.html"
             else:
-                return "default_user"
+                return "button/default_user.html"
         else:
-            return "null_value"
+            return "button/null_value.html"
+
+    def get_staff_buttons_profile(self, user_id):
+        if self.is_authenticated:
+            if self.is_connected_with_user_with_id(user_id):
+                return "button/staff_frend_user.html"
+            elif self.has_blocked_user_with_id(user_id):
+                return "button/staff_blocked_user.html"
+            elif self.is_following_user_with_id(user_id):
+                return "button/staff_following_user.html"
+            elif self.is_followers_user_view(user_id):
+                return "button/staff_follow_view_user.html"
+            elif self.is_followers_user_with_id(user_id):
+                return "button/staff_follow_user.html"
+            else:
+                return "button/staff_default_user.html"
+        else:
+            return "button/null_value.html"
 
 
     def is_album_exists(self):

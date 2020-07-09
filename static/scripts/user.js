@@ -97,7 +97,7 @@ on('#ajax', 'click', '.follow_view', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     this.remove();
-    toast_info("Пользователь оставлен в подписчиках!");
+    toast_info("Пользователь оставлен в подписчиках");
   }};
   link_.send();
 })

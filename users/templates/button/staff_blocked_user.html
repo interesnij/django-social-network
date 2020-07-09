@@ -1,0 +1,20 @@
+<span style="margin-bottom: 10px;" class="centered">
+  <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-secondary menu_drop">
+          Заблокирован
+      </button>
+      <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+          <span class="dropdown-item user_unblock">Разблокировать</span>
+          <span class="dropdown-item user_blocker" style="font-weight: bold;">Заблокировать</span>
+          <span class="dropdown-item user_suspend" style="font-weight: bold;">Остановка</span>
+          {% if user.is_have_warning_banner %}
+            <a href="/managers/penalty_list/user/{{ request.user.pk}}" class="dropdown-item ajax" style="font-weight: bold;">Применен баннер</a>
+          {% else %}
+            <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
+          {% endif %}
+          {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
+            <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
+          {% endif %}
+      </div>
+  </div>
+</span>

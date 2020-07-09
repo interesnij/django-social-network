@@ -165,6 +165,7 @@ class ProfileUserView(TemplateView):
         from stst.models import UserNumbers
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.get_buttons_block = self.user.get_buttons_profile(self.user.pk)
 
         if self.user.pk == request.user.pk:
             if not request.user.is_phone_verified:
@@ -180,6 +181,7 @@ class ProfileUserView(TemplateView):
                 self.template_name = "main/phone_verification.html"
             elif self.user.is_suspended():
                 self.template_name = "main/user_suspended.html"
+                self.get_buttons_block = self.user.get_staff_buttons_profile(self.user.pk)
             elif self.user.is_blocked():
                 self.template_name = "main/user_global_block.html"
             elif request.user.is_user_manager() or request.user.is_superuser:
@@ -212,7 +214,7 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.user.get_pop_communities()
-        context['get_buttons_block'] = "button/" + self.request.user.get_buttons_block(self.user.pk) + ".html"
+        context['get_buttons_block'] = self.get_buttons_block
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context
