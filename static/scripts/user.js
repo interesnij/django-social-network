@@ -103,7 +103,7 @@ on('#ajax', 'click', '.follow_view', function() {
   link_.open( 'GET', "/follows/view/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this.remove();
+    this.delete();
     toast_info("Пользователь оставлен в подписчиках");
   }};
   link_.send();
