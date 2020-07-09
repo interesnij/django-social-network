@@ -174,7 +174,7 @@ class User(AbstractUser):
         from follows.models import Follow
 
         check_is_following_user_with_id(user=self, user_id=user_id)
-        follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
+        follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk, view=True)
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
@@ -1414,7 +1414,7 @@ class User(AbstractUser):
         return community_to_leave
 
     def has_blocked_user_with_id(self, user_id):
-        return self.user_blocks.filter(blocked_user_id=user_id).exists()
+        return self.blocked_by_users.filter(blocker_id=user_id).exists() 
 
     def get_last_location(self):
         from users.model.profile import OneUserLocation, TwoUserLocation, ThreeUserLocation
