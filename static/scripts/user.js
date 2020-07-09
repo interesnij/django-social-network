@@ -69,7 +69,7 @@ on('#ajax', 'click', '.create_post_claim_btn', function() {
 });
 
 on('#ajax', 'click', '.follow_create', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/follows/add/" + pk + "/", true );
   link_.onreadystatechange = function () {
