@@ -98,12 +98,13 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.send();
 })
 on('#ajax', 'click', '.follow_view', function() {
+  _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/follows/view/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this.delete();
+    _this.delete();
     toast_info("Пользователь оставлен в подписчиках");
   }};
   link_.send();
