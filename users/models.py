@@ -31,7 +31,7 @@ class User(AbstractUser):
         from notifications.model.user import UserNotification, notification_handler
         notification_handler(self, user, UserNotification.CONNECTION_REQUEST, key='notification')
     def notification_connect(self, user):
-        from notifications.model.user import UserNotification
+        from notifications.model.user import UserNotification, notification_handler
         notification_handler(self, user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     def create_s_avatar(self, photo_input):
