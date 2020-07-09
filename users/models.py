@@ -29,8 +29,10 @@ class User(AbstractUser):
 
     def notification_follow(self, user):
         from notifications.model.user import UserNotification, notification_handler
-
         notification_handler(self, user, UserNotification.CONNECTION_REQUEST, key='notification')
+    def notification_connect(self, user):
+        from notifications.model.user import UserNotification
+        notification_handler(self, user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
@@ -236,7 +238,7 @@ class User(AbstractUser):
         return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
-        return self.connections.filter(target_connection__target_user_id=user_id).exists() 
+        return self.connections.filter(target_connection__target_user_id=user_id).exists()
 
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()

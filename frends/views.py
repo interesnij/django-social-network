@@ -62,17 +62,15 @@ class CommonFrendsListView(ListView):
 
 
 class ConnectCreate(View):
-	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		new_frend = request.user.frend_user(self.target_user)
-		new_frend.notification_connect(request.user)
+		request.user.notification_connect(new_frend)
 		return HttpResponse("!")
 
 
 class ConnectDelete(View):
-	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])

@@ -8,10 +8,6 @@ class Connect(models.Model):
     target_connection = models.OneToOneField('self', on_delete=models.CASCADE, null=True)
     id = models.BigAutoField(primary_key=True)
 
-    def notification_connect(self, user):
-        from notifications.model.user import UserNotification
-
-        notification_handler(user, self.target_user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     @classmethod
     def create_connection(cls, user_id, target_user_id):
