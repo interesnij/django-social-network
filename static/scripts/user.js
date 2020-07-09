@@ -83,7 +83,7 @@ on('#ajax', 'click', '.follow_create', function() {
 on('#ajax', 'click', '.follow_delete', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.timeout = 30000;
+  link_.timeout = 1;
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
