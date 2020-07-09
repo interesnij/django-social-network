@@ -94,7 +94,8 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.ontimeout = function() {
   alert( 'Извините, запрос превысил максимальное время' );
   }
-  link_.loadstart = function() {
+  link_.addEventListener('loadstart', _loadstart);
+  function _loadstart() {
     console.log("Запрос начат");
   }
   link_.send();
