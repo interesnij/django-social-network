@@ -308,7 +308,7 @@ class User(AbstractUser):
         return self.follows.filter(user__id=user_id, view=True).exists()
 
     def has_blocked_user_with_id(self, user_id):
-        return self.blocked_by_users.filter(blocker_id=user_id).exists() 
+        return self.blocked_by_users.filter(blocked_user_id=user_id).exists() 
 
     def get_buttons_profile(self, user_id):
         if self.is_authenticated:
