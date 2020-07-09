@@ -311,9 +311,9 @@ class User(AbstractUser):
         return self.followers.filter(followed_user__id=user_id).exists()
 
     def is_followers_user_with_id(self, user_id):
-        return self.followers.filter(user__id=user_id).exists()
+        return self.follows.filter(user__id=user_id).exists()
     def is_followers_user_view(self, user_id):
-        return self.followers.filter(user__id=user_id, view=True).exists()
+        return self.follows.filter(user__id=user_id, view=True).exists()
 
     def get_buttons_profile(self, user_id):
         if self.is_authenticated:
