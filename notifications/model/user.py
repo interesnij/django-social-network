@@ -114,24 +114,11 @@ class UserCommunityNotification(models.Model):
             self.unread = True
             self.save()
 
+def notification_handler(actor, recipient, verb, comment, **kwargs):
 
-def notification_handler(actor, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            UserNotification.objects.create(actor=actor,recipient=user,verb=verb)
-        user_notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for user in recipient:
-            UserNotification.objects.create(actor=actor,recipient=User.objects.get(username=user.username),verb=verb)
-
-    elif isinstance(recipient):
-        UserNotification.objects.create(actor=actor,recipient=recipient,verb=verb)
-        user_notification_broadcast(actor, key, recipient=recipient.username)
-    else:
-        pass
+    UserNotification.objects.create(actor=actor, recipient=recipient, verb=verb)
+    notification_broadcast(actor, key, recipient=recipient.username)
 
 def community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')

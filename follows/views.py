@@ -44,9 +44,9 @@ class FollowingsView(ListView):
 
 class FollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		new_follow = request.user.follow_user(self.followed_user)
-		new_follow.notification_follow(request.user)
+		followed_user = User.objects.get(pk=self.kwargs["pk"])
+		new_follow = request.user.follow_user(followed_user)
+		request.user.notification_follow(followed_user)
 		return HttpResponse("!")
 
 class FollowView(View):

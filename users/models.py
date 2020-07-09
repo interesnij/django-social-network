@@ -27,6 +27,11 @@ class User(AbstractUser):
     def get_full_name(self):
         return  str(self.first_name) + " " + str(self.last_name)
 
+    def notification_follow(self, user):
+        from notifications.model.user import UserNotification, notification_handler
+
+        notification_handler(self, user, UserNotification.CONNECTION_REQUEST, key='notification')
+
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
         from easy_thumbnails.files import get_thumbnailer

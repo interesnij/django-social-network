@@ -8,11 +8,6 @@ class Follow(models.Model):
     id = models.BigAutoField(primary_key=True)
     view = models.BooleanField(default=False, verbose_name="Просмотрено")
 
-    def notification_follow(self, user):
-        from notifications.model.user import UserNotification, notification_handler
-
-        notification_handler(user, self.followed_user, UserNotification.CONNECTION_REQUEST, key='notification')
-
     class Meta:
         unique_together = ('user', 'followed_user')
         verbose_name = 'Подписчик'
