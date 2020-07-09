@@ -307,6 +307,26 @@ class User(AbstractUser):
 
     def is_followers_user_with_id(self, user_id):
         return self.followers.filter(user__id=user_id).exists()
+    def is_followers_user_view(self, user_id):
+        return self.followers.filter(user__id=user_id, view=True).exists()
+
+    def get_buttons_block(self, user_id):
+        if self.is_authenticated:
+            if self.is_connected_with_user_with_id(user_id):
+                return "frend_user"
+            elif self.has_blocked_user_with_id(user_id):
+                return "blocked_user"
+            elif self.is_following_user_with_id(user_id):
+                return "following_user"
+            elif self.is_followers_user_view(user_id):
+                return "follow_view_user"
+            elif self.is_followers_user_with_id(user_id):
+                return "follow_user"
+            else:
+                return "default_user"
+        else:
+            return "null_value"
+
 
     def is_album_exists(self):
         return self.created_user.filter(creator__id=self.pk, community=None).exists()

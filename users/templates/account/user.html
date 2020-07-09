@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize get_key profile_button %}
+{% load humanize get_key %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -25,72 +25,8 @@
                       </figure>
                   </a>
               </div>
-              {% if request.user|is_frend_user:user.pk %}
-              <span style="margin-bottom: 10px;" class="centered">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                        У Вас в друзьях
-                    </button>
-                    <div class="dropdown-menu btn-secondary" style="margin-top:5px;width:100%">
-                        <span class="dropdown-item connect_delete">Убрать из друзей</span>
-                        <span class="dropdown-item user_block">Заблокировать</span>
-                        <span class="dropdown-item user_claim">Пожаловаться</span>
-                    </div>
-                </div>
-              </span>
-              {% elif request.user|is_blocked_user:user.pk %}
-              <span style="margin-bottom: 10px;" class="centered">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                        Заблокирован
-                    </button>
-                    <div class="dropdown-menu" style="margin-top:5px;width:100%">
-                        <span class="dropdown-item user_unblock">Разблокировать</span>
-                        <span class="dropdown-item user_claim">Пожаловаться</span>
-                    </div>
-                </div>
-              </span>
 
-              {% elif request.user|is_request_follow:user.pk %}
-              <span style="margin-bottom: 10px;" class="centered">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                        Вы подписаны
-                    </button>
-                    <div class="dropdown-menu" style="margin-top:5px;width:100%">
-                        <span class="dropdown-item follow_delete">Отменить подписку</span>
-                        <span class="dropdown-item user_block">Заблокировать</span>
-                        <span class="dropdown-item user_claim">Пожаловаться</span>
-                    </div>
-                </div>
-              </span>
-
-              {% elif request.user|is_user_follow:user.pk %}
-              <span style="margin-bottom: 10px;" class="centered">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary menu_drop">
-                        Ваш подписчик
-                    </button>
-                    <div class="dropdown-menu" style="margin-top:5px;width:100%">
-                        <span class="dropdown-item connect_create">Добавить в друзья</span>
-                        <span class="dropdown-item user_block">Заблокировать</span>
-                        <span class="dropdown-item user_claim">Пожаловаться</span>
-                    </div>
-                </div>
-              </span>
-
-              {% else %}
-              <span style="margin-bottom: 10px;" class="centered">
-                <button class="btn btn-sm btn-success success-gradient follow_create">Добавить в друзья</button>
-                <button style="margin-left:5px;" type="button" class="btn btn-sm btn-success success-gradient menu_drop">
-                  <svg style="width: 17px;height: 17px; "fill="#FFFFF8" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                </button>
-                <div class="dropdown-menu" style="margin-top:-50px;width:100%">
-                  <span class="dropdown-item user_block">Заблокировать</span>
-                  <span class="dropdown-item user_claim">Пожаловаться</span>
-                </div>
-              </span>
-              {% endif %}
+              {% indlude "button/{{ request.user.get_buttons_block }}.html" %}
 
 
               <span class="centered">

@@ -43,16 +43,25 @@ class FollowingsView(ListView):
 
 
 class FollowCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		new_follow = request.user.follow_user(self.followed_user)
 		new_follow.notification_follow(request.user)
 		return HttpResponse("!")
 
+class FollowView(View):
+	def get(self,request,*args,**kwargs):
+		follow_user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			follow = Follow.objects.get(user=follow_user, followed_user=request.user)
+			follow.view = True
+			follow.save(update_fields=['view'])
+		except:
+			pass
+		return HttpResponse("!")
+
 
 class FollowDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		request.user.unfollow_user(self.followed_user)
@@ -60,7 +69,6 @@ class FollowDelete(View):
 
 
 class CommunityFollowCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		from communities.models import Community
 
@@ -72,7 +80,6 @@ class CommunityFollowCreate(View):
 
 
 class CommunityFollowDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		from communities.models import Community
 
