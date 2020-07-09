@@ -212,6 +212,7 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.user.get_pop_communities()
+        context['get_buttons_block'] = "button/" + self.request.user.get_buttons_block() + ".html"
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context
