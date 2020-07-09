@@ -114,7 +114,7 @@ class UserCommunityNotification(models.Model):
             self.unread = True
             self.save()
 
-def notification_handler(actor, recipient, verb, comment, **kwargs):
+def notification_handler(actor, recipient, verb, **kwargs):
 
     key = kwargs.pop('key', 'notification')
     UserNotification.objects.create(actor=actor, recipient=recipient, verb=verb)
