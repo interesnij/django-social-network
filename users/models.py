@@ -241,16 +241,6 @@ class User(AbstractUser):
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()
 
-    def is_pending_confirm_connection_for_user_with_id(self, user_id):
-        if not self.is_connected_with_user_with_id(user_id):
-            return False
-        connection = self.connections.filter(target_connection__user_id=user_id).get()
-        return not connection.circles.exists()
-
-    def is_global_moderator(self):
-        moderators_community_name = settings.MODERATORS_COMMUNITY_NAME
-        return self.is_member_of_community_with_name(community_name=moderators_community_name)
-
     def is_invited_to_community_with_name(self, community_name):
         from communities.models import Community
 
@@ -317,10 +307,10 @@ class User(AbstractUser):
 
     def get_buttons_profile(self, user_id):
         if self.is_authenticated:
-            if self.is_connected_with_user_with_id(user_id):
-                return "button/frend_user.html"
-            elif self.has_blocked_user_with_id(user_id):
+            if self.has_blocked_user_with_id(user_id):
                 return "button/blocked_user.html"
+            elif self.is_connected_with_user_with_id(user_id):
+                return "button/frend_user.html"
             elif self.is_followers_user_view(user_id):
                 return "button/follow_view_user.html"
             elif self.is_following_user_with_id(user_id):
@@ -334,10 +324,10 @@ class User(AbstractUser):
 
     def get_staff_buttons_profile(self, user_id):
         if self.is_authenticated:
-            if self.is_connected_with_user_with_id(user_id):
-                return "button/staff_frend_user.html"
-            elif self.has_blocked_user_with_id(user_id):
+            if self.has_blocked_user_with_id(user_id):
                 return "button/staff_blocked_user.html"
+            elif self.is_connected_with_user_with_id(user_id):
+                return "button/staff_frend_user.html"
             elif self.is_followers_user_view(user_id):
                 return "button/staff_follow_view_user.html"
             elif self.is_following_user_with_id(user_id):
