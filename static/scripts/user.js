@@ -81,7 +81,7 @@ on('#ajax', 'click', '.follow_create', function() {
   link_.send();
 })
 on('#ajax', 'click', '.follow_delete', function() {
-  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
 
@@ -90,7 +90,7 @@ on('#ajax', 'click', '.follow_delete', function() {
     console.log("Запрос звершен");
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
-  }};
+  };
   link_.ontimeout = function() {
   alert( 'Извините, запрос превысил максимальное время' );
   }
