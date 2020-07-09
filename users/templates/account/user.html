@@ -65,7 +65,7 @@
                 </div>
               </span>
 
-              {% elif request.user|is_following_user_with_id:user.pk %}
+              {% elif request.user|is_following_user:user.pk %} 
               <span style="margin-bottom: 10px;" class="centered">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary menu_drop">
