@@ -88,7 +88,7 @@ on('#ajax', 'click', '.connect_create', function() {
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
   }};
-  link_.send();
+  link_.send(); 
 })
 on('#ajax', 'click', '.follow_view', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null

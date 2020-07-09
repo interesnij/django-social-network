@@ -356,7 +356,7 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.body.querySelector(".video_btn_big").style.display = "block";
   document.getElementById("video_loader").innerHTML=""
 });
-on('body', 'click', '.worker_fullscreen_hide', function() {document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
+on('body', 'click', '.create_fullscreen_hide', function() {document.querySelector(".create_fullscreen").style.display = "none";document.getElementById("create_loader").innerHTML=""});
 
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
