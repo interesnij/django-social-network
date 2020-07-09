@@ -113,7 +113,7 @@ on('#ajax', 'click', '.connect_create', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-  link_.open( 'GET', "/frends/add/" + pk + "/", true );
+  link_.open( 'GET', "/friends/add/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     this_page_reload('/users/' + pk + '/');
@@ -124,7 +124,7 @@ on('#ajax', 'click', '.connect_create', function() {
 on('#ajax', 'click', '.connect_delete', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/frends/delete/" + pk + "/", true );
+  link_.open( 'GET', "/friends/delete/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     this_page_reload('/users/' + pk + '/');
