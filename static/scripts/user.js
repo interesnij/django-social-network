@@ -83,7 +83,8 @@ on('#ajax', 'click', '.follow_create', function() {
 on('#ajax', 'click', '.follow_delete', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.timeout = 1;
+  link_.timeout = 30000;
+  link_.addEventListener('loadstart', _loadstart);
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -91,13 +92,9 @@ on('#ajax', 'click', '.follow_delete', function() {
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
   }};
-  link_.ontimeout = function() {
-  alert( 'Извините, запрос превысил максимальное время' );
-  }
-  link_.addEventListener('loadstart', _loadstart);
-  function _loadstart() {
-    console.log("Запрос начат");
-  }
+  link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
+
+  function _loadstart() {console.log("Запрос начат")}
   link_.send();
 })
 on('#ajax', 'click', '.follow_view', function() {
@@ -115,18 +112,13 @@ on('#ajax', 'click', '.follow_view', function() {
 on('#ajax', 'click', '.connect_create', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.timeout = 30000;
 
   link_.open( 'GET', "/frends/add/" + pk + "/", true );
   link_.onreadystatechange = function () {
-  if ( this.readyState == 1 ){console.log("Запрос начат")}
-  else if ( this.readyState == 4 && this.status == 200 ) {
+  if ( this.readyState == 4 && this.status == 200 ) {
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг добавлен!");
   }};
-  link_.ontimeout = function() {
-  alert( 'Извините, запрос превысил максимальное время' );
-  }
   link_.send();
 })
 on('#ajax', 'click', '.connect_delete', function() {
@@ -137,6 +129,30 @@ on('#ajax', 'click', '.connect_delete', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     this_page_reload('/users/' + pk + '/');
     toast_info("Друг удален!");
+  }};
+  link_.send();
+})
+on('#ajax', 'click', '.user_block', function() {
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.timeout = 30000;
+  link_.open( 'GET', "/users/progs/block/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/users/' + pk + '/');
+    toast_info("Пользователь заблокирован!");
+  }};
+  link_.send();
+})
+on('#ajax', 'click', '.user_unblock', function() {
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.timeout = 30000;
+  link_.open( 'GET', "/users/progs/unblock/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/users/' + pk + '/');
+    toast_info("Пользователь разблокирован!");
   }};
   link_.send();
 })
