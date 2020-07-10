@@ -3,11 +3,11 @@
   {% csrf_token %}
 
 <div class="row justify-content-center">
-  <div class="card">
-    Создание жалобы на комментарий к записи от {{ comment.post.created }}
+  <div class="card" data-uuid="{{ post.uuid }}">
+    Создание жалобы на комментарий к <span class="fullscreen" style="cursor:pointer">записи от {{ post.created }}</span>
     <div class="card-body">
       <div class="border">
-        {{ comment.text }}
+        <span style="padding:20px">{{ comment.text }}</span>
         <div class="attach_container">
           {% for photo in comment.item_photo.all %}
           <div class="photo">

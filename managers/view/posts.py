@@ -277,6 +277,10 @@ class PostCommentClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.post = self.comment.post
+        except:
+            self.post = self.comment.parent_comment.post
         if request.user.is_post_manager or request.user.is_superuser:
             self.template_name = "manage_create/post/post_comment_claim.html"
         else:
@@ -286,4 +290,5 @@ class PostCommentClaimWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PostCommentClaimWindow,self).get_context_data(**kwargs)
         context["comment"] = self.comment
+        context["post"] = self.post
         return context
