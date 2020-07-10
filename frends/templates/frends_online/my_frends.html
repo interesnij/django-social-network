@@ -91,7 +91,7 @@
             </div>
           </div>
       </div>
-      {% if request.user.is_no_view_followers %}
+      {% if request.user.count_followers %}
       <br>
       <div class="card mb-2">
           <div class="card-header">
@@ -99,6 +99,21 @@
                 <div class="media-body">
                   <h5 class="mt-1">
                     <a href="{% url 'follows' pk=request.user.pk %}" class="ajax">Подписчики</a>
+                  </h5>
+                </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
+
+      {% if request.user.count_following %}
+      <br>
+      <div class="card mb-2">
+          <div class="card-header">
+            <div class="media">
+                <div class="media-body">
+                  <h5 class="mt-1">
+                    <a href="{% url 'followings' pk=request.user.pk %}" class="ajax">Мои заявки</a>
                   </h5>
                 </div>
             </div>
