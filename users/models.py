@@ -329,16 +329,15 @@ class User(AbstractUser):
             elif self.is_connected_with_user_with_id(user_id):
                 return "button/frend_user.html"
             elif self.is_followers_user_view(user_id):
-                return "button/follow_view_user.html"
+                return "button/follow_user.html"
             elif self.is_following_user_with_id(user_id):
                 return "button/following_user.html"
             elif self.is_followers_user_with_id(user_id):
-                return "button/follow_user.html"
+                return "button/follow_view_user.html"
             else:
                 return "button/default_user.html"
         else:
             return "button/null_value.html"
-
     def get_staff_buttons_profile(self, user_id):
         if self.is_authenticated:
             if self.has_blocked_user_with_id(user_id):
@@ -346,11 +345,11 @@ class User(AbstractUser):
             elif self.is_connected_with_user_with_id(user_id):
                 return "button/staff_frend_user.html"
             elif self.is_followers_user_view(user_id):
-                return "button/staff_follow_view_user.html"
+                return "button/staff_follow_user.html"
             elif self.is_following_user_with_id(user_id):
                 return "button/staff_following_user.html"
             elif self.is_followers_user_with_id(user_id):
-                return "button/staff_follow_user.html"
+                return "button/staff_follow_view_user.html"
             else:
                 return "button/staff_default_user.html"
         else:
