@@ -238,7 +238,7 @@ class User(AbstractUser):
         return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
-        return self.connections.filter(target_connection__target_user_id=user_id).exists()
+        return self.connections.filter(target_connection__user_id=user_id).exists() 
 
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()
