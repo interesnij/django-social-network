@@ -177,11 +177,10 @@ a.media:hover {
     background-color: #5D1131 !important;
     color: rgba(255, 255, 255, 0.6) !important;
 }
-
-.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #661336; color: rgba(255, 255, 255, 0.6) !important;}
-.comment_like_window:hover, .comment_dislike_window:hover {background: #661336; color: color: rgba(255, 255, 255, 0.6) !important;}
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #661336; color: rgba(255, 255, 255, 0.6) !important;}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#661336; color: rgba(255, 255, 255, 0.6) !important;}
+.like_window, .dislike_window, .repost_window,
+.comment_like_window, .comment_dislike_window {
+  background: #661336; color: rgba(255, 255, 255, 0.6) !important;
+}
 .thumb{
 border:rgba(255, 255, 255, 0.6) solid 1px;
 }
