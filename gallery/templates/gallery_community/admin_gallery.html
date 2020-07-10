@@ -2,7 +2,7 @@
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">
@@ -22,7 +22,7 @@
   {% include 'gallery_community/albums.html' %}
 </div>
 
-<div class="container-fluid mt-3 pk_saver" community-pk="{{ community.pk }}">
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">

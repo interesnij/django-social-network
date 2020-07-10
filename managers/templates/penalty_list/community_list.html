@@ -24,7 +24,7 @@
 
               <ul class="list-group" id="penalty_community_container" data-link="/managers/penalty_list/community_admin/{{ community.pk }}" >
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" community-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
                       <div class="media">
                         <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                           <figure>

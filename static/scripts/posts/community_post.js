@@ -7,7 +7,7 @@ on('#ajax', 'click', '#c_add_post', function() {
   form_data = new FormData(document.forms.new_community_post);
   form_post = document.querySelector("#commnity_post");
   lenta_load = form_post.parentElement.nextElementSibling;
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/add_post_community/" + pk + "/", true );
@@ -60,14 +60,14 @@ on('#ajax', 'click', '.c_post_comment_abort_remove', function() {
 on('#ajax', 'click', '.c_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/community_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
@@ -75,7 +75,7 @@ on('#ajax', 'click', '.c_like2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/community_comment/" + comment_pk + "/" + pk + "/like/");
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
@@ -83,7 +83,7 @@ on('#ajax', 'click', '.c_dislike2', function() {
   _this = this;
   item = _this.parentElement;
   comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/community_comment/" + comment_pk + "/" + pk + "/dislike/");
   vote_reload("/posts/item_window/c_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
@@ -92,7 +92,7 @@ on('body', 'click', '#community_avatar_btn', function(event) {
   this.previousElementSibling.click();
 })
 on('#ajax', 'change', '#community_avatar_upload', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_community_avatar"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_avatar/" + pk + "/", true );

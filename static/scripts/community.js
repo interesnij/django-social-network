@@ -35,7 +35,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
             rtr.innerHTML = ajax.innerHTML;
-            pk = rtr.querySelector(".pk_saver").getAttribute("community-pk");
+            pk = rtr.querySelector(".pk_saver").getAttribute("data-pk");
             window.scrollTo(0,0);
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
@@ -66,14 +66,14 @@ on('#ajax', 'change', '#sub_category', function() {
 
 on('#ajax', 'click', '.community_claim', function() {
   this.parentElement.classList.remove("show");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/managers/progs_community/claim_window/" + pk, loader)
 })
 on('#ajax', 'click', '.create_community_claim_btn', function() {
   form_data = new FormData(document.querySelector("#community_claim_form"));
   form_post = document.querySelector("#community_claim_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_community/create_claim/" + pk + "/", true );

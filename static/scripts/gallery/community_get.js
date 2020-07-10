@@ -19,7 +19,7 @@ on('#ajax', 'click', '.c_photo_detail', function() {
 });
 
 on('#ajax', 'click', '.c_wall_image', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = this.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/community_wall/" + pk + "/" + uuid + "/", loader)
@@ -31,7 +31,7 @@ on('#ajax', 'click', '.c_photos_add', function() {
 
 on('#ajax', 'click', '.c_albums_add', function() {
   container = this.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute('community-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/community/add_album/" + pk + "/", loader)
 });
@@ -48,7 +48,7 @@ on('#ajax', 'click', '#c_add_album', function() {
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/gallery/community/add_album/" + pk + "/", true );
@@ -107,7 +107,7 @@ on('#ajax', 'click', '.c_all_photo_reposts', function() {
 on('#ajax', 'click', '.c_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("community-pk");
+  pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/community_progs/comment/" + uuid + "/" + pk + "/";
   list_load(data.querySelector(".c_load_comments"), url);

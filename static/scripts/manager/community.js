@@ -2,10 +2,10 @@ on('#ajax', 'click', '.community_suspend', function() {
   _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");
@@ -19,10 +19,10 @@ on('#ajax', 'click', '.community_blocker', function() {
   _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");
@@ -36,10 +36,10 @@ on('#ajax', 'click', '.community_warning_banner', function() {
   _this = this;
   if (document.body.querySelector(".pk_saver")){
     this.parentElement.classList.remove("show");
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if(_this.parentElement.classList.contains("btn_console")){
     li = _this.parentElement.parentElement.parentElement.parentElement;
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
     list = document.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("changed");
@@ -54,10 +54,10 @@ on('#ajax', 'click', '.create_community_suspend_btn', function() {
   form_data = new FormData(document.querySelector("#community_suspend_form"));
   form_post = document.querySelector("#community_suspend_form");
   if (document.body.querySelector(".pk_saver")){
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -82,10 +82,10 @@ on('#ajax', 'click', '.create_community_blocker_btn', function() {
   form_data = new FormData(document.querySelector("#community_blocker_form"));
   form_post = document.querySelector("#community_blocker_form");
   if (document.body.querySelector(".pk_saver")){
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if (document.body.querySelector(".changed")){
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -110,10 +110,10 @@ on('#ajax', 'click', '.create_community_warning_banner_btn', function() {
   form_data = new FormData(document.querySelector("#community_warning_banner_form"));
   form_post = document.querySelector("#community_warning_banner_form");
   if (document.body.querySelector(".pk_saver")){
-    pk = document.body.querySelector(".pk_saver").getAttribute("community-pk")
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
   }else if (document.body.querySelector(".changed")) {
     li = document.body.querySelector(".changed");
-    pk = li.getAttribute("community-pk");
+    pk = li.getAttribute("data-pk");
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -136,7 +136,7 @@ on('#ajax', 'click', '.create_community_warning_banner_btn', function() {
 
 on('#ajax', 'click', '.community_unverify', function() {
   li = this.parentElement.parentElement.parentElement;
-  community_pk = li.getAttribute("community-pk");
+  community_pk = li.getAttribute("data-pk");
   obj_pk = li.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_community/unverify/" + community_pk + "/" + obj_pk + "/", true );
@@ -152,7 +152,7 @@ on('#ajax', 'click', '.community_unverify', function() {
 
 on('#ajax', 'click', '.remove_community_suspend', function() {
   li = this.parentElement.parentElement.parentElement;
-  pk = li.getAttribute("community-pk");
+  pk = li.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/community_user/delete_suspension/" + pk + "/", true );
 
@@ -166,7 +166,7 @@ on('#ajax', 'click', '.remove_community_suspend', function() {
 });
 on('#ajax', 'click', '.remove_community_bloсk', function() {
   li = this.parentElement.parentElement.parentElement;
-  pk = li.getAttribute("community-pk");
+  pk = li.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_community/delete_block/" + pk + "/", true );
 
@@ -180,7 +180,7 @@ on('#ajax', 'click', '.remove_community_bloсk', function() {
 });
 on('#ajax', 'click', '.remove_community_warning_banner', function() {
   li = this.parentElement.parentElement.parentElement;
-  pk = li.getAttribute("community-pk");
+  pk = li.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/managers/progs_community/delete_warning_banner/" + pk + "/", true );
 

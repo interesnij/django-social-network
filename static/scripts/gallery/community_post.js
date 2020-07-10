@@ -105,14 +105,14 @@ on('#ajax', 'click', '.community_photo_abort_remove', function() {
 on('#ajax', 'click', '.c_photo_like', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("community-pk");
+  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
   vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("community-pk");
+  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/gallery/photo_window/c_like_window/" + uuid + "/", "/gallery/photo_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
@@ -136,7 +136,7 @@ on('body', 'click', '#c_add_multi_photos', function(event) {
 })
 
 on('#ajax', 'change', '#c_gallery_photo_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_photo/" + pk + "/", true );
@@ -158,7 +158,7 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
 });
 
 on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("community-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
