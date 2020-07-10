@@ -4693,6 +4693,14 @@ cursor: pointer;
 .worker_fullscreen,
 .good_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto; }
 
+.open_10 {
+  position: fixed;
+  z-index: 10;
+}
+.open_11 {
+  position: fixed;
+  z-index: 11;
+}
 .open_100 {
   position: fixed;
   z-index: 100;
@@ -4786,7 +4794,7 @@ cursor: pointer;
 .repost_window { opacity: 0; visibility: hidden; position: absolute; bottom: 25px; margin-bottom: 10px; display: flex; transition: 0.5s; }
 .like_window:hover,
 .comment_like_window:hover,
-.comment_dislike_window:hover, 
+.comment_dislike_window:hover,
 .dislike_window:hover,
 .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 
