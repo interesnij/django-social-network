@@ -76,7 +76,7 @@ on('#ajax', 'click', '.follow_create', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-     : (p = document.createElement("span"), p.innerHTML = '<span class="small follow_delete">Отписаться</span>', _this.parentElement.append(p), _this.remove());
+     : (p = document.createElement("span"), p.classList.add("small", "follow_delete", "btn_default"), p.innerHTML = 'Отписаться', _this.parentElement.append(p), _this.remove());
      toast_info("Подписка оформлена!")
   }};
   link_.send();
@@ -92,7 +92,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-          : (p = document.createElement("span"), p.innerHTML = '<span class="small follow_create">Подписаться</span>', _this.parentElement.append(p), _this.remove());
+          : (p = document.createElement("span"), p.classList.add("small", "follow_create", "btn_default"), p.innerHTML = 'Подписаться', _this.parentElement.append(p), _this.remove());
           toast_info("Друг добавлен!")
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
@@ -123,7 +123,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-        : (p = document.createElement("span"), p.innerHTML = '<span class="small connect_delete">Убрать из друзей</span>', _this.parentElement.append(p), _this.remove());
+        : (p = document.createElement("span"), p.classList.add("small", "connect_delete", "btn_default"), p.innerHTML = 'Убрать из друзей', _this.parentElement.append(p), _this.remove());
         toast_info("Друг добавлен!")
   }}
   link_.send();
@@ -135,7 +135,7 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-      : (p = document.createElement("span"), p.innerHTML = '<span class="small connect_create">Добавить в друзья</span>', _this.parentElement.append(p), _this.remove());
+      : (p = document.createElement("span"), p.classList.add("small", "connect_create", "btn_default"), p.innerHTML = 'Добавить в друзья', _this.parentElement.append(p), _this.remove());
       toast_info("Друг добавлен!")
   }};
   link_.send();
