@@ -118,7 +118,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.open( 'GET', "/friends/add/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг удален!"))
+    document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
                                              : this.parentElement.parentElement.parentElement.delete()
   }};
   link_.send();

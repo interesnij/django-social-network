@@ -168,51 +168,52 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
 
-        if self.user.pk == request.user.pk:
-            if not request.user.is_phone_verified:
-                self.template_name = "main/phone_verification.html"
-            elif self.user.is_suspended():
-                self.template_name = "main/you_suspended.html"
-            elif self.user.is_blocked():
-                self.template_name = "main/you_global_block.html"
-            else:
-                self.template_name = "account/my_user.html"
-        elif request.user.pk != self.user.pk and request.user.is_authenticated:
-            self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
-            if not request.user.is_phone_verified:
-                self.template_name = "main/phone_verification.html"
-            elif self.user.is_suspended():
-                self.template_name = "main/user_suspended.html"
-                self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
-            elif self.user.is_blocked():
-                self.template_name = "main/user_global_block.html"
-            elif request.user.is_user_manager() or request.user.is_superuser:
-                self.template_name = "account/staff_user.html"
-            elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
-                self.template_name = "account/block_user.html"
-            elif self.user.is_closed_profile():
-                if request.user.is_followers_user_with_id(user_id=self.user.pk):
+        if request.user.is_authenticated:
+            if self.user.pk == request.user.pk:
+                if not request.user.is_phone_verified:
+                    self.template_name = "main/phone_verification.html"
+                elif self.user.is_suspended():
+                    self.template_name = "main/you_suspended.html"
+                elif self.user.is_blocked():
+                    self.template_name = "main/you_global_block.html"
+                else:
+                    self.template_name = "account/my_user.html"
+            elif request.user.pk != self.user.pk:
+                self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
+                if not request.user.is_phone_verified:
+                    self.template_name = "main/phone_verification.html"
+                elif self.user.is_suspended():
+                    self.template_name = "main/user_suspended.html"
+                elif self.user.is_blocked():
+                    self.template_name = "main/user_global_block.html"
+                elif request.user.is_user_manager() or request.user.is_superuser:
+                    self.template_name = "account/staff_user.html"
+                    self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
+                elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
+                    self.template_name = "account/block_user.html"
+                elif self.user.is_closed_profile():
+                    if request.user.is_followers_user_with_id(user_id=self.user.pk):
+                        self.template_name = "account/user.html"
+                    elif not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                        self.template_name = "account/close_user.html"
+                else:
                     self.template_name = "account/user.html"
-                elif not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                    self.template_name = "account/close_user.html"
+                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                    UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
+                else:
+                    UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
+        elif request.user.is_anonymous:
+            if self.user.is_closed_profile():
+                self.template_name = "account/close_user.html"
             else:
-                self.template_name = "account/user.html"
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "account/close_user.html"
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "account/anon_user.html"
+                self.template_name = "account/anon_user.html"
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
-            if request.user.is_authenticated and request.user.pk != self.user.pk:
-                UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
-        else:
-            if request.user.is_authenticated and request.user.pk != self.user.pk:
-                UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
