@@ -3,9 +3,9 @@
 {% block title %}Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
+<div class="mt-3">
 <div class="row">
     <div class="col-12 col-md-8">
-        <br>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск подписчиков">
             <div class="input-group-append">
@@ -67,9 +67,7 @@
         </div>
     </div>
     <div class="col-12 col-md-4">
-        <br>
-
     </div>
 </div>
-
+</div>
 {% endblock %}
