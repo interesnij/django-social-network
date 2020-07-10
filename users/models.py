@@ -789,6 +789,13 @@ class User(AbstractUser):
     def is_no_view_followers(self):
         return self.followers.filter(view=False).exists()
 
+    def is_have_followers(self):
+        return self.followers.values('pk').exists()
+    def is_have_followings(self):
+        return self.follows.values('pk').exists()
+    def is_have_blacklist(self):
+        return self.user_blocks.values('pk').exists() 
+
     def count_no_view_followers(self):
         return self.followers.filter(view=False).values('pk').count()
 
