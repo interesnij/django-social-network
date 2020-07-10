@@ -200,6 +200,13 @@ class PostUnverify(View):
         return HttpResponse("")
 
 
+class CommentPostUnverify(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        obj = ModeratedPostComment.objects.get(pk=self.kwargs["obj_pk"])
+        obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+        return HttpResponse("")
+
 class CommentPostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
