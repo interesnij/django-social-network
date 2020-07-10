@@ -93,7 +93,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
           : (p = document.createElement("span"), p.classList.add("small", "follow_create", "btn_default"), p.innerHTML = 'Подписаться', _this.parentElement.append(p), _this.remove());
-          toast_info("Друг добавлен!")
+          toast_info("Подписка отменена")
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
 
@@ -141,25 +141,25 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.send();
 })
 on('#ajax', 'click', '.user_block', function() {
-  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.timeout = 30000;
   link_.open( 'GET', "/users/progs/block/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/users/' + pk + '/');
+    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    : (p = document.createElement("span"), p.classList.add("small", "user_unblock", "btn_default"), p.innerHTML = 'Разблокировать', _this.parentElement.append(p), _this.remove());
     toast_info("Пользователь заблокирован!");
   }};
   link_.send();
 })
 on('#ajax', 'click', '.user_unblock', function() {
-  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.timeout = 30000;
   link_.open( 'GET', "/users/progs/unblock/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/users/' + pk + '/');
+    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    : (p = document.createElement("span"), p.classList.add("small", "user_block", "btn_default"), p.innerHTML = 'Заблокировать', _this.parentElement.append(p), _this.remove());
     toast_info("Пользователь разблокирован!");
   }};
   link_.send();
