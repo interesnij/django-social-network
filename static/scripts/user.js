@@ -114,6 +114,7 @@ on('#ajax', 'click', '.follow_view', function() {
 })
 
 on('#ajax', 'click', '.connect_create', function() {
+  _this = this;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
                                            : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -123,7 +124,7 @@ on('#ajax', 'click', '.connect_create', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
         : (_this.parentElement.parentElement.parentElement.remove(),
-          block = document.body.querySelector("#followings_container"),
+          block = document.body.querySelector("#follows_container"),
           !block.querySelector(".pag") ? block.innerHTML = '<div class="card centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></div><h6 style="margin: 20px;text-align: center;"> Подписчиков нет...</h6></div>' : null)
   }};
   link_.send();
