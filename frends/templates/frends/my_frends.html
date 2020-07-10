@@ -81,14 +81,34 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br>
-        <div class="card">
-            <div class="card-body px-0 py-0">
-               <h5 class="mt-1"><a href="{% url 'all_users' %}" class="ajax">Найти друзей</a></h5>
+      <br>
+      <div class="card mb-2">
+          <div class="card-header">
+            <div class="media">
+                <div class="media-body">
+                  <h5 class="mt-1">
+                    <a href="{% url 'all_users' %}" class="ajax">Найти друзей</a>
+                  </h5>
+                </div>
             </div>
-        </div>
+          </div>
+      </div>
+      {% if request.user.is_no_view_followers %}
+      <br>
+      <div class="card mb-2">
+          <div class="card-header">
+            <div class="media">
+                <div class="media-body">
+                  <h5 class="mt-1">
+                    <a href="{% url 'followings' pk=request.user.pk %}" class="ajax">Подписчики</a>
+                  </h5>
+                </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
 
-        {% include 'featured_users.html' %}
+      {% include 'featured_users.html' %}
 
     </div>
 </div>
