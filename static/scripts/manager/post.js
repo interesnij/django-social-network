@@ -45,6 +45,23 @@ on('#ajax', 'click', '.post_delete_window', function() {
   open_fullscreen("/managers/progs_post/delete_window/" + uuid, loader)
 })
 
+on('#ajax', 'click', '.post_comment_delete_window', function() {
+  _this = this;
+  if(_this.parentElement.classList.contains("btn_console")){
+    div = _this.parentElement.parentElement.parentElement.parentElement;
+    pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+    list = document.querySelectorAll('.pag');
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("changed");
+    }
+    div.classList.add("changed")
+  }else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
+    pk = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  }
+  loader = document.getElementById("worker_loader");
+  open_fullscreen("/managers/progs_post/delete_comment_window/" + pk, loader)
+})
+
 on('#ajax', 'click', '.create_post_suspend_btn', function() {
   _this = this;
   form_data = new FormData(document.querySelector("#post_suspend_form"));

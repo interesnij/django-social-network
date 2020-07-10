@@ -159,39 +159,6 @@ class PostRejectedCreate(View):
             return HttpResponse("")
 
 
-class PostDeleteWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/post_delete.html"
-        else:
-            self.template_name = "about.html"
-        return super(PostDeleteWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(PostDeleteWindow,self).get_context_data(**kwargs)
-        context["object"] = self.post
-        return context
-
-class PostClaimWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/post_claim.html"
-        else:
-            self.template_name = "about.html"
-        return super(PostClaimWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(PostClaimWindow,self).get_context_data(**kwargs)
-        context["object"] = self.post
-        return context
-
-
 class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["post_uuid"])
@@ -254,3 +221,69 @@ class CommentPostRejectedCreate(View):
             return HttpResponse("")
         else:
             return HttpResponse("")
+
+
+class PostDeleteWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            self.template_name = "manage_create/post/post_delete.html"
+        else:
+            self.template_name = "about.html"
+        return super(PostDeleteWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostDeleteWindow,self).get_context_data(**kwargs)
+        context["object"] = self.post
+        return context
+
+class PostClaimWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            self.template_name = "manage_create/post/post_claim.html"
+        else:
+            self.template_name = "about.html"
+        return super(PostClaimWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostClaimWindow,self).get_context_data(**kwargs)
+        context["object"] = self.post
+        return context
+
+
+class PostCommentDeleteWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            self.template_name = "manage_create/post/post_comment_delete.html"
+        else:
+            self.template_name = "about.html"
+        return super(PostCommentDeleteWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostCommentDeleteWindow,self).get_context_data(**kwargs)
+        context["comment"] = self.comment
+        return context
+
+class PostCommentClaimWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.post = PostComment.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            self.template_name = "manage_create/post/post_comment_claim.html"
+        else:
+            self.template_name = "about.html"
+        return super(PostCommentClaimWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostCommentClaimWindow,self).get_context_data(**kwargs)
+        context["comment"] = self.comment
+        return context
