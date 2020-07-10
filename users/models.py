@@ -300,7 +300,7 @@ class User(AbstractUser):
         return self.communities_memberships.filter(community__name=community_name, is_editor=True).exists()
 
     def is_following_user_with_id(self, user_id):
-        return self.followers.filter(user__id=user_id).exists()
+        return self.follows.filter(followed_user__id=user_id).exists() 
 
     def is_followers_user_with_id(self, user_id):
         return self.followers.filter(user__id=user_id).exists()
