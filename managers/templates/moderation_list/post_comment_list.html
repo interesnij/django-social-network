@@ -27,7 +27,7 @@
 
               <div id="moderation_post_comment_container" data-link="/managers/moderation_list/post_comment/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" {% if object.comment.post %}data-uuid="{{ object.comment.post.uuid }}"{% else %}data-uuid="{{ object.comment.parent_comment.post.uuid }}"{% endif %}>
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" {% if object.comment.post %}data-uuid="{{ object.comment.post.uuid }}"{% else %}data-uuid="{{ object.comment.parent_comment.post.uuid }}"{% endif %}>
                       <div class="media">
                         <div class="media-body">
 
@@ -95,8 +95,6 @@
                             </div>
                             {% endfor %}
                           </div>
-
-                            <div class="media-body btn_console border-top">
                               {% for report in object.post_comment_reports.all %}
                                 <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
                                 {% if report.description %}<p class="mb-2">{{ report.description }}</p>{% endif %}
@@ -105,7 +103,6 @@
                                   <a href="#" class="post_comment_delete_window">Удалить</a>
                                 | <a href="#" class="post_comment_rejected">Отклонить</a>
                                 </div>
-                            </div>
                         </div>
                       </div>
                   </div>
