@@ -24,6 +24,12 @@ urlpatterns = [
     url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimCreate.as_view())),
     url(r'^unverify/(?P<post_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(PostUnverify.as_view())),
 
+    url(r'^comment_create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(CommentPostDeleteCreate.as_view())),
+    url(r'^comment_delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(CommentPostDeleteDelete.as_view())),
+    url(r'^comment_create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(CommentPostRejectedCreate.as_view())),
+    url(r'^comment_create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(CommentPostClaimCreate.as_view())),
+    url(r'^comment_unverify/(?P<post_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(CommentPostUnverify.as_view())),
+
     url(r'^delete_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteWindow.as_view())),
     url(r'^claim_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimWindow.as_view())),
 ]

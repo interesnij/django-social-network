@@ -6,21 +6,11 @@ from django.conf import settings
 class AudioManageLog(models.Model):
     DELETED = 'R'
     UNDELETED = 'UR'
-    SEVERITY_CRITICAL = 'C'
-    SEVERITY_HIGH = 'H'
-    SEVERITY_MEDIUM = 'M'
-    SEVERITY_LOW = 'L'
-    UNSUSPENDED = 'US'
     REJECT = 'R'
     UNVERIFY = 'UV'
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
-        (SEVERITY_CRITICAL, 'Вечная заморозка'),
-        (SEVERITY_HIGH, 'Долгая заморозка'),
-        (SEVERITY_MEDIUM, 'Средняя заморозка'),
-        (SEVERITY_LOW, 'Краткая заморозка'),
-        (UNSUSPENDED, 'Разморожен'),
         (REJECT, 'Жалоба отклонена'),
         (UNVERIFY, 'Проверка убрана'),
     )

@@ -30,3 +30,11 @@ class PostReportForm(forms.ModelForm):
 	class Meta:
 		model = PostModerationReport
 		fields = ['description']
+class PostCommentModeratedForm(forms.ModelForm):
+	class Meta:
+		model = ModeratedPostComment
+		fields = ['description']
+class PostCommentReportForm(forms.ModelForm):
+	class Meta:
+		model = PostCommentModerationReport
+		fields = ['description']

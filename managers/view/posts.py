@@ -2,10 +2,10 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.posts import *
-from posts.models import Post
-from managers.forms import PostModeratedForm
+from posts.models import Post, PostComment
+from managers.forms import PostModeratedForm, PostCommentModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.post import ModeratedPost
+from managers.model.post import ModeratedPost, ModeratedPostComment
 
 
 class PostAdminCreate(View):
@@ -198,3 +198,52 @@ class PostUnverify(View):
         obj = ModeratedPost.objects.get(pk=self.kwargs["obj_pk"])
         obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
         return HttpResponse("")
+
+
+class CommentPostDeleteCreate(View):
+    def post(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        form = PostCommentModeratedForm(request.POST)
+        if form.is_valid() and (request.user.is_post_manager or request.user.is_superuser):
+            mod = form.save(commit=False)
+            moderate_obj = ModeratedPostComment.get_or_create_moderated_object_for_comment(comment)
+            moderate_obj.status = ModeratedPostComment.STATUS_DELETED
+            moderate_obj.description = mod.description
+            moderate_obj.save()
+            moderate_obj.create_deleted(manager_id=request.user.pk, comment_id=comment.pk)
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
+
+class CommentPostDeleteDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            moderate_obj = ModeratedPostComment.objects.get(comment=comment)
+            moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+
+class CommentPostClaimCreate(View):
+    def post(self,request,*args,**kwargs):
+        from managers.model.post import PostCommentModerationReport
+
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        description = request.POST.get('description')
+        type = request.POST.get('type')
+        PostCommentModerationReport.create_post_comment_moderation_report(reporter_id=request.user.pk, comment=comment, description=description, type=type)
+        return HttpResponse("!")
+
+class CommentPostRejectedCreate(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_post_manager or request.user.is_superuser:
+            moderate_obj = ModeratedPostComment.objects.get(comment=comment)
+            moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            return HttpResponse("")
+        else:
+            return HttpResponse("")
