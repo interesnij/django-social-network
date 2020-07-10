@@ -12,7 +12,6 @@ class ModeratedPost(models.Model):
     STATUS_REJECTED = 'R'
     STATUSES = (
         (STATUS_PENDING, 'Запись рассматривается'),
-        (STATUS_SUSPEND, 'Запись заморожена'),
         (STATUS_DELETED, 'Запись удалена'),
         (STATUS_REJECTED, 'Запись отвергнута'),
     )
