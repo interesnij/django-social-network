@@ -544,9 +544,7 @@ canvas{
 }
 .dropdown:hover .dropdown-menu{
 display: block;
-top: 26px;
-left: -120px;
-height: inherit;
+
 }
 .dropdown-menu{
 transform: scale(1)!important;
