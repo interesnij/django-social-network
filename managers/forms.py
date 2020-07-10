@@ -1,6 +1,6 @@
 from managers.model.user import ModeratedUser, UserModerationReport
 from managers.model.community import ModeratedCommunity, CommunityModerationReport
-from managers.model.post import ModeratedPost, PostModerationReport
+from managers.model.post import *
 from django import forms
 
 
