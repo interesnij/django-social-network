@@ -180,6 +180,13 @@ class User(AbstractUser):
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
+    def disconnect_from_user_with_id(self, user_id):
+        check_is_connected_with_user_with_id(user=self, user_id=user_id)
+        if self.is_following_user_with_id(user_id):
+            self.unfollow_user_with_id(user_id)
+        connection = self.connections.get(target_connection__user_id=user_id)
+        connection.delete()
+
     def unblock_user_with_pk(self, pk):
         user = User.objects.get(pk=pk)
         return self.unblock_user_with_id(user_id=user.pk)
