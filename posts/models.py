@@ -12,16 +12,6 @@ from common.model.votes import PostVotes, PostCommentVotes
 
 
 class Post(models.Model):
-    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
-    is_repost = models.BooleanField(verbose_name="Это репост", default=False)
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
@@ -32,6 +22,16 @@ class Post(models.Model):
         (STATUS_PUBLISHED, 'Опубликована'),
         (STATUS_ARHIVED, 'Архивирована'),
     )
+
+    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
+    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+    is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     id = models.BigAutoField(primary_key=True)

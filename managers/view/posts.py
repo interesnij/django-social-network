@@ -110,31 +110,6 @@ class PostWorkerEditorDelete(View):
         return HttpResponse("")
 
 
-class PostSuspensionCreate(View):
-    def post(self,request,*args,**kwargs):
-        form = PostModeratedForm(request.POST)
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-
-        if form.is_valid() and (request.user.is_post_manager or request.user.is_superuser):
-            mod = form.save(commit=False)
-            number = request.POST.get('number')
-            moderate_obj = ModeratedPost.get_or_create_moderated_object_for_post(post)
-            moderate_obj.status = ModeratedPost.STATUS_SUSPEND
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_suspend(manager_id=request.user.pk, post_id=post.pk, severity_int=number)
-            return HttpResponse("ok")
-        else:
-            return HttpResponse("bad request")
-
-class PostSuspensionDelete(View):
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            moderate_obj = ModeratedPost.objects.get(post=post)
-            moderate_obj.delete_suspend(manager_id=request.user.pk, post_id=post.pk)
-        return HttpResponse("")
-
 class PostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -183,22 +158,6 @@ class PostRejectedCreate(View):
         else:
             return HttpResponse("")
 
-
-class PostSuspendWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/post_suspend.html"
-        else:
-            self.template_name = "about.html"
-        return super(PostSuspendWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(PostSuspendWindow,self).get_context_data(**kwargs)
-        context["object"] = self.post
-        return context
 
 class PostDeleteWindow(TemplateView):
     template_name = None

@@ -11,20 +11,6 @@ on('#ajax', 'click', '.c_manage_wall_image', function() {
   open_fullscreen("/gallery/load/community_wall/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_manage_good_detail', function() {
-  uuid = this.getAttribute('data-uuid');
-  pk = this.parentElement.parentElement.getAttribute("data-pk");
-  loader = document.getElementById("good_loader");
-  open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader);
-  setTimeout(function() {good_gallery(loader)}, 1000)
-});
-on('#ajax', 'click', '.c_manage_good_detail', function() {
-  uuid = this.getAttribute('data-uuid');
-  pk = this.parentElement.parentElement.getAttribute("data-pk");
-  loader = document.getElementById("good_loader");
-  open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
-  setTimeout(function() {good_gallery(loader)}, 1000)
-});
 
 on('#ajax', 'click', '.post_suspend_window', function() {
   _this = this;

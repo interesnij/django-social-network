@@ -8,7 +8,6 @@ from logs.model.manage_posts import PostManageLog
 
 class ModeratedPost(models.Model):
     STATUS_PENDING = 'P'
-    STATUS_SUSPEND = 'S'
     STATUS_DELETED = 'D'
     STATUS_REJECTED = 'R'
     STATUSES = (
@@ -49,9 +48,6 @@ class ModeratedPost(models.Model):
     def is_verified(self):
         # проверен ли пользователь
         return self.verified
-    def is_suspend(self):
-        # Объект заморожен
-        return self.status == ModeratedPost.STATUS_SUSPEND
     def is_pending(self):
         # Жалоба рассматривается
         return self.status == ModeratedPost.STATUS_PENDING
@@ -59,37 +55,12 @@ class ModeratedPost(models.Model):
         # Объект блокирован
         return self.status == ModeratedPost.STATUS_DELETED
 
-    def create_suspend(self, manager_id, post_id, severity_int):
-        self.verified = True
-        severity = None
-        duration_of_penalty = None
-        if severity_int == '4':
-            duration_of_penalty = timezone.timedelta(days=30)
-            severity = "C"
-        elif severity_int == '3':
-            duration_of_penalty = timezone.timedelta(days=7)
-            severity = "H"
-        elif severity_int == '2':
-            duration_of_penalty = timezone.timedelta(days=3)
-            severity = "M"
-        elif severity_int == '1':
-            duration_of_penalty = timezone.timedelta(hours=6)
-            severity = "L"
-        moderation_expiration = timezone.now() + duration_of_penalty
-        ModerationPenaltyPost.create_suspension_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id, expiration=moderation_expiration)
-        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=severity)
-        self.save()
     def create_deleted(self, manager_id, post_id):
         self.verified = True
         self.save()
         ModerationPenaltyPost.create_delete_penalty(moderated_object=self, manager_id=manager_id, post_id=post_id)
         PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.DELETED)
 
-    def delete_suspend(self, manager_id, post_id):
-        obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
-        obj.delete()
-        self.delete()
-        PostManageLog.objects.create(post=post_id, manager=manager_id, action_type=PostManageLog.UNSUSPENDED)
     def delete_deleted(self, manager_id, post_id):
         obj = ModerationPenaltyPost.objects.get(moderated_object=self, post_id=post_id)
         obj.delete()
@@ -125,9 +96,9 @@ class ModeratedPostComment(models.Model):
     STATUS_DELETED = 'D'
     STATUS_REJECTED = 'R'
     STATUSES = (
-        (STATUS_PENDING, 'Запись рассматривается'),
-        (STATUS_DELETED, 'Запись удалена'),
-        (STATUS_REJECTED, 'Запись отвергнута'),
+        (STATUS_PENDING, 'Комментарий рассматривается'),
+        (STATUS_DELETED, 'Комментарий удален'),
+        (STATUS_REJECTED, 'Комментарий отвергнут'),
     )
     description = models.TextField(max_length=300, blank=True, null=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
@@ -313,22 +284,15 @@ class ModerationPenaltyPost(models.Model):
     SUSPENSION = 'S'
     DELETE = 'D'
     TYPES = (
-        (SUSPENSION, 'Приостановлено'),
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
-    def create_suspension_penalty(cls, post_id, manager_id, moderated_object, expiration):
-        return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, post_id=post_id, type=cls.SUSPENSION, expiration=expiration)
-    @classmethod
     def create_delete_penalty(cls, post_id, manager_id, moderated_object):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, post_id=post_id, type=cls.DELETE)
 
-    def is_suspend(self):
-        # Объект заморожен
-        return self.type == ModerationPenaltyPost.SUSPENSION
     def is_deleted(self):
         # Объект блокирован
         return self.type == ModerationPenaltyPost.DELETE
@@ -349,7 +313,6 @@ class ModerationPenaltyPostComment(models.Model):
     SUSPENSION = 'S'
     DELETE = 'D'
     TYPES = (
-        (SUSPENSION, 'Приостановлено'),
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
