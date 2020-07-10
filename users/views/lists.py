@@ -106,8 +106,12 @@ class PostListView(ListView):
 			elif self.user != request.user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 				if self.user.is_closed_profile():
-					check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-				self.template_name = "lenta/list.html"
+					if request.user.is_followers_user_with_id(user_id=self.user.pk):
+						self.template_name = "lenta/list.html"
+					elif not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+						raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+				else:
+					self.template_name = "lenta/list.html"
 		elif request.user.is_anonymous:
 			if self.user.is_closed_profile():
 				raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
