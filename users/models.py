@@ -164,7 +164,7 @@ class User(AbstractUser):
         from follows.models import Follow
 
         check_not_can_follow_user_with_id(user=self, user_id=user_id)
-        follow = Follow.objects.get(user=self,followed_user=user_id)
+        follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
 
     def unfrend_user(self, user):
@@ -197,11 +197,11 @@ class User(AbstractUser):
 
         if self.is_connected_with_user_with_id(user_id=user_id):
             self.disconnect_from_user_with_id(user_id=user_id)
-        elif self.is_followers_user_with_id(user_id=user_id):
+        elif self.is_following_user_with_id(user_id=user_id):
             self.unfollow_user_with_id(user_id=user_id)
 
         user_to_block = User.objects.get(pk=user_id)
-        if user_to_block.is_followers_user_with_id(user_id=self.pk):
+        if user_to_block.is_following_user_with_id(user_id=self.pk):
             user_to_block.unfollow_user_with_id(self.pk)
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
