@@ -69,6 +69,7 @@ on('#ajax', 'click', '.create_post_claim_btn', function() {
 });
 
 on('#ajax', 'click', '.follow_create', function() {
+  _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = _this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
