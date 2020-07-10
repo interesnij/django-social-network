@@ -122,6 +122,7 @@ on('#ajax', 'click', '.connect_create', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
         : (toast_info("Друг добавлен!"), _this.parentElement.append('<span class="small connect_delete">Убрать из друзей</span>'), _this.remove())
+  }}
   link_.send();
 })
 on('#ajax', 'click', '.connect_delete', function() {
