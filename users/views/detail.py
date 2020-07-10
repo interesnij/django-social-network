@@ -189,10 +189,10 @@ class ProfileUserView(TemplateView):
             elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                 self.template_name = "account/block_user.html"
             elif self.user.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                    self.template_name = "account/close_user.html"
-                elif request.user.is_following_user_with_id(user_id=self.user.pk):
+                if self.user.is_followers_user_with_id(user_id=request.user.pk):
                     self.template_name = "account/user.html"
+                elif not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                    self.template_name = "account/close_user.html"
                 else:
                     self.template_name = "account/user.html"
             else:
