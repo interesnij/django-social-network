@@ -81,16 +81,16 @@ on('#ajax', 'click', '.follow_create', function() {
   link_.send();
 })
 on('#ajax', 'click', '.follow_delete', function() {
-  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null;
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+                                           : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
   link_.addEventListener('loadstart', _loadstart);
   link_.open( 'GET', "/follows/delete/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    console.log("Запрос завершен");
-    this_page_reload('/users/' + pk + '/');
-    toast_info("Друг добавлен!");
+    document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
+                                             : this.parentElement.parentElement.parentElement.delete()
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
 
@@ -111,14 +111,15 @@ on('#ajax', 'click', '.follow_view', function() {
 })
 
 on('#ajax', 'click', '.connect_create', function() {
-  document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
+                                           : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
   link_.open( 'GET', "/friends/add/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/users/' + pk + '/');
-    toast_info("Друг добавлен!");
+    document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг удален!"))
+                                             : this.parentElement.parentElement.parentElement.delete()
   }};
   link_.send();
 })
@@ -128,8 +129,8 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.open( 'GET', "/friends/delete/" + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/users/' + pk + '/');
-    toast_info("Друг удален!");
+    document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг удален!"))
+                                             : null
   }};
   link_.send();
 })

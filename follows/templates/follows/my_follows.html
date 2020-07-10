@@ -27,7 +27,7 @@
 
               <ul class="list-group" id="follows_container" data-link="/follows/{{ user.pk }}">
                   {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ user.pk }}">
                       <div class="media">
                         <a href="{% url 'user' pk=object.pk %}" class="ajax">
                           <figure>
@@ -42,7 +42,7 @@
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                             </a>
-                            <a href="" class="small">Принять заявку</a>
+                            <span class="btn_default small connect_create">Принять заявку</span>
                         </div>
                       </div>
                   </li>
