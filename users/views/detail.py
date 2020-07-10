@@ -165,7 +165,7 @@ class ProfileUserView(TemplateView):
         from stst.models import UserNumbers
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.get_buttons_block = self.user.get_buttons_profile(self.user.pk)
+        self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
 
         if self.user.pk == request.user.pk:
             if not request.user.is_phone_verified:
@@ -181,7 +181,7 @@ class ProfileUserView(TemplateView):
                 self.template_name = "main/phone_verification.html"
             elif self.user.is_suspended():
                 self.template_name = "main/user_suspended.html"
-                self.get_buttons_block = self.user.get_staff_buttons_profile(self.user.pk)
+                self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
             elif self.user.is_blocked():
                 self.template_name = "main/user_global_block.html"
             elif request.user.is_user_manager() or request.user.is_superuser:
