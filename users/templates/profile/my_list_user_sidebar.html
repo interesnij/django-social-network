@@ -1,3 +1,15 @@
+<div class="card mb-2  mt-3">
+    <div class="card-header">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'all_users' %}" class="ajax">Найти друзей</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+
 {% if request.user.is_have_followers %}
 <div class="card mb-2">
     <div class="card-header">
