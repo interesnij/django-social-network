@@ -24,9 +24,9 @@ class UserPostView(TemplateView):
             elif self.user != request.user:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
                 if self.user.is_closed_profile():
-                    if request.user.is_followers_user_with_id(user_id=self.user.pk):
+                    if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                         self.template_name = "lenta/post.html"
-                    elif not request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                    else:
                         raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
                 else:
                     self.template_name = "lenta/post.html"
