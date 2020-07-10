@@ -79,7 +79,7 @@ on('#ajax', 'click', '.create_post_comment_claim_btn', function() {
   form_post = document.querySelector("#post_comment_claim_form");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/managers/progs_post/create_comment_claim/" + pk + "/", true );
+  link_.open( 'POST', "/managers/progs_post/comment_create_claim/" + pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
