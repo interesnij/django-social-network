@@ -125,7 +125,7 @@ class PostCommunity(TemplateView):
             else:
                 self.template_name = "c_lenta/item.html"
         elif request.user.is_anonymous:
-            if self.is_public():
+            if self.community.is_public():
                 self.template_name = "c_lenta/item.html"
 
         MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
