@@ -102,6 +102,10 @@ class User(AbstractUser):
     def get_favorite_communities(self):
         return self.favorite_communities.all()
 
+    def get_blocked_users(self):
+        blocked_users_query = Q(blocked_by_users__blocker_id=self.pk)
+        return User.objects.filter(blocked_users_query).distinct()
+
     def get_staffed_communities(self):
         from communities.models import Community
 
@@ -778,6 +782,9 @@ class User(AbstractUser):
 
     def count_followers(self):
         return self.followers.values('pk').count()
+
+    def count_blacklist(self):
+        return self.user_blocks.values('pk').count()
 
     def is_no_view_followers(self):
         return self.followers.filter(view=False).exists()

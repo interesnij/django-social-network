@@ -18,6 +18,19 @@ class UserVisitCommunities(ListView):
 		communities = self.request.user.get_visited_communities()
 		return communities
 
+class BlackListUsers(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="u_list/", template="blacklist.html", request=request)
+		return super(BlackListUsers,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		communities = self.request.user.get_blocked_users()
+		return communities
+
 
 class UserVideoList(ListView):
 	template_name = None

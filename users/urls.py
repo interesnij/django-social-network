@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from users.views.detail import *
-from users.views.lists import AllUsers
+from users.views.lists import AllUsers, BlackListUsers
 
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/music/$', UserMusic.as_view(), name='user_music'),
     url(r'^(?P<pk>\d+)/video/$', UserVideo.as_view(), name='user_video'),
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
+    url(r'^blacklist/(?P<pk>\d+)/$', BlackListUsers.as_view(), name='user_black_list'),
 ]
