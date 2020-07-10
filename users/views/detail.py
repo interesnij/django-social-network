@@ -208,7 +208,7 @@ class ProfileUserView(TemplateView):
                     UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
-                self.template_name = "account/close_user.html"
+                self.template_name = "account/anon_close_user.html"
             else:
                 self.template_name = "account/anon_user.html"
 

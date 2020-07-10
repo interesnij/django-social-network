@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_anon.html" %}
 {% load humanize %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
@@ -18,7 +18,7 @@
           <div class="card-body">
               <div class="row align-items-center no-gutters">
                   <a class="col">
-                      <figure class="mx-auto mb-3" style="margin:0">
+                      <figure class="mx-auto" style="margin:0">
                         {% if user.get_b_avatar %}
                           <img src="{{ user.get_b_avatar }}">
                         {% else %}
