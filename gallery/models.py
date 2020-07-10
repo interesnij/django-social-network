@@ -230,6 +230,14 @@ class PhotoComment(models.Model):
     def __str__(self):
         return str(self.photo_comment.id)
 
+    def likes_count(self):
+        likes = PhotoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
+        return likes.count()
+
+    def dislikes_count(self):
+        dislikes = PhotoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
+        return dislikes.count()
+
     @classmethod
     def create_comment(cls, commenter, photo_comment, parent_comment, text):
         comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo_comment=photo_comment, text=text, created=timezone.now())
