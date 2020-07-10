@@ -99,7 +99,7 @@
                             <div class="media-body btn_console border-top">
                               {% for report in object.post_comment_reports.all %}
                                 <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
-                                <p class="mb-2">{{ report.description }}</p>
+                                {% if report.description %}<p class="mb-2">{{ report.description }}</p>{% endif %}
                               {% endfor %}
                                 <div class="py-2 border-top btn_console">
                                   <a href="#" class="post_comment_delete_window">Удалить</a>
