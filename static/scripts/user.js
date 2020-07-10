@@ -81,8 +81,9 @@ on('#ajax', 'click', '.follow_create', function() {
   link_.send();
 })
 on('#ajax', 'click', '.follow_delete', function() {
+  _this = this;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
-                                           : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
+                                           : pk = _this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
   link_.addEventListener('loadstart', _loadstart);
@@ -90,7 +91,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
-                                             : this.parentElement.parentElement.parentElement.delete()
+                                             : _this.parentElement.parentElement.parentElement.delete()
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
 
