@@ -261,7 +261,7 @@ class PostCommentModerationReport(models.Model):
 
     @classmethod
     def create_post_comment_moderation_report(cls, reporter_id, comment, description, type):
-        moderated_object = ModeratedPostComment.get_or_create_moderated_object_for_post_comment(comment=comment)
+        moderated_object = ModeratedPostComment.get_or_create_moderated_object_for_comment(comment=comment)
         post_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return post_comment_moderation_report
 
