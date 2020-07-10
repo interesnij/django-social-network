@@ -92,7 +92,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-          : (p = document.createElement("span"), p.innerHTML = '<span class="small follow_create">Подписаться</span>', _this.parentElement.append(p), _this.remove())ж
+          : (p = document.createElement("span"), p.innerHTML = '<span class="small follow_create">Подписаться</span>', _this.parentElement.append(p), _this.remove());
           toast_info("Друг добавлен!")
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
@@ -123,7 +123,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-        : (p = document.createElement("span"), p.innerHTML = '<span class="small connect_delete">Убрать из друзей</span>', _this.parentElement.append(p), _this.remove())ж
+        : (p = document.createElement("span"), p.innerHTML = '<span class="small connect_delete">Убрать из друзей</span>', _this.parentElement.append(p), _this.remove());
         toast_info("Друг добавлен!")
   }}
   link_.send();
