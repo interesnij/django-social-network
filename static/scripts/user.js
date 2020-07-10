@@ -91,7 +91,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? (this_page_reload('/users/' + pk + '/'), toast_info("Друг добавлен!"))
-                                             : _this.parentElement.parentElement.parentElement.delete()
+                                             : _this.parentElement.parentElement.parentElement.remove()
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
 
