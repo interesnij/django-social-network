@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 
 on('#ajax', 'click', '.u_wall_image', function() {
   uuid = this.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute("user-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk"); 
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
 });

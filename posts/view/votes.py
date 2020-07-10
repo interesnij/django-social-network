@@ -30,6 +30,7 @@ class PostUserLikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
+        if user != request.user:
             item.notification_user_like(request.user)
         likes = item.likes_count()
         if likes != 0:
@@ -64,6 +65,7 @@ class PostCommentUserLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
+        if user != request.user:
             comment.notification_user_comment_like(request.user)
         likes = comment.likes_count()
         if likes != 0:
@@ -98,6 +100,7 @@ class PostUserDislikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
+        if user != request.user:
             item.notification_user_dislike(request.user)
         likes = item.likes_count()
         if likes != 0:
@@ -132,6 +135,7 @@ class PostCommentUserDislikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
+        if user != request.user:
             comment.notification_user_comment_dislike(request.user)
         likes = comment.likes_count()
         if likes:
@@ -163,6 +167,7 @@ class PostCommunityLikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
+        if not request.user.is_staff_of_community_with_name(community.name):
             item.notification_community_like(request.user)
         likes = item.likes_count()
         if likes:
@@ -194,6 +199,7 @@ class PostCommunityDislikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
+        if not request.user.is_staff_of_community_with_name(community.name):
             item.notification_community_dislike(request.user)
         likes = item.likes_count()
         if likes != 0:
@@ -225,6 +231,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
+        if not request.user.is_staff_of_community_with_name(community.name):
             comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
         if likes:
@@ -256,6 +263,7 @@ class PostCommentCommunityDislikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
+        if not request.user.is_staff_of_community_with_name(community.name):
             comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:

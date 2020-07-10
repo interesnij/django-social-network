@@ -297,9 +297,6 @@ class User(AbstractUser):
     def is_staffed_user(self):
         return self.communities_memberships.filter(Q(is_administrator=True) | Q(is_moderator=True) | Q(is_editor=True)).exists()
 
-    def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name) or self.is_editor_of_community_with_name(community_name=community_name) or self.is_advertiser_of_community_with_name(community_name=community_name)
-
     def is_administrator_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
 
@@ -794,7 +791,7 @@ class User(AbstractUser):
     def is_have_followings(self):
         return self.follows.values('pk').exists()
     def is_have_blacklist(self):
-        return self.user_blocks.values('pk').exists() 
+        return self.user_blocks.values('pk').exists()
 
     def count_no_view_followers(self):
         return self.followers.filter(view=False).values('pk').count()
