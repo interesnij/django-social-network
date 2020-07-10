@@ -11,7 +11,7 @@
       {% include 'generic/attach/u_post_attach.html' %}
     </div>
 
-    {% if object.is_repost %}
+    {% if object.parent %}
     {% include 'post_user/repost_detail.html' %}
     {% endif %}
 

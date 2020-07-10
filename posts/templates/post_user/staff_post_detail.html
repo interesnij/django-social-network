@@ -2,7 +2,7 @@
 
     {% include 'post_user/staff_card_header.html' %}
 
-    {% if object.is_repost %}
+    {% if object.parent %}
     {% include 'post_user/repost_detail.html' %}
     {% endif %}
 

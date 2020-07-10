@@ -111,8 +111,7 @@ class RepostUserUser(View):
                 self.parent=self.item.parent
             else:
                 self.parent=self.item
-            self.is_repost=True
-            new_post=Post.objects.create(creator=self.creator, text=self.text, comments_enabled=self.comments_enabled, status = self.status, parent = self.parent, is_repost=True, )
+            new_post=Post.objects.create(creator=self.creator, text=self.text, comments_enabled=self.comments_enabled, status = self.status, parent = self.parent, )
             if request.is_ajax() :
                 return HttpResponse("!")
 
@@ -122,10 +121,10 @@ class RepostCommunityUser(View):
 	def post(self, request, *args, **kwargs):
 		self.item = Post.objects.get(pk=self.kwargs["pk"])
 		if self.item.parent:
-			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item.parent, is_repost=True)
+			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item.parent)
 			return HttpResponse("репост репоста")
 		else:
-			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item, is_repost=True)
+			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item)
 			return HttpResponse("репост item")
 
 
@@ -136,10 +135,9 @@ class RepostCommunityCommunity(View):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
-            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
-            return HttpResponse("репост репоста")
+            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent)
         else:
-            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item, is_repost=True)
+            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item)
             return HttpResponse("репост item")
 
 
@@ -150,8 +148,8 @@ class RepostUserCommunity(View):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
-            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
+            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent)
             return HttpResponse("репост репоста")
         else:
-            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item, is_repost=True)
+            new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item)
             return HttpResponse("репост item")

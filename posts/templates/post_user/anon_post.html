@@ -1,7 +1,7 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
     {% include 'post_user/anon_card_header.html' %}
 
-    {% if object.is_repost %}
+    {% if object.parent %}
     {% include 'post_user/repost.html' %}
     {% endif %}
 
