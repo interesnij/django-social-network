@@ -163,7 +163,7 @@ class User(AbstractUser):
     def unfollow_user_with_id(self, user_id):
         from follows.models import Follow
 
-        check_not_can_follow_user_with_id(user=self, user_id=user_id)
+        #check_not_can_follow_user_with_id(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
 
