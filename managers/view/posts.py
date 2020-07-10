@@ -276,7 +276,7 @@ class PostCommentClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.post = PostComment.objects.get(uuid=self.kwargs["uuid"])
+        self.post = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_post_manager or request.user.is_superuser:
             self.template_name = "manage_create/post/post_comment_claim.html"
         else:
