@@ -160,12 +160,12 @@ class UserVideo(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = None
+    get_buttons_block = None
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
 
         if self.user.pk == request.user.pk:
             if not request.user.is_phone_verified:
@@ -177,6 +177,7 @@ class ProfileUserView(TemplateView):
             else:
                 self.template_name = "account/my_user.html"
         elif request.user.pk != self.user.pk and request.user.is_authenticated:
+            self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
             if not request.user.is_phone_verified:
                 self.template_name = "main/phone_verification.html"
             elif self.user.is_suspended():
