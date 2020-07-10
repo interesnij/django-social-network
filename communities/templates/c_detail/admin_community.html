@@ -58,12 +58,12 @@
                     <span id="community_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
                 </form>
 
-                <button type="button" class="btn btn-sm btn-secondary menu_drop" style="margin: 3px;">
-                    Вы админ
+                <button type="button" class="btn btn-sm btn-secondary member_create" style="margin: 3px;margin-top:10px">
+                    Подписаться
                 </button>
-                <div class="dropdown-menu" style="width:100%">
-                    <span style="cursor:pointer" class="dropdown-item member_delete">Отписаться</span>
-                    <a class="btn btn-sm btn-secondary ajax dropdown-item" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
+                <div class="card mt-1 mb-1" style="padding: 10px;">
+                  <a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" style="cursor:pointer">Управление</a>
+                  <a href="{% url 'community_traffic_day' community.pk %}" class="ajax" style="cursor:pointer">,Статистика</a>
                 </div>
             </div>
             <br>
