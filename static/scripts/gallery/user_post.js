@@ -114,7 +114,7 @@ on('#ajax', 'click', '.u_photo_dislike', function() {
   send_dislike(photo, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/gallery/photo_window/u_like_window/" + uuid + "/", "/gallery/photo_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
-on('#ajax', 'click', '.u_photo_dislike2', function() {
+on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
