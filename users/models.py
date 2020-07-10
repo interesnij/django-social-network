@@ -174,7 +174,9 @@ class User(AbstractUser):
         from follows.models import Follow
 
         check_is_following_user_with_id(user=self, user_id=user_id)
-        follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk, view=True)
+        follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
+        follow.view = True
+        follow.save(update_fields=["view"])
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
@@ -238,7 +240,7 @@ class User(AbstractUser):
         return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
-        return self.connections.filter(target_connection__user_id=user_id).exists() 
+        return self.connections.filter(target_connection__user_id=user_id).exists()
 
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()
