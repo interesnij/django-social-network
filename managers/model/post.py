@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from users.models import User
-from managers.models import ModerationCategory
 from logs.model.manage_posts import PostManageLog, PostCommentManageLog
 
 

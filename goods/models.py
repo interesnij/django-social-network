@@ -8,7 +8,6 @@ from notifications.model.good import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
-#from django.contrib.contenttypes.fields import GenericRelation
 
 
 class GoodCategory(models.Model):
