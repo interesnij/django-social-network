@@ -69,7 +69,7 @@ on('#ajax', 'click', '.create_post_comment_delete_btn', function() {
     document.getElementById("worker_loader").innerHTML="";
     if (container_object){
       comment_pk = container_object.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
-      comment = comment_pk.parentElement.parentElement.parentElement;
+      comment = comment_pk.parentElement.parentElement;
       comment.remove()
     } else if (moderation_container && !moderation_container.querySelector(".pag")){
       div.remove();
