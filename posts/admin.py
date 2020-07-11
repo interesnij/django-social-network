@@ -8,6 +8,11 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['is_deleted', 'created',]
 
 
+class PostCommentAdmin(admin.ModelAdmin):
+    search_fields = ('commenter',)
+    list_display = ['commenter','created', 'is_deleted']
+    list_filter = ['is_deleted']
+
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(PostComment)
+admin.site.register(PostComment, PostCommentAdmin)
