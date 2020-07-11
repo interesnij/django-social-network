@@ -204,7 +204,7 @@ class GoodModerationReport(models.Model):
 
     @classmethod
     def create_good_moderation_report(cls, reporter_id, good, description, type):
-        moderated_object = ModeratedGood.get_or_create_moderated_object_for_video(good=good)
+        moderated_object = ModeratedGood.get_or_create_moderated_object_for_good(good=good)
         good_moderation_report = cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
         return good_moderation_report
 
@@ -296,7 +296,7 @@ class ModerationPenaltyGood(models.Model):
 class ModerationPenaltyGoodComment(models.Model):
     comment = models.ForeignKey("goods.GoodComment", on_delete=models.CASCADE, related_name='good_comment_penalties', verbose_name="Оштрафованный комментарий к товару")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_good_comment_penalties', verbose_name="Менеджер")
-    moderated_object = models.ForeignKey(ModeratedVideoComment, on_delete=models.CASCADE, related_name='good_comment_moderated_object', verbose_name="Объект")
+    moderated_object = models.ForeignKey(ModeratedGoodComment, on_delete=models.CASCADE, related_name='good_comment_moderated_object', verbose_name="Объект")
 
     DELETE = 'D'
     TYPES = (
