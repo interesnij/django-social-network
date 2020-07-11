@@ -318,7 +318,7 @@ class ModerationPenaltyPostComment(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
-    def create_delete_penalty(cls, post_id, manager_id, moderated_object):
+    def create_delete_penalty(cls, comment_id, manager_id, moderated_object):
         return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, comment_id=comment_id, type=cls.DELETE)
 
     def is_deleted(self):
