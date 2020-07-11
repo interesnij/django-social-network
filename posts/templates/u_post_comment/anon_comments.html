@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-<span class="stream_comments">
+<span class="stream_comments comments_block_container">
   {% for comment in object_list %}
     {% if comment.is_deleted %}
       <div class="comment border-bottom">
