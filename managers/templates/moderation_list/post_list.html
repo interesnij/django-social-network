@@ -224,7 +224,7 @@
 
                             {% for report in object.post_reports.all %}
                               <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
-                              <p class="mb-2">{{ report.description }}</p>
+                              {% if report.description %}<p class="mb-2">{{ report.description }}</p>{% endif %}
                             {% endfor %}
                               <div class="py-2 border-top btn_console">
                                 <a class="btn_default post_delete_window">Удалить</a>
