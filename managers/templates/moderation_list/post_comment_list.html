@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Оштрафованные записи{% endblock %}
+{% block title %}Жалобы на комментарии записей{% endblock %}
 {% load liked_user humanize %}
 {% block content %}
 
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                      <h5 class="mt-1">Оштрафованные записи</h5>
+                      <h5 class="mt-1">Жалобы на комментарии записей</h5>
                       <small class="content-color-secondary float-right mr-2 mt-1"></small>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                                 <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
                                 {% if report.description %}<p class="mb-2">{{ report.description }}</p>{% endif %}
                               {% endfor %}
-                                <div class="py-2 border-top btn_console">
+                                <div class="border-top btn_console">
                                   <a href="#" class="post_comment_delete_window">Удалить</a>
                                 | <a href="#" class="post_comment_rejected">Отклонить</a>
                                 </div>
