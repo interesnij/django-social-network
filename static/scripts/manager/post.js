@@ -38,8 +38,8 @@ on('#ajax', 'click', '.post_comment_delete_window', function() {
       list[i].classList.remove("changed");
     }
     div.classList.add("changed")
-  }else if (_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute){
-    pk = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  }else if (_this.parentElement.parentElement.getAttribute){
+    pk = _this.parentElement.parentElement.getAttribute("data-pk");
   }
   loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_post/delete_comment_window/" + pk, loader)
