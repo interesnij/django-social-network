@@ -5,7 +5,7 @@ from common.staff_progs.goods import *
 from goods.models import Good, GoodComment
 from managers.forms import GoodModeratedForm, GoodCommentModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.goods import ModeratedGood, ModeratedGoodComment
+from managers.model.good import ModeratedGood, ModeratedGoodComment
 
 
 class GoodAdminCreate(View):

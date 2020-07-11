@@ -2,7 +2,7 @@ from django import forms
 from managers.model.user import ModeratedUser, UserModerationReport
 from managers.model.community import ModeratedCommunity, CommunityModerationReport
 from managers.model.post import *
-from managers.model.goods import *
+from managers.model.good import *
 from managers.model.photo import *
 from managers.model.video import *
 from managers.model.audio import *
