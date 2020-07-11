@@ -27,9 +27,9 @@
 
               <div id="moderation_post_comment_container" data-link="/managers/moderation_list/post_comment/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" {% if object.comment.post %}data-uuid="{{ object.comment.post.uuid }}"{% else %}data-uuid="{{ object.comment.parent_comment.post.uuid }}"{% endif %}>
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" data-pk="{{ object.comment.pk }}">
                       <div class="media">
-                        <div class="media-body">
+                        <div class="media-body"> 
 
                           <span style="padding:20px">{{ object.comment.text }}</span>
                           <div class="attach_container">
