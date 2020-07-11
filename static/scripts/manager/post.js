@@ -121,7 +121,7 @@ on('#ajax', 'click', '.remove_post_delete', function() {
     }
   }};
   link_.send();
-});
+}); 
 
 on('#ajax', 'click', '.post_rejected', function() {
   div = this.parentElement.parentElement.parentElement.parentElement;
