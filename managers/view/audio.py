@@ -5,7 +5,7 @@ from common.staff_progs.audio import *
 from music.models import SoundcloudParsing
 from managers.forms import AudioModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.goods import ModeratedAudio
+from managers.model.audio import ModeratedAudio
 
 
 class AudioAdminCreate(View):
