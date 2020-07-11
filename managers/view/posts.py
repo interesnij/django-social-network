@@ -163,7 +163,8 @@ class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["post_uuid"])
         obj = ModeratedPost.objects.get(pk=self.kwargs["obj_pk"])
-        obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
+        if request.user.is_post_manager or request.user.is_superuser:
+            obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
         return HttpResponse("")
 
 
@@ -171,7 +172,8 @@ class CommentPostUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         obj = ModeratedPostComment.objects.get(pk=self.kwargs["obj_pk"])
-        obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+        if request.user.is_post_manager or request.user.is_superuser:
+            obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
         return HttpResponse("")
 
 class CommentPostDeleteCreate(View):
@@ -244,10 +246,7 @@ class PostClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/post/post_claim.html"
-        else:
-            self.template_name = "about.html"
+        self.template_name = "manage_create/post/post_claim.html"
         return super(PostClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -281,10 +280,7 @@ class PostCommentClaimWindow(TemplateView):
             self.post = self.comment.parent_comment.post
         except:
             self.post = self.comment.post
-        if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = "manage_create/post/post_comment_claim.html"
-        else:
-            self.template_name = "about.html"
+        self.template_name = "manage_create/post/post_comment_claim.html"
         return super(PostCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

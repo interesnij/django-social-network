@@ -159,9 +159,7 @@ class UserSuspensionCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_suspend(manager_id=request.user.pk, user_id=user.pk, severity_int=number)
-            return HttpResponse("ok")
-        else:
-            return HttpResponse("bad request")
+        return HttpResponse("ok")
 
 class UserSuspensionDelete(View):
     def get(self,request,*args,**kwargs):
@@ -182,9 +180,7 @@ class UserBlockCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_block(manager_id=request.user.pk, user_id=user.pk)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class UserBlockDelete(View):
     def get(self,request,*args,**kwargs):
@@ -205,9 +201,7 @@ class UserWarningBannerCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_warning_banner(manager_id=request.user.pk, user_id=user.pk)
-            return HttpResponse("") 
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class UserClaimCreate(View):
     def post(self,request,*args,**kwargs):
@@ -218,9 +212,7 @@ class UserClaimCreate(View):
         if form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
             UserModerationReport.create_user_moderation_report(reporter_id=request.user.pk, user=user, description=mod.description, type=request.POST.get('type'))
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
@@ -236,9 +228,7 @@ class UserRejectedCreate(View):
         if request.user.is_user_manager or request.user.is_superuser:
             moderate_obj = ModeratedUser.objects.get(user=user)
             moderate_obj.reject_moderation(manager_id=request.user.pk, user_id=user.pk)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 
 class UserSuspendWindow(TemplateView):
@@ -294,10 +284,7 @@ class UserClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_user_manager or request.user.is_superuser:
-            self.template_name = "manage_create/user_claim.html"
-        else:
-            self.template_name = "about.html"
+        self.template_name = "manage_create/user_claim.html"
         return super(UserClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -310,5 +297,6 @@ class UserUnverify(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["user_pk"])
         obj = ModeratedUser.objects.get(pk=self.kwargs["obj_pk"])
-        obj.unverify_moderation(manager_id=request.user.pk, user_id=user.pk)
+        if request.user.is_user_manager or request.user.is_superuser:
+            obj.unverify_moderation(manager_id=request.user.pk, user_id=user.pk)
         return HttpResponse("")

@@ -119,9 +119,7 @@ class CommunityWorkerEditorCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_superuser:
             add_community_editor_worker(user, request.user)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class CommunityWorkerEditorDelete(View):
     def get(self,request,*args,**kwargs):
@@ -136,9 +134,7 @@ class CommunityWorkerAdvertiserCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_superuser:
             add_community_advertiser_worker(user, request.user)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class CommunityWorkerAdvertiserDelete(View):
     def get(self,request,*args,**kwargs):
@@ -161,9 +157,7 @@ class CommunitySuspensionCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_suspend(manager_id=request.user.pk, community_id=community.pk, severity_int=number)
-            return HttpResponse("ok")
-        else:
-            return HttpResponse("bad request")
+        return HttpResponse("ok")
 
 class CommunitySuspensionDelete(View):
     def get(self,request,*args,**kwargs):
@@ -184,9 +178,7 @@ class CommunityBlockCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_block(manager_id=request.user.pk, community_id=community.pk)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class CommunityBlockDelete(View):
     def get(self,request,*args,**kwargs):
@@ -207,9 +199,7 @@ class CommunityWarningBannerCreate(View):
             moderate_obj.description = mod.description
             moderate_obj.save()
             moderate_obj.create_warning_banner(manager_id=request.user.pk, community_id=community.pk)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class CommunityClaimCreate(View):
     def post(self,request,*args,**kwargs):
@@ -220,9 +210,7 @@ class CommunityClaimCreate(View):
         if form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
             CommunityModerationReport.create_community_moderation_report(reporter_id=request.user.pk, community=community, description=mod.description, type=request.POST.get('type'))
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class CommunityWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
@@ -238,9 +226,7 @@ class CommunityRejectedCreate(View):
         if request.user.is_community_manager or request.user.is_superuser:
             moderate_obj = ModeratedCommunity.objects.get(community=community)
             moderate_obj.reject_moderation(manager_id=request.user.pk, community_id=community.pk)
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 
 class CommunitySuspendWindow(TemplateView):
@@ -296,10 +282,7 @@ class CommunityClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_community_manager or request.user.is_superuser:
-            self.template_name = "manage_create/community_claim.html"
-        else:
-            self.template_name = "about.html"
+        self.template_name = "manage_create/community_claim.html"
         return super(CommunityClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -312,5 +295,6 @@ class CommunityUnverify(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["community_pk"])
         obj = ModeratedCommunity.objects.get(pk=self.kwargs["obj_pk"])
-        obj.unverify_moderation(manager_id=request.user.pk, community_id=community.pk)
+        if request.user.is_community_manager or request.user.is_superuser:
+            obj.unverify_moderation(manager_id=request.user.pk, community_id=community.pk)
         return HttpResponse("")
