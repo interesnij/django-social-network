@@ -296,7 +296,7 @@ class ModerationPenaltyPhoto(models.Model):
 class ModerationPenaltyPhotoComment(models.Model):
     comment = models.ForeignKey("gallery.PhotoComment", on_delete=models.CASCADE, related_name='photo_comment_penalties', verbose_name="Оштрафованный комментарий к фотографии")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_photo_comment_penalties', verbose_name="Менеджер")
-    moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_moderated_object', verbose_name="Объект")
+    moderated_object = models.ForeignKey(ModeratedPhotoComment, on_delete=models.CASCADE, related_name='post_comment_moderated_object', verbose_name="Объект")
 
     DELETE = 'D'
     TYPES = (
