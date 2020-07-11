@@ -130,7 +130,62 @@ on('#ajax', 'click', '.post_unverify', function() {
   }};
   link_.send();
 });
+on('#ajax', 'click', '.post_comment_unverify', function() {
+  div = this.parentElement.parentElement.parentElement.parentElement;
+  comment_pk = div.getAttribute("comment-pk");
+  obj_pk = div.getAttribute("obj-pk");
+  penalty_container = document.body.querySelector("#penalty_post_comment_container");
 
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/managers/progs_post/comment_unverify/" + comment_pk + "/" + obj_pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Верификация отменена!");
+    div.remove();
+    if (!document.body.querySelector(".pag")){
+      penalty_container.innerHTML = '<div class="card mb-3 post_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;text-align: center;"> Штраф-лист пуст...</h6></div>'
+    }
+  }};
+  link_.send();
+});
+on('#ajax', 'click', '.remove_post_comment_delete', function() {
+  div = this.parentElement.parentElement.parentElement.parentElement;
+  comment_pk = div.getAttribute("comment-pk");
+  penalty_container = document.body.querySelector("#penalty_post_comment_container");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/managers/progs_post/comment_delete_delete/" + comment_pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Сообщение восстановлено!");
+    div.remove();
+    if (penalty_container){
+      !penalty_container.querySelector(".pag") ? penalty_container.innerHTML = '<div class="card mb-3 post_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;text-align: center;"> Штраф-лист пуст...</h6></div>' : null
+    }
+  }};
+  link_.send();
+});
+on('#ajax', 'click', '.post_comment_rejected', function() {
+  div = this.parentElement.parentElement.parentElement.parentElement;
+  comment_pk = div.getAttribute("data-pk");
+  moderation_container = document.body.querySelector("#moderation_post_comment_container");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/managers/progs_post/comment_create_rejected/" + comment_pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Жалобы на комментарий удалены!");
+    div.remove();
+    if (!moderation_container.querySelector(".pag")){
+      moderation_container.innerHTML = '<div class="card mb-3 post_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;text-align: center;"> Пока ничего нет...</h6></div>'
+    }
+  }};
+
+  link_.send();
+});
 
 on('#ajax', 'click', '.remove_post_delete', function() {
   div = this.parentElement.parentElement.parentElement.parentElement;
@@ -142,7 +197,7 @@ on('#ajax', 'click', '.remove_post_delete', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    toast_info("Пост разблокирован!");
+    toast_info("Пост восстановлен!");
     div.remove();
     if (penalty_container){
       !penalty_container.querySelector(".pag") ? penalty_container.innerHTML = '<div class="card mb-3 post_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;text-align: center;"> Штраф-лист пуст...</h6></div>' : null

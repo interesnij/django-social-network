@@ -27,7 +27,7 @@
 
               <div id="penalty_post_comment_container" data-link="/managers/penalty_list/post_comment/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.comment.pk }}">
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" comment-pk="{{ object.comment.pk }}" obj-pk="{{ object.pk }}">
                       <div class="media">
                         <div class="media-body">
                           <span style="padding:20px">{{ object.comment.text }}</span>
@@ -96,7 +96,7 @@
                           </div>
 
                             <div class="media-body btn_console border-top">
-                                {% if object.object.is_deleted %}
+                                {% if object.comment.is_deleted %}
                                   <span class="">Удалено</span>
                                   (<a href="#" class="remove_post_comment_delete">Восстановить</a> |
                                    <a href="#" class="post_comment_unverify">Отменить проверку</a>)
