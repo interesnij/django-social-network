@@ -135,7 +135,7 @@ class ModeratedPostComment(models.Model):
     def create_deleted(self, manager_id, comment_id):
         self.verified = True
         self.save()
-        ModerationPenaltyPostComment.create_block_penalty(moderated_object=self, manager_id=manager_id, comment_id=comment_id)
+        ModerationPenaltyPostComment.create_delete_penalty(moderated_object=self, manager_id=manager_id, comment_id=comment_id)
         PostCommentManageLog.objects.create(comment=comment_id, manager=manager_id, action_type=PostCommentManageLog.DELETED)
 
     def delete_deleted(self, manager_id, comment_id):
