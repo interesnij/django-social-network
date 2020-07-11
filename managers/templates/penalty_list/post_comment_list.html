@@ -27,7 +27,7 @@
 
               <div id="penalty_post_comment_container" data-link="/managers/penalty_list/post_comment/{{ user.pk }}">
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" comment-pk="{{ object.comment.pk }}" obj-pk="{{ object.pk }}">
+                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" comment-pk="{{ object.comment.pk }}" obj-pk="{{ object.moderated_object.pk }}">
                       <div class="media">
                         <div class="media-body">
                           <span style="padding:20px">{{ object.comment.text }}</span>
