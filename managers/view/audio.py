@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from common.staff_progs.audio import *
-from music.models import SoundCloudParsing
+from music.models import SoundcloudParsing
 from managers.forms import AudioModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.goods import ModeratedAudio
@@ -112,7 +112,7 @@ class AudioWorkerEditorDelete(View):
 
 class AudioDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         form = AudioModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_audio_manager or request.user.is_superuser):
             mod = form.save(commit=False)
@@ -127,7 +127,7 @@ class AudioDeleteCreate(View):
 
 class AudioDeleteDelete(View):
     def get(self,request,*args,**kwargs):
-        audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         if request.user.is_audio_manager or request.user.is_superuser:
             moderate_obj = ModeratedAudio.objects.get(audio=audio)
             moderate_obj.delete_deleted(manager_id=request.user.pk, audio_id=audio.pk)
@@ -140,7 +140,7 @@ class AudioClaimCreate(View):
     def post(self,request,*args,**kwargs):
         from managers.model.audio import AudioModerationReport
 
-        audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         description = request.POST.get('description')
         type = request.POST.get('type')
         AudioModerationReport.create_audio_moderation_report(reporter_id=request.user.pk, audio=audio, description=description, type=type)
@@ -148,7 +148,7 @@ class AudioClaimCreate(View):
 
 class AudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         if request.user.is_audio_manager or request.user.is_superuser:
             moderate_obj = ModeratedAudio.objects.get(audio=audio)
             moderate_obj.reject_moderation(manager_id=request.user.pk, audio_id=audio.pk)
@@ -157,7 +157,7 @@ class AudioRejectedCreate(View):
 
 class AudioUnverify(View):
     def get(self,request,*args,**kwargs):
-        audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         obj = ModeratedAudio.objects.get(pk=self.kwargs["obj_pk"])
         if request.user.is_audio_manager or request.user.is_superuser:
             obj.unverify_moderation(manager_id=request.user.pk, audio_id=audio.pk)
@@ -168,7 +168,7 @@ class AudioDeleteWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         if request.user.is_audio_manager or request.user.is_superuser:
             self.template_name = "manage_create/audio/audio_delete.html"
         else:
@@ -184,7 +184,7 @@ class AudioClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.audio = SuundCloudParsing.objects.get(pk=self.kwargs["pk"])
+        self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         self.template_name = "manage_create/audio/audio_claim.html"
         return super(AudioClaimWindow,self).get(request,*args,**kwargs)
 
