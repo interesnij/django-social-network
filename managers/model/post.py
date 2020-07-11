@@ -326,7 +326,7 @@ class ModerationPenaltyPostComment(models.Model):
         return self.type == ModerationPenaltyPostComment.DELETE
 
     def __str__(self):
-        return self.comment.comment.get_full_name()
+        return self.comment.commenter.get_full_name()
 
     class Meta:
         verbose_name = 'Оштрафованный комментарий к записи'
