@@ -5,12 +5,12 @@ from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
 
 
-class UserDesign(TemplateView):
+class UserGeneralChange(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="settings/", template="general.html", request=request)
-		return super(UserDesign,self).get(request,*args,**kwargs)
+		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 
 class UserInfoChange(TemplateView):
