@@ -16,6 +16,26 @@ function comment_delete(_this, _link, _class){
   }};
   link.send( );
 }
+function comment_wall_delete(_this, _link, _class){
+  data = _this.parentElement.parentElement;
+  comment_pk = data.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + pk + "/" + comment_pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    comment = data.parentElement.parentElement.parentElement.parentElement;
+    comment.style.display = "none";
+    div = document.createElement("div");
+    div.classList.add("media", "comment");
+
+    div.innerHTML = "<p class='" + _class + "'style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
+    comment.parentElement.insertBefore(div, comment);
+    comment.style.display = "none";
+  }};
+  link.send( );
+}
+
 function comment_abort_delete(_this, _link){
   comment = _this.parentElement.nextElementSibling;
   comment.style.display = "flex";
@@ -23,6 +43,20 @@ function comment_abort_delete(_this, _link){
   block = _this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + pk + "/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+  }};
+  link.send();
+}
+function comment_wall_abort_delete(_this, _link){
+  comment = _this.parentElement.nextElementSibling;
+  comment.style.display = "flex";
+  comment_pk = _this.getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  block = _this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', _link + pk + "/" + comment_pk + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();

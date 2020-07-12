@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
@@ -10,6 +11,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from gallery.forms import CommentForm
 from communities.models import Community
+from rest_framework.exceptions import PermissionDenied
 
 
 class PhotoCommunityCommentList(ListView):
@@ -19,7 +21,25 @@ class PhotoCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_template_list(folder="c_photo_comment/", template="comments.html", request=request)
+
+        if not self.item.comments_enabled:
+            raise PermissionDenied('Комментарии для фотографии отключены')
+        elif request.user.is_authenticated:
+            if request.user.is_staff_of_community_with_name(self.community.name):
+                self.template_name = "c_photo_comment/admin_comments.html"
+            elif request.user.is_photo_manager():
+                self.template_name = "c_photo_comment/staff_comments.html"
+            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+                self.template_name = "c_photo_comment/comments.html"
+            else:
+                self.template_name = "c_photo_comment/comments.html"
+        elif request.user.is_anonymous:
+            if self.is_public():
+                self.template_name = "c_photo_comment/anon_comments.html"
+
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

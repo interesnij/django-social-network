@@ -98,6 +98,30 @@ on('#ajax', 'click', '.u_post_remove', function() {
 
   link.send( );
 });
+on('#ajax', 'click', '.u_post_wall_remove', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("data-uuid");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/user/wall_delete/" + pk + "/" + uuid + "/", true );
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    p = document.createElement("div");
+    p.classList.add("card", "mb-3");
+    p.style.padding = "20px";
+    p.style.display =  "block";
+    p.innerHTML = "Запись удалена. <span class='u_post_wall_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
+    : (document.querySelector(".item_fullscreen").style.display = "none",
+    block = document.body.querySelector(".post_container"),
+    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
+    item.parentElement.insertBefore(p, item),
+    item.style.display = "none")
+  }};
+
+  link.send( );
+});
 
 on('#ajax', 'click', '.u_post_abort_remove', function() {
   item = this.parentElement.nextElementSibling;
@@ -111,7 +135,21 @@ on('#ajax', 'click', '.u_post_abort_remove', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
   }};
+  link.send();
+});
+on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
+  item = this.parentElement.nextElementSibling;
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  item.style.display = "block";
+  uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/user/wall_abort_delete/" + pk + "/" + uuid + "/", true );
 
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+  }};
   link.send();
 });
 
@@ -181,8 +219,17 @@ on('#ajax', 'click', '.u_dislike2', function() {
 on('#ajax', 'click', '.u_post_comment_delete', function() {
   comment_delete(this, "/posts/user/delete_comment/", "u_post_comment_abort_remove")
 })
+
 on('#ajax', 'click', '.u_post_comment_abort_remove', function() {
   comment_abort_delete(this, "/posts/user/abort_delete_comment/")
+});
+
+on('#ajax', 'click', '.u_post_wall_comment_delete', function() {
+  comment_wall_delete(this, "/posts/user/delete_wall_comment/", "u_post_comment_abort_remove")
+})
+
+on('#ajax', 'click', '.u_post_wall_comment_abort_remove', function() {
+  comment_wall_abort_delete(this, "/posts/user/abort_delete_wall_comment/")
 });
 
 on('#ajax', 'change', '#photo_add_post_attach', function() {

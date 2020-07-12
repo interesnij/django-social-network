@@ -9,6 +9,7 @@ from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import render
+from rest_framework.exceptions import PermissionDenied
 
 
 class PostCommunityCommentList(ListView):
@@ -19,7 +20,9 @@ class PostCommunityCommentList(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.user.is_authenticated:
+        if not self.item.comments_enabled:
+            raise PermissionDenied('Комментарии для записи отключены')
+        elif request.user.is_authenticated:
             if request.user.is_staff_of_community_with_name(self.community.name):
                 self.template_name = "c_post_comment/admin_comments.html"
             elif request.user.is_post_manager():
@@ -93,11 +96,7 @@ class PostCommunityReplyCreate(View):
 class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent_comment.post.community
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
         return HttpResponse("")
@@ -105,10 +104,24 @@ class PostCommentCommunityDelete(View):
 class PostCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent_comment.post.community
+        if request.user.pk == comment.commenter.pk:
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PostWallCommentCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_staff_of_community_with_name(community.name):
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PostWallCommentCommunityAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
@@ -149,8 +162,26 @@ class PostCommunityOnComment(View):
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.user.pk == item.creator.pk:
             item.is_deleted = True
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PostWallCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["[pk]"])
+        if request.user.is_staff_of_community_with_name(community.name):
+            item.is_deleted = True
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PostWallCommunityAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["[pk]"])
+        if request.user.is_staff_of_community_with_name(community.name):
+            item.is_deleted = False
             item.save(update_fields=['is_deleted'])
         return HttpResponse("")
 

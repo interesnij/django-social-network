@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
@@ -10,6 +11,7 @@ from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
 from gallery.forms import CommentForm
+from rest_framework.exceptions import PermissionDenied
 
 
 class PhotoUserCommentList(ListView):
@@ -19,7 +21,27 @@ class PhotoUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_list_user(folder="u_photo_comment/", template="comments.html", request=request)
+        if not self.item.comments_enabled:
+            raise PermissionDenied('Комментарии для фотографии отключены')
+        elif request.user.is_authenticated:
+            if self.user.pk == request.user.pk:
+                self.template_name = "u_photo_comment/my_comments.html"
+            elif request.user.is_photo_manager():
+                self.template_name = "u_photo_comment/staff_comments.html"
+            elif self.user != request.user:
+                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+                if self.user.is_closed_profile():
+                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+                self.template_name = "u_photo_comment/comments.html"
+        elif request.user.is_anonymous:
+            if self.user.is_closed_profile():
+                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            else:
+                self.template_name = "u_photo_comment/anon_comments.html"
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -42,7 +64,6 @@ class PhotoCommentUserCreate(View):
 
         if form_post.is_valid():
             comment=form_post.save(commit=False)
-
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
                 if user.is_closed_profile():

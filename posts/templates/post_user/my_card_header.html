@@ -16,7 +16,9 @@
               <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                 {{ object.creator.get_full_name }} &nbsp;
               </a>
-              <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
+              {% if not object.is_fixed %}
+              <span class="is_fixed" style="color: #888888;font-size: 13px;">закреплено</span>
+              {% endif %}
             </h6>
             <p class="mb-0">{{ object.created|naturaltime }}</p>
         </div>
@@ -26,7 +28,7 @@
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <span class="dropdown-item u_post_remove">Удалить запись</span>
+                <span class="dropdown-item u_post_wall_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span>
                 {% if object.is_fixed %}

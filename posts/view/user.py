@@ -8,6 +8,7 @@ from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from posts.forms import CommentForm
 from django.shortcuts import render
+from rest_framework.exceptions import PermissionDenied
 
 
 class PostUserCommentList(ListView):
@@ -18,7 +19,9 @@ class PostUserCommentList(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.user.is_authenticated:
+        if not self.item.comments_enabled:
+            raise PermissionDenied('Комментарии для записи отключены')
+        elif request.user.is_authenticated:
             if self.user.pk == request.user.pk:
                 self.template_name = "u_post_comment/my_comments.html"
             elif request.user.is_post_manager():
@@ -57,7 +60,7 @@ class PostCommentUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         post = Post.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid():
+        if form_post.is_valid() and post.comments_enabled:
             comment=form_post.save(commit=False)
 
             if request.user.pk != user.pk:
@@ -84,7 +87,7 @@ class PostReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
 
-        if form_post.is_valid():
+        if form_post.is_valid() and parent.post.comments_enabled:
             comment=form_post.save(commit=False)
 
             if request.user != user:
@@ -109,9 +112,7 @@ class PostCommentUserDelete(View):
         if request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class PostCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -119,9 +120,26 @@ class PostCommentUserAbortDelete(View):
         if request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
+
+
+class PostWallCommentUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        user = User.objects.get(pk=request.POST.get('pk'))
+        if request.user.pk == user.pk:
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PostWallCommentUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        user = User.objects.get(pk=request.POST.get('pk'))
+        if request.user.pk == user.pk:
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
@@ -129,9 +147,7 @@ class PostUserFixed(View):
         if request.user == item.creator:
             item.is_fixed = True
             item.save(update_fields=['is_fixed'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
@@ -144,25 +160,21 @@ class PostUserUnFixed(View):
             return HttpResponse("")
 
 
-class PostCommunityOffComment(View):
+class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
-class PostCommunityOnComment(View):
+class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user == item.creator:
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 
 class PostUserDelete(View):
@@ -171,9 +183,17 @@ class PostUserDelete(View):
         if request.user.pk == item.creator.pk:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
+
+
+class PostWallUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["[pk]"])
+        if request.user.pk == user.pk:
+            item.is_deleted = True
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
 class PostUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -181,9 +201,17 @@ class PostUserAbortDelete(View):
         if request.user.pk == item.creator.pk:
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
+
+
+class PostWallUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["[pk]"])
+        if request.user.pk == user.pk:
+            item.is_deleted = False
+            item.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
 
 class PostUserDetail(TemplateView):
