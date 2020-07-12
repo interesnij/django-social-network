@@ -5,7 +5,7 @@
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-md-9">
-            <form action="" id="GENERAL-FORM" method="post" class="contact-form">
+            <form action="" id="info_user_form" method="post" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
@@ -38,118 +38,20 @@
                                         <input type="numder" value="{{ user.profile.phone }}" name="phone" id="id_phone" class="form-control" placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <label>Аккаунт VK</label>
-                                        <input type="text" value="{{ user.profile.vk_url }}" name="vk_url" id="id_vk_url" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <label>Аккаунт youtube</label>
-                                        <input type="text" value="{{ user.profile.youtube_url }}" name="youtube_url" id="id_youtube_url" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <label>Аккаунт facebook</label>
-                                        <input type="text" value="{{ user.profile.facebook_url }}" name="facebook_url" id="id_facebook_url" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <label>Аккаунт instagram</label>
-                                        <input type="text" value="{{ user.profile.instagram_url }}" name="instagram_url" id="id_instagram_url" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <label>Аккаунт twitter</label>
-                                        <input type="text" value="{{ user.profile.twitter_url }}" name="twitter_url" id="id_twitter_url" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="mb-2 btn btn-sm btn-success float-righ in_btn">Сохранить</button>
+                        <button type="button" class="mb-2 btn btn-sm btn-success float-righ info_user_btn">Сохранить</button>
                     </div>
                 </div>
             </form>
         </div>
 
-        <div class="col-md-3 left_menu">
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
-              Общее
-          </a>
-          <div class="collapse show">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_general_form' request.user.pk %}" class="ajax">Информация</a></li>
-                <li><a href="{% url 'user_about_form' request.user.pk %}" class="ajax">Обо мне</a></li>
-                <li><a href="{% url 'user_design' request.user.id %}" class="ajax">Внешний вид</a></li>
-              </ul>
-            </div>
-          </div>
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Приватность
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_settings_private' request.user.pk %}" class="ajax">Записи</a></li>
-                <li><a href="" class="ajax">Фотографии</a></li>
-                <li><a href="" class="ajax">Товары</a></li>
-                <li><a href="" class="ajax">Музыка</a></li>
-                <li><a href="" class="ajax">Видео</a></li>
-              </ul>
-            </div>
-          </div>
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Уведомления
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_settings_notify' request.user.pk %}" class="ajax">Записи</a></li>
-                <li><a href="" class="ajax">Фотографии</a></li>
-                <li><a href="" class="ajax">Товары</a></li>
-                <li><a href="" class="ajax">Музыка</a></li>
-                <li><a href="" class="ajax">Видео</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Статистика
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_cuberture_day' user.pk %}" class="ajax">Обший охват</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_traffic_day' user.pk %}" class="ajax">Посещаемость</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        {% include 'settings/menu.html' %}
 
     </div>
 </div>
 
-<script>
-  document.querySelector(".in_btn").addEventListener("click", (e) => {
-   var form10 = document.getElementById('GENERAL-FORM');
-   var formEntries = new FormData(form10);
-   var options = {
-     method: 'POST',
-     body: formEntries,
-   };
-   fetch('{% url "user_general_form" pk=request.user.pk %}', options).then(data => {
-     console.log("Все ОК")
-   }).catch(error => {console.log("Все не ОК")})
-})
-</script>
 
 {% endblock %}

@@ -1,22 +1,15 @@
 from django import forms
 from users.model.profile import UserProfile
-from users.model.settings import UserPrivate, UserItemNotifications
+from users.model.settings import UserPrivate, UserPostNotifications
 
 
-class GeneralUserForm(forms.ModelForm):
+class InfoUserForm(forms.ModelForm):
     first_name = forms.CharField(required=False,max_length=256,label='Имя')
     last_name = forms.CharField(required=False,max_length=256,label='Фамилия')
 
     class Meta:
         model = UserProfile
-        fields = ('first_name','last_name','sity','vk_url','youtube_url','facebook_url','instagram_url','twitter_url')
-
-
-class AboutUserForm(forms.ModelForm):
-
-    class Meta:
-        model = UserProfile
-        fields = ('bio',)
+        fields = ('first_name','last_name','sity')
 
 
 class SettingsPrivateForm(forms.ModelForm):
@@ -25,29 +18,27 @@ class SettingsPrivateForm(forms.ModelForm):
         model = UserPrivate
         fields = (
             'is_private',
-            'can_message',
-            'photo_visible_all',
-            'photo_visible_frends',
-            'can_comments',
-            'can_add_post',
-            'can_add_article',
-            'can_add_good',
+            'open_message',
+            'open_wall',
+            'open_post',
+            'open_good',
+            'open_video',
         )
 
 class SettingsNotifyForm(forms.ModelForm):
 
     class Meta:
-        model = UserItemNotifications
+        model = UserPostNotifications
         fields = (
-            'comment_notifications',
-            'comment_reply_notifications',
-            'comment_user_mention_notifications',
-            'user_mention_notifications',
-            'repost_notifications',
-            'like_notifications',
-            'dislike_notifications',
-            'comment_like_notifications',
-            'comment_dislike_notifications',
-            'comment_reply_like_notifications',
-            'comment_reply_dislike_notifications',
+            'comment',
+            'comment_reply',
+            'comment_user_mention',
+            'user_mention',
+            'repost',
+            'like',
+            'dislike',
+            'comment_like',
+            'comment_dislike',
+            'comment_reply_like',
+            'comment_reply_dislike',
         )

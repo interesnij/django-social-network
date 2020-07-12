@@ -6,7 +6,7 @@
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-md-9">
-            <form id="NOTIFY-FORM" action="" method="post" class="contact-form">
+            <form id="user_notifications_form" action="" method="post" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
@@ -15,151 +15,86 @@
                     <div class="card-body">
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
-                            <input type="checkbox" {% if notify_settings.connection_request_notifications %} checked {% endif %} name="connection_request_notifications" id="id_connection_request_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_connection_request_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.connection_request %} checked {% endif %} name="connection_request" id="id_connection_request" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_connection_request" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Подтверждение заявки в друзья
-                            <input type="checkbox" {% if notify_settings.connection_confirmed_notifications %} checked {% endif %} name="connection_confirmed_notifications" id="id_connection_confirmed_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_connection_confirmed_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.connection_confirmed %} checked {% endif %} name="connection_confirmed" id="id_connection_confirmed" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_connection_confirmed" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Приглашения в сообщества
-                            <input type="checkbox" {% if notify_settings.community_invite_notifications %} checked {% endif %} name="community_invite_notifications" id="id_community_invite_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_community_invite_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.community_invite %} checked {% endif %} name="community_invite" id="id_community_invite" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_community_invite" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Комментарии к записям
-                            <input type="checkbox" {% if notify_settings.comment_notifications %} checked {% endif %} name="comment_notifications" id="id_comment_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment %} checked {% endif %} name="comment" id="id_comment" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Ответы на комментарии
-                            <input type="checkbox" {% if notify_settings.comment_reply_notifications %} checked {% endif %} name="comment_reply_notifications" id="id_comment_reply_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_reply %} checked {% endif %} name="comment_reply" id="id_comment_reply" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Репосты записей
-                            <input type="checkbox" {% if notify_settings.repost_notifications %} checked {% endif %} name="repost_notifications" id="id_repost_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notify_settings.repost %} checked {% endif %} name="repost" id="id_repost" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_repost_notifications" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в записях
-                            <input type="checkbox" {% if notify_settings.user_mention_notifications %} checked {% endif %} name="user_mention_notifications" id="id_user_mention_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_user_mention_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.user_mention %} checked {% endif %} name="user_mention" id="id_user_mention" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_user_mention" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в комменариях
-                            <input type="checkbox" {% if notify_settings.comment_user_mention_notifications %} checked {% endif %} name="comment_user_mention_notifications" id="id_comment_user_mention_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_user_mention_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_user_mention %} checked {% endif %} name="comment_user_mention" id="id_comment_user_mention" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_user_mention" class="bg_success mb-2 border float-right"></label>
                         </p>
 
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Лайки на записи
-                            <input type="checkbox" {% if notify_settings.like_notifications %} checked {% endif %} name="like_notifications" id="id_like_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_like_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.like %} checked {% endif %} name="like" id="id_like" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_like" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Дизайки на записи
-                            <input type="checkbox" {% if notify_settings.dislike_notifications %} checked {% endif %} name="dislike_notifications" id="id_dislike_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_dislike_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.dislike %} checked {% endif %} name="dislike" id="id_dislike" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_dislike" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Лайки на комментарии
-                            <input type="checkbox" {% if notify_settings.comment_like_notifications %} checked {% endif %} name="comment_like_notifications" id="id_comment_like_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_like_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_like %} checked {% endif %} name="comment_like" id="id_comment_like" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_like" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Дизайки на комментарии
-                            <input type="checkbox" {% if notify_settings.comment_dislike_notifications %} checked {% endif %} name="comment_dislike_notifications" id="id_comment_dislike_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_dislike_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_dislike %} checked {% endif %} name="comment_dislike" id="id_comment_dislike" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_dislike" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Лайки на ответы
-                            <input type="checkbox" {% if notify_settings.comment_reply_like_notifications %} checked {% endif %} name="comment_reply_like_notifications" id="id_comment_reply_like_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_like_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_reply_like %} checked {% endif %} name="comment_reply_like" id="id_comment_reply_like" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_like" class="bg_success mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Дизайки на ответы
-                            <input type="checkbox" {% if notify_settings.comment_reply_dislike_notifications %} checked {% endif %} name="comment_reply_dislike_notifications" id="id_comment_reply_dislike_notifications" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_dislike_notifications" class="bg_success mb-2 border float-right"></label>
+                            <input type="checkbox" {% if notify_settings.comment_reply_dislike %} checked {% endif %} name="comment_reply_dislike" id="id_comment_reply_dislike" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_dislike" class="bg_success mb-2 border float-right"></label>
                         </p>
 
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="buttonbutton mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                        <button type="button" class="user_notifications_btn mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-3 left_menu">
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
-              Общее
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_general_form' request.user.pk %}" class="ajax">Информация</a></li>
-                <li><a href="{% url 'user_about_form' request.user.pk %}" class="ajax">Обо мне</a></li>
-                <li><a href="{% url 'user_design' request.user.id %}" class="ajax">Внешний вид</a></li>
-              </ul>
-            </div>
-          </div>
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Приватность
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_settings_private' request.user.pk %}" class="ajax">Записи</a></li>
-                <li><a href="" class="ajax">Фотографии</a></li>
-                <li><a href="" class="ajax">Товары</a></li>
-                <li><a href="" class="ajax">Музыка</a></li>
-                <li><a href="" class="ajax">Видео</a></li>
-              </ul>
-            </div>
-          </div>
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Уведомления
-          </a>
-          <div class="collapse show">
-            <div class="card card-body" style="display: contents;">
-              <ul>
-                <li><a href="{% url 'user_settings_notify' request.user.pk %}" class="ajax">Записи</a></li>
-                <li><a href="" class="ajax">Фотографии</a></li>
-                <li><a href="" class="ajax">Товары</a></li>
-                <li><a href="" class="ajax">Музыка</a></li>
-                <li><a href="" class="ajax">Видео</a></li>
-              </ul>
-            </div>
-          </div>
 
-          <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
-              Статистика
-          </a>
-          <div class="collapse">
-            <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_cuberture_day' user.pk %}" class="ajax">Обший охват</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_traffic_day' user.pk %}" class="ajax">Посещаемость</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        {% include 'settings/menu.html' %}
 
     </div>
 </div>
-<script type="text/javascript">
-  document.querySelector(".buttonbutton").addEventListener("click", (e) => {
-   var form10 = document.getElementById('NOTIFY-FORM');
-   var formEntries = new FormData(form10);
-   var options = {
-     method: 'POST',
-     body: formEntries,
-   };
-   fetch('{% url "user_settings_notify" pk=request.user.pk %}', options).then(data => {
-     console.log("Все ОК")
-   }).catch(error => {console.log("Все не ОК")})
-})
-</script>
 {% endblock %}

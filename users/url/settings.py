@@ -4,8 +4,8 @@ from users.views.settings import *
 
 urlpatterns = [
     url(r'^general/(?P<pk>[0-9]+)/$', UserGeneralChange.as_view(), name='user_general_form'),
-    url(r'^about/(?P<pk>[0-9]+)/$', UserAboutChange.as_view(), name='user_about_form'),
-    url(r'^design/(?P<pk>\d+)/$', UserDesign.as_view(), name='user_design'),
-    url(r'^settings_notify/(?P<pk>[0-9]+)/$', SettingsNotifyView.as_view(), name='user_settings_notify'),
-    url(r'^settings_private/(?P<pk>[0-9]+)/$', SettingsPrivateView.as_view(), name='user_settings_private'),
+    url(r'^info/(?P<pk>[0-9]+)/$', UserInfoChange.as_view(), name='user_info_form'),
+    url(r'^design/(?P<pk>\d+)/$', UserDesign.as_view(), name='user_design_form'),
+    url(r'^notify/(?P<pk>[0-9]+)/$', SettingsNotifyView.as_view(), name='user_notify_form'),
+    url(r'^private/(?P<pk>[0-9]+)/$', SettingsPrivateView.as_view(), name='user_private_form'),
 ]

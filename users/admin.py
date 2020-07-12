@@ -1,12 +1,12 @@
 from django.contrib import admin
 from users.models import User
 from users.model.profile import *
-from users.model.settings import UserItemNotifications, UserPrivate, UserColorSettings
+from users.model.settings import UserPostNotifications, UserPrivate, UserColorSettings
 from users.model.list import UserBlock
 
 
 class UserNotificationsSettingsInline(admin.TabularInline):
-    model = UserItemNotifications
+    model = UserPostNotifications
 
 class UserPrivateSettingsInline(admin.TabularInline):
     model = UserPrivate

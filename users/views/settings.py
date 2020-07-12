@@ -5,17 +5,25 @@ from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
 
 
-class UserGeneralChange(TemplateView):
+class UserDesign(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = request.user.get_settings_template(folder="settings/", template="general.html", request=request)
+		return super(UserDesign,self).get(request,*args,**kwargs)
+
+
+class UserInfoChange(TemplateView):
 	template_name = None
 	form = None
 	profile = None
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="settings/", template="info.html", request=request)
-		return super(UserGeneralChange,self).get(request,*args,**kwargs)
+		return super(UserInfoChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserGeneralChange,self).get_context_data(**kwargs)
+		context = super(UserInfoChange,self).get_context_data(**kwargs)
 		context["profile"] = self.profile
 		context["form"] = self.form
 		return context
@@ -25,43 +33,15 @@ class UserGeneralChange(TemplateView):
 			self.profile = UserProfile.objects.get(user=request.user)
 		except:
 			self.profile = UserProfile.objects.create(user=request.user)
-		self.form = GeneralUserForm(request.POST,instance=self.profile)
+		self.form = InfoUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			user = self.request.user
 			user.first_name = self.form.cleaned_data['first_name']
 			user.last_name = self.form.cleaned_data['last_name']
 			user.save()
 			self.form.save()
-			return HttpResponse ('!')
-		return super(UserGeneralChange,self).post(request,*args,**kwargs)
-
-
-class UserAboutChange(TemplateView):
-	template_name = None
-	form = None
-	profile = None
-
-	def get(self,request,*args,**kwargs):
-		self.form = AboutUserForm(instance=request.user)
-		self.template_name = request.user.get_settings_template(folder="settings/", template="about.html", request=request)
-		return super(UserAboutChange,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserAboutChange,self).get_context_data(**kwargs)
-		context["profile"] = self.profile
-		context["form"] = self.form
-		return context
-
-	def post(self,request,*args,**kwargs):
-		try:
-			self.profile = UserProfile.objects.get(user=request.user)
-		except:
-			self.profile = UserProfile.objects.create(user=request.user)
-		self.form = AboutUserForm(request.POST,instance=self.profile)
-		if self.form.is_valid():
-			self.form.save()
-			return HttpResponse ('!')
-		return super(UserAboutChange,self).post(request,*args,**kwargs)
+			return HttpResponse ('')
+		return super(UserInfoChange,self).post(request,*args,**kwargs)
 
 
 class SettingsNotifyView(TemplateView):
@@ -126,11 +106,3 @@ class UserDesign(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="settings/", template="design.html", request=request)
 		return super(UserDesign,self).get(request,*args,**kwargs)
-
-
-class StateCoverView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = request.user.get_settings_template(folder="settings/", template="stat_cover.html", request=request)
-		return super(StateCoverView,self).get(request,*args,**kwargs)
