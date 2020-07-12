@@ -20,7 +20,6 @@ class SettingsPrivateForm(forms.ModelForm):
             'is_private',
             'open_message',
             'open_wall',
-            'open_post',
             'open_good',
             'open_video',
         )
