@@ -62,7 +62,7 @@ class PhotoCommentUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid():
+        if form_post.is_valid() and photo_comment.comments_enabled:
             comment=form_post.save(commit=False)
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
@@ -87,7 +87,7 @@ class PhotoReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
-        if form_post.is_valid():
+        if form_post.is_valid() and parent.photo_comment.comments_enabled:
             comment=form_post.save(commit=False)
 
             if request.user != user:
@@ -202,6 +202,25 @@ class UserOffPrivatePhoto(View):
             photo.is_public = True
             photo.save(update_fields=['is_public'])
         return HttpResponse("!")
+
+
+class PhotoWallCommentUserDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
+        user = User.objects.get(pk=request.POST.get('pk'))
+        if request.user.pk == user.pk:
+            comment.is_deleted = True
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
+
+class PhotoWallCommentUserAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
+        user = User.objects.get(pk=request.POST.get('pk'))
+        if request.user.pk == user.pk:
+            comment.is_deleted = False
+            comment.save(update_fields=['is_deleted'])
+        return HttpResponse("")
 
 
 class UserAddAvatarPhoto(View):

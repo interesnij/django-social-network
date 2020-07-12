@@ -19,4 +19,6 @@ urlpatterns=[
     url(r'^reply-comment/$', login_required(PhotoReplyUserCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentUserDelete.as_view())),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentUserAbortDelete.as_view())),
+    url(r'^delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentUserDelete.as_view())),
+	url(r'^abort_delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentUserAbortDelete.as_view())),
 ]
