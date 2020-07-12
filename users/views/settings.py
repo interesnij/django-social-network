@@ -9,7 +9,8 @@ class UserGeneralChange(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = request.user.get_settings_template(folder="settings/", template="general.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="general.html", request=request)
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 
@@ -19,7 +20,8 @@ class UserInfoChange(TemplateView):
 	profile = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = request.user.get_settings_template(folder="settings/", template="info.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="info.html", request=request)
 		return super(UserInfoChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -51,7 +53,8 @@ class SettingsNotifyView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form = SettingsNotifyForm()
-		self.template_name = request.user.get_settings_template(folder="settings/", template="notifications.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notifications.html", request=request)
 		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -78,8 +81,9 @@ class SettingsPrivateView(TemplateView):
 	private_settings = None
 
 	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.form = SettingsPrivateForm(instance=request.user)
-		self.template_name = request.user.get_settings_template(folder="settings/", template="private.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private.html", request=request)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -104,5 +108,6 @@ class UserDesign(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = request.user.get_settings_template(folder="settings/", template="design.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="design.html", request=request)
 		return super(UserDesign,self).get(request,*args,**kwargs)
