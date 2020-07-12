@@ -21,7 +21,7 @@ class PhotoUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not self.item.comments_enabled:
+        if not self.photo.comments_enabled:
             raise PermissionDenied('Комментарии для фотографии отключены')
         elif request.user.is_authenticated:
             if self.user.pk == request.user.pk:

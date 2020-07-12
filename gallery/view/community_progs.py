@@ -22,7 +22,7 @@ class PhotoCommunityCommentList(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if not self.item.comments_enabled:
+        if not self.photo.comments_enabled:
             raise PermissionDenied('Комментарии для фотографии отключены')
         elif request.user.is_authenticated:
             if request.user.is_staff_of_community_with_name(self.community.name):
