@@ -238,7 +238,7 @@ on('body', 'click', '#c_multi_photos', function(event) {
 
 on('#ajax', 'change', '#c_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_photos")); 
+  form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
 
@@ -247,11 +247,27 @@ on('#ajax', 'change', '#c_photo_post_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".c_photo_detail");
-    block_divs_length = photo_list.length;
 
-    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
+    photo_post_upload_attach(response.querySelectorAll(".c_photo_detail"), document.body.querySelector(".attach_block"), photo_list.length);
+    }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+  link_.send(form_data);
+});
+
+on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_comment_attach(response.querySelectorAll(".c_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;, photo_list.length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";

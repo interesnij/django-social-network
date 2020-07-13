@@ -11,7 +11,7 @@
 <h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографий</h4>
 <form id="add_photos" method="post">
     {% csrf_token %}
-      <input type="file" class="upload_for_post_comment" id="c_photo_post_attach" name="file" style="display:none" multiple="multiple">
+      <input type="file" id="c_photo_post_comment_attach" name="file" style="display:none" multiple="multiple">
       <div id="c_multi_photos" class="border" style="cursor:pointer">
           <h4>загрузить и прикрепить (до 2х)</h4>
       </div>
