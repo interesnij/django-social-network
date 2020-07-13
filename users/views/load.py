@@ -64,7 +64,7 @@ class UserGoodsList(ListView):
 		return goods_list
 
 
-class CommentPhotosList(ListView):
+class CommunityPhotosList(ListView):
 	template_name = 'load/c_photos_load.html'
 	paginate_by = 15
 
@@ -75,7 +75,7 @@ class CommentPhotosList(ListView):
 		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
-class CommentPhotosCommentList(ListView):
+class CommunityPhotosCommentList(ListView):
 	template_name = 'load/c_photos_comments_load.html'
 	paginate_by = 15
 
@@ -86,7 +86,7 @@ class CommentPhotosCommentList(ListView):
 		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
-class CommentVideosList(ListView):
+class CommunityVideosList(ListView):
 	template_name = 'load/c_videos_load.html'
 	paginate_by = 15
 
@@ -97,7 +97,7 @@ class CommentVideosList(ListView):
 		videos_list = self.request.user.get_video().order_by('-created')
 		return videos_list
 
-class CommentMusicsList(ListView):
+class CommunityMusicsList(ListView):
 	template_name = 'load/c_musics_load.html'
 	paginate_by = 15
 
@@ -108,7 +108,7 @@ class CommentMusicsList(ListView):
 		musics_list = self.request.user.get_music().order_by('-created_at')
 		return musics_list
 
-class CommentArticlesList(ListView):
+class CommunityArticlesList(ListView):
 	template_name = 'load/c_articles_load.html'
 	paginate_by = 15
 
@@ -119,7 +119,7 @@ class CommentArticlesList(ListView):
 		articles_list = self.request.user.get_articles().order_by('-created')
 		return articles_list
 
-class CommentGoodsList(ListView):
+class CommunityGoodsList(ListView):
 	template_name = 'load/c_goods_load.html'
 	paginate_by = 15
 
