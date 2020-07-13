@@ -232,7 +232,7 @@ on('#ajax', 'click', '.c_post_wall_abort_remove', function() {
 });
 
 
-on('body', 'click', '#c_multi_comments_photos', function(event) {
+on('body', 'click', '#c_multi_photos', function(event) {
   this.previousElementSibling.click();
 })
 
