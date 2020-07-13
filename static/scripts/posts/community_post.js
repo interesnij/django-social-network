@@ -247,6 +247,7 @@ on('#ajax', 'change', '#c_photo_post_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".c_photo_detail");
 
     photo_post_upload_attach(response.querySelectorAll(".c_photo_detail"), document.body.querySelector(".attach_block"), photo_list.length);
     }
