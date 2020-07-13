@@ -188,7 +188,7 @@ class PhotoAttachCommunityCreate(View):
             photo = Photo.objects.create(file=p, creator=request.user)
             _album.album.add(photo)
             photos += [photo,]
-        return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
+        return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
 
 
 
