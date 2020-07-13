@@ -12,7 +12,7 @@
 <form id="add_comment_photos" method="post">
     {% csrf_token %}
       <input type="file" class="upload_for_post_comment" id="u_photo_post_attach" name="file" style="display:none" multiple="multiple">
-      <div id="add_multi_comments_photos" class="border">
+      <div id="add_multi_comments_photos" class="border" style="cursor:pointer">
           <h4>загрузить и прикрепить (до 2х)</h4>
       </div>
 </form>
