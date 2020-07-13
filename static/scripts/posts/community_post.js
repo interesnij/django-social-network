@@ -236,7 +236,7 @@ on('body', 'click', '#c_multi_photos', function(event) {
   this.previousElementSibling.click();
 })
 
-on('#ajax', 'change', '#c_photo_comment_attach', function() {
+on('#ajax', 'change', '#c_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_comment_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
