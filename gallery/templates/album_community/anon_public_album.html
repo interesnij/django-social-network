@@ -4,8 +4,11 @@
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ album.uuid }}">
   <h5 class="mt-1">
-    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
       {{ community.name }}
+    </a> -
+    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+      Галерея
     </a> - {{ album.title }}
   </h5>
   Фото: {{ album.count_photo }}

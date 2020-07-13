@@ -231,7 +231,34 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_template_list(folder="gallery_community/", template="list.html", request=request)
+        if self.community.is_suspended():
+            raise PermissionDenied('Сообщество заморожено.')
+        elif self.community.is_blocked():
+            raise PermissionDenied('Сообщество заблокировано.')
+        elif request.user.is_authenticated:
+            if request.user.is_member_of_community_with_name(self.community.name):
+                self.template_name = "gallery_community/list.html"
+            elif request.user.is_community_manager():
+                self.template_name = "gallery_community/list.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                raise PermissionDenied('Нет доступа.')
+            elif request.user.is_banned_from_community_with_name(self.community.name):
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_public():
+                self.template_name = "gallery_community/list.html"
+            elif self.community.is_closed():
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_private():
+                self.template_name = "gallery_community/list.html"
+        elif request.user.is_anonymous:
+            if self.community.is_public():
+                self.template_name = "gallery_community/list.html"
+            elif self.community.is_closed():
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_private():
+                raise PermissionDenied('Нет доступа.')
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -251,6 +278,34 @@ class CommunityAlbumPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.community.get_template_list(folder="album_community/", template="list.html", request=request)
+        if self.community.is_suspended():
+            raise PermissionDenied('Сообщество заморожено.')
+        elif self.community.is_blocked():
+            raise PermissionDenied('Сообщество заблокировано.')
+        elif request.user.is_authenticated:
+            if request.user.is_member_of_community_with_name(self.community.name):
+                self.template_name = "album_community/list.html"
+            elif request.user.is_community_manager():
+                self.template_name = "album_community/list.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                raise PermissionDenied('Нет доступа.')
+            elif request.user.is_banned_from_community_with_name(self.community.name):
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_public():
+                self.template_name = "album_community/list.html"
+            elif self.community.is_closed():
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_private():
+                self.template_name = "album_community/list.html"
+        elif request.user.is_anonymous:
+            if self.community.is_public():
+                self.template_name = "album_community/list.html"
+            elif self.community.is_closed():
+                raise PermissionDenied('Нет доступа.')
+            elif self.community.is_private():
+                raise PermissionDenied('Нет доступа.')
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
