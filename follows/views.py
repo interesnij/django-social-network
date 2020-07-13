@@ -10,7 +10,7 @@ class FollowsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="follows/", template="follows.html", request=request)
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
@@ -20,7 +20,7 @@ class FollowsView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list=self.user.get_followers()
+		friends_list = self.user.get_followers()
 		return friends_list
 
 class FollowingsView(ListView):

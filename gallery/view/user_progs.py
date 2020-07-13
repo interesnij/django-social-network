@@ -39,7 +39,7 @@ class PhotoUserCommentList(ListView):
             else:
                 self.template_name = "u_photo_comment/anon_comments.html"
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
@@ -63,7 +63,7 @@ class PhotoCommentUserCreate(View):
         photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
         if form_post.is_valid() and photo_comment.comments_enabled:
-            comment=form_post.save(commit=False)
+            comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
                 if user.is_closed_profile():
@@ -88,7 +88,7 @@ class PhotoReplyUserCreate(View):
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
         if form_post.is_valid() and parent.photo_comment.comments_enabled:
-            comment=form_post.save(commit=False)
+            comment = form_post.save(commit=False)
 
             if request.user != user:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
@@ -112,9 +112,7 @@ class PhotoCommentUserDelete(View):
         if request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class PhotoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -122,9 +120,7 @@ class PhotoCommentUserAbortDelete(View):
         if request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-            return HttpResponse("")
-        else:
-            return HttpResponse("")
+        return HttpResponse("")
 
 class UserPhotoDescription(View):
     form_image = None

@@ -5,12 +5,12 @@ from django.views.generic import ListView
 
 
 class AllMusicView(TemplateView):
-    template_name="all_music.html"
+    template_name = "all_music.html"
 
     def get(self,request,*args,**kwargs):
-        self.rus_simbols=SoundSymbol.objects.filter(type='RS')
-        self.angl_simbols=SoundSymbol.objects.filter(type='AS')
-        self.number_simbols=SoundSymbol.objects.filter(type='NS')
+        self.rus_simbols = SoundSymbol.objects.filter(type='RS')
+        self.angl_simbols = SoundSymbol.objects.filter(type='AS')
+        self.number_simbols = SoundSymbol.objects.filter(type='NS')
         self.all_music_count = SoundcloudParsing.objects.only('pk').count()
         self.rus_tegs_count = SoundTags.objects.filter(symbol__type='RS').values('pk').count()
         self.angl_tegs_count = SoundTags.objects.filter(symbol__type='AS').values('pk').count()
@@ -19,7 +19,7 @@ class AllMusicView(TemplateView):
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(AllMusicView,self).get_context_data(**kwargs)
+        context = super(AllMusicView,self).get_context_data(**kwargs)
         context["rus_simbols"] = self.rus_simbols
         context["angl_simbols"] = self.angl_simbols
         context["number_simbols"] = self.number_simbols
@@ -32,12 +32,12 @@ class AllMusicView(TemplateView):
 
 
 class AllTagsMusicView(ListView):
-    template_name="music/tags_music.html"
+    template_name = "music/tags_music.html"
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.symbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
-        self.tags=SoundTags.objects.filter(symbol=self.symbol)
+        self.symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
+        self.tags = SoundTags.objects.filter(symbol=self.symbol)
         return super(AllTagsMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -52,7 +52,7 @@ class AllTagsMusicView(ListView):
 
 
 class AllTagMusicView(ListView):
-    template_name="music/tag_music.html"
+    template_name = "music/tag_music.html"
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
@@ -73,7 +73,7 @@ class AllTagMusicView(ListView):
 
 
 class GenreMusicView(ListView):
-    template_name="music/genre_music.html"
+    template_name = "music/genre_music.html"
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
@@ -94,7 +94,7 @@ class GenreMusicView(ListView):
 
 
 class AllSearchMusicView(View):
-    template_name="search_music.html"
+    template_name = "search_music.html"
     def get(self,request,*args,**kwargs):
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         if request.method == 'GET':

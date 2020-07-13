@@ -1,7 +1,6 @@
 import uuid
 from django.conf import settings
 from django.db import models
-#from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from communities.models import Community
@@ -25,8 +24,8 @@ class SoundGenres(models.Model):
         return queryset[:300]
 
     class Meta:
-        verbose_name="жанр"
-        verbose_name_plural="жанры"
+        verbose_name = "жанр"
+        verbose_name_plural = "жанры"
 
 
 class SoundSymbol(models.Model):
@@ -50,8 +49,8 @@ class SoundSymbol(models.Model):
         return self.symbol_papa.count()
 
     class Meta:
-        verbose_name="буква поиска музыки"
-        verbose_name_plural="буквы поиска музыки"
+        verbose_name = "буква поиска музыки"
+        verbose_name_plural = "буквы поиска музыки"
 
 
 class SoundList(models.Model):
@@ -73,8 +72,8 @@ class SoundList(models.Model):
         return queryset
 
     class Meta:
-        verbose_name="список: весь, человека или сообщества"
-        verbose_name_plural="списки: весь, человека или сообщества"
+        verbose_name = "список: весь, человека или сообщества"
+        verbose_name_plural = "списки: весь, человека или сообщества"
         ordering = ['order']
 
 
@@ -112,8 +111,8 @@ class SoundTags(models.Model):
         return self.track_tag.count()
 
     class Meta:
-        verbose_name="тег"
-        verbose_name_plural="теги"
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
 
 class UserTempSoundList(models.Model):
     id = models.AutoField(primary_key=True)
@@ -124,7 +123,6 @@ class UserTempSoundList(models.Model):
 
 
 class SoundcloudParsing(models.Model):
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
     id = models.BigAutoField(primary_key=True)
     artwork_url = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -151,6 +149,6 @@ class SoundcloudParsing(models.Model):
         return url
 
     class Meta:
-        verbose_name="спарсенные треки"
-        verbose_name_plural="спарсенные треки"
+        verbose_name = "спарсенные треки"
+        verbose_name_plural = "спарсенные треки"
         indexes = (BrinIndex(fields=['created_at']),)

@@ -121,14 +121,14 @@ class AlbumCommunityCreate(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.form=AlbumForm()
+        self.form = AlbumForm()
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(AlbumCommunityCreate,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["community"]=self.community
+        context["form"] = self.form
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):

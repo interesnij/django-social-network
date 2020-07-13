@@ -23,7 +23,7 @@ class UserGalleryView(TemplateView):
         return super(UserGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGalleryView,self).get_context_data(**kwargs)
+        context = super(UserGalleryView,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['albums_list'] = self.albums_list
         return context
@@ -118,18 +118,18 @@ class AlbumUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
-    template_name="album_user/add_album.html"
+    template_name = "album_user/add_album.html"
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.form=AlbumForm()
+        self.form = AlbumForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(AlbumUserCreate,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["user"]=self.user
+        context = super(AlbumUserCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):

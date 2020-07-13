@@ -71,8 +71,8 @@ class OneUserLocation(models.Model):
     phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
-        verbose_name="Местоположение 1"
-        verbose_name_plural="Местоположения 1"
+        verbose_name = "Местоположение 1"
+        verbose_name_plural = "Местоположения 1"
         index_together = [('id', 'user'),]
 
     def __str__(self):
@@ -94,8 +94,8 @@ class TwoUserLocation(models.Model):
     phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
-        verbose_name="Местоположение 2"
-        verbose_name_plural="Местоположения 2"
+        verbose_name = "Местоположение 2"
+        verbose_name_plural = "Местоположения 2"
         index_together = [('id', 'user'),]
 
     def __str__(self):
@@ -114,8 +114,8 @@ class ThreeUserLocation(models.Model):
     phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
-        verbose_name="Местоположение 3"
-        verbose_name_plural="Местоположения 3"
+        verbose_name = "Местоположение 3"
+        verbose_name_plural = "Местоположения 3"
         index_together = [('id', 'user'),]
 
     def __str__(self):
@@ -128,8 +128,8 @@ class IPUser(models.Model):
     ip_3 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 3")
 
     class Meta:
-        verbose_name="ip пользователя"
-        verbose_name_plural="ip пользователей"
+        verbose_name = "ip пользователя"
+        verbose_name_plural = "ip пользователей"
         index_together = [('id', 'user'),]
 
     def __str__(self):

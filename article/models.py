@@ -20,7 +20,6 @@ class Article(models.Model):
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='articles')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
@@ -51,9 +50,9 @@ class Article(models.Model):
 
 
     class Meta:
-        ordering=["-created"]
-        verbose_name="статья"
-        verbose_name_plural="статьи"
+        ordering = ["-created"]
+        verbose_name = "статья"
+        verbose_name_plural = "статьи"
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):

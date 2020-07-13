@@ -8,10 +8,11 @@ from django.views import View
 from common.model.votes import GoodVotes, GoodCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from common.checkers import check_can_get_posts_for_community_with_name
+from rest_framework.exceptions import PermissionDenied
 
 
 class GoodLikeWindow(TemplateView):
-    template_name="good_votes/like_window.html"
+    template_name = "good_votes/like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.like = Good.objects.get(pk=self.kwargs["pk"])
@@ -19,46 +20,46 @@ class GoodLikeWindow(TemplateView):
         return super(GoodLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodLikeWindow,self).get_context_data(**kwargs)
-        context["like"]=self.like
+        context = super(GoodLikeWindow,self).get_context_data(**kwargs)
+        context["like"] = self.like
         return context
 
 
 class GoodCommentLikeWindow(TemplateView):
-    template_name="good_votes/comment_like_window.html"
+    template_name = "good_votes/comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_like = GoodComment.objects.get(pk=self.kwargs["pk"])
         return super(GoodCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodCommentLikeWindow,self).get_context_data(**kwargs)
-        context["comment_like"]=self.comment_like
+        context = super(GoodCommentLikeWindow,self).get_context_data(**kwargs)
+        context["comment_like"] = self.comment_like
         return context
 
 
 class GoodDislikeWindow(TemplateView):
-    template_name="good_votes/dislike_window.html"
+    template_name = "good_votes/dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.dislike = Good.objects.get(pk=self.kwargs["pk"])
         return super(GoodDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodDislikeWindow,self).get_context_data(**kwargs)
-        context["dislike"]=self.dislike
+        context = super(GoodDislikeWindow,self).get_context_data(**kwargs)
+        context["dislike"] = self.dislike
         return context
 
 
 class GoodCommentDislikeWindow(TemplateView):
-    template_name="good_votes/comment_dislike_window.html"
+    template_name = "good_votes/comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = GoodComment.objects.get(pk=self.kwargs["pk"])
         return super(GoodCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodCommentDislikeWindow,self).get_context_data(**kwargs)
+        context = super(GoodCommentDislikeWindow,self).get_context_data(**kwargs)
         context["comment_dislike"]=self.comment_dislike
         return context
 
@@ -67,6 +68,8 @@ class GoodUserLikeCreate(View):
     def post(self, request, **kwargs):
         item = Good.objects.get(pk=self.kwargs["pk"])
         user = User.objects.get(uuid=self.kwargs["uuid"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -91,6 +94,8 @@ class GoodUserDislikeCreate(View):
     def post(self, request, **kwargs):
         item = Good.objects.get(pk=self.kwargs["pk"])
         user = User.objects.get(uuid=self.kwargs["uuid"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -164,6 +169,8 @@ class GoodCommunityLikeCreate(View):
     def post(self, request, **kwargs):
         item = Good.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = GoodVotes.objects.get(parent=item, user=request.user)
@@ -185,6 +192,8 @@ class GoodCommunityDislikeCreate(View):
     def post(self, request, **kwargs):
         item = Good.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = GoodVotes.objects.get(parent=item, user=request.user)

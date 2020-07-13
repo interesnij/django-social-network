@@ -4,6 +4,7 @@ from users.models import User
 from posts.models import Post, PostComment
 from communities.models import Community
 from common.model.votes import PostVotes, PostCommentVotes
+from rest_framework.exceptions import PermissionDenied
 
 
 class PostUserLikeWindow(TemplateView):
@@ -11,11 +12,13 @@ class PostUserLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserLikeWindow,self).get_context_data(**kwargs)
+        context = uper(PostUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.item.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "u_all_posts_likes"
@@ -26,11 +29,13 @@ class PostUserDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.creator.get_permission_list_user(folder="post_votes/", template="page.html", request=request)
         return super(PostUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PostUserDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.item.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_posts_dislikes"
@@ -46,7 +51,7 @@ class PostUserCommentLikeWindow(TemplateView):
         return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserCommentLikeWindow,self).get_context_data(**kwargs)
+        context = super(PostUserCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "u_all_posts_comment_likes"
@@ -62,7 +67,7 @@ class PostUserCommentDislikeWindow(TemplateView):
         return super(PostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserCommentDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PostUserCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_posts_comment_dislikes"
@@ -73,11 +78,13 @@ class PostCommunityLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityLikeWindow,self).get_context_data(**kwargs)
+        context = super(PostCommunityLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.item.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "c_all_posts_likes"
@@ -88,11 +95,13 @@ class PostCommunityDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PostCommunityDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.item.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_posts_dislikes"
@@ -107,7 +116,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityCommentLikeWindow,self).get_context_data(**kwargs)
+        context = super(PostCommunityCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "c_all_posts_comment_likes"
@@ -122,7 +131,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PostCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "c_all_posts_comment_dislikes"
@@ -135,6 +144,8 @@ class AllPostUserLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.creator.get_permission_list_user(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostUserLikeWindow,self).get(request,*args,**kwargs)
 
@@ -154,6 +165,8 @@ class AllPostUserDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.creator.get_permission_list_user(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostUserDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -214,6 +227,8 @@ class AllPostCommunityLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.community.get_template_list(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostCommunityLikeWindow,self).get(request,*args,**kwargs)
 
@@ -233,6 +248,8 @@ class AllPostCommunityDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
+        if not self.item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         self.template_name = self.item.community.get_template_list(folder="all_post_votes/", template="page.html", request=request)
         return super(AllPostCommunityDislikeWindow,self).get(request,*args,**kwargs)
 

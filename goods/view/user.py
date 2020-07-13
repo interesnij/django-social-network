@@ -14,13 +14,13 @@ class UserGoods(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="good_user/", template="goods.html", request=request)
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGoods,self).get_context_data(**kwargs)
-        context["user"]=self.user
+        context = super(UserGoods,self).get_context_data(**kwargs)
+        context["user"] = self.user
         return context
 
     def get_queryset(self):
@@ -41,7 +41,7 @@ class UserGood(TemplateView):
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGood,self).get_context_data(**kwargs)
+        context = super(UserGood,self).get_context_data(**kwargs)
         context["object"] = self.good
         context["user"] = self.user
         context["next"] = self.next
@@ -50,32 +50,31 @@ class UserGood(TemplateView):
 
 
 class GoodUserCreate(TemplateView):
-    template_name="good_user/add.html"
-    form=None
-    success_url="/"
+    template_name = "good_user/add.html"
+    form = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.form=GoodForm(initial={"creator":self.user})
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":self.user})
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from goods.models import GoodSubCategory, GoodCategory
 
-        context=super(GoodUserCreate,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["sub_categories"]=GoodSubCategory.objects.only("id")
-        context["categories"]=GoodCategory.objects.only("id")
-        context["user"]=self.user
+        context = super(GoodUserCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=GoodForm(request.POST,request.FILES)
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_good=self.form.save(commit=False)
-            new_good.creator=self.user
-            new_good=self.form.save()
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
             html = render(request, 'good_base/new_good.html',{'object': new_good})
             return HttpResponse(html)
         else:
@@ -84,32 +83,31 @@ class GoodUserCreate(TemplateView):
 
 
 class GoodUserCreateAttach(TemplateView):
-    template_name="good_user/add_attach.html"
-    form=None
-    success_url="/"
+    template_name = "good_user/add_attach.html"
+    form = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.form=GoodForm(initial={"creator":self.user})
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":self.user})
         return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from goods.models import GoodSubCategory, GoodCategory
 
-        context=super(GoodUserCreateAttach,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["sub_categories"]=GoodSubCategory.objects.only("id")
-        context["categories"]=GoodCategory.objects.only("id")
-        context["user"]=self.user
+        context = super(GoodUserCreateAttach,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=GoodForm(request.POST,request.FILES)
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_good=self.form.save(commit=False)
-            new_good.creator=self.user
-            new_good=self.form.save()
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
             html = render(request, 'good_user/good.html',{'object': new_good})
             return HttpResponse(html)
         else:

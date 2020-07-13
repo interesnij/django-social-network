@@ -37,7 +37,7 @@ class PostUserCommentList(ListView):
             else:
                 self.template_name = "u_post_comment/anon_comments.html"
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PostUserCommentList,self).get(request,*args,**kwargs)
@@ -61,7 +61,7 @@ class PostCommentUserCreate(View):
         post = Post.objects.get(uuid=request.POST.get('uuid'))
 
         if form_post.is_valid() and post.comments_enabled:
-            comment=form_post.save(commit=False)
+            comment = form_post.save(commit=False)
 
             if request.user.pk != user.pk:
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
@@ -223,8 +223,8 @@ class PostUserDetail(TemplateView):
         return super(PostUserDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserDetail,self).get_context_data(**kwargs)
-        context["object"]=self.item
+        context = super(PostUserDetail,self).get_context_data(**kwargs)
+        context["object"] = self.item
         return context
 
 

@@ -73,8 +73,8 @@ class PostCommunityCommentCreate(View):
 
 class PostCommunityReplyCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post=CommentForm(request.POST, request.FILES)
-        community=Community.objects.get(pk=request.POST.get('pk'))
+        form_post = CommentForm(request.POST, request.FILES)
+        community = Community.objects.get(pk=request.POST.get('pk'))
         parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if form_post.is_valid() and parent.post.comments_enabled:
@@ -202,8 +202,8 @@ class PostCommunityDetail(TemplateView):
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityDetail,self).get_context_data(**kwargs)
-        context["object"]=self.object
+        context = super(PostCommunityDetail,self).get_context_data(**kwargs)
+        context["object"] = self.object
         return context
 
 

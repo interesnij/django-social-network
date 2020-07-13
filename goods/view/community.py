@@ -14,13 +14,13 @@ class CommunityGoods(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template(folder="good_community/", template="goods.html", request=request)
         return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityGoods,self).get_context_data(**kwargs)
-        context["user"]=self.user
+        context = super(CommunityGoods,self).get_context_data(**kwargs)
+        context["user"] = self.user
         return context
 
     def get_queryset(self):
@@ -41,7 +41,7 @@ class CommunityGood(TemplateView):
         return super(CommunityGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityGood,self).get_context_data(**kwargs)
+        context = super(CommunityGood,self).get_context_data(**kwargs)
         context["object"] = self.good
         context["user"] = self.user
         context["next"] = self.next
@@ -50,32 +50,31 @@ class CommunityGood(TemplateView):
 
 
 class GoodCommunityCreate(TemplateView):
-    template_name="good_community/add.html"
-    form=None
-    success_url="/"
+    template_name = "good_community/add.html"
+    form = None
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
-        self.form=GoodForm(initial={"creator":request.user})
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":request.user})
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from goods.models import GoodSubCategory, GoodCategory
 
-        context=super(GoodCommunityCreate,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["sub_categories"]=GoodSubCategory.objects.only("id")
-        context["categories"]=GoodCategory.objects.only("id")
-        context["community"]=self.community
+        context = super(GoodCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=GoodForm(request.POST,request.FILES)
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(request.POST,request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_good=self.form.save(commit=False)
-            new_good.creator=self.user
-            new_good=self.form.save()
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
             html = render(request,'good_base/new_good.html',{'object': new_good})
             return HttpResponse(html)
         else:
@@ -84,32 +83,31 @@ class GoodCommunityCreate(TemplateView):
 
 
 class GoodCommunityCreateAttach(TemplateView):
-    template_name="good_community/add_attach.html"
-    form=None
-    success_url="/"
+    template_name = "good_community/add_attach.html"
+    form = None
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
-        self.form=GoodForm(initial={"creator":request.user})
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":request.user})
         return super(GoodCommunityCreateAttach,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from goods.models import GoodSubCategory, GoodCategory
 
-        context=super(GoodCommunityCreateAttach,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["sub_categories"]=GoodSubCategory.objects.only("id")
-        context["categories"]=GoodCategory.objects.only("id")
-        context["community"]=self.community
+        context = super(GoodCommunityCreateAttach,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=GoodForm(request.POST,request.FILES)
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(request.POST,request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_good=self.form.save(commit=False)
-            new_good.creator=request.user
-            new_good=self.form.save()
+            new_good = self.form.save(commit=False)
+            new_good.creator = request.user
+            new_good = self.form.save()
             html = render(request, 'good_community/good.html',{'object': new_good})
             return HttpResponse(html)
         else:

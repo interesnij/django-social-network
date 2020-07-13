@@ -11,11 +11,14 @@ class PhotoUserLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.creator.get_permission_list_user(folder="photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.creator.get_permission_list_user(folder="photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(PhotoUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoUserLikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.photo.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "u_all_photo_likes"
@@ -26,11 +29,14 @@ class PhotoUserDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.creator.get_permission_list_user(folder="photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.creator.get_permission_list_user(folder="photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(PhotoUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoUserDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoUserDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.photo.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_photo_dislikes"
@@ -46,7 +52,7 @@ class PhotoUserCommentLikeWindow(TemplateView):
         return super(PhotoUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoUserCommentLikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoUserCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "u_all_photo_comment_likes"
@@ -62,7 +68,7 @@ class PhotoUserCommentDislikeWindow(TemplateView):
         return super(PhotoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoUserCommentDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoUserCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_photo_comment_dislikes"
@@ -73,11 +79,14 @@ class PhotoCommunityLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(PhotoCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoCommunityLikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCommunityLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.photo.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "c_all_photo_likes"
@@ -88,11 +97,14 @@ class PhotoCommunityDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.community.get_template_list(folder="photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(PhotoCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoCommunityDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCommunityDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.photo.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "u_all_photo_dislikes"
@@ -107,7 +119,7 @@ class PhotoCommunityCommentLikeWindow(TemplateView):
         return super(PhotoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoCommunityCommentLikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCommunityCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "c_all_photo_comment_likes"
@@ -122,7 +134,7 @@ class PhotoCommunityCommentDislikeWindow(TemplateView):
         return super(PhotoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PhotoCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
         context["text"] = "Не оценили:"
         context["class_name"] = "c_all_photo_comment_dislikes"
@@ -135,7 +147,10 @@ class AllPhotoUserLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.creator.get_permission_list_user(folder="all_photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.creator.get_permission_list_user(folder="all_photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(AllPhotoUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -154,7 +169,10 @@ class AllPhotoUserDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.creator.get_permission_list_user(folder="all_photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.creator.get_permission_list_user(folder="all_photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(AllPhotoUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -214,7 +232,10 @@ class AllPhotoCommunityLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.community.get_template_list(folder="all_photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.community.get_template_list(folder="all_photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(AllPhotoCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -233,7 +254,10 @@ class AllPhotoCommunityDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.photo.community.get_template_list(folder="all_photo_votes/", template="page.html", request=request)
+        if self.photo.votes_on:
+            self.template_name = self.photo.community.get_template_list(folder="all_photo_votes/", template="page.html", request=request)
+        else:
+            self.template_name = "about.html"
         return super(AllPhotoCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

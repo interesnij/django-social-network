@@ -63,7 +63,6 @@ class Album(models.Model):
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     community = models.ForeignKey('communities.Community', related_name='photo_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
     album = models.ManyToManyField(Album, related_name="album", blank=True)
     file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")

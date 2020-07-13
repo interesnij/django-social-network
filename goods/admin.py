@@ -23,6 +23,6 @@ class GoodAdmin(admin.ModelAdmin):
             model = Good
 
 
-admin.site.register(GoodCategory,GoodCategoryAdmin)
-admin.site.register(GoodSubCategory,GoodSubCategoryAdmin)
-admin.site.register(Good,GoodAdmin)
+admin.site.register(GoodCategory, GoodCategoryAdmin)
+admin.site.register(GoodSubCategory, GoodSubCategoryAdmin)
+admin.site.register(Good, GoodAdmin)

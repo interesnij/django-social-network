@@ -172,7 +172,7 @@ a.media:hover {
 .svg_default_50 {border: #6C757D solid 1px;}
 .like_window, .dislike_window, .repost_window,
 .comment_like_window, .comment_dislike_window {
-  background: #D6DAE1; color: rgba(255, 255, 255, 0.8) !important;
+  background: #D6DAE1; color: rgba(0, 0, 0, 0.8) !important;
 }
 .thumb{border:#6C757D solid 1px;}
 .thumb_small{border:#6C757D solid 1px;}

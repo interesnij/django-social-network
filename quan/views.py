@@ -15,7 +15,7 @@ class QuanCategoryView(ListView):
 		return super(QuanCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(QuanCategoryView,self).get_context_data(**kwargs)
+		context = super(QuanCategoryView,self).get_context_data(**kwargs)
 		context["category"] = self.category
 		context["quest_categories"] = QuestionsCategory.objects.only("pk")
 		return context

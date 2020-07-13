@@ -45,7 +45,7 @@ class UserPostView(TemplateView):
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserPostView,self).get_context_data(**kwargs)
+        context = super(UserPostView,self).get_context_data(**kwargs)
         context["object"] = self.post
         context["user"] = self.user
         context["next"] = self.next
@@ -57,7 +57,7 @@ class UserCommunities(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_community/", template="communities.html", request=request)
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = "user_community/my_staffed_communities.html"
@@ -77,7 +77,7 @@ class UserStaffCommunities(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = "user_community/staffed_communities.html"
         return super(UserStaffCommunities,self).get(request,*args,**kwargs)
@@ -96,7 +96,7 @@ class UserMobStaffed(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user == request.user:
             self.template_name = "mob_user_community/staffed.html"
         return super(UserMobStaffed,self).get(request,*args,**kwargs)
@@ -169,9 +169,9 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.user.is_authenticated:
             if self.user.pk == request.user.pk:

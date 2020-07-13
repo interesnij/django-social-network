@@ -8,12 +8,12 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 
 class PostsView(TemplateView):
-    template_name="posts.html"
+    template_name = "posts.html"
 
 
 class PostDetailView(TemplateView):
-    model=Post
-    template_name="post.html"
+    model = Post
+    template_name = "post.html"
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -22,27 +22,27 @@ class PostDetailView(TemplateView):
         return super(PostDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostDetailView,self).get_context_data(**kwargs)
-        context["object"]=self.post
+        context = super(PostDetailView,self).get_context_data(**kwargs)
+        context["object"] = self.post
         return context
 
 
 class PostUserCreate(View):
-    form_post=None
+    form_post = None
 
     def get_context_data(self,**kwargs):
-        context=super(PostUserCreate,self).get_context_data(**kwargs)
-        context["form_post"]=PostForm()
+        context = super(PostUserCreate,self).get_context_data(**kwargs)
+        context["form_post"] = PostForm()
         return context
 
     def post(self,request,*args,**kwargs):
         from posts.forms import PostForm
 
-        self.form_post=PostForm(request.POST)
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form_post = PostForm(request.POST)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if self.form_post.is_valid():
-            post=self.form_post.save(commit=False)
+            post = self.form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
 
@@ -62,19 +62,19 @@ class PostUserCreate(View):
 class PostCommunityCreate(View):
 
     def get_context_data(self,**kwargs):
-        context=super(PostCommunityCreate,self).get_context_data(**kwargs)
-        context["form_post"]=PostCommunityForm()
+        context = super(PostCommunityCreate,self).get_context_data(**kwargs)
+        context["form_post"] = PostCommunityForm()
         return context
 
     def post(self,request,*args,**kwargs):
         from communities.models import Community
         from posts.forms import PostForm
 
-        form_post=PostForm(request.POST)
+        form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            post=form_post.save(commit=False)
+            post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
 
@@ -101,17 +101,17 @@ class RepostUserUser(View):
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 
-            self.text=request.POST.get('text')
-            self.creator=self.request.user
-            self.comm_enabled=request.POST.get('comments_enabled')
+            self.text = request.POST.get('text')
+            self.creator = self.request.user
+            self.comm_enabled = request.POST.get('comments_enabled')
             if self.comm_enabled == 'on':
                 self.comments_enabled = True
-            self.status=request.POST.get('status')
+            self.status = request.POST.get('status')
             if self.item.parent:
-                self.parent=self.item.parent
+                self.parent = self.item.parent
             else:
-                self.parent=self.item
-            new_post=Post.objects.create(creator=self.creator, text=self.text, comments_enabled=self.comments_enabled, status = self.status, parent = self.parent, )
+                self.parent = self.item
+            new_post = Post.objects.create(creator=self.creator, text=self.text, comments_enabled=self.comments_enabled, status = self.status, parent = self.parent, )
             if request.is_ajax() :
                 return HttpResponse("!")
 

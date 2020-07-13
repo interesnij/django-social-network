@@ -9,7 +9,7 @@ class FrendsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="frends/", template="frends.html", request=request)
 		#self.common_users=self.user.get_common_friends_of_user(request.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
@@ -21,7 +21,7 @@ class FrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list=self.user.get_all_connection()
+		friends_list = self.user.get_all_connection()
 		return friends_list
 
 class OnlineFrendsListView(ListView):
@@ -29,7 +29,7 @@ class OnlineFrendsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="frends_online/", template="frends.html", request=request)
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
@@ -39,7 +39,7 @@ class OnlineFrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list=self.user.get_online_connection()
+		friends_list = self.user.get_online_connection()
 		return friends_list
 
 class CommonFrendsListView(ListView):
@@ -47,7 +47,7 @@ class CommonFrendsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="frends_common/", template="frends.html", request=request)
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
 
@@ -57,7 +57,7 @@ class CommonFrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list=self.user.get_common_friends_of_user(self.request.user)
+		friends_list = self.user.get_common_friends_of_user(self.request.user)
 		return friends_list
 
 

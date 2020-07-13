@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 
 class MainPageView(TemplateView):
-	template_name=None
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
@@ -13,12 +13,12 @@ class MainPageView(TemplateView):
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(MainPageView,self).get_context_data(**kwargs)
+		context = super(MainPageView,self).get_context_data(**kwargs)
 		return context
 
 
 class NewsListView(ListView):
-	template_name="news_list.html"
+	template_name = "news_list.html"
 	paginate_by = 15
 
 	def get_queryset(self):
@@ -30,8 +30,8 @@ class NewsListView(ListView):
 
 
 class ComingView(TemplateView):
-	template_name="base_coming.html"
+	template_name = "base_coming.html"
 
 
 class MainPhoneSend(TemplateView):
-	template_name="phone_verification.html"
+	template_name = "phone_verification.html"

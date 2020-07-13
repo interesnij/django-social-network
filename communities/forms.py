@@ -34,15 +34,17 @@ class CommunityNotifyForm(forms.ModelForm):
     class Meta:
         model = CommunityNotificationsSettings
         fields = (
-            'comment_notifications',
-            'react_notifications',
-            'comment_reply_notifications',
-            'comment_reply_react_notifications',
-            'comment_react_notifications',
-            'connection_request_notifications',
-            'comment_user_mention_notifications',
-            'user_mention_notifications',
-            'repost_notifications',
+            'comment',
+            'comment_reply',
+            'comment_mention',
+            'mention',
+            'repost',
+            'like',
+            'dislike',
+            'comment_like',
+            'comment_dislike',
+            'comment_reply_like',
+            'comment_reply_dislike',
         )
 
 class CommunityPrivateForm(forms.ModelForm):

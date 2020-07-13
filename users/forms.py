@@ -31,8 +31,8 @@ class SettingsNotifyForm(forms.ModelForm):
         fields = (
             'comment',
             'comment_reply',
-            'comment_user_mention',
-            'user_mention',
+            'comment_mention',
+            'mention',
             'repost',
             'like',
             'dislike',

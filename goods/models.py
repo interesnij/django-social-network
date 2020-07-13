@@ -11,35 +11,34 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class GoodCategory(models.Model):
-	name=models.CharField(max_length=100, verbose_name="Название категории")
-	order=models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
-	image=models.ImageField(blank=True, verbose_name="Изображение", upload_to="goods/list")
+	name = models.CharField(max_length=100, verbose_name="Название категории")
+	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
+	image = models.ImageField(blank=True, verbose_name="Изображение", upload_to="goods/list")
 
 	def __str__(self):
 		return self.name
 
 	class Meta:
-		ordering=["order","name"]
-		verbose_name="категория товаров"
-		verbose_name_plural="категории товаров"
+		ordering = ["order","name"]
+		verbose_name = "категория товаров"
+		verbose_name_plural = "категории товаров"
 
 
 class GoodSubCategory(models.Model):
-	name=models.CharField(max_length=100, verbose_name="Название подкатегории")
-	order=models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер подкатегории")
-	category=models.ForeignKey(GoodCategory, on_delete=models.CASCADE, verbose_name="Категория-родитель")
-	image=models.ImageField(blank=True, verbose_name="Изображение", upload_to="sub_category/list")
+	name = models.CharField(max_length=100, verbose_name="Название подкатегории")
+	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер подкатегории")
+	category = models.ForeignKey(GoodCategory, on_delete=models.CASCADE, verbose_name="Категория-родитель")
+	image = models.ImageField(blank=True, verbose_name="Изображение", upload_to="sub_category/list")
 
 	def __str__(self):
 		return self.name
 
 	class Meta:
-		ordering=["order","name"]
-		verbose_name="Подкатегория товаров"
-		verbose_name_plural="Подкатегории товаров"
+		ordering = ["order","name"]
+		verbose_name = "Подкатегория товаров"
+		verbose_name_plural = "Подкатегории товаров"
 
 class Good(models.Model):
-
 	uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
@@ -132,7 +131,7 @@ class Good(models.Model):
 		return comments_query
 
 	def likes(self):
-		likes =GoodVotes.objects.filter(parent=self, vote__gt=0)
+		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
 		return likes
 
 	def window_likes(self):
@@ -175,8 +174,8 @@ class GoodComment(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        verbose_name="комментарий к записи"
-        verbose_name_plural="комментарии к записи"
+        verbose_name = "комментарий к записи"
+        verbose_name_plural = "комментарии к записи"
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])

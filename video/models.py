@@ -28,8 +28,8 @@ class VideoCategory(models.Model):
         return queryset[:300]
 
     class Meta:
-        verbose_name="Категория ролика"
-        verbose_name_plural="Категории ролика"
+        verbose_name = "Категория ролика"
+        verbose_name_plural = "Категории ролика"
 
 
 class VideoTags(models.Model):
@@ -65,8 +65,8 @@ class VideoTags(models.Model):
         return self.video_tag.count()
 
     class Meta:
-        verbose_name="тег"
-        verbose_name_plural="теги"
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
 
 
 class VideoAlbum(models.Model):
@@ -134,8 +134,8 @@ class Video(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
-        verbose_name="Видео-ролики"
-        verbose_name_plural="Видео-ролики"
+        verbose_name = "Видео-ролики"
+        verbose_name_plural = "Видео-ролики"
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
@@ -176,8 +176,8 @@ class VideoComment(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
-        verbose_name="комментарий к ролику"
-        verbose_name_plural="комментарии к ролику"
+        verbose_name = "комментарий к ролику"
+        verbose_name_plural = "комментарии к ролику"
 
     def all_visits_count(self):
         from stst.models import VideoNumbers

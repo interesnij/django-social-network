@@ -49,9 +49,9 @@ class Post(models.Model):
         return post
 
     class Meta:
-        ordering=["-created"]
-        verbose_name="Запись"
-        verbose_name_plural="Записи"
+        ordering = ["-created"]
+        verbose_name = "Запись"
+        verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
@@ -191,8 +191,8 @@ class PostComment(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name="комментарий к записи"
-        verbose_name_plural="комментарии к записи"
+        verbose_name = "комментарий к записи"
+        verbose_name_plural = "комментарии к записи"
 
     def get_replies(self):
         get_comments = PostComment.objects.filter(parent_comment=self).all()

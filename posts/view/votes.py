@@ -8,12 +8,15 @@ from common.model.votes import PostVotes, PostCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
 from notifications.model.item import item_community_notification_handler, ItemCommunityNotification
+from rest_framework.exceptions import PermissionDenied
 
 
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -84,6 +87,8 @@ class PostUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -154,6 +159,8 @@ class PostCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
@@ -186,6 +193,8 @@ class PostCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not item.votes_on:
+            raise PermissionDenied('Реакции отключены.')
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)

@@ -85,7 +85,7 @@ class PhotoReplyCommunityCreate(View):
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
         if form_post.is_valid() and parent.photo_comment.comments_enabled:
-            comment=form_post.save(commit=False)
+            comment = form_post.save(commit=False)
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):

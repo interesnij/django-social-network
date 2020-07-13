@@ -3,15 +3,15 @@ from goods.models import GoodSubCategory
 
 
 class GoodCategories(TemplateView):
-	template_name="good_base/categories.html"
+	template_name = "good_base/categories.html"
 
 
 class GoodSubCategories(TemplateView):
-	template_name="good_base/subcategories.html"
+	template_name = "good_base/subcategories.html"
 
 
 class GoodsCats(TemplateView):
-	template_name="good_base/cats.html"
+	template_name = "good_base/cats.html"
 	categ = None
 
 	def get(self,request,*args,**kwargs):
@@ -19,6 +19,6 @@ class GoodsCats(TemplateView):
 		return super(GoodsCats,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodsCats,self).get_context_data(**kwargs)
-		context["categ"]=self.categ
+		context = super(GoodsCats,self).get_context_data(**kwargs)
+		context["categ"] = self.categ
 		return context

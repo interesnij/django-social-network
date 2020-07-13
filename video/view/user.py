@@ -43,7 +43,7 @@ class UserVideoDetail(TemplateView):
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
-                MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+                MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
