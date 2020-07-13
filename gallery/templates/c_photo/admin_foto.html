@@ -92,7 +92,7 @@
             {% csrf_token %}
                 <div class="">
                     <div class="input-group input-group-sm">
-                      {{ user_form.description }}
+                      <textarea name="description" class="form-control bg-light-secondary border-0" rows="4" placeholder="Добавьте описание"></textarea>
                     </div>
                 </div>
                 <div class="text-right">

@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from posts.models import PostComment
@@ -109,7 +111,10 @@ class CommunityDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.avatar_photos = self.photo.community.get_avatar_photos()
-        self.template_name = get_detail_template_community(self.photo.community, "photo_community/", "avatar_photo.html", request)
+        self.template_name = get_detail_template_community(self.photo.community, "c_photo/", "avatar.html", request.user)
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -117,7 +122,6 @@ class CommunityDetailAvatar(TemplateView):
         context["object"] = self.photo
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["album"] = Album.objects.get(is_generic=True, title="Фото со страницы", community=self.photo.community)
         return context
 
@@ -140,7 +144,6 @@ class CommunityPhoto(TemplateView):
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
 
 
