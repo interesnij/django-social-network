@@ -1,6 +1,6 @@
 
+{% if albums_list %}
 <div class="row" style="margin-left: 0;margin-right: 0;">
-  {% if albums_list %}
     {% for object in albums_list %}
     <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
 
@@ -10,10 +10,21 @@
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
                         <h4 class="mb-0">{{ object.title }}</h4>
                     </div>
+                    {% if not object.album_is_generic %}
+                    <div class="dropdown d-inline-block">
+                        <a style="cursor:pointer;width:20px;display:inline-block">
+                          <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="" class="dropdown-item">Изменить</a>
+                            <a href="" class="dropdown-item">Удалить</a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-body">
-              <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
+              <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
                   {% if object.get_cover_photo %}
                     <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
@@ -25,6 +36,5 @@
         </div>
     </div>
     {% endfor %}
-
-    {% endif %}
 </div>
+{% endif %}

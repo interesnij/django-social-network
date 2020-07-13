@@ -1,3 +1,4 @@
+import re
 from django.views.generic.base import TemplateView
 from users.models import User
 from communities.models import Community
@@ -41,6 +42,51 @@ class CommunityGalleryView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.community.get_albums().order_by('-created')
         self.template_name = self.community.get_template(folder="gallery_community/", template="gallery.html", request=request)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+        if self.community.is_suspended():
+            self.template_name = "gallery_community/community_suspended.html"
+        elif self.community.is_blocked():
+            self.template_name = "gallery_community/community_blocked.html"
+        elif request.user.is_authenticated:
+            if request.user.is_member_of_community_with_name(self.community.name):
+                if request.user.is_administrator_of_community_with_name(self.community.name):
+                    self.template_name = "gallery_community/admin_gallery.html"
+                elif request.user.is_moderator_of_community_with_name(self.community.name):
+                    self.template_name = "gallery_community/moderator_gallery.html"
+                elif request.user.is_editor_of_community_with_name(self.community.name):
+                    self.template_name = "gallery_community/editor_gallery.html"
+                elif request.user.is_community_manager():
+                    self.template_name = "gallery_community/staff_member_gallery.html"
+                else:
+                    self.template_name = "gallery_community/member_gallery.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                self.template_name = "gallery_community/follow_gallery.html"
+            elif request.user.is_community_manager():
+                self.template_name = "gallery_community/staff_gallery.html"
+            elif request.user.is_banned_from_community_with_name(self.community.name):
+                self.template_name = "gallery_community/block_gallery.html"
+            elif self.community.is_public():
+                self.template_name = "gallery_community/public_gallery.html"
+            elif self.community.is_closed():
+                self.template_name = "gallery_community/close_gallery.html"
+            elif self.community.is_private():
+                self.template_name = "gallery_community/private_gallery.html"
+            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
+            else:
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
+        elif request.user.is_anonymous:
+            if self.community.is_public():
+                self.template_name = "gallery_community/anon_public_gallery.html"
+            elif self.community.is_closed():
+                self.template_name = "gallery_community/anon_close_gallery.html"
+            elif self.community.is_private():
+                self.template_name = "gallery_community/anon_private_gallery.html"
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(CommunityGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

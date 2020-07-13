@@ -10,11 +10,6 @@
                 {{ community.name }}
               </a> - альбомы</h5> {% if not community.is_album_exists %}- альбомов нет{% endif %}
         </div>
-        <div class="col-12 col-md-4">
-          <button class="c_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-            Добавить альбом
-          </button>
-        </div>
     </div>
 </div>
 
@@ -31,15 +26,6 @@
               </a> - фотографии
             </h5>
             {{ community.count_photos }}
-        </div>
-        <div class="col-12 col-md-4">
-          <form id="c_add_photos" method="post">
-              {% csrf_token %}
-                <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-                <button id="c_add_multi_photos" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-                  Добавить фотографии
-                </button>
-          </form>
         </div>
     </div>
 </div>
