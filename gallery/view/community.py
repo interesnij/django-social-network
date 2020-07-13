@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from communities.models import Community
@@ -41,7 +42,6 @@ class CommunityGalleryView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.community.get_albums().order_by('-created')
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         if self.community.is_suspended():
             self.template_name = "gallery_community/community_suspended.html"
@@ -96,7 +96,6 @@ class CommunityAlbumView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.community.get_template(folder="album_community/", template="album.html", request=request)
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         if self.community.is_suspended():
             self.template_name = "album_community/community_suspended.html"
