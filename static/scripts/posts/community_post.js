@@ -238,7 +238,7 @@ on('body', 'click', '#c_multi_photos', function(event) {
 
 on('#ajax', 'change', '#c_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
+  form_data = new FormData(document.body.querySelector("#add_photos")); 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
 
