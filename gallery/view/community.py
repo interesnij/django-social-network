@@ -41,7 +41,6 @@ class CommunityGalleryView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.community.get_albums().order_by('-created')
-        self.template_name = self.community.get_template(folder="gallery_community/", template="gallery.html", request=request)
         MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         if self.community.is_suspended():
@@ -72,11 +71,6 @@ class CommunityGalleryView(TemplateView):
                 self.template_name = "gallery_community/close_gallery.html"
             elif self.community.is_private():
                 self.template_name = "gallery_community/private_gallery.html"
-            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
-            else:
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
         elif request.user.is_anonymous:
             if self.community.is_public():
                 self.template_name = "gallery_community/anon_public_gallery.html"
@@ -90,7 +84,7 @@ class CommunityGalleryView(TemplateView):
         return super(CommunityGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityGalleryView,self).get_context_data(**kwargs)
+        context = super(CommunityGalleryView,self).get_context_data(**kwargs)
         context['community'] = self.community
         context['albums_list'] = self.albums_list
         return context
