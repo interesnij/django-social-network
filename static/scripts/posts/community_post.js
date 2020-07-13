@@ -267,7 +267,7 @@ on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_comment_attach(response.querySelectorAll(".c_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;, photo_list.length);
+    photo_comment_attach(response.querySelectorAll(".c_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
