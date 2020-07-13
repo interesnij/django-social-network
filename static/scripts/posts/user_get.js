@@ -14,7 +14,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
 });
 
-on('body', 'click', '#add_multi_comments_photos', function(event) {
+on('body', 'click', '#u_multi_comments_photos', function(event) {
   this.previousElementSibling.click();
 })
 
@@ -62,66 +62,66 @@ on('#ajax', 'click', '.u_item_comments', function() {
   this.classList.toggle("comments_open");
 });
 
-on('#ajax', 'click', '.comment_photo', function() {
+on('#ajax', 'click', '.u_comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_comment_load/', loader)
+  open_fullscreen('/users/load/u_img_comment_load/', loader)
 });
-on('#ajax', 'click', '.comment_video', function() {
+on('#ajax', 'click', '.u_comment_video', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/video_load/', loader)
+  open_fullscreen('/users/load/u_video_load/', loader)
 });
-on('#ajax', 'click', '.comment_music', function() {
+on('#ajax', 'click', '.u_comment_music', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/music_load/', loader)
+  open_fullscreen('/users/load/u_music_load/', loader)
 });
-on('#ajax', 'click', '.comment_good', function() {
+on('#ajax', 'click', '.u_comment_good', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/good_load/', loader)
+  open_fullscreen('/users/load/u_good_load/', loader)
 });
-on('#ajax', 'click', '.comment_article', function() {
+on('#ajax', 'click', '.u_comment_article', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/article_load/', loader)
+  open_fullscreen('/users/load/u_article_load/', loader)
 });
 
-on('#ajax', 'click', '.select_photo', function() {
+on('#ajax', 'click', '.u_select_photo', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/img_load/', loader)
+  open_fullscreen('/users/load/u_img_load/', loader)
 });
-on('#ajax', 'click', '.select_video', function() {
+on('#ajax', 'click', '.u_select_video', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/video_load/', loader)
+  open_fullscreen('/users/load/u_video_load/', loader)
 });
-on('#ajax', 'click', '.select_music', function() {
+on('#ajax', 'click', '.u_select_music', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/music_load/', loader)
+  open_fullscreen('/users/load/u_music_load/', loader)
 });
-on('#ajax', 'click', '.select_good', function() {
+on('#ajax', 'click', '.u_select_good', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/good_load/', loader)
+  open_fullscreen('/users/load/u_good_load/', loader)
 });
-on('#ajax', 'click', '.select_article', function() {
+on('#ajax', 'click', '.u_select_article', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/article_load/', loader)
+  open_fullscreen('/users/load/u_article_load/', loader)
 });
 
 on('#ajax', 'click', '.delete_thumb', function(e) {

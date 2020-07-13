@@ -230,3 +230,31 @@ on('#ajax', 'click', '.c_post_wall_abort_remove', function() {
 
   link.send();
 });
+
+
+on('body', 'click', '#c_add_multi_photos', function(event) {
+  this.previousElementSibling.click();
+})
+
+on('#ajax', 'change', '#c_photo_comment_attach', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".c_photo_detail");
+    block_divs_length = photo_list.length;
+
+    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
+    }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+  link_.send(form_data);
+});

@@ -96,7 +96,7 @@ class PhotoAlbumUserCreate(View):
 
 class PhotoAttachUserCreate(View):
     """
-    мульти сохранение изображений  с моментальным выводом в превью
+    мульти сохранение изображений с моментальным выводом в превью
     """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -111,8 +111,6 @@ class PhotoAttachUserCreate(View):
                 _album.album.add(photo)
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
-
-
 
 class AlbumUserCreate(TemplateView):
     """

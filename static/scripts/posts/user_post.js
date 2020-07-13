@@ -232,7 +232,7 @@ on('#ajax', 'click', '.u_post_wall_comment_abort_remove', function() {
   comment_wall_abort_delete(this, "/posts/user/abort_delete_wall_comment/")
 });
 
-on('#ajax', 'change', '#photo_add_post_attach', function() {
+on('#ajax', 'change', '#u_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

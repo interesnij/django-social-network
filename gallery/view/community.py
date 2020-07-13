@@ -174,16 +174,16 @@ class PhotoAlbumCommunityCreate(View):
 
 class PhotoAttachCommunityCreate(View):
     """
-    мульти сохранение изображений  с моментальным выводом в превью
+    мульти сохранение изображений с моментальным выводом в превью
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photos = []
         check_can_get_posts_for_community_with_name(request.user, community.name)
         try:
-            _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
+            _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены", community=community)
         except:
-            _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
+            _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, creator=request.user)
             _album.album.add(photo)

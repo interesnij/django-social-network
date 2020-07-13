@@ -202,12 +202,12 @@ on('#ajax', 'change', '#user_avatar_upload', function() {
   link_.send(form_data);
 })
 
-on('#ajax', 'change', '#photo_add_comment_attach', function() {
+on('#ajax', 'change', '#u_photo_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_comment_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
-
+ 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
