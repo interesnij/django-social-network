@@ -197,7 +197,7 @@ class CommunityOnPrivatePhoto(View):
 class PhotoWallCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=request.POST.get('pk'))
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user or request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
@@ -206,7 +206,7 @@ class PhotoWallCommentCommunityDelete(View):
 class PhotoWallCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=request.POST.get('pk'))
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user or request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])

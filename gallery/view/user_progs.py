@@ -203,7 +203,7 @@ class UserOffPrivatePhoto(View):
 class PhotoWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=request.POST.get('pk'))
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
@@ -212,7 +212,7 @@ class PhotoWallCommentUserDelete(View):
 class PhotoWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=request.POST.get('pk'))
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])

@@ -126,7 +126,7 @@ class PostCommentUserAbortDelete(View):
 class PostWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=request.POST.get('pk'))
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
@@ -135,7 +135,7 @@ class PostWallCommentUserDelete(View):
 class PostWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=request.POST.get('pk'))
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
@@ -189,7 +189,7 @@ class PostUserDelete(View):
 class PostWallUserDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["[pk]"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
@@ -207,7 +207,7 @@ class PostUserAbortDelete(View):
 class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["[pk]"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])

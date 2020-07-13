@@ -170,7 +170,7 @@ class PostCommunityDelete(View):
 class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["[pk]"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_staff_of_community_with_name(community.name):
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
@@ -179,7 +179,7 @@ class PostWallCommunityDelete(View):
 class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["[pk]"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_staff_of_community_with_name(community.name):
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
