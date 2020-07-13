@@ -69,7 +69,7 @@ class CommunityPhotosList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentPhotosList,self).get(request,*args,**kwargs)
+		return super(CommunityPhotosList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		photos_list = self.request.user.get_photos().order_by('-created')
@@ -80,7 +80,7 @@ class CommunityPhotosCommentList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentPhotosCommentList,self).get(request,*args,**kwargs)
+		return super(CommunityPhotosCommentList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		photos_list = self.request.user.get_photos().order_by('-created')
@@ -91,7 +91,7 @@ class CommunityVideosList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentVideosList,self).get(request,*args,**kwargs)
+		return super(CommunityVideosList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		videos_list = self.request.user.get_video().order_by('-created')
@@ -102,7 +102,7 @@ class CommunityMusicsList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentMusicsList,self).get(request,*args,**kwargs)
+		return super(CommunityMusicsList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		musics_list = self.request.user.get_music().order_by('-created_at')
@@ -113,7 +113,7 @@ class CommunityArticlesList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentArticlesList,self).get(request,*args,**kwargs)
+		return super(CommunityArticlesList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		articles_list = self.request.user.get_articles().order_by('-created')
@@ -124,7 +124,7 @@ class CommunityGoodsList(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		return super(CommentGoodsList,self).get(request,*args,**kwargs)
+		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		goods_list = self.request.user.get_goods()

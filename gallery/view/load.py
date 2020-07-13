@@ -71,7 +71,7 @@ class UserWallPhoto(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserWallPhoto,self).get_context_data(**kwargs)
-        context["object"] = elf.photo
+        context["object"] = self.photo
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()

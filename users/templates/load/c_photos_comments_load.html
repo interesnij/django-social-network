@@ -1,0 +1,49 @@
+<style>
+  .hide_image input { display: none; }
+  #add_multi_comments_photos {
+    border: 1px dashed green;
+    padding: 5px;
+    text-align: center;}
+  #add_multi_comments_photos:hover {cursor: pointer}
+</style>
+
+
+<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографий</h4>
+<form id="add_comment_photos" method="post">
+    {% csrf_token %}
+      <input type="file" class="upload_for_post_comment" id="c_photo_post_attach" name="file" style="display:none" multiple="multiple">
+      <div id="add_multi_comments_photos" class="border" style="cursor:pointer">
+          <h4>загрузить и прикрепить (до 2х)</h4>
+      </div>
+</form>
+<br><br>
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" id="img_load_container" data-link="users/load/img_load">
+{% for object in object_list %}
+  <div class="col-md-4 pag {% if forloop.last %}last{% endif %}">
+    <div>
+          <img style="cursor:pointer"
+               class="lazyload image_fit_200 photo_load_one"
+               photo-uuid="{{ object.uuid }}"
+               data-src="{{ object.file.url }}"
+               alt="img">
+    </div>
+      <span class="item_attach_circle photo_load_several"
+           tooltip="Выбрать несколько"
+           flow="up">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+          </svg>
+      </span>
+  </div>
+  {% endfor %}
+
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+  </div>
+  <h6 style="margin-bottom: 20px;"> У Вас нет фотографий ...</h6>
+</div>
+{% endif %}
