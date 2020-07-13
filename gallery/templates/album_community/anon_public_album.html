@@ -1,0 +1,17 @@
+{% extends "base_anon.html" %}
+{% block title %}{{ community.name }} - {{ album.title }}{% endblock %}
+{% block content %}
+
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ album.uuid }}">
+  <h5 class="mt-1">
+    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+      {{ community.name }}
+    </a> - {{ album.title }}
+  </h5>
+  Фото: {{ album.count_photo }}
+</div>
+
+<div class="container mt-4 main-container">
+    <div id="c_album_photo_load" data-link="/gallery/community/album_photos/{{ community.pk }}/{{ album.uuid }}"></div>
+</div>
+{% endblock %}

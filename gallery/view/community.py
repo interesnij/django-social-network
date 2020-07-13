@@ -56,13 +56,13 @@ class CommunityGalleryView(TemplateView):
                 elif request.user.is_editor_of_community_with_name(self.community.name):
                     self.template_name = "gallery_community/editor_gallery.html"
                 elif request.user.is_community_manager():
-                    self.template_name = "gallery_community/staff_member_gallery.html"
+                    self.template_name = "gallery_community/staff_gallery.html"
                 else:
                     self.template_name = "gallery_community/member_gallery.html"
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
-                self.template_name = "gallery_community/follow_gallery.html"
             elif request.user.is_community_manager():
                 self.template_name = "gallery_community/staff_gallery.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                self.template_name = "gallery_community/follow_gallery.html"
             elif request.user.is_banned_from_community_with_name(self.community.name):
                 self.template_name = "gallery_community/block_gallery.html"
             elif self.community.is_public():
@@ -96,6 +96,46 @@ class CommunityAlbumView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.community.get_template(folder="album_community/", template="album.html", request=request)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+        if self.community.is_suspended():
+            self.template_name = "album_community/community_suspended.html"
+        elif self.community.is_blocked():
+            self.template_name = "album_community/community_blocked.html"
+        elif request.user.is_authenticated:
+            if request.user.is_member_of_community_with_name(self.community.name):
+                if request.user.is_administrator_of_community_with_name(self.community.name):
+                    self.template_name = "album_community/admin_album.html"
+                elif request.user.is_moderator_of_community_with_name(self.community.name):
+                    self.template_name = "album_community/moderator_album.html"
+                elif request.user.is_editor_of_community_with_name(self.community.name):
+                    self.template_name = "album_community/editor_album.html"
+                elif request.user.is_community_manager():
+                    self.template_name = "album_community/staff_album.html"
+                else:
+                    self.template_name = "album_community/member_album.html"
+            elif request.user.is_community_manager():
+                self.template_name = "album_community/staff_album.html"
+            elif request.user.is_follow_from_community_with_name(self.community.pk):
+                self.template_name = "album_community/follow_album.html"
+            elif request.user.is_banned_from_community_with_name(self.community.name):
+                self.template_name = "album_community/block_album.html"
+            elif self.community.is_public():
+                self.template_name = "album_community/public_album.html"
+            elif self.community.is_closed():
+                self.template_name = "album_community/close_album.html"
+            elif self.community.is_private():
+                self.template_name = "album_community/private_album.html"
+        elif request.user.is_anonymous:
+            if self.community.is_public():
+                self.template_name = "album_community/anon_public_album.html"
+            elif self.community.is_closed():
+                self.template_name = "album_community/anon_close_album.html"
+            elif self.community.is_private():
+                self.template_name = "album_community/anon_private_album.html"
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name += "mob_"
         return super(CommunityAlbumView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
