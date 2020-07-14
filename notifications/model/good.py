@@ -41,11 +41,6 @@ class GoodNotificationQS(models.query.QuerySet):
 
 
 class GoodNotification(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_notifications', verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
-    unread  = models.BooleanField(default=True, db_index=True)
-
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -70,12 +65,15 @@ class GoodNotification(models.Model):
         (REPOST, 'поделился Вашим товаром'),
     )
 
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_notifications', verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    slug = models.SlugField(max_length=210, null=True, blank=True)
-    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
+    good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
@@ -93,19 +91,12 @@ class GoodNotification(models.Model):
 
 
 class GoodCommunityNotification(models.Model):
-    community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
-    unread  = models.BooleanField(default=True, db_index=True)
-
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
     REPOST = 'R'
-
     LIKE = 'L'
     DISLIKE = 'D'
     LIKE_REPLY_COMMENT = 'LRC'
@@ -125,12 +116,16 @@ class GoodCommunityNotification(models.Model):
         (REPOST, 'поделился товаром сообщества'),
     )
 
+    community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    slug = models.SlugField(max_length=210, null=True, blank=True)
-    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
+    good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"

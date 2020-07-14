@@ -1,10 +1,8 @@
-import uuid
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from slugify import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
@@ -43,11 +41,6 @@ class UserNotificationQS(models.query.QuerySet):
 
 
 class UserNotification(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
-    unread  = models.BooleanField(default=True, db_index=True)
-
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     COMMUNITY_INVITE = 'CI'
@@ -58,10 +51,13 @@ class UserNotification(models.Model):
         (COMMUNITY_INVITE, 'пригласил Вас в сообщество'),
     )
 
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    slug = models.SlugField(max_length=210, null=True, blank=True)
-    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = UserNotificationQS.as_manager()
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление пользователя"
@@ -79,12 +75,6 @@ class UserNotification(models.Model):
 
 
 class UserCommunityNotification(models.Model):
-    community = models.ForeignKey('communities.Community', related_name='community_users_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_user_recipient', on_delete=models.CASCADE, verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
-    unread  = models.BooleanField(default=True, db_index=True)
-
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     JOIN = 'J'
@@ -95,10 +85,14 @@ class UserCommunityNotification(models.Model):
         (JOIN, 'вступил в сообщество'),
     )
 
+    community = models.ForeignKey('communities.Community', related_name='community_users_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_user_recipient', on_delete=models.CASCADE, verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
+    unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    slug = models.SlugField(max_length=210, null=True, blank=True)
-    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = UserNotificationQS.as_manager()
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление сообщества"

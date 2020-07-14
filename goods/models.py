@@ -53,11 +53,11 @@ class Good(models.Model):
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
-	community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, blank=True, verbose_name="Сообщество")
+	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, verbose_name="Сообщество")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	is_hide = models.BooleanField(default=False, verbose_name="Товар виден только Вам")
 	id = models.BigAutoField(primary_key=True)
@@ -67,7 +67,7 @@ class Good(models.Model):
 	image3 = ProcessedImageField(verbose_name='изображение 3', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
 	image4 = ProcessedImageField(verbose_name='изображение 4', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
 	image5 = ProcessedImageField(verbose_name='изображение 5', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
-	status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
+	status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
 	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
 	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 
@@ -87,7 +87,6 @@ class Good(models.Model):
 
 	def notification_user_repost(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
-
 	def notification_user_like(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
 	def notification_user_dislike(self, user):
@@ -164,25 +163,18 @@ class GoodComment(models.Model):
 
     def notification_user_comment(self, user):
         good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
-
     def notification_user_reply_comment(self, user):
         good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
-
     def notification_user_comment_like(self, user):
         good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.LIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
-
     def notification_user_comment_dislike(self, user):
         good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.DISLIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
-
     def notification_community_comment(self, user, community):
         good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment, verb=GoodNotification.POST_COMMENT, comment=self, key='social_update')
-
     def notification_community_reply_comment(self, user, community):
         good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment.photo_comment, verb=GoodNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
-
     def notification_community_comment_like(self, user, community):
         good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.LIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
-
     def notification_community_comment_dislike(self, user, community):
         good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.DISLIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
 

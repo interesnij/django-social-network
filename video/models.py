@@ -8,6 +8,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from video.helpers import upload_to_video_directory
 from common.model.votes import VideoVotes, VideoCommentVotes
+from notifications.model.video import *
 
 
 class VideoCategory(models.Model):
@@ -70,8 +71,8 @@ class VideoTags(models.Model):
 
 
 class VideoAlbum(models.Model):
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, verbose_name="Сообщество")
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     order = models.PositiveIntegerField(default=0)
@@ -115,15 +116,15 @@ class Video(models.Model):
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    description = models.CharField(max_length=500, blank=True, null=True, verbose_name="Описание")
-    category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
-    tag = models.ForeignKey(VideoTags, blank=True, null=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег")
+    description = models.CharField(max_length=500, blank=True, verbose_name="Описание")
+    category = models.ForeignKey(VideoCategory, blank=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
+    tag = models.ForeignKey(VideoTags, blank=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег")
     title = models.CharField(max_length=255, verbose_name="Название")
     uri = models.CharField(max_length=255, verbose_name="Ссылка на видео")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    is_deleted = models.BooleanField(default=False, verbose_name="Удален")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     is_child = models.BooleanField(default=True, verbose_name="Доступен детям")
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
@@ -159,19 +160,31 @@ class Video(models.Model):
 
     def all_visits_count(self):
         from stst.models import VideoNumbers
-
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
+
+    def notification_user_repost(self, user):
+		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
+	def notification_user_like(self, user):
+		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
+	def notification_user_dislike(self, user):
+		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
+	def notification_community_repost(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
+	def notification_community_like(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.LIKE, key='social_update', community=community, good=self, comment=None)
+	def notification_community_dislike(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.DISLIKE, key='social_update', community=community, good=self, comment=None)
 
 
 class VideoComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
-    text = models.TextField(blank=True,null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True)
+    text = models.TextField(blank=True)
+    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -192,7 +205,7 @@ class VideoComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.replies.count()
+        return self.video_comment_replies.count()
 
     def likes(self):
         likes = VideoCommentVotes.objects.filter(photo=self, vote__gt=0)
@@ -225,3 +238,20 @@ class VideoComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
+
+    def notification_user_comment(self, user):
+        good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
+    def notification_user_reply_comment(self, user):
+        good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
+    def notification_user_comment_like(self, user):
+        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.LIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
+    def notification_user_comment_dislike(self, user):
+        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.DISLIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
+    def notification_community_comment(self, user, community):
+        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment, verb=GoodNotification.POST_COMMENT, comment=self, key='social_update')
+    def notification_community_reply_comment(self, user, community):
+        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment.photo_comment, verb=GoodNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+    def notification_community_comment_like(self, user, community):
+        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.LIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
+    def notification_community_comment_dislike(self, user, community):
+        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.DISLIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
