@@ -71,7 +71,7 @@ class PhotoNotification(models.Model):
     objects =  PhotoNotificationQS.as_manager()
     photo = models.ForeignKey('gallery.Photo', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', blank=True, on_delete=models.CASCADE)
-    id = models.BigAutoField(primary_key=True)
+    #id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
@@ -123,7 +123,7 @@ class PhotoCommunityNotification(models.Model):
     objects = PhotoNotificationQS.as_manager()
     photo = models.ForeignKey('gallery.Photo', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', blank=True, on_delete=models.CASCADE)
-    id = models.BigAutoField(primary_key=True)
+    #id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"

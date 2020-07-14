@@ -57,7 +57,7 @@ class UserNotification(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = UserNotificationQS.as_manager()
-    id = models.BigAutoField(primary_key=True)
+    #id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление пользователя"
@@ -92,7 +92,7 @@ class UserCommunityNotification(models.Model):
     unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = UserNotificationQS.as_manager()
-    id = models.BigAutoField(primary_key=True)
+    #id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление сообщества"
