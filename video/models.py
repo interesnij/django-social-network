@@ -163,17 +163,17 @@ class Video(models.Model):
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
     def notification_user_repost(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
-	def notification_user_like(self, user):
-		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
-	def notification_user_dislike(self, user):
-		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
-	def notification_community_repost(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
-	def notification_community_like(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.LIKE, key='social_update', community=community, good=self, comment=None)
-	def notification_community_dislike(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.DISLIKE, key='social_update', community=community, good=self, comment=None)
+        video_notification_handler(user, self.creator, verb=VideoNotification.REPOST, key='social_update', video=self, comment=None)
+    def notification_user_like(self, user):
+        video_notification_handler(user, self.creator, verb=VideoNotification.LIKE, key='social_update', video=self, comment=None)
+    def notification_user_dislike(self, user):
+        video_notification_handler(user, self.creator, verb=VideoNotification.DISLIKE, key='social_update', video=self, comment=None)
+    def notification_community_repost(self, user, community):
+        video_community_notification_handler(actor=user, recipient=None, verb=VideoNotification.REPOST, key='social_update', community=self.community, video=self, comment=None)
+    def notification_community_like(self, user, community):
+        video_community_notification_handler(actor=user, recipient=None, verb=VideoNotification.LIKE, key='social_update', community=community, video=self, comment=None)
+    def notification_community_dislike(self, user, community):
+        video_community_notification_handler(actor=user, recipient=None, verb=VideoNotification.DISLIKE, key='social_update', community=community, video=self, comment=None)
 
 
 class VideoComment(models.Model):
