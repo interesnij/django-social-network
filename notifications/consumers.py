@@ -1,13 +1,10 @@
 import json
-
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class NotificationsConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
         if self.scope["user"].is_anonymous:
-            # Reject the connection
             await self.close()
 
         else:
