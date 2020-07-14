@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post
@@ -131,7 +132,6 @@ class PostListView(ListView):
 			else:
 				self.template_name = "lenta/anon_list.html"
 
-		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + template_name
 		return super(PostListView,self).get(request,*args,**kwargs)

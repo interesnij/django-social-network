@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from posts.models import Post
 from communities.models import Community, CommunityMembership
@@ -88,7 +89,6 @@ class PostsCommunity(ListView):
             if self.community.is_public():
                 self.template_name = "c_lenta/list.html"
 
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostsCommunity,self).get(request,*args,**kwargs)
@@ -128,7 +128,6 @@ class PostCommunity(TemplateView):
             if self.community.is_public():
                 self.template_name = "c_lenta/item.html"
 
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostCommunity,self).get(request,*args,**kwargs)
@@ -150,7 +149,6 @@ class CommunityDetail(TemplateView):
         from stst.models import CommunityNumbers
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         if self.community.is_suspended():
             self.template_name = "c_detail/community_suspended.html"

@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
@@ -17,8 +19,6 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
-		import re
-
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.name):
 			membersheeps = None
@@ -26,7 +26,6 @@ class CommunityMembersView(ListView):
 		else:
 			membersheeps = self.community.get_community_with_name_members(self.community.name)
 			self.template_name = "c_detail/members.html"
-		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return membersheeps
@@ -46,15 +45,12 @@ class CommunityFriendsView(ListView):
 		return context
 
 	def get_queryset(self):
-		import re
-
 		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.community.name):
 			frends = None
 			self.template_name = "c_detail/private_community.html"
 		else:
 			frends = self.request.user.get_common_friends_of_community(self.community.pk)
 			self.template_name = "c_detail/friends.html"
-		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return frends

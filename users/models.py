@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 import uuid
 from django.utils import timezone
 from django.db import models
@@ -1286,8 +1288,6 @@ class User(AbstractUser):
         return connection
 
     def get_template_user(self, folder, template, request):
-        import re
-
         if self.pk == request.user.pk:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
@@ -1319,14 +1319,11 @@ class User(AbstractUser):
             template_name = folder + "close_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
             template_name = folder + "anon_" + template
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_template_list_user(self, folder, template, request):
-        import re
-
         if self.pk == request.user.pk:
             template_name = folder + "my_" + template
         elif self != request.user and request.user.is_authenticated:
@@ -1340,14 +1337,11 @@ class User(AbstractUser):
         elif request.user.is_anonymous and self.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_permission_list_user(self, folder, template, request):
-        import re
-
         if self.pk == request.user.pk:
             template_name = folder + "my_" + template
         elif self != request.user and request.user.is_authenticated:
@@ -1361,17 +1355,13 @@ class User(AbstractUser):
         elif request.user.is_anonymous and self.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_settings_template(self, folder, template, request):
-        import re
-
         template_name = folder + template
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name

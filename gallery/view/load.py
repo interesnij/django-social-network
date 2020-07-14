@@ -173,7 +173,7 @@ class CommunityAlbumPhoto(TemplateView):
 
 class CommunityWallPhoto(TemplateView):
     """
-    страница отдельного фото альбома пользователя "Фото со стены"
+    страница отдельного фото альбома сообщества "Фото со стены"
     """
     template_name = None
 
@@ -181,7 +181,7 @@ class CommunityWallPhoto(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(community=self.community, is_generic=True, title="Фото со стены")
-        self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
+        self.photos = self.community.get_photos_for_album(album_id=self.album.pk)
         self.template_name = get_detail_template_community(self.user, "photo_community/", "wall_photo.html", request)
         return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
 

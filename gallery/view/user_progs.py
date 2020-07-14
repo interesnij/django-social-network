@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
@@ -38,8 +39,6 @@ class PhotoUserCommentList(ListView):
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
             else:
                 self.template_name = "u_photo_comment/anon_comments.html"
-
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)

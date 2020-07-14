@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 
@@ -17,7 +18,6 @@ def get_detail_template_user(user, folder, template, request):
     elif request.user.is_anonymous and user.is_closed_profile():
         raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 
-    MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
     if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         template_name = "mob_" + template_name
     return template_name
@@ -56,7 +56,6 @@ def get_default_template(folder, template, request):
     elif request.user.is_anonymous:
         template_name = folder + "anon_" + template
 
-    MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
     if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         template_name = "mob_" + template_name
     return template_name

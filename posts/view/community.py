@@ -1,4 +1,5 @@
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
@@ -35,7 +36,6 @@ class PostCommunityCommentList(ListView):
             if self.is_public():
                 self.template_name = "c_post_comment/anon_comments.html"
 
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)

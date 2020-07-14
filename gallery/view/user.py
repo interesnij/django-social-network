@@ -103,9 +103,9 @@ class PhotoAttachUserCreate(View):
         photos = []
         if self.user == request.user:
             try:
-                _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены")
+                _album = Album.objects.get(creator=request.user, community=None, is_generic=True, title="Фото со стены")
             except:
-                _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
+                _album = Album.objects.create(creator=request.user, community=None, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.album.add(photo)

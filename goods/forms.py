@@ -1,4 +1,4 @@
-from goods.models import Good
+from goods.models import Good, GoodComment
 from django import forms
 
 
@@ -13,7 +13,14 @@ class GoodForm(forms.ModelForm):
 					'image',
 					'image2',
 					'image3',
-					'image4', 
+					'image4',
 					'image5',
 					'comments_enabled'
 				]
+
+class CommentForm(forms.ModelForm):
+	text=forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
+
+	class Meta:
+		model = GoodComment
+		fields = ['text']

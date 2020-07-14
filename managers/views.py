@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
 
 class MainManagersView(TemplateView):
@@ -20,7 +21,6 @@ class ManagersView(TemplateView):
             self.template_name = "manager_main/managers.html"
         else:
             self.template_name = "about.html"
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(ManagersView,self).get(request,*args,**kwargs)
@@ -34,7 +34,6 @@ class SuperManagersView(TemplateView):
             self.template_name = "manager_main/supermanagers.html"
         else:
             self.template_name = "about.html"
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(SuperManagersView,self).get(request,*args,**kwargs)

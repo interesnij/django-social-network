@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import VideoAlbum, Video
@@ -33,7 +35,6 @@ class UserVideoDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        import re
         from stst.models import VideoNumbers
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -43,7 +44,6 @@ class UserVideoDetail(TemplateView):
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
-                MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:

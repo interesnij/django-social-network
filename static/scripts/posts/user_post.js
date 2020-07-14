@@ -256,6 +256,24 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
   }
   link_.send(form_data);
 });
+on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_comment_attach(response.querySelectorAll(".u_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
+    }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }
+  link_.send(form_data);
+});
 
 on('#ajax', 'click', '.photo_load_several', function() {
   _this = this.previousElementSibling.querySelector("img");

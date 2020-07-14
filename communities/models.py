@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 import uuid
 from django.conf import settings
 from django.db import models
@@ -322,8 +324,6 @@ class Community(models.Model):
             return None
 
     def get_template(self, folder, template, request):
-        import re
-
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
             if request.user.is_administrator_of_community_with_name(self.name):
                 template_name = folder + "admin_" + template
@@ -354,38 +354,29 @@ class Community(models.Model):
         elif request.user.is_anonymous and self.is_private():
             template_name = folder + "anon_private_" + template
 
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_manage_template(self, folder, template, request):
-        import re
-
         if request.user.is_administrator_of_community_with_name(self.name):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_moders_template(self, folder, template, request):
-        import re
-
         if request.user.is_administrator_of_community_with_name(self.name) or request.user.is_moderator_of_community_with_name(self.name):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
 
     def get_template_list(self, folder, template, request):
-        import re
-
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
             if request.user.is_moderator_of_community_with_name(self.name):
                 template_name = folder + "moderator_" + template
@@ -399,7 +390,6 @@ class Community(models.Model):
             template_name = folder + template
         elif request.user.is_anonymous and self.is_public():
             template_name = folder + "anon_" + template
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
