@@ -18,7 +18,7 @@ class PostUserLikeWindow(TemplateView):
         return super(PostUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = uper(PostUserLikeWindow,self).get_context_data(**kwargs)
+        context = super(PostUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.item.window_likes()
         context["text"] = "Оценили:"
         context["class_name"] = "u_all_posts_likes"
