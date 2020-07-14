@@ -71,7 +71,7 @@ class VideoTags(models.Model):
 
 
 class VideoAlbum(models.Model):
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
