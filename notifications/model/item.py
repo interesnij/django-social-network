@@ -73,7 +73,7 @@ class ItemNotification(models.Model):
     objects =  ItemNotificationQS.as_manager()
     item = models.ForeignKey('posts.Post', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -125,7 +125,7 @@ class ItemCommunityNotification(models.Model):
     objects = ItemNotificationQS.as_manager()
     item = models.ForeignKey('posts.Post', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"

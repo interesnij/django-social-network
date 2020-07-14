@@ -73,7 +73,7 @@ class GoodNotification(models.Model):
     objects =  GoodNotificationQS.as_manager()
     good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
@@ -125,7 +125,7 @@ class GoodCommunityNotification(models.Model):
     objects = GoodNotificationQS.as_manager()
     good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"

@@ -72,7 +72,7 @@ class VideoNotification(models.Model):
     objects =  VideoNotificationQS.as_manager()
     video = models.ForeignKey('video.Video', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('video.VideoComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - ролики пользователя"
@@ -127,7 +127,7 @@ class VideoCommunityNotification(models.Model):
     objects = VideoNotificationQS.as_manager()
     video = models.ForeignKey('video.Video', blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('video.VideoComment', blank=True, on_delete=models.CASCADE)
-    #id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - ролики сообщества"
