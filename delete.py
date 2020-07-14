@@ -14,6 +14,9 @@ django.setup()
 
 from django.conf import settings
 from music.models import UserTempSoundList
+from notifications.model.user import UserNotification, UserCommunityNotification
+from notifications.model.item import ItemNotification, ItemCommunityNotification
+from notifications.model.photo import PhotoNotification, PhotoCommunityNotification
+from notifications.model.good import GoodNotification, GoodCommunityNotification
 
-
-UserTempSoundList.objects.all().delete()
+UserNotification.objects.all().delete()
