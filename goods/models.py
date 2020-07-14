@@ -86,13 +86,13 @@ class Good(models.Model):
 		verbose_name_plural="Товары"
 
 	def notification_user_repost(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
 
     def notification_user_like(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
 
     def notification_user_dislike(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
 
     def notification_community_repost(self, user, community):
         good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
