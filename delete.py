@@ -20,3 +20,10 @@ from notifications.model.photo import PhotoNotification, PhotoCommunityNotificat
 from notifications.model.good import GoodNotification, GoodCommunityNotification
 
 UserNotification.objects.all().delete()
+UserCommunityNotification.objects.all().delete()
+ItemNotification.objects.all().delete()
+ItemCommunityNotification.objects.all().delete()
+PhotoNotification.objects.all().delete()
+PhotoCommunityNotification.objects.all().delete()
+GoodNotification.objects.all().delete()
+GoodCommunityNotification.objects.all().delete()
