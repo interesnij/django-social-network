@@ -38,7 +38,7 @@ class PhotoNotificationQS(models.query.QuerySet):
         return qs
 
 
-class PhotoNotification(models.Model):
+class PhotoNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -88,7 +88,7 @@ class PhotoNotification(models.Model):
             self.save()
 
 
-class PhotoCommunityNotification(models.Model):
+class PhotoCommunityNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
@@ -143,14 +143,14 @@ def photo_notification_handler(actor, recipient, verb, photo, comment, **kwargs)
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, photo=photo, comment=comment)
+    PhotoNotify.objects.create(actor=actor, recipient=recipient, verb=verb, photo=photo, comment=comment)
     photo_notification_broadcast(actor, key, recipient=recipient.username)
 
 def photo_community_notification_handler(actor, community, recipient, photo, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotification.objects.create(actor=actor, community=community, photo=photo, comment=comment, recipient=user, verb=verb)
+        PhotoCommunityNotify.objects.create(actor=actor, community=community, photo=photo, comment=comment, recipient=user, verb=verb)
     photo_notification_broadcast(actor, key)
 
 

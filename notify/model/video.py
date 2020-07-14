@@ -39,7 +39,7 @@ class VideoNotificationQS(models.query.QuerySet):
         return qs
 
 
-class VideoNotification(models.Model):
+class VideoNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -92,7 +92,7 @@ class VideoNotification(models.Model):
             self.save()
 
 
-class VideoCommunityNotification(models.Model):
+class VideoCommunityNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
@@ -151,7 +151,7 @@ def video_notification_handler(actor, recipient, verb, video, comment, **kwargs)
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    VideoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, video=video, comment=comment)
+    VideoNotify.objects.create(actor=actor, recipient=recipient, verb=verb, video=video, comment=comment)
     video_notification_broadcast(actor, key, recipient=recipient.username)
 
 
@@ -159,7 +159,7 @@ def video_community_notification_handler(actor, community, recipient, video, ver
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        VideoCommunityNotification.objects.create(actor=actor, community=community, video=video, comment=comment, recipient=user, verb=verb)
+        VideoCommunityNotify.objects.create(actor=actor, community=community, video=video, comment=comment, recipient=user, verb=verb)
     item_notification_broadcast(actor, key)
 
 

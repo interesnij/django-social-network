@@ -40,7 +40,7 @@ class GoodNotificationQS(models.query.QuerySet):
         return qs
 
 
-class GoodNotification(models.Model):
+class GoodNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -90,7 +90,7 @@ class GoodNotification(models.Model):
             self.save()
 
 
-class GoodCommunityNotification(models.Model):
+class GoodCommunityNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
@@ -146,14 +146,14 @@ def good_notification_handler(actor, recipient, verb, good, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PhotoNotification.objects.create(actor=actor, recipient=recipient, verb=verb, good=good, comment=comment)
+    PhotoNotify.objects.create(actor=actor, recipient=recipient, verb=verb, good=good, comment=comment)
     photo_notification_broadcast(actor, key, recipient=recipient.username)
 
 def good_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotification.objects.create(actor=actor, community=community, good=good, comment=comment, recipient=user, verb=verb)
+        PhotoCommunityNotify.objects.create(actor=actor, community=community, good=good, comment=comment, recipient=user, verb=verb)
     item_notification_broadcast(actor, key)
 
 

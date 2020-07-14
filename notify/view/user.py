@@ -2,26 +2,26 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-from notifications.model2.user import UserNotification, UserCommunityNotification
+from notify.model.user import UserNotify, UserCommunityNotify
 
 
 class UserNotificationListView(LoginRequiredMixin, ListView):
-    model = UserNotification
+    model = UserNotify
     context_object_name = 'notification_list'
     template_name = 'not_user/user_notify_list.html'
 
     def get_queryset(self, **kwargs):
-        notify = UserNotification.objects.filter(recipient=self.request.user)
+        notify = UserNotify.objects.filter(recipient=self.request.user)
         return notify
 
 
 class CommunityNotificationListView(LoginRequiredMixin, ListView):
-    model = UserCommunityNotification
+    model = UserCommunityNotify
     context_object_name = 'notification_list'
     template_name = 'not_user/community_notify_list.html'
 
     def get_queryset(self, **kwargs):
-        notify = UserCommunityNotification.objects.filter(community__creator=self.request.user)
+        notify = UserCommunityNotify.objects.filter(community__creator=self.request.user)
         return notify
 
 

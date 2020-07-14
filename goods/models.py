@@ -4,7 +4,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notifications.model2.good import *
+from notify.model.good import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
@@ -86,17 +86,17 @@ class Good(models.Model):
 		verbose_name_plural="Товары"
 
 	def notification_user_repost(self, user):
-		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotify.REPOST, key='social_update', good=self, comment=None)
 	def notification_user_like(self, user):
-		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotify.LIKE, key='social_update', good=self, comment=None)
 	def notification_user_dislike(self, user):
-		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
+		good_notification_handler(user, self.creator, verb=GoodNotify.DISLIKE, key='social_update', good=self, comment=None)
 	def notification_community_repost(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotify.REPOST, key='social_update', community=self.community, good=self, comment=None)
 	def notification_community_like(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.LIKE, key='social_update', community=community, good=self, comment=None)
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotify.LIKE, key='social_update', community=community, good=self, comment=None)
 	def notification_community_dislike(self, user, community):
-		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.DISLIKE, key='social_update', community=community, good=self, comment=None)
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotify.DISLIKE, key='social_update', community=community, good=self, comment=None)
 
 	def likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
@@ -162,21 +162,21 @@ class GoodComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def notification_user_comment(self, user):
-        good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
+        good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
     def notification_user_reply_comment(self, user):
-        good_notification_handler(user, self.commenter, verb=GoodNotification.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
+        good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
     def notification_user_comment_like(self, user):
-        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.LIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
+        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotify.LIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
     def notification_user_comment_dislike(self, user):
-        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotification.DISLIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
+        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotify.DISLIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
     def notification_community_comment(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment, verb=GoodNotification.POST_COMMENT, comment=self, key='social_update')
+        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment, verb=GoodNotify.POST_COMMENT, comment=self, key='social_update')
     def notification_community_reply_comment(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment.photo_comment, verb=GoodNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment.photo_comment, verb=GoodNotify.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
     def notification_community_comment_like(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.LIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
+        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotify.LIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
     def notification_community_comment_dislike(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotification.DISLIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
+        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotify.DISLIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
 
     def get_replies(self):
         get_comments = GoodComment.objects.filter(parent_comment=self).all()

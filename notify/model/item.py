@@ -38,7 +38,7 @@ class ItemNotificationQS(models.query.QuerySet):
         return qs
 
 
-class ItemNotification(models.Model):
+class ItemNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -90,7 +90,7 @@ class ItemNotification(models.Model):
             self.save()
 
 
-class ItemCommunityNotification(models.Model):
+class ItemCommunityNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
@@ -149,7 +149,7 @@ def item_notification_handler(actor, recipient, verb, item, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    ItemNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
+    ItemNotify.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
     item_notification_broadcast(actor, key, recipient=recipient.username)
 
 
@@ -157,7 +157,7 @@ def item_community_notification_handler(actor, community, recipient, item, verb,
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        ItemCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
+        ItemCommunityNotify.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
     item_notification_broadcast(actor, key)
 
 

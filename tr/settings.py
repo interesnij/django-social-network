@@ -59,6 +59,7 @@ MY_APPS = [
     'about',
     'logs',
     'managers',
+    'notify',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS

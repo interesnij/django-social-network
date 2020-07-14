@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
-from notifications.model2.item import *
+from notify.model.item import *
 from common.model.votes import PostVotes, PostCommentVotes
 
 
@@ -70,22 +70,22 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     def notification_user_repost(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.REPOST, key='social_update', item=self, comment=None)
+        item_notification_handler(user, self.creator, verb=ItemNotify.REPOST, key='social_update', item=self, comment=None)
 
     def notification_user_like(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.LIKE, key='social_update', item=self, comment=None)
+        item_notification_handler(user, self.creator, verb=ItemNotify.LIKE, key='social_update', item=self, comment=None)
 
     def notification_user_dislike(self, user):
-        item_notification_handler(user, self.creator, verb=ItemNotification.DISLIKE, key='social_update', item=self, comment=None)
+        item_notification_handler(user, self.creator, verb=ItemNotify.DISLIKE, key='social_update', item=self, comment=None)
 
     def notification_community_repost(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.REPOST, key='social_update', community=self.community, item=self, comment=None)
+        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotify.REPOST, key='social_update', community=self.community, item=self, comment=None)
 
     def notification_community_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.LIKE, key='social_update', community=self.community, item=self, comment=None)
+        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotify.LIKE, key='social_update', community=self.community, item=self, comment=None)
 
     def notification_community_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.DISLIKE, key='social_update', community=self.community, item=self, comment=None)
+        item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotify.DISLIKE, key='social_update', community=self.community, item=self, comment=None)
 
     def get_comments(self):
         comments_query = Q(post_id=self.pk)
@@ -229,28 +229,27 @@ class PostComment(models.Model):
         return self.commenter.get_full_name()
 
     def notification_user_comment(self, user):
-        item_notification_handler(user, self.commenter, verb=ItemNotification.POST_COMMENT, comment=self, item=self.post, key='social_update')
+        item_notification_handler(user, self.commenter, verb=ItemNotify.POST_COMMENT, comment=self, item=self.post, key='social_update')
 
     def notification_user_reply_comment(self, user):
-        item_notification_handler(user, self.commenter, verb=ItemNotification.POST_COMMENT_REPLY, item=self.parent_comment.post, comment=self.parent_comment, key='social_update')
+        item_notification_handler(user, self.commenter, verb=ItemNotify.POST_COMMENT_REPLY, item=self.parent_comment.post, comment=self.parent_comment, key='social_update')
 
     def notification_user_comment_like(self, user):
-        item_notification_handler(actor=user, recipient=self.commenter, verb=ItemNotification.LIKE_COMMENT, item=self.post, comment=self, key='social_update')
+        item_notification_handler(actor=user, recipient=self.commenter, verb=ItemNotify.LIKE_COMMENT, item=self.post, comment=self, key='social_update')
 
     def notification_user_comment_dislike(self, user):
-        item_notification_handler(actor=user, recipient=self.commenter, verb=ItemNotification.DISLIKE_COMMENT, item=self.post, comment=self, key='social_update')
+        item_notification_handler(actor=user, recipient=self.commenter, verb=ItemNotify.DISLIKE_COMMENT, item=self.post, comment=self, key='social_update')
 
     def notification_community_comment(self, user, community):
-        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.post, verb=ItemCommunityNotification.POST_COMMENT, comment=self, key='social_update')
-
+        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.post, verb=ItemCommunityNotify.POST_COMMENT, comment=self, key='social_update')
     def notification_community_reply_comment(self, user, community):
-        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.parent_comment.post, verb=ItemCommunityNotification.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=community, item=self.parent_comment.post, verb=ItemCommunityNotify.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
 
     def notification_community_comment_like(self, user, community):
-        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.post, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotify.LIKE_COMMENT, comment=self, item=self.post, key='social_update')
 
     def notification_community_comment_dislike(self, user, community):
-        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.post, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=community, verb=ItemCommunityNotify.DISLIKE_COMMENT, comment=self, item=self.post, key='social_update')
 
     @classmethod
     def create_comment(cls, commenter, post, parent_comment, text):

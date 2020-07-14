@@ -40,7 +40,7 @@ class UserNotificationQS(models.query.QuerySet):
         return qs
 
 
-class UserNotification(models.Model):
+class UserNotify(models.Model):
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     COMMUNITY_INVITE = 'CI'
@@ -74,7 +74,7 @@ class UserNotification(models.Model):
             self.save()
 
 
-class UserCommunityNotification(models.Model):
+class UserCommunityNotify(models.Model):
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     JOIN = 'J'
@@ -111,14 +111,14 @@ class UserCommunityNotification(models.Model):
 def notification_handler(actor, recipient, verb, **kwargs):
 
     key = kwargs.pop('key', 'notification')
-    UserNotification.objects.create(actor=actor, recipient=recipient, verb=verb)
+    UserNotify.objects.create(actor=actor, recipient=recipient, verb=verb)
     user_notification_broadcast(actor, key, recipient=recipient.username)
 
 def community_notification_handler(actor, community, recipient, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        UserCommunityNotification.objects.create(actor=actor, community=community, recipient=user, verb=verb)
+        UserCommunityNotify.objects.create(actor=actor, community=community, recipient=user, verb=verb)
     user_notification_broadcast(actor, key)
 
 

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-from notifications.model2.good import GoodNotification, GoodCommunityNotification
+from notify.model.good import GoodNotify, GoodCommunityNotify
 
 
 class GoodNotificationListView(LoginRequiredMixin, ListView):
@@ -11,17 +11,17 @@ class GoodNotificationListView(LoginRequiredMixin, ListView):
     template_name = 'not_good/user_notify_list.html'
 
     def get_queryset(self, **kwargs):
-        notify = GoodNotification.objects.filter(recipient=self.request.user)
+        notify = GoodNotify.objects.filter(recipient=self.request.user)
         return notify
 
 
 class GoodCommunityNotificationListView(LoginRequiredMixin, ListView):
-    model = GoodCommunityNotification
+    model = GoodCommunityNotify
     context_object_name = 'notification_list'
     template_name = 'not_good/community_notify_list.html'
 
     def get_queryset(self, **kwargs):
-        notify = GoodCommunityNotification.objects.filter(community__creator=self.request.user)
+        notify = GoodCommunityNotify.objects.filter(community__creator=self.request.user)
         return notify
 
 

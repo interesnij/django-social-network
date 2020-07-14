@@ -8,7 +8,7 @@ from django.db.models import Q
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
-from notifications.model2.user import *
+from notify.model.user import *
 from rest_framework.exceptions import PermissionDenied
 
 

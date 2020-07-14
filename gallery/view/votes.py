@@ -7,7 +7,7 @@ from django.views import View
 from common.model.votes import PhotoVotes, PhotoCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
-from notifications.model2.item import item_community_notification_handler, ItemCommunityNotification
+from notify.model.item import item_community_notification_handler, ItemCommunityNotify
 from rest_framework.exceptions import PermissionDenied
 
 
