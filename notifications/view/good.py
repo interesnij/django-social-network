@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-from notifications.model.good import GoodNotification, GoodCommunityNotification
+from notifications.model2.good import GoodNotification, GoodCommunityNotification
 
 
 class GoodNotificationListView(LoginRequiredMixin, ListView):
