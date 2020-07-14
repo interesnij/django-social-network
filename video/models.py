@@ -8,7 +8,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from video.helpers import upload_to_video_directory
 from common.model.votes import VideoVotes, VideoCommentVotes
-from notifications.model.video import *
+from notifications.model2.video import *
 
 
 class VideoCategory(models.Model):
