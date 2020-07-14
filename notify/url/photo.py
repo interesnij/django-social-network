@@ -1,6 +1,5 @@
 from django.conf.urls import url
-
-from notifications.view.photo import *
+from notify.view.photo import *
 
 
 urlpatterns = [

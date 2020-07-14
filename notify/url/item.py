@@ -1,6 +1,5 @@
 from django.conf.urls import url
-
-from notifications.view.item import *
+from notify.view.item import *
 
 
 urlpatterns = [
