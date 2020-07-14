@@ -18,7 +18,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.photo.creator.get_photos()
-        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "photo.html", request)
+        self.template_name = get_detail_template_user(self.photo.creator, "u_photo/", "photo.html", request)
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -41,7 +41,7 @@ class UserAlbumPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photos = self.photo.creator.get_photos_for_my_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "album_photo.html", request)
+        self.template_name = get_detail_template_user(self.photo.creator, "u_photo/", "album_photo.html", request)
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -66,7 +66,7 @@ class UserWallPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_user(self.user, "photo_user/", "wall_photo.html", request)
+        self.template_name = get_detail_template_user(self.user, "u_photo/", "wall_photo.html", request)
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -89,7 +89,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.avatar_photos = self.photo.creator.get_avatar_photos()
-        self.template_name = get_detail_template_user(self.photo.creator, "photo_user/", "avatar_photo.html", request)
+        self.template_name = get_detail_template_user(self.photo.creator, "u_photo/", "avatar_photo.html", request)
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
