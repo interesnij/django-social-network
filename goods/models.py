@@ -88,20 +88,16 @@ class Good(models.Model):
 	def notification_user_repost(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
 
-    def notification_user_like(self, user):
+	def notification_user_like(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
-
-    def notification_user_dislike(self, user):
+	def notification_user_dislike(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
-
-    def notification_community_repost(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
-
-    def notification_community_like(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.LIKE, key='social_update', community=community, good=self, comment=None)
-
-    def notification_community_dislike(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.DISLIKE, key='social_update', community=community, good=self, comment=None)
+	def notification_community_repost(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
+	def notification_community_like(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.LIKE, key='social_update', community=community, good=self, comment=None)
+	def notification_community_dislike(self, user, community):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodNotification.DISLIKE, key='social_update', community=community, good=self, comment=None)
 
 	def likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
