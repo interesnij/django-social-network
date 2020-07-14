@@ -6,7 +6,7 @@ from notify.model.good import GoodNotify, GoodCommunityNotify
 
 
 class GoodNotificationListView(LoginRequiredMixin, ListView):
-    model = GoodNotification
+    model = GoodNotify
     context_object_name = 'notification_list'
     template_name = 'not_good/user_notify_list.html'
 
