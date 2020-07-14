@@ -212,11 +212,11 @@ class GoodComment(models.Model):
 	    likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
 	    return likes.count()
 
-	def dislikes_count(self):
-		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
-		return dislikes.count()
-	def __str__(self):
-		return str(self.good)
+    def dislikes_count(self):
+	    dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
+	    return dislikes.count()
+    def __str__(self):
+	    return str(self.good)
 
     @classmethod
     def create_comment(cls, commenter, good=None, parent_comment=None, text=None, created=None ):
