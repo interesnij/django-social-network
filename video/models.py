@@ -33,43 +33,6 @@ class VideoCategory(models.Model):
         verbose_name_plural = "Категории ролика"
 
 
-class VideoTags(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
-    order = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.name
-
-    def is_video_in_tag(self, video_id):
-        self.video_tag.filter(id=video_id).exists()
-
-    def get_categories(self):
-        from django.db.models import Q
-
-        categories_list = []
-        categories = self.video_tag.values('category_id')
-        categories_ids = [id['category_id'] for id in categories]
-        for category in categories_ids:
-            if not category in categories_list:
-                categories_list = categories_list + [category,]
-
-        categories_query = Q(id__in=categories_list)
-        result = VideoCategory.objects.filter(categories_query)
-        return result
-
-    def playlist_too(self):
-        queryset = self.track_tag.all()
-        return queryset
-
-    def get_tracks_count(self):
-        return self.video_tag.count()
-
-    class Meta:
-        verbose_name = "тег"
-        verbose_name_plural = "теги"
-
-
 class VideoAlbum(models.Model):
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -118,7 +81,6 @@ class Video(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=500, blank=True, verbose_name="Описание")
     category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
-    tag = models.ForeignKey(VideoTags, blank=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег")
     title = models.CharField(max_length=255, verbose_name="Название")
     uri = models.CharField(max_length=255, verbose_name="Ссылка на видео")
     is_deleted = models.BooleanField(default=False, verbose_name="Удален")
