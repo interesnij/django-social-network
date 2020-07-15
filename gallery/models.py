@@ -227,7 +227,7 @@ class PhotoComment(models.Model):
         return dislikes[0:6]
 
     def __str__(self):
-        return str(self.photo_comment.id)
+        return self.text
 
     def likes_count(self):
         likes = PhotoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
