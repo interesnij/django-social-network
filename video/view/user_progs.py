@@ -127,7 +127,7 @@ class UserVideoDelete(View):
             video.save(update_fields=['is_deleted'])
         return HttpResponse("!")
 
-class UserPhotoAbortDelete(View):
+class UserVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if video.creator == request.user:
@@ -144,7 +144,7 @@ class UserOpenCommentVideo(View):
             video.save(update_fields=['comments_enabled'])
         return HttpResponse("!")
 
-class UserCloseCommentPhoto(View):
+class UserCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if video.creator == request.user:
