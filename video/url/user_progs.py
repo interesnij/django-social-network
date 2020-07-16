@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesVideo.as_view()),
 
     url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', VideoUserCommentList.as_view()),
-    url(r'^post-comment/$', login_required(VideoCommentUserCreate.as_view())),
-    url(r'^reply-comment/$', login_required(VideoReplyUserCreate.as_view())),
-    url(r'^delete_comment/(?P<pk>\d+)/$', login_required(VideoCommentUserDelete.as_view())),
-	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(VideoCommentUserAbortDelete.as_view())),
+    url(r'^post-comment/$', VideoCommentUserCreate.as_view()),
+    url(r'^reply-comment/$', VideoReplyUserCreate.as_view()),
+    url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentUserDelete.as_view()),
+	url(r'^abort_delete_comment/(?P<pk>\d+)/$', VideoCommentUserAbortDelete.as_view()),
 ]
