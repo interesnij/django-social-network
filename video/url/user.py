@@ -1,8 +1,5 @@
 from django.conf.urls import url
-from video.view.user import (
-                                UserVideoList, UserVideoDetail,
-                                UserCreateListWindow, UserCreateVideoListWindow, UserCreateVideoAttachWindow
-                            )
+from video.view.user_progs import *
 
 
 urlpatterns = [

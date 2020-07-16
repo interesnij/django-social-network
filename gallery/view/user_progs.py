@@ -2,12 +2,11 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from gallery.models import Album, Photo
+from gallery.models import Album, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from gallery.models import Photo, PhotoComment
 from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView

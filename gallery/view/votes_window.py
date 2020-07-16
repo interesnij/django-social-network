@@ -20,7 +20,7 @@ class PhotoUserLikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.photo.window_likes()
-        context["text"] = "Оценили:"
+        context["text"] = "Фото одобрили:"
         context["class_name"] = "u_all_photo_likes"
         return context
 
@@ -38,7 +38,7 @@ class PhotoUserDislikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoUserDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.photo.window_dislikes()
-        context["text"] = "Не оценили:"
+        context["text"] = "Фото не одобрили:"
         context["class_name"] = "u_all_photo_dislikes"
         return context
 
@@ -54,7 +54,7 @@ class PhotoUserCommentLikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoUserCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
-        context["text"] = "Оценили:"
+        context["text"] = "Коммент одобрили:"
         context["class_name"] = "u_all_photo_comment_likes"
         return context
 
@@ -70,7 +70,7 @@ class PhotoUserCommentDislikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoUserCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
-        context["text"] = "Не оценили:"
+        context["text"] = "Коммент не одобрили:"
         context["class_name"] = "u_all_photo_comment_dislikes"
         return context
 
@@ -88,7 +88,7 @@ class PhotoCommunityLikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoCommunityLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.photo.window_likes()
-        context["text"] = "Оценили:"
+        context["text"] = "Фото одобрили:"
         context["class_name"] = "c_all_photo_likes"
         return context
 
@@ -106,7 +106,7 @@ class PhotoCommunityDislikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoCommunityDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.photo.window_dislikes()
-        context["text"] = "Не оценили:"
+        context["text"] = "Фото не одобрили:"
         context["class_name"] = "u_all_photo_dislikes"
         return context
 
@@ -121,7 +121,7 @@ class PhotoCommunityCommentLikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoCommunityCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"] = self.comment.window_likes()
-        context["text"] = "Оценили:"
+        context["text"] = "Коммент одобрили:"
         context["class_name"] = "c_all_photo_comment_likes"
         return context
 
@@ -136,7 +136,7 @@ class PhotoCommunityCommentDislikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"] = self.comment.window_dislikes()
-        context["text"] = "Не оценили:"
+        context["text"] = "Коммент не одобрили:"
         context["class_name"] = "c_all_photo_comment_dislikes"
         return context
 
@@ -156,7 +156,7 @@ class AllPhotoUserLikeWindow(ListView):
     def get_context_data(self,**kwargs):
         context = super(AllPhotoUserLikeWindow,self).get_context_data(**kwargs)
         context['photo'] = self.photo
-        context['text'] = "Запись одобрили:"
+        context['text'] = "Фото одобрили:"
         return context
 
     def get_queryset(self):
@@ -177,8 +177,8 @@ class AllPhotoUserDislikeWindow(ListView):
 
     def get_context_data(self,**kwargs):
         context = super(AllPhotoUserDislikeWindow,self).get_context_data(**kwargs)
-        context['item'] = self.photo
-        context['text'] = "Запись не одобрили:"
+        context['photo'] = self.photo
+        context['text'] = "Фото не одобрили:"
         return context
 
     def get_queryset(self):
@@ -241,7 +241,7 @@ class AllPhotoCommunityLikeWindow(ListView):
     def get_context_data(self,**kwargs):
         context = super(AllPhotoCommunityLikeWindow,self).get_context_data(**kwargs)
         context['photo'] = self.photo
-        context['text'] = "Запись одобрили:"
+        context['text'] = "Фото одобрили:"
         return context
 
     def get_queryset(self):
@@ -263,7 +263,7 @@ class AllPhotoCommunityDislikeWindow(ListView):
     def get_context_data(self,**kwargs):
         context = super(AllPhotoCommunityDislikeWindow,self).get_context_data(**kwargs)
         context['photo'] = self.photo
-        context['text'] = "Запись не одобрили:"
+        context['text'] = "Фото не одобрили:"
         return context
 
     def get_queryset(self):
@@ -323,7 +323,7 @@ class AllPhotoCommunityRepostWindow(ListView):
     def get_context_data(self,**kwargs):
         context = super(AllPhotoCommunityRepostWindow,self).get_context_data(**kwargs)
         context['photo'] = self.photo
-        context['text'] = "Записью поделились:"
+        context['text'] = "Фото поделились:"
         return context
 
     def get_queryset(self):
@@ -342,7 +342,7 @@ class AllPhotoUserRepostWindow(ListView):
     def get_context_data(self,**kwargs):
         context = super(AllPhotoUserRepostWindow,self).get_context_data(**kwargs)
         context['photo'] = self.photo
-        context['text'] = "Запись одобрили:"
+        context['text'] = "Фото одобрили:"
         return context
 
     def get_queryset(self):

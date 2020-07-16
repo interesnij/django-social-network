@@ -146,7 +146,7 @@ class VideoComment(models.Model):
     text = models.TextField(blank=True)
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
+    video_comment = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -189,8 +189,8 @@ class VideoComment(models.Model):
         return str(self.item)
 
     @classmethod
-    def create_comment(cls, commenter, video=None, parent_comment=None, text=None, created=None ):
-        comment = VideoComment.objects.create(commenter=commenter, parent_comment=parent_comment, video=video, text=text)
+    def create_comment(cls, commenter, video_comment=None, parent_comment=None, text=None, created=None ):
+        comment = VideoComment.objects.create(commenter=commenter, parent_comment=parent_comment, video_comment=video_comment, text=text)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
