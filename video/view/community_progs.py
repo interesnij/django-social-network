@@ -8,7 +8,7 @@ from django.views import View
 from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
 from common.checkers import check_can_get_posts_for_community_with_name
-
+from django.views.generic import ListView
 
 
 class VideoCommunityCommentList(ListView):

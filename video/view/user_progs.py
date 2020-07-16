@@ -11,6 +11,7 @@ from users.models import User
 from django.views.generic import ListView
 from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
+from django.views.generic import ListView
 
 
 class VideoUserCommentList(ListView):
