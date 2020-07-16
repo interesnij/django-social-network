@@ -5,7 +5,7 @@ from communities.models import Community
 from video.models import VideoAlbum, Video, VideoComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from video.forms import AlbumForm, VideoForm
+from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
 from common.checkers import check_can_get_posts_for_community_with_name
 

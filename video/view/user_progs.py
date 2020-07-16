@@ -9,7 +9,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
-from video.forms import CommentForm
+from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 
 
