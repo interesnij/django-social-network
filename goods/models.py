@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from common.model.votes import GoodVotes, GoodCommentVotes
+from django.db.models import Q
 
 
 class GoodCategory(models.Model):

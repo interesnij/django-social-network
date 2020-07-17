@@ -8,7 +8,8 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from video.helpers import upload_to_video_directory
 from common.model.votes import VideoVotes, VideoCommentVotes
-from notify.model.video import *
+from notify.model.video import * 
+from django.db.models import Q
 
 
 class VideoCategory(models.Model):
