@@ -8,6 +8,7 @@ from notify.model.good import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
+from common.model.votes import GoodVotes, GoodCommentVotes
 
 
 class GoodCategory(models.Model):
