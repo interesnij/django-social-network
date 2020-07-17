@@ -151,12 +151,12 @@ class Good(models.Model):
 		return i
 
 	def likes_count(self):
-        likes = GoodCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
-        return likes.count()
+		likes = GoodCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
+		return likes.count()
 
     def dislikes_count(self):
-        dislikes = GoodCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
-        return dislikes.count()
+		dislikes = GoodCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
+		return dislikes.count()
 
 
 class GoodComment(models.Model):
