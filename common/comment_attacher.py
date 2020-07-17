@@ -47,12 +47,12 @@ def article_attach(value, comment):
     except:
         raise ValidationError('Статья не найдена')
 
-def get_comment_attach(request, comment):
+def get_comment_attach(request, comment, value):
     if request.POST.get('photo'):
         if request.POST.get('select_photo1'):
-            photo_attach(request.POST.get('select_photo1'), comment, "item_comment")
+            photo_attach(request.POST.get('select_photo1'), comment, value)
         if request.POST.get('select_photo2'):
-            photo_attach(request.POST.get('select_photo2'), comment, "item_comment")
+            photo_attach(request.POST.get('select_photo2'), comment, value)
 
     if request.POST.get('video'):
         if request.POST.get('select_video1'):
