@@ -80,14 +80,14 @@ on('#ajax', 'click', '.c_video_like', function() {
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_like(video, "/video/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/video/video_window/c_like_window/" + uuid + "/", "/video/video_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/video/window/c_like_window/" + uuid + "/", "/video/window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_video_dislike', function() {
   video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_dislike(video, "/video/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/video/video_window/c_like_window/" + uuid + "/", "/video/video_window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  vote_reload("/video/window/c_like_window/" + uuid + "/", "/video/window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.c_video_like2', function() {
   _this = this;
@@ -101,5 +101,5 @@ on('#ajax', 'click', '.c_video_dislike2', function() {
   video = _this.parentElement;
   comment_pk = video.getAttribute("data-pk");
   send_dislike(video, "/video/votes/community_comment/" + comment_pk + "/" + "/dislike/");
-  vote_reload("/video/video_window/c_comment_like_window/" + comment_pk + "/", "/video/video_window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  vote_reload("/video/window/c_comment_like_window/" + comment_pk + "/", "/video/window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });

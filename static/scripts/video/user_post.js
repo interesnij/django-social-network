@@ -84,14 +84,14 @@ on('#ajax', 'click', '.u_video_like', function() {
   uuid = video.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(video, "/video/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/video/video_window/u_like_window/" + uuid + "/", "/video/video_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/video/window/u_like_window/" + uuid + "/", "/video/window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_video_dislike', function() {
   video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = video.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(video, "/video/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/video/video_window/u_like_window/" + uuid + "/", "/video/video_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  vote_reload("/video/window/u_like_window/" + uuid + "/", "/video/window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.u_video_like2', function() {
   _this = this;
@@ -99,7 +99,7 @@ on('#ajax', 'click', '.u_video_like2', function() {
   comment_pk = video.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(video, "/video/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/video/video_window/u_comment_like_window/" + comment_pk + "/", "/video/video_window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/video/window/u_comment_like_window/" + comment_pk + "/", "/video/window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_video_dislike2', function() {
   _this = this;
@@ -107,5 +107,5 @@ on('#ajax', 'click', '.u_video_dislike2', function() {
   comment_pk = video.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(video, "/video/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/video/video_window/u_comment_like_window/" + comment_pk + "/", "/video/video_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  vote_reload("/video/window/u_comment_like_window/" + comment_pk + "/", "/video/window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });

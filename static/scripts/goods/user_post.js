@@ -113,7 +113,7 @@ on('#ajax', 'click', '.u_good_like', function() {
   pk = block.getAttribute("data-pk");
   uuid = block.getAttribute("data-uuid");
   send_like(block, "/goods/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/goods/good_window/u_like_window/" + uuid + "/", "/goods/good_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  vote_reload("/goods/window/u_like_window/" + uuid + "/", "/goods/window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_good_dislike', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -131,7 +131,7 @@ on('#ajax', 'click', '.u_good_like2', function() {
   vote_reload("/goods/window/u_comment_like_window/" + comment_pk + "/", "/goods/window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_good_dislike2', function() {
-  _this = this; 
+  _this = this;
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
