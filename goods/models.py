@@ -196,19 +196,19 @@ class GoodComment(models.Model):
         return self.good_comment_replies.count()
 
     def likes(self):
-        likes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__gt=0)
+        likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
         return likes
 
     def window_likes(self):
-        likes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__gt=0)
+        likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
-        dislikes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__lt=0)
+        dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
         return dislikes
 
     def window_dislikes(self):
-        dislikes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__lt=0)
+        dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
         return dislikes[0:6]
 
     def likes_count(self):
