@@ -104,6 +104,10 @@ class Good(models.Model):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
 		return likes
 
+	def likes_count(self):
+        likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+        return likes.count()
+
 	def window_likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
 		return likes[0:6]
@@ -111,6 +115,11 @@ class Good(models.Model):
 	def dislikes(self):
 		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
 		return dislikes
+
+	def dislikes_count(self):
+        dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+        return dislikes.count()
+
 	def window_dislikes(self):
 		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
 		return dislikes[0:6]
@@ -140,6 +149,14 @@ class Good(models.Model):
 			i = i + comment.count_replies()
 		i = i + parents_count
 		return i
+
+	def likes_count(self):
+        likes = GoodCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
+        return likes.count()
+
+    def dislikes_count(self):
+        dislikes = GoodCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
+        return dislikes.count()
 
 
 class GoodComment(models.Model):

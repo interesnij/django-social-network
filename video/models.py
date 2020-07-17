@@ -8,7 +8,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from video.helpers import upload_to_video_directory
 from common.model.votes import VideoVotes, VideoCommentVotes
-from notify.model.video import * 
+from notify.model.video import *
 from django.db.models import Q
 
 
@@ -174,6 +174,14 @@ class VideoComment(models.Model):
         likes = VideoCommentVotes.objects.filter(photo=self, vote__gt=0)
         return likes
 
+    def likes_count(self):
+        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+        return likes.count()
+
+    def dislikes_count(self):
+        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+        return dislikes.count()
+
     def window_likes(self):
         likes = VideoCommentVotes.objects.filter(photo=self, vote__gt=0)
         return likes[0:6]
@@ -188,6 +196,14 @@ class VideoComment(models.Model):
 
     def __str__(self):
         return str(self.item)
+
+    def likes_count(self):
+        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
+        return likes.count()
+
+    def dislikes_count(self):
+        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
+        return dislikes.count()
 
     @classmethod
     def create_comment(cls, commenter, video_comment=None, parent_comment=None, text=None, created=None ):
