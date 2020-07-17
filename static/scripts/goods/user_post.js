@@ -131,7 +131,7 @@ on('#ajax', 'click', '.u_good_like2', function() {
   vote_reload("/goods/window/u_comment_like_window/" + comment_pk + "/", "/goods/window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_good_dislike2', function() {
-  _this = this;
+  _this = this; 
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
