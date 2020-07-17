@@ -10,11 +10,11 @@ def photo_attach(value, comment, value):
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
         if value == "item_comment":
             _select_photo.item_comment.add(comment)
-        if value == "photo_comment":
+        elif value == "photo_comment":
             _select_photo.photo_comment.add(comment)
-        if value == "good_comment":
+        elif value == "good_comment":
             _select_photo.good_comment.add(comment)
-        if value == "video_comment":
+        elif value == "video_comment":
             _select_photo.video_comment.add(comment)
     except:
         raise ValidationError('Фото не найдено')
