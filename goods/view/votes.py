@@ -65,7 +65,7 @@ class GoodCommentUserLikeCreate(View):
                 likedislike.delete()
                 result = False
         except GoodCommentVotes.DoesNotExist:
-            PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
+            GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
         if user != request.user:
             comment.notification_user_comment_like(request.user)

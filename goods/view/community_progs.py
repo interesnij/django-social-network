@@ -18,10 +18,10 @@ class GoodCommunityCommentList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if not self.photo.comments_enabled:
+        if not self.good.comments_enabled:
             raise PermissionDenied('Комментарии для фотографии отключены')
         elif request.user.is_authenticated:
             if request.user.is_staff_of_community_with_name(self.community.name):
@@ -36,12 +36,12 @@ class GoodCommunityCommentList(ListView):
             if self.is_public():
                 self.template_name = "c_good_comment/anon_comments.html"
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(GoodCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(GoodCommunityCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.photo
+        context['parent'] = self.good
         context['community'] = self.community
         return context
 
