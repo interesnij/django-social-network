@@ -68,7 +68,7 @@ class GoodCommentUserCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)
-                get_comment_attach(request, new_comment, "photo_comment")
+                get_comment_attach(request, new_comment, "good_comment")
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render(request, 'u_good_comment/my_parent.html',{'comment': new_comment})
@@ -94,7 +94,7 @@ class GoodReplyUserCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
-                get_comment_attach(request, new_comment, "photo_comment")
+                get_comment_attach(request, new_comment, "good_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:
