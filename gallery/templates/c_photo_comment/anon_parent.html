@@ -34,7 +34,7 @@
                   <span class="comment_like_window">
                       {% if comment.window_likes %}
                       <div class="comment_like_pop" style="margin:15px">
-                          <span class="c_all_comment_likes" style="cursor:pointer">Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                          <span class="c_all_photo_comment_likes" style="cursor:pointer">Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
 
                           <span style="display: flex;">
                               {% for heart in comment.window_likes %}
@@ -61,7 +61,7 @@
                 <span class="comment_dislike_window">
                   {% if comment.window_dislikes %}
                 <div class="comment_dislike_pop" style="margin:15px">
-                  <span class="c_all_comment_dislikes" style="cursor:pointer">Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="c_all_photo_comment_dislikes" style="cursor:pointer">Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <span style="display: flex;">
                     {% for sheet in comment.window_dislikes %}
                     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">

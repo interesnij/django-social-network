@@ -1,0 +1,123 @@
+{% load humanize liked_user %}
+
+<div class="media reply border-bottom">
+  <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
+    <figure>
+        {% if reply.commenter.get_avatar %}
+          <img src="{{ reply.commenter.get_avatar }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+        {% else %}
+          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        {% endif %}
+    </figure>
+  </a>
+    <div class="media-body" style="overflow: inherit;">
+        <h5 class="mt-0">
+          <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
+            <span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
+          </a>
+          <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
+        </h5>
+
+        <p>{{ reply.text }}</p>
+
+        {% include 'generic/attach/c_photo_reply.html' %}
+
+        <div class="">
+            <div class="row">
+                <div class="col" data-pk="{{ reply.pk }}">
+                  <span class="like like2 c_good_like2 {% if reply.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
+                        <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
+                          <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                        </svg>
+                        <span class="likes_count">{% if reply.likes.count %}{{ reply.likes.count }}{% endif %}</span>
+                  </span>
+
+                  <span class="comment_like_window">
+                      {% if comment.window_likes %}
+                      <div class="comment_like_pop" style="margin:15px">
+                          <span class="c_all_good_comment_likes" style="cursor:pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                          <span style="display: flex;">
+                              {% for heart in reply.window_likes %}
+                              <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                                <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
+                                  {% if heart.user.get_avatar %}
+                                    <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                                  {% else %}
+                                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                  {% endif %}
+                                </figure>
+                              </a>
+                              {% endfor %}
+                          </span>
+                      </div>
+                      {% endif %}
+                  </span>
+
+                  <span class="dislike dislike2 c_good_dislike2 {% if reply.dislikes|user_in:request.user %}btn_danger{% else %}btn_default{% endif %}" title="Не нравится">
+                      <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                      <span class="dislikes_count">{% if reply.dislikes.count %}{{ reply.dislikes.count }}{% endif %}</span>
+                  </span>
+
+                  <span class="comment_dislike_window">
+                  {% if reply.window_dislikes %}
+                  <div class="comment_dislike_pop" style="margin:15px">
+                  <span class="c_all_good_comment_dislikes" style="cursor:pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span style="display: flex;">
+                    {% for sheet in reply.window_dislikes %}
+                    <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                      <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
+                        {% if sheet.user.get_avatar %}
+                          <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                        {% else %}
+                          <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                        {% endif %}
+                      </figure>
+                    </a>
+                    {% endfor %}
+                  </span>
+                  </div>
+                  {% endif %}
+                  </span>
+
+                    <span class="commenter_first_name" style="display:none">{{ reply.commenter.first_name }}</span>
+                    <span class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
+                        ответить
+                    </span>
+
+                    <span style="float: right; margin-right:10px">
+                      {% if request.user.pk == reply.commenter.pk %}
+                      <span class="u_good_comment_edit btn_default" flow="up" tooltip="Редактировать">
+                        <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                      </span>
+                      {% endif %}
+                      <span class="u_good_comment_delete btn_default" flow="up" tooltip="Удалить">
+                        <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                      </span>
+                    </span>
+
+                    <div style="display:none;margin-left:-50px;">
+                        <form>
+                            {% csrf_token %}
+                            <div class="row img_block" style="margin:10px"></div>
+
+                            <div class="row no-gutters">
+                              {% include 'c_good_comment/form_dropdown.html' %}
+                                <div class="col" style="left: -30px;">
+                                    <div class="input-group input-group-sm" style="width: 105%;">
+                                      <input type="hidden" name="pk" value="{{ community.pk }}">
+                                      <input type="hidden" name="good_comment" value="{{ comment.pk }}">
+
+                                      <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyParentGoodComment" type="button">
+                                          <svg class="svg_s_info" fill="currentColor"  viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                      </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
