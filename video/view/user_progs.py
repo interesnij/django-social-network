@@ -67,7 +67,7 @@ class VideoCommentUserCreate(View):
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.photo_comment_attacher import get_comment_attach
+                from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != photo_comment.creator.pk:
@@ -93,7 +93,7 @@ class VideoReplyUserCreate(View):
                 if user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.photo_comment_attacher import get_comment_attach
+                from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != parent.commenter.pk:

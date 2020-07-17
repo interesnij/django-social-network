@@ -64,7 +64,7 @@ class PhotoCommentCommunityCreate(View):
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.photo_comment_attacher import get_comment_attach
+                from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
@@ -87,7 +87,7 @@ class PhotoReplyCommunityCreate(View):
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.photo_comment_attacher import get_comment_attach
+                from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != parent.commenter.pk:

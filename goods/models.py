@@ -70,8 +70,12 @@ class Good(models.Model):
 	image4 = ProcessedImageField(verbose_name='изображение 4', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
 	image5 = ProcessedImageField(verbose_name='изображение 5', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
 	status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
+
 	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
 	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
+	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
+    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
+    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good') 
 
 	def __str__(self):
 		return self.title
