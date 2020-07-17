@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from good.models import Good, GoodComment
+from goods.models import Good, GoodComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
