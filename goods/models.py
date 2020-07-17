@@ -105,8 +105,8 @@ class Good(models.Model):
 		return likes
 
 	def likes_count(self):
-        likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-        return likes.count()
+		likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+		return likes.count()
 
 	def window_likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
@@ -117,8 +117,8 @@ class Good(models.Model):
 		return dislikes
 
 	def dislikes_count(self):
-        dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-        return dislikes.count()
+		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+		return dislikes.count()
 
 	def window_dislikes(self):
 		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
