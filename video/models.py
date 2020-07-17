@@ -139,12 +139,12 @@ class Video(models.Model):
         video_community_notification_handler(actor=user, recipient=None, verb=VideoNotify.DISLIKE, key='social_update', community=community, video=self, comment=None)
 
     def likes_count(self):
-		likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-		return likes.count()
+        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+        return likes.count()
 
     def dislikes_count(self):
-		dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-		return dislikes.count()
+        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+        return dislikes.count()
 
 
 class VideoComment(models.Model):
