@@ -1,3 +1,32 @@
+on('#ajax', 'change', '.goods_category', function() {
+  var val = this.value;
+  if (val == '') {
+    document.getElementById('subcat').innerHTML = "";
+  } else {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/goods/progs/cat/" + val + "/", true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var sub = document.getElementById("subcat");
+              sub.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  };
+});
+
+function good_gallery(loader){
+  thumb_list = loader.querySelectorAll(".thumb_list li");
+  thumb = loader.querySelector(".big_img");
+  thumb_list.forEach((item) => {
+    item.addEventListener("mouseover", function () {
+    image = item.children[0].src;
+      thumb.src = image;
+    });
+  });
+}
 
 on('#ajax', 'click', '.u_goodComment', function() {
   form = this.parentElement.parentElement.parentElement;

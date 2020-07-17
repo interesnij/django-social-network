@@ -38,6 +38,12 @@ on('#ajax', 'click', '.c_good_comment_abort_remove', function() {
 });
 
 
+on('#ajax', 'click', '#c_good_add', function() {
+  pk = this.getAttribute('data-pk');
+  loader = document.getElementById("good_add_loader");
+  open_fullscreen('/goods/community/add/' + pk + '/', loader)
+});
+
 on('#ajax', 'click', '.u_good_off_private', function() {
   send_photo_change(this, "/goods/community_progs/off_private/", "c_good_on_private", "Вкл. приватность")
 })
