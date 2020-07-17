@@ -32,8 +32,8 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.good = Good.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         self.goods = self.user.get_goods()
         self.template_name = self.user.get_permission_list_user(folder="u_good/", template="good.html", request=request)
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
