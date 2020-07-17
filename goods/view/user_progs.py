@@ -67,7 +67,7 @@ class GoodCommentUserCreate(View):
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good=good, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)
                 get_comment_attach(request, new_comment)
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_user_comment(request.user)
@@ -93,7 +93,7 @@ class GoodReplyUserCreate(View):
                     check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)

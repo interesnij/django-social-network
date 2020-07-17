@@ -64,7 +64,7 @@ class GoodCommentCommunityCreate(View):
             check_can_get_posts_for_community_with_name(request.user, community.name)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good=good, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)
                 get_comment_attach(request, new_comment)
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
