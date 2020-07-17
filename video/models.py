@@ -138,6 +138,14 @@ class Video(models.Model):
     def notification_community_dislike(self, user, community):
         video_community_notification_handler(actor=user, recipient=None, verb=VideoNotify.DISLIKE, key='social_update', community=community, video=self, comment=None)
 
+    def likes_count(self):
+		likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
+		return likes.count()
+
+    def dislikes_count(self):
+		dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
+		return dislikes.count()
+
 
 class VideoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', blank=True, verbose_name="Родительский комментарий")

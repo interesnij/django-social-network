@@ -150,14 +150,6 @@ class Good(models.Model):
 		i = i + parents_count
 		return i
 
-	def likes_count(self):
-		likes = GoodCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
-		return likes.count()
-	def dislikes_count(self):
-		dislikes = GoodCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
-		return dislikes.count()
-
-
 class GoodComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -218,6 +210,7 @@ class GoodComment(models.Model):
     def window_dislikes(self):
         dislikes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__lt=0)
         return dislikes[0:6]
+		
     def likes_count(self):
 	    likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
 	    return likes.count()
