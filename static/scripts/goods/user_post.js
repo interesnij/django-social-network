@@ -109,17 +109,17 @@ on('#ajax', 'click', '.user_good_abort_remove', function() {
 })
 
 on('#ajax', 'click', '.u_good_like', function() {
-  good = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = good.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(good, "/goods/votes/user_like/" + uuid + "/" + pk + "/");
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
+  uuid = block.getAttribute("data-uuid");
+  send_like(block, "/goods/votes/user_like/" + uuid + "/" + pk + "/");
   vote_reload("/goods/good_window/u_like_window/" + uuid + "/", "/goods/good_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.u_good_dislike', function() {
-  good = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = good.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(good, "/goods/votes/user_dislike/" + uuid + "/" + pk + "/");
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
+  uuid = block.getAttribute("data-uuid");
+  send_dislike(block, "/goods/votes/user_dislike/" + uuid + "/" + pk + "/");
   vote_reload("/goods/good_window/u_like_window/" + uuid + "/", "/goods/good_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
 });
 on('#ajax', 'click', '.u_good_like2', function() {
