@@ -8,4 +8,5 @@ urlpatterns=[
 	url(r'^user/', include('goods.url.user')),
 	url(r'^community/', include('goods.url.community')),
 	url(r'^votes/', include('goods.url.votes')),
+	url(r'^window/', include('goods.url.window')),
 ]

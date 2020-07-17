@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^community_progs/', include('video.url.community_progs')),
     url(r'^user/', include('video.url.user')),
     url(r'^community/', include('video.url.community')),
+    url(r'^votes/', include('video.url.votes')),
+	url(r'^window/', include('video.url.window')),
 ]
