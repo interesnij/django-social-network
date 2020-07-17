@@ -78,7 +78,7 @@ class GoodUserCreate(TemplateView):
             html = render(request, 'good_base/new_good.html',{'object': new_good})
             return HttpResponse("")
         else:
-            return HttpResponseBadRequest("")
+            return HttpResponse("")
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 
