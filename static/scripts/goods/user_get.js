@@ -41,7 +41,7 @@ on('#ajax', 'click', '.u_all_good_reposts', function() {
 
 on('#ajax', 'click', '.u_good_comments', function() {
   clear_comment_dropdown();
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
   uuid = block.getAttribute("data-uuid");
   url = "/goods/user_progs/comment/" + uuid + "/" + pk + "/";
