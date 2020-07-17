@@ -5,16 +5,16 @@ from gallery.models import Photo
 from goods.models import Good
 from article.models import Article
 
-def photo_attach(value, comment, value):
+def photo_attach(value, comment, target):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        if value == "item_comment":
+        if target == "item_comment":
             _select_photo.item_comment.add(comment)
-        elif value == "photo_comment":
+        elif target == "photo_comment":
             _select_photo.photo_comment.add(comment)
-        elif value == "good_comment":
+        elif target == "good_comment":
             _select_photo.good_comment.add(comment)
-        elif value == "video_comment":
+        elif target == "video_comment":
             _select_photo.video_comment.add(comment)
     except:
         raise ValidationError('Фото не найдено')
@@ -47,12 +47,12 @@ def article_attach(value, comment):
     except:
         raise ValidationError('Статья не найдена')
 
-def get_comment_attach(request, comment, value):
+def get_comment_attach(request, comment, target):
     if request.POST.get('photo'):
         if request.POST.get('select_photo1'):
-            photo_attach(request.POST.get('select_photo1'), comment, value)
+            photo_attach(request.POST.get('select_photo1'), comment, target)
         if request.POST.get('select_photo2'):
-            photo_attach(request.POST.get('select_photo2'), comment, value)
+            photo_attach(request.POST.get('select_photo2'), comment, target)
 
     if request.POST.get('video'):
         if request.POST.get('select_video1'):
