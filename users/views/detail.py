@@ -214,7 +214,7 @@ class ProfileUserView(TemplateView):
                 self.template_name = "account/anon_user.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
