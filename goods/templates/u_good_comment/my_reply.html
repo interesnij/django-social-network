@@ -23,7 +23,7 @@
         <p>{{ reply.text }}</p>
 
         <div class="row" data-pk="{{ reply.pk }}">
-          {% for object in reply.gallery_comment_good.all %}
+          {% for object in reply.good_comment_photo.all %}
           <div class="col-md-6">
               <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="u_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
           </div>
