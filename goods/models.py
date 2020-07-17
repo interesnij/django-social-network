@@ -74,8 +74,8 @@ class Good(models.Model):
 	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
 	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
-    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
-    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good') 
+	good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
+	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good') 
 
 	def __str__(self):
 		return self.title
