@@ -53,7 +53,7 @@ class Good(models.Model):
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
-	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, verbose_name="Сообщество")
+	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
