@@ -1,3 +1,11 @@
+on('#ajax', 'click', '.с_good_detail', function() {
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
+  pk = this.getAttribute('good-pk');
+  loader = document.getElementById("good_loader");
+  open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
+  setTimeout(function() {good_gallery(loader)}, 1000)
+});
+
 on('#ajax', 'click', '.c_goodComment', function() {
   form = this.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/post-comment/');

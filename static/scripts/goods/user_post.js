@@ -1,3 +1,11 @@
+on('#ajax', 'click', '.u_good_detail', function() {
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
+  pk = this.getAttribute('good-pk');
+  loader = document.getElementById("good_loader");
+  open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader);
+  setTimeout(function() {good_gallery(loader)}, 1000)
+});
+
 on('#ajax', 'change', '.goods_category', function() {
   var val = this.value;
   if (val == '') {
