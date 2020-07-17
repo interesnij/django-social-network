@@ -20,7 +20,39 @@
 
         <p>{{ reply.text }}</p>
 
-        {% include 'generic/attach/c_photo_reply.html' %}
+        <div class="row" data-pk="{{ comment.pk }}">
+          {% for object in reply.good_comment_photo.all %}
+          <div class="col-md-6" style="margin-left: -7px; margin-right: -7px;">
+              <img data-uuid="{{ object.uuid }}" photo-pk="{{ comment.commenter.pk }}" class="c_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
+          </div>
+          {% endfor %}
+          {% for object in reply.good_comment_video.all %}
+          <div class="col-md-6" style="margin-left: -7px; margin-right: -7px;" album-pk="{{ object.video_album.pk }}">
+              <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
+              <div class="video_icon_play_v2 c_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+          </div>
+          {% endfor %}
+          {% for object in reply.good_comment_music.all %}
+          <div class="col-md-12">
+            <div class="media" data-path="{{ object.uri }}" data-duration="{{ object.duration }}" music-counter="{{ forloop.counter0 }}">
+                <figure style="cursor:pointer">
+                  <a class="music_list_comment">
+                    {% if object.artwork_url %}
+                      <img style="width:30px;heigth:auto" data-src="{{ object.artwork_url }}" class="lazyload" />
+                    {% else %}
+                      <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                    {% endif %}
+                  </a>
+                </figure>
+                <div class="media-body" style="display: flex;">
+                    <h6 class="music_list_comment music_title" style="cursor:pointer;padding-top: 6px;">
+                      <a>{{ object.title }}</a>
+                    </h6>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
 
         <div class="">
             <div class="row">
