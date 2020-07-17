@@ -15,7 +15,7 @@ class CommunityGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template(folder="good_community/", template="goods.html", request=request)
+        self.template_name = self.user.get_template(folder="c_good/", template="goods.html", request=request)
         return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -35,7 +35,7 @@ class CommunityGood(TemplateView):
         self.community = Community.objects.get(uuid=self.kwargs["uuid"])
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.goods = self.user.get_goods()
-        self.template_name = self.user.get_permission_list(folder="good_community/", template="good.html", request=request)
+        self.template_name = self.user.get_permission_list(folder="c_good/", template="good.html", request=request)
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(CommunityGood,self).get(request,*args,**kwargs)
@@ -50,7 +50,7 @@ class CommunityGood(TemplateView):
 
 
 class GoodCommunityCreate(TemplateView):
-    template_name = "good_community/add.html"
+    template_name = "c_good/add.html"
     form = None
 
     def get(self,request,*args,**kwargs):
@@ -83,7 +83,7 @@ class GoodCommunityCreate(TemplateView):
 
 
 class GoodCommunityCreateAttach(TemplateView):
-    template_name = "good_community/add_attach.html"
+    template_name = "c_good/add_attach.html"
     form = None
 
     def get(self,request,*args,**kwargs):
@@ -108,7 +108,7 @@ class GoodCommunityCreateAttach(TemplateView):
             new_good = self.form.save(commit=False)
             new_good.creator = request.user
             new_good = self.form.save()
-            html = render(request, 'good_community/good.html',{'object': new_good})
+            html = render(request, 'c_good/good.html',{'object': new_good})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()

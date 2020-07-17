@@ -15,7 +15,7 @@ class UserGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_user(folder="good_user/", template="goods.html", request=request)
+        self.template_name = self.user.get_template_user(folder="u_good/", template="goods.html", request=request)
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -35,7 +35,7 @@ class UserGood(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.goods = self.user.get_goods()
-        self.template_name = self.user.get_permission_list_user(folder="good_user/", template="good.html", request=request)
+        self.template_name = self.user.get_permission_list_user(folder="u_good/", template="good.html", request=request)
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)
@@ -50,7 +50,7 @@ class UserGood(TemplateView):
 
 
 class GoodUserCreate(TemplateView):
-    template_name = "good_user/add.html"
+    template_name = "u_good/add.html"
     form = None
 
     def get(self,request,*args,**kwargs):
@@ -83,7 +83,7 @@ class GoodUserCreate(TemplateView):
 
 
 class GoodUserCreateAttach(TemplateView):
-    template_name = "good_user/add_attach.html"
+    template_name = "u_good/add_attach.html"
     form = None
 
     def get(self,request,*args,**kwargs):
@@ -108,7 +108,7 @@ class GoodUserCreateAttach(TemplateView):
             new_good = self.form.save(commit=False)
             new_good.creator = self.user
             new_good = self.form.save()
-            html = render(request, 'good_user/good.html',{'object': new_good})
+            html = render(request, 'u_good/good.html',{'object': new_good})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()

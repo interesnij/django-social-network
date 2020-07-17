@@ -42,7 +42,7 @@
           <span class="dislike_window">
             {% if object.window_dislikes %}
           <div class="dislike_pop" style="margin:15px">
-            <span class="c_all_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+            <span class="c_all_photo_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
               {% for sheet in object.window_dislikes %}
