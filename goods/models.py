@@ -219,7 +219,7 @@ class GoodComment(models.Model):
 	    dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
 	    return dislikes.count()
     def __str__(self):
-	    return str(self.good)
+	    return str(self.good_comment)
 
     @classmethod
     def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):
