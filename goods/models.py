@@ -210,7 +210,7 @@ class GoodComment(models.Model):
     def window_dislikes(self):
         dislikes = GoodCommentVotes.objects.filter(good_id=self.pk, vote__lt=0)
         return dislikes[0:6]
-		
+
     def likes_count(self):
 	    likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
 	    return likes.count()
@@ -222,8 +222,8 @@ class GoodComment(models.Model):
 	    return str(self.good)
 
     @classmethod
-    def create_comment(cls, commenter, good=None, parent_comment=None, text=None, created=None ):
-        comment = GoodComment.objects.create(commenter=commenter, parent_comment=parent_comment, good=good, text=text)
+    def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):
+        comment = GoodComment.objects.create(commenter=commenter, parent_comment=parent_comment, good_comment=good_comment, text=text)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
