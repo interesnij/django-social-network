@@ -7,14 +7,12 @@ on('#ajax', 'click', '.u_good_detail', function() {
 });
 
 on('#ajax', 'click', '.u_all_good_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_user_like/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_all_good_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_user_dislike/" + uuid + "/", loader)
 });
@@ -33,8 +31,7 @@ on('#ajax', 'click', '.u_all_good_comment_dislikes', function() {
 });
 
 on('#ajax', 'click', '.u_all_good_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_user_reposts/" + uuid + "/", loader)
 });
