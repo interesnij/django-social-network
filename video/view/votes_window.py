@@ -264,7 +264,7 @@ class AllVideoCommunityDislikeWindow(ListView):
         return users
 
 
-class AllVideoommunityCommentLikeWindow(ListView):
+class AllVideoCommunityCommentLikeWindow(ListView):
     template_name = None
     paginate_by = 15
 
