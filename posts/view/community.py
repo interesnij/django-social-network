@@ -62,7 +62,7 @@ class PostCommunityCommentCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
-                get_comment_attach(request, new_comment)
+                get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render(request, 'c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -83,7 +83,7 @@ class PostCommunityReplyCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text, post=None)
-                get_comment_attach(request, new_comment)
+                get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
                 return render(request, 'c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})

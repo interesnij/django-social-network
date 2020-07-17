@@ -70,12 +70,15 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
-    item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
-    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     id = models.BigAutoField(primary_key=True)
+
+    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
+    item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
+    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
+    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_photo')
+    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_photo')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

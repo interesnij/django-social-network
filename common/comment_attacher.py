@@ -5,10 +5,17 @@ from gallery.models import Photo
 from goods.models import Good
 from article.models import Article
 
-def photo_attach(value, comment):
+def photo_attach(value, comment, value):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        _select_photo.item_comment.add(comment)
+        if value == "item_comment":
+            _select_photo.item_comment.add(comment)
+        if value == "photo_comment":
+            _select_photo.photo_comment.add(comment)
+        if value == "good_comment":
+            _select_photo.good_comment.add(comment)
+        if value == "video_comment":
+            _select_photo.video_comment.add(comment)
     except:
         raise ValidationError('Фото не найдено')
 
@@ -43,9 +50,9 @@ def article_attach(value, comment):
 def get_comment_attach(request, comment):
     if request.POST.get('photo'):
         if request.POST.get('select_photo1'):
-            photo_attach(request.POST.get('select_photo1'), comment)
+            photo_attach(request.POST.get('select_photo1'), comment, "item_comment")
         if request.POST.get('select_photo2'):
-            photo_attach(request.POST.get('select_photo2'), comment)
+            photo_attach(request.POST.get('select_photo2'), comment, "item_comment")
 
     if request.POST.get('video'):
         if request.POST.get('select_video1'):

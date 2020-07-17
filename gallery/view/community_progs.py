@@ -66,7 +66,7 @@ class PhotoCommentCommunityCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
-                get_comment_attach(request, new_comment)
+                get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render(request, 'c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -89,7 +89,7 @@ class PhotoReplyCommunityCreate(View):
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.photo_comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
-                get_comment_attach(request, new_comment)
+                get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
             else:
