@@ -221,7 +221,7 @@ on('#ajax', 'click', '.c_post_wall_abort_remove', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/abort_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community/wall_abort_delete/" + pk + "/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
