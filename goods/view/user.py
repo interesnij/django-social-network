@@ -107,7 +107,7 @@ class GoodUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid():
+        if self.form.is_valid() and self.user.pk == request.user.pk:
             new_good = self.form.save(commit=False)
             new_good.creator = self.user
             new_good = self.form.save()
