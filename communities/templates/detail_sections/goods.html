@@ -1,6 +1,16 @@
 
 {% if community_goods %}
 <div class="card mb-3">
+  <div class="card-header">
+    <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+      <div class="media">
+          <div class="media-body">
+              <h4 class="content-color-primary mb-0">Товары</h4>
+          </div>
+          {{ community.count_goods }}
+      </div>
+    </a>
+  </div>
     {% for object in community_goods %}
     <div class="col-md-4 c_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer">
             <div class="">
@@ -25,9 +35,9 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'all_music' %}" class="ajax">
+            <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
                 <div class="media-body">
-                    <h4 class="content-color-primary mb-0">Добавьте музыку</h4>
+                    <h4 class="content-color-primary mb-0">Добавьте товары</h4>
                 </div>
             </a>
         </div>

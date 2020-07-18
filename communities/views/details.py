@@ -203,5 +203,5 @@ class CommunityDetail(TemplateView):
         context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
         context["community"] = self.community
         context["common_friends"] = self.common_friends
-        context["community_goods"] = self.community.community.get_goods()[:3]
+        context["community_goods"] = self.community.get_goods()[:3]
         return context
