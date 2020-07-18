@@ -58,12 +58,12 @@ class UserGood(TemplateView):
                 else:
                     self.template_name = "u_good/good.html"
             try:
-                VideoNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
             except:
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
+                    GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
                 else:
-                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
+                    GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
