@@ -63,7 +63,7 @@ class CommunityGood(TemplateView):
             if self.community.is_public():
                 self.template_name = "c_lenta/anon_good.html"
             else:
-                raise PermissionDenied('Ошибка доступа.')
+                self.template_name = "c_good/anon_close_good.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

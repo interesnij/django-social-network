@@ -54,7 +54,7 @@ class UserGood(TemplateView):
                     if  request.user.is_connected_with_user_with_id(user_id=self.user.pk) or request.user.is_followers_user_with_id(user_id=self.user.pk):
                         self.template_name = "u_good/good.html"
                     else:
-                        raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+                        self.template_name = "u_good/close_good.html"
                 else:
                     self.template_name = "u_good/good.html"
             try:
@@ -66,7 +66,7 @@ class UserGood(TemplateView):
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+                self.template_name = "u_good/anon_close_good.html"
             else:
                 self.template_name = "u_good/anon_good.html"
 
