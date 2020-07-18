@@ -125,7 +125,7 @@ on('#ajax', 'click', '.c_good_dislike2', function() {
   vote_reload("/goods/window/c_comment_like_window/" + comment_pk + "/", "/goods/window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
 
-on('#ajax', 'click', '#add_good_user_btn', function() {
+on('#ajax', 'click', '#add_good_community_btn', function() {
   if (!document.body.querySelector("#id_title").value){
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
