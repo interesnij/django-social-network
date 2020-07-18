@@ -160,8 +160,8 @@ class Good(models.Model):
 		return i
 
 	def all_visits_count(self):
-		from stst.models import VideoNumbers
-		return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
+		from stst.models import GoodNumbers
+		return GoodNumbers.objects.filter(video=self.pk).values('pk').count()
 
 
 class GoodComment(models.Model):
