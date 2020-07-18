@@ -18,7 +18,7 @@ class CommunityGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template(folder="c_good/", template="goods.html", request=request)
+        self.template_name = self.community.get_template(folder="c_good/", template="goods.html", request=request)
         return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
