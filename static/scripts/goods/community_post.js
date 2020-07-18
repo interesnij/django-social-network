@@ -47,7 +47,7 @@ on('#ajax', 'click', '.c_good_comment_abort_remove', function() {
 
 
 on('#ajax', 'click', '#c_good_add', function() {
-  pk = this.getAttribute('data-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("good_add_loader");
   open_fullscreen('/goods/community/add/' + pk + '/', loader)
 });
