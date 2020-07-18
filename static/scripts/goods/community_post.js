@@ -28,12 +28,12 @@ on('#ajax', 'click', '.c_replyParentGoodComment', function() {
 });
 
 on('#ajax', 'click', '.c_good_off_comment', function() {
-  send_photo_change(this, "/goods/community_progs/off_comment/", "c_good_on_comment", "Вкл. комментарии");
+  send_change(this, "/goods/community_progs/off_comment/", "c_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".c_good_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_good_on_comment', function() {
-  send_photo_change(this, "/goods/community_progs/on_comment/", "c_good_off_comment", "Выкл. комментарии");
+  send_change(this, "/goods/community_progs/on_comment/", "c_good_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".c_good_comments").style.display = "unset"
 })
@@ -53,27 +53,35 @@ on('#ajax', 'click', '#c_good_add', function() {
 });
 
 on('#ajax', 'click', '.u_good_off_private', function() {
-  send_photo_change(this, "/goods/community_progs/off_private/", "c_good_on_private", "Вкл. приватность")
+  send_change(this, "/goods/community_progs/off_private/", "c_good_on_private", "Вкл. приватность")
 })
 on('#ajax', 'click', '.c_good_on_private', function() {
-  send_photo_change(this, "/goods/community_progs/on_private/", "c_good_off_private", "Выкл. приватность")
+  send_change(this, "/goods/community_progs/on_private/", "c_good_off_private", "Выкл. приватность")
 })
 
 on('#ajax', 'click', '.c_good_off_votes', function() {
-  send_photo_change(this, "/goods/community_progs/off_votes/", "c_good_on_votes", "Вкл. реакции");
+  send_change(this, "/goods/community_progs/off_votes/", "c_good_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.c_good_on_votes', function() {
-  send_photo_change(this, "/goods/community_progs/on_votes/", "c_good_off_votes", "Выкл. реакции");
+  send_change(this, "/goods/community_progs/on_votes/", "c_good_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 })
+on('#ajax', 'click', '.c_good_hide', function() {
+  send_change(this, "/goods/community_progs/hide/", "u_good_unhide", "Товар не виден");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+})
+on('#ajax', 'click', '.c_good_unhide', function() {
+  send_change(this, "/goods/community_progs/unhide/", "u_good_hide", "Товар виден");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+})
 
 on('#ajax', 'click', '.community_good_remove', function() {
-  send_photo_change(this, "/goods/community_progs/delete/", "community_good_abort_remove", "Отмена");
+  send_change(this, "/goods/community_progs/delete/", "community_good_abort_remove", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
@@ -81,7 +89,7 @@ on('#ajax', 'click', '.community_good_remove', function() {
   this.style.color = "#FF0000";
 })
 on('#ajax', 'click', '.community_good_abort_remove', function() {
-  send_photo_change(this, "/goods/community_progs/abort_delete/", "community_good_remove", "Удалить");
+  send_change(this, "/goods/community_progs/abort_delete/", "community_good_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
