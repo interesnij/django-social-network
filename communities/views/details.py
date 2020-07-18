@@ -21,7 +21,7 @@ class CommunityMusic(ListView):
             self.playlist = SoundList.objects.get(community_id=self.community.pk, is_generic=True, name="Основной плейлист")
         except:
             self.playlist = None
-        self.template_name = self.user.get_template(folder="community_music/", template="music.html", request=request)
+        self.template_name = self.community.get_template(folder="community_music/", template="music.html", request=request)
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
