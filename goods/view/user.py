@@ -26,7 +26,10 @@ class UserGoods(ListView):
         return context
 
     def get_queryset(self):
-        goods_list = self.user.get_goods().order_by('-created')
+        if self.user.pk == self.request.user.pk:
+            goods_list = self.user.get_my_goods().order_by('-created')
+        else:
+            goods_list = self.user.get_goods().order_by('-created')
         return goods_list
 
 

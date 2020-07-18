@@ -24,7 +24,10 @@ class CommunityGoods(ListView):
         return context
 
     def get_queryset(self):
-        goods_list = self.community.get_goods().order_by('-created')
+        if self.request.user.is_staff_of_community_with_name(self.community.name):
+            goods_list = self.user.get_admin_goods().order_by('-created')
+        else:
+            goods_list = self.user.get_goods().order_by('-created')
         return goods_list
 
 
