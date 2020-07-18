@@ -24,7 +24,7 @@
   {% endif %}
 
     <div class="card mb-3" data-uuid="{{ object.uuid }}" data-pk="{{ user.pk }}">
-        <div class="card-body py-0">
+        <div class="card-body py-0" data-uuid="{{ object.uuid }}">
             <div class="row">
                 <div class="col-md-8">
                   <div class="product-gallery">
@@ -86,6 +86,6 @@
                     </div>
                 </div>
             </div>
-            {% include 'u_good/info.html' %} 
+            {% include 'u_good/info.html' %}
         </div>
     </div>
