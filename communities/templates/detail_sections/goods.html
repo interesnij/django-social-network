@@ -1,6 +1,6 @@
 
 {% if community_goods %}
-<div class="card mb-3">
+<div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
       <div class="media">
@@ -32,7 +32,7 @@
     {% endfor %}
 </div>
 {% else %}
-<div class="card mb-3">
+<div class="card mt-3">
     <div class="card-header">
         <div class="media centered">
             <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
