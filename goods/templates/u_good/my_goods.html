@@ -55,8 +55,8 @@
                                   <p class="content-color-secondary small mb-0">Цена</p>
                               </div>
                               <div class="col py-3">
-                                  <h5 class="content-color-primary mb-0">12</h5>
-                                  <p class="content-color-secondary small mb-0">Просмотров</p>
+                                  <h5 class="content-color-primary mb-0">{{ object.all_visits_count }}</h5>
+                                  <p class="content-color-secondary small mb-0">{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</p>
                               </div>
                           </div>
                       </div>

@@ -54,7 +54,7 @@ class CommunityGood(TemplateView):
                 self.template_name = "c_lenta/anon_good.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+            self.template_name = "mob_" + self.template_name
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(CommunityGood,self).get(request,*args,**kwargs)
