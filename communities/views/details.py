@@ -47,7 +47,7 @@ class CommunityVideo(ListView):
         try:
             self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
         except:
-            self.album = None
+            self.album = VideoAlbum.objects.create(community_id=self.community.pk, community=self.community, is_generic=True, title="Все видео")
         if request.user.is_staff_of_community_with_name(self.community.name):
             self.video_list = self.album.get_my_queryset()
         else:
