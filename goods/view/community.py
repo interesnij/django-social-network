@@ -7,6 +7,7 @@ from goods.forms import GoodForm
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
+from stst.models import GoodNumbers
 
 
 class CommunityGoods(ListView):
@@ -49,9 +50,18 @@ class CommunityGood(TemplateView):
                 self.template_name = "c_lenta/good.html"
             else:
                 self.template_name = "c_lenta/good.html"
+            try:
+                VideoNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+            except:
+                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
+                else:
+                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
             if self.community.is_public():
                 self.template_name = "c_lenta/anon_good.html"
+            else:
+                raise PermissionDenied('Ошибка доступа.')
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

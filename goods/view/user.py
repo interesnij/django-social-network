@@ -9,6 +9,7 @@ from goods.forms import GoodForm
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
+from stst.models import GoodNumbers
 
 
 class UserGoods(ListView):
@@ -56,6 +57,13 @@ class UserGood(TemplateView):
                         raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
                 else:
                     self.template_name = "u_good/good.html"
+            try:
+                VideoNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+            except:
+                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
+                else:
+                    VideoNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
