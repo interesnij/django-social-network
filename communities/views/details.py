@@ -20,7 +20,7 @@ class CommunityMusic(ListView):
         try:
             self.playlist = SoundList.objects.get(community_id=self.community.pk, is_generic=True, name="Основной плейлист")
         except:
-            self.playlist = None
+            self.playlist = SoundList.objects.get(creator=self.community.creator, community_id=self.community.pk, is_generic=True, name="Основной плейлист")
         self.template_name = self.community.get_template(folder="community_music/", template="music.html", request=request)
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
@@ -47,7 +47,8 @@ class CommunityVideo(ListView):
         try:
             self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
         except:
-            self.album = VideoAlbum.objects.create(community_id=self.community.pk, community=self.community, is_generic=True, title="Все видео")
+            creator = self.community.creator
+            self.album = VideoAlbum.objects.create(creator=self.community.creator, community_id=self.community.pk, community=self.community, is_generic=True, title="Все видео")
         if request.user.is_staff_of_community_with_name(self.community.name):
             self.video_list = self.album.get_my_queryset()
         else:
