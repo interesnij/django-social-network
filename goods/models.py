@@ -75,7 +75,7 @@ class Good(models.Model):
 	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
 	good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
-	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good') 
+	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good')
 
 	def __str__(self):
 		return self.title
@@ -153,6 +153,10 @@ class Good(models.Model):
 			i = i + comment.count_replies()
 		i = i + parents_count
 		return i
+
+	def all_visits_count(self):
+        from stst.models import VideoNumbers
+        return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
 class GoodComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
