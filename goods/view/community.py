@@ -53,7 +53,7 @@ class CommunityGood(TemplateView):
             else:
                 self.template_name = "c_lenta/good.html"
             try:
-                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+                GoodNumbers.objects.filter(user=request.user.pk, good=self.good.pk).exists()
             except:
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
