@@ -11,7 +11,7 @@ def user_in(objects, user):
     return False
 
 @register.filter
-def rupluralize(value, arg="дурак,дурака,дураков"):
+def rupluralize(value, arg="единица,единицы,единиц"):
     args = arg.split(",")
     number = abs(int(value))
     a = number % 10
