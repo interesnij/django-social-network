@@ -79,16 +79,17 @@ class Good(models.Model):
 	def __str__(self):
 		return self.title
 
-	#def save(self, *args, **kwargs):
-	#	super().save(*args, **kwargs)
-	#	channel_layer = get_channel_layer()
-	#	payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
-	#	async_to_sync(channel_layer.group_send)('notifications', payload)
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		channel_layer = get_channel_layer()
+		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
+		async_to_sync(channel_layer.group_send)('notifications', payload)
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
+		ordering = ["-created"]
 
 	def notification_user_repost(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotify.REPOST, key='social_update', good=self, comment=None)
