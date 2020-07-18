@@ -190,7 +190,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     document.body.querySelector("#id_description").style.border = "1px #FF0000 solid";
     toast_error("Описание товара - обязательное поле!");
   } else if (!document.body.querySelector("#id_image").value){
-    document.body.querySelector("#good_image").style.border = "1px #FF0000 solid";
+    document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
     toast_error("Фотография на обложку обязательна!")
   }
   pk_block = document.body.querySelector(".pk_saver");
