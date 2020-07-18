@@ -140,7 +140,7 @@ on('#ajax', 'click', '#add_good_community_btn', function() {
     toast_error("Фотография на обложку обязательна!")
   }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_good_user_form"));
+  form_data = new FormData(document.body.querySelector("#add_good_community_form"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/community/add/" + pk + "/", true );
 
