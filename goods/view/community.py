@@ -23,7 +23,7 @@ class CommunityGoods(ListView):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityGoods,self).get_context_data(**kwargs)
-        context["user"] = self.user
+        context["community"] = self.community
         return context
 
     def get_queryset(self):
