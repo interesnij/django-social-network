@@ -113,7 +113,7 @@ class GoodUserCreate(TemplateView):
             new_good = self.form.save()
             return render(request, 'good_base/new_good.html',{'object': new_good})
         else:
-            return HttpResponse("")
+            return HttpResponseBadRequest("")
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 
