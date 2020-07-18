@@ -124,3 +124,39 @@ on('#ajax', 'click', '.c_good_dislike2', function() {
   send_dislike(good, "/goods/votes/community_comment/" + comment_pk + "/" + "/dislike/");
   vote_reload("/goods/window/c_comment_like_window/" + comment_pk + "/", "/goods/window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
 });
+
+on('#ajax', 'click', '#add_good_user_btn', function() {
+  if (!document.body.querySelector("#id_title").value){
+    document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else if (!document.body.querySelector("#category").value){
+    document.body.querySelector("#category").style.border = "1px #FF0000 solid";
+    toast_error("Категория - обязательное поле!")
+  } else if (!document.body.querySelector("#id_description").value){
+    document.body.querySelector("#id_description").style.border = "1px #FF0000 solid";
+    toast_error("Описание товара - обязательное поле!");
+  } else if (!document.body.querySelector("#id_image").value){
+    document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
+    toast_error("Фотография на обложку обязательна!")
+  }
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(document.body.querySelector("#add_good_user_form"));
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/goods/community/add/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_good = document.createElement("span");
+    new_good.innerHTML = elem;
+
+    goods = document.body.querySelector("#goods_container");
+    new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
+                                              goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
+    : null;
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
+  toast_info("Товар создан!")
+  }};
+  link_.send(form_data);
+});
