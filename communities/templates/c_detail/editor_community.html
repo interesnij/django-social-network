@@ -35,7 +35,54 @@
                     </li>
                   </ul>
             </div>
-            <br>
+
+
+            {% if community_goods %}
+            <div class="card mt-3">
+              <div class="card-header">
+                <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h4 class="content-color-primary mb-0">Товары</h4>
+                      </div>
+                      {{ community.count_goods }}
+                  </div>
+                </a>
+              </div>
+                {% for object in community_goods %}
+                <div class="col-md-4 c_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer">
+                        <div class="">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col">
+                                        <div class="text-center">
+                                          {% if object.image %}
+                                            <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                          {% else %}
+                                            <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                          {% endif %}
+                                        </div>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+                            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+                        </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="media centered">
+                        <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+                            <div class="media-body">
+                                <h4 class="content-color-primary mb-0">Добавьте товары</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             {% include 'detail_sections/new_post.html' %}
 
             <div id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
