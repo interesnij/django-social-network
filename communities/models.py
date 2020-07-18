@@ -174,21 +174,18 @@ class Community(models.Model):
 
     def get_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_archive_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
         posts = Post.objects.filter(posts_query)
@@ -198,33 +195,25 @@ class Community(models.Model):
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
-        #exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
     def get_admin_goods(self):
         from goods.models import Good
 
         goods_query = Q(community_id=self.pk, is_deleted=False)
-        #exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Photo
 
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(is_deleted=False, album__pk=album_id, is_public=True)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_admin_album(self, album_id):
         from gallery.models import Photo
 
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(is_deleted=False, album_id=album_id)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
@@ -232,16 +221,12 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, is_public=True, community=self)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_admin_photos(self):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, community=self)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
@@ -249,8 +234,6 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=self)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)
         return avatar_photos
 
@@ -258,8 +241,6 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
-        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -273,8 +254,6 @@ class Community(models.Model):
         from gallery.models import Photo
 
         photos_query = Q(community=self, is_deleted=False, is_public=True)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos[0:6]
 
@@ -282,28 +261,22 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False, community=None)
-        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
         music_query = Q(list=list, is_deleted=False)
-        #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
 
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        #exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
         music_query = Q(list=list, is_deleted=False)
-        #music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 

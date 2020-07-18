@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good
@@ -35,7 +37,30 @@ class UserGood(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         self.goods = self.user.get_goods()
-        self.template_name = self.user.get_permission_list_user(folder="u_good/", template="good.html", request=request)
+
+        if request.user.is_authenticated:
+            if self.user.pk == request.user.pk:
+                self.template_name = "u_good/my_good.html"
+                self.goods = self.user.get_my_goods()
+            elif request.user.is_post_manager():
+                self.template_name = "u_good/staff_good.html"
+            elif self.user != request.user:
+                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+                if self.user.is_closed_profile():
+                    if  request.user.is_connected_with_user_with_id(user_id=self.user.pk) or request.user.is_followers_user_with_id(user_id=self.user.pk):
+                        self.template_name = "u_good/good.html"
+                    else:
+                        raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+                else:
+                    self.template_name = "u_good/good.html"
+        elif request.user.is_anonymous:
+            if self.user.is_closed_profile():
+                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            else:
+                self.template_name = "u_good/anon_good.html"
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)

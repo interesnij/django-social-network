@@ -172,14 +172,14 @@ class UserUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
         if good.creator == request.user:
-            good.is_hide = False
-            good.save(update_fields=['is_hide'])
+            good.status = Good.STATUS_PUBLISHED
+            good.save(update_fields=['status'])
         return HttpResponse("!")
 
 class UserHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
         if good.creator == request.user:
-            good.is_hide = True
-            good.save(update_fields=['is_hide'])
+            good.status = Good.STATUS_DRAFT
+            good.save(update_fields=['status'])
         return HttpResponse("!")

@@ -61,7 +61,6 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-	is_hide = models.BooleanField(default=False, verbose_name="Товар виден только Вам")
 	id = models.BigAutoField(primary_key=True)
 
 	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to="goods/%Y/%m/%d")
@@ -107,6 +106,12 @@ class Good(models.Model):
 	def likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
 		return likes
+
+	def is_draft(self):
+		if self.status == Good.STATUS_DRAFT:
+			return True
+		else:
+			return False
 
 	def likes_count(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk")

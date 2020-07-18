@@ -91,7 +91,7 @@ class PostsCommunity(ListView):
                 self.template_name = "c_lenta/list.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + template_name
         return super(PostsCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

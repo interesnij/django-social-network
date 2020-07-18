@@ -169,29 +169,7 @@
                           еще
                         </a>
                         <div class="dropdown-menu">
-                            <span class="dropdown-item u_good_remove">Удалить видео</span>
-                            <span class="dropdown-item">Редактировать</span>
-                            <span>
-                              {% if object.comments_enabled %}
-                                <span class="dropdown-item u_good_off_comment">Выключить комментарии</span>
-                              {% else %}
-                                <span class="dropdown-item u_good_on_comment">Включить комментарии</span>
-                              {% endif %}
-                            </span>
-                            <span>
-                              {% if object.votes_on %}
-                                <span class="dropdown-item u_good_off_votes">Выкл. реакции</span>
-                              {% else %}
-                                <span class="dropdown-item u_good_on_votes">Вкл. реакции</span>
-                              {% endif %}
-                            </span>
-                            <span>
-                              {% if object.is_draft %}
-                                <span class="dropdown-item u_good_unhide">Товар не виден</span>
-                              {% else %}
-                                <span class="dropdown-item u_good_hide">Товар виден</span>
-                              {% endif %}
-                            </span>
+                            <span class="dropdown-item u_good_manage_remove">Удалить видео</span>
                         </div>
                     </div>
                   </div>
