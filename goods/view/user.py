@@ -58,7 +58,7 @@ class UserGood(TemplateView):
                 else:
                     self.template_name = "u_good/good.html"
             try:
-                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk).exists()
             except:
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
