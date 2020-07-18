@@ -155,8 +155,9 @@ class Good(models.Model):
 		return i
 
 	def all_visits_count(self):
-        from stst.models import VideoNumbers
-        return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
+		from stst.models import VideoNumbers
+		return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
+
 
 class GoodComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
