@@ -52,7 +52,7 @@ class CommunityPrivateSettings(models.Model):
         (COMMENT_NOMEMBER, 'Комментарии пишут все'),
     )
     community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_settings', verbose_name="Сообщество")
-    wall = models.CharField(max_length=5, choices=WALL, default=WALL_ADMIN, verbose_name="Стена")
+    wall = models.CharField(max_length=5, choices=WALL, default=STAFF_POST, verbose_name="Стена")
     photo = models.CharField(max_length=5, choices=PHOTO, default=PHOTO_ADMIN, verbose_name="Фотографии")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
     open_video = models.BooleanField(default=False, verbose_name="Вам могут добавлять ролики")
