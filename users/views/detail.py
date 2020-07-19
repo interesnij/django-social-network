@@ -39,7 +39,7 @@ class UserPostView(TemplateView):
                 self.template_name = "lenta/anon_post.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+            self.template_name = "mob_" + self.template_name
         self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
         self.prev = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
         return super(UserPostView,self).get(request,*args,**kwargs)

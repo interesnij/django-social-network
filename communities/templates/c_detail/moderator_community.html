@@ -36,7 +36,11 @@
                   </ul>
             </div>
             {% include 'detail_sections/goods.html' %}
-            {% include 'detail_sections/new_post.html' %}
+            {% if community.is_wall_member %}
+              {% include 'detail_sections/create_member_post.html' %}
+            {% else if community.is_wall_nomember %}
+              {% include 'detail_sections/create_nomember_post.html' %}
+            {% endif %}
 
             <div id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 

@@ -40,6 +40,15 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
+    COMMUNITY_TYPE_PRIVATE = 'T'
+    COMMUNITY_TYPE_PUBLIC = 'P'
+    COMMUNITY_TYPE_CLOSED = 'C'
+    COMMUNITY_TYPES = (
+        (COMMUNITY_TYPE_PUBLIC, 'Публичное'),
+        (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
+        (COMMUNITY_TYPE_CLOSED, 'Закрытое'),
+    )
+
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
@@ -49,14 +58,6 @@ class Community(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    COMMUNITY_TYPE_PRIVATE = 'T'
-    COMMUNITY_TYPE_PUBLIC = 'P'
-    COMMUNITY_TYPE_CLOSED = 'C'
-    COMMUNITY_TYPES = (
-        (COMMUNITY_TYPE_PUBLIC, 'Публичное'),
-        (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
-        (COMMUNITY_TYPE_CLOSED, 'Закрытое'),
-    )
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаленное")
@@ -106,8 +107,7 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
-        from music.models import SoundList
-        from video.models import VideoAlbum
+        from communities.model.settings import CommunityPrivateSettings
 
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
@@ -116,8 +116,7 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
-        SoundList.objects.create(creator=creator, community_id=community.pk, is_generic=True, name="Основной плейлист")
-        VideoAlbum.objects.create(creator=creator, community_id=community.pk, is_generic=True, title="Все видео")
+        CommunityPrivateSettings.objects.create(community=community)
         return community
 
     @classmethod
@@ -492,6 +491,69 @@ class Community(models.Model):
         try:
             UserTempSoundList.objects.get(tag=None, community=self, genre=None)
             return True
+        except:
+            return False
+
+    def is_wall_close(self):
+        try:
+            if self.community_private_settings.wall == "WC":
+                return True
+        except:
+            return False
+    def is_wall_admin(self):
+        try:
+            if self.community_private_settings.wall == "WA":
+                return True
+        except:
+            return False
+    def is_wall_member(self):
+        try:
+            if self.community_private_settings.wall == "WM":
+                return True
+        except:
+            return False
+    def is_wall_nomember(self):
+        try:
+            if self.community_private_settings.wall == "WNM":
+                return True
+        except:
+            return False
+
+    def is_photo_upload_admin(self):
+        try:
+            if self.community_private_settings.photo == "PA":
+                return True
+        except:
+            return False
+    def is_photo_upload_member(self):
+        try:
+            if self.community_private_settings.photo == "PM":
+                return True
+        except:
+            return False
+    def is_photo_upload_nomember(self):
+        try:
+            if self.community_private_settings.photo == "PNM":
+                return True
+        except:
+            return False
+
+    def is_comment_send_admin(self):
+        try:
+            if self.community_private_settings.comment == "CA":
+                return True
+        except:
+            return False
+    def is_comment_send_member(self):
+        try:
+            if self.community_private_settings.comment == "CM":
+                return True
+        except:
+            return False
+    def is_comment_send_nomember(self):
+        try:
+            if self.community_private_settings.comment == "CNM":
+                return True
         except:
             return False
 
