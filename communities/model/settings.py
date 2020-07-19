@@ -29,7 +29,7 @@ class CommunityPrivateSettings(models.Model):
     PHOTO_NOMEMBER = 'PNM'
 
     COMMENT_ADMIN = 'CA'
-    COMMENTMEMBER = 'CM'
+    COMMENT_MEMBER = 'CM'
     COMMENT_NOMEMBER = 'CNM'
     WALL = (
         (WALL_CLOSE, 'Стена закрыта'),
