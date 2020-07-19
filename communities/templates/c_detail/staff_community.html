@@ -40,7 +40,7 @@
 
             {% if community.is_all_can_post %}
               {% include 'detail_sections/create_nomember_post.html' %}
-            {% else if community.is_staff_post_member_can and community.is_staff_post_all_can %}
+            {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
               {% include 'detail_sections/create_offer_post.html' %}
             {% endif %}
 
