@@ -34,12 +34,12 @@ class CommunityPrivateSettings(models.Model):
     COMMENT_MEMBER = 'CM'
     COMMENT_NOMEMBER = 'CNM'
     WALL = (
-        (STAFF_POST, 'На стене пишет персонал'),
-        (STAFF_POST__MEMBER_CAN, 'На стене пишет персонал, подписчики предлагают записи'),
-        (STAFF_POST__ALL_CAN, 'На стене пишет персонал, все пользователи предлагают записи'),
-        (MEMBER_POST, 'На стене пишут подписчики'),
-        (MEMBER_POST__ALL_CAN, 'На стене пишут подписчики, все пользователи предлагают записи'),
-        (ALL_CAN, 'На стене пишут все пользователи'),
+        (STAFF_POST, 'Персонал пишет'),
+        (STAFF_POST__MEMBER_CAN, 'Персонал пишет, подписчики предлагают'),
+        (STAFF_POST__ALL_CAN, 'Персонал пишет, все предлагают'),
+        (MEMBER_POST, 'Подписчики пишут'),
+        (MEMBER_POST__ALL_CAN, 'Подписчики пишут, все предлагают'),
+        (ALL_CAN, 'На стене пишут все'),
     )
     PHOTO = (
         (PHOTO_ADMIN, 'Фото загружает персонал'),
