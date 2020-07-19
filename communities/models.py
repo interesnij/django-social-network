@@ -496,25 +496,37 @@ class Community(models.Model):
 
     def is_wall_close(self):
         try:
-            if self.community_private_settings.wall == "WC":
+            if self.community_private_settings.wall == "SP":
                 return True
         except:
             return False
-    def is_wall_admin(self):
+    def is_staff_post_member_can(self):
         try:
-            if self.community_private_settings.wall == "WA":
+            if self.community_private_settings.wall == "SPMC":
                 return True
         except:
             return False
-    def is_wall_member(self):
+    def is_staff_post_all_can(self):
         try:
-            if self.community_private_settings.wall == "WM":
+            if self.community_private_settings.wall == "SPAC":
                 return True
         except:
             return False
-    def is_wall_nomember(self):
+    def is_member_post(self):
         try:
-            if self.community_private_settings.wall == "WNM":
+            if self.community_private_settings.wall == "MP":
+                return True
+        except:
+            return False
+    def is_member_post_all_can(self):
+        try:
+            if self.community_private_settings.wall == "MPAC":
+                return True
+        except:
+            return False
+    def is_all_can_post(self):
+        try:
+            if self.community_private_settings.wall == "AC":
                 return True
         except:
             return False

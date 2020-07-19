@@ -19,10 +19,12 @@ class CommunityNotificationsSettings(models.Model):
 
 
 class CommunityPrivateSettings(models.Model):
-    WALL_CLOSE = 'WC'
-    WALL_ADMIN = 'WA'
-    WALL_MEMBER = 'WM'
-    WALL_NOMEMBER = 'WNM'
+    STAFF_POST = 'SP'
+    STAFF_POST__MEMBER_CAN = 'SPMC'
+    STAFF_POST__ALL_CAN = 'SPAC'
+    MEMBER_POST = 'MP'
+    MEMBER_POST__ALL_CAN = 'MPAC'
+    ALL_CAN = 'AC'
 
     PHOTO_ADMIN = 'PA'
     PHOTO_MEMBER = 'PM'
@@ -32,10 +34,12 @@ class CommunityPrivateSettings(models.Model):
     COMMENT_MEMBER = 'CM'
     COMMENT_NOMEMBER = 'CNM'
     WALL = (
-        (WALL_CLOSE, 'Стена закрыта'),
-        (WALL_ADMIN, 'На стене пишет персонал'),
-        (WALL_MEMBER, 'На стене пишут подписчики'),
-        (WALL_NOMEMBER, 'На стене пишут все'),
+        (STAFF_POST, 'На стене пишет персонал'),
+        (STAFF_POST__MEMBER_CAN, 'На стене пишет персонал, подписчики предлагают записи'),
+        (STAFF_POST__ALL_CAN, 'На стене пишет персонал, все пользователи предлагают записи'),
+        (MEMBER_POST, 'На стене пишут подписчики'),
+        (MEMBER_POST__ALL_CAN, 'На стене пишут подписчики, все пользователи предлагают записи'),
+        (ALL_CAN, 'На стене пишут все пользователи'),
     )
     PHOTO = (
         (PHOTO_ADMIN, 'Фото загружает персонал'),

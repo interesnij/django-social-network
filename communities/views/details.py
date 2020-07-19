@@ -166,7 +166,7 @@ class CommunityDetail(TemplateView):
                 elif request.user.is_advertiser_of_community_with_name(self.community.name):
                     self.template_name = "c_detail/advertiser_community.html"
                 elif request.user.is_community_manager():
-                    self.template_name = "c_detail/staff_community.html"
+                    self.template_name = "c_detail/staff_member_community.html"
                 else:
                     self.template_name = "c_detail/member_community.html"
             elif request.user.is_follow_from_community_with_name(self.community.pk):

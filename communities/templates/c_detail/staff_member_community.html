@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ community.name }} - Вы админ{% endblock %}
+{% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
 {% if community.cover %}
@@ -11,7 +11,6 @@
     </div>
 </div>
 {% endif %}
-
 
 <div class="container main-container mt-3 pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
@@ -34,55 +33,16 @@
                             </div>
                         </div>
                     </li>
+                  </ul>
             </div>
 
-            {% if community_goods %}
-            <div class="card mt-3">
-              <div class="card-header">
-                <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
-                  <div class="media">
-                      <div class="media-body">
-                          <h4 class="content-color-primary mb-0">Товары</h4>
-                      </div>
-                      {{ community.count_goods }}
-                  </div>
-                </a>
-              </div>
-                {% for object in community_goods %}
-                <div class="col-md-4 c_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer">
-                        <div class="">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col">
-                                        <div class="text-center">
-                                          {% if object.image %}
-                                            <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
-                                          {% else %}
-                                            <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                          {% endif %}
-                                        </div>
-                                </div>
-                            </div>
-                            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
-                            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
-                        </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="card mt-3">
-                <div class="card-header">
-                    <div class="media centered">
-                        <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
-                            <div class="media-body">
-                                <h4 class="content-color-primary mb-0">Добавьте товары</h4>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {% include 'detail_sections/goods.html' %}
+
+            {% if community.is_member_post or community.is_all_can_post %}
+              {% include 'detail_sections/create_member_post.html' %}
+            {% else if community.is_staff_post_member_can and community.is_staff_post_all_can %}
+              {% include 'detail_sections/create_nomember_post.html' %}
             {% endif %}
-
-            {% include 'detail_sections/create_admin_post.html' %}
 
             <div class="mt-3" id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 
@@ -98,20 +58,22 @@
                         <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
                     {% endif %}
                 </figure>
-                <form id="add_community_avatar" method="post">
-                    {% csrf_token %}
-                    <input type="file" id="community_avatar_upload" name="file" style="display:none">
-                    <span id="community_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
-                </form>
-
-                <button type="button" class="btn btn-sm btn-secondary" style="margin: 3px;margin-top:10px">
-                    Вы подписаны
+                <button type="button" class="btn btn-sm btn-secondary member_create" style="margin: 3px;margin-top:10px">
+                    Подписаться
                 </button>
                 <div class="card mt-1 mb-1" style="padding: 10px;">
-                  <a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" style="cursor:pointer">Управление</a>
-                  <a href="{% url 'community_traffic_day' community.pk %}" class="ajax" style="cursor:pointer">,Статистика</a>
+                  <span class="community_blocker" style="cursor:pointer">Блокировать</span>
+                  <span class="community_suspend" style="cursor:pointer">Остановка</span>
+                  {% if community.is_have_warning_banner %}
+                    <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
+                  {% else %}
+                    <span class="community_warning_banner" style="cursor:pointer">Повесить баннер</span>
+                  {% endif %}
+                  {% if request.user.is_community_editor or request.user.is_community_admin or request.user.is_superuser %}
+                    <span class="" style="cursor:pointer">Редактировать</span>
+                  {% endif %}
                 </div>
-            </div>
+          </div>
             <br>
             {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
@@ -154,18 +116,6 @@
                 </div>
                 {% endfor %}
             </div>
-            {% else %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="media centered">
-                        <a href="{% url 'all_music' %}" class="ajax">
-                            <div class="media-body">
-                                <h4 class="content-color-primary mb-0">Добавьте музыку</h4>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
             {% endif %}
 
             {% if community.get_profile_photos %}
@@ -187,18 +137,6 @@
                           <img class="lazyload image_fit_70" data-src="{{ object.file.url }}" alt="">
                         </div>
                       {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="media centered">
-                        <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
-                            <div class="media-body">
-                                <h4 class="content-color-primary mb-0">Добавьте фото</h4>
-                            </div>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -230,22 +168,10 @@
 
                 </div>
             </div>
-            {% else %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="media centered">
-                        <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
-                            <div class="media-body">
-                                <h4 class="content-color-primary mb-0">Добавьте видео</h4>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
             {% endif %}
         </div>
 
     </div>
 </div>
-
+{% include 'detail_sections/warning_banner.html' %}
 {% endblock %}
