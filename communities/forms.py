@@ -51,9 +51,8 @@ class CommunityPrivateForm(forms.ModelForm):
     class Meta:
         model = CommunityPrivateSettings
         fields = (
-            'open_message',
-            'open_wall',
-            'open_good',
+            'wall',
+            'photo',
+            'comment',
             'open_video',
-			'open_photo',
         )
