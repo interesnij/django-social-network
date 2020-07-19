@@ -72,7 +72,7 @@ class UserWallPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_user_photo(self.user, "u_photo/", "wall_photo.html", request.user)
+        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "wall_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -98,7 +98,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.avatar_photos = self.photo.creator.get_avatar_photos()
-        self.template_name = get_detail_template_user_photo(self.user, "u_photo/", "avatar.html", request.user)
+        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "avatar.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
