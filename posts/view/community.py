@@ -58,7 +58,7 @@ class PostCommunityCommentCreate(View):
         post = Post.objects.get(uuid=request.POST.get('uuid'))
         if not community.is_comment_post_send_all() and not requset.user.is_member_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif community.is_comment_post_send_admin() and not requset.user.is_administrator_of_community_with_name(community.name):
+        elif community.is_comment_post_send_admin() and not requset.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
         elif form_post.is_valid() and post.comments_enabled:
             check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -82,7 +82,7 @@ class PostCommunityReplyCreate(View):
         parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
         if not community.is_comment_post_send_all() and not requset.user.is_member_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif community.is_comment_post_send_admin() and not requset.user.is_administrator_of_community_with_name(community.name):
+        elif community.is_comment_post_send_admin() and not requset.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
         elif form_post.is_valid() and parent.post.comments_enabled:
             check_can_get_posts_for_community_with_name(request.user,community.name)
