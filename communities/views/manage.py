@@ -155,6 +155,7 @@ class CommunityPrivatePostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 		self.form = CommunityPrivatePostForm(instance=self.private_settings)
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
@@ -168,7 +169,6 @@ class CommunityPrivatePostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 			self.private_settings.wall = request.POST.get('wall')
 			self.private_settings.photo = request.POST.get('photo')
 			self.private_settings.comment = request.POST.get('comment')
