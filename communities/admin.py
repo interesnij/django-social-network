@@ -5,9 +5,21 @@ from communities.model.settings import *
 
 class CommunityNotificationsPostInline(admin.TabularInline):
     model = CommunityNotificationsPost
+class CommunityNotificationsPhotoInline(admin.TabularInline):
+    model = CommunityNotificationsPhoto
+class CommunityNotificationsGoodInline(admin.TabularInline):
+    model = CommunityNotificationsGood
+class CommunityNotificationsVideoInline(admin.TabularInline):
+    model = CommunityNotificationsVideo
 
 class CommunityPrivatePostInline(admin.TabularInline):
     model = CommunityPrivatePost
+class CommunityPrivatePhotoInline(admin.TabularInline):
+    model = CommunityPrivatePhoto
+class CommunityPrivateGoodInline(admin.TabularInline):
+    model = CommunityPrivateGood
+class CommunityPrivateVideoInline(admin.TabularInline):
+    model = CommunityPrivateVideo
 
 
 class CommunityCategoryAdmin(admin.ModelAdmin):
@@ -19,7 +31,14 @@ class CommunitySubCategoryAdmin(admin.ModelAdmin):
 class CommunityAdmin(admin.ModelAdmin):
     inlines = [
         CommunityNotificationsPostInline,
+        CommunityNotificationsPhotoInline,
+        CommunityNotificationsGoodInline,
+        CommunityNotificationsVideoInline,
+
         CommunityPrivatePostInline,
+        CommunityPrivatePhotoInline,
+        CommunityPrivateGoodInline,
+        CommunityPrivateVideoInline,
     ]
 
     search_fields = ('name',)
