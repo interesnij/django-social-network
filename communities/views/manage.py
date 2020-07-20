@@ -206,7 +206,7 @@ class CommunityNotifyVideoView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.notify_post = CommunityNotificationsVideo.objects.get(community=self.community)
+		self.notify_video = CommunityNotificationsVideo.objects.get(community=self.community)
 		self.form = CommunityNotifyVideoForm(request.POST, instance=self.notify_video)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
