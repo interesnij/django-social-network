@@ -56,7 +56,11 @@ class VideoCommentCommunityCreate(View):
         community = Community.objects.get(pk=request.POST.get('pk'))
         video_comment = Video.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid() and video_comment.comments_enabled:
+        if not community.is_comment_video_send_all() and not request.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
@@ -79,7 +83,11 @@ class VideoReplyCommunityCreate(View):
         community = Community.objects.get(pk=request.POST.get('pk'))
         parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
 
-        if form_post.is_valid() and parent.video_comment.comments_enabled:
+        if not community.is_comment_video_send_all() and not request.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and parent.video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             check_can_get_posts_for_community_with_name(request.user, community.name)

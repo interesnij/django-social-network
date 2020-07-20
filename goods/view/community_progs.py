@@ -58,7 +58,11 @@ class GoodCommentCommunityCreate(View):
         community = Community.objects.get(pk=request.POST.get('pk'))
         good = Good.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid() and good.comments_enabled:
+        if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and good.comments_enabled:
             comment=form_post.save(commit=False)
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
@@ -85,7 +89,12 @@ class GoodReplyCommunityCreate(View):
             comment = form_post.save(commit=False)
 
             check_can_get_posts_for_community_with_name(request.user, community.name)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
+
+            if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
+                raise PermissionDenied("Ошибка доступа.")
+            elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+                raise PermissionDenied("Ошибка доступа.")
+            elif request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment, "good_comment")
