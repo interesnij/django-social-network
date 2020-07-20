@@ -125,7 +125,7 @@ class CommunityNotifyPostView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityNotifyForm()
-		self.template_name = self.community.get_manage_template(folder="manage/", template="notifications_settings.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_post.html", request=request)
 		try:
 			self.notify_settings=CommunityNotificationsPost.objects.get(community=self.community)
 		except:
