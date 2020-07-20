@@ -114,10 +114,9 @@ class CommunityNotifyPostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
-		self.form = CommunityNotifyPostForm(request.POST)
+		self.form = CommunityNotifyPostForm(request.POST,instance=self.notify_post)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
-
 			return HttpResponse ('!')
 		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
 
