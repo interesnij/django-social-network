@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ community.name }}{% endblock %}
+{% block title %}{{ community.name }} - Вы подписчик{% endblock %}
 {% block content %}
 
 {% if community.cover %}
@@ -18,7 +18,7 @@
             <div class="container main-container card" style="padding: 15px;">
                 <h3 class="mb-2">{{ community.name }}</h3>
                 <span>Статус</span>
-                <br>
+                <br><br>
                 <ul class="list-group list-group-flush w-100">
                     <li class="list-group-item px-0">
                         <div class="media experience">
@@ -35,7 +35,6 @@
                     </li>
                   </ul>
             </div>
-
             {% include 'detail_sections/goods.html' %}
 
             {% if community.is_member_post or community.is_all_can_post %}
@@ -58,19 +57,13 @@
                         <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
                     {% endif %}
                 </figure>
-                <button type="button" class="btn btn-sm btn-secondary member_create" style="margin: 3px;margin-top:10px">
-                    Подписаться
+                <button type="button" class="btn btn-sm btn-secondary member_delete" style="margin: 3px;margin-top:10px">
+                    Отписаться
                 </button>
                 <div class="card mt-1 mb-1" style="padding: 10px;">
-                  <span class="community_blocker" style="cursor:pointer">Блокировать</span>
-                  <span class="community_suspend" style="cursor:pointer">Остановка</span>
-                  {% if community.is_have_warning_banner %}
-                    <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
-                  {% else %}
-                    <span class="community_warning_banner" style="cursor:pointer">Повесить баннер</span>
-                  {% endif %}
+                  <span class="community_claim">Пожаловаться</span>
                 </div>
-          </div>
+            </div>
             <br>
             {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
@@ -170,5 +163,7 @@
 
     </div>
 </div>
+
 {% include 'detail_sections/warning_banner.html' %}
+
 {% endblock %}
