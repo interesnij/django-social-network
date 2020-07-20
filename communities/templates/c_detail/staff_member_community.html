@@ -37,11 +37,9 @@
             </div>
             {% include 'detail_sections/goods.html' %}
 
-            {% if community.is_member_post or community.is_all_can_post %}
-            <!-- если подписчики могут писать посты или могут писать все -->
+            {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
               {% include 'detail_sections/create_post.html' %}
             {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
-              <!-- если подписчики могут предлагать новости или  все могут предлагать посты -->
               {% include 'detail_sections/create_offer_post.html' %}
             {% endif %}
 
