@@ -48,7 +48,7 @@ class CommunityNotifyForm(forms.ModelForm):
         )
 
 class CommunityPrivatePostForm(forms.ModelForm):
-	wall = forms.CharField(required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+	wall = forms.ChoiceField(required=False, widget=forms.Select(attrs={'class': 'form-control'}))
 
 	class Meta:
 		model = CommunityPrivatePost
