@@ -82,7 +82,7 @@ class CommunityPrivatePost(models.Model):
     wall = models.CharField(max_length=5, choices=WALL, default=STAFF_POST, verbose_name="Стена")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
-class CommunityPrivateGallery(models.Model):
+class CommunityPrivatePhoto(models.Model):
     PHOTO_ADMIN = 'PA'
     PHOTO_MEMBER = 'PM'
     PHOTO_NOMEMBER = 'PNM'
@@ -100,7 +100,7 @@ class CommunityPrivateGallery(models.Model):
         (COMMENT_MEMBER, 'Комментарии пишут подписчики'),
         (COMMENT_NOMEMBER, 'Комментарии пишут все'),
     )
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_gallery', verbose_name="Сообщество")
+    community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_photo', verbose_name="Сообщество")
     photo = models.CharField(max_length=5, choices=PHOTO, default=PHOTO_ADMIN, verbose_name="Фотографии")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
