@@ -69,8 +69,7 @@ class CommunityMemberDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.user.leave_community_with_name(self.community.name)
+		request.user.leave_community_with_name(self.community.name)
 		return HttpResponse("!")
 
 
