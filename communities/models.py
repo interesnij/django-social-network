@@ -107,7 +107,7 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
-        from communities.model.settings import *
+        from communities.model.settings import CommunityPrivatePost
 
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
