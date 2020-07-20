@@ -32,9 +32,6 @@
                   <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
                 </span>
                 <span class="dropdown-item post_delete_window">♦ Удалить</span>
-                {% if request.user.is_post_editor or request.user.is_post_administrator or request.user_is_superuser %}
-                  <span class="dropdown-item post_edit_window">♦ Изменить</span>
-                {% endif %}
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/add_post_community/" + pk + "/", true );
+  link_.open( 'POST', "/posts/community_progs/add_post/" + pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
