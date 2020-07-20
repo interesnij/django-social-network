@@ -252,7 +252,7 @@ class CommunityPrivateGoodView(TemplateView):
 			self.private_good = CommunityPrivateGood.objects.get(community=self.community)
 		except:
 			self.private_good = CommunityPrivateGood.objects.create(community=self.community)
-		self.form = CommunityPrivatGoodForm(instance=self.private_good)
+		self.form = CommunityPrivateGoodForm(instance=self.private_good)
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_good.html", request=request)
 		return super(CommunityPrivateGoodView,self).get(request,*args,**kwargs)
 
