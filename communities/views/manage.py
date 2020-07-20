@@ -157,21 +157,22 @@ class CommunityPrivatePostView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form = CommunityPrivatePostForm(instance=self.private_settings)
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
-		self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["private_settings"] = self.private_settings
 		return context
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityPrivatePostForm(request.POST,instance=self.private_settings)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
-			new_form = self.form.save()
-			return HttpResponse(new_form)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
+			self.private_settings.wall = request.POST.get('wall')
+			self.private_settings.photo = request.POST.get('photo')
+			self.private_settings.comment = request.POST.get('comment')
+			self.private_settings.save()
+			return HttpResponse()
 		else:
 			return HttpResponse("все не ок")
 		return super(CommunityPrivatePostView,self).post(request,*args,**kwargs)
