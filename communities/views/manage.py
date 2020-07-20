@@ -114,7 +114,7 @@ class CommunityNotifyPostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
-		self.form = CommunityNotifyPostForm(request.POST,instance=self.notify_post)
+		self.form = CommunityNotifyPostForm(request.POST, instance=self.notify_post)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
@@ -145,7 +145,7 @@ class CommunityNotifyPhotoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_photo = CommunityNotificationsPhoto.objects.get(community=self.community)
-		self.form = CommunityNotifyPhotoForm(request.POST)
+		self.form = CommunityNotifyPhotoForm(request.POST, instance=self.notify_photo)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
@@ -176,7 +176,7 @@ class CommunityNotifyGoodView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_good = CommunityNotificationsGood.objects.get(community=self.community)
-		self.form = CommunityNotifyGoodForm(request.POST)
+		self.form = CommunityNotifyGoodForm(request.POST, instance=self.notify_good)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
@@ -207,7 +207,7 @@ class CommunityNotifyVideoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_post = CommunityNotificationsVideo.objects.get(community=self.community)
-		self.form = CommunityNotifyVideoForm(request.POST)
+		self.form = CommunityNotifyVideoForm(request.POST, instance=self.notify_video)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
@@ -220,10 +220,10 @@ class CommunityPrivatePostView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
-			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
+			self.private_post = CommunityPrivatePost.objects.get(community=self.community)
 		except:
-			self.private_settings = CommunityPrivatePost.objects.create(community=self.community)
-		self.form = CommunityPrivatePostForm(instance=self.private_settings)
+			self.private_post = CommunityPrivatePost.objects.create(community=self.community)
+		self.form = CommunityPrivatePostForm(instance=self.private_post)
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
@@ -235,12 +235,11 @@ class CommunityPrivatePostView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
-			self.private_settings.wall = request.POST.get('wall')
-			self.private_settings.comment = request.POST.get('comment')
-			self.private_settings.save()
-		return HttpResponse()
+		self.private_post = CommunityPrivatePost.objects.get(community=self.community)
+		self.form = CommunityPrivatePostForm(request.POST, instance=self.private_post)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse()
 
 class CommunityPrivateGoodView(TemplateView):
 	template_name = None
@@ -263,12 +262,11 @@ class CommunityPrivateGoodView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_good = CommunityPrivateGood.objects.get(community=self.community)
-			self.private_good.good = request.POST.get('good')
-			self.private_good.comment = request.POST.get('comment')
-			self.private_good.save()
-		return HttpResponse()
+		self.private_good = CommunityPrivateGood.objects.get(community=self.community)
+		self.form = CommunityPrivateGoodForm(request.POST, instance=self.private_good)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse()
 
 class CommunityPrivateVideoView(TemplateView):
 	template_name = None
@@ -291,12 +289,11 @@ class CommunityPrivateVideoView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_video = CommunityPrivateVideo.objects.get(community=self.community)
-			self.private_video.video = request.POST.get('video')
-			self.private_video.comment = request.POST.get('comment')
-			self.private_video.save()
-		return HttpResponse()
+		self.private_video = CommunityPrivateVideo.objects.get(community=self.community)
+		self.form = CommunityPrivateVideoForm(request.POST, instance=self.private_video)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse()
 
 class CommunityPrivatePhotoView(TemplateView):
 	template_name = None
@@ -319,12 +316,11 @@ class CommunityPrivatePhotoView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_photo = CommunityPrivatePhoto.objects.get(community=self.community)
-			self.private_photo.photo = request.POST.get('photo')
-			self.private_photo.comment = request.POST.get('comment')
-			self.private_photo.save()
-		return HttpResponse()
+		self.private_photo = CommunityPrivatePhoto.objects.get(community=self.community)
+		self.form = CommunityPrivatePhotoForm(request.POST, instance=self.private_photo)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse()
 
 class CommunityAdminView(ListView):
 	template_name = None
