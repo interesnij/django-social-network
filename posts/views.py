@@ -74,7 +74,7 @@ class PostCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        elif form_post.is_valid():
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
