@@ -40,13 +40,13 @@
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Упоминания в записях
-                          <input type="checkbox" {% if notify_good.user_mention %} checked {% endif %} name="user_mention" id="id_mention" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_user_mention" class="bg_success mb-2 border float-right"></label>
+                          <input type="checkbox" {% if notify_good.mention %} checked {% endif %} name="umention" id="id_mention" class="switch switch-sm">
+                          <label style="margin-right:12px;bottom: 5px;" for="id_mention" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Упоминания в комменариях
-                          <input type="checkbox" {% if notify_good.comment_user_mention %} checked {% endif %} name="comment_mention" id="id_comment_user_mention" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_comment_user_mention" class="bg_success mb-2 border float-right"></label>
+                          <input type="checkbox" {% if notify_good.comment_mention %} checked {% endif %} name="comment_mention" id="id_comment_mention" class="switch switch-sm">
+                          <label style="margin-right:12px;bottom: 5px;" for="id_comment_mention" class="bg_success mb-2 border float-right"></label>
                       </p>
 
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
