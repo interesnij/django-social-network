@@ -54,12 +54,12 @@ class CommunityPrivatePostForm(forms.ModelForm):
 class CommunityPrivatePhotoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivatePhoto
-		fields = ('wall', 'photo', 'comment',)
+		fields = ('photo', 'comment',)
 class CommunityPrivateGoodForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateGood
-		fields = ('wall', 'good', 'comment',)
+		fields = ('good', 'comment',)
 class CommunityPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateVideo
-		fields = ('wall', 'video', 'comment',)
+		fields = ('video', 'comment',)
