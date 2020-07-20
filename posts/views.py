@@ -78,7 +78,7 @@ class PostCommunityCreate(View):
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
-                from common.processing.post import get_post_processing(post)
+                from common.processing.post import get_post_processing
 
                 new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status="PG")
                 get_post_attach(request, new_post)
