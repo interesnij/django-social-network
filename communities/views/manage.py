@@ -266,7 +266,7 @@ class CommunityPrivateGoodView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.private_good = CommunityPrivatePost.objects.get(community=self.community)
-			self.private_good.wall = request.POST.get('good')
+			self.private_good.good = request.POST.get('good')
 			self.private_good.comment = request.POST.get('comment')
 			self.private_good.save()
 		return HttpResponse()
@@ -294,7 +294,7 @@ class CommunityPrivateVideoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.private_video = CommunityPrivateVideo.objects.get(community=self.community)
-			self.private_video.wall = request.POST.get('video')
+			self.private_video.video = request.POST.get('video')
 			self.private_video.comment = request.POST.get('comment')
 			self.private_video.save()
 		return HttpResponse()
@@ -322,7 +322,7 @@ class CommunityPrivatePhotoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.private_photo = CommunityPrivatePhoto.objects.get(community=self.community)
-			self.private_photo.wall = request.POST.get('photo')
+			self.private_photo.photo = request.POST.get('photo')
 			self.private_photo.comment = request.POST.get('comment')
 			self.private_photo.save()
 		return HttpResponse()
