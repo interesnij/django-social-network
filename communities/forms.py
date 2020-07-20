@@ -54,5 +54,4 @@ class CommunityPrivateForm(forms.ModelForm):
             'wall',
             'photo',
             'comment',
-            'open_video',
         )

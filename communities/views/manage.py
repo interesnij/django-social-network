@@ -175,8 +175,9 @@ class CommunityPrivatePostView(TemplateView):
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
+			return HttpResponse("")
+		else:
+			return HttpResponseBadRequest()
 		return super(CommunityPrivatePostView,self).post(request,*args,**kwargs)
 
 
