@@ -114,4 +114,4 @@ on('#ajax', 'click', '.member_delete', function() {
 })
 
 
-loadScripts('/static/scripts/community/manager.js')
+loadScripts('/static/scripts/community/manage.js')
