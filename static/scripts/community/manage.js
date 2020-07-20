@@ -37,7 +37,7 @@ document.querySelector(".add_staff_options").addEventListener("click", (e) => {
     li = document.querySelector(".li_{{user.pk }}");
     staff_btn = li.querySelector(".staff_btn");
     staff_btn.innerHTML = "<span class='staff_btn'>Редактор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_editor' style='cursor:pointer'>Разжаловать</span></span><br></span>";
-    }).catch(error => {console.log("Все не ОК")});
+    }).catch(error => {console.log("Все не ОК")})
     :
     (document.querySelector(".manage_window_fullscreen").style.display = "none",
     document.getElementById('load_staff_window').innerHTML = "")}
@@ -49,7 +49,7 @@ document.querySelector(".add_staff_options").addEventListener("click", (e) => {
     li = document.querySelector(".li_{{user.pk }}");
     staff_btn = li.querySelector(".staff_btn");
     staff_btn.innerHTML = "<span class='staff_btn'>Администратор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_admin' style='cursor:pointer'>Разжаловать</span></span><br></span>";
-    }).catch(error => {console.log("Все не ОК")});
+    }).catch(error => {console.log("Все не ОК")})
     :
     (document.querySelector(".manage_window_fullscreen").style.display = "none",
     document.getElementById('load_staff_window').innerHTML = "")
@@ -61,7 +61,7 @@ document.querySelector(".add_staff_options").addEventListener("click", (e) => {
     li = document.querySelector(".li_{{user.pk }}");
     staff_btn = li.querySelector(".staff_btn");
     staff_btn.innerHTML = "<span class='staff_btn'>Рекламодатель<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_advertiser' style='cursor:pointer'>Разжаловать</span></span><br></span>";
-    }).catch(error => {console.log("Все не ОК")});
+    }).catch(error => {console.log("Все не ОК")})
     :
     (document.querySelector(".manage_window_fullscreen").style.display = "none",
     document.getElementById('load_staff_window').innerHTML = "")
