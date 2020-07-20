@@ -39,7 +39,7 @@ class CommunityCreate(TemplateView):
 		if self.form.is_valid():
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
-			membersheeps=[request.user,]
+			membersheeps = [request.user,]
 			return render(request, 'c_detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
@@ -74,7 +74,6 @@ class CommunityMemberDelete(View):
 
 
 class CommunityAdminCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -84,7 +83,6 @@ class CommunityAdminCreate(View):
 		else:
 			return HttpResponse("!")
 class CommunityAdminDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -96,7 +94,6 @@ class CommunityAdminDelete(View):
 
 
 class CommunityModerCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -106,7 +103,6 @@ class CommunityModerCreate(View):
 			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityModerDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -117,7 +113,6 @@ class CommunityModerDelete(View):
 		return HttpResponse("!")
 
 class CommunityEditorCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -127,7 +122,6 @@ class CommunityEditorCreate(View):
 			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityEditorDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -138,7 +132,6 @@ class CommunityEditorDelete(View):
 		return HttpResponse("!")
 
 class CommunityAdvertiserCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -148,7 +141,6 @@ class CommunityAdvertiserCreate(View):
 			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityAdvertiserDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
