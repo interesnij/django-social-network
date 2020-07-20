@@ -102,7 +102,7 @@ class CommunityNotifyPostView(TemplateView):
 			self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		except:
 			self.notify_post = CommunityNotificationsPost.objects.create(community=self.community)
-		self.form=CommunityNotifyPostForm(instance=self.notify_post, initial={"community":self.community},)
+		self.form=CommunityNotifyPostForm(instance=self.notify_post)
 		return super(CommunityNotifyPostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -117,7 +117,8 @@ class CommunityNotifyPostView(TemplateView):
 		self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		self.form = CommunityNotifyPostForm(request.POST)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.form.save()
+			self.form.save(commit=False)
+
 			return HttpResponse ('!')
 		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
 

@@ -16,13 +16,6 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                      {% if community.is_closed %}
-                        <p class="content-color-primary page-sub-title-small mt-2">
-                            Заявки в группу
-                            <input type="checkbox" {% if notify_post.connection_request %} checked {% endif %} name="connection_request" id="id_connection_request" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_connection_request" class="bg_success mb-2 border float-right"></label>
-                        </p>
-                      {% endif %}
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Комментарии к записям
                           <input type="checkbox" {% if notify_post.comment %} checked {% endif %} name="comment" id="id_comment" class="switch switch-sm">
