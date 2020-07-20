@@ -48,6 +48,8 @@ class CommunityNotifyForm(forms.ModelForm):
         )
 
 class CommunityPrivatePostForm(forms.ModelForm):
+	wall = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+	
     class Meta:
         model = CommunityPrivatePost
         fields = (
