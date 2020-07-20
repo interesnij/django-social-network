@@ -35,7 +35,7 @@
     <div class="collapse">
       <div class="card card-body" style="display: contents;">
         <ul>
-          <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
+          <li><a href="{% url 'community_post_private' community.pk %}" class="ajax">Записи</a></li>
           <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
           <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
           <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
@@ -49,7 +49,7 @@
     <div class="collapse">
       <div class="card card-body" style="display: contents;">
         <ul>
-          <li><a href="{% url 'community_notify' community.pk %}" class="ajax">Записи</a></li>
+          <li><a href="{% url 'community_post_notify' community.pk %}" class="ajax">Записи</a></li>
           <li><a href="" class="ajax">Фотографии</a></li>
           <li><a href="" class="ajax">Товары</a></li>
           <li><a href="" class="ajax">Музыка</a></li>
