@@ -102,7 +102,7 @@ class CommunityNotifyPostView(TemplateView):
 			self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		except:
 			self.notify_post = CommunityNotificationsPost.objects.create(community=self.community)
-		self.form=CommunityNotifyPostForm(instance=self.notify_post)
+		self.form=CommunityNotifyPostForm(instance=self.notify_post, initial={"community":self.community},)
 		return super(CommunityNotifyPostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -195,7 +195,7 @@ class CommunityNotifyVideoView(TemplateView):
 			self.notify_video = CommunityNotificationsVideo.objects.get(community=self.community)
 		except:
 			self.notify_video = CommunityNotificationsVideo.objects.create(community=self.community)
-		self.form = CommunityNotifyVideoForm(instance=self.notify_video)
+		self.form = CommunityNotifyVideoForm(instance=self.notify_video, initial={"community":self.community},)
 		return super(CommunityNotifyVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
