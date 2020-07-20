@@ -157,10 +157,7 @@ class CommunityPrivatePostView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form = CommunityPrivatePostForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
-		try:
-			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
-		except:
-			self.private_settings = CommunityPrivatePost.objects.create(community=self.community)
+		self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
