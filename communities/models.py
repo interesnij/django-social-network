@@ -331,7 +331,7 @@ class Community(models.Model):
         return template_name
 
     def get_manage_template(self, folder, template, request):
-        if request.user.is_administrator_of_community_with_name(self.name):
+        if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.name):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
