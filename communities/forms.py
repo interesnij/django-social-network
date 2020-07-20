@@ -32,7 +32,7 @@ class CatCommunityForm(forms.ModelForm):
 
 class CommunityNotifyForm(forms.ModelForm):
     class Meta:
-        model = CommunityNotificationsSettings
+        model = CommunityNotificationsPost
         fields = (
             'comment',
             'comment_reply',
@@ -49,7 +49,7 @@ class CommunityNotifyForm(forms.ModelForm):
 
 class CommunityPrivateForm(forms.ModelForm):
     class Meta:
-        model = CommunityPrivateSettings
+        model = CommunityPrivatePost
         fields = (
             'wall',
             'photo',

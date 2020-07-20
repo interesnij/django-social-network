@@ -112,3 +112,6 @@ on('#ajax', 'click', '.member_delete', function() {
   }};
   link_.send();
 })
+
+
+loadScripts('/static/scripts/community/manager.js')

@@ -6,8 +6,8 @@ from communities.model.settings import *
 class CommunityNotificationsSettingsInline(admin.TabularInline):
     model = CommunityNotificationsSettings
 
-class CommunityPrivateSettingsInline(admin.TabularInline):
-    model = CommunityPrivateSettings
+class CommunityPrivatePostInline(admin.TabularInline):
+    model = CommunityPrivatePost
 
 
 class CommunityCategoryAdmin(admin.ModelAdmin):
@@ -19,7 +19,7 @@ class CommunitySubCategoryAdmin(admin.ModelAdmin):
 class CommunityAdmin(admin.ModelAdmin):
     inlines = [
         CommunityNotificationsSettingsInline,
-        CommunityPrivateSettingsInline,
+        CommunityPrivatePostInline,
     ]
 
     search_fields = ('name',)

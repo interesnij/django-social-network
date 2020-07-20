@@ -3,7 +3,7 @@ from django.db import models
 from communities.models import Community
 
 
-class CommunityNotificationsSettings(models.Model):
+class CommunityNotificationsPost(models.Model):
     community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_notifications_settings', verbose_name="Сообщество")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к записи")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к записи")
@@ -18,7 +18,7 @@ class CommunityNotificationsSettings(models.Model):
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
 
-class CommunityPrivateSettings(models.Model):
+class CommunityPrivatePost(models.Model):
     STAFF_POST = 'SP'
     STAFF_POST__MEMBER_CAN = 'SPMC'
     STAFF_POST__ALL_CAN = 'SPAC'

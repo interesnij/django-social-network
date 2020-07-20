@@ -117,7 +117,7 @@ class CommunityCatChange(TemplateView):
 		return super(CommunityCatChange,self).post(request,*args,**kwargs)
 
 
-class CommunityNotifyView(TemplateView):
+class CommunityNotifyPostView(TemplateView):
 	template_name = None
 	form=None
 	notify_settings=None
@@ -127,13 +127,13 @@ class CommunityNotifyView(TemplateView):
 		self.form=CommunityNotifyForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="notifications_settings.html", request=request)
 		try:
-			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
+			self.notify_settings=CommunityNotificationsPost.objects.get(community=self.community)
 		except:
-			self.notify_settings=CommunityNotificationsSettings.objects.create(community=self.community)
-		return super(CommunityNotifyView,self).get(request,*args,**kwargs)
+			self.notify_settings=CommunityNotificationsPost.objects.create(community=self.community)
+		return super(CommunityNotifyPostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityNotifyView,self).get_context_data(**kwargs)
+		context=super(CommunityNotifyPostView,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["notify_settings"]=self.notify_settings
 		context["community"]=self.community
@@ -141,33 +141,31 @@ class CommunityNotifyView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
+		self.notify_settings=CommunityNotificationsPost.objects.get(community=self.community)
 		self.form=CommunityNotifyForm(request.POST)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
-		return super(CommunityNotifyView,self).post(request,*args,**kwargs)
+		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
 
 
-class CommunityPrivateView(TemplateView):
+class CommunityPrivatePostView(TemplateView):
 	template_name = None
-	form=None
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm()
-		self.template_name = self.community.get_manage_template(folder="manage/", template="private_settings.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
 		try:
-			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
+			self.private_settings=CommunityPrivatePost.objects.get(community=self.community)
 		except:
-			self.private_settings=CommunityPrivateSettings.objects.create(community=self.community)
-		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
+			self.private_settings=CommunityPrivatePost.objects.create(community=self.community)
+		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityPrivateView,self).get_context_data(**kwargs)
-		context["form"]=self.form
+		context=super(CommunityPrivatePostView,self).get_context_data(**kwargs)
 		context["community"]=self.community
 		context["private_settings"]=self.private_settings
 		return context
@@ -179,7 +177,7 @@ class CommunityPrivateView(TemplateView):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
-		return super(CommunityPrivateView,self).post(request,*args,**kwargs)
+		return super(CommunityPrivatePostView,self).post(request,*args,**kwargs)
 
 
 class CommunityAdminView(ListView):

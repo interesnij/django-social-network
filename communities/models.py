@@ -107,7 +107,7 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
-        from communities.model.settings import CommunityPrivateSettings
+        from communities.model.settings import *
 
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
@@ -116,7 +116,7 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
-        CommunityPrivateSettings.objects.create(community=community)
+        CommunityPrivatePost.objects.create(community=community)
         return community
 
     @classmethod

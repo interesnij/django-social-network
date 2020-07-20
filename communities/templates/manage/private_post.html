@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Приватность стены - {{ community.name }}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+    <div class="row">
+        <div class="col-md-9 order-1">
+            <form id="community_private_post_form" class="contact-form">
+                {% csrf_token %}
+                <div class="card mb-3">
+                    <div class="card-header border-bottom">
+                        <h5 class="content-color-primary mb-0">Приватность стены -
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                              {{ community.name }}
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                          <label>Приватность стены (блога)</label>
+                          <select class="form-control" id="id_wall" name="type" data-live-search="true" tabindex="-1" aria-hidden="true">
+                              <option value="SP">Персонал пишет</option>
+                              <option value="SPMC">Персонал пишет, подписчики предлагают</option>
+                              <option value="SPAC">Персонал пишет, все предлагают</option>
+                              <option value="MP">Персонал и подписчики пишут</option>
+                              <option value="MPAC">Подписчики пишут, все предлагают</option>
+                              <option value="AC">На стене пишут все</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Приватность галереи</label>
+                          <select class="form-control" id="id_photo" name="type" data-live-search="true" tabindex="-1" aria-hidden="true">
+                              <option value="PA">Фото загружает персонал</option>
+                              <option value="PM">Фото загружают подписчики</option>
+                              <option value="PNM">Фото загружают все</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Приватность комментариев</label>
+                          <select class="form-control" id="id_comment" name="type" data-live-search="true" tabindex="-1" aria-hidden="true">
+                              <option value="CNM">Комментарии пишут все</option>
+                              <option value="CM">Комментарии пишут подписчики</option>
+                              <option value="CA">Комментарии пишет персонал</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" id="community_private_post_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-3 order-2 left_menu">
+            {% include 'manage/menu.html' %}
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+  document.querySelector("#private_button").addEventListener("click", (e) => {
+   var form10 = document.getElementById('notify_form');
+   var formEntries = new FormData(form10);
+   var options = {
+     method: 'POST',
+     body: formEntries,
+   };
+   fetch('{% url "community_private" pk=community.pk %}', options).then(data => {
+     console.log("Все ОК")
+   }).catch(error => {console.log("Все не ОК")})
+})
+</script>
+{% endblock %}
