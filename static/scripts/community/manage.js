@@ -10,7 +10,7 @@ on('#ajax', 'click', '#community_private_post_btn', function() {
             toast_info("Изменения приняты!");
         }
       }
-      ajax_link.send(form_data);
+      ajax_link.send(form_data); 
 });
 
 on('#ajax', 'click', '.add_staff_options', function() {

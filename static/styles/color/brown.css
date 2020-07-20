@@ -114,12 +114,12 @@ a.media:hover {
 .switch:not(:checked) + label {
   background-color: #573c33 !important;
 }
-.form-control {
+.form-control, select {
   background-color: #714e42;
   border-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
-.form-control:focus {
+.form-control:focus, select:focus {
   border-color: rgba(255, 255, 255, 0.5);
   background-color: #875d4f;
   color: rgba(255, 255, 255, 0.6);

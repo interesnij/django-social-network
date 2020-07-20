@@ -119,12 +119,12 @@ a.media:hover {
 .checkbox-user-check.active {
   background: #7979ff;
 }
-.form-control {
+.form-control, select {
   background-color: #131a3b;
   border-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
-.form-control:focus {
+.form-control:focus, select:focus {
   border-color: rgba(255, 255, 255, 0.5);
   background-color: #1b2656;
   color: rgba(255, 255, 255, 0.6);
