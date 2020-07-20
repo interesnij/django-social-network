@@ -169,6 +169,7 @@ class CommunityPrivatePostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
+			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 			self.private_settings.wall = request.POST.get('wall')
 			self.private_settings.photo = request.POST.get('photo')
 			self.private_settings.comment = request.POST.get('comment')
