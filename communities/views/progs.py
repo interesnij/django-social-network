@@ -63,8 +63,7 @@ class CommunityMemberCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_member = self.user.join_community_with_name(self.community.name)
+		new_member = request.user.join_community_with_name(self.community.name)
 		return HttpResponse("!")
 class CommunityMemberDelete(View):
 	success_url = "/"
@@ -159,17 +158,3 @@ class CommunityAdvertiserDelete(View):
 		else:
 			return HttpResponse("!")
 		return HttpResponse("!")
-
-
-class GygView(TemplateView):
-	template_name="gygyg.html"
-
-	def get(self,request,*args,**kwargs):
-		self.new_community = Community.objects.only('id').last()
-		self.new_url = self.new_community.pk
-		return super(GygView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(GygView,self).get_context_data(**kwargs)
-		context["new_url"]=self.new_url
-		return context

@@ -12,8 +12,5 @@
     {% else %}
       <span class="dropdown-item user_warning_banner" style="font-weight: bold;">Повесить баннер</span>
     {% endif %}
-    {% if request.user.is_user_editor or request.user.is_user_admin or request.user.is_superuser %}
-      <span class="dropdown-item" style="font-weight: bold;">Редактировать</span>
-    {% endif %}
   </div>
 </span>

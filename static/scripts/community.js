@@ -88,3 +88,27 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
 
   link_.send(form_data);
 });
+
+
+on('#ajax', 'click', '.member_create', function() {
+  _this = this;
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/communities/progs/add_member/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/communities/' + pk + '/');
+  }};
+  link_.send();
+})
+on('#ajax', 'click', '.member_delete', function() {
+  _this = this;
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/communities/progs/delete_member/" + pk + "/", true );
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload('/communities/' + pk + '/');
+  }};
+  link_.send();
+})

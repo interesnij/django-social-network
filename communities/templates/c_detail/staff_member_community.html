@@ -69,9 +69,6 @@
                   {% else %}
                     <span class="community_warning_banner" style="cursor:pointer">Повесить баннер</span>
                   {% endif %}
-                  {% if request.user.is_community_editor or request.user.is_community_admin or request.user.is_superuser %}
-                    <span class="" style="cursor:pointer">Редактировать</span>
-                  {% endif %}
                 </div>
           </div>
             <br>
