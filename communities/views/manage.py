@@ -93,7 +93,6 @@ class CommunityCoverChange(TemplateView):
 class CommunityNotifyPostView(TemplateView):
 	template_name = None
 	form = None
-	notify_post = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
