@@ -3,8 +3,8 @@ from communities.models import *
 from communities.model.settings import *
 
 
-class CommunityNotificationsSettingsInline(admin.TabularInline):
-    model = CommunityNotificationsSettings
+class CommunityNotificationsPostInline(admin.TabularInline):
+    model = CommunityNotificationsPost
 
 class CommunityPrivatePostInline(admin.TabularInline):
     model = CommunityPrivatePost
@@ -18,7 +18,7 @@ class CommunitySubCategoryAdmin(admin.ModelAdmin):
 
 class CommunityAdmin(admin.ModelAdmin):
     inlines = [
-        CommunityNotificationsSettingsInline,
+        CommunityNotificationsPostInline,
         CommunityPrivatePostInline,
     ]
 
