@@ -141,12 +141,11 @@ class CommunityNotifyPostView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.notify_settings=CommunityNotificationsPost.objects.get(community=self.community)
-		self.form=CommunityNotifyForm(request.POST)
+		self.notify_settings = CommunityNotificationsPost.objects.get(community=self.community)
+		self.form = CommunityNotifyForm(request.POST)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
+			return HttpResponse ('!')
 		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
 
 
@@ -156,18 +155,18 @@ class CommunityPrivatePostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityPrivateForm()
+		self.form = CommunityPrivateForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
 		try:
-			self.private_settings=CommunityPrivatePost.objects.get(community=self.community)
+			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
 		except:
-			self.private_settings=CommunityPrivatePost.objects.create(community=self.community)
+			self.private_settings = CommunityPrivatePost.objects.create(community=self.community)
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityPrivatePostView,self).get_context_data(**kwargs)
-		context["community"]=self.community
-		context["private_settings"]=self.private_settings
+		context = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["private_settings"] = self.private_settings
 		return context
 
 	def post(self,request,*args,**kwargs):
@@ -177,7 +176,7 @@ class CommunityPrivatePostView(TemplateView):
 			self.form.save()
 			return HttpResponse("")
 		else:
-			return HttpResponseBadRequest()
+			return HttpResponse("все не ок")
 		return super(CommunityPrivatePostView,self).post(request,*args,**kwargs)
 
 
