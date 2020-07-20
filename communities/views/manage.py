@@ -173,6 +173,8 @@ class CommunityPrivatePostView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save(commit=False)
+			self.form.community = self.community
 			self.form.save()
 			return HttpResponse("")
 		else:
