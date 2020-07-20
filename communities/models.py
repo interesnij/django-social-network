@@ -542,7 +542,7 @@ class Community(models.Model):
                 return True
         except:
             return False
-    def is_comment_post_send_nomember(self):
+    def is_comment_post_send_all(self):
         try:
             if self.community_private_post.comment == "CNM":
                 return True

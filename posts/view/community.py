@@ -56,7 +56,11 @@ class PostCommunityCommentCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         community = Community.objects.get(pk=request.POST.get('pk'))
         post = Post.objects.get(uuid=request.POST.get('uuid'))
-        if form_post.is_valid() and post.comments_enabled:
+        if not community.is_comment_post_send_all() and not requset.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_comment_post_send_admin() and not requset.user.is_administrator_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and post.comments_enabled:
             check_can_get_posts_for_community_with_name(request.user,community.name)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
@@ -76,8 +80,11 @@ class PostCommunityReplyCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         community = Community.objects.get(pk=request.POST.get('pk'))
         parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
-
-        if form_post.is_valid() and parent.post.comments_enabled:
+        if not community.is_comment_post_send_all() and not requset.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_comment_post_send_admin() and not requset.user.is_administrator_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and parent.post.comments_enabled:
             check_can_get_posts_for_community_with_name(request.user,community.name)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
