@@ -97,12 +97,12 @@ class CommunityNotifyPostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityNotifyPostForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_post.html", request=request)
 		try:
 			self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		except:
 			self.notify_post = CommunityNotificationsPost.objects.create(community=self.community)
+		self.form=CommunityNotifyPostForm(instance=self.notify_post)
 		return super(CommunityNotifyPostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -128,12 +128,12 @@ class CommunityNotifyPhotoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityNotifyPhotoForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_photo.html", request=request)
 		try:
 			self.notify_photo = CommunityNotificationsPhoto.objects.get(community=self.community)
 		except:
 			self.notify_photo = CommunityNotificationsPhoto.objects.create(community=self.community)
+		self.form=CommunityNotifyPhotoForm(instance=self.notify_photo)
 		return super(CommunityNotifyPhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -159,12 +159,12 @@ class CommunityNotifyGoodView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityNotifyGoodForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_good.html", request=request)
 		try:
 			self.notify_good = CommunityNotificationsGood.objects.get(community=self.community)
 		except:
 			self.notify_good = CommunityNotificationsGood.objects.create(community=self.community)
+		self.form=CommunityNotifyGoodForm(instance=self.notify_good)
 		return super(CommunityNotifyGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -190,12 +190,12 @@ class CommunityNotifyVideoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form = CommunityNotifyVideoForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_video.html", request=request)
 		try:
 			self.notify_video = CommunityNotificationsVideo.objects.get(community=self.community)
 		except:
 			self.notify_video = CommunityNotificationsVideo.objects.create(community=self.community)
+		self.form = CommunityNotifyVideoForm(instance=self.notify_video)
 		return super(CommunityNotifyVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
