@@ -3,9 +3,9 @@ on('#ajax', 'click', '#community_article_add', function() {
   open_fullscreen("/article/c_article_window/" + pk + "/", document.getElementById("create_loader"))
 });
 
-on('#ajax', 'click', '#c_add_admin_post', function() {
+on('#ajax', 'click', '#c_add_post_btn', function() {
   form_data = new FormData(document.forms.new_community_post);
-  form_post = document.querySelector("#admin_commnity_post");
+  form_post = document.querySelector("#c_add_post_form");
   lenta_load = form_post.parentElement.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 

@@ -43,14 +43,11 @@ class PostUserCreate(View):
 
         if self.form_post.is_valid():
             post = self.form_post.save(commit=False)
+
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
 
-                new_post = post.create_post(creator=request.user,
-                                            text=post.text,
-                                            community=None,
-                                            comments_enabled=post.comments_enabled,
-                                            status=post.status)
+                new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status="PG")
                 get_post_attach(request, new_post)
                 return render(request, 'post_user/my_post.html', {'object': new_post})
             else:
@@ -73,17 +70,19 @@ class PostCommunityCreate(View):
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if (community.is_wall_close() or community.is_staff_post_member_can()) and not request.user.is_staff_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.post_attacher import get_post_attach
+                from common.processing.post import get_post_processing(post)
 
-                new_post = post.create_post(creator=request.user,
-                                            text=post.text,
-                                            community=community,
-                                            comments_enabled=post.comments_enabled,
-                                            status=post.status)
+                new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status="PG")
                 get_post_attach(request, new_post)
+                get_post_processing(new_post)
                 return render(request, 'post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
