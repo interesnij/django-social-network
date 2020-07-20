@@ -265,7 +265,7 @@ class CommunityPrivateGoodView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
-			self.private_good = CommunityPrivatePost.objects.get(community=self.community)
+			self.private_good = CommunityPrivateGood.objects.get(community=self.community)
 			self.private_good.good = request.POST.get('good')
 			self.private_good.comment = request.POST.get('comment')
 			self.private_good.save()
