@@ -38,8 +38,11 @@
             {% include 'detail_sections/goods.html' %}
 
             {% if community.is_member_post or community.is_all_can_post %}
-              {% include 'detail_sections/create_member_post.html' %}
-            
+            <!-- если подписчики могут писать посты или могут писать все -->
+              {% include 'detail_sections/create_post.html' %}
+            {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
+              <!-- если подписчики могут предлагать новости или  все могут предлагать посты -->
+              {% include 'detail_sections/create_offer_post.html' %}
             {% endif %}
 
             <div class="mt-3" id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
