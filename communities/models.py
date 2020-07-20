@@ -496,75 +496,166 @@ class Community(models.Model):
 
     def is_wall_close(self):
         try:
-            if self.community_private_settings.wall == "SP":
+            if self.community_private_post.wall == "SP":
                 return True
         except:
             return False
     def is_staff_post_member_can(self):
         try:
-            if self.community_private_settings.wall == "SPMC":
+            if self.community_private_post.wall == "SPMC":
                 return True
         except:
             return False
     def is_staff_post_all_can(self):
         try:
-            if self.community_private_settings.wall == "SPAC":
+            if self.community_private_post.wall == "SPAC":
                 return True
         except:
             return False
     def is_member_post(self):
         try:
-            if self.community_private_settings.wall == "MP":
+            if self.community_private_post.wall == "MP":
                 return True
         except:
             return False
     def is_member_post_all_can(self):
         try:
-            if self.community_private_settings.wall == "MPAC":
+            if self.community_private_post.wall == "MPAC":
                 return True
         except:
             return False
     def is_all_can_post(self):
         try:
-            if self.community_private_settings.wall == "AC":
+            if self.community_private_post.wall == "AC":
+                return True
+        except:
+            return False
+    def is_comment_post_send_admin(self):
+        try:
+            if self.community_private_post.comment == "CA":
+                return True
+        except:
+            return False
+    def is_comment_post_send_member(self):
+        try:
+            if self.community_private_post.comment == "CM":
+                return True
+        except:
+            return False
+    def is_comment_post_send_nomember(self):
+        try:
+            if self.community_private_post.comment == "CNM":
                 return True
         except:
             return False
 
     def is_photo_upload_admin(self):
         try:
-            if self.community_private_settings.photo == "PA":
+            if self.community_private_photo.photo == "PA":
                 return True
         except:
             return False
     def is_photo_upload_member(self):
         try:
-            if self.community_private_settings.photo == "PM":
+            if self.community_private_photo.photo == "PM":
                 return True
         except:
             return False
     def is_photo_upload_nomember(self):
         try:
-            if self.community_private_settings.photo == "PNM":
+            if self.community_private_photo.photo == "PNM":
+                return True
+        except:
+            return False
+    def is_comment_photo_send_admin(self):
+        try:
+            if self.community_private_photo.comment == "CA":
+                return True
+        except:
+            return False
+    def is_comment_photo_send_member(self):
+        try:
+            if self.community_private_photo.comment == "CM":
+                return True
+        except:
+            return False
+    def is_comment_photo_send_nomember(self):
+        try:
+            if self.community_private_photo.comment == "CNM":
                 return True
         except:
             return False
 
-    def is_comment_send_admin(self):
+    def is_good_upload_admin(self):
         try:
-            if self.community_private_settings.comment == "CA":
+            if self.community_private_good.good == "GA":
                 return True
         except:
             return False
-    def is_comment_send_member(self):
+    def is_good_upload_member(self):
         try:
-            if self.community_private_settings.comment == "CM":
+            if self.community_private_good.good == "GM":
                 return True
         except:
             return False
-    def is_comment_send_nomember(self):
+    def is_good_upload_nomember(self):
         try:
-            if self.community_private_settings.comment == "CNM":
+            if self.community_private_good.good == "GNM":
+                return True
+        except:
+            return False
+    def is_comment_good_send_admin(self):
+        try:
+            if self.community_private_good.comment == "CA":
+                return True
+        except:
+            return False
+    def is_comment_good_send_member(self):
+        try:
+            if self.community_private_good.comment == "CM":
+                return True
+        except:
+            return False
+    def is_comment_good_send_nomember(self):
+        try:
+            if self.community_private_good.comment == "CNM":
+                return True
+        except:
+            return False
+
+    def is_video_upload_admin(self):
+        try:
+            if self.community_private_video.video == "VA":
+                return True
+        except:
+            return False
+    def is_video_upload_member(self):
+        try:
+            if self.community_private_video.video == "VM":
+                return True
+        except:
+            return False
+    def is_video_upload_nomember(self):
+        try:
+            if self.community_private_video.video == "VNM":
+                return True
+        except:
+            return False
+    def is_comment_video_send_admin(self):
+        try:
+            if self.community_private_video.comment == "CA":
+                return True
+        except:
+            return False
+    def is_comment_video_send_member(self):
+        try:
+            if self.community_private_video.comment == "CM":
+                return True
+        except:
+            return False
+    def is_comment_video_send_nomember(self):
+        try:
+            if self.community_private_video.comment == "CNM":
                 return True
         except:
             return False

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Приватность стены - {{ community.name }}{% endblock %}
+{% block title %}Приватность галереи - {{ community.name }}{% endblock %}
 {% block content %}
 
 <div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-md-9 order-1">
-            <form id="community_private_post_form" class="contact-form">
+            <form id="community_private_photo_form" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Приватность стены -
+                        <h5 class="content-color-primary mb-0">Приватность галереи -
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                               {{ community.name }}
                             </a>
@@ -17,8 +17,8 @@
                     </div>
                     <div class="card-body">
                       <div class="form-group">
-                          <label>Стена (блога)</label>
-                          {{ form.wall }}
+                          <label>Загрузка фотографий</label>
+                          {{ form.photo }}
                       </div>
                       <div class="form-group">
                           <label>Комментарии</label>
@@ -26,7 +26,7 @@
                       </div>
                     </div>
                     <div class="card-footer">
-                        <button type="button" id="community_private_post_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                        <button type="button" id="community_private_photo_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                     </div>
                 </div>
             </form>

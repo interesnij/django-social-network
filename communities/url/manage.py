@@ -4,9 +4,16 @@ from communities.views.manage import *
 
 urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/general/$', CommunityGeneralChange.as_view(), name='community_general_form'),
-    url(r'^cat/(?P<pk>[0-9]+)/$', CommunityCatChange.as_view(), name='community_cat'),
+
     url(r'^notify_post/(?P<pk>[0-9]+)/$', CommunityNotifyPostView.as_view(), name='community_post_notify'),
+    url(r'^notify_photo/(?P<pk>[0-9]+)/$', CommunityNotifyPhotoView.as_view(), name='community_photo_notify'),
+    url(r'^notify_good/(?P<pk>[0-9]+)/$', CommunityNotifyGoodView.as_view(), name='community_good_notify'),
+    url(r'^notify_video/(?P<pk>[0-9]+)/$', CommunityNotifyVideoView.as_view(), name='community_video_notify'),
+
     url(r'^private_post/(?P<pk>[0-9]+)/$', CommunityPrivatePostView.as_view(), name='community_post_private'),
+    url(r'^notify_photo/(?P<pk>[0-9]+)/$', CommunityPrivatePhotoView.as_view(), name='community_photo_private'),
+    url(r'^notify_good/(?P<pk>[0-9]+)/$', CommunityPrivateGoodView.as_view(), name='community_good_private'),
+    url(r'^notify_video/(?P<pk>[0-9]+)/$', CommunityPrivateVideoView.as_view(), name='community_video_private'),
 
     url(r'^(?P<pk>[0-9]+)/admins/$', CommunityAdminView.as_view(), name='community_admins'),
     url(r'^(?P<pk>[0-9]+)/moders/$', CommunityModersView.as_view(), name='community_moders'),

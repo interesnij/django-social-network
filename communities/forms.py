@@ -30,25 +30,36 @@ class CatCommunityForm(forms.ModelForm):
 		fields = ['category', ]
 
 
-class CommunityNotifyForm(forms.ModelForm):
+class CommunityNotifyPostForm(forms.ModelForm):
     class Meta:
         model = CommunityNotificationsPost
-        fields = (
-            'comment',
-            'comment_reply',
-            'comment_mention',
-            'mention',
-            'repost',
-            'like',
-            'dislike',
-            'comment_like',
-            'comment_dislike',
-            'comment_reply_like',
-            'comment_reply_dislike',
-        )
+        fields = ('comment','comment_reply','comment_mention','mention','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class CommunityNotifyPhotoForm(forms.ModelForm):
+    class Meta:
+        model = CommunityNotificationsPhoto
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class CommunityNotifyGoodForm(forms.ModelForm):
+    class Meta:
+        model = CommunityNotificationsGood
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class CommunityNotifyVideoForm(forms.ModelForm):
+    class Meta:
+        model = CommunityNotificationsVideo
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
 
 class CommunityPrivatePostForm(forms.ModelForm):
-
 	class Meta:
 		model = CommunityPrivatePost
+		fields = ('wall', 'comment',)
+class CommunityPrivatePhotoForm(forms.ModelForm):
+	class Meta:
+		model = CommunityPrivatePhoto
 		fields = ('wall', 'photo', 'comment',)
+class CommunityPrivateGoodForm(forms.ModelForm):
+	class Meta:
+		model = CommunityPrivateGood
+		fields = ('wall', 'good', 'comment',)
+class CommunityPrivateVideoForm(forms.ModelForm):
+	class Meta:
+		model = CommunityPrivateVideo
+		fields = ('wall', 'video', 'comment',)
