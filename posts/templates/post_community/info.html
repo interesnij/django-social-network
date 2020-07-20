@@ -1,7 +1,7 @@
 {% load liked_user %}
 
 {% if object.is_signature %}
-<a href="{% url 'user' pk=object.creator.pk %}" class="ajax" style="padding-left:10px">{{ object.creator }}</a>
+<a href="{% url 'user' pk=object.creator.pk %}" class="ajax small" style="padding-left:10px;text-decoration:underline;">{{ object.creator }}</a>
 {% endif %}
 <div class="card-footer border-top py-2">
     <div class="row">
