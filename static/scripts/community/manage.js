@@ -13,7 +13,7 @@ on('#ajax', 'click', '#community_private_post_btn', function() {
       ajax_link.send(form_data);
 });
 
-document.querySelector(".add_staff_options").addEventListener("click", (e) => {
+on('#ajax', 'click', '.add_staff_options', function() {
     uuid = this.getAttribute("data-uuid");
     status = this.getAttribute("data-status");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
