@@ -1,70 +1,28 @@
-function send_form_with_pk_and_toast(url, form, toast){
-    form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', url, true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info(toast);
-        }
-      }
-      ajax_link.send(form_data);
-}
 
 on('#ajax', 'click', '#community_private_post_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_post_form"), "Изменения приняты!")
 });
 on('#ajax', 'click', '#community_private_photo_btn', function() {
-  form = document.querySelector("#community_private_photo_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/communities/manage/private_photo/' + pk + "/", true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info("Изменения приняты!");
-        }
-      }
-      ajax_link.send(form_data);
+  send_form_with_pk_and_toast('/communities/manage/private_photo/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_photo_form"), "Изменения приняты!")
 });
 on('#ajax', 'click', '#community_private_good_btn', function() {
-  form = document.querySelector("#community_private_good_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/communities/manage/private_good/' + pk + "/", true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info("Изменения приняты!");
-        }
-      }
-      ajax_link.send(form_data);
+  send_form_with_pk_and_toast('/communities/manage/private_good/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_good_form"), "Изменения приняты!")
 });
 on('#ajax', 'click', '#community_private_video_btn', function() {
-  form = document.querySelector("#community_private_video_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/communities/manage/private_video/' + pk + "/", true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info("Изменения приняты!");
-        }
-      }
-      ajax_link.send(form_data);
+  send_form_with_pk_and_toast('/communities/manage/private_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_video_form"), "Изменения приняты!")
 });
 
 on('#ajax', 'click', '#community_notify_post_btn', function() {
-  form = document.querySelector("#community_notify_post_form");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/communities/manage/notify_post/' + pk + "/", true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info("Изменения приняты!");
-        }
-      }
-      ajax_link.send(form_data);
+  send_form_with_pk_and_toast('/communities/manage/notify_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_post_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#community_notify_photo_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/notify_photo/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_photo_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#community_notify_good_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/notify_good/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_good_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#community_notify_video_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/notify_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_video_form"), "Изменения приняты!")
 });
 
 on('#ajax', 'click', '.add_staff_options', function() {

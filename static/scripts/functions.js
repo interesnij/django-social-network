@@ -1,3 +1,15 @@
+function send_form_with_pk_and_toast(url, form, toast){
+    form_data = new FormData(form);
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', url, true );
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            toast_info(toast);
+        }
+      }
+      ajax_link.send(form_data);
+}
+
 function comment_delete(_this, _link, _class){
   data = _this.parentElement.parentElement;
   comment_pk = data.getAttribute("data-pk");
