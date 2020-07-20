@@ -47,7 +47,7 @@ class CommunityNotifyForm(forms.ModelForm):
             'comment_reply_dislike',
         )
 
-class CommunityPrivateForm(forms.ModelForm):
+class CommunityPrivatePostForm(forms.ModelForm):
     class Meta:
         model = CommunityPrivatePost
         fields = (

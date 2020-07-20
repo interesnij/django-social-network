@@ -151,11 +151,11 @@ class CommunityNotifyPostView(TemplateView):
 
 class CommunityPrivatePostView(TemplateView):
 	template_name = None
-	private_settings=None
+	private_settings = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form = CommunityPrivateForm()
+		self.form = CommunityPrivatePostForm()
 		self.template_name = self.community.get_manage_template(folder="manage/", template="private_post.html", request=request)
 		try:
 			self.private_settings = CommunityPrivatePost.objects.get(community=self.community)
@@ -171,10 +171,8 @@ class CommunityPrivatePostView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
+		self.form=CommunityPrivatePostForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.form.save(commit=False)
-			self.form.community = self.community
 			self.form.save()
 			return HttpResponse("")
 		else:
