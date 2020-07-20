@@ -22,23 +22,24 @@ class Post(models.Model):
         (STATUS_PUBLISHED, 'Опубликована'),
         (STATUS_ARHIVED, 'Архивирована'),
     )
-
-    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    id = models.BigAutoField(primary_key=True)
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
+    status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
+    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
+
+    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
-    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
+    is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
-    def create_post(cls, creator, text, community, comments_enabled, status):
-        post = Post.objects.create(creator=creator, text=text, community=community, comments_enabled=comments_enabled, status=status, )
+    def create_post(cls, creator, text, community, comments_enabled, is_signature, status):
+        post = Post.objects.create(creator=creator, text=text, community=community, is_signature=is_signature, comments_enabled=comments_enabled, status=status, )
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
