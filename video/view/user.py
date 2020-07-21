@@ -20,7 +20,7 @@ class UserVideoList(ListView):
 
         self.template_name = self.user.get_template_user("u_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
         return super(UserVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -50,10 +50,10 @@ class UserVideoDetail(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-                    
+
         self.template_name = self.user.get_template_user("u_video_detail/", "video.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
         return super(UserVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
