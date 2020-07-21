@@ -7,7 +7,7 @@
           <div class="media-body">
               <h4 class="content-color-primary mb-0">Предложенные записи</h4>
           </div>
-          {{ community|count_draft_posts_for_user:request.user.pk }}
+          <span class="user_draft_count">{{ community|count_draft_posts_for_user:request.user.pk }}</span>
       </div>
     </a>
   </div>
