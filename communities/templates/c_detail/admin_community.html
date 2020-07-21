@@ -45,6 +45,7 @@
                         <a href="{% url 'community_draft_list' pk=community.pk %}" class="ajax">
                             <div class="media-body">
                                 <h4 class="content-color-primary mb-0">Предложенные записи</h4>
+                                <span class="">{{ community.get_count_draft_posts }}</span>
                             </div>
                         </a>
                     </div>

@@ -184,6 +184,15 @@ class Community(models.Model):
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
+    def get_count_draft_posts(self):
+        from posts.models import Post
+
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
+        count_posts = Post.objects.filter(posts_query).values("pk").count()
+        return count_posts
+
+    def id_draft_posts_exists():
+        return self.post_community.filter(status="D", is_deleted=False).exists()
 
     def get_draft_posts_for_user(self, user_pk):
         from posts.models import Post
@@ -198,9 +207,6 @@ class Community(models.Model):
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
-
-    def id_draft_posts_exists():
-        return self.post_community.filter(status="D", is_deleted=False).exists()
     def get_archive_posts(self):
         from posts.models import Post
 
