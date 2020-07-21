@@ -8,3 +8,7 @@ def is_community_draft_exists(request_user, community_id):
         return True
     else:
         return False
+
+@register.filter
+def count_draft_posts_for_user(request_user_pk, community):
+    return community.get_count_draft_posts_for_user(request_user_pk)
