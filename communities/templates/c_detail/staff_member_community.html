@@ -35,7 +35,11 @@
                     </li>
                   </ul>
             </div>
-            {% include 'detail_sections/goods.html' %}
+            {% if community.is_good_upload_member or community.is_good_upload_nomember %}
+              {% include 'detail_sections/admin_goods.html' %}
+            {% else %}
+              {% include 'detail_sections/goods.html' %}
+            {% endif %}
 
             {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
               {% include 'detail_sections/create_post.html' %}
