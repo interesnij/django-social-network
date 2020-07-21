@@ -20,7 +20,7 @@
                         <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                           {{ community.name }}
                         </a>
-                        | Предложенные записи
+                        - Предложенные записи
                       </h5>
                     </div>
                 </div>
@@ -28,13 +28,13 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group" id="community_draft_post_container" data-link="/communities/draft/{{ community.pk }}">
                   {% if object_list %}
-                    {% for object in object_list %}
                     <div id="lenta_container">
                         <div class="stream-update">
                             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
                         </div>
 
                         <span class="stream post_container">
+                          {% for object in object_list %}
                           <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
                             <div class="card-header">
                                 <div class="media">
@@ -73,10 +73,10 @@
                           </div>
                         </div>
                       </div>
+                      {% endfor %}
                     </span>
                   </div>
 
-                    {% endfor %}
                     {% else %}
                     <div class="card mb-3 post_empty centered">
                       <div class="card-body">
