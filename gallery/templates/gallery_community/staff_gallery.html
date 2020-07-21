@@ -14,7 +14,7 @@
 </div>
 
 <div class="container mt-4">
-  {% include 'gallery_community/admin_albums.html' %}
+  {% include 'gallery_community/albums.html' %}
 </div>
 
 <div class="container-fluid mt-3">
@@ -27,6 +27,17 @@
             </h5>
             {{ community.count_photos }}
         </div>
+        {% if community.is_photo_upload_nomember %}
+        <div class="col-12 col-md-4">
+          <form id="c_add_photos" method="post">
+              {% csrf_token %}
+                <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
+                <button id="c_add_multi_photos" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                  Добавить фотографии
+                </button>
+          </form>
+        </div>
+        {% endif %}
     </div>
 </div>
 

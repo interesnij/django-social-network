@@ -56,7 +56,7 @@ class CommunityGalleryView(TemplateView):
                 elif request.user.is_editor_of_community_with_name(self.community.name):
                     self.template_name = "gallery_community/editor_gallery.html"
                 elif request.user.is_community_manager():
-                    self.template_name = "gallery_community/staff_gallery.html"
+                    self.template_name = "gallery_community/staff_member_gallery.html"
                 else:
                     self.template_name = "gallery_community/member_gallery.html"
             elif request.user.is_community_manager():
@@ -110,7 +110,7 @@ class CommunityAlbumView(TemplateView):
                 elif request.user.is_editor_of_community_with_name(self.community.name):
                     self.template_name = "album_community/editor_album.html"
                 elif request.user.is_community_manager():
-                    self.template_name = "album_community/staff_album.html"
+                    self.template_name = "album_community/staff_member_album.html"
                 else:
                     self.template_name = "album_community/member_album.html"
             elif request.user.is_community_manager():
