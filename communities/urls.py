@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
-from communities.views.list import AllCommunities, CommunityMembersView, CommunityFriendsView, CommunityCategoryView
-from communities.views.details import PostCommunity, PostsCommunity, CommunityDetail, CommunityMusic, CommunityVideo
+from communities.views.list import *
+from communities.views.details import *
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PostCommunity.as_view(), name='community_item'),
     url(r'^list/(?P<pk>\d+)/$', PostsCommunity.as_view(), name="community_item_list"),
+    url(r'^draft/(?P<pk>\d+)/$', PostsDraftCommunity.as_view(), name="community_draft_list"),
     url(r'^(?P<pk>\d+)/music/$', CommunityMusic.as_view(), name='community_music'),
     url(r'^(?P<pk>\d+)/video/$', CommunityVideo.as_view(), name='community_video'),
 

@@ -183,6 +183,8 @@ class Community(models.Model):
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
+    def id_draft_posts_exists():
+        return self.post_community.filter(status="D").exists()
     def get_archive_posts(self):
         from posts.models import Post
 

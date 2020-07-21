@@ -12,11 +12,6 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 
 class PostUserCreate(View):
-    def get_context_data(self,**kwargs):
-        context = super(PostUserCreate,self).get_context_data(**kwargs)
-        context["form_post"] = PostForm()
-        return context
-
     def post(self,request,*args,**kwargs):
         self.form_post = PostForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])

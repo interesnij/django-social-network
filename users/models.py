@@ -878,21 +878,26 @@ class User(AbstractUser):
 
     def get_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
+
+    def get_draft_posts_of_community_with_pk(self, community_pk):
+        from posts.models import Post
+
+        posts_query = Q(creator_id=self.id, community_pk=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
+        posts = Post.objects.filter(posts_query)
+        return posts
+
     def get_archive_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
         posts = Post.objects.filter(posts_query)
@@ -900,90 +905,63 @@ class User(AbstractUser):
 
     def get_articles(self):
         from article.models import Article
-        from managers.model.post import ModeratedPost
 
         articles_query = Q(creator_id=self.id, is_deleted=False)
-        #exclude_reported_and_approved_articles_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #articles_query.add(exclude_reported_and_approved_articles_query, Q.AND)
         articles = Article.objects.filter(articles_query)
         return articles
 
     def get_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
     def get_profile_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos[0:6]
 
     def get_my_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__pk=album_id, is_deleted=False, is_public=True)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_my_album(self, album_id):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album__id=album_id, is_deleted=False)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
 
     def get_avatar_photos(self):
         from gallery.models import Photo
-        from managers.model.photo import ModeratedPhoto
 
         photos_query = Q(creator_id=self.id, is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=None)
-        #exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)
         return avatar_photos
 
     def get_albums(self):
         from gallery.models import Album
-        from managers.model.photo import ModeratedPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, is_generic=False, community=None)
-        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
     def get_my_albums(self):
         from gallery.models import Album
-        from managers.model.photo import ModeratedPhoto
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        #exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        #albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -1156,70 +1134,55 @@ class User(AbstractUser):
 
     def _get_timeline_posts(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
         posts_select_related = ('creator', 'community')
         posts_only = ('id', 'created', 'creator__id', 'community__id')
-        #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
         own_posts_queryset = self.posts.select_related(*posts_select_related).only(*posts_only).filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
-        #community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-        #community_posts_query.add(reported_posts_exclusion_query, Q.AND)
         community_posts_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
         followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        #followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         followed_users_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
         frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        #frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Post.objects.select_related(*posts_select_related).only(*posts_only).filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
     def _get_timeline_posts_v2(self):
         from posts.models import Post
-        from managers.model.post import ModeratedPost
 
-        #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        #own_posts_query.add(reported_posts_exclusion_query, Q.AND)
         own_posts_queryset = self.post_creator.only('created').filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_deleted=False, status=Post.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
-        #community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-        #community_posts_query.add(reported_posts_exclusion_query, Q.AND)
         community_posts_queryset = Post.objects.only('created').filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
         followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        #followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         followed_users_queryset = Post.objects.only('created').filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
         frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        #frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Post.objects.only('created').filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
     def get_follows(self):
-        #reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         followed_users = self.followers.values('user_id')
         followed_users_ids = [followed_user['user_id'] for followed_user in followed_users]
         followed_users_query = Q(id__in=followed_users_ids)
-        #followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         query = User.objects.filter(followed_users_query)
         return query
 

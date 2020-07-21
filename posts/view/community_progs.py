@@ -11,11 +11,6 @@ from common.processing.post import get_post_processing
 
 
 class PostCommunityCreate(View):
-    def get_context_data(self,**kwargs):
-        context = super(PostCommunityCreate,self).get_context_data(**kwargs)
-        context["form_post"] = PostCommunityForm()
-        return context
-
     def post(self,request,*args,**kwargs):
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -31,6 +26,28 @@ class PostCommunityCreate(View):
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 return render(request, 'post_community/admin_post.html', {'object': new_post})
+            else:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
+
+
+class PostOfferCommunityCreate(View):
+    def post(self,request,*args,**kwargs):
+        form_post = PostForm(request.POST)
+        community = Community.objects.get(pk=self.kwargs["pk"])
+
+        if community.is_wall_close():
+            raise PermissionDenied("Ошибка доступа.")
+        elif community.is_staff_post_member_can() and not request.user.is_member_of_community_with_name(community.name):
+            raise PermissionDenied("Ошибка доступа.")
+        elif form_post.is_valid():
+            post = form_post.save(commit=False)
+            if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+                new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")
+                get_post_attach(request, new_post)
+                get_post_offer_processing(new_post)
+                return render(request, 'post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:

@@ -24,7 +24,7 @@ class Post(models.Model):
     )
     id = models.BigAutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='post_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
@@ -37,7 +37,7 @@ class Post(models.Model):
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 
-    @classmethod 
+    @classmethod
     def create_post(cls, creator, text, community, comments_enabled, is_signature, status):
         post = Post.objects.create(creator=creator, text=text, community=community, is_signature=is_signature, comments_enabled=comments_enabled, status=status, )
         channel_layer = get_channel_layer()
