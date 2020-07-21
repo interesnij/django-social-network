@@ -403,7 +403,7 @@ class User(AbstractUser):
         except:
             return False
 
-    def try_except(value):
+    def try_except(self, value):
         try:
             if value:
                 return True
