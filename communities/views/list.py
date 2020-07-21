@@ -214,3 +214,26 @@ class PostsDraftCommunity(ListView):
     def get_queryset(self):
         item_list = self.community.get_draft_posts().order_by('-created')
         return item_list
+
+class PostsUserDraftCommunity(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+
+        if request.user.is_authenticated:
+            if request.user.get_draft_posts_of_community_with_pk(self.community.pk):
+                self.template_name = "c_list/user_draft_list.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
+        return super(PostsUserDraftCommunity,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostsUserDraftCommunity,self).get_context_data(**kwargs)
+        context["community"] = self.community
+        return context
+
+    def get_queryset(self):
+        item_list = self.community.get_draft_posts_for_user(self.request.user.pk).order_by('-created') 
+        return item_list

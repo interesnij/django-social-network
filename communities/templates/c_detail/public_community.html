@@ -37,6 +37,8 @@
             </div>
             {% include 'detail_sections/goods.html' %}
 
+
+
             {% if community.is_all_can_post %}
               {% include 'detail_sections/create_post.html' %}
             {% elif community.is_member_post_all_can or community.is_staff_post_all_can %}

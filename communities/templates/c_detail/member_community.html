@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ community.name }} - Вы подписчик{% endblock %}
+{% load exists %}
 {% block content %}
 
 {% if community.cover %}
@@ -36,6 +37,12 @@
                   </ul>
             </div>
             {% include 'detail_sections/goods.html' %}
+
+            <span class="draft_post_container">
+            {% if requset.user.is_community_draft_exists|community.pk %}
+              {% include 'detail_sections/user_draft_post.html' %}
+            {% endif %}
+            </span>
 
             {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
               {% include 'detail_sections/create_post.html' %}
