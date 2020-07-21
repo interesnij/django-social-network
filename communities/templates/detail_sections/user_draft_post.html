@@ -1,3 +1,5 @@
+{% load exists %}
+
 <div class="card mt-3 user_draft_list">
   <div class="card-header">
     <a href="{% url 'community_user_draft_list' pk=community.pk %}" class="ajax">
