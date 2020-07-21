@@ -7,7 +7,7 @@ from django.views import View
 from communities.models import Community
 from posts.forms import PostForm
 from common.post_attacher import get_post_attach
-from common.processing.post import get_post_processing
+from common.processing.post import get_post_processing, get_post_offer_processing
 
 
 class PostCommunityCreate(View):
