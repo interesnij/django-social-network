@@ -403,36 +403,23 @@ class User(AbstractUser):
         except:
             return False
 
+    def try_except(value):
+        try:
+            if value:
+                return True
+        except:
+            return False
+
     def is_user_administrator(self):
-        try:
-            if self.user_staff.level == "A":
-                return True
-        except:
-            return False
+        try_except(self.user_staff.level == "A")
     def is_user_moderator(self):
-        try:
-            if self.user_staff.level == "M":
-                return True
-        except:
-            return False
+        try_except(self.user_staff.level == "M")
     def is_user_editor(self):
-        try:
-            if self.user_staff.level == "E":
-                return True
-        except:
-            return False
+        try_except(self.user_staff.level == "E")
     def is_user_advertiser(self):
-        try:
-            if self.user_staff.level == "R":
-                return True
-        except:
-            return False
+        try_except(self.user_staff.level == "R")
     def is_user_manager(self):
-        try:
-            if self.user_staff.level and self.user_staff.level != "R":
-                return True
-        except:
-            return False
+        try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
         try:

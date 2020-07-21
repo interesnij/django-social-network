@@ -37,9 +37,6 @@ top: 0;
 left: 0;
 }
 
-.btn_default {
-  cursor:pointer
-}
 .photo_stream_comments{
   overflow: auto;
   max-height: 500px;
