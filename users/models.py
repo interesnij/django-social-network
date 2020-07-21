@@ -403,7 +403,7 @@ class User(AbstractUser):
         except:
             return False
 
-    def try_except(self, value):
+    def try_except(value):
         try:
             if value:
                 return True
@@ -411,15 +411,15 @@ class User(AbstractUser):
             return False
 
     def is_user_administrator(self):
-        try_except(self.user_staff.level == "A")
+        self.try_except(self.user_staff.level == "A")
     def is_user_moderator(self):
-        try_except(self.user_staff.level == "M")
+        self.try_except(self.user_staff.level == "M")
     def is_user_editor(self):
-        try_except(self.user_staff.level == "E")
+        self.try_except(self.user_staff.level == "E")
     def is_user_advertiser(self):
-        try_except(self.user_staff.level == "R")
+        self.try_except(self.user_staff.level == "R")
     def is_user_manager(self):
-        try_except(self.user_staff.level and self.user_staff.level != "R")
+        self.try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
         try:
