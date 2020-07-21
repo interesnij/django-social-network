@@ -1,3 +1,11 @@
+on('#ajax', 'click', '.show_staff_window', function() {
+  var parent, pk, uuid, loader
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = parent.getAttribute("data-pk");
+  uuid = parent.getAttribute("data-uuid");
+  loader = document.getElementById("load_staff_window");
+  open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
+});
 
 on('#ajax', 'click', '#community_private_post_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_post_form"), "Изменения приняты!")

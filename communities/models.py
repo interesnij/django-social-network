@@ -95,9 +95,16 @@ class Community(models.Model):
         return self.b_avatar
 
     def get_b_avatar(self):
-        return try_except(self.b_avatar.url)
+        try:
+            return self.b_avatar.url
+        except:
+            return None
+
     def get_avatar(self):
-        return try_except(self.s_avatar.url)
+        try:
+            return self.s_avatar.url
+        except:
+            return None
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, invites_enabled=None):

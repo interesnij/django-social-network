@@ -29,6 +29,28 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#c_add_offer_post', function() {
+  form_post = document.body.querySelector("#admin_offer_post");
+  form_data = new FormData(form_post);
+
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/posts/community_progs/add_offer_post/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector('.id_text').value = "";
+    clear_attach_block();
+
+    elem = link_.responseText;
+    document.body.querySelector(".user_draft_list") ? toast_info("Запись предложена")
+    : (document.body.querySelector(".draft_post_container").innerHTML = '<div class="card mt-3 user_draft_list"><div class="card-header"><a href="/communities/user_draft/"' + pk + '"/" class="ajax"><div class="media"><div class="media-body"><h4 class="content-color-primary mb-0">Предложенные записи</h4></div></div></a></div></div>',
+    toast_info("Запись предложена,"))
+  }};
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.c_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.previousElementSibling, '/posts/community/post-comment/');
