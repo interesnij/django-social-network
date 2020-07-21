@@ -8,6 +8,7 @@ from django.conf import settings
 from common.checkers import *
 from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
+from common.utils import try_except
 
 
 class User(AbstractUser):

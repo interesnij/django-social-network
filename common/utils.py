@@ -1,4 +1,10 @@
-
+def try_except(value):
+    try:
+        if value:
+            return True
+    except:
+        return False
+        
 def safe_json(data):
     import json
     from django.utils.safestring import mark_safe
