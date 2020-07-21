@@ -46,7 +46,7 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
     elem = link_.responseText;
     document.body.querySelector(".user_draft_list") ? (toast_info("Запись предложена"),
                                                        value = document.body.querySelector(".user_draft_count").innerHTML,
-                                                       int(value) += 1,
+                                                       parseInt(value) += 1,
                                                        document.body.querySelector(".user_draft_count").innerHTML = value)
     : (document.body.querySelector(".draft_post_container").innerHTML = '<div class="card mt-3 user_draft_list"><div class="card-header"><a href="/communities/user_draft/"' + pk + '"/" class="ajax"><div class="media"><div class="media-body"><h4 class="content-color-primary mb-0">Предложенные записи</h4></div>1</div></a></div></div>',
     toast_info("Запись предложена,"))
