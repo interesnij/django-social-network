@@ -1250,40 +1250,40 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
-    def get_template_user(self, folder, template, request):
-        if self.pk == request.user.pk:
-            if not request.user.is_phone_verified:
-                template_name = "main/phone_verification.html"
-            elif self.is_suspended():
-                self.template_name = "main/you_suspended.html"
-            elif self.is_blocked():
-                self.template_name = "main/you_global_block.html"
-            else:
-                template_name = folder + "my_" + template
-        elif request.user.pk != self.pk and request.user.is_authenticated:
-            if not request.user.is_phone_verified:
-                template_name = "main/phone_verification.html"
-            elif self.is_suspended():
-                self.template_name = "main/user_suspended.html"
-            elif self.is_blocked():
-                self.template_name = "main/user_global_block.html"
-            elif self.is_have_warning_banner():
-                self.template_name = "account/user_have_warning_banner.html"
-            elif request.user.is_blocked_with_user_with_id(user_id=self.pk):
-                template_name = folder + "block_" + template
-            elif self.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.pk):
-                    template_name = folder + "close_" + template
+    def get_template_user(self, folder, template, request_user):
+        if request_user.is_authenticated:
+            if self.pk == request_user.pk:
+                if not request_user.is_phone_verified:
+                    template_name = "main/phone_verification.html"
+                elif self.is_suspended():
+                    self.template_name = "main/you_suspended.html"
+                elif self.is_blocked():
+                    self.template_name = "main/you_global_block.html"
                 else:
-                    template_name = folder + "frend_" + template
-            else:
-                template_name = folder + template
-        elif request.user.is_anonymous and self.is_closed_profile():
-            template_name = folder + "close_" + template
-        elif request.user.is_anonymous and not self.is_closed_profile():
-            template_name = folder + "anon_" + template
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
+                    template_name = folder + "my_" + template
+            elif request_user.pk != self.pk:
+                if not request_user.is_phone_verified:
+                    template_name = "main/phone_verification.html"
+                elif self.is_suspended():
+                    self.template_name = "main/user_suspended.html"
+                elif self.is_blocked():
+                    self.template_name = "main/user_global_block.html"
+                elif self.is_have_warning_banner():
+                    self.template_name = "account/user_have_warning_banner.html"
+                elif request_user.is_blocked_with_user_with_id(user_id=self.pk):
+                    template_name = folder + "block_" + template
+                elif self.is_closed_profile():
+                    if not request_user.is_connected_with_user_with_id(user_id=self.pk):
+                        template_name = folder + "close_" + template
+                    else:
+                        template_name = folder + "frend_" + template
+                else:
+                    template_name = folder + template
+        elif request_user.is_anonymous:
+            if self.is_closed_profile():
+                template_name = folder + "close_" + template
+            elif not self.is_closed_profile():
+                template_name = folder + "anon_" + template
         return template_name
 
     def get_template_list_user(self, folder, template, request):
