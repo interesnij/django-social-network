@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ community.name }} - Вы модератор{% endblock %}
+{% load exists %}
 {% block content %}
 
 {% if community.cover %}
