@@ -18,7 +18,7 @@ class UserGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_user(folder="u_good/", template="goods.html", request=request)
+        self.template_name = self.user.get_template_user("u_good/", "goods.html", request.user)
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

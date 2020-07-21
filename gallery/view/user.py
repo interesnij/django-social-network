@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
@@ -19,7 +21,10 @@ class UserGalleryView(TemplateView):
             self.albums_list = self.user.get_my_albums().order_by('-created')
         else:
             self.albums_list = self.user.get_albums().order_by('-created')
-        self.template_name = self.user.get_template_user(folder="gallery_user/", template="gallery.html", request=request)
+
+        self.template_name = self.user.get_template_user("gallery_user/", "gallery.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
         return super(UserGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -34,7 +39,10 @@ class UserAlbumView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_template_user(folder="album_user/", template="album.html", request=request)
+
+        self.template_name = self.user.get_template_user("album_user/", "album.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
         return super(UserAlbumView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
