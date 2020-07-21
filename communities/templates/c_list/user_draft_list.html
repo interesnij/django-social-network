@@ -3,9 +3,8 @@
 {% block title %}{{ community.name }} | Мои предложенные записи{% endblock %}
 {% block content %}
 
-<div class="row">
+<div class="row mt-3 pk_saver" data-pk="{{ request.user.pk }}">
     <div class="col-12 col-md-8">
-        <br><br><br>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск записей">
             <div class="input-group-append">
