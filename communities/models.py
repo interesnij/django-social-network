@@ -10,6 +10,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from notify.model.user import *
 from rest_framework.exceptions import PermissionDenied
+from common.utils import try_except
 
 
 class CommunityCategory(models.Model):
@@ -94,16 +95,9 @@ class Community(models.Model):
         return self.b_avatar
 
     def get_b_avatar(self):
-        try:
-            return self.b_avatar.url
-        except:
-            return None
-
+        return try_except(self.b_avatar.url)
     def get_avatar(self):
-        try:
-            return self.s_avatar.url
-        except:
-            return None
+        return try_except(self.s_avatar.url)
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, invites_enabled=None):
@@ -504,171 +498,65 @@ class Community(models.Model):
         except:
             return False
 
+
+
     def is_wall_close(self):
-        try:
-            if self.community_private_post.wall == "SP":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "SP")
     def is_staff_post_member_can(self):
-        try:
-            if self.community_private_post.wall == "SPMC":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "SPMC")
     def is_staff_post_all_can(self):
-        try:
-            if self.community_private_post.wall == "SPAC":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "SPAC")
     def is_member_post(self):
-        try:
-            if self.community_private_post.wall == "MP":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "MP")
     def is_member_post_all_can(self):
-        try:
-            if self.community_private_post.wall == "MPAC":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "MPAC")
     def is_all_can_post(self):
-        try:
-            if self.community_private_post.wall == "AC":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.wall == "AC")
     def is_comment_post_send_admin(self):
-        try:
-            if self.community_private_post.comment == "CA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.comment == "CA")
     def is_comment_post_send_member(self):
-        try:
-            if self.community_private_post.comment == "CM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.comment == "CM")
     def is_comment_post_send_all(self):
-        try:
-            if self.community_private_post.comment == "CNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_post.comment == "CNM")
 
     def is_photo_upload_admin(self):
-        try:
-            if self.community_private_photo.photo == "PA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.photo == "PA")
     def is_photo_upload_member(self):
-        try:
-            if self.community_private_photo.photo == "PM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.photo == "PM")
     def is_photo_upload_nomember(self):
-        try:
-            if self.community_private_photo.photo == "PNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.photo == "PNM")
     def is_comment_photo_send_admin(self):
-        try:
-            if self.community_private_photo.comment == "CA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.comment == "CA")
     def is_comment_photo_send_member(self):
-        try:
-            if self.community_private_photo.comment == "CM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.comment == "CM")
     def is_comment_photo_send_nomember(self):
-        try:
-            if self.community_private_photo.comment == "CNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_photo.comment == "CNM")
 
     def is_good_upload_admin(self):
-        try:
-            if self.community_private_good.good == "GA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.good == "GA")
     def is_good_upload_member(self):
-        try:
-            if self.community_private_good.good == "GM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.good == "GM")
     def is_good_upload_nomember(self):
-        try:
-            if self.community_private_good.good == "GNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.good == "GNM")
     def is_comment_good_send_admin(self):
-        try:
-            if self.community_private_good.comment == "CA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.comment == "CA")
     def is_comment_good_send_member(self):
-        try:
-            if self.community_private_good.comment == "CM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.comment == "CM")
     def is_comment_good_send_nomember(self):
-        try:
-            if self.community_private_good.comment == "CNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_good.comment == "CNM")
 
     def is_video_upload_admin(self):
-        try:
-            if self.community_private_video.video == "VA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.video == "VA")
     def is_video_upload_member(self):
-        try:
-            if self.community_private_video.video == "VM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.video == "VM")
     def is_video_upload_nomember(self):
-        try:
-            if self.community_private_video.video == "VNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.video == "VNM")
     def is_comment_video_send_admin(self):
-        try:
-            if self.community_private_video.comment == "CA":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.comment == "CA")
     def is_comment_video_send_member(self):
-        try:
-            if self.community_private_video.comment == "CM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.comment == "CM")
     def is_comment_video_send_nomember(self):
-        try:
-            if self.community_private_video.comment == "CNM":
-                return True
-        except:
-            return False
+        return try_except(self.community_private_video.comment == "CNM")
 
     def add_administrator(self, user):
         user_membership = self.memberships.get(user=user)
