@@ -16,7 +16,12 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">{{ community.name }} | Мои предложенные записи</h5>
+                        <h5 class="mt-1">
+                          <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                              {{ community.name }}
+                          </a>
+                          | Мои предложенные записи
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -86,36 +91,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br><br><br>
-        <button class="btn btn-outline-success user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="{{ user.pk }}">
-            Создать сообщество
-        </button>
 
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Категории </h5>
-                    </div>
-                    <a class="ajax" href="{% url 'all_communities' %}">
-                        все
-                    </a>
-                </div>
-            </div>
-            <div class="card-body px-0 py-0">
-                <ul class="list-group">
-                  {% for object in communities_categories %}
-                    <li class="list-group-item">
-                        <div class="media">
-                            <div class="media-body">
-                                <h6 class="my-0 mt-1"><a href="{% url 'community_category' pk=object.pk %}" class="ajax">{{ object.name }}</a></h6>
-                            </div>
-                        </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}
