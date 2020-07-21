@@ -414,38 +414,22 @@ class User(AbstractUser):
     def is_user_administrator(self):
         return try_except(self.user_staff.level == "A")
     def is_user_moderator(self):
-        return try_except(self.user_staff.level, "M")
+        return try_except(self.user_staff.level == "M")
     def is_user_editor(self):
-        return try_except(self.user_staff.level, "E")
+        return try_except(self.user_staff.level == "E")
     def is_user_advertiser(self):
-        return try_except(self.user_staff.level, "R")
+        return try_except(self.user_staff.level == "R")
     def is_user_manager(self):
         return try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
-        try:
-            if self.user_community_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.user_community_staff.level == "A")
     def is_community_moderator(self):
-        try:
-            if self.user_community_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.user_community_staff.level == "M")
     def is_community_editor(self):
-        try:
-            if self.user_community_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.user_community_staff.level == "E")
     def is_community_advertiser(self):
-        try:
-            if self.user_community_staff.level == "R":
-                return True
-        except:
-            return False
+        return try_except(self.user_community_staff.level == "R")
     def is_community_manager(self):
         try:
             if self.user_community_staff.level and self.user_community_staff.level != "R":
