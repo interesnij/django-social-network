@@ -35,9 +35,23 @@
                     </li>
                   </ul>
             </div>
-            {% include 'detail_sections/goods.html' %}
+            {% if community.is_good_upload_member or community.is_good_upload_nomember %}
+              {% include 'detail_sections/admin_goods.html' %}
+            {% else %}
+              {% include 'detail_sections/goods.html' %}
+            {% endif %}
 
-            {% include 'detail_sections/create_post.html' %}
+            <span class="draft_post_container">
+            {% if request.user|is_community_draft_exists:community.pk %}
+              {% include 'detail_sections/user_draft_post.html' %}
+            {% endif %}
+            </span>
+
+            {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
+              {% include 'detail_sections/create_post.html' %}
+            {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
+              {% include 'detail_sections/create_offer_post.html' %}
+            {% endif %}
 
             <div class="mt-3" id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 
