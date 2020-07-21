@@ -524,10 +524,11 @@ class User(AbstractUser):
         return try_except(self.can_work_staff_good_user.can_work_moderator)
     def is_work_good_editor(self):
         return try_except(self.can_work_staff_good_user.can_work_editor)
-    if self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor():
-        return True
-    else:
-        return False
+    def is_work_good_supermanager(self):
+        if self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor():
+            return True
+        else:
+            return False
 
     def is_work_photo_administrator(self):
         return try_except(self.can_work_staff_photo_user.can_work_administrator)
@@ -535,10 +536,11 @@ class User(AbstractUser):
         return try_except(self.can_work_staff_photo_user.can_work_moderator)
     def is_work_photo_editor(self):
         return try_except(self.can_work_staff_photo_user.can_work_editor)
-    if self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor():
-        return True
-    else:
-        return False
+    def is_work_photo_supermanager(self):
+        if self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor():
+            return True
+        else:
+            return False
 
     def is_work_video_administrator(self):
         return try_except(self.can_work_staff_video_user.can_work_administrator)
@@ -546,10 +548,11 @@ class User(AbstractUser):
         return try_except(self.can_work_staff_video_user.can_work_moderator)
     def is_work_video_editor(self):
         return try_except(self.can_work_staff_video_user.can_work_editor)
-    if self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor():
-        return True
-    else:
-        return False
+    def is_work_video_supermanager(self):
+        if self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor():
+            return True
+        else:
+            return False
 
     def is_work_music_administrator(self):
         return try_except(self.can_work_staff_music_user.can_work_administrator)
