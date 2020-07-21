@@ -222,7 +222,7 @@ class PostUserDetail(TemplateView):
 
         self.template_name = self.user.get_template_user("post_user/", "detail.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
         return super(PostUserDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
