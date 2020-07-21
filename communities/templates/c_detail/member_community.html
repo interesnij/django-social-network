@@ -38,7 +38,7 @@
             {% include 'detail_sections/goods.html' %}
 
             <span class="draft_post_container">
-            {% if requset.user.is_community_draft_exists|community.pk %}
+            {% if request.user|is_community_draft_exists:community.pk %}
               {% include 'detail_sections/user_draft_post.html' %}
             {% endif %}
             </span>
