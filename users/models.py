@@ -470,13 +470,13 @@ class User(AbstractUser):
         return try_except(self.video_user_staff.level)
 
     def is_audio_administrator(self):
-        return try_except(self.audio_user_staff.level == "A")
+        return try_except(self.music_user_staff.level == "A")
     def is_audio_moderator(self):
-        return try_except(self.audio_user_staff.level == "M")
+        return try_except(self.music_user_staff.level == "M")
     def is_audio_editor(self):
-        return try_except(self.audio_user_staff.level == "E")
+        return try_except(self.music_user_staff.level == "E")
     def is_audio_manager(self):
-        return try_except(self.audio_user_staff.level)
+        return try_except(self.music_user_staff.level)
 
     def is_work_administrator(self):
         return try_except(self.can_work_staff_user.can_work_administrator)
