@@ -24,7 +24,7 @@ class UserGalleryView(TemplateView):
 
         self.template_name = self.user.get_template_user("gallery_user/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
         return super(UserGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -42,7 +42,7 @@ class UserAlbumView(TemplateView):
 
         self.template_name = self.user.get_template_user("album_user/", "album.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
         return super(UserAlbumView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
