@@ -8,6 +8,7 @@ from django.conf import settings
 from common.checkers import *
 from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
+from utils.common import try_except
 
 
 class User(AbstractUser):
@@ -403,7 +404,7 @@ class User(AbstractUser):
         except:
             return False
 
-    def try_except(self, key, value):
+    def try_except(key, value):
         try:
             if key == value:
                 return True
@@ -411,15 +412,15 @@ class User(AbstractUser):
             return False
 
     def is_user_administrator(self):
-        self.try_except(self.user_staff.level, "A")
+        try_except(self.user_staff.level, "A")
     def is_user_moderator(self):
-        self.try_except(self.user_staff.level, "M")
+        try_except(self.user_staff.level, "M")
     def is_user_editor(self):
-        self.try_except(self.user_staff.level, "E")
+        try_except(self.user_staff.level, "E")
     def is_user_advertiser(self):
-        self.try_except(self.user_staff.level, "R")
+        try_except(self.user_staff.level, "R")
     def is_user_manager(self):
-        self.try_except(self.user_staff.level and self.user_staff.level != "R")
+        try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
         try:
