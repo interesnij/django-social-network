@@ -431,322 +431,136 @@ class User(AbstractUser):
     def is_community_advertiser(self):
         return try_except(self.user_community_staff.level == "R")
     def is_community_manager(self):
-        try:
-            if self.user_community_staff.level and self.user_community_staff.level != "R":
-                return True
-        except:
-            return False
+        return try_except(self.user_community_staff.level and self.user_community_staff.level != "R")
 
     def is_post_administrator(self):
-        try:
-            if self.post_user_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.post_user_staff.level == "A")
     def is_post_moderator(self):
-        try:
-            if self.post_user_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.post_user_staff.level == "M")
     def is_post_editor(self):
-        try:
-            if self.post_user_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.post_user_staff.level == "E")
     def is_post_manager(self):
-        try:
-            if self.post_user_staff.level:
-                return True
-        except:
-            return False
+        return try_except(self.post_user_staff.level)
 
     def is_good_administrator(self):
-        try:
-            if self.good_user_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.good_user_staff.level == "A")
     def is_good_moderator(self):
-        try:
-            if self.good_user_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.good_user_staff.level == "M")
     def is_good_editor(self):
-        try:
-            if self.good_user_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.good_user_staff.level == "E")
     def is_good_manager(self):
-        try:
-            if self.good_user_staff.level:
-                return True
-        except:
-            return False
+        return try_except(self.good_user_staff.level)
 
     def is_photo_administrator(self):
-        try:
-            if self.photo_user_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.photo_user_staff.level == "A")
     def is_photo_moderator(self):
-        try:
-            if self.photo_user_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.photo_user_staff.level == "M")
     def is_photo_editor(self):
-        try:
-            if self.photo_user_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.photo_user_staff.level == "E")
     def is_photo_manager(self):
-        try:
-            if self.photo_user_staff.level:
-                return True
-        except:
-            return False
+        return try_except(self.photo_user_staff.level)
 
     def is_video_administrator(self):
-        try:
-            if self.video_user_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.video_user_staff.level == "A")
     def is_video_moderator(self):
-        try:
-            if self.video_user_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.video_user_staff.level == "M")
     def is_video_editor(self):
-        try:
-            if self.video_user_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.video_user_staff.level == "E")
     def is_video_manager(self):
-        try:
-            if self.video_user_staff.level:
-                return True
-        except:
-            return False
+        return try_except(self.video_user_staff.level)
 
     def is_audio_administrator(self):
-        try:
-            if self.audio_user_staff.level == "A":
-                return True
-        except:
-            return False
+        return try_except(self.audio_user_staff.level == "A")
     def is_audio_moderator(self):
-        try:
-            if self.audio_user_staff.level == "M":
-                return True
-        except:
-            return False
+        return try_except(self.audio_user_staff.level == "M")
     def is_audio_editor(self):
-        try:
-            if self.audio_user_staff.level == "E":
-                return True
-        except:
-            return False
+        return try_except(self.audio_user_staff.level == "E")
     def is_audio_manager(self):
-        try:
-            if self.audio_user_staff.level:
-                return True
-        except:
-            return False
+        return try_except(self.audio_user_staff.level)
 
     def is_work_administrator(self):
-        try:
-            if self.can_work_staff_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_user.can_work_administrator)
     def is_work_moderator(self):
-        try:
-            if self.can_work_staff_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_user.can_work_moderator)
     def is_work_editor(self):
-        try:
-            if self.can_work_staff_user.can_work_editor:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_user.can_work_editor)
     def is_work_advertiser(self):
-        try:
-            if self.can_work_staff_user.can_work_advertiser:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_user.can_work_advertiser)
     def is_user_supermanager(self):
-        try:
-            if self.can_work_staff_user.level:
-                return True
-        except:
+        if self.is_work_administrator() or self.is_work_moderator() or is_work_editor() or is_work_advertiser():
+            return True
+        else:
             return False
 
     def is_work_community_administrator(self):
-        try:
-            if self.can_work_staff_community.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_community.can_work_administrator)
     def is_work_community_moderator(self):
-        try:
-            if self.can_work_staff_community.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_community.can_work_moderator)
     def is_work_community_editor(self):
-        try:
-            if self.can_work_staff_community.can_work_editor:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_community.can_work_editor)
     def is_work_community_advertiser(self):
-        try:
-            if self.can_work_staff_community.can_work_advertiser:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_community.can_work_advertiser)
     def is_community_supermanager(self):
-        try:
-            if self.can_work_staff_community.level:
-                return True
-        except:
+        if self.is_work_community_administrator() or self.is_work_community_moderator() or is_work_community_editor() or is_work_community_advertiser():
+            return True
+        else:
             return False
 
     def is_work_post_administrator(self):
-        try:
-            if self.can_work_staff_post_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_post_user.can_work_administrator)
     def is_work_post_moderator(self):
-        try:
-            if self.can_work_staff_post_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_post_user.can_work_moderator)
     def is_work_post_editor(self):
-        try:
-            if self.can_work_staff_post_user.can_work_editor:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_post_user.can_work_editor)
     def is_work_supermanager(self):
-        try:
-            if self.can_work_staff_post_user.level:
-                return True
-        except:
+        if self.is_work_post_administrator() or self.is_work_post_moderator() or is_work_post_editor():
+            return True
+        else:
             return False
 
     def is_work_good_administrator(self):
-        try:
-            if self.can_work_staff_good_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_good_user.can_work_administrator)
     def is_work_good_moderator(self):
-        try:
-            if self.can_work_staff_good_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_good_user.can_work_moderator)
     def is_work_good_editor(self):
-        try:
-            if self.can_work_staff_good_user.can_work_editor:
-                return True
-        except:
-            return False
-    def is_work_supermanager(self):
-        try:
-            if self.can_work_staff_good_user.level:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_good_user.can_work_editor)
+    if self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor():
+        return True
+    else:
+        return False
 
     def is_work_photo_administrator(self):
-        try:
-            if self.can_work_staff_photo_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_photo_user.can_work_administrator)
     def is_work_photo_moderator(self):
-        try:
-            if self.can_work_staff_photo_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_photo_user.can_work_moderator)
     def is_work_photo_editor(self):
-        try:
-            if self.can_work_staff_photo_user.can_work_editor:
-                return True
-        except:
-            return False
-    def is_photo_supermanager(self):
-        try:
-            if self.can_work_staff_photo_user.level:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_photo_user.can_work_editor)
+    if self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor():
+        return True
+    else:
+        return False
 
     def is_work_video_administrator(self):
-        try:
-            if self.can_work_staff_video_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_video_user.can_work_administrator)
     def is_work_video_moderator(self):
-        try:
-            if self.can_work_staff_video_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_video_user.can_work_moderator)
     def is_work_video_editor(self):
-        try:
-            if self.can_work_staff_video_user.can_work_editor:
-                return True
-        except:
-            return False
-    def is_video_supermanager(self):
-        try:
-            if self.can_work_staff_video_user.level:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_video_user.can_work_editor)
+    if self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor():
+        return True
+    else:
+        return False
 
     def is_work_music_administrator(self):
-        try:
-            if self.can_work_staff_music_user.can_work_administrator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_music_user.can_work_administrator)
     def is_work_music_moderator(self):
-        try:
-            if self.can_work_staff_music_user.can_work_moderator:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_music_user.can_work_moderator)
     def is_work_music_editor(self):
-        try:
-            if self.can_work_staff_music_user.can_work_editor:
-                return True
-        except:
-            return False
+        return try_except(self.can_work_staff_music_user.can_work_editor)
     def is_music_supermanager(self):
-        try:
-            if self.can_work_staff_music_user.level:
-                return True
-        except:
+        if self.is_work_music_administrator() or self.is_work_music_moderator() or is_work_music_editor():
+            return True
+        else:
             return False
 
     ''''' количества всякие  196-216 '''''
