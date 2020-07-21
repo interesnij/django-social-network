@@ -3,6 +3,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
+from common.checkers import check_can_get_posts_for_community_with_name
 
 
 class CommunityMembersView(ListView):
