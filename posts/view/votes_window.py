@@ -112,7 +112,7 @@ class PostCommunityCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.community.get_template_list(folder="post_votes/", template="page.html", request=request)
+        self.template_name = self.comment.post.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -127,7 +127,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.community.get_template_list(folder="post_votes/", template="page.html", request=request)
+        self.template_name = self.comment.post.community.get_template_list(folder="post_votes/", template="page.html", request=request)
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
