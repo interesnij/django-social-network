@@ -10,5 +10,5 @@ def is_community_draft_exists(request_user, community_id):
         return False
 
 @register.filter
-def count_draft_posts_for_user(request_user_pk, community):
+def count_draft_posts_for_user(community, request_user_pk):
     return community.get_count_draft_posts_for_user(request_user_pk)
