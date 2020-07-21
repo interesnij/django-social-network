@@ -1261,7 +1261,7 @@ class User(AbstractUser):
                     self.template_name = "main/you_global_block.html"
                 else:
                     template_name = folder + "my_" + template
-            elif request_user.pk != self.pk:
+            elif self.pk != request_user.pk:
                 if not request_user.is_phone_verified:
                     template_name = "main/phone_verification.html"
                 elif self.is_suspended():
@@ -1276,7 +1276,7 @@ class User(AbstractUser):
                     if not request_user.is_connected_with_user_with_id(user_id=self.pk):
                         template_name = folder + "close_" + template
                     else:
-                        template_name = folder + "frend_" + template
+                        template_name = folder + template
                 else:
                     template_name = folder + template
         elif request_user.is_anonymous:
