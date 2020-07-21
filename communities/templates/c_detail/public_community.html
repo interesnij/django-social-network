@@ -35,12 +35,18 @@
                     </li>
                   </ul>
             </div>
-            
+
             {% if community.is_good_upload_nomember %}
               {% include 'detail_sections/admin_goods.html' %}
             {% else %}
               {% include 'detail_sections/goods.html' %}
             {% endif %}
+
+            <span class="draft_post_container">
+              {% if request.user|is_community_draft_exists:community.pk %}
+                {% include 'detail_sections/user_draft_post.html' %}
+              {% endif %}
+            </span>
 
             {% if community.is_all_can_post %}
               {% include 'detail_sections/create_post.html' %}

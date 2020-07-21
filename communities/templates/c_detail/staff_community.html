@@ -42,6 +42,12 @@
               {% include 'detail_sections/goods.html' %}
             {% endif %}
 
+            <span class="draft_post_container">
+              {% if request.user|is_community_draft_exists:community.pk %}
+                {% include 'detail_sections/user_draft_post.html' %}
+              {% endif %}
+            </span>
+
             {% if community.is_all_can_post %}
               {% include 'detail_sections/create_post.html' %}
             {% elif community.is_member_post_all_can or community.is_staff_post_all_can %}
