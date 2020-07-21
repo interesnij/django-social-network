@@ -412,15 +412,15 @@ class User(AbstractUser):
             return False
 
     def is_user_administrator(self):
-        return try_except(self.user_staff.level, "A")
+        return try_except(self.user_staff.level == "A")
     def is_user_moderator(self):
-        try_except(self.user_staff.level, "M")
+        return try_except(self.user_staff.level, "M")
     def is_user_editor(self):
-        try_except(self.user_staff.level, "E")
+        return try_except(self.user_staff.level, "E")
     def is_user_advertiser(self):
-        try_except(self.user_staff.level, "R")
+        return try_except(self.user_staff.level, "R")
     def is_user_manager(self):
-        try_except(self.user_staff.level and self.user_staff.level != "R")
+        return try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
         try:
