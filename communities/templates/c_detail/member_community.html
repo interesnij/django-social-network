@@ -43,7 +43,18 @@
 
             <span class="draft_post_container">
             {% if request.user|is_community_draft_exists:community.pk %}
-              {% include 'detail_sections/user_draft_post.html' %}
+            <div class="card mt-3 user_draft_list">
+              <div class="card-header">
+                <a href="{% url 'community_user_draft_list' pk=community.pk %}" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h4 class="content-color-primary mb-0">Предложенные записи</h4>
+                      </div>
+                      <span class="user_draft_count">{{ community|count_draft_posts_for_user:request.user.pk }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
             {% endif %}
             </span>
 
