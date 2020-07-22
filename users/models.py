@@ -434,7 +434,10 @@ class User(AbstractUser):
     def is_community_advertiser(self):
         return try_except(self.user_community_staff.level == "R")
     def is_community_manager(self):
-        return try_except(self.user_community_staff.level and self.user_community_staff.level != "R")
+        try:
+            return try_except(self.user_community_staff.level and self.user_community_staff.level != "R")
+        except:
+            return None
 
     def is_post_administrator(self):
         return try_except(self.post_user_staff.level == "A")
@@ -455,7 +458,10 @@ class User(AbstractUser):
     def is_good_editor(self):
         return try_except(self.good_user_staff.level == "E")
     def is_good_manager(self):
-        return try_except(self.good_user_staff.level)
+        try:
+            return try_except(self.good_user_staff.level)
+        except:
+            return None
 
     def is_photo_administrator(self):
         return try_except(self.photo_user_staff.level == "A")
@@ -464,7 +470,10 @@ class User(AbstractUser):
     def is_photo_editor(self):
         return try_except(self.photo_user_staff.level == "E")
     def is_photo_manager(self):
-        return try_except(self.photo_user_staff.level)
+        try:
+            return try_except(self.photo_user_staff.level)
+        except:
+            return None
 
     def is_video_administrator(self):
         return try_except(self.video_user_staff.level == "A")
@@ -473,7 +482,10 @@ class User(AbstractUser):
     def is_video_editor(self):
         return try_except(self.video_user_staff.level == "E")
     def is_video_manager(self):
-        return try_except(self.video_user_staff.level)
+        try:
+            return try_except(self.video_user_staff.level)
+        except:
+            return None
 
     def is_audio_administrator(self):
         return try_except(self.music_user_staff.level == "A")
@@ -482,7 +494,10 @@ class User(AbstractUser):
     def is_audio_editor(self):
         return try_except(self.music_user_staff.level == "E")
     def is_audio_manager(self):
-        return try_except(self.music_user_staff.level)
+        try:
+            return try_except(self.music_user_staff.level)
+        except:
+            return None
 
     def is_work_administrator(self):
         return try_except(self.can_work_staff_user.can_work_administrator)
