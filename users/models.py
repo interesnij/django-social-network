@@ -443,7 +443,10 @@ class User(AbstractUser):
     def is_post_editor(self):
         return try_except(self.post_user_staff.level == "E")
     def is_post_manager(self):
-        return try_except(self.post_user_staff.level)
+        try:
+            return try_except(self.post_user_staff.level)
+        except:
+            return None
 
     def is_good_administrator(self):
         return try_except(self.good_user_staff.level == "A")
