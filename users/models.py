@@ -420,7 +420,10 @@ class User(AbstractUser):
     def is_user_advertiser(self):
         return try_except(self.user_staff.level == "R")
     def is_user_manager(self):
-        return try_except(self.user_staff.level != "R")
+        try:
+            return try_except(self.user_staff.level and self.user_staff.level != "R")
+        except:
+            return None
 
     def is_community_administrator(self):
         return try_except(self.user_community_staff.level == "A")
