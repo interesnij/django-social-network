@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from goods.models import Good, GoodComment
+from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -150,12 +150,9 @@ class GoodUserCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.form = GoodForm(initial={"creator":self.user})
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from goods.models import GoodSubCategory, GoodCategory
-
         context = super(GoodUserCreate,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["sub_categories"] = GoodSubCategory.objects.only("id")
@@ -166,10 +163,10 @@ class GoodUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid() and self.user.pk == request.user.pk:
+        if self.form.is_valid():
             new_good = self.form.save(commit=False)
             new_good.creator = self.user
-            new_good = self.form.save()
+            new_good = self.form.save() 
             return render(request, 'good_base/new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
@@ -187,8 +184,6 @@ class GoodUserCreateAttach(TemplateView):
         return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from goods.models import GoodSubCategory, GoodCategory
-
         context = super(GoodUserCreateAttach,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["sub_categories"] = GoodSubCategory.objects.only("id")
