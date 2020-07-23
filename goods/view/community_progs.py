@@ -8,7 +8,7 @@ from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.shortcuts import render
 from django.views.generic import ListView
-from goods.forms import CommentForm
+from goods.forms import CommentForm, GoodForm
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
 

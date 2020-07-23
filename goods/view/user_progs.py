@@ -8,7 +8,7 @@ from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render
 from users.models import User
-from goods.forms import CommentForm
+from goods.forms import CommentForm, GoodForm
 from rest_framework.exceptions import PermissionDenied
 
 
