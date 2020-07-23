@@ -30,5 +30,5 @@ def load_playlist(permalink_url, request_user, list):
                                                             genre=genre,
                                                             title=track.title,
                                                             uri=track.uri,
-                                                            release_year=track.release_year,
-                                                            list=list)
+                                                            release_year=track.release_year)
+                list.album.add(new_track)
