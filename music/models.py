@@ -68,7 +68,7 @@ class SoundList(models.Model):
         self.players.filter(id=track_id).exists()
 
     def playlist_too(self):
-        queryset = self.track.all()
+        queryset = self.players.all()
         return queryset
 
     class Meta:
