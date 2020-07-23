@@ -10,6 +10,7 @@ from django.shortcuts import render
 from users.models import User
 from goods.forms import CommentForm, GoodForm
 from rest_framework.exceptions import PermissionDenied
+from common.processing.good import get_good_processing, get_good_offer_processing
 
 
 class GoodCommentUserCreate(View):
@@ -165,9 +166,9 @@ class GoodUserCreate(TemplateView):
         self.form = GoodForm(request.POST,request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_good = self.form.save(commit=False)
-            new_good.creator = self.user
-            new_good = self.form.save()
+            good = self.form.save(commit=False)
+            new_good = good.create_good(title=good.title, sub_category=good.sub_category, creator=user, description=good.description, community=None, price=good.price, comments_enabled=good.comments_enabled, votes_on=good.votes_on, status="PG")
+            get_good_offer_processing(new_good)
             return render(request, 'good_base/new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")

@@ -44,10 +44,12 @@ class Good(models.Model):
 	STATUS_DRAFT = 'D'
 	STATUS_SOLD = 'S'
 	STATUS_PUBLISHED = 'P'
+	STATUS_PROCESSING = 'PG'
 	STATUSES = (
 		(STATUS_DRAFT, 'Отложен'),
 		(STATUS_PUBLISHED, 'Опубликован'),
 		(STATUS_SOLD, 'Продан'),
+		(STATUS_PROCESSING, 'Обработка'),
 		)
 
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -79,11 +81,17 @@ class Good(models.Model):
 	def __str__(self):
 		return self.title
 
-	def save(self, *args, **kwargs):
-		super().save(*args, **kwargs)
-		channel_layer = get_channel_layer()
-		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
-		async_to_sync(channel_layer.group_send)('notifications', payload)
+	@classmethod
+    def create_good(cls, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
+        good = Good.objects.create(title=title, sub_category=sub_category, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on )
+        channel_layer = get_channel_layer()
+        payload = {
+            "type": "receive",
+            "key": "additional_post",
+            "actor_name": good.creator.get_full_name()
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+        return good
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
