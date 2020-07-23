@@ -40,7 +40,7 @@ class UserSoundcloudSetCreate(View):
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
             new_list.save()
-            load_playlist(request.POST.get('permalink'), request.user, new_list.name, new_list.order, None)
+            load_playlist(request.POST.get('permalink'), request.user, new_list)
             return render(request, 'user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()

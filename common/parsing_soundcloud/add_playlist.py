@@ -10,11 +10,10 @@ genres_list_names = [name['name'] for name in genres_list]
 
 
 
-def load_playlist(permalink_url, request_user, title, order, community):
+def load_playlist(permalink_url, request_user, list):
 
     tracks = client.get('/tracks', permalink_url=permalink_url)
     if tracks:
-        list = SoundList.objects.create(creator=request_user, title=title, order=order, community=community, is_generic=False)
         for track in tracks:
             created_at = track.created_at
             created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
