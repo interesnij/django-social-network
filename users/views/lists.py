@@ -73,7 +73,7 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
-		self.template_name = self.user.get_template_user("user_music_list/", "playlist.html", request.user)
+		self.template_name = self.user.get_template_user("user_music_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserMusicList,self).get(request,*args,**kwargs)
