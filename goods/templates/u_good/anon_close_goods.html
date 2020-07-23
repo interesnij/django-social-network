@@ -12,7 +12,7 @@
       Это закрытый профиль. Вам необходимо
         <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax">войти в сеть</a> и стать подписчиком
         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-          этого пользователя
+          {{ user.first_name|gent }} {{ user.last_name|gent }}
         </a>
         , чтобы просматривать его фотографии
     </h6>
