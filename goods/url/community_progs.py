@@ -13,9 +13,11 @@ urlpatterns=[
     url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOnVotesGood.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOffVotesGood.as_view()),
 
-    url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', GoodCommunityCommentList.as_view()),
     url(r'^post-comment/$', login_required(GoodCommentCommunityCreate.as_view())),
     url(r'^reply-comment/$', login_required(GoodReplyCommunityCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityDelete.as_view())),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityAbortDelete.as_view())),
+
+    url(r'^add/(?P<pk>\d+)/$', GoodCommunityCreate.as_view()),
+	url(r'^add_attach/(?P<pk>\d+)/$', GoodCommunityCreateAttach.as_view())
 ]

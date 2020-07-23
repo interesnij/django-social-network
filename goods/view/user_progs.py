@@ -8,48 +8,8 @@ from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render
 from users.models import User
-from django.views.generic import ListView
 from goods.forms import CommentForm
 from rest_framework.exceptions import PermissionDenied
-
-
-class GoodUserCommentList(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not self.good.comments_enabled:
-            raise PermissionDenied('Комментарии для товара отключены')
-        elif request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "u_good_comment/my_comments.html"
-            elif request.user.is_good_manager():
-                self.template_name = "u_good_comment/staff_comments.html"
-            elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.template_name = "u_good_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            else:
-                self.template_name = "u_good_comment/anon_comments.html"
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
-        return super(GoodUserCommentList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(GoodUserCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.good
-        context['user'] = self.user
-        return context
-
-    def get_queryset(self):
-        comments = self.good.get_comments()
-        return comments
 
 
 class GoodCommentUserCreate(View):
@@ -183,3 +143,68 @@ class UserHideGood(View):
             good.status = Good.STATUS_DRAFT
             good.save(update_fields=['status'])
         return HttpResponse("!")
+
+class GoodUserCreate(TemplateView):
+    template_name = "u_good/add.html"
+    form = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":self.user})
+        return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from goods.models import GoodSubCategory, GoodCategory
+
+        context = super(GoodUserCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.form.is_valid() and self.user.pk == request.user.pk:
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
+            return render(request, 'good_base/new_good.html',{'object': new_good})
+        else:
+            return HttpResponseBadRequest("")
+        return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+
+
+class GoodUserCreateAttach(TemplateView):
+    template_name = "u_good/add_attach.html"
+    form = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form = GoodForm(initial={"creator":self.user})
+        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from goods.models import GoodSubCategory, GoodCategory
+
+        context = super(GoodUserCreateAttach,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.form.is_valid():
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
+            html = render(request, 'u_good/good.html',{'object': new_good})
+            return HttpResponse(html)
+        else:
+            return HttpResponseBadRequest()
+        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)

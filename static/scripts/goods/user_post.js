@@ -197,7 +197,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   pk = pk_block.getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_good_user_form"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/goods/user/add/" + pk + "/", true );
+  link_.open( 'POST', "/goods/user_progs/add/" + pk + "/", true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

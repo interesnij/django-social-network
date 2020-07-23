@@ -41,7 +41,7 @@ on('#ajax', 'click', '.u_good_comments', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
   uuid = block.getAttribute("data-uuid");
-  url = "/goods/user_progs/comment/" + uuid + "/" + pk + "/";
+  url = "/goods/user/comment/" + uuid + "/" + pk + "/";
   list_load(block.querySelector(".u_load_comments"), url);
   this.classList.toggle("comments_open");
 });

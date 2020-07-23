@@ -49,7 +49,7 @@ on('#ajax', 'click', '.c_good_comment_abort_remove', function() {
 on('#ajax', 'click', '#c_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/community/add/' + pk + '/', loader)
+  open_fullscreen('/goods/community_progs/add/' + pk + '/', loader)
 });
 
 on('#ajax', 'click', '.u_good_off_private', function() {
