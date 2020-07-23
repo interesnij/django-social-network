@@ -166,7 +166,7 @@ class GoodUserCreate(TemplateView):
         if self.form.is_valid():
             new_good = self.form.save(commit=False)
             new_good.creator = self.user
-            new_good = self.form.save() 
+            new_good = self.form.save()
             return render(request, 'good_base/new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
