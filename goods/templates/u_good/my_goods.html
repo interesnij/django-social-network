@@ -19,7 +19,7 @@
         </button>
       </div>
     </div>
-        <div class="card mb-2"> 
+        <div class="card mb-2">
             <div class="card-header">
               <div class="media">
                 <div class="media-body">
@@ -33,7 +33,7 @@
             <div class="row" id="user_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/user/goods/{{ user.uuid }}">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-4 u_good_detail pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}" style="cursor:pointer">
+              <div class="col-md-4 border u_good_detail pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}" style="cursor:pointer">
                       <div class="">
                           <div class="row align-items-center no-gutters">
                               <div class="col">
