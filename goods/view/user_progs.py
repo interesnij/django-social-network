@@ -149,6 +149,7 @@ class GoodUserCreate(TemplateView):
     form = None
 
     def get(self,request,*args,**kwargs):
+        self.form = GoodForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
