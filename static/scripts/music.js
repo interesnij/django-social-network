@@ -8,8 +8,8 @@ on('#ajax', 'click', '.u_soundcloud_set', function() {
 on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
   form = document.body.querySelector("#soundcloud_set_create_form");
   form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
