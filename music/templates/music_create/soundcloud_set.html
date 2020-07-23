@@ -1,0 +1,28 @@
+<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <form id="soundcloud_set_create_form">
+      {% csrf_token %}
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Добавление списка Soundcloud</h5>
+            </div>
+            <div class="card-body">
+                  <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="title" class="form-control" id="id_title">
+                  </div>
+                  <div class="form-group">
+                    <label>Порядковый номер</label>
+                    <input type="number" min="0" name="order" class="form-control" id="id_order">
+                  </div>
+                  <div class="form-group">
+                    <label>Ссылка на плейлист</label>
+                    <input type="text" name="permalink" class="form-control">
+                  </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button type="button" class="btn btn-success float-right" id="soundcloud_set_create_btn">Создать</button>
+            </div>
+        </div>
+    </form>
+</div>

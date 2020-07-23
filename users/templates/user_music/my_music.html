@@ -2,7 +2,7 @@
 {% block title %}Моя музыка{% endblock %}
 {% load get_key %}
 {% block content %}
-<div class="container main-container">
+<div class="container main-container pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
           <br>
@@ -84,7 +84,7 @@
                 </div>
               </div>
           </div>
-          {% if not album.is_generic %}
+          {% if not playlist.is_generic %}
           <div class="card mb-3">
               <div class="card-header">
                 <div class="media">
@@ -113,7 +113,18 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="#" class="user_video_list_create_window" data-pk="{{ user.pk }}">Создать список</a>
+                        <span style="cursor:pointer" class="u_soundcloud_set">Сет из Soundcloud</span>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="#" class="user_music_list_create_window">Создать список</a>
                       </h5>
                     </div>
                 </div>
