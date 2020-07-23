@@ -15,7 +15,8 @@ class GoodForm(forms.ModelForm):
 					'image3',
 					'image4',
 					'image5',
-					'comments_enabled'
+					'comments_enabled',
+					'community'
 				]
 
 class CommentForm(forms.ModelForm):
