@@ -11,4 +11,5 @@ urlpatterns = [
 
     url(r'^manage/', include('music.url.manage')),
     url(r'^get/', include('music.url.get')),
+    url(r'^get/', include('music.url.user_progs')),
 ]
