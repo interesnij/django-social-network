@@ -82,16 +82,16 @@ class Good(models.Model):
 		return self.title
 
 	@classmethod
-    def create_good(cls, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
-        good = Good.objects.create(title=title, sub_category=sub_category, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on )
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "additional_post",
-            "actor_name": good.creator.get_full_name()
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
-        return good
+	def create_good(cls, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
+		good = Good.objects.create(title=title, sub_category=sub_category, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
+		channel_layer = get_channel_layer()
+		payload = {
+			"type": "receive",
+			"key": "additional_post",
+			"actor_name": good.creator.get_full_name()
+			}
+		async_to_sync(channel_layer.group_send)('notifications', payload)
+		return good
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
