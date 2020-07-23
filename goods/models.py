@@ -54,7 +54,7 @@ class Good(models.Model):
 
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
-	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
+	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
