@@ -6,17 +6,11 @@ class GoodForm(forms.ModelForm):
 
 	class Meta:
 		model = Good
-		fields = [	'title',
-					'sub_category',
-					'price',
-					'description',
-					'image',
+		fields = [	'image',
 					'image2',
 					'image3',
 					'image4',
 					'image5',
-					'comments_enabled',
-					'community'
 				]
 
 class CommentForm(forms.ModelForm):
