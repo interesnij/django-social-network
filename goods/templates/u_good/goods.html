@@ -34,21 +34,19 @@
             <div class="row" id="user_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/user/goods/{{ user.uuid }}">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-6 u_good_detail pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" style="cursor:pointer">
+              <div class="col-md-6 u_good_detail pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}" style="cursor:pointer">
                       <div class="">
-                          <div class="row align-items-center no-gutters">
-                              <div class="col">
-                                  <div class="swiper-wrapper">
-                                      <div class="swiper-slide text-center">
-                                        {% if object.image %}
-                                          <img style="width:100%" src="{{ object.image.url }}" alt="">
-                                        {% else %}
-                                          <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                        {% endif %}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                        <div class="row align-items-center no-gutters">
+                            <div class="col">
+                                    <div class="text-center">
+                                      {% if object.image %}
+                                        <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                      {% else %}
+                                        <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                      {% endif %}
+                                    </div>
+                            </div>
+                        </div>
                           <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
                           <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
                           <br>
