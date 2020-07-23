@@ -82,8 +82,8 @@ class Good(models.Model):
 		return self.title
 
 	@classmethod
-	def create_good(cls, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
-		good = Good.objects.create(title=title, sub_category=sub_category, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
+	def create_good(cls, image, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
+		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
 		channel_layer = get_channel_layer()
 		payload = {
 			"type": "receive",
