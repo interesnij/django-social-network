@@ -173,10 +173,10 @@ on('#ajax', 'click', '#u_good_add', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen('/goods/user_progs/add/' + pk + '/', loader)
 });
-on('#ajax', 'click', '#good_add_attach', function() {
+on('#ajax', 'click', '#u_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user/add_attach/' + pk + '/', loader);
+  open_fullscreen('/goods/user_progs/add_attach/' + pk + '/', loader);
 });
 
 on('#ajax', 'click', '#add_good_user_btn', function() {

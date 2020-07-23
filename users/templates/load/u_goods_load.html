@@ -1,15 +1,15 @@
 {% load humanize liked_user %}
 <style>
-  #good_add_attach {
+  #u_good_add_attach {
     border: 1px dashed green;
     padding: 5px;
     text-align: center;}
-  #good_add_attach:hover {cursor: pointer}
+  #u_good_add_attach:hover {cursor: pointer}
 </style>
 
 
 <h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление товаров</h4>
-<h4 id="good_add_attach" class="mb-3 border">Создать и прикрепить</h4>
+<h4 id="u_good_add_attach" class="mb-3 border">Создать и прикрепить</h4>
 
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" id="goods_load_container" data-link="users/load/good_load">

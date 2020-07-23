@@ -10,7 +10,13 @@ on('#ajax', 'click', '.c_all_good_dislikes', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_community_dislike/" + uuid + "/", loader)
 });
-
+on('#ajax', 'click', '.с_good_detail', function() {
+  uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
+  pk = this.getAttribute('good-pk');
+  loader = document.getElementById("good_loader");
+  open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
+  setTimeout(function() {good_gallery(loader)}, 1000)
+});
 on('#ajax', 'click', '.c_all_good_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
