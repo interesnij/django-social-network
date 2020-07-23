@@ -191,18 +191,11 @@ class Community(models.Model):
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
-    def id_draft_posts_exists():
+    def id_draft_posts_exists(self):
         from posts.models import Post
 
         posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         return Post.objects.filter(posts_query).exists()
-
-    def get_draft_posts_of_community_with_pk(self, community_pk):
-        from posts.models import Post
-
-        posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
-        posts = Post.objects.filter(posts_query)
-        return posts
 
     def get_draft_posts_for_user(self, user_pk):
         from posts.models import Post
