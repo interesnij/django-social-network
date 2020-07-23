@@ -1091,7 +1091,7 @@ class User(AbstractUser):
                     template_name = folder + template
         elif request_user.is_anonymous:
             if self.is_closed_profile():
-                template_name = folder + "close_" + template
+                template_name = folder + "anon_close_" + template
             elif not self.is_closed_profile():
                 template_name = folder + "anon_" + template
         return template_name

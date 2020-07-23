@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load liked_user %}
-{% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Товары сообщества {{ community.name }}{% endblock %}
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
@@ -20,14 +19,17 @@
             <div class="card-header">
               <div class="media">
                 <div class="media-body">
-                    <h5 class="mt-1">Товары {{ user.first_name|gent }} {{ user.last_name|gent }}
-                      <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
-                    </h5>
+                  <h5 class="mt-1">Товары сообщества
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                      {{ community.name }}
+                    </a>
+                    <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ community.count_goods }}</small>
+                  </h5>
                 </div>
               </div>
             </div>
             <div class="card-body">
-            <div class="row" id="user_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/user/goods/{{ user.uuid }}">
+            <div class="row" id="community_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/community/goods/{{ user.uuid }}">
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-4 u_good_detail pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}" style="cursor:pointer">
