@@ -10,6 +10,10 @@ genres_list_names = [name['name'] for name in genres_list]
 
 
 def load_playlist(permalink_url, request_user, list):
+    permalink_url.replace("\\?", "%3f")
+    permalink_url.replace("=", "%3d")
+    permalink_url.replace("/", "%2F")
+    permalink_url.replace(":", "%3A")
 
     tracks = client.get('/tracks', permalink_url=permalink_url)
     if tracks:
