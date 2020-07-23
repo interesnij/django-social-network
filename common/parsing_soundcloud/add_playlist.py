@@ -26,7 +26,8 @@ def load_playlist(permalink_url, request_user, list):
                 description = None
             if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                 genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
-                new_track = SoundcloudParsing.objects.create(id=track.id,
+                try:
+                    new_track = SoundcloudParsing.objects.create(id=track.id,
                                                             artwork_url=track.artwork_url,
                                                             created_at=created_at,
                                                             description=description,
@@ -35,4 +36,6 @@ def load_playlist(permalink_url, request_user, list):
                                                             title=track.title,
                                                             uri=track.uri,
                                                             release_year=track.release_year)
-                list.players.add(new_track) 
+                    list.players.add(new_track)
+                except:
+                    a=1
