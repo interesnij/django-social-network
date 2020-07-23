@@ -168,7 +168,7 @@ class GoodUserCreate(TemplateView):
         if self.form.is_valid():
             good = self.form.save(commit=False)
             new_good = good.create_good(title=good.title, sub_category=good.sub_category, creator=user, description=good.description, community=None, price=good.price, comments_enabled=good.comments_enabled, votes_on=good.votes_on, status="PG")
-            get_good_offer_processing(new_good)
+            #get_good_offer_processing(new_good)
             return render(request, 'good_base/new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
