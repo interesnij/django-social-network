@@ -39,17 +39,17 @@
             {% include 'detail_sections/admin_goods.html' %}
 
             {% if community.id_draft_posts_exists %}
-            <div class="card mt-3">
-                <div class="card-header">
-                    <div class="media centered">
-                        <a href="{% url 'community_draft_list' pk=community.pk %}" class="ajax">
-                            <div class="media-body">
-                                <h4 class="content-color-primary mb-0">Предложенные записи</h4>
-                                <span class="">{{ community.get_count_draft_posts }}</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            <div class="card mt-3 user_draft_list">
+              <div class="card-header">
+                <a href="{% url 'community_draft_list' pk=community.pk %}" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h4 class="content-color-primary mb-0">Предложенные записи</h4>
+                      </div>
+                      <span class="user_draft_count">{{ community.get_count_draft_posts }}</span>
+                  </div>
+                </a>
+              </div>
             </div>
             {% endif %}
 
