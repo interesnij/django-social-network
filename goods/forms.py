@@ -15,6 +15,7 @@ class GoodForm(forms.ModelForm):
 					'description',
 					'comments_enabled',
 					'votes_on',
+					'sub_category',
 				]
 
 class CommentForm(forms.ModelForm):
