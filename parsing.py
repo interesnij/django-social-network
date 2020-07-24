@@ -30,7 +30,7 @@ list = SoundList.objects.get(uuid='b5c130a2-4c49-4341-9b7e-bc46f5fdc814')
 start = 0
 end = 20
 
-playlist = client.get(permalink_url=permalink_url)
+playlist = client.get('/tracks/', permalink_url=permalink_url)
 if tracks:
     for track in playlist.tracks:
         created_at = track.created_at
