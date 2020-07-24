@@ -32,7 +32,7 @@ end = 20
 
 playlist = client.get('/tracks/', permalink_url=permalink_url)
 if playlist:
-    for track in playlist.collections:
+    for track in playlist:
         created_at = track.created_at
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
         if track.description:
