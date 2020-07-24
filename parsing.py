@@ -41,7 +41,7 @@ if playlist:
         #    description = track.description[:500]
         #else:
         #    description = None
-        genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
+        #genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
         try:
             new_track = SoundcloudParsing.objects.create(id=track.id,
                                                         artwork_url=track.artwork_url,
