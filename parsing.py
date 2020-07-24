@@ -19,22 +19,16 @@ client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-permalink_url = 'https://soundcloud.com/its-jezika-bruh/sets/chillax-mood'
 permalink_url.replace("\\?", "%3f")
 permalink_url.replace("=", "%3d")
 permalink_url.replace("/", "%2F")
 permalink_url.replace(":", "%3A")
 
-list = SoundList.objects.get(uuid='44984459-abc3-4838-af63-7b1b4fe78b20')
-
-start = 0
-end = 20
 
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/timpietrusky/sets/super-hot-shit&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
-#print(data)
 
 if data:
     for track in data['tracks']:
