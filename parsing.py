@@ -37,10 +37,10 @@ if playlist:
         print (track['title'])
         #created_at = track.created_at
         #created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
-        if track.description:
-            description = track.description[:500]
-        else:
-            description = None
+        #if track.description:
+        #    description = track.description[:500]
+        #else:
+        #    description = None
         if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
             genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
             try:
