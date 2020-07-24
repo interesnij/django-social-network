@@ -29,7 +29,7 @@ list = SoundList.objects.get(uuid='b3fb9256-d8c7-44c9-b062-614a4e79e558')
 start = 0
 end = 20
 
-playlist = client.get('/playlists' :permalink => 'its-jezika-bruh/sets/deep-satisfaction-1')
+playlist = client.get('/playlists', :permalink => 'its-jezika-bruh/sets/deep-satisfaction-1')
 
 if playlist:
 
