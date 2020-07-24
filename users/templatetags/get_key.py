@@ -11,7 +11,7 @@ def is_track_exists(user, track_id):
 
 @register.filter
 def is_user_list(user, list):
-    if user.is_user_list(list):
+    if user.is_user_temp_list(list):
         return True
     else:
         return False
