@@ -146,7 +146,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-        : (p = document.createElement("span"), p.classList.add("small", "connect_delete", "btn_default"), p.innerHTML = 'Убрать из друзей', _this.parentElement.append(p), _this.remove());
+        : (p = document.createElement("span"), p.classList.add("small", "connect_delete", "pointer"), p.innerHTML = 'Убрать из друзей', _this.parentElement.append(p), _this.remove());
         toast_info("Друг добавлен!")
   }}
   link_.send();
@@ -158,7 +158,7 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-      : (p = document.createElement("span"), p.classList.add("small", "connect_create", "btn_default"), p.innerHTML = 'Добавить в друзья', _this.parentElement.append(p), _this.remove());
+      : (p = document.createElement("span"), p.classList.add("small", "connect_create", "pointer"), p.innerHTML = 'Добавить в друзья', _this.parentElement.append(p), _this.remove());
       toast_info("Друг добавлен!")
   }};
   link_.send();
@@ -171,7 +171,7 @@ on('#ajax', 'click', '.user_block', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-    : (p = document.createElement("span"), p.classList.add("small", "user_unblock", "btn_default"), p.innerHTML = 'Разблокировать', _this.parentElement.append(p), _this.remove());
+    : (p = document.createElement("a"), p.classList.add("small", "user_unblock", "pointer"), p.innerHTML = 'Разблокировать', _this.parentElement.append(p), _this.remove());
     toast_info("Пользователь заблокирован!");
   }};
   link_.send();
@@ -184,7 +184,7 @@ on('#ajax', 'click', '.user_unblock', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-    : (p = document.createElement("span"), p.classList.add("small", "user_block", "btn_default"), p.innerHTML = 'Заблокировать', _this.parentElement.append(p), _this.remove());
+    : (p = document.createElement("a"), p.classList.add("small", "user_block", "pointer"), p.innerHTML = 'Заблокировать', _this.parentElement.append(p), _this.remove());
     toast_info("Пользователь разблокирован!");
   }};
   link_.send();

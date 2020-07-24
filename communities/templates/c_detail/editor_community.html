@@ -51,7 +51,7 @@
                 </a>
               </div>
             </div>
-            {% endif %} 
+            {% endif %}
 
             {% include 'detail_sections/create_post.html' %}
 
@@ -62,7 +62,7 @@
             <div class="card">
                 <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
                     {% if community.get_b_avatar %}
-                    <img data-src="{{ community.get_b_avatar }}" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload c_avatar_detail" style="width:100%;cursor:pointer" alt="image">
+                    <img data-src="{{ community.get_b_avatar }}" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload c_avatar_detail pointer" style="width:100%" alt="image">
                     {% else %}
                     <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0z" fill="none" />
@@ -107,7 +107,7 @@
                               </a>
                             </figure>
                             <div class="media-body" style="line-height: 10px;">
-                                <p class="track_item music_list_item" style="cursor:pointer;font-size: 17px;"><a>{{ object.title }}</a></p>
+                                <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
                                 <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
                             </div>
                         </div>

@@ -62,7 +62,7 @@
             <div class="card">
                 <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
                     {% if community.get_b_avatar %}
-                    <img data-src="{{ community.get_b_avatar }}" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload c_avatar_detail" style="width:100%;cursor:pointer" alt="image">
+                    <img data-src="{{ community.get_b_avatar }}" photo-uuid="{{ community.get_avatar_uuid }}" class="lazyload c_avatar_detail pointer" style="width:100%" alt="image">
                     {% else %}
                     <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0z" fill="none" />
@@ -72,15 +72,15 @@
                 <form id="add_community_avatar" method="post">
                     {% csrf_token %}
                     <input type="file" id="community_avatar_upload" name="file" style="display:none">
-                    <span id="community_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
+                    <span id="community_avatar_btn pointer">Загрузить аватар</span>
                 </form>
 
                 <button type="button" class="btn btn-sm btn-secondary" style="margin: 3px;margin-top:10px">
                     Вы подписаны
                 </button>
                 <div class="card mt-1 mb-1" style="padding: 10px;">
-                  <a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" style="cursor:pointer">Управление</a>
-                  <a href="{% url 'community_traffic_day' community.pk %}" class="ajax" style="cursor:pointer">Статистика</a>
+                  <a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Управление</a>
+                  <a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Статистика</a>
                 </div>
             </div>
             <br>
@@ -117,7 +117,7 @@
                               </a>
                             </figure>
                             <div class="media-body" style="line-height: 10px;">
-                                <p class="track_item music_list_item" style="cursor:pointer;font-size: 17px;"><a>{{ object.title }}</a></p>
+                                <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
                                 <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
                             </div>
                         </div>
