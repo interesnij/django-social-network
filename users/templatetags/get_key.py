@@ -8,3 +8,10 @@ def is_track_exists(user, track_id):
         return True
     else:
         return False
+
+@register.filter
+def is_user_list(user, list):
+    if user.is_user_list(list):
+        return True
+    else:
+        return False

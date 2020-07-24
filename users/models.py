@@ -386,6 +386,14 @@ class User(AbstractUser):
         except:
             return False
 
+    def is_user_list(self, list):
+        from music.models import UserTempSoundList
+        try:
+            UserTempSoundList.objects.get(user=self, tag=None, genre=None, list=list)
+            return True
+        except:
+            return False
+
     def is_tag_playlist(self, tag):
         from music.models import UserTempSoundList
 
