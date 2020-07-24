@@ -15,7 +15,6 @@ from datetime import datetime, date, time
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-#page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
@@ -43,7 +42,7 @@ if playlist:
         else:
             description = None
         if track['genre'] and track['release_year'] and track['duration'] > 90000 and track['genre'] in genres_list_names:
-            genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
+            genre = SoundGenres.objects.get(name=track['genre'].replace("'", '') )
             try:
                 new_track = SoundcloudParsing.objects.create(id=track['id'],
                                                         artwork_url=track['artwork_url'],
