@@ -27,7 +27,10 @@ def load_playlist(url, request_user, list):
                 genre = SoundGenres.objects.get(name=track_genre)
             except:
                 genre = SoundGenres.objects.create(name=track_genre, order=SoundGenres.get_new_order())
-            new_track = SoundcloudParsing.objects.create(id=track['id'],
+            try:
+                new_track = SoundcloudParsing.objects.get(id=track['id'])
+            except:
+                new_track = SoundcloudParsing.objects.create(id=track['id'],
                                                         artwork_url=track['artwork_url'],
                                                         created_at=created_at,
                                                         description=description,
