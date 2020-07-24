@@ -34,8 +34,9 @@ playlist = client.get('/playlists/2050462')
 
 if playlist:
     for track in playlist.tracks:
-        created_at = track.created_at
-        created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+        print track['title']
+        #created_at = track.created_at
+        #created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
         if track.description:
             description = track.description[:500]
         else:
@@ -45,7 +46,7 @@ if playlist:
             try:
                 new_track = SoundcloudParsing.objects.create(id=track.id,
                                                         artwork_url=track.artwork_url,
-                                                        created_at=created_at,
+            #                                            created_at=created_at,
                                                         description=description,
                                                         duration=track.duration,
                                                         genre=genre,
