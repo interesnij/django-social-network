@@ -49,10 +49,10 @@ if playlist:
             #                                            created_at=created_at,
             #                                            description=description,
                                                         duration=track.duration,
-                                                        genre=genre,
+            #                                            genre=genre,
                                                         title=track.title,
                                                         uri=track.uri,
-                                                        release_year=track.release_year)
+            #                                            release_year=track.release_year)
                 list.players.add(new_track)
             except:
                 a=1
