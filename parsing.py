@@ -36,9 +36,9 @@ print(data)
 
 playlist = client.get('/playlists', permalink='its-jezika-bruh/sets/deep-satisfaction-1')
 
-if playlist:
+if data:
 
-    for track in playlist.tracks:
+    for track in data.tracks:
         created_at = track['created_at']
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
