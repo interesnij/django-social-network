@@ -52,7 +52,8 @@ if playlist:
             #                                            genre=genre,
                                                         title=track.title,
                                                         uri=track.uri,
-            #                                            release_year=track.release_year)
+            #                                            release_year=track.release_year
+                                                        )
                 list.players.add(new_track)
             except:
                 a=1
