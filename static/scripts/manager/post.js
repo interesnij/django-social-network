@@ -40,7 +40,7 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
   } else if (_this.getAttribute){
     uuid = _this.getAttribute("data-uuid");
     container_object = document.body.querySelector(".post_container");
-    div = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+    div = container_object.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
