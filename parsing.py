@@ -32,7 +32,7 @@ end = 20
 
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
-response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/its-jezika-bruh/sets/deep-satisfaction-1&client_id=dce5652caa1b66331903493735ddd64d")
+response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/timpietrusky/sets/super-hot-shit&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
 print(data)
 
