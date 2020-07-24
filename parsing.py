@@ -25,7 +25,7 @@ permalink_url.replace("=", "%3d")
 permalink_url.replace("/", "%2F")
 permalink_url.replace(":", "%3A")
 
-list = SoundList.objects.get(uuid='b3fb9256-d8c7-44c9-b062-614a4e79e558')
+list = SoundList.objects.get(uuid='44984459-abc3-4838-af63-7b1b4fe78b20')
 
 start = 0
 end = 20
@@ -33,8 +33,6 @@ end = 20
 response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/its-jezika-bruh/sets/deep-satisfaction-1&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
 print(data)
-
-playlist = client.get('/playlists', permalink='its-jezika-bruh/sets/deep-satisfaction-1')
 
 if data:
     for track in data['tracks']:
