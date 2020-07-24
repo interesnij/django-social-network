@@ -36,3 +36,4 @@ if playlist:
     print (playlist.tracks[0])
     for track in playlist.tracks:
         print (track['title'])
+        print (track['description'])
