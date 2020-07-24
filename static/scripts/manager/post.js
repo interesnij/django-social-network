@@ -29,6 +29,7 @@ on('#ajax', 'click', '.post_delete_window', function() {
 })
 
 on('#ajax', 'click', '.create_post_delete_btn', function() {
+  var moderation_container, container_object
   _this = this;
   form_data = new FormData(document.querySelector("#post_delete_form"));
   form_post = document.querySelector("#post_delete_form");
@@ -39,7 +40,7 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
   } else if (_this.getAttribute){
     uuid = _this.getAttribute("data-uuid");
     container_object = document.body.querySelector(".post_container");
-    div = _this.parentElement.parentElement.parentElement.parentElement.parentElement
+    div = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
