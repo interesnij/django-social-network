@@ -33,7 +33,7 @@ end = 20
 playlist = client.get('/playlists/2050462')
 
 if playlist:
-    print (playlist.tracks[0])
+
     for track in playlist.tracks:
         print (track['title'])
         print (track['description'])
