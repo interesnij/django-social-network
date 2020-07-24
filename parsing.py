@@ -12,6 +12,7 @@ django.setup()
 import soundcloud
 from music.models import *
 from datetime import datetime, date, time
+import json, requests
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
@@ -28,6 +29,10 @@ list = SoundList.objects.get(uuid='b3fb9256-d8c7-44c9-b062-614a4e79e558')
 
 start = 0
 end = 20
+
+response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/matas/hobnotropic&client_id=dce5652caa1b66331903493735ddd64d")
+data = response.json()
+print(data)
 
 playlist = client.get('/playlists', permalink='its-jezika-bruh/sets/deep-satisfaction-1')
 
