@@ -30,6 +30,8 @@ list = SoundList.objects.get(uuid='44984459-abc3-4838-af63-7b1b4fe78b20')
 start = 0
 end = 20
 
+genres_list = SoundGenres.objects.values('name')
+genres_list_names = [name['name'] for name in genres_list]
 response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/its-jezika-bruh/sets/deep-satisfaction-1&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
 print(data)
@@ -50,7 +52,8 @@ if data:
         try:
             new_track = SoundcloudParsing.objects.get(id=track['id'])
         except:
-            new_track = SoundcloudParsing.objects.create(id=track['id'],
+            if track['genre'] and track['genre'] in genres_list_names:
+                new_track = SoundcloudParsing.objects.create(id=track['id'],
                                                         artwork_url=track['artwork_url'],
                                                         created_at=created_at,
                                                         description=description,
@@ -59,4 +62,4 @@ if data:
                                                         title=track['title'],
                                                         uri=track['uri'],
                                                         release_year=track['release_year'])
-            list.players.add(new_track)
+                list.players.add(new_track)
