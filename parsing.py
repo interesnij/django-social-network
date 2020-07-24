@@ -30,9 +30,10 @@ list = SoundList.objects.get(uuid='b5c130a2-4c49-4341-9b7e-bc46f5fdc814')
 start = 0
 end = 20
 
-playlist = client.get('/tracks/', permalink_url=permalink_url)
+playlist = client.get('/playlists/2050462')
+
 if playlist:
-    for track in playlist:
+    for track in playlist.tracks:
         created_at = track.created_at
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
         if track.description:
