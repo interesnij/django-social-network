@@ -35,5 +35,25 @@ playlist = client.get('/playlists/2050462')
 if playlist:
 
     for track in playlist.tracks:
-        print (track['title'])
-        print (track['description'])
+        created_at = track['created_at']
+        created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+
+        if track['description']:
+            description = track['description'][:500]
+        else:
+            description = None
+        if track['genre'] and track['release_year'] and track['duration'] > 90000 and track['genre'] in genres_list_names:
+            genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
+            try:
+                new_track = SoundcloudParsing.objects.create(id=track['id'],
+                                                        artwork_url=track['artwork_url'],
+                                                        created_at=created_at,
+                                                        description=description,
+                                                        duration=track['duration'],
+                                                        genre=genre,
+                                                        title=track['title'],
+                                                        uri=track['uri'],
+                                                        release_year=track['release_year'])
+                list.players.add(new_track)
+            except:
+                a=1
