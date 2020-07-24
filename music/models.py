@@ -22,8 +22,8 @@ class SoundGenres(models.Model):
     def playlist_too(self):
         queryset = self.track_genre.all()
         return queryset[:300]
-        
-    def get_new_order(self):
+
+    def get_new_order():
         last = SoundGenres.objects.last()
         new_order = last.order + 1
         return new_order
