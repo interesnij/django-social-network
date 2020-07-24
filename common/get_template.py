@@ -74,7 +74,7 @@ def get_detail_template_user_photo(user, folder, template, request_user):
                 template_name = "main/user_global_block.html"
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 raise PermissionDenied('Ошибка доступа')
-            elif self.user.is_closed_profile():
+            elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                     template_name = folder + template
                 else:
