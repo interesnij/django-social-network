@@ -32,12 +32,11 @@ end = 20
 
 response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/matas/hobnotropic&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
-#print(data)
+print(data)
 
 playlist = client.get('/playlists', permalink='its-jezika-bruh/sets/deep-satisfaction-1')
 
 if data:
-
     for track in data['tracks']:
         created_at = track['created_at']
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
