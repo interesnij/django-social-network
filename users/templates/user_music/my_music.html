@@ -159,7 +159,7 @@
 </div>
 
 <script>
-  {% if user.is_user_playlist }} %}
+  {% if user|is_user_list:playlist %} 
     document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
   {% endif %}
 </script>
