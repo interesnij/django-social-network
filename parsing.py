@@ -27,7 +27,7 @@ permalink_url.replace(":", "%3A")
 
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
-response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/timpietrusky/sets/super-hot-shit&client_id=dce5652caa1b66331903493735ddd64d")
+response = requests.get(url= "https://api.soundcloud.com/resolve?url=https://soundcloud.com/rehan-khan-55/sets/meditation&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
 
 if data:
@@ -41,19 +41,3 @@ if data:
             description = None
         track_genre = track['genre'].replace("'", '')
         print(track_genre)
-
-        try:
-            new_track = SoundcloudParsing.objects.get(id=track['id'])
-        except:
-            if track['genre'] and track['genre'] in genres_list_names:
-                genre = SoundGenres.objects.get(name=track_genre)
-                new_track = SoundcloudParsing.objects.create(id=track['id'],
-                                                        artwork_url=track['artwork_url'],
-                                                        created_at=created_at,
-                                                        description=description,
-                                                        duration=track['duration'],
-                                                        genre=genre,
-                                                        title=track['title'],
-                                                        uri=track['uri'],
-                                                        release_year=track['release_year'])
-                list.players.add(new_track)
