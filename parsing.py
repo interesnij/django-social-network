@@ -41,9 +41,9 @@ if playlist:
             description = track['description'][:500]
         else:
             description = None
-        if track['genre'] in genres_list_names:
-            genre = SoundGenres.objects.get(name=track['genre'].replace("'", '') )
-            new_track = SoundcloudParsing.objects.create(id=track['id'],
+
+        genre = SoundGenres.objects.get(name=track['genre'].replace("'", '') )
+        new_track = SoundcloudParsing.objects.create(id=track['id'],
                                                         artwork_url=track['artwork_url'],
                                                         created_at=created_at,
                                                         description=description,
@@ -52,4 +52,4 @@ if playlist:
                                                         title=track['title'],
                                                         uri=track['uri'],
                                                         release_year=track['release_year'])
-            list.players.add(new_track)
+        list.players.add(new_track)
