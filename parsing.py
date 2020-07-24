@@ -24,12 +24,12 @@ permalink_url.replace("=", "%3d")
 permalink_url.replace("/", "%2F")
 permalink_url.replace(":", "%3A")
 
-list = SoundList.objects.get(uuid='b5c130a2-4c49-4341-9b7e-bc46f5fdc814')
+list = SoundList.objects.get(uuid='b3fb9256-d8c7-44c9-b062-614a4e79e558')
 
 start = 0
 end = 20
 
-playlist = client.get('/playlists/2050462')
+playlist = client.get('/playlists' :permalink => 'its-jezika-bruh/sets/deep-satisfaction-1')
 
 if playlist:
 
