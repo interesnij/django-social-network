@@ -34,7 +34,7 @@ playlist = client.get('/playlists/2050462')
 
 if playlist:
     for track in playlist.tracks:
-        print track['title']
+        print (track['title'])
         #created_at = track.created_at
         #created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
         if track.description:
