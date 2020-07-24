@@ -47,7 +47,7 @@ if playlist:
                 new_track = SoundcloudParsing.objects.create(id=track.id,
                                                         artwork_url=track.artwork_url,
             #                                            created_at=created_at,
-                                                        description=description,
+            #                                            description=description,
                                                         duration=track.duration,
                                                         genre=genre,
                                                         title=track.title,
