@@ -12,6 +12,7 @@ on('#ajax', 'click', '.u_soundcloud_set_list', function() {
 });
 
 on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
+  this.disabled = true;
   form = document.body.querySelector("#soundcloud_set_create_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
@@ -42,6 +43,7 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
     ajax_link.send(form_data);
 });
 on('#ajax', 'click', '#soundcloud_set_btn', function() {
+  this.disabled = true; 
   form = document.body.querySelector("#soundcloud_set_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_permalink").value){
