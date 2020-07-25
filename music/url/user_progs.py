@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^souncloud_list_window/(?P<pk>\d+)/$', UserSoundcloudSetWindow.as_view()),
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', UserSoundcloudSetCreate.as_view()),
-    url(r'^soundcloud_set/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSetCreate.as_view()),
+    url(r'^soundcloud_set/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSet.as_view()), 
 ]

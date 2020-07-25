@@ -64,6 +64,6 @@ class UserSoundcloudSet(View):
 
         if request.user == user:
             add_playlist(request.POST.get('permalink'), request.user, list)
-            return HttpResponse('')
+            return HttpResponse()
         else:
-            return HttpResponse('')
+            return HttpResponseBadRequest()
