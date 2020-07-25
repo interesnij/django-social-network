@@ -81,6 +81,7 @@ class CommunityCategoryView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
+		from common.get_template import get_default_template
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_default_template(folder="c_list/", template="cat_communities.html", request=request)
 		return super(CommunityCategoryView,self).get(request,*args,**kwargs)
