@@ -175,7 +175,7 @@ class CommunityAlbumPhoto(TemplateView):
             self.photos = self.album.get_staff_photos()
         else:
             self.photos = self.album.get_photos()
-        self.template_name = get_detail_template_community_photo(self.photo.community, "photo_community/", "album_photo.html", request.user)
+        self.template_name = get_detail_template_community_photo(self.album.community, "photo_community/", "album_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
