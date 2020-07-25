@@ -81,7 +81,7 @@ function create_pagination(block){
 		if(block.querySelector('#all_communities_container')){all_communities = block.querySelector('#all_communities_container'); scrolled(all_communities, all_communities.getAttribute("data-link"), '#all_communities_container')}
 		else if(block.querySelector('#all_users_container')){all_users = block.querySelector('#all_users_container'); scrolled(all_users, all_users.getAttribute("data-link"), '#all_users_container')}
 		else if(block.querySelector('#quan_container')){quan = block.querySelector('#quan_container'); scrolled(quan, quan.getAttribute("data-link"), '#quan_container')}
-		else if(block.querySelector('#cat_communities_container')){all_communities = block.querySelector('#cat_communities_container'); scrolled(cat_communities, cat_communities.getAttribute("data-link"), '#cat_communities_container')}
+		else if(block.querySelector('#cat_communities_container')){cat_communities = block.querySelector('#cat_communities_container'); scrolled(cat_communities, cat_communities.getAttribute("data-link"), '#cat_communities_container')}
 		else if(block.querySelector('#articles_load_container')){articles_load = block.querySelector('#articles_load_container'); scrolled(articles_load, articles_load.getAttribute("data-link"), '#articles_load_container')}
 		else if(block.querySelector('#music_load_container')){music_load = block.querySelector('#music_load_container'); scrolled(music_load, music_load.getAttribute("data-link"), '#music_load_container')}
 		else if(block.querySelector('#img_load_container')){img_load = block.querySelector('#img_load_container'); scrolled(img_load, img_load.getAttribute("data-link"), '#img_load_container')}
