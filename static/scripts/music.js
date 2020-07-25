@@ -4,6 +4,12 @@ on('#ajax', 'click', '.u_soundcloud_set_create', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/souncloud_create_list_window/" + pk, loader)
 });
+on('#ajax', 'click', '.u_soundcloud_set_list_main', function() {
+  uuid = this.parentElement.getAttribute('data-uuid');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/user_progs/souncloud_list_window_main/" + pk, loader)
+});
 on('#ajax', 'click', '.u_soundcloud_set_list', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
@@ -42,6 +48,7 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
     }
     ajax_link.send(form_data);
 });
+
 on('#ajax', 'click', '#main_soundcloud_set_btn', function() {
   this.disabled = true;
   form = document.body.querySelector("#soundcloud_set_form");
@@ -55,7 +62,7 @@ on('#ajax', 'click', '#main_soundcloud_set_btn', function() {
   uuid = saver.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set_main/" + pk + "/" + uuid + "/", true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         this_page_reload('/users/' + pk + '/music')

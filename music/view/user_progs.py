@@ -22,6 +22,18 @@ class UserSoundcloudSetPlaylistWindow(TemplateView):
         context['form_post'] = PlaylistForm()
         return context
 
+class UserSoundcloudSetMainWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_set_playlist_main.html", request=request)
+        return super(UserSoundcloudSetMainWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserSoundcloudSetMainWindow,self).get_context_data(**kwargs)
+        return context
+
 class UserSoundcloudSetWindow(TemplateView):
     template_name = None
 
@@ -56,12 +68,19 @@ class UserSoundcloudSetCreate(View):
         else:
             return HttpResponseBadRequest()
 
-class UserSoundcloudSet(View):
-
+class UserSoundcloudSetMain(View):
     def post(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-
+        if request.user == user:
+            add_playlist(request.POST.get('permalink'), request.user, list)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+class UserSoundcloudSet(View):
+    def post(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.user == user:
             add_playlist(request.POST.get('permalink'), request.user, list)
             return HttpResponse()
