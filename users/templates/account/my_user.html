@@ -94,6 +94,8 @@
         {% endif %}
 
         {% if communities %}
+
+        {% load liked_user %}
         <div class="card mb-3">
             <div class="card-header">
               <a href="{% url 'communities' pk=user.pk %}" class="ajax">

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize get_key %}
+{% load humanize %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -72,6 +72,7 @@
 
 {% include 'profile/warning_banner.html' %}
 
+{% load get_key %}
 <script>
   {% if user|is_user_list:user.get_music_list_id %}
     document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
