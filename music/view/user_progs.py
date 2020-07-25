@@ -6,15 +6,28 @@ from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
-from common.parsing_soundcloud.add_playlist import load_playlist
+from common.parsing_soundcloud.add_playlist import add_playlist
 
+
+class UserSoundcloudSetPlaylistWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_set_playlist.html", request=request)
+        return super(UserSoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserSoundcloudSetPlaylistWindow,self).get_context_data(**kwargs)
+        context['form_post'] = PlaylistForm()
+        return context
 
 class UserSoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_set.html", request=request)
+        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_set_playlist.html", request=request)
 
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 

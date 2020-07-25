@@ -41,7 +41,7 @@
                               </figure>
                               <div class="media-body">
                                   <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
-                                  <a class="small ajax" href="">{{ object.genre }}</a>
+                                  <a class="small ajax" href="{% url 'genre_music' pk=object.pk %}">{{ object.genre }}</a>
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
                                         <span class='track_remove' title="Удалить">
