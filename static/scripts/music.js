@@ -21,7 +21,7 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
   } else if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
-  } 
+  }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -42,6 +42,29 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
     }
     ajax_link.send(form_data);
 });
+on('#ajax', 'click', '#main_soundcloud_set_btn', function() {
+  this.disabled = true;
+  form = document.body.querySelector("#soundcloud_set_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_permalink").value){
+    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
+    toast_error("Ссылка - обязательное поле!");
+  }
+  saver = document.body.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + pk + "/" + uuid + "/", true );
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload('/users/' + pk + '/music')
+        document.querySelector(".create_fullscreen").style.display = "none";
+        document.getElementById("create_loader").innerHTML="";
+      }
+    }
+    ajax_link.send(form_data);
+});
 on('#ajax', 'click', '#soundcloud_set_btn', function() {
   this.disabled = true;
   form = document.body.querySelector("#soundcloud_set_form");
@@ -58,6 +81,7 @@ on('#ajax', 'click', '#soundcloud_set_btn', function() {
     ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + pk + "/" + uuid + "/", true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload('/users/detail/music_list/' + pk + "/" + uuid + "/")
         document.querySelector(".create_fullscreen").style.display = "none";
         document.getElementById("create_loader").innerHTML="";
       }
