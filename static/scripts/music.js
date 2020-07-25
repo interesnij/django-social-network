@@ -21,7 +21,7 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
   } else if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
-  }
+  } 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -43,7 +43,7 @@ on('#ajax', 'click', '#soundcloud_set_create_btn', function() {
     ajax_link.send(form_data);
 });
 on('#ajax', 'click', '#soundcloud_set_btn', function() {
-  this.disabled = true; 
+  this.disabled = true;
   form = document.body.querySelector("#soundcloud_set_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_permalink").value){
