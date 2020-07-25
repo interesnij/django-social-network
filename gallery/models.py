@@ -59,6 +59,12 @@ class Album(models.Model):
         else:
             return False
 
+    def get_photos(self):
+        return self.album.filter(is_deleted=False, is_public=True)
+
+    def get_staff_photos(self):
+        return self.album.filter(is_deleted=False)
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")

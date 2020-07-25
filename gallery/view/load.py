@@ -171,7 +171,10 @@ class CommunityAlbumPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
-        self.photos = self.photo.community.get_photos_for_album(album_id=self.album.pk)
+        if request.user.is_administrator_of_community_with_name(self.photo.community.name):
+            self.photos = self.album.get_staff_photos()
+        else:
+            self.photos = self.album.get_photos()
         self.template_name = get_detail_template_community_photo(self.photo.community, "photo_community/", "album_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
