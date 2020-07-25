@@ -2,7 +2,7 @@
 {% block title %}Моя музыка{% endblock %}
 {% load get_key %}
 {% block content %}
-<div class="container main-container pk_saver" data-pk="{{ user.pk }}">
+<div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
           <br>
@@ -104,7 +104,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="#" class="">Добавить трек в список</a>
+                        <a class="pointer">Добавить трек в список</a>
                       </h5>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="#" class="">Добавить треки списком</a>
+                        <a class="u_soundcloud_set_list pointer">Добавить треки списком</a>
                       </h5>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="#" class="user_music_list_create_window">Создать новый список</a>
+                        <a class="user_music_list_create_window pointer">Создать новый список</a>
                       </h5>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a style="cursor:pointer" class="u_soundcloud_set">Закачать новый список</a>
+                        <a class="u_soundcloud_set_create pointer">Закачать новый список</a>
                       </h5>
                     </div>
                 </div>
