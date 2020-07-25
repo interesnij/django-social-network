@@ -41,7 +41,9 @@
                               </figure>
                               <div class="media-body">
                                   <h6 class="tag_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
+                                  {% if object.tag %}
                                   <a class="small">{{ object.tag }}</a>
+                                  {% endif %}
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
                                         {% if request.user|is_track_exists:object.id %}
