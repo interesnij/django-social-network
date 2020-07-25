@@ -3,8 +3,8 @@
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Добавление списка Soundcloud</h5>
-                <p>Вы можете закачать целый плейлист с Souncloud в список, на странице которого вы нажали кнопку "Добавить треки списком"</p>
+                <h5 class="content-color-primary mb-3">Добавление списка Soundcloud</h5>
+                <p>Вы можете закачать целый плейлист с Souncloud в список "{{ playlist.name }}"</p>
             </div>
             <div class="card-body">
                   <div class="form-group">
