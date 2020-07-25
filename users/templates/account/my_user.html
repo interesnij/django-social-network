@@ -281,7 +281,7 @@
 
           {% include 'profile/new_post.html' %}
 
-          <div id="lenta_load" data-link="/users/detail/list/{{ user.pk }}"></div>
+          <div id="lenta_load" class="profile_block_paginate" data-link="/users/detail/list/{{ user.pk }}"></div>
 
         </div>
     </div>
@@ -289,9 +289,8 @@
 
 
 <script>
-{% if user.is_user_playlist %}
-  body = document.querySelector("body");
-  body.classList.add('list_' + {{ user.get_music_list_id }});
+{% if user|is_user_list:user.get_music_list_id %}
+  document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
 {% endif %}
 </script>
 

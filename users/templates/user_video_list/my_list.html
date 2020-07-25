@@ -27,7 +27,7 @@
               <div class="card-body">
 
                 <div class="video_playlist" id="movies_container">
-                  <div class="row movies_list_in_list" id="user_video_container" data-list="/users/{{ user.pk }}/video">
+                  <div class="row movies_list_in_list profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_list_detail pag {% if forloop.last %}last{% endif %}" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
                         <div class="blog-header-img">

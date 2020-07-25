@@ -26,7 +26,7 @@
 
             <div class="card-body px-0 py-0">
               {% if object_list %}
-                <ul class="list-group" id="com_follows_container" data-link='/communities/manage/follows/{{ community.pk }}'>
+                <ul class="list-group staff_community_block_paginate" id="community_follows_container" data-link='/communities/manage/follows/{{ community.pk }}'>
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }} pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.user.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">

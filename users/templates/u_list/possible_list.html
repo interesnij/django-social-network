@@ -22,7 +22,7 @@
             <br><br>
             <div class="card-body px-0 py-0">
 
-              <ul class="list-group" id="possible_friends_container" data-link="/users/detail/possible/{{ user.pk }}">
+              <ul class="list-group profile_block_paginate" id="possible_friends_container" data-link="/users/detail/possible/{{ user.pk }}">
                   {% if object_list %}
                   {% for object in object_list %}
                   <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">

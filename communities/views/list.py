@@ -77,11 +77,12 @@ class AllCommunities(ListView):
 
 
 class CommunityCategoryView(ListView):
-	template_name="cat.html"
-	paginate_by=15
+	template_name = None
+	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_default_template(folder="c_list/", template="cat_communities.html", request=request)
 		return super(CommunityCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -235,5 +236,5 @@ class PostsUserDraftCommunity(ListView):
         return context
 
     def get_queryset(self):
-        item_list = self.community.get_draft_posts_for_user(self.request.user.pk).order_by('-created') 
+        item_list = self.community.get_draft_posts_for_user(self.request.user.pk).order_by('-created')
         return item_list

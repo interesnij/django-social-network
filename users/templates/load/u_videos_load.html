@@ -12,7 +12,7 @@
 <h4 class="user_video_create_attach mb-3 border">Создать и прикрепить</h4>
 
 {% if object_list %}
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" id="video_load_container" data-link="users/load/video_load">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="list_block_paginate" id="video_load_container" data-link="users/load/video_load">
 {% for object in object_list %}
 <div class="col-md-4 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.pk }}">
   <div>

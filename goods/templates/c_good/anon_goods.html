@@ -30,7 +30,7 @@
               </div>
             </div>
             <div class="card-body">
-            <div class="row" id="community_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/community/goods/{{ user.uuid }}">
+            <div class="row community_block_paginate" id="community_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/community/goods/{{ user.uuid }}">
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-6 c_good_detail pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" style="cursor:pointer">

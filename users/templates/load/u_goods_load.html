@@ -12,7 +12,7 @@
 <h4 id="u_good_add_attach" class="mb-3 border">Создать и прикрепить</h4>
 
 {% if object_list %}
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" id="goods_load_container" data-link="users/load/good_load">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="list_block_paginate" id="goods_load_container" data-link="users/load/good_load">
 {% for object in object_list %}
 <div class="good_3 pag {% if forloop.last %}last{% endif %}">
   <div class="good_load_one" good-pk="{{ object.pk }}" style="cursor:pointer">

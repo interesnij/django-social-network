@@ -24,7 +24,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <ul class="list-group" id="quan_container" data-link="/quan/{{category.name_en}}">
+                <ul class="list-group list_block_paginate" id="quan_container" data-link="/quan/{{category.name_en}}">
                     {% for object in object_list %}
                     <div class="card pag {% if forloop.last %}last{% endif %}">
 						            <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">

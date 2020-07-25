@@ -23,50 +23,10 @@
                         <button class="btn btn-outline-link" type="button">Искать</button>
                     </div>
                 </div>
-                <span id="load_staff_list"></span>
+                <span id="load_staff_list" class="profile_block_paginate"></span>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/users/detail/manage_communities/{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var load_cat_list = document.getElementById("load_staff_list");
-              load_cat_list.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
-  });
-
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var items = document.getElementById("communities_manage_container");
-
-    if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/users/detail/manage_communities/{{ user.uuid }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
-        items.append(elem);
-        }
-      }
-    }}
-  }catch{return}
-  }
-</script>
 {% endblock %}

@@ -16,7 +16,7 @@
 <br><br>
 
 {% if object_list %}
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" id="articles_load_container" data-link="users/load/article_load">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="list_block_paginate" id="articles_load_container" data-link="users/load/article_load">
 {% for object in object_list %}
 <div class="article_3 pag {% if forloop.last %}last{% endif %}">
      <div class="jumbotron mb-3 bg-dark text-center has-background-img position-relative box-shadow">

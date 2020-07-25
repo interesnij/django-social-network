@@ -30,8 +30,8 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="music_playlist" id="tracks_container" data-pk="{{ user.get_music_list_id }}">
-                    <ul id="user_tracks_container" data-link="/users/{{ user.pk }}/music">
+                <div class="music_playlist" id="user_tracks_container" data-pk="{{ user.get_music_list_id }}">
+                    <ul id="user_tracks_container" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %} id_{{ object.id }}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
@@ -125,7 +125,7 @@
 </div>
 
 <script>
-  {% if user|is_user_list:playlist %}
+  {% if user|is_user_list:playlist.pk %}
     document.querySelector("body").classList.add('list_' + {{ user.playlist.pk }});
   {% endif %}
 </script>

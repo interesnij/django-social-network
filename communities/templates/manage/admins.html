@@ -2,7 +2,7 @@
 {% block title %}Администраторы - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}"> 
+<div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
 <div class="row">
     <div class="col-md-9 order-1">
         <div class="input-group mb-3">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <ul class="list-group" id="com_admins_container" data-link="/communities/manage/admins/{{ community.pk }}">
+                <ul class="list-group staff_community_block_paginate" id="community_admins_container" data-link="/communities/manage/admins/{{ community.pk }}">
                     {% for object in object_list %}
                     <li class="list-group-item pag {% if forloop.last %}last{% endif %} li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
