@@ -126,7 +126,7 @@
 
 <script>
   {% if user|is_user_list:playlist.pk %}
-    document.querySelector("body").classList.add('list_' + {{ user.playlist.pk }});
+    document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
   {% endif %}
 </script>
 

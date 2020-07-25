@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Моя музыка{% endblock %}
+{% block title %}Моя музыка - {% endblock %}
 {% load get_key %}
 {% block content %}
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
@@ -171,7 +171,7 @@
 
 <script>
   {% if user|is_user_list:playlist.pk %}
-    document.querySelector("body").classList.add('list_' + {{ user.playlist.pk }});
+    document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
   {% endif %}
 </script>
 {% endblock %}
