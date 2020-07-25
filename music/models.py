@@ -76,6 +76,9 @@ class SoundList(models.Model):
         queryset = self.players.all()
         return queryset
 
+    def count_tracks(self):
+        return self.players.filter(is_deleted=False).values("pk").count()
+
     class Meta:
         verbose_name = "список: весь, человека или сообщества"
         verbose_name_plural = "списки: весь, человека или сообщества"

@@ -51,7 +51,7 @@ class Album(models.Model):
             return False
 
     def count_photo(self):
-        return self.album.filter(is_deleted=False).count()
+        return self.album.filter(is_deleted=False).values("pk").count()
 
     def album_is_generic(self):
         if self.is_generic:

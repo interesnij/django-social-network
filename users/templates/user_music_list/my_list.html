@@ -17,7 +17,7 @@
                 <div class="media">
                   <div class="media-body">
                       <h5 class="mt-1">{{ playlist.name }} - Моя музыка
-                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ playlist.get_music_count }}</small>
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ playlist.count_tracks }}</small>
                       </h5>
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                 {% if object_list %}
 
                 <div class="music_playlist" data-pk="{{ playlist.pk }}">
-                    <ul id="user_tracks_list_container" class="profile_block_paginate" data-link="/users/detail/music_list/{{ user.pk }}/{{ playlist.uuid }}"> 
+                    <ul id="user_tracks_list_container" class="profile_block_paginate" data-link="/users/detail/music_list/{{ user.pk }}/{{ playlist.uuid }}">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
