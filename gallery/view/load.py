@@ -171,7 +171,7 @@ class CommunityAlbumPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
-        if request.user.is_administrator_of_community_with_name(self.photo.community.name):
+        if request.user.is_administrator_of_community_with_name(self.album.community.name):
             self.photos = self.album.get_staff_photos()
         else:
             self.photos = self.album.get_photos()
