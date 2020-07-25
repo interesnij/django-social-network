@@ -32,7 +32,6 @@ class UserSoundcloudSetWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserSoundcloudSetWindow,self).get_context_data(**kwargs)
-        context['form_post'] = PlaylistForm()
         return context
 
 
