@@ -445,7 +445,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }}catch{null}
     }
     function music_onPlay(){
-        console.log("Воспроизводится трек № : " + music_player.getTrackId());
+        console.log("Воспроизводится трек: " + music_player.getTrackTitle());
         div = document.createElement("div");
         div.innerHTML = music_player.getTrackTitle();
         title = div.querySelector('span').innerHTML;
@@ -453,7 +453,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
         if(document.querySelector(".user_status")){
           document.querySelector(".user_status").innerHTML = title;
         }
-        try{video_player.pause()}catch{null}
+        if (video_player){video_player.pause()}
     };
 
     function dragElement(elmnt) {
