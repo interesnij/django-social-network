@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load liked_user get_key %}
-{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}{{ playlist.name }} - {{ user.first_name }} {{ user.last_name }}{% endblock %}
 {% block content %}
 
 <div class="container main-container">
@@ -18,7 +18,7 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Музыка
+                      <h5 class="mt-1">{{ playlist.name }}
                         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
                           {{ user.first_name|gent }} {{ user.last_name|gent }}
                         </a>

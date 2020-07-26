@@ -17,7 +17,10 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">{{ playlist.name }} - треки {{ user.first_name|gent }} {{ user.last_name|gent }}
+                      <h5 class="mt-1">{{ playlist.name }} -
+                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                        </a>
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ playlist.count_tracks }}</small>
                       </h5>
                   </div>

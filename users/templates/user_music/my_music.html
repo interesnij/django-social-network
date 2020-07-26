@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Моя музыка - {% endblock %}
+{% block title %}Моя музыка - {{ playlist.name }} {% endblock %}
 {% load get_key %}
 {% block content %}
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
@@ -16,7 +16,7 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Моя музыка
+                      <h5 class="mt-1">{{ playlist.name }}
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music_count }}</small>
                       </h5>
                   </div>
