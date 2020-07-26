@@ -73,13 +73,11 @@ class UserTrackAdd(View):
     """
     def get(self, request, *args, **kwargs):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        try:
-            my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
-        except:
-            my_list = SoundList.objects.create(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
-        if not my_list.is_track_in_list(track.pk):
-            my_list.players.add(track)
-        return HttpResponse("!")
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+
+        if not list.is_track_in_list(track.pk):
+            list.players.add(track)
+        return HttpResponse()
 
 class UserTrackRemove(View):
     """
@@ -87,7 +85,7 @@ class UserTrackRemove(View):
     """
     def get(self, request, *args, **kwargs):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
-        if my_list.is_track_in_list(track.pk):
-            my_list.players.remove(track)
-        return HttpResponse("!")
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        if list.is_track_in_list(track.pk):
+            list.players.remove(track)
+        return HttpResponse()
