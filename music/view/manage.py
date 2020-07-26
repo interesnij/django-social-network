@@ -78,7 +78,7 @@ class TempGenreOn(View):
         return HttpResponse("!")
 
 
-class TrackAdd(View):
+class UserTrackAdd(View):
     """
     Добавляем трек в свой плейлист, если его там нет
     """
@@ -92,7 +92,7 @@ class TrackAdd(View):
             my_list.players.add(track)
         return HttpResponse("!")
 
-class TrackRemove(View):
+class UserTrackRemove(View):
     """
     Удаляем трек из своего плейлиста, если он там есть
     """

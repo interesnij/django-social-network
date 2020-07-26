@@ -27,7 +27,9 @@
                 </figure>
                 <div class="media-body" style="line-height: 10px;">
                     <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
+                    {% if object.tag %}
                     <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
