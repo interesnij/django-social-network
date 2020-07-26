@@ -116,6 +116,7 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
     list.classList.remove("u_add_track_in_list");
     svg = document.createElement("svg");
     svg.fill = "currentColor";
+    svg.viewBox="0 0 24 24";
     svg.style.width = "15px";
     svg.style.height = "15px";
     svg.classList.add("svg_default");
