@@ -51,7 +51,7 @@
                                         </span>
                                         <div class="dropdown-menu dropdown-menu-right" style="top: 65px;">
                                           <span>
-                                            {% if playlist|is_track_exists:object.id %}
+                                            {% if playlist|track_in_list:object.id %}
                                               <span class="dropdown-item u_remove_track_in_list">
                                                 <svg fill='currentColor' style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
                                                 {{ playlist.name }}
@@ -64,7 +64,7 @@
                                           {% if user.user_music_playlist_exists %}
                                             {% for list in user.get_audio_playlists %}
                                               <span>
-                                                {% if list|is_track_exists:object.id %}
+                                                {% if list|track_in_list:object.id %}
                                                   <span class="dropdown-item u_remove_track_in_list">
                                                     <svg fill='currentColor' style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
                                                     {{ list.name }}
