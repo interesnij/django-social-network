@@ -453,7 +453,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
         if(document.querySelector(".user_status")){
           document.querySelector(".user_status").innerHTML = title;
         }
-        video_player.pause()
+        try{video_player.pause()}catch{null}
     };
 
     function dragElement(elmnt) {
