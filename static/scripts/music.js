@@ -111,11 +111,9 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
   link.open( 'GET', '/music/user_progs/u_add_track_in_list/' + pk + "/" + uuid + "/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    span = document.createElement("span");
-    span.classList.add("u_remove_track_in_list", "dropdown-item");
-    span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>' + parent.innerHTML;
-    parent.innerHTML = "";
-    parent.append(span)
+    _this.classList.add("u_remove_track_in_list");
+    _this.classList.remove("u_add_track_in_list");
+    this.prepend('<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>')
   }};
   link.send( null );
 })
