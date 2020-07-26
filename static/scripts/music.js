@@ -106,7 +106,7 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement;
+  pk = _this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/music/user_progs/u_add_track_in_list/' + pk + "/" + uuid + "/", true );
   link.onreadystatechange = function () {
@@ -121,7 +121,7 @@ on('#ajax', 'click', '.u_remove_track_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement;
+  pk = _this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/music/user_progs/u_remove_track_in_list/' + pk + "/" + uuid + "/", true );
   link.onreadystatechange = function () {
