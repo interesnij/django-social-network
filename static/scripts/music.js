@@ -115,13 +115,15 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
     list.classList.add("u_remove_track_in_list");
     list.classList.remove("u_add_track_in_list");
     svg = document.createElement("svg");
+    span = document.createElement("span");
+    span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>';
     svg.fill = "currentColor";
     svg.viewBox="0 0 24 24";
     svg.style.width = "15px";
     svg.style.height = "15px";
     svg.classList.add("svg_default");
     svg.innerHTML = '<path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>';
-    list.prepend(svg)
+    list.prepend(span)
   }};
   link.send( null );
 })
