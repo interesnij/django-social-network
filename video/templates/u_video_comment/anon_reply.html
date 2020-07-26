@@ -4,7 +4,7 @@
   <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
     <figure>
         {% if reply.commenter.get_avatar %}
-          <img src="{{ reply.commenter.get_avatar }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+          <img src="{{ reply.commenter.get_avatar }}" class="pull-left comment_user_image" alt="User Image">
         {% else %}
           <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         {% endif %}
@@ -22,12 +22,12 @@
 
         <div class="row" data-pk="{{ reply.pk }}">
           {% for object in reply.video_comment_photo.all %}
-          <div class="col-md-6" style="margin-left: -7px; margin-right: -7px;">
+          <div class="col-md-6">
               <img data-uuid="{{ object.uuid }}" photo-pk="{{ comment.commenter.pk }}" class="u_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
           </div>
           {% endfor %}
           {% for object in reply.video_comment_video.all %}
-          <div class="col-md-6" style="margin-left: -7px; margin-right: -7px;" album-pk="{{ object.video_album.pk }}">
+          <div class="col-md-6" album-pk="{{ object.video_album.pk }}">
               <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
               <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
           </div>
