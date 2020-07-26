@@ -70,7 +70,7 @@ class SoundList(models.Model):
         return self.name
 
     def is_track_in_list(self, track_id):
-        self.players.filter(pk=track_id).values("pk").exists()
+        return self.players.filter(pk=track_id).values("pk").exists() 
 
     def playlist_too(self):
         queryset = self.players.all()
