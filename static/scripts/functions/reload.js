@@ -168,6 +168,9 @@ function this_page_reload(url) {
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
         if_list(rtr);
+				page = 2;
+				loaded = false;
+				create_pagination(rtr);
       }
     }
     ajax_link.send();

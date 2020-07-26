@@ -65,7 +65,7 @@ on('#ajax', 'click', '#main_soundcloud_set_btn', function() {
     ajax_link.open( 'POST', "/music/user_progs/soundcloud_set_main/" + pk + "/" + uuid + "/", true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload('/users/' + pk + '/music')
+        this_page_reload(document.location.href)
         document.querySelector(".create_fullscreen").style.display = "none";
         document.getElementById("create_loader").innerHTML="";
       }
@@ -101,7 +101,7 @@ on('#ajax', 'click', '.u_track_add', function(e) {
   block = this.parentElement;
   pk = block.parentElement.getAttribute("data-pk");
   var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', "/music/manage/u_add_track/" + pk, true );
+  _link.open( 'GET', "/music/user_progs/u_add_track/" + pk, true );
   _link.onreadystatechange = function () {
     if ( _link.readyState == 4 && _link.status == 200 ) {
       block.innerHTML = "";
@@ -114,7 +114,7 @@ on('#ajax', 'click', '.u_track_remove', function(e) {
   block = this.parentElement;
   pk = block.parentElement.getAttribute("data-pk");
   var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', "/music/manage/u_remove_track/" + pk, true );
+  _link.open( 'GET', "/music/user_progs/u_remove_track/" + pk, true );
   _link.onreadystatechange = function () {
     if ( _link.readyState == 4 && _link.status == 200 ) {
       block.innerHTML = "";

@@ -76,29 +76,3 @@ class TempGenreOn(View):
         temp_genre.tag = None
         temp_genre.save()
         return HttpResponse("!")
-
-
-class UserTrackAdd(View):
-    """
-    Добавляем трек в свой плейлист, если его там нет
-    """
-    def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        try:
-            my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True)
-        except:
-            my_list = SoundList.objects.create(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
-        if not my_list.is_track_in_list(track.pk):
-            my_list.players.add(track)
-        return HttpResponse("!")
-
-class UserTrackRemove(View):
-    """
-    Удаляем трек из своего плейлиста, если он там есть
-    """
-    def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        my_list = SoundList.objects.get(creator_id=request.user.pk, community=None, is_generic=True, name="Основной плейлист")
-        if my_list.is_track_in_list(track.pk):
-            my_list.players.remove(track)
-        return HttpResponse("!")
