@@ -45,7 +45,7 @@
                                   <a class="small ajax" href="{% url 'genre_music' pk=object.genre.pk %}">{{ object.genre }}</a>
                                   {% endif %}
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
-                                      <div class='dropdown'>
+                                      <span class='dropdown'>
                                         <span class='pointer drop' title="Добавить в плейлист">
                                           <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
                                         </span>
@@ -57,7 +57,7 @@
                                             {% endfor %}
                                           {% endif %}
                                         </div>
-                                      </div>
+                                      </span>
                                       <span>
                                         <span class='u_track_remove btn_default pointer' title="Удалить">
                                           <svg fill="currentColor" style="width:20px;height:20px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
