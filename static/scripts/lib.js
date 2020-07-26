@@ -55,5 +55,3 @@ loadScripts('/static/scripts/lib/Chart.min.js')
 
 loadScripts('/static/scripts/lib/video_player.js')
 loadScripts('/static/scripts/lib/video_init.js')
-
-loadScripts('/static/scripts/functions/audio_video.js')
