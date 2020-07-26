@@ -15,3 +15,11 @@ def is_user_list(user, list):
         return True
     else:
         return False
+
+
+@register.filter
+def track_in_list(list, track_id):
+    if list.is_track_in_list(track_id):
+        return True
+    else:
+        return False
