@@ -431,7 +431,7 @@ function get_normal_screen(){
             }};
             playlist_link.send( null );
             };
-            
+
 function music_onReady(){console.log("Аудио плеер готов");}
 
     function music_onPause(){
@@ -446,15 +446,13 @@ function music_onReady(){console.log("Аудио плеер готов");}
     }
     function music_onPlay(){
         console.log("Воспроизводится трек № : " + music_player.getTrackId());
-        try{
         div = document.createElement("div");
         div.innerHTML = music_player.getTrackTitle();
         title = div.querySelector('span').innerHTML;
         document.title = title;
         if(document.querySelector(".user_status")){
           document.querySelector(".user_status").innerHTML = title;
-        }}catch{null};
-        try{video_player.pause();}catch{null}
+        video_player.pause();
     };
 
     function dragElement(elmnt) {
