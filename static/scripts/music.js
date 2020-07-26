@@ -114,7 +114,7 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
     list = parent.querySelector(".u_add_track_in_list");
     list.classList.add("u_remove_track_in_list");
     list.classList.remove("u_add_track_in_list");
-    svg.document.createElement("svg");
+    svg = document.createElement("svg");
     svg.fill = "currentColor";
     svg.style.width = "15px";
     svg.style.height = "15px";
