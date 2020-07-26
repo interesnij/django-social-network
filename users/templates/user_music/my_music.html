@@ -53,20 +53,19 @@
                                           <span>
                                             {% if playlist|track_in_list:object.id %}
                                               <span class="dropdown-item u_remove_track_in_list">
-                                                <svg fill='currentColor' style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
+                                                <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                                                 {{ playlist.name }}
                                               </span>
                                             {% else %}
                                               <span class="dropdown-item u_add_track_in_list">{{ list.name }}</span>
                                             {% endif %}
                                           </span>
-                                          <span class="dropdown-item u_create_music_list_track_add">В новый плейлист</span>
                                           {% if user.user_music_playlist_exists %}
                                             {% for list in user.get_audio_playlists %}
                                               <span>
                                                 {% if list|track_in_list:object.id %}
                                                   <span class="dropdown-item u_remove_track_in_list">
-                                                    <svg fill='currentColor' style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
+                                                    <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                                                     {{ list.name }}
                                                   </span>
                                                 {% else %}
@@ -75,6 +74,7 @@
                                               </span>
                                             {% endfor %}
                                           {% endif %}
+                                          <span class="dropdown-item u_create_music_list_track_add">В новый плейлист</span>
                                         </div>
                                       </span>
                                       <span>
