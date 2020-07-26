@@ -51,7 +51,7 @@
                                         </span>
                                         <div class="dropdown-menu dropdown-menu-right" style="top: 65px;">
                                           {% if user.user_music_playlist_exists %}
-                                            {% for list in user.get_audio_playlists %}
+                                            {% for list in user.get_all_audio_playlists %}
                                               <span>
                                                 {% if list|track_in_list:object.id %}
                                                   <span class="dropdown-item u_remove_track_in_list">
