@@ -12,4 +12,6 @@ urlpatterns = [
 
     url(r'^u_add_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackAdd.as_view())),
     url(r'^u_remove_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackRemove.as_view())),
+    url(r'^u_add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackListAdd.as_view())),
+    url(r'^u_remove_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackListRemove.as_view())),
 ]

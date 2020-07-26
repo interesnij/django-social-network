@@ -89,3 +89,27 @@ class UserTrackRemove(View):
         if list.is_track_in_list(track.pk):
             list.players.remove(track)
         return HttpResponse()
+
+
+class UserTrackListAdd(View):
+    """
+    Добавляем трек в любой плейлист, если его там нет
+    """
+    def get(self, request, *args, **kwargs):
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+
+        if not list.is_track_in_list(track.pk):
+            list.players.add(track)
+        return HttpResponse()
+
+class UserTrackListRemove(View):
+    """
+    Удаляем трек из любого плейлиста, если он там есть
+    """
+    def get(self, request, *args, **kwargs):
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        if list.is_track_in_list(track.pk):
+            list.players.remove(track)
+        return HttpResponse()
