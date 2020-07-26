@@ -120,7 +120,7 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
     svg.style.height = "15px";
     svg.classList.add("svg_default");
     svg.innerHTML = '<path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>';
-    list.append(svg)
+    list.prepend(svg)
   }};
   link.send( null );
 })
