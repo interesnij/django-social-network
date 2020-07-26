@@ -114,8 +114,13 @@ on('#ajax', 'click', '.u_add_track_in_list', function() {
     list = parent.querySelector(".u_add_track_in_list");
     list.classList.add("u_remove_track_in_list");
     list.classList.remove("u_add_track_in_list");
-    svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
-    list.prepend(svg)
+    svg.document.createElement("svg");
+    svg.fill = "currentColor";
+    svg.style.width = "15px";
+    svg.style.height = "15px";
+    svg.classList.add("svg_default");
+    svg.innerHTML = '<path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>';
+    list.append(svg)
   }};
   link.send( null );
 })
