@@ -445,7 +445,11 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }}catch{null}
     }
     function music_onPlay(){
-        console.log("Воспроизводится трек: " + music_player.getTrackTitle());
+        div = document.createElement("div");
+        div.innerHTML = music_player.getTrackTitle();
+        title = div.querySelector('span').innerHTML;
+
+        console.log("Воспроизводится трек: " + title);
         div = document.createElement("div");
         div.innerHTML = music_player.getTrackTitle();
         title = div.querySelector('span').innerHTML;
