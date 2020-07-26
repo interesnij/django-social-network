@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from music.view.user_progs import *
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
