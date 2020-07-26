@@ -131,6 +131,7 @@ on('#ajax', 'click', '.u_remove_track_in_list', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     list = parent.querySelector(".u_remove_track_in_list");
+    list.style.paddingLeft = "30px";
     list.classList.add("u_add_track_in_list");
     list.classList.remove("u_remove_track_in_list");
     list.querySelector("svg").remove();
