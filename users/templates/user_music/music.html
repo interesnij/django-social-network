@@ -30,7 +30,7 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="music_playlist" id="user_tracks_container" data-pk="{{ playlist.pk }}" data-uuid="{{ playlist.uuid }}">
+                <div class="music_playlist" data-pk="{{ user.get_music_list_id }}">
                     <ul id="user_tracks_container" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music/">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %} id_{{ object.id }}">
