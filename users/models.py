@@ -31,9 +31,6 @@ class User(AbstractUser):
 
     id = models.BigAutoField(primary_key=True)
     is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
-    #is_deleted = models.BooleanField(default=False, verbose_name="Удален")
-    #is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для офицеров")
-    #is_supermanager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
