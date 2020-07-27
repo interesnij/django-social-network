@@ -18,7 +18,7 @@ class GetUserGender(View):
             return HttpResponse()
         else:
             import pandas as pd
-            import common.csv.FNen.csv as csv1
+            from common.csv.FNen import * as csv1
 
             dfru = pd.read_csv('/static/csv/FNru.csv')
             dfen = pd.read_csv(csv1)
