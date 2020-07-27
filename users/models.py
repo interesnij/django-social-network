@@ -17,6 +17,7 @@ class User(AbstractUser):
     SUSPEND = 'SU'
     CHILD = 'CH'
     STANDART = 'ST'
+    VERIFIED = 'VE'
     MANAGER = 'MA'
     SUPERMANAGER = 'SM'
     PERM = (
@@ -47,6 +48,15 @@ class User(AbstractUser):
         return try_except(self.perm == "MA")
     def is_supermanager(self):
         return try_except(self.perm == "SM")
+    def is_verified(self):
+        return try_except(self.perm == "VE")
+    def is_child(self):
+        return try_except(self.perm == "CH")
+    def is_child_safety(self):
+        if self.is_manager() or self.is_supermanager() or is_verified():
+            return True
+        else:
+            return False
 
     def get_full_name(self):
         return str(self.first_name) + " " + str(self.last_name)

@@ -210,6 +210,8 @@ class ProfileUserView(TemplateView):
                         self.template_name = "account/user.html"
                     else:
                         self.template_name = "account/close_user.html"
+                elif request.user.is_child() and not self.user.is_child_safety():
+                    self.template_name = "account/no_child_safety.html"
                 else:
                     self.template_name = "account/user.html"
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -219,6 +221,8 @@ class ProfileUserView(TemplateView):
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 self.template_name = "account/anon_close_user.html"
+            elif not self.user.is_child_safety():
+                self.template_name = "account/anon_no_child_safety.html"
             else:
                 self.template_name = "account/anon_user.html"
 
