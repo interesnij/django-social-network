@@ -14,18 +14,19 @@ from common.utils import try_except
 class User(AbstractUser):
     DELETED = 'DE'
     BLOCKED = 'BL'
-    SUSPEND = 'SU'
     CHILD = 'CH'
     STANDART = 'ST'
+    VERIFIED_SEND = 'VS'
     VERIFIED = 'VE'
     MANAGER = 'MA'
     SUPERMANAGER = 'SM'
     PERM = (
         (DELETED, 'Удален'),
         (BLOCKED, 'Заблокирован'),
-        (SUSPEND, 'Заморожен'),
         (CHILD, 'Ребенок'),
         (STANDART, 'Обычные права'),
+        (VERIFIED_SEND, 'Запрос на проверку'),
+        (VERIFIED, 'Провернный'),
         (MANAGER, 'Менеджер'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
@@ -43,17 +44,19 @@ class User(AbstractUser):
         verbose_name_plural = 'пользователи'
 
     def is_deleted(self):
-        return try_except(self.perm == "DE")
+        return try_except(self.perm == User.DELETED)
     def is_manager(self):
-        return try_except(self.perm == "MA")
+        return try_except(self.perm == User.MANAGER)
     def is_supermanager(self):
-        return try_except(self.perm == "SM")
+        return try_except(self.perm == User.SUPERMANAGER)
+    def is_verified_send(self):
+        return try_except(self.perm == User.VERIFIED_SEND)
     def is_verified(self):
-        return try_except(self.perm == "VE")
+        return try_except(self.perm == User.VERIFIED)
     def is_child(self):
-        return try_except(self.perm == "CH")
+        return try_except(self.perm == User.CHILD)
     def is_child_safety(self):
-        if self.is_manager() or self.is_supermanager() or self.is_verified():
+        if self.perm == User.MANAGER or self.perm == User.SUPERMANAGER or self.perm == User.VERIFIED:
             return True
         else:
             return False
