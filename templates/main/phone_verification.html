@@ -88,9 +88,19 @@
          if (request.responseText.indexOf("ok") != -1){window.location.href = "{% url 'user' pk=request.user.pk %}";}
        }
      };
-     request.send( null );
-
+     request.send( null )
      });
+
+
+     var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+     gender.open( 'GET', "/users/progs/get_gender/", true );
+     gender.onreadystatechange = function () {
+       if ( gender.readyState == 4 && gender.status == 200 ) {
+         console.log("Пол сохранен!");
+       }
+     };
+     gender.send( null )
+
      </script>
 
      </span>
