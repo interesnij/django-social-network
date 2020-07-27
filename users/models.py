@@ -53,7 +53,7 @@ class User(AbstractUser):
     def is_child(self):
         return try_except(self.perm == "CH")
     def is_child_safety(self):
-        if self.is_manager() or self.is_supermanager() or is_verified():
+        if self.is_manager() or self.is_supermanager() or self.is_verified():
             return True
         else:
             return False
