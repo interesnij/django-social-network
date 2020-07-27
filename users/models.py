@@ -55,7 +55,7 @@ class User(AbstractUser):
         return str(self.first_name) + " " + str(self.last_name)
 
     def get_full_name(self):
-        return
+        return str(self.first_name) + " " + str(self.last_name)
 
     def notification_follow(self, user):
         from notifications.model.user import UserNotification, notification_handler
