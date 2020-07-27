@@ -1,6 +1,12 @@
 .comment_user_image {
 
 }
+.comment_btn{
+  float:right;
+}
+.comment_btn span{
+  cursor:pointer
+}
 .pointer{
   cursor:pointer
 }
