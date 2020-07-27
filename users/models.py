@@ -12,23 +12,50 @@ from common.utils import try_except
 
 
 class User(AbstractUser):
+    DELETED = 'DE'
+    BLOCKED = 'BL'
+    SUSPEND = 'SU'
+    CHILD = 'CH'
+    STANDART = 'ST'
+    MANAGER = 'MA'
+    SUPERMANAGER = 'SM'
+    PERM = (
+        (DELETED, 'Удален'),
+        (BLOCKED, 'Заблокирован'),
+        (SUSPEND, 'Заморожен'),
+        (CHILD, 'Ребенок'),
+        (STANDART, 'Обычные права'),
+        (MANAGER, 'Менеджер'),
+        (SUPERMANAGER, 'Суперменеджер'),
+    )
+
     id = models.BigAutoField(primary_key=True)
     is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
-    is_deleted = models.BooleanField(default=False, verbose_name="Удален")
-    is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для офицеров")
-    is_supermanager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
-    is_suspended = models.BooleanField(default=False, verbose_name="Заморожен")
+    #is_deleted = models.BooleanField(default=False, verbose_name="Удален")
+    #is_manager = models.BooleanField(default=False, verbose_name="Доступен отдел для офицеров")
+    #is_supermanager = models.BooleanField(default=False, verbose_name="Доступен отдел для высших офицеров")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
-    last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
+    last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
+    perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
+    def is_deleted(self):
+        return try_except(self.perm == "DE")
+    def is_manager(self):
+        return try_except(self.perm == "MA")
+    def is_supermanager(self):
+        return try_except(self.perm == "SM")
+
     def get_full_name(self):
-        return  str(self.first_name) + " " + str(self.last_name)
+        return str(self.first_name) + " " + str(self.last_name)
+
+    def get_full_name(self):
+        return
 
     def notification_follow(self, user):
         from notifications.model.user import UserNotification, notification_handler

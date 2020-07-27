@@ -1,6 +1,7 @@
 from managers.models import PhotoUserStaff, CanWorkStaffPhotoUser
 from logs.model.manage_photo import PhotoWorkerManageLog, PhotoCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
+from users.models import User
 
 
 def add_photo_administrator(user, request_user):
@@ -9,7 +10,8 @@ def add_photo_administrator(user, request_user):
         user.photo_user_staff.save(update_fields=['level'])
     except:
         user_staff = PhotoStaff.objects.create(user=user, level="A")
-    user.is_manager = True
+    user.perm = User.MANAGER
+    user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
     return user_staff
 
@@ -19,7 +21,8 @@ def add_photo_moderator(user, request_user):
         user.photo_user_staff.save(update_fields=['level'])
     except:
         user_staff = PhotoStaff.objects.create(user=user, level="M")
-    user.is_manager = True
+    user.perm = User.MANAGER
+    user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
     return user_staff
 
@@ -29,7 +32,8 @@ def add_photo_editor(user, request_user):
         user.photo_user_staff.save(update_fields=['level'])
     except:
         user_staff = PhotoStaff.objects.create(user=user, level="E")
-    user.is_manager = True
+    user.perm = User.MANAGER
+    user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)
     return user_staff
 
@@ -67,7 +71,8 @@ def add_photo_administrator_worker(user, request_user):
         user.can_work_staff_photo_user.save(update_fields=['is_administrator'])
     except:
         user_staff = CanWorkStaffPhoto.objects.create(user=user, is_administrator=True)
-    user.is_supermanager = True
+    user.perm = User.SUPERMANAGER
+    user.save(update_fields=['perm'])
     PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
     return user_staff
 
@@ -77,7 +82,8 @@ def add_photo_moderator_worker(user, request_user):
         user.can_work_staff_photo_user.save(update_fields=['is_moderator'])
     except:
         user_staff = CanWorkStaffPhoto.objects.create(user=user, is_moderator=True)
-    user.is_supermanager = True
+    user.perm = User.SUPERMANAGER
+    user.save(update_fields=['perm'])
     PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
     return user_staff
 
@@ -87,7 +93,8 @@ def add_photo_editor_worker(user, request_user):
         user.can_work_staff_photo_user.save(update_fields=['is_editor'])
     except:
         user_staff = CanWorkStaffPhoto.objects.create(user=user, is_editor=True)
-    user.is_supermanager = True
+    user.perm = User.SUPERMANAGER
+    user.save(update_fields=['perm'])
     PhotoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADVERTISER)
     return user_staff
 

@@ -13,11 +13,13 @@ def safe_json(data):
 
 def check_manager_state(user):
     if not user.is_user_manager() or not user.is_community_manager() or not user.is_post_manager() or not user.is_good_manager() or not user.is_photo_manager() or not user.is_audio_manager() or not user.is_video_manager():
-        user.is_manager = False
+        user.perm = User.STANDART
+        user.save(update_fields=['perm'])
 
 def check_supermanager_state(user):
     if not user.is_superuser_manager() or not user.is_community_supermanager() or not user.is_post_supermanager() or not user.is_good_supermanager() or not user.is_photo_supermanager() or not user.is_audio_supermanager() or not user.is_video_supermanager():
-        user.is_supermanager = False
+        user.perm = User.STANDART
+        user.save(update_fields=['perm'])
 
 
 def get_client_ip(request):

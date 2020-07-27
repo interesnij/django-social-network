@@ -17,7 +17,7 @@ class ManagersView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user.is_manager:
+        if self.user.is_manager():
             self.template_name = "manager_main/managers.html"
         else:
             self.template_name = "about.html"
@@ -30,7 +30,7 @@ class SuperManagersView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_supermanager:
+        if request.user.is_supermanager():
             self.template_name = "manager_main/supermanagers.html"
         else:
             self.template_name = "about.html"
