@@ -178,7 +178,6 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
