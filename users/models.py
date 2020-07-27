@@ -32,9 +32,11 @@ class User(AbstractUser):
         (MANAGER, 'Менеджер'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
+    MALE = 'Man'
+    FEMALE = 'Fem'
     GENDER = (
-        (MALE, 'Man'),
-        (FEMALE, 'Fem'),
+        (MALE, 'Мужской'),
+        (FEMALE, 'Женский'),
     )
 
     id = models.BigAutoField(primary_key=True)
