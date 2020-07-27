@@ -45,7 +45,7 @@ class RegisterSerializer(serializers.Serializer):
         adapter = get_adapter()
         user = adapter.new_user(request)
         users_count = User.objects.only("pk").count()
-        user.phone = users_count + 100
+        user.phone = users_count + 156
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
