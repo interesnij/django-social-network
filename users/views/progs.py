@@ -18,9 +18,10 @@ class GetUserGender(View):
             return HttpResponse()
         else:
             import pandas as pd
+            import common.FNen.csv as csv1
 
-            dfru = pd.read_csv(/static/csv/FNru.csv)
-            dfen = pd.read_csv(r'static/csv/FNen.csv')
+            dfru = pd.read_csv('/static/csv/FNru.csv')
+            dfen = pd.read_csv(csv1)
 
             rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
             rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
