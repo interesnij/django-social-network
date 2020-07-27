@@ -14,6 +14,7 @@ from common.utils import try_except
 class User(AbstractUser):
     DELETED = 'DE'
     BLOCKED = 'BL'
+    PHONE_NO_VERIFIED = 'PV'
     CHILD = 'CH'
     STANDART = 'ST'
     VERIFIED_SEND = 'VS'
@@ -24,19 +25,24 @@ class User(AbstractUser):
         (DELETED, 'Удален'),
         (BLOCKED, 'Заблокирован'),
         (CHILD, 'Ребенок'),
+        (PHONE_NO_VERIFIED, 'PV'),
         (STANDART, 'Обычные права'),
         (VERIFIED_SEND, 'Запрос на проверку'),
         (VERIFIED, 'Провернный'),
         (MANAGER, 'Менеджер'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
+    GENDER = (
+        (MALE, 'Man'),
+        (FEMALE, 'Fem'),
+    )
 
     id = models.BigAutoField(primary_key=True)
-    is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
+    perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     USERNAME_FIELD = 'phone'
 
     class Meta:
@@ -55,11 +61,14 @@ class User(AbstractUser):
         return try_except(self.perm == User.VERIFIED)
     def is_child(self):
         return try_except(self.perm == User.CHILD)
+    def is_no_phone_verified(self):
+        return try_except(self.perm == User.PHONE_NO_VERIFIED)
     def is_child_safety(self):
         if self.perm == User.MANAGER or self.perm == User.SUPERMANAGER or self.perm == User.VERIFIED:
             return True
         else:
             return False
+
 
     def get_full_name(self):
         return str(self.first_name) + " " + str(self.last_name)
@@ -1115,7 +1124,7 @@ class User(AbstractUser):
     def get_template_user(self, folder, template, request_user):
         if request_user.is_authenticated:
             if self.pk == request_user.pk:
-                if not request_user.is_phone_verified:
+                if request_user.is_no_phone_verified():
                     template_name = "main/phone_verification.html"
                 elif self.is_suspended():
                     self.template_name = "main/you_suspended.html"
@@ -1124,7 +1133,7 @@ class User(AbstractUser):
                 else:
                     template_name = folder + "my_" + template
             elif self.pk != request_user.pk:
-                if not request_user.is_phone_verified:
+                if request_user.is_no_phone_verified():
                     template_name = "main/phone_verification.html"
                 elif self.is_suspended():
                     self.template_name = "main/user_suspended.html"

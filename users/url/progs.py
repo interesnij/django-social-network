@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from users.views.progs import UserBanCreate, UserUnbanCreate, UserColorChange, UserPostView, PhoneSend, PhoneVerify
+from users.views.progs import UserBanCreate, UserUnbanCreate, UserColorChange, UserPostView, PhoneSend, PhoneVerify, GetUserGender
 from django.contrib.auth.decorators import login_required
 
 
@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^post_view/(?P<pk>\d+)/$', UserPostView.as_view()),
     url(r'^phone_send/(?P<phone>\d+)/$', login_required(PhoneSend.as_view())),
     url(r'^phone_verify/(?P<phone>\d+)/(?P<code>\d+)/$', login_required(PhoneVerify.as_view())),
+
+    url(r'^get_gender/$', GetUserGender.as_view()),
 ]

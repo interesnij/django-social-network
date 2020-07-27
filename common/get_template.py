@@ -56,7 +56,7 @@ def get_detail_template_community_photo(community, folder, template, request_use
 
 def get_detail_template_user_photo(user, folder, template, request_user):
     if request_user.is_authenticated:
-        if not request_user.is_phone_verified:
+        if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
         elif user.pk == request_user.pk:
             if user.is_suspended():

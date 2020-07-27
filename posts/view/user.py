@@ -31,10 +31,15 @@ class PostUserCommentList(ListView):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
                 if self.user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.template_name = "u_post_comment/comments.html"
+                elif request.user.is_child() and not self.user.is_child_safety():
+                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
+                else:
+                    self.template_name = "u_post_comment/comments.html"
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            elif not self.user.is_child_safety():
+                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
             else:
                 self.template_name = "u_post_comment/anon_comments.html"
 

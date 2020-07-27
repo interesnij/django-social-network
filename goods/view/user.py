@@ -55,6 +55,8 @@ class UserGood(TemplateView):
                         self.template_name = "u_good/good.html"
                     else:
                         self.template_name = "u_good/close_good.html"
+                elif request.user.is_child() and not self.user.is_child_safety():
+                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
                 else:
                     self.template_name = "u_good/good.html"
             try:
@@ -67,6 +69,8 @@ class UserGood(TemplateView):
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 self.template_name = "u_good/anon_close_good.html"
+            elif not self.user.is_child_safety():
+                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
             else:
                 self.template_name = "u_good/anon_good.html"
 
@@ -103,10 +107,15 @@ class GoodUserCommentList(ListView):
                 check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
                 if self.user.is_closed_profile():
                     check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.template_name = "u_good_comment/comments.html"
+                elif request.user.is_child() and not self.user.is_child_safety():
+                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
+                else:
+                    self.template_name = "u_good_comment/comments.html"
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            elif not self.user.is_child_safety():
+                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
             else:
                 self.template_name = "u_good_comment/anon_comments.html"
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):

@@ -30,11 +30,15 @@ class UserPostView(TemplateView):
                         self.template_name = "lenta/post.html"
                     else:
                         raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+                elif request.user.is_child() and not self.user.is_child_safety():
+                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
                 else:
                     self.template_name = "lenta/post.html"
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            elif not self.user.is_child_safety():
+                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
             else:
                 self.template_name = "lenta/anon_post.html"
 
@@ -182,7 +186,7 @@ class ProfileUserView(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.user.is_authenticated:
-            if not request.user.is_phone_verified:
+            if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
             elif self.user.pk == request.user.pk:
                 if self.user.is_suspended():

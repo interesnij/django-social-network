@@ -12,6 +12,45 @@ class UserBanCreate(View):
         return HttpResponse('Пользователь заблокирован')
 
 
+class GetUserGender(View):
+    def get(self,request,*args,**kwargs):
+        if request.user.gender:
+            return HttpResponse()
+        else:
+            import pandas as pd
+
+            dfru = pd.read_csv('/help/FNru.csv')
+            dfen = pd.read_csv('/help/FNen.csv')
+
+            rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
+            rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
+
+            rufemalenames = set(dfru[dfru['Gender'] == 'female']['GivenName'])
+            rufemalesurnames = set(dfru[dfru['Gender'] == 'female']['Surname'])
+
+            enmalenames = set(dfen[dfen['Gender'] == 'male']['GivenName'])
+            enmalesurnames = set(dfen[dfen['Gender'] == 'male']['Surname'])
+
+            enfemalenames = set(dfen[dfen['Gender'] == 'female']['GivenName'])
+            enfemalesurnames = set(dfen[dfen['Gender'] == 'female']['Surname'])
+
+            name = request.user.first_name
+            surname = request.user.last_name
+
+            if name in rumalenames and surname in rumalesurnames:
+                request.user.gender = "Man"
+            elif name in rufemalenames and surname in rufemalesurnames:
+                request.user.gender = "Fem"
+            elif name in enmalenames and surname in enmalesurnames:
+                request.user.gender = "Man"
+            elif name in enfemalenames and surname in enfemalesurnames:
+                request.user.gender = "Fem"
+            else:
+                request.user.gender = "Man"
+            request.user.save(update_fields=['gender'])
+            return HttpResponse()
+
+
 class UserUnbanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -66,8 +105,8 @@ class PhoneVerify(View):
             obj = None
         if obj:
             user = User.objects.get(pk=request.user.pk)
-            user.is_phone_verified=True
-            user.phone=obj.phone
+            user.perm = User.STANDART
+            user.phone = obj.phone
             user.save()
             obj.delete()
             data = 'ok'
@@ -86,7 +125,7 @@ class PhoneSend(View):
         from users.models import User
 
         text = ""
-        if request.user.is_phone_verified:
+        if not request.user.is_no_phone_verified():
             return HttpResponse("")
         else:
             _phone = self.kwargs["phone"]
