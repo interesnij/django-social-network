@@ -60,18 +60,18 @@ def get_detail_template_user_photo(user, folder, template, request_user):
             template_name = "main/phone_verification.html"
         elif user.pk == request_user.pk:
             if user.is_suspended():
-                template_name = "main/you_suspended.html"
+                template_name = "generic/template/you_suspended.html"
             elif user.is_blocked():
-                template_name = "main/you_global_block.html"
+                template_name = "generic/template/you_global_block.html"
             else:
                 template_name = folder + "my_" + template
         elif request_user.is_photo_manager():
             template_name = folder + "staff_" + template
         elif request_user.pk != user.pk:
             if user.is_suspended():
-                template_name = "main/user_suspended.html"
+                template_name = "generic/template/user_suspended.html"
             elif user.is_blocked():
-                template_name = "main/user_global_block.html"
+                template_name = "generic/template/user_global_block.html"
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 raise PermissionDenied('Ошибка доступа')
             elif user.is_closed_profile():

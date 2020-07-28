@@ -1,6 +1,5 @@
 {% extends "base_anon.html" %}
-{% load liked_user %}
-{% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}{{ user.get_full_name }}{% endblock %}
 {% block content %}
 
 <div class="card mb-3 centered">

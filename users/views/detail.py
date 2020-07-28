@@ -190,17 +190,17 @@ class ProfileUserView(TemplateView):
                 self.template_name = "main/phone_verification.html"
             elif self.user.pk == request.user.pk:
                 if self.user.is_suspended():
-                    self.template_name = "main/you_suspended.html"
+                    self.template_name = "generic/template/you_suspended.html"
                 elif self.user.is_blocked():
-                    self.template_name = "main/you_global_block.html"
+                    self.template_name = "generic/template/you_global_block.html"
                 else:
                     self.template_name = "account/my_user.html"
             elif request.user.pk != self.user.pk:
                 self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
                 if self.user.is_suspended():
-                    self.template_name = "main/user_suspended.html"
+                    self.template_name = "generic/template/user_suspended.html"
                 elif self.user.is_blocked():
-                    self.template_name = "main/user_global_block.html"
+                    self.template_name = "generic/template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
                     self.template_name = "account/staff_user.html"
                     self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)

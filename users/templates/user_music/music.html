@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load liked_user get_key %}
-{% block title %}{{ playlist.name }} - {{ user.first_name }} {{ user.last_name }}{% endblock %}
+{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }} - {{ playlist.name }}{% endblock %}
 {% block content %}
 
 <div class="container main-container">
