@@ -47,7 +47,7 @@ class PhotoCommunityCommentList(ListView):
         return context
 
     def get_queryset(self):
-        check_can_get_lists(self.request.user, self.community.name)
+        check_can_get_lists(self.request.user, self.community)
         comments = self.photo.get_comments()
         return comments
 
