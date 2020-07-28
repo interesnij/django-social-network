@@ -11,28 +11,28 @@ def get_template_community_photo(community, folder, template, request_user):
             template_name = "generic/c_template/community_blocked.html"
         if request_user.is_member_of_community_with_name(community.name):
             if request_user.is_administrator_of_community_with_name(community.name):
-                template_name = "c_detail/admin_community.html"
+                template_name = folder + "admin_" + template
             elif request_user.is_moderator_of_community_with_name(community.name):
-                template_name = "c_detail/moderator_community.html"
+                template_name = folder + "moderator_" + template
             elif request_user.is_editor_of_community_with_name(community.name):
-                template_name = "c_detail/editor_community.html"
+                template_name = folder + "editor_" + template
             elif request_user.is_advertiser_of_community_with_name(community.name):
-                template_name = "c_detail/advertiser_community.html"
+                template_name = folder + "advertiser_" + template
             elif request_user.is_photo_manager():
-                template_name = "c_detail/staff_member_community.html"
+                template_name = folder + "staff_member_" + template
             else:
-                template_name = "c_detail/member_community.html"
+                template_name = folder + template
         elif request_user.is_follow_from_community_with_name(community.pk):
             template_name = "generic/c_template/follow_community.html"
         elif request_user.is_photo_manager():
-            template_name = "c_detail/staff_community.html"
+            template_name = folder + "staff_" + template
         elif request_user.is_banned_from_community_with_name(community.name):
             template_name = "generic/c_template/block_community.html"
         elif community.is_public():
             if request_user.is_child() and not community.is_child_safety():
                 template_name = "generic/c_template/no_child_safety.html"
             else:
-                template_name = "c_detail/public_community.html"
+                template_name = folder + "public_" + template
         elif community.is_closed():
             template_name = "generic/c_template/close_community.html"
         elif community.is_private():
@@ -46,7 +46,7 @@ def get_template_community_photo(community, folder, template, request_user):
             if not community.is_child_safety():
                 template_name = "generic/c_template/anon_no_child_safety.html"
             else:
-                template_name = "c_detail/anon_public_community.html"
+                template_name = folder + "anon_public_" + template
         elif community.is_closed():
             template_name = "generic/c_template/anon_close_community.html"
         elif community.is_private():
