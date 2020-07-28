@@ -51,6 +51,9 @@ class User(AbstractUser):
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
+    def is_women(self):
+        return try_except(self.perm == User.FEMALE)
+
     def is_deleted(self):
         return try_except(self.perm == User.DELETED)
     def is_manager(self):
