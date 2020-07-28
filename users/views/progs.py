@@ -19,7 +19,7 @@ class GetUserGender(View):
         else:
             import pandas as pd
 
-            dfru = pd.read_csv('http://трезвый.рус/static/scripts/csv/FNru.csv', encoding='utf-8')
+            dfru = pd.read_csv('http://трезвый.рус/static/scripts/csv/FNru.csv', encoding='ISO-8859-1')
             dfen = pd.read_csv('http://трезвый.рус/static/scripts/csv/FNen.csv', encoding='utf-8')
 
             rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
