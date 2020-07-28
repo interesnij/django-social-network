@@ -8,6 +8,7 @@ from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
+from common.template.photo import *
 
 
 class UserGalleryView(TemplateView):
@@ -22,7 +23,7 @@ class UserGalleryView(TemplateView):
         else:
             self.albums_list = self.user.get_albums().order_by('-created')
 
-        self.template_name = self.user.get_template_user("gallery_user/", "gallery.html", request.user)
+        self.template_name = get_template_user_photo(self.user, "gallery_user/", "gallery.html", request_user=request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGalleryView,self).get(request,*args,**kwargs)
@@ -40,7 +41,7 @@ class UserAlbumView(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = self.user.get_template_user("album_user/", "album.html", request.user)
+        self.template_name = get_template_user_photo(self.user, "album_user/", "album.html", request_user=request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbumView,self).get(request,*args,**kwargs)
@@ -158,7 +159,10 @@ class UserPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_permission_list_user(folder="gallery_user/", template="list.html", request=request)
+        self.template_name = get_permission_user_photo(self.user, "gallery_user/", "list.html", request.user)
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
         return super(UserPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -177,7 +181,10 @@ class UserAlbumPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_permission_list_user(folder="album_user/", template="list.html", request=request)
+        self.template_name = get_permission_user_photo(self.user, "album_user/", "list.html", request.user)
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

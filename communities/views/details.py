@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from posts.models import Post
 from communities.models import Community, CommunityMembership
 from follows.models import CommunityFollow
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 
@@ -25,16 +25,21 @@ class PostCommunity(TemplateView):
                 self.template_name = "c_lenta/admin_item.html"
             elif request.user.is_post_manager():
                 self.template_name = "c_lenta/staff_item.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_lenta/item.html"
             else:
                 self.template_name = "c_lenta/item.html"
         elif request.user.is_anonymous:
             if self.community.is_public():
-                self.template_name = "c_lenta/item.html"
+                if not self.community.is_child_safety():
+                    self.template_name = "account/anon_no_child_safety.html"
+                else:
+                    self.template_name = "c_lenta/item.html"
+            else:
+                raise ValidationError('Ошибка доступа')
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,7 +85,10 @@ class CommunityDetail(TemplateView):
             elif request.user.is_banned_from_community_with_name(self.community.name):
                 self.template_name = "c_detail/block_community.html"
             elif self.community.is_public():
-                self.template_name = "c_detail/public_community.html"
+                if request.user.is_child() and not self.community.is_child_safety():
+                    self.template_name = "c_detail/no_child_safety.html"
+                else:
+                    self.template_name = "c_detail/public_community.html"
             elif self.community.is_closed():
                 self.template_name = "c_detail/close_community.html"
             elif self.community.is_private():
@@ -92,14 +100,17 @@ class CommunityDetail(TemplateView):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
         elif request.user.is_anonymous:
             if self.community.is_public():
-                self.template_name = "c_detail/anon_public_community.html"
+                if not self.community.is_child_safety():
+                    self.template_name = "c_detail/anon_no_child_safety.html"
+                else:
+                    self.template_name = "c_detail/anon_public_community.html"
             elif self.community.is_closed():
                 self.template_name = "c_detail/anon_close_community.html"
             elif self.community.is_private():
                 self.template_name = "c_detail/anon_private_community.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

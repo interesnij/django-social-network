@@ -130,6 +130,8 @@ class PostListView(ListView):
 						self.template_name = "lenta/list.html"
 					else:
 						raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+				elif request.user.is_child() and not self.user.is_child_safety():
+					raise PermissionDenied('Сообщество не проверено. Его контент не доступен для детей')
 				else:
 					self.template_name = "lenta/list.html"
 		elif request.user.is_anonymous:

@@ -25,7 +25,7 @@ class User(AbstractUser):
         (DELETED, 'Удален'),
         (BLOCKED, 'Заблокирован'),
         (CHILD, 'Ребенок'),
-        (PHONE_NO_VERIFIED, 'PV'),
+        (PHONE_NO_VERIFIED, 'Телефон не подтвержден'),
         (STANDART, 'Обычные права'),
         (VERIFIED_SEND, 'Запрос на проверку'),
         (VERIFIED, 'Провернный'),
@@ -1130,24 +1130,22 @@ class User(AbstractUser):
 
     def get_template_user(self, folder, template, request_user):
         if request_user.is_authenticated:
-            if self.pk == request_user.pk:
-                if request_user.is_no_phone_verified():
-                    template_name = "main/phone_verification.html"
-                elif self.is_suspended():
-                    self.template_name = "generic/u_template/you_suspended.html"
+            if request_user.is_no_phone_verified():
+                template_name = "main/phone_verification.html"
+            elif self.pk == request_user.pk:
+                if self.is_suspended():
+                    template_name = "generic/u_template/you_suspended.html"
                 elif self.is_blocked():
-                    self.template_name = "generic/u_template/you_global_block.html"
+                    template_name = "generic/u_template/you_global_block.html"
                 else:
                     template_name = folder + "my_" + template
             elif self.pk != request_user.pk:
-                if request_user.is_no_phone_verified():
-                    template_name = "main/phone_verification.html"
-                elif self.is_suspended():
-                    self.template_name = "generic/u_template/user_suspended.html"
+                if self.is_suspended():
+                    template_name = "generic/u_template/user_suspended.html"
                 elif self.is_blocked():
-                    self.template_name = "generic/u_template/user_global_block.html"
+                    template_name = "generic/u_template/user_global_block.html"
                 elif self.is_have_warning_banner():
-                    self.template_name = "account/user_have_warning_banner.html"
+                    template_name = "account/user_have_warning_banner.html"
                 elif request_user.is_blocked_with_user_with_id(user_id=self.pk):
                     template_name = "generic/u_template/user_block.html"
                 elif self.is_closed_profile():
@@ -1158,12 +1156,16 @@ class User(AbstractUser):
                 else:
                     template_name = folder + template
         elif request_user.is_anonymous:
-            if self.is_closed_profile():
+            if self.is_suspended():
+                template_name = "generic/u_template/anon_user_suspended.html"
+            elif self.is_blocked():
+                template_name = "generic/u_template/anon_user_global_block.html"
+            elif self.is_closed_profile():
                 template_name = "generic/u_template/anon_close_user.html"
-            elif not self.is_closed_profile():
-                template_name = folder + "anon_" + template
             elif not self.is_child_safety():
                 self.template_name = "generic/u_template/anon_no_child_safety.html"
+            else:
+                template_name = folder + "anon_" + template
         return template_name
 
     def get_template_list_user(self, folder, template, request):

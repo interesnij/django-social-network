@@ -6,7 +6,7 @@ from posts.models import PostComment
 from gallery.models import Album, Photo
 from gallery.forms import PhotoDescriptionForm
 from communities.models import Community
-from common.get_template import get_detail_template_user_photo, get_detail_template_community_photo
+from common.template.photo import *
 
 
 class UserPhoto(TemplateView):
@@ -18,7 +18,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.photo.creator.get_photos()
-        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "photo.html", request.user)
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo/", "photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -44,7 +44,7 @@ class UserAlbumPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photos = self.photo.creator.get_photos_for_my_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "album_photo.html", request.user)
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo/", "album_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -72,7 +72,7 @@ class UserWallPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
         self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "wall_photo.html", request.user)
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo/", "wall_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -98,7 +98,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.avatar_photos = self.photo.creator.get_avatar_photos()
-        self.template_name = get_detail_template_user_photo(self.photo.creator, "u_photo/", "avatar.html", request.user)
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo/", "avatar.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -123,10 +123,10 @@ class CommunityDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.avatar_photos = self.photo.community.get_avatar_photos()
-        self.template_name = get_detail_template_community_photo(self.photo.community, "c_photo/", "avatar.html", request.user)
+        self.template_name = get_permission_community_photo(self.photo.community, "c_photo/", "avatar.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -147,10 +147,10 @@ class CommunityPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.photo.community.get_photos()
-        self.template_name = get_detail_template_community_photo(self.photo.community, "photo_community/", "photo.html", request.user)
+        self.template_name = get_permission_community_photo(self.photo.community, "photo_community/", "photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -175,10 +175,10 @@ class CommunityAlbumPhoto(TemplateView):
             self.photos = self.album.get_staff_photos()
         else:
             self.photos = self.album.get_photos()
-        self.template_name = get_detail_template_community_photo(self.album.community, "photo_community/", "album_photo.html", request.user)
+        self.template_name = get_permission_community_photo(self.album.community, "photo_community/", "album_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -203,10 +203,10 @@ class CommunityWallPhoto(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(community=self.community, is_generic=True, title="Фото со стены")
         self.photos = self.community.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_detail_template_community_photo(self.user, "photo_community/", "wall_photo.html", request.user)
+        self.template_name = get_permission_community_photo(self.user, "photo_community/", "wall_photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

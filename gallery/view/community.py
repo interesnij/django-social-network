@@ -8,9 +8,10 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_can_get_posts_for_community_with_name
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
+from common.template.photo import *
+from common.check.community import check_can_get_lists
 
 
 class CommunityAddAvatar(View):
@@ -43,44 +44,9 @@ class CommunityGalleryView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.community.get_albums().order_by('-created')
 
-        if self.community.is_suspended():
-            self.template_name = "gallery_community/community_suspended.html"
-        elif self.community.is_blocked():
-            self.template_name = "gallery_community/community_blocked.html"
-        elif request.user.is_authenticated:
-            if request.user.is_member_of_community_with_name(self.community.name):
-                if request.user.is_administrator_of_community_with_name(self.community.name):
-                    self.template_name = "gallery_community/admin_gallery.html"
-                elif request.user.is_moderator_of_community_with_name(self.community.name):
-                    self.template_name = "gallery_community/moderator_gallery.html"
-                elif request.user.is_editor_of_community_with_name(self.community.name):
-                    self.template_name = "gallery_community/editor_gallery.html"
-                elif request.user.is_community_manager():
-                    self.template_name = "gallery_community/staff_member_gallery.html"
-                else:
-                    self.template_name = "gallery_community/member_gallery.html"
-            elif request.user.is_community_manager():
-                self.template_name = "gallery_community/staff_gallery.html"
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
-                self.template_name = "gallery_community/follow_gallery.html"
-            elif request.user.is_banned_from_community_with_name(self.community.name):
-                self.template_name = "gallery_community/block_gallery.html"
-            elif self.community.is_public():
-                self.template_name = "gallery_community/public_gallery.html"
-            elif self.community.is_closed():
-                self.template_name = "gallery_community/close_gallery.html"
-            elif self.community.is_private():
-                self.template_name = "gallery_community/private_gallery.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                self.template_name = "gallery_community/anon_public_gallery.html"
-            elif self.community.is_closed():
-                self.template_name = "gallery_community/anon_close_gallery.html"
-            elif self.community.is_private():
-                self.template_name = "gallery_community/anon_private_gallery.html"
-
+        self.template_name = get_template_community_photo("gallery_community/", "gallery.html", request_user=request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -95,46 +61,10 @@ class CommunityAlbumView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template(folder="album_community/", template="album.html", request=request)
-
-        if self.community.is_suspended():
-            self.template_name = "album_community/community_suspended.html"
-        elif self.community.is_blocked():
-            self.template_name = "album_community/community_blocked.html"
-        elif request.user.is_authenticated:
-            if request.user.is_member_of_community_with_name(self.community.name):
-                if request.user.is_administrator_of_community_with_name(self.community.name):
-                    self.template_name = "album_community/admin_album.html"
-                elif request.user.is_moderator_of_community_with_name(self.community.name):
-                    self.template_name = "album_community/moderator_album.html"
-                elif request.user.is_editor_of_community_with_name(self.community.name):
-                    self.template_name = "album_community/editor_album.html"
-                elif request.user.is_community_manager():
-                    self.template_name = "album_community/staff_member_album.html"
-                else:
-                    self.template_name = "album_community/member_album.html"
-            elif request.user.is_community_manager():
-                self.template_name = "album_community/staff_album.html"
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
-                self.template_name = "album_community/follow_album.html"
-            elif request.user.is_banned_from_community_with_name(self.community.name):
-                self.template_name = "album_community/block_album.html"
-            elif self.community.is_public():
-                self.template_name = "album_community/public_album.html"
-            elif self.community.is_closed():
-                self.template_name = "album_community/close_album.html"
-            elif self.community.is_private():
-                self.template_name = "album_community/private_album.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                self.template_name = "album_community/anon_public_album.html"
-            elif self.community.is_closed():
-                self.template_name = "album_community/anon_close_album.html"
-            elif self.community.is_private():
-                self.template_name = "album_community/anon_private_album.html"
+        self.template_name = get_template_community_photo("album_community/", "album.html", request_user=request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -150,7 +80,7 @@ class PhotoCommunityCreate(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photos = []
-        check_can_get_posts_for_community_with_name(request.user, community.name)
+        check_can_get_lists(request.user, community)
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             photos += [photo,]
@@ -165,7 +95,7 @@ class PhotoAlbumCommunityCreate(View):
         _album = Album.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
-        check_can_get_posts_for_community_with_name(request.user, community.name)
+        check_can_get_lists(request.user, community)
         for p in request.FILES.getlist('file'):
             photo = Photo.objects.create(file=p, community=community, creator=request.user)
             _album.album.add(photo)
@@ -179,7 +109,7 @@ class PhotoAttachCommunityCreate(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photos = []
-        check_can_get_posts_for_community_with_name(request.user, community.name)
+        check_can_get_lists(request.user, community)
         try:
             _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены", community=community)
         except:
@@ -230,32 +160,8 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if self.community.is_suspended():
-            raise PermissionDenied('Сообщество заморожено.')
-        elif self.community.is_blocked():
-            raise PermissionDenied('Сообщество заблокировано.')
-        elif request.user.is_authenticated:
-            if request.user.is_member_of_community_with_name(self.community.name):
-                self.template_name = "gallery_community/list.html"
-            elif request.user.is_community_manager():
-                self.template_name = "gallery_community/list.html"
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
-                raise PermissionDenied('Нет доступа.')
-            elif request.user.is_banned_from_community_with_name(self.community.name):
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_public():
-                self.template_name = "gallery_community/list.html"
-            elif self.community.is_closed():
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_private():
-                self.template_name = "gallery_community/list.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                self.template_name = "gallery_community/list.html"
-            elif self.community.is_closed():
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_private():
-                raise PermissionDenied('Нет доступа.')
+        self.template_name = get_permission_community_photo(self.user, "gallery_community/", "list.html", request.user)
+
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
@@ -276,35 +182,10 @@ class CommunityAlbumPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template_list(folder="album_community/", template="list.html", request=request)
-        if self.community.is_suspended():
-            raise PermissionDenied('Сообщество заморожено.')
-        elif self.community.is_blocked():
-            raise PermissionDenied('Сообщество заблокировано.')
-        elif request.user.is_authenticated:
-            if request.user.is_member_of_community_with_name(self.community.name):
-                self.template_name = "album_community/list.html"
-            elif request.user.is_community_manager():
-                self.template_name = "album_community/list.html"
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
-                raise PermissionDenied('Нет доступа.')
-            elif request.user.is_banned_from_community_with_name(self.community.name):
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_public():
-                self.template_name = "album_community/list.html"
-            elif self.community.is_closed():
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_private():
-                self.template_name = "album_community/list.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                self.template_name = "album_community/list.html"
-            elif self.community.is_closed():
-                raise PermissionDenied('Нет доступа.')
-            elif self.community.is_private():
-                raise PermissionDenied('Нет доступа.')
+        self.template_name = get_permission_community_photo(self.user, "album_community/", "list.html", request.user)
+
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

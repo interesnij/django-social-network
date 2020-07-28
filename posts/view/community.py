@@ -7,7 +7,7 @@ from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import CommentForm
 from django.views import View
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
@@ -28,14 +28,15 @@ class PostCommunityCommentList(ListView):
                 self.template_name = "c_post_comment/admin_comments.html"
             elif request.user.is_post_manager():
                 self.template_name = "c_post_comment/staff_comments.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_post_comment/comments.html"
             else:
-                self.template_name = "c_post_comment/comments.html"
+                raise ValidationError('Ошибка доступа')
         elif request.user.is_anonymous:
             if self.is_public():
                 self.template_name = "c_post_comment/anon_comments.html"
-
+            else:
+                raise ValidationError('Ошибка доступа')
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)

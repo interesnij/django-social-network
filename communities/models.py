@@ -49,26 +49,53 @@ class Community(models.Model):
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
         (COMMUNITY_TYPE_CLOSED, 'Закрытое'),
     )
+    DELETED = 'DE'
+    BLOCKED = 'BL'
+    CHILD = 'CH'
+    STANDART = 'ST'
+    VERIFIED_SEND = 'VS'
+    VERIFIED = 'VE'
+    PERM = (
+        (DELETED, 'Удален'),
+        (BLOCKED, 'Заблокирован'),
+        (CHILD, 'Детская'),
+        (STANDART, 'Обычные права'),
+        (VERIFIED_SEND, 'Запрос на проверку'),
+        (VERIFIED, 'Провернный'),
+    )
 
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
     description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Описание" )
-    rules = models.TextField(max_length=1000, blank=True, null=True, verbose_name="Правила")
     cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаленное")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
+    perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
 
     class Meta:
         verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
+
+    def is_deleted(self):
+        return try_except(self.perm == Community.DELETED)
+    def is_verified_send(self):
+        return try_except(self.perm == Community.VERIFIED_SEND)
+    def is_verified(self):
+        return try_except(self.perm == Community.VERIFIED)
+    def is_child(self):
+        return try_except(self.perm == Community.CHILD)
+    def is_child_safety(self):
+        if self.perm == Community.VERIFIED:
+            return True
+        else:
+            return False
 
     def get_avatar_uuid(self):
         avatar = self.get_avatar_photos().order_by('-id')[0]
@@ -322,39 +349,48 @@ class Community(models.Model):
         except:
             return None
 
-    def get_template(self, folder, template, request):
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
-            if request.user.is_administrator_of_community_with_name(self.name):
-                template_name = folder + "admin_" + template
-            elif request.user.is_moderator_of_community_with_name(self.name):
-                template_name = folder + "moderator_" + template
-            elif request.user.is_editor_of_community_with_name(self.name):
-                template_name = folder + "editor_" + template
-            elif request.user.is_advertiser_of_community_with_name(self.name):
-                template_name = folder + "advertiser_" + template
-            else:
-                template_name = folder + "member_" + template
-        elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.pk):
-            template_name = folder + "follow_" + template
-        elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.name):
-            template_name = folder + "block_" + template
-
-        elif request.user.is_authenticated and self.is_public():
-            template_name = folder + "public_" + template
-        elif request.user.is_authenticated and self.is_closed():
-            template_name = folder + "close_" + template
-        elif request.user.is_authenticated and self.is_private():
-            template_name = folder + "private_" + template
-
-        elif request.user.is_anonymous and self.is_public():
-            template_name = folder + "anon_public_" + template
-        elif self.is_closed and request.user.is_anonymous():
-            template_name = folder + "anon_close_" + template
-        elif request.user.is_anonymous and self.is_private():
-            template_name = folder + "anon_private_" + template
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
+    def get_template(self, folder, template, request_user):
+        if request_user.is_authenticated:
+            if self.is_suspended():
+                template_name = "generic/c_template/community_suspended.html"
+            elif self.is_blocked():
+                template_name = "generic/c_template/community_blocked.html"
+            elif request_user.is_member_of_community_with_name(self.name):
+                if request_user.is_staff_of_community_with_name(self.name):
+                    template_name = folder + "admin_" + template
+                elif request_user.is_community_manager():
+                    template_name = folder + "staff_member_" + template
+                else:
+                    template_name = folder + "member_" + template
+            elif request_user.is_follow_from_community_with_name(self.pk):
+                template_name = "generic/c_template/follow_community.html"
+            elif request_user.is_community_manager():
+                template_name = folder + "staff_" + template
+            elif request_user.is_banned_from_community_with_name(self.name):
+                template_name = "generic/c_template/block_community.html"
+            elif self.is_public():
+                if request_user.is_child() and not self.is_child_safety():
+                    template_name = "generic/c_template/no_child_safety.html"
+                else:
+                    template_name = folder + template
+            elif self.is_closed():
+                template_name = "generic/c_template/close_community.html"
+            elif self.is_private():
+                template_name = "generic/c_template/private_community.html"
+        elif request_user.is_anonymous:
+            if self.is_suspended():
+                template_name = "generic/c_template/anon_community_suspended.html"
+            elif self.is_blocked():
+                template_name = "generic/c_template/anon_community_blocked.html"
+            elif self.is_public():
+                if not self.is_child_safety():
+                    template_name = "generic/c_template/anon_no_child_safety.html"
+                else:
+                    template_name = folder + "anon_" + template
+            elif self.is_closed():
+                template_name = "generic/c_template/anon_close_community.html"
+            elif self.is_private():
+                template_name = "generic/c_template/anon_private_community.html"
         return template_name
 
     def get_manage_template(self, folder, template, request):
@@ -375,22 +411,36 @@ class Community(models.Model):
             template_name = "mob_" + template_name
         return template_name
 
-    def get_template_list(self, folder, template, request):
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
-            if request.user.is_moderator_of_community_with_name(self.name):
-                template_name = folder + "moderator_" + template
-            elif request.user.is_administrator_of_community_with_name(self.name):
-                template_name = folder + "admin_" + template
-            elif request.user.is_editor_of_community_with_name(self.name):
-                template_name = folder + "admin_" + template
-            else:
-                template_name = folder + template
-        elif request.user.is_authenticated and self.is_public():
-            template_name = folder + template
-        elif request.user.is_anonymous and self.is_public():
-            template_name = folder + "anon_" + template
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
+    def get_template_list(self, folder, template, request_user):
+        if self.is_suspended():
+            raise PermissionDenied('Ошибка доступа.')
+        elif self.is_blocked():
+            raise PermissionDenied('Ошибка доступа.')
+        elif self.is_closed():
+            raise PermissionDenied('Ошибка доступа.')
+        elif self.is_private():
+            raise PermissionDenied('Ошибка доступа.')
+        elif request_user.is_authenticated:
+            if request_user.is_member_of_community_with_name(self.name):
+                if request_user.is_staff_of_community_with_name(self.name):
+                    template_name = folder + "admin_" + template
+                else:
+                    template_name = folder + "member_" + template
+            elif request_user.is_follow_from_community_with_name(self.pk):
+                raise PermissionDenied('Ошибка доступа.')
+            elif request_user.is_banned_from_community_with_name(self.name):
+                raise PermissionDenied('Ошибка доступа.')
+            elif self.is_public():
+                if request_user.is_child() and not self.is_child_safety():
+                    raise PermissionDenied('Ошибка доступа.')
+                else:
+                    template_name = folder + template
+        elif request_user.is_anonymous:
+            if self.is_public():
+                if not self.is_child_safety():
+                    raise PermissionDenied('Ошибка доступа.')
+                else:
+                    template_name = folder + "anon_" + template
         return template_name
 
     @classmethod

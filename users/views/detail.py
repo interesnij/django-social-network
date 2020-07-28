@@ -220,7 +220,11 @@ class ProfileUserView(TemplateView):
                 else:
                     UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
         elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
+            if self.user.is_suspended():
+                self.template_name = "generic/u_template/anon_user_suspended.html"
+            elif self.user.is_blocked():
+                self.template_name = "generic/u_template/anon_user_global_block.html"
+            elif self.user.is_closed_profile():
                 self.template_name = "account/anon_close_user.html"
             elif not self.user.is_child_safety():
                 self.template_name = "account/anon_no_child_safety.html"

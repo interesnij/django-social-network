@@ -1,3 +1,5 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from article.forms import ArticleForm
 from users.models import User
@@ -46,7 +48,10 @@ class ArticleCommunityDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template_list(folder="c_article/", template="article.html", request=request)
+        self.template_name = self.community.get_template_list("c_article/", "article.html", request_user=request.user)
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

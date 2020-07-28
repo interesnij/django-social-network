@@ -45,11 +45,15 @@ def check_can_get_posts_for_community_with_name(user, community_name):
         raise ValidationError(
             'Сообщество является приватным. Вы должны стать участником, чтобы видеть его записи.',
         )
-    if Community.is_community_with_name_closed(
+    elif Community.is_community_with_name_closed(
             community_name=community_name) and not user.is_member_of_community_with_name(
         community_name=community_name):
         raise ValidationError(
             'Сообщество является закрытым. Вы должны стать участником, чтобы видеть его записи.',
+        )
+    elif not Community.is_child_safety() and user.is_child():
+        raise ValidationError(
+            'Сообщество не проверено. Вы должны стать участником, чтобы видеть его записи.',
         )
 
 
