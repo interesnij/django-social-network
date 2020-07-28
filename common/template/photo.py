@@ -21,7 +21,7 @@ def get_template_community_photo(community, folder, template, request_user):
             elif request_user.is_photo_manager():
                 template_name = folder + "staff_member_" + template
             else:
-                template_name = folder + template
+                template_name = folder + "member_" + template
         elif request_user.is_follow_from_community_with_name(community.pk):
             template_name = "generic/c_template/follow_community.html"
         elif request_user.is_photo_manager():
