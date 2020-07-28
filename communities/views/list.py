@@ -3,7 +3,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 
 
 class CommunityMembersView(ListView):
@@ -171,7 +171,7 @@ class PostsCommunity(ListView):
                 self.template_name = "c_lenta/admin_list.html"
             elif request.user.is_post_manager():
                 self.template_name = "c_lenta/staff_list.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_lenta/list.html"
             else:
                 self.template_name = "c_lenta/list.html"
