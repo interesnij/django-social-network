@@ -1,7 +1,7 @@
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
 def get_default_template(folder, template, request):

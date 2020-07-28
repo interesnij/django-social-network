@@ -50,7 +50,7 @@ class GoodReplyCommunityCreate(View):
         if form_post.is_valid() and parent.good_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
-            check_can_get_posts_for_community_with_name(request.user, community.name)
+            check_can_get_lists(request.user, community)
 
             if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
                 raise PermissionDenied("Ошибка доступа.")

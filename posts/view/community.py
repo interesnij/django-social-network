@@ -62,7 +62,7 @@ class PostCommunityCommentCreate(View):
         elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
         elif form_post.is_valid() and post.comments_enabled:
-            check_can_get_posts_for_community_with_name(request.user,community.name)
+            check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
@@ -86,7 +86,7 @@ class PostCommunityReplyCreate(View):
         elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
         elif form_post.is_valid() and parent.post.comments_enabled:
-            check_can_get_posts_for_community_with_name(request.user,community.name)
+            check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach

@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 
 
@@ -26,7 +26,7 @@ class VideoCommunityCommentList(ListView):
                 self.template_name = "c_video_comment/admin_comments.html"
             elif request.user.is_video_manager():
                 self.template_name = "c_video_comment/staff_comments.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_video_comment/comments.html"
             else:
                 self.template_name = "c_video_comment/comments.html"
@@ -63,7 +63,7 @@ class VideoCommentCommunityCreate(View):
         elif form_post.is_valid() and video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
-            check_can_get_posts_for_community_with_name(request.user, community.name)
+            check_can_get_lists(request.user, community)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
@@ -90,7 +90,7 @@ class VideoReplyCommunityCreate(View):
         elif form_post.is_valid() and parent.video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
-            check_can_get_posts_for_community_with_name(request.user, community.name)
+            check_can_get_lists(request.user, community)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)

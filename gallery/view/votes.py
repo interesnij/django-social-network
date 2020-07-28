@@ -161,7 +161,7 @@ class PhotoCommunityLikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PhotoVotes.LIKE:

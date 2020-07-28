@@ -5,8 +5,9 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import VideoVotes, VideoCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
+from common.check.community import check_can_get_lists
 
 
 class VideoUserLikeCreate(View):
@@ -159,7 +160,7 @@ class VideoCommunityLikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
             if likedislike.vote is not VideoVotes.LIKE:
@@ -193,7 +194,7 @@ class VideoCommunityDislikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
             if likedislike.vote is not VideoVotes.DISLIKE:
@@ -225,7 +226,7 @@ class VideoCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not VideoCommentVotes.LIKE:
@@ -257,7 +258,7 @@ class VideoCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not VideoCommentVotes.DISLIKE:
