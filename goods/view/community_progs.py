@@ -5,7 +5,7 @@ from users.models import User
 from goods.models import Good, GoodComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from django.shortcuts import render
 from django.views.generic import ListView
 from goods.forms import CommentForm, GoodForm
@@ -27,7 +27,7 @@ class GoodCommentCommunityCreate(View):
         elif form_post.is_valid() and good.comments_enabled:
             comment=form_post.save(commit=False)
 
-            check_can_get_posts_for_community_with_name(request.user, community.name)
+            check_can_get_lists(request.user, community)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)

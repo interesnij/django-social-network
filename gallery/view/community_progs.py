@@ -6,7 +6,7 @@ from gallery.models import Album, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from django.shortcuts import render
 from django.views.generic import ListView
 from communities.models import Community
@@ -28,7 +28,7 @@ class PhotoCommunityCommentList(ListView):
                 self.template_name = "c_photo_comment/admin_comments.html"
             elif request.user.is_photo_manager():
                 self.template_name = "c_photo_comment/staff_comments.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_photo_comment/comments.html"
             else:
                 self.template_name = "c_photo_comment/comments.html"

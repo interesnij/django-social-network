@@ -5,8 +5,9 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PostVotes, PostCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
+from common.check.community import check_can_get_lists
 
 
 class PostUserLikeCreate(View):
@@ -159,7 +160,7 @@ class PostCommunityLikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.LIKE:
@@ -193,7 +194,7 @@ class PostCommunityDislikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.DISLIKE:
@@ -225,7 +226,7 @@ class PostCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PostCommentVotes.LIKE:
@@ -257,7 +258,7 @@ class PostCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
+        check_can_get_lists(request.user,community)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PostCommentVotes.DISLIKE:

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good
 from communities.models import Community
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.check.community import check_can_get_lists
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 
@@ -45,7 +45,7 @@ class CommunityGood(TemplateView):
                 self.goods = self.user.get_admin_goods()
             elif request.user.is_post_manager():
                 self.template_name = "c_lenta/staff_good.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_lenta/good.html"
             else:
                 self.template_name = "c_lenta/good.html"
@@ -92,7 +92,7 @@ class GoodCommunityCommentList(ListView):
                 self.template_name = "c_good_comment/admin_comments.html"
             elif request.user.is_good_manager():
                 self.template_name = "c_good_comment/staff_comments.html"
-            elif check_can_get_posts_for_community_with_name(request.user, self.community.name):
+            elif check_can_get_lists(request.user, self.community):
                 self.template_name = "c_good_comment/comments.html"
             else:
                 self.template_name = "c_good_comment/comments.html"
@@ -110,6 +110,6 @@ class GoodCommunityCommentList(ListView):
         return context
 
     def get_queryset(self):
-        check_can_get_posts_for_community_with_name(self.request.user, self.community.name)
+        check_can_get_lists(self.request.user, self.community)
         comments = self.good.get_comments()
         return comments
