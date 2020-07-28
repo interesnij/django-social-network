@@ -44,7 +44,7 @@ class CommunityGalleryView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.community.get_albums().order_by('-created')
 
-        self.template_name = get_template_community_photo("gallery_community/", "gallery.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.community, "gallery_community/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGalleryView,self).get(request,*args,**kwargs)
@@ -61,7 +61,7 @@ class CommunityAlbumView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo("album_community/", "album.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.community, "album_community/", "album.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

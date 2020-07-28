@@ -13,7 +13,7 @@ class PhotoUserLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(PhotoUserLikeWindow,self).get(request,*args,**kwargs)
@@ -31,7 +31,7 @@ class PhotoUserDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(PhotoUserDislikeWindow,self).get(request,*args,**kwargs)
@@ -49,7 +49,7 @@ class PhotoUserCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_user_photo(self.comment.commenter, "photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.comment.commenter, "photo_votes/", "page.html", request.user)
         return super(PhotoUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -65,7 +65,7 @@ class PhotoUserCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_user_photo(self.comment.commenter, "photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.comment.commenter, "photo_votes/", "page.html", request.user)
         return super(PhotoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -81,7 +81,7 @@ class PhotoCommunityLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_community_photo(self.photo.community, "photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_community_photo(self.photo.community, "photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(PhotoCommunityLikeWindow,self).get(request,*args,**kwargs)
@@ -99,7 +99,7 @@ class PhotoCommunityDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_community_photo(self.photo.community, "photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_community_photo(self.photo.community, "photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(PhotoCommunityDislikeWindow,self).get(request,*args,**kwargs)
@@ -116,7 +116,7 @@ class PhotoCommunityCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_community_photo(self.comment.photo.community, "photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.comment.photo.community, "photo_votes/", "page.html", request.user)
         return super(PhotoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -131,7 +131,7 @@ class PhotoCommunityCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_community_photo(self.comment.photo.community, "photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.comment.photo.community, "photo_votes/", "page.html", request.user)
         return super(PhotoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -149,7 +149,7 @@ class AllPhotoUserLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "all_photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_user_photo(self.photo.creator, "all_photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(AllPhotoUserLikeWindow,self).get(request,*args,**kwargs)
@@ -171,7 +171,7 @@ class AllPhotoUserDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "all_photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_user_photo(self.photo.creator, "all_photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(AllPhotoUserDislikeWindow,self).get(request,*args,**kwargs)
@@ -193,7 +193,7 @@ class AllPhotoUserCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_user_photo(self.comment.commenter, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.comment.commenter, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -213,7 +213,7 @@ class AllPhotoUserCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_user_photo(self.comment.commenter, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.comment.commenter, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -234,7 +234,7 @@ class AllPhotoCommunityLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(AllPhotoCommunityLikeWindow,self).get(request,*args,**kwargs)
@@ -256,7 +256,7 @@ class AllPhotoCommunityDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
-            self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+            self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
         return super(AllPhotoCommunityDislikeWindow,self).get(request,*args,**kwargs)
@@ -278,7 +278,7 @@ class AllPhotoCommunityCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_community_photo(self.comment.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.comment.photo.community, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -298,7 +298,7 @@ class AllPhotoCommunityCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_template_community_photo(self.comment.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.comment.photo.community, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -318,7 +318,7 @@ class AllPhotoCommunityRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoCommunityRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -337,7 +337,7 @@ class AllPhotoUserRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request_user=request.user)
+        self.template_name = get_template_community_photo(self.photo.community, "all_photo_votes/", "page.html", request.user)
         return super(AllPhotoUserRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

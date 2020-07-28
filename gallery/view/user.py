@@ -23,7 +23,7 @@ class UserGalleryView(TemplateView):
         else:
             self.albums_list = self.user.get_albums().order_by('-created')
 
-        self.template_name = get_template_user_photo(self.user, "gallery_user/", "gallery.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.user, "gallery_user/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGalleryView,self).get(request,*args,**kwargs)
@@ -41,7 +41,7 @@ class UserAlbumView(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_template_user_photo(self.user, "album_user/", "album.html", request_user=request.user)
+        self.template_name = get_template_user_photo(self.user, "album_user/", "album.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbumView,self).get(request,*args,**kwargs)
