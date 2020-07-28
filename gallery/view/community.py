@@ -160,7 +160,7 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_permission_community_photo(self.user, "gallery_community/", "list.html", request.user)
+        self.template_name = get_permission_community_photo(self.community, "gallery_community/", "list.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
@@ -182,7 +182,7 @@ class CommunityAlbumPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_community_photo(self.user, "album_community/", "list.html", request.user)
+        self.template_name = get_permission_community_photo(self.community, "album_community/", "list.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
