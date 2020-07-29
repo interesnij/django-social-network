@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     url(r'^add_member/(?P<pk>\d+)/$', CommunityMemberCreate.as_view()),
     url(r'^delete_member/(?P<pk>\d+)/$', CommunityMemberDelete.as_view()),
+    url(r'^manager_add_member/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityManageMemberCreate.as_view()),
+    url(r'^manager_delete_member/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityManageMemberDelete.as_view()),
 
     url(r'^create_community_window/(?P<pk>\d+)/$', UserCreateCommunityWindow.as_view()),
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),

@@ -60,18 +60,28 @@ class CommunitiesCatsView(TemplateView):
 
 
 class CommunityMemberCreate(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		new_member = request.user.join_community_with_name(self.community.name)
-		return HttpResponse("!")
+		return HttpResponse()
 class CommunityMemberDelete(View):
-	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		request.user.leave_community_with_name(self.community.name)
-		return HttpResponse("!")
+		return HttpResponse()
 
+class CommunityManageMemberCreate(View):
+	def get(self,request,*args,**kwargs):
+		community = Community.objects.get(pk=self.kwargs["pk"])
+		user = Community.objects.get(uuid=self.kwargs["uuid"])
+		new_member = user.user.join_community_with_name(community.name)
+		return HttpResponse()
+class CommunityManageMemberDelete(View):
+	def get(self,request,*args,**kwargs):
+		community = Community.objects.get(pk=self.kwargs["pk"])
+		user = Community.objects.get(uuid=self.kwargs["uuid"])
+		user.leave_community_with_name(community.name)
+		return HttpResponse()
 
 class CommunityAdminCreate(View):
 	def get(self,request,*args,**kwargs):

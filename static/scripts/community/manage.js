@@ -7,6 +7,29 @@ on('#ajax', 'click', '.show_staff_window', function() {
   open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'change', '.community_follow_view', function() {
+    li = this.parentElement.parentElement.parentElement.parentElement;
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    uuid = li.getAttribute("data-uuid");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/follows/community_view/" + pk + "/" + uuid + "/", true );
+    if ( this.readyState == 4 && this.status == 200 ) {
+      li.remove()
+    }};
+  link.send( null );
+});
+on('#ajax', 'change', '.community_member_create', function() {
+    li = this.parentElement.parentElement.parentElement.parentElement;
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    uuid = li.getAttribute("data-uuid");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/communties/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
+    if ( this.readyState == 4 && this.status == 200 ) {
+      li.remove()
+    }};
+  link.send( null );
+});
+
 on('#ajax', 'click', '#community_private_post_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_post_form"), "Изменения приняты!")
 });

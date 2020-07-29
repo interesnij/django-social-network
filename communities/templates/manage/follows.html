@@ -28,7 +28,7 @@
               {% if object_list %}
                 <ul class="list-group staff_community_block_paginate" id="community_follows_container" data-link='/communities/manage/follows/{{ community.pk }}'>
                     {% for object in object_list %}
-                    <li class="list-group-item li_{{object.pk }} pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.user.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.user.uuid }}">
                         <div class="media">
                           <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                             <figure>
@@ -44,7 +44,7 @@
                                   <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                               </a>
                               <span class="small">
-                                <span class="community_member_create" style="cursor:pointer">Одобрить</span> | <span class="community_follow_delete" style="cursor:pointer">Отклонить</span>
+                                <span class="community_member_create" style="cursor:pointer">Одобрить</span> | <span class="community_follow_view" style="cursor:pointer">Отклонить</span>
                               </span>
                           </div>
                         </div>

@@ -87,3 +87,16 @@ class CommunityFollowDelete(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		request.user.community_unfollow_user(self.community)
 		return HttpResponse("!")
+
+
+class CommunityFollowView(View):
+	def get(self,request,*args,**kwargs):
+		community = Community.objects.get(pk=self.kwargs["pk"])
+		user = Community.objects.get(uuid=self.kwargs["uuid"])
+		try:
+			follow = CommunityFollow.objects.get(user=user, community=community)
+			follow.view = True
+			follow.save(update_fields=['view'])
+		except:
+			pass
+		return HttpResponse("!")

@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', FollowDelete.as_view()),
     url(r'^add_member/(?P<pk>\d+)/$', CommunityFollowCreate.as_view()),
     url(r'^delete_member/(?P<pk>\d+)/$', CommunityFollowDelete.as_view()),
+    url(r'^community_view/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityFollowView.as_view()), 
 ]

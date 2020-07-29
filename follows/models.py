@@ -39,5 +39,5 @@ class CommunityFollow(models.Model):
 
     @classmethod
     def get_community_with_name_follows(cls, community_name):
-        follows_query = CommunityFollow.objects.filter(community__name=community_name)
+        follows_query = CommunityFollow.objects.filter(community__name=community_name, view=False)
         return follows_query
