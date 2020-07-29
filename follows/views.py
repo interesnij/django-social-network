@@ -93,10 +93,7 @@ class CommunityFollowView(View):
 	def get(self,request,*args,**kwargs):
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		user = User.objects.get(uuid=self.kwargs["uuid"])
-		try:
-			follow = CommunityFollow.objects.get(user=user, community=community)
-			follow.view = True
-			follow.save(update_fields=['view'])
-		except:
-			pass
+		follow = CommunityFollow.objects.get(user=user, community=community)
+		follow.view = True
+		follow.save(update_fields=['view']) 
 		return HttpResponse("!")
