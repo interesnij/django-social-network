@@ -21,7 +21,7 @@ class PostCommunity(TemplateView):
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
-        self.template_name = get_template_community_post(self.user, "c_lenta/", "item.html", request.user)
+        self.template_name = get_template_community_post(self.community, "c_lenta/", "item.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(PostCommunity,self).get(request,*args,**kwargs)
