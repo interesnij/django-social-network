@@ -203,7 +203,7 @@ class CommunityWallPhoto(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(community=self.community, is_generic=True, title="Фото со стены")
         self.photos = self.community.get_photos_for_album(album_id=self.album.pk)
-        self.template_name = get_permission_community_photo(self.user, "c_photo/wall_photo/", "photo.html", request.user)
+        self.template_name = get_permission_community_photo(self.community, "c_photo/wall_photo/", "photo.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
