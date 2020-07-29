@@ -11,7 +11,7 @@ def check_user_connected(user, user_id):
 
 def check_user_followed(user, user_id):
     if not user.is_followers_user_with_id(user_id=user.pk):
-        raise ValidationError('Не дружит с пользователем.')
+        raise ValidationError('Не подписан на Вас.')
 
 def check_user_can_get_list(request_user, user):
     check_user_not_blocked(request_user, user.pk)
