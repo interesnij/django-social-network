@@ -128,34 +128,34 @@ class CommunityMusic(ListView):
 
 
 class CommunityVideo(ListView):
-    template_name = None
-    paginate_by = 15
+	template_name = None
+	paginate_by = 15
 
-    def get(self,request,*args,**kwargs):
-        from video.models import VideoAlbum
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-	    self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
-        try:
-            self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
-        except:
-            creator = self.community.creator
-            self.album = VideoAlbum.objects.create(creator=self.community.creator, community_id=self.community.pk, community=self.community, is_generic=True, title="Все видео")
-        if request.user.is_staff_of_community_with_name(self.community.name):
-            self.video_list = self.album.get_my_queryset()
-        else:
-            self.video_list = self.album.get_queryset()
-        return super(CommunityVideo,self).get(request,*args,**kwargs)
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
+		try:
+			self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
+		except:
+			creator = self.community.creator
+			self.album = VideoAlbum.objects.create(creator=self.community.creator, community_id=self.community.pk, community=self.community, is_generic=True, title="Все видео")
+		if request.user.is_staff_of_community_with_name(self.community.name):
+			self.video_list = self.album.get_my_queryset()
+		else:
+			self.video_list = self.album.get_queryset()
+		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityVideo,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['album'] = self.album
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityVideo,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['album'] = self.album
+		return context
 
-    def get_queryset(self):
-        video_list = self.video_list
-        return video_list
+	def get_queryset(self):
+		video_list = self.video_list
+		return video_list
 
 
 class PostsCommunity(ListView):
