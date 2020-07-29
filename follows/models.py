@@ -3,9 +3,9 @@ from django.conf import settings
 
 
 class Follow(models.Model):
+    id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='follows', verbose_name="Подписчик")
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='followers', null=False, verbose_name="На кого подписывается")
-    id = models.BigAutoField(primary_key=True)
     view = models.BooleanField(default=False, verbose_name="Просмотрено")
 
     class Meta:
@@ -21,9 +21,10 @@ class Follow(models.Model):
 
 
 class CommunityFollow(models.Model):
+    id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='community_follows', verbose_name="Подписчик")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
-    id = models.BigAutoField(primary_key=True)
+    view = models.BooleanField(default=False, verbose_name="Просмотрено")
 
     class Meta:
         unique_together = ('user', 'community')
