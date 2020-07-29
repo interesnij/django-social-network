@@ -135,7 +135,7 @@ class CommunityVideo(ListView):
         from video.models import VideoAlbum
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
+	    self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
         try:
             self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
         except:
