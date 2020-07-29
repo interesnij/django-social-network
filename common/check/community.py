@@ -21,3 +21,9 @@ def check_can_get_lists(user, community):
         )
     else:
         return True
+
+def check_can_get_lists(community):
+    if community.is_public() and community.is_child_safety():
+        return True
+    else:
+        raise ValidationError('Ошибка доступа',)

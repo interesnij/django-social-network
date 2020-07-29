@@ -1,6 +1,6 @@
 from rest_framework.exceptions import PermissionDenied
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from common.check.community import check_can_get_lists
+from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+from common.check.community import check_can_get_lists, check_anon_can_get_list
 
 
 def get_template_community_photo(community, folder, template, request_user):
@@ -70,11 +70,10 @@ def get_permission_community_photo(community, folder, template, request_user):
         else:
             raise PermissionDenied('Ошибка доступа')
     elif request_user.is_anonymous:
-        if community.is_public():
-            if not community.is_child_safety():
-                raise PermissionDenied('Ошибка доступа')
-            else:
-                template_name = folder + "anon_" + template
+        if check_can_get_lists(community):
+            template_name = folder + "anon_" + template
+        else:
+            raise PermissionDenied('Ошибка доступа')
     return template_name
 
 def get_template_user_photo(user, folder, template, request_user):
