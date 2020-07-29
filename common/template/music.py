@@ -3,7 +3,7 @@ from common.check.user import check_user_can_get_list, check_anon_user_can_get_l
 from common.check.community import check_can_get_lists, check_anon_can_get_list
 
 
-def get_template_community_photo(community, folder, template, request_user):
+def get_template_community_music(community, folder, template, request_user):
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -18,13 +18,13 @@ def get_template_community_photo(community, folder, template, request_user):
                 template_name = folder + "editor_" + template
             elif request_user.is_advertiser_of_community_with_name(community.name):
                 template_name = folder + "advertiser_" + template
-            elif request_user.is_photo_manager():
+            elif request_user.is_audio_manager():
                 template_name = folder + "staff_member_" + template
             else:
                 template_name = folder + "member_" + template
         elif request_user.is_follow_from_community_with_name(community.pk):
             template_name = "generic/c_template/follow_community.html"
-        elif request_user.is_photo_manager():
+        elif request_user.is_audio_manager():
             template_name = folder + "staff_" + template
         elif request_user.is_banned_from_community_with_name(community.name):
             template_name = "generic/c_template/block_community.html"
@@ -53,7 +53,7 @@ def get_template_community_photo(community, folder, template, request_user):
             template_name = "generic/c_template/anon_private_community.html"
     return template_name
 
-def get_permission_community_photo(community, folder, template, request_user):
+def get_permission_community_music(community, folder, template, request_user):
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():
@@ -61,7 +61,7 @@ def get_permission_community_photo(community, folder, template, request_user):
     elif request_user.is_authenticated:
         if request_user.is_staff_of_community_with_name(community.name):
             template_name = folder + "admin_" + template
-        elif request_user.is_photo_manager():
+        elif request_user.is_audio_manager():
             template_name = folder + "staff_" + template
         elif check_can_get_lists(request_user, community):
             template_name = folder + template
@@ -76,7 +76,7 @@ def get_permission_community_photo(community, folder, template, request_user):
             raise PermissionDenied('Ошибка доступа')
     return template_name
 
-def get_template_user_photo(user, folder, template, request_user):
+def get_template_user_music(user, folder, template, request_user):
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -92,7 +92,7 @@ def get_template_user_photo(user, folder, template, request_user):
                 template_name = "generic/u_template/user_suspended.html"
             elif user.is_blocked():
                 template_name = "generic/u_template/user_global_block.html"
-            elif request_user.is_photo_manager() or request_user.is_superuser:
+            elif request_user.is_audio_manager() or request_user.is_superuser:
                 template_name = folder + "staff_" + template
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 template_name = "generic/u_template/block_user.html"
@@ -118,7 +118,7 @@ def get_template_user_photo(user, folder, template, request_user):
             template_name = folder + "anon_" + template
     return template_name
 
-def get_permission_user_photo(user, folder, template, request_user):
+def get_permission_user_music(user, folder, template, request_user):
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif user.is_blocked():
@@ -128,7 +128,7 @@ def get_permission_user_photo(user, folder, template, request_user):
             raise PermissionDenied('Ошибка доступа')
         elif user.pk == request_user.pk:
             template_name = folder + "my_" + template
-        elif request_user.is_photo_manager():
+        elif request_user.is_audio_manager():
             template_name = folder + "staff_" + template
         elif request_user.pk != user.pk:
             if check_user_can_get_list(request_user, user):

@@ -3,7 +3,8 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.template.post import get_permission_user_post
+from common.template.video import get_permission_user_video
 from rest_framework.exceptions import PermissionDenied
 
 
@@ -47,7 +48,7 @@ class UserVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 
-		self.template_name = self.user.get_template_user("user_video_list/", "list.html", request.user)
+		self.template_name = get_permission_user_video(self.user, "user_video_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserVideoList,self).get(request,*args,**kwargs)
@@ -73,7 +74,7 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
-		self.template_name = self.user.get_template_user("user_music_list/", "list.html", request.user)
+		self.template_name = get_permission_user_music(self.user, "user_music_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserMusicList,self).get(request,*args,**kwargs)
@@ -118,28 +119,7 @@ class PostListView(ListView):
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 
-		if request.user.is_authenticated:
-			if self.user.pk == request.user.pk:
-				self.template_name = "lenta/my_list.html"
-			elif request.user.is_post_manager():
-				self.template_name = "lenta/staff_list.html"
-			elif self.user != request.user:
-				check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-				if self.user.is_closed_profile():
-					if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-						self.template_name = "lenta/list.html"
-					else:
-						raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-				elif request.user.is_child() and not self.user.is_child_safety():
-					raise PermissionDenied('Сообщество не проверено. Его контент не доступен для детей')
-				else:
-					self.template_name = "lenta/list.html"
-		elif request.user.is_anonymous:
-			if self.user.is_closed_profile():
-				raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-			else:
-				self.template_name = "lenta/anon_list.html"
-
+		self.template_name = get_permission_user_post(self.user, "lenta/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + template_name
 		return super(PostListView,self).get(request,*args,**kwargs)

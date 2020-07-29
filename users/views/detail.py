@@ -7,6 +7,7 @@ from music.models import SoundcloudParsing
 from communities.models import Community
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
+from common.template.post import get_template_user_post
 
 
 class UserPostView(TemplateView):
@@ -18,30 +19,7 @@ class UserPostView(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.posts = self.user.get_posts()
 
-        if request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "lenta/my_post.html"
-            elif request.user.is_post_manager():
-                self.template_name = "lenta/staff_post.html"
-            elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                        self.template_name = "lenta/post.html"
-                    else:
-                        raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-                elif request.user.is_child() and not self.user.is_child_safety():
-                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-                else:
-                    self.template_name = "lenta/post.html"
-        elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            elif not self.user.is_child_safety():
-                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-            else:
-                self.template_name = "lenta/anon_post.html"
-
+        self.template_name = get_template_user_post(self.user, "lenta/", "post.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
