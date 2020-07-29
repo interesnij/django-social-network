@@ -1,3 +1,4 @@
+{% load humanize %}
 
 <span class="text-hide-xs">
   {% if prev %}
@@ -12,4 +13,130 @@
   {% endif %}
 </span>
 
-{% include 'u_photo/anon_foto.html' %}
+<div class="mb-3 data_display" user-pk="{{ object.creator.pk }}" data-uuid="{{ object.uuid }}">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        {% if object.file %}
+          <img style="width: 100%;" src="{{ object.file.url }}" alt="">
+        {% else %}
+          <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        {% endif %}
+    </div>
+    <a href="{% url 'user_album' pk=object.creator.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>
+    <span>
+        <span style="cursor:pointer" class="">Пожаловаться</span>
+    </span>
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+
+      <div class="card-header">
+          <div class="media">
+            <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+              <figure>
+                {% if object.creator.get_avatar %}
+                  <img src="{{ object.creator.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                {% else %}
+                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                {% endif %}
+              </figure>
+            </a>
+              <div class="media-body">
+                  <h6 class="mb-0">
+                    <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                      {{ object.creator.get_full_name }} &nbsp;
+                    </a>
+                  </h6>
+                  <p class="mb-0">{{ object.created|naturaltime }}</p>
+              </div>
+          </div>
+      </div>
+        {% if object.description %}
+          {{ object.description }}
+        {% else %}
+          Нет описания
+        {% endif %}
+      <br><br>
+
+      {% load liked_user %}
+
+      <div class="border-top py-2">
+          <div class="row">
+              <div class="col interaction" id="interaction">
+                <span {% if not object.votes_on %}style="display:none"{% endif %} class="like btn_default" title="Нравится">
+                      <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                      </svg>
+                      <span class="likes_count">
+                        {% if object.likes.count %}{{ object.likes.count }}{% endif %}
+                      </span>
+                </span>
+
+                <span class="like_window">
+                  {% if object.window_likes %}
+                <div class="like_pop" style="margin:15px">
+                  <span class="u_all_photo_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <br><br>
+                  <span style="display: flex;">
+                    {% for heart in object.window_likes %}
+                    <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
+                      <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
+                          {% if heart.user.get_avatar %}
+                            <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                          {% else %}
+                            <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                          {% endif %}
+                      </figure>
+                    </a>
+                    {% endfor %}
+                  </span>
+                </div>
+                {% endif %}
+              </span>
+
+                <span {% if not object.votes_on %}style="display:none"{% endif %} class="dislike btn_default" title="Не нравится">
+                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                    <span class="dislikes_count">{% if object.dislikes.count %}{{ object.dislikes.count }}{% endif %}</span>
+                </span>
+
+                <span class="dislike_window">
+                  {% if object.window_dislikes %}
+                <div class="dislike_pop" style="margin:15px">
+                  <span class="c_all_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <br><br>
+                  <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
+                    {% for sheet in object.window_dislikes %}
+                    <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                      <figure style="margin: 0;">
+                        {% if sheet.user.get_avatar %}
+                          <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                      {% else %}
+                          <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                        {% endif %}
+                      </figure>
+                      </a>
+                      {% endfor %}
+                  </span>
+                </div>
+                {% endif %}
+              </span>
+
+                  <span title="Комментарий" class="u_photo_comments btn_default" style="cursor:pointer;margin-right:5px;{% if not object.comments_enabled %}display:none{% endif %}">
+                    <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                      <span class="comment-count">
+                          {% if object.count_comments %} {{ object.count_comments }} {% endif %}
+                      </span>
+                  </span>
+
+                  <span title="Поделиться"style="cursor:pointer">
+                    <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                  </span>
+              </div>
+          </div>
+
+          <div class="u_load_comments" style="margin-right: -15px; margin-left: -15px"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
