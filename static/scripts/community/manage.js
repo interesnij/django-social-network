@@ -17,7 +17,6 @@ on('#ajax', 'change', '.community_follow_view', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         li.remove()
       }};
-  };;
   link.send( null );
 });
 on('#ajax', 'change', '.community_member_create', function() {
