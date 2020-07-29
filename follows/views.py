@@ -1,6 +1,6 @@
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-
+from communities.models import Community
 from django.views import View
 from follows.models import Follow
 from users.models import User
@@ -76,20 +76,14 @@ class FollowDelete(View):
 
 class CommunityFollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		from communities.models import Community
-
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_follow = self.user.community_follow_user(self.community)
-		new_follow.notification_community_follow(self.user)
+		new_follow = request.user.community_follow_user(self.community)
+		self.community.notification_community_follow(request.user)
 		return HttpResponse("!")
 
 
 class CommunityFollowDelete(View):
 	def get(self,request,*args,**kwargs):
-		from communities.models import Community
-
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.user.community_unfollow_user(self.community)
+		request.user.community_unfollow_user(self.community)
 		return HttpResponse("!")

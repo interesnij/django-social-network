@@ -25,11 +25,6 @@ class CommunityFollow(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
     id = models.BigAutoField(primary_key=True)
 
-    def notification_community_follow(self, user):
-        from notifications.model.user import UserCommunityNotification, community_notification_handler
-
-        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
-
     class Meta:
         #unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'

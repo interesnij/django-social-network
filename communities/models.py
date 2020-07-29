@@ -456,7 +456,7 @@ class Community(models.Model):
 
     @classmethod
     def _make_trending_communities_query(cls, category_name=None):
-        trending_communities_query = ~Q(perm=Community.DELETED)  
+        trending_communities_query = ~Q(perm=Community.DELETED)
         if category_name:
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query
@@ -570,8 +570,6 @@ class Community(models.Model):
             return True
         except:
             return False
-
-
 
     def is_wall_close(self):
         return try_except(self.community_private_post.wall == "SP")
@@ -695,6 +693,8 @@ class Community(models.Model):
 
     def notification_new_member(self, user):
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.JOIN, community=self.community, key='notification')
+    def notification_community_follow(self, user):
+        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
 
     def create_invite(self, creator, invited_user):
         from invitations.models import CommunityInvite

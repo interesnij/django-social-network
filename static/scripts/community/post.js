@@ -39,33 +39,26 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Жалоба отправлена!");
-    document.querySelector(".worker_fullscreen").style.display = "none";
-    document.getElementById("worker_loader").innerHTML="";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
 
   }};
 
   link_.send(form_data);
 });
 
+
+
 on('#ajax', 'click', '.member_create', function() {
-  _this = this;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/communities/progs/add_member/" + pk + "/", true );
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/communities/' + pk + '/');
-  }};
-  link_.send();
+  send_with_pk_and_reload("/communities/progs/add_member/")
 })
 on('#ajax', 'click', '.member_delete', function() {
-  _this = this;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/communities/progs/delete_member/" + pk + "/", true );
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload('/communities/' + pk + '/');
-  }};
-  link_.send();
+  send_with_pk_and_reload("/communities/progs/delete_member/")
+})
+
+on('#ajax', 'click', '.member_follow_create', function() {
+  send_with_pk_and_reload("/follows/add_member/")
+})
+on('#ajax', 'click', '.member_follow_delete', function() {
+  send_with_pk_and_reload("/follows/delete_member/")
 })
