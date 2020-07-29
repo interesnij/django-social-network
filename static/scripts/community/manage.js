@@ -13,9 +13,11 @@ on('#ajax', 'change', '.community_follow_view', function() {
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/follows/community_view/" + pk + "/" + uuid + "/", true );
-    if ( this.readyState == 4 && this.status == 200 ) {
-      li.remove()
-    }};
+    link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        li.remove()
+      }};
+  };;
   link.send( null );
 });
 on('#ajax', 'change', '.community_member_create', function() {
@@ -24,9 +26,10 @@ on('#ajax', 'change', '.community_member_create', function() {
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/communties/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
-    if ( this.readyState == 4 && this.status == 200 ) {
-      li.remove()
-    }};
+    link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        li.remove()
+      }};
   link.send( null );
 });
 
