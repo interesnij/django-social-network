@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from communities.models import Community
 from django.views import View
-from follows.models import Follow
+from follows.models import Follow, CommunityFollow
 from users.models import User
 from django.http import HttpResponse
 from django.views.generic import ListView
@@ -95,5 +95,5 @@ class CommunityFollowView(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		follow = CommunityFollow.objects.get(user=user, community=community)
 		follow.view = True
-		follow.save(update_fields=['view']) 
+		follow.save(update_fields=['view'])
 		return HttpResponse("!")
