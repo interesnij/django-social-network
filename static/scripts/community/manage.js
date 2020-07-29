@@ -24,7 +24,7 @@ on('#ajax', 'click', '.community_member_create', function() {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', "/communties/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
+    link.open( 'GET', "/communities/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         li.remove()
