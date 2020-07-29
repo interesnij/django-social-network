@@ -5,12 +5,12 @@ def check_user_not_blocked(user, user_id):
     if user.is_blocked_with_user_with_id(user_id=user_id):
         raise PermissionDenied('Вы в черном списке у этого пользователя.')
 
-def check_user_connected(user, user_id):
-    if not user.is_connected_with_user_with_id(user_id):
+def check_user_connected(user, request_user):
+    if not request_user.is_connected_with_user_with_id(user.pk):
         raise ValidationError('Не дружит с пользователем.')
 
-def check_user_followed(user, user_id):
-    if not user.is_followers_user_with_id(user_id=user.pk):
+def check_user_followed(user, request_user):
+    if not user.is_followers_user_with_id(user_id=request_user.pk):
         raise ValidationError('Не подписан на Вас.')
 
 def check_user_can_get_list(request_user, user):
