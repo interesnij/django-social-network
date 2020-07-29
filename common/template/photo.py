@@ -1,11 +1,11 @@
 from rest_framework.exceptions import PermissionDenied
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-from common.check.community import check_can_get_lists, check_anon_can_get_list
+from common.check.community import check_can_get_lists, check_anon_can_get_list 
 
 
 def get_template_community_photo(community, folder, template, request_user):
     if request_user.is_authenticated:
-        if community.is_suspended(): 
+        if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"

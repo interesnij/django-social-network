@@ -22,7 +22,7 @@ def check_can_get_lists(user, community):
     else:
         return True
 
-def check_can_get_anon_lists(community):
+def check_anon_can_get_list(community):
     if community.is_public() and community.is_child_safety():
         return True
     else:
