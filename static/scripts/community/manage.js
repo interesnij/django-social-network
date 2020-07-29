@@ -7,7 +7,7 @@ on('#ajax', 'click', '.show_staff_window', function() {
   open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'change', '.community_follow_view', function() {
+on('#ajax', 'click', '.community_follow_view', function() {
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     uuid = li.getAttribute("data-uuid");
@@ -19,7 +19,7 @@ on('#ajax', 'change', '.community_follow_view', function() {
       }};
   link.send( null );
 });
-on('#ajax', 'change', '.community_member_create', function() {
+on('#ajax', 'click', '.community_member_create', function() {
     li = this.parentElement.parentElement.parentElement.parentElement;
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     uuid = li.getAttribute("data-uuid");
