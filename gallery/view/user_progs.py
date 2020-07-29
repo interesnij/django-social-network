@@ -11,6 +11,7 @@ from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
+from common.template.photo import get_permission_user_photo
 
 
 class PhotoUserCommentList(ListView):
@@ -20,21 +21,8 @@ class PhotoUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not self.photo.comments_enabled:
-            raise PermissionDenied('Комментарии для фотографии отключены')
-        elif request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "u_photo_comment/my_comments.html"
-            elif request.user.is_photo_manager():
-                self.template_name = "u_photo_comment/staff_comments.html"
-            elif self.user != request.user:
-                if check_user_can_get_list(request.user, self.user):
-                    self.template_name = "u_photo_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            else:
-                self.template_name = "u_photo_comment/anon_comments.html"
+
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)

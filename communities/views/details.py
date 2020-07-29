@@ -7,6 +7,7 @@ from follows.models import CommunityFollow
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
+from common.template.post import get_template_community_post
 
 
 class PostCommunity(TemplateView):
@@ -20,24 +21,7 @@ class PostCommunity(TemplateView):
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
-        if request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_lenta/admin_item.html"
-            elif request.user.is_post_manager():
-                self.template_name = "c_lenta/staff_item.html"
-            elif check_can_get_lists(request.user, self.community):
-                self.template_name = "c_lenta/item.html"
-            else:
-                self.template_name = "c_lenta/item.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                if not self.community.is_child_safety():
-                    self.template_name = "account/anon_no_child_safety.html"
-                else:
-                    self.template_name = "c_lenta/item.html"
-            else:
-                raise ValidationError('Ошибка доступа')
-
+        self.template_name = get_template_community_post(self.user, "c_lenta/", "item.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(PostCommunity,self).get(request,*args,**kwargs)
@@ -79,7 +63,7 @@ class CommunityDetail(TemplateView):
                 else:
                     self.template_name = "c_detail/member_community.html"
             elif request.user.is_follow_from_community_with_name(self.community.pk):
-                self.template_name = "c_detail/follow_community.html" 
+                self.template_name = "c_detail/follow_community.html"
             elif request.user.is_community_manager():
                 self.template_name = "c_detail/staff_community.html"
             elif request.user.is_banned_from_community_with_name(self.community.name):

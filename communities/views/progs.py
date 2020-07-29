@@ -9,9 +9,13 @@ from django.shortcuts import render
 
 
 class UserCreateCommunityWindow(TemplateView):
-	template_name = "manage/create_community.html"
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		if request.user.is_authenticated:
+			self.template_name = "manage/create_community.html"
+		else:
+			self.template_name = "about.html"
 		return super(UserCreateCommunityWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

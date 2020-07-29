@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
+from common.template.photo import get_permission_community_photo
 
 
 class PhotoCommunityCommentList(ListView):
@@ -21,21 +22,7 @@ class PhotoCommunityCommentList(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if not self.photo.comments_enabled:
-            raise PermissionDenied('Комментарии для фотографии отключены')
-        elif request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_photo_comment/admin_comments.html"
-            elif request.user.is_photo_manager():
-                self.template_name = "c_photo_comment/staff_comments.html"
-            elif check_can_get_lists(request.user, self.community):
-                self.template_name = "c_photo_comment/comments.html"
-            else:
-                self.template_name = "c_photo_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.is_public():
-                self.template_name = "c_photo_comment/anon_comments.html"
-
+        self.template_name = get_permission_community_photo(self.photo.community, "c_photo_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)

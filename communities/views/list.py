@@ -4,6 +4,9 @@ from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
 from common.check.community import check_can_get_lists
+from common.template.post import get_template_community_post, get_permission_user_post
+from common.template.music import get_template_community_music
+from common.template.video import get_template_community_video
 
 
 class CommunityMembersView(ListView):
@@ -110,7 +113,7 @@ class CommunityMusic(ListView):
             self.playlist = SoundList.objects.get(community_id=self.community.pk, is_generic=True, name="Основной плейлист")
         except:
             self.playlist = SoundList.objects.get(creator=self.community.creator, community_id=self.community.pk, is_generic=True, name="Основной плейлист")
-        self.template_name = self.community.get_template(folder="community_music/", template="music.html", request=request)
+        self.template_name = get_template_community_music(self.user, "c_music/", "list.html", request.user)
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -132,7 +135,7 @@ class CommunityVideo(ListView):
         from video.models import VideoAlbum
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_template(folder="community_video/", template="list.html", request=request)
+		self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
         try:
             self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Все видео")
         except:
@@ -166,19 +169,7 @@ class PostsCommunity(ListView):
         except:
             self.fixed = None
 
-        if request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_lenta/admin_list.html"
-            elif request.user.is_post_manager():
-                self.template_name = "c_lenta/staff_list.html"
-            elif check_can_get_lists(request.user, self.community):
-                self.template_name = "c_lenta/list.html"
-            else:
-                self.template_name = "c_lenta/list.html"
-        elif request.user.is_anonymous:
-            if self.community.is_public():
-                self.template_name = "c_lenta/list.html"
-
+		self.template_name = get_permission_user_post(self.user, "c_lenta/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PostsCommunity,self).get(request,*args,**kwargs)

@@ -4,7 +4,7 @@ from users.models import User
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic import ListView
-
+from common.template.user import get_template_user
 
 
 class FrendsListView(ListView):
@@ -13,7 +13,8 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_template_user("frends/", "frends.html", request.user)
+
+		self.template_name = get_template_community_post(self.user, "frends/", "frends.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 
@@ -37,7 +38,7 @@ class OnlineFrendsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 
-		self.template_name = self.user.get_template_user("frends_online/", "frends.html", request.user)
+		self.template_name = get_template_community_post(self.user, "frends_online/", "frends.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
@@ -58,7 +59,7 @@ class CommonFrendsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 
-		self.template_name = self.user.get_template_user("frends_common/", "frends.html", request.user)
+		self.template_name = self.user.get_settings_user("frends_common/", "frends.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
