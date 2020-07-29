@@ -7,7 +7,7 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
-from common.template.post import get_template_user_good, get_permission_user_good
+from common.template.good import get_template_user_good, get_permission_user_good
 
 
 class UserGoods(ListView):
