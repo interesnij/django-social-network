@@ -10,7 +10,7 @@ def check_user_connected(user, user_id):
         raise ValidationError('Не дружит с пользователем.')
 
 def check_user_followed(user, user_id):
-    if not user.is_followers_user_with_id(user_id=user.pk)
+    if not user.is_followers_user_with_id(user_id=user.pk):
         raise ValidationError('Не дружит с пользователем.')
 
 def check_user_can_get_list(request_user, user):
