@@ -16,8 +16,12 @@ def check_user_followed(user, user_id):
 def check_user_can_get_list(request_user, user):
     check_user_not_blocked(request_user, user.pk)
     if user.is_closed_profile():
-        if check_user_connected(request_user, user.pk) or check_user_followed(request_user, user.pk):
+        if check_user_connected(request_user, user.pk):
             return True
+        elif check_user_followed(request_user, user.pk):
+            return True
+        else:
+            raise PermissionDenied('Ошибка доступа',)
     elif request_user.is_child() and not user.is_child_safety():
         raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
     else:
