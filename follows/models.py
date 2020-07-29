@@ -26,7 +26,7 @@ class CommunityFollow(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
-        #unique_together = ('user', 'community')
+        unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'
         verbose_name_plural = 'Подписчики группы'
 
