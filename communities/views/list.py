@@ -169,7 +169,7 @@ class PostsCommunity(ListView):
 		except:
 			self.fixed = None
 
-		self.template_name = get_permission_user_post(self.user, "c_lenta/", "list.html", request.user)
+		self.template_name = get_permission_community_post(self.community, "c_lenta/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + template_name
 		return super(PostsCommunity,self).get(request,*args,**kwargs)
