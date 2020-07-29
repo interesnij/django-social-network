@@ -74,7 +74,7 @@ class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_member = user.user.join_community_with_name(community.name)
+		new_member = user.join_community_with_name(community.name)
 		return HttpResponse()
 class CommunityManageMemberDelete(View):
 	def get(self,request,*args,**kwargs):
