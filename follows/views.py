@@ -92,7 +92,7 @@ class CommunityFollowDelete(View):
 class CommunityFollowView(View):
 	def get(self,request,*args,**kwargs):
 		community = Community.objects.get(pk=self.kwargs["pk"])
-		user = Community.objects.get(uuid=self.kwargs["uuid"])
+		user = User.objects.get(uuid=self.kwargs["uuid"])
 		try:
 			follow = CommunityFollow.objects.get(user=user, community=community)
 			follow.view = True
