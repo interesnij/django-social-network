@@ -9,18 +9,10 @@ def check_user_connected(user, request_user):
     if not request_user.is_connected_with_user_with_id(user.pk):
         raise ValidationError('Не дружит с пользователем.')
 
-def check_user_followed(user, request_user):
-    if not user.is_followers_user_with_id(user_id=request_user.pk):
-        raise ValidationError('Не подписан на Вас.')
-    else:
-        return True
-
 def check_user_can_get_list(request_user, user):
     check_user_not_blocked(request_user, user.pk)
     if user.is_closed_profile():
-        if check_user_connected(request_user, user):
-            return True
-        elif check_user_followed(request_user, user):
+        if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
             return True
         else:
             raise PermissionDenied('Ошибка доступа',)
