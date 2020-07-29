@@ -79,7 +79,7 @@ class CommunityDetail(TemplateView):
                 else:
                     self.template_name = "c_detail/member_community.html"
             elif request.user.is_follow_from_community_with_name(self.community.pk):
-                self.template_name = "c_detail/follow_community.html"
+                self.template_name = "c_detail/follow_community.html" 
             elif request.user.is_community_manager():
                 self.template_name = "c_detail/staff_community.html"
             elif request.user.is_banned_from_community_with_name(self.community.name):
