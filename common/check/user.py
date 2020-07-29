@@ -16,9 +16,9 @@ def check_user_followed(user, request_user):
 def check_user_can_get_list(request_user, user):
     check_user_not_blocked(request_user, user.pk)
     if user.is_closed_profile():
-        if check_user_connected(request_user, user.pk):
+        if check_user_connected(request_user, user):
             return True
-        elif check_user_followed(request_user, user.pk):
+        elif check_user_followed(request_user, user):
             return True
         else:
             raise PermissionDenied('Ошибка доступа',)
