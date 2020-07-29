@@ -11,6 +11,7 @@ from common.check.community import check_can_get_lists
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
+from common.template.post import get_permission_community_post
 
 
 class PostCommunityCommentList(ListView):
@@ -22,21 +23,9 @@ class PostCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if not self.item.comments_enabled:
-            raise PermissionDenied('Комментарии для записи отключены')
-        elif request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_post_comment/admin_comments.html"
-            elif request.user.is_post_manager():
-                self.template_name = "c_post_comment/staff_comments.html"
-            elif check_can_get_lists(request.user, self.community):
-                self.template_name = "c_post_comment/comments.html"
-            else:
-                raise ValidationError('Ошибка доступа')
-        elif request.user.is_anonymous:
-            if self.is_public():
-                self.template_name = "c_post_comment/anon_comments.html"
-            else:
-                raise ValidationError('Ошибка доступа')
+            raise PermissionDenied('Комментарии к записи отключены')
+            
+        self.template_name = get_permission_community_post(self.user, "u_post_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)

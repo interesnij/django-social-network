@@ -8,6 +8,8 @@ from communities.models import Community
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_template_user_post
+from common.template.music import get_template_user_music
+from common.template.video import get_template_user_video
 
 
 class UserPostView(TemplateView):
@@ -104,8 +106,8 @@ class UserMusic(ListView):
             self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
         except:
             self.playlist = SoundList.objects.create(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
-        self.template_name = self.user.get_template_user("user_music/", "music.html", request.user)
 
+        self.template_name = get_template_user_music(self.user, "user_music/", "music.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserMusic,self).get(request,*args,**kwargs)
@@ -137,7 +139,7 @@ class UserVideo(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-        self.template_name = self.user.get_template_user("user_video_list/", "list.html", request.user)
+        self.template_name = get_template_user_video(self.user, "user_video_list/", "list.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

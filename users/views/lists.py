@@ -5,7 +5,7 @@ from django.views.generic import ListView
 from posts.models import Post
 from common.template.post import get_permission_user_post
 from common.template.video import get_permission_user_video
-from rest_framework.exceptions import PermissionDenied
+from common.template.music import get_template_community_music
 
 
 class UserVisitCommunities(ListView):
@@ -48,7 +48,7 @@ class UserVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 
-		self.template_name = get_permission_user_video(self.user, "user_video_list/", "list.html", request.user)
+		self.template_name = get_template_user_video(self.user, "user_video_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserVideoList,self).get(request,*args,**kwargs)
@@ -74,7 +74,7 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
-		self.template_name = get_permission_user_music(self.user, "user_music_list/", "list.html", request.user)
+		self.template_name = get_template_user_music(self.user, "user_music_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserMusicList,self).get(request,*args,**kwargs)

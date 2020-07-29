@@ -7,6 +7,7 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
+from common.template.post import get_template_user_good, get_permission_user_good
 
 
 class UserGoods(ListView):
@@ -16,7 +17,7 @@ class UserGoods(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        self.template_name = self.user.get_template_user("u_good/", "goods.html", request.user)
+        self.template_name = get_permission_user_good(self.photo.creator, "u_good/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGoods,self).get(request,*args,**kwargs)
@@ -97,27 +98,9 @@ class GoodUserCommentList(ListView):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not self.good.comments_enabled:
-            raise PermissionDenied('Комментарии для товара отключены')
-        elif request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "u_good_comment/my_comments.html"
-            elif request.user.is_good_manager():
-                self.template_name = "u_good_comment/staff_comments.html"
-            elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                elif request.user.is_child() and not self.user.is_child_safety():
-                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-                else:
-                    self.template_name = "u_good_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            elif not self.user.is_child_safety():
-                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-            else:
-                self.template_name = "u_good_comment/anon_comments.html"
+            raise PermissionDenied('Комментарии к товару отключены')
+
+        self.template_name = get_permission_user_good(self.user, "u_good_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(GoodUserCommentList,self).get(request,*args,**kwargs)

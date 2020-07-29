@@ -10,7 +10,7 @@ from common.check.user import check_user_can_get_list, check_anon_user_can_get_l
 from posts.forms import CommentForm
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
-from common.template.post import get_permission_user_post 
+from common.template.post import get_permission_user_post
 
 
 class PostUserCommentList(ListView):
@@ -21,6 +21,8 @@ class PostUserCommentList(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
+        if not self.item.comments_enabled:
+            raise PermissionDenied('Комментарии к записи отключены')
         self.template_name = get_permission_user_post(self.user, "u_post_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
