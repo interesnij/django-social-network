@@ -19,3 +19,5 @@ def check_can_get_lists(user, community):
         raise ValidationError(
             'Сообщество не проверено. Вы должны стать участником, чтобы видеть его записи.',
         )
+    else:
+        return True
