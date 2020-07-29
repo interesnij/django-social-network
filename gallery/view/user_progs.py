@@ -60,7 +60,7 @@ class PhotoCommentUserCreate(View):
         if form_post.is_valid() and photo_comment.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
-                check_user_can_get_list(request.user, self.user)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
@@ -84,7 +84,7 @@ class PhotoReplyUserCreate(View):
             comment = form_post.save(commit=False)
 
             if request.user != user:
-                check_user_can_get_list(request.user, self.user)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)

@@ -5,7 +5,7 @@ from users.models import User
 from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from django.shortcuts import render
 from users.models import User
 from goods.forms import CommentForm, GoodForm
@@ -23,9 +23,7 @@ class GoodCommentUserCreate(View):
         if form_post.is_valid() and good.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)
@@ -49,9 +47,7 @@ class GoodReplyUserCreate(View):
             comment = form_post.save(commit=False)
 
             if request.user != user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
