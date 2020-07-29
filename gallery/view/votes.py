@@ -5,7 +5,7 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PhotoVotes, PhotoCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
 
@@ -18,9 +18,7 @@ class PhotoUserLikeCreate(View):
             raise PermissionDenied('Реакции отключены.')
 
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PhotoVotes.LIKE:
@@ -53,9 +51,7 @@ class PhotoCommentUserLikeCreate(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PhotoCommentVotes.LIKE:
@@ -90,9 +86,7 @@ class PhotoUserDislikeCreate(View):
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PhotoVotes.DISLIKE:
@@ -125,9 +119,7 @@ class PhotoCommentUserDislikeCreate(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PhotoCommentVotes.DISLIKE:

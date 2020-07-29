@@ -8,6 +8,7 @@ from communities.models import Community
 from posts.forms import PostForm
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
+from common.check.community import check_can_get_lists
 
 
 class PostCommunityCreate(View):
@@ -19,7 +20,7 @@ class PostCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid():
+        elif form_post.is_valid() and check_can_get_lists(request.user,community):
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")
@@ -41,7 +42,7 @@ class PostOfferCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_staff_post_member_can() and not request.user.is_member_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid():
+        elif form_post.is_valid() and check_can_get_lists(request.user,community):
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")

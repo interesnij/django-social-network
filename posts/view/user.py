@@ -6,7 +6,7 @@ from users.models import User
 from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from posts.forms import CommentForm
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
@@ -28,19 +28,10 @@ class PostUserCommentList(ListView):
             elif request.user.is_post_manager():
                 self.template_name = "u_post_comment/staff_comments.html"
             elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                elif request.user.is_child() and not self.user.is_child_safety():
-                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-                else:
+                if check_user_can_get_list(request.user,self.user):
                     self.template_name = "u_post_comment/comments.html"
         elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            elif not self.user.is_child_safety():
-                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
-            else:
+            if check_anon_user_can_get_list(self.user):
                 self.template_name = "u_post_comment/anon_comments.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -69,9 +60,7 @@ class PostCommentUserCreate(View):
             comment = form_post.save(commit=False)
 
             if request.user.pk != user.pk:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
@@ -96,9 +85,7 @@ class PostReplyUserCreate(View):
             comment=form_post.save(commit=False)
 
             if request.user != user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, post=None, text=comment.text)

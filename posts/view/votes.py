@@ -5,7 +5,7 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PostVotes, PostCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
 
@@ -17,9 +17,7 @@ class PostUserLikeCreate(View):
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.LIKE:
@@ -52,9 +50,7 @@ class PostCommentUserLikeCreate(View):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PostCommentVotes.LIKE:
@@ -89,9 +85,7 @@ class PostUserDislikeCreate(View):
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.DISLIKE:
@@ -124,9 +118,7 @@ class PostCommentUserDislikeCreate(View):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not PostCommentVotes.DISLIKE:
@@ -160,7 +152,7 @@ class PostCommunityLikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_lists(request.user,community)
+        check_can_get_lists(request.user, community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.LIKE:
@@ -194,7 +186,7 @@ class PostCommunityDislikeCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        check_can_get_lists(request.user,community)
+        check_can_get_lists(request.user, community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PostVotes.DISLIKE:

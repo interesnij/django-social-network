@@ -132,22 +132,9 @@ def get_permission_user_photo(user, folder, template, request_user):
         elif request_user.is_photo_manager():
             template_name = folder + "staff_" + template
         elif request_user.pk != user.pk:
-            if request_user.is_blocked_with_user_with_id(user_id=user.pk):
-                raise PermissionDenied('Ошибка доступа')
-            elif user.is_closed_profile():
-                if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
-                    template_name = folder + template
-                else:
-                    raise PermissionDenied('Ошибка доступа')
-            elif request.user.is_child() and not self.user.is_child_safety():
-                raise PermissionDenied('Ошибка доступа')
-            else:
+            if check_user_can_get_list(request_user, user):
                 template_name = folder + template
     elif request_user.is_anonymous:
-        if user.is_closed_profile():
-            raise PermissionDenied('Ошибка доступа')
-        elif not user.is_child_safety():
-            raise PermissionDenied('Ошибка доступа')
-        else:
+        if check_anon_user_can_get_list(user):
             template_name = folder + "anon_" + template
     return template_name

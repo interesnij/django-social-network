@@ -31,6 +31,18 @@ on('#ajax', 'click', '.community_member_create', function() {
       }};
   link.send( null );
 });
+on('#ajax', 'click', '.community_member_delete', function() {
+    li = this.parentElement.parentElement.parentElement.parentElement;
+    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    uuid = li.getAttribute("data-uuid");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/communities/progs/manager_delete_member/" + pk + "/" + uuid + "/", true );
+    link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        li.remove()
+      }};
+  link.send( null );
+});
 
 on('#ajax', 'click', '#community_private_post_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_post_form"), "Изменения приняты!")

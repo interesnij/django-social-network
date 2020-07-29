@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good
 from users.models import User
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 

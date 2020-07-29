@@ -8,7 +8,7 @@ from communities.models import Community
 from posts.forms import PostForm
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
 
 class PostUserCreate(View):

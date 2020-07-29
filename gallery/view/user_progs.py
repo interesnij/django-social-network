@@ -6,7 +6,7 @@ from gallery.models import Album, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
@@ -28,10 +28,8 @@ class PhotoUserCommentList(ListView):
             elif request.user.is_photo_manager():
                 self.template_name = "u_photo_comment/staff_comments.html"
             elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.template_name = "u_photo_comment/comments.html"
+                if check_user_can_get_list(request.user, self.user):
+                    self.template_name = "u_photo_comment/comments.html"
         elif request.user.is_anonymous:
             if self.user.is_closed_profile():
                 raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
@@ -62,9 +60,7 @@ class PhotoCommentUserCreate(View):
         if form_post.is_valid() and photo_comment.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
+                check_user_can_get_list(request.user, self.user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
@@ -88,9 +84,7 @@ class PhotoReplyUserCreate(View):
             comment = form_post.save(commit=False)
 
             if request.user != user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
+                check_user_can_get_list(request.user, self.user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
