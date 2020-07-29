@@ -159,30 +159,30 @@ class CommunityVideo(ListView):
 
 
 class PostsCommunity(ListView):
-    template_name = None
-    paginate_by = 15
+	template_name = None
+	paginate_by = 15
 
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.fixed = Post.objects.get(community=community, is_fixed=True)
-        except:
-            self.fixed = None
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.fixed = Post.objects.get(community=community, is_fixed=True)
+		except:
+			self.fixed = None
 
 		self.template_name = get_permission_user_post(self.user, "c_lenta/", "list.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
-        return super(PostsCommunity,self).get(request,*args,**kwargs)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + template_name
+		return super(PostsCommunity,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(PostsCommunity,self).get_context_data(**kwargs)
-        context['object'] = self.fixed
-        context["community"] = self.community
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(PostsCommunity,self).get_context_data(**kwargs)
+		context['object'] = self.fixed
+		context["community"] = self.community
+		return context
 
-    def get_queryset(self):
-        item_list = self.community.get_posts().order_by('-created')
-        return item_list
+	def get_queryset(self):
+		item_list = self.community.get_posts().order_by('-created')
+		return item_list
 
 
 class PostsDraftCommunity(ListView):
