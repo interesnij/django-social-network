@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
 from common.check.community import check_can_get_lists
-from common.template.post import get_template_community_post, get_permission_user_post
+from common.template.post import get_template_community_post, get_permission_community_post
 from common.template.music import get_template_community_music
 from common.template.video import get_template_community_video
 
