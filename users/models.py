@@ -330,12 +330,7 @@ class User(AbstractUser):
         return self.favorite_communities.filter(name=community_name).exists()
 
     def is_follow_from_community_with_name(self, community_pk):
-        from follows.models import CommunityFollow
-
-        try:
-            return CommunityFollow.objects.get(community__id=community_pk, user=self).exists()
-        except:
-            return False
+        return self.community_follows.filter(community__pk=community_pk).exists()
 
     def is_closed_profile(self):
         from users.model.settings import UserPrivate
