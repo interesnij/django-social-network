@@ -1,6 +1,6 @@
 from rest_framework.exceptions import PermissionDenied
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-from common.check.community import check_can_get_lists, check_anon_can_get_list 
+from common.check.community import check_can_get_lists, check_anon_can_get_list
 
 
 def get_template_community_photo(community, folder, template, request_user):
@@ -94,7 +94,7 @@ def get_template_user_photo(user, folder, template, request_user):
                 template_name = "generic/u_template/user_global_block.html"
             elif request_user.is_photo_manager() or request_user.is_superuser:
                 template_name = folder + "staff_" + template
-            elif request_user.is_blocked_with_user_with_id(user_id=self.user.pk):
+            elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 template_name = "generic/u_template/block_user.html"
             elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
