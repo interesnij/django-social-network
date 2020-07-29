@@ -16,7 +16,7 @@ function send_with_pk_and_reload(url){
   link_.open( 'GET', url + pk + "/", true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    this_page_reload(url + pk + '/');
+    this_page_reload(document.location.href);
   }};
   link_.send();
 }
