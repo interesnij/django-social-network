@@ -30,7 +30,7 @@
             </a>
               <div class="media-body">
                   <h6 class="mb-0">
-                    <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                    <a href="/communities/{{ object.community.pk }}" class="ajax">
                       {{ object.community.name }} &nbsp;
                     </a>
                   </h6>
