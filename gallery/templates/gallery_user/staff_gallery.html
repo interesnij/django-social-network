@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load liked_user %}
+{% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
+    <div class="row">
+        <div class="col-12">
+            <h5 class="mt-1">Альбомы
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                  {{ user.first_name|gent }} {{ user.last_name|gent }}
+                </a>
+                {% if not user.is_album_exists %}- альбомов нет{% endif %}
+            </h5>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+  {% include 'gallery_user/albums.html' %}
+</div>
+
+  <div class="container-fluid mt-3">
+      <div class="row">
+          <div class="col-12">
+              <h5 class="mt-1">Фотографии
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                    {{ user.first_name|gent }} {{ user.last_name|gent }}
+                  </a>
+              </h5>
+              Фото: {{ user.count_photos }}
+          </div>
+      </div>
+  </div>
+
+  <div class="container mt-4">
+        <div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}"></div>
+  </div>
+
+{% endblock %}
