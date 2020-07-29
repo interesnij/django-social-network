@@ -693,9 +693,9 @@ class Community(models.Model):
         user_membership.delete()
 
     def notification_new_member(self, user):
-        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotify.JOIN, community=self.community, key='notification')
+        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotify.JOIN, community=self, key='notification')
     def notification_community_follow(self, user):
-        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotify.CONNECTION_REQUEST, community=self.community, key='notification')
+        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotify.CONNECTION_REQUEST, community=self, key='notification')
 
     def create_invite(self, creator, invited_user):
         from invitations.models import CommunityInvite
