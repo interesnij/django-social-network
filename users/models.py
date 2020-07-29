@@ -199,7 +199,7 @@ class User(AbstractUser):
         from follows.models import CommunityFollow
 
         check_can_join_community_with_name(user=self, community_name=community_name)
-        follow = CommunityFollow.objects.get(user=self,community=community_name)
+        follow = CommunityFollow.objects.get(user=self,community_name=community_name)
         follow.delete()
 
     def frend_user(self, user):
