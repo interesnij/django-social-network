@@ -14,10 +14,10 @@ class CommunityVideoList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        
+
         self.template_name = get_template_community_video(self.community, "c_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
 
         if request.user.is_staff_of_community_with_name(self.community.name):
             self.video_list = self.album.get_my_queryset()
@@ -47,7 +47,7 @@ class CommunityVideoDetail(TemplateView):
 
         self.template_name = get_template_community_video(self.community, "c_video_detail/", "video.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+            self.template_name = "mob_" + self.template_name
 
         if request.user.is_authenticated:
             try:
