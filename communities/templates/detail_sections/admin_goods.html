@@ -1,4 +1,4 @@
-{% if community_goods %}
+{% if community_goods and community.is_good_open %}
 <div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">

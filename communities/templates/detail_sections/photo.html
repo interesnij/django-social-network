@@ -1,0 +1,23 @@
+{% if community.get_profile_photos and community.is_photo_open %}
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Фото </h4>
+            </div>
+            {{ community.count_photos }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        <div class="row no-gutters">
+          {% for object in community.get_profile_photos %}
+            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
+              <img class="lazyload image_fit_70" data-src="{{ object.file.url }}" alt="">
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

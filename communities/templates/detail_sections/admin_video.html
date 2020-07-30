@@ -1,0 +1,38 @@
+{% if community.get_last_video and community.is_video_open %}
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Видео </h4>
+            </div>
+            {{ community.get_video_count }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        <div class="row no-gutters">
+          {% for object in community.get_last_video %}
+            <div style="position:relative">
+              <img class="lazyload image_fit_small" data-src="{{ object.image.url }}" alt="">
+              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+              <p>{{ object.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% else %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+                <div class="media-body">
+                    <h4 class="content-color-primary mb-0">Добавьте видео</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

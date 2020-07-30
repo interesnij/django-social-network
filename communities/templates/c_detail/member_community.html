@@ -96,94 +96,11 @@
 
             {% include 'detail_sections/membersheeps.html' %}
 
-            {% if community.get_last_music %}
-            <div class="card mb-3 music_playlist" data-pk="{{ community.get_music_list_id }}">
-                <div class="card-header">
-                  <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
-                    <div class="media">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Аудиозаписи</h4>
-                        </div>
-                        {{ community.get_music_count }}
-                    </div>
-                  </a>
-                </div>
+            {% include 'detail_sections/photo.html' %}
 
-                {% for object in community.get_last_music %}
-                <div class="card border-top border-bottom">
-                    <div class="card-body" style="padding:7px;">
-                        <div class="media" music-counter="{{ forloop.counter0 }}">
-                            <figure style="cursor:pointer">
-                              <a class="music_list_item">
-                                {% if object.artwork_url %}
-                                  <img style="width:40px" class="lazyload" data-src="{{ object.artwork_url }}" />
-                                {% else %}
-                                  <svg fill="currentColor" style="width:40px;heigth:40px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-                                {% endif %}
-                              </a>
-                            </figure>
-                            <div class="media-body" style="line-height: 10px;">
-                                <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
-                                <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% include 'detail_sections/music.html' %}
 
-            {% if community.get_profile_photos %}
-            <div class="card mb-3">
-                <div class="card-header">
-                  <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
-                    <div class="media">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Фото </h4>
-                        </div>
-                        {{ community.count_photos }}
-                    </div>
-                  </a>
-                </div>
-                <div class="card-body p-1">
-                    <div class="row no-gutters">
-                      {% for object in community.get_profile_photos %}
-                        <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
-                          <img class="lazyload image_fit_70" data-src="{{ object.file.url }}" alt="">
-                        </div>
-                      {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            {% if community.get_last_video %}
-
-            <div class="card mb-3">
-                <div class="card-header">
-                  <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
-                    <div class="media">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Видео </h4>
-                        </div>
-                        {{ community.get_video_count }}
-                    </div>
-                  </a>
-                </div>
-                <div class="card-body p-1">
-                    <div class="row no-gutters">
-                      {% for object in community.get_last_video %}
-                        <div style="position:relative">
-                          <img class="lazyload image_fit_small" data-src="{{ object.image.url }}" alt="">
-                          <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
-                          <p>{{ object.title }}</p>
-                        </div>
-                      {% endfor %}
-                    </div>
-
-                </div>
-            </div>
-            {% endif %}
+            {% include 'detail_sections/video.html' %}
         </div>
 
     </div>
