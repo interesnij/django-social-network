@@ -70,7 +70,7 @@ def get_permission_community_post(community, folder, template, request_user):
         else:
             raise PermissionDenied('Ошибка доступа')
     elif request_user.is_anonymous:
-        if check_can_get_lists(community):
+        if check_anon_can_get_list(community):
             template_name = folder + "anon_" + template
         else:
             raise PermissionDenied('Ошибка доступа')
