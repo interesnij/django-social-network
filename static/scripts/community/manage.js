@@ -70,6 +70,10 @@ on('#ajax', 'click', '#community_notify_video_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/notify_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_video_form"), "Изменения приняты!")
 });
 
+on('#ajax', 'click', '#community_sections_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/sections/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_sections_form"), "Изменения приняты!")
+});
+
 on('#ajax', 'click', '.add_staff_options', function() {
     uuid = this.getAttribute("data-uuid");
     status = this.getAttribute("data-status");

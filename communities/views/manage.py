@@ -37,6 +37,37 @@ class CommunityGeneralView(TemplateView):
 		return super(CommunityGeneralView,self).post(request,*args,**kwargs)
 
 
+class CommunitySectionsOpenView(TemplateView):
+	template_name = None
+	form = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="sections.html", request=request)
+		try:
+			self.sections = CommunitySectionsOpen.objects.get(community=self.community)
+		except:
+			self.sections = CommunitySectionsOpen.objects.create(community=self.community)
+		self.form=CommunitySectionOpenForm(instance=self.notify_post)
+		return super(CommunitySectionsOpenView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunitySectionsOpenView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["sections"] = self.sections
+		context["community"] = self.community
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.sections = CommunitySectionsOpen.objects.get(community=self.community)
+		self.form = CommunitySectionOpenForm(request.POST, instance=self.sections)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse ()
+		return super(CommunitySectionsOpenView,self).post(request,*args,**kwargs)
+
+
 class CommunityNotifyPostView(TemplateView):
 	template_name = None
 	form = None

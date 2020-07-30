@@ -151,7 +151,7 @@ class CommunityPrivateVideo(models.Model):
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
 
-class CommunitySectionsOpen(models.Model): 
+class CommunitySectionsOpen(models.Model):
     community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_sections_open', verbose_name="Сообщество")
     photo = models.BooleanField(default=True, verbose_name="Галерея открыта")
     good = models.BooleanField(default=True, verbose_name="Товары открыты")
@@ -161,3 +161,4 @@ class CommunitySectionsOpen(models.Model):
     article = models.BooleanField(default=True, verbose_name="Статьи открыты")
     contacts = models.BooleanField(default=True, verbose_name="Контакты открыты")
     discussion = models.BooleanField(default=True, verbose_name="Обсуждения открыты")
+    members = models.BooleanField(default=True, verbose_name="Подписчики открыты")

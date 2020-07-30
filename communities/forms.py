@@ -6,7 +6,7 @@ from django import forms
 class CommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
-		fields = ['name','type','category','id', ]
+		fields = ['name','type','category',]
 
 
 class GeneralCommunityForm(forms.ModelForm):
@@ -63,3 +63,8 @@ class CommunityPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateVideo
 		fields = ('video', 'comment',)
+
+class CommunitySectionOpenForm(forms.ModelForm):
+	class Meta:
+		model = CommunitySectionsOpen
+		fields = ['photo', 'good', 'video', 'music', 'link', 'article', 'contacts', 'discussion', 'members',]
