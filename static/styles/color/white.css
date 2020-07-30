@@ -1,3 +1,7 @@
+::-webkit-scrollbar-thumb {
+    background: #E2E2E2 !important;
+}
+
 a:hover{
   color: black !important;
 }
