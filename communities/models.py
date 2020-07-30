@@ -86,6 +86,8 @@ class Community(models.Model):
 
     def is_deleted(self):
         return try_except(self.perm == Community.DELETED)
+    def is_standart(self):
+        return try_except(self.perm == Community.STANDART)
     def is_verified_send(self):
         return try_except(self.perm == Community.VERIFIED_SEND)
     def is_verified(self):
