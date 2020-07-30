@@ -10,7 +10,7 @@ from follows.models import CommunityFollow
 from datetime import datetime, timedelta
 
 
-class CommunityGeneralChange(TemplateView):
+class CommunityGeneralView(TemplateView):
 	template_name = None
 	form=None
 
@@ -18,10 +18,10 @@ class CommunityGeneralChange(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(instance=self.community)
 		self.template_name = self.community.get_manage_template(folder="manage/", template="general.html", request=request)
-		return super(CommunityGeneralChange,self).get(request,*args,**kwargs)
+		return super(CommunityGeneralView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityGeneralChange,self).get_context_data(**kwargs)
+		context=super(CommunityGeneralView,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["community"]=self.community
 		return context
@@ -29,65 +29,12 @@ class CommunityGeneralChange(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(request.POST, instance=self.community)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse('!')
 		else:
 			return HttpResponseBadRequest()
-		return super(CommunityGeneralChange,self).post(request,*args,**kwargs)
-
-
-class CommunityAvatarChange(TemplateView):
-	template_name = None
-	form=None
-
-	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=AvatarCommunityForm()
-		self.template_name = self.community.get_manage_template(folder="manage/", template="avatar.html", request=request)
-		return super(CommunityAvatarChange,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommunityAvatarChange,self).get_context_data(**kwargs)
-		context["community"]=self.community
-		context["form"]=self.form
-		return context
-
-	def post(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=AvatarCommunityForm(request.POST,request.FILES, instance=self.community)
-		if self.form.is_valid():
-			self.form.save(commit=False)
-
-			if request.is_ajax():
-				return HttpResponse ('!')
-		return super(CommunityAvatarChange,self).post(request,*args,**kwargs)
-
-
-class CommunityCoverChange(TemplateView):
-	template_name = None
-	form=None
-
-	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CoverCommunityForm()
-		self.template_name = self.community.get_manage_template(folder="manage/", template="cover.html", request=request)
-		return super(CommunityCoverChange,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommunityCoverChange,self).get_context_data(**kwargs)
-		context["community"]=self.community
-		context["form"]=self.form
-		return context
-
-	def post(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CoverCommunityForm(request.POST,request.FILES, instance=self.community)
-		if self.form.is_valid():
-			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
-		return super(CommunityCoverChange,self).post(request,*args,**kwargs)
+		return super(CommunityGeneralView,self).post(request,*args,**kwargs)
 
 
 class CommunityNotifyPostView(TemplateView):

@@ -69,7 +69,7 @@ class CommunityDetail(TemplateView):
             elif request.user.is_banned_from_community_with_name(self.community.name):
                 self.template_name = "c_detail/block_community.html"
             elif self.community.is_public():
-                if request.user.is_child() and not self.community.is_child_safety():
+                if request.user.is_child() and not self.community.is_verified():
                     self.template_name = "c_detail/no_child_safety.html"
                 else:
                     self.template_name = "c_detail/public_community.html"
@@ -84,7 +84,7 @@ class CommunityDetail(TemplateView):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
         elif request.user.is_anonymous:
             if self.community.is_public():
-                if not self.community.is_child_safety():
+                if not self.community.is_verified():
                     self.template_name = "c_detail/anon_no_child_safety.html"
                 else:
                     self.template_name = "c_detail/anon_public_community.html"

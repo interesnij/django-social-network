@@ -94,11 +94,23 @@ class Community(models.Model):
         return try_except(self.perm == Community.VERIFIED)
     def is_child(self):
         return try_except(self.perm == Community.CHILD)
-    def is_child_safety(self):
-        if self.perm == Community.VERIFIED:
-            return True
-        else:
-            return False
+
+    def is_photo_open(self):
+        return try_except(self.community_sections_open.photo)
+    def is_good_open(self):
+        return try_except(self.community_sections_open.good)
+    def is_video_open(self):
+        return try_except(self.community_sections_open.video)
+    def is_music_open(self):
+        return try_except(self.community_sections_open.music)
+    def is_link_open(self):
+        return try_except(self.community_sections_open.link)
+    def is_article_open(self):
+        return try_except(self.community_sections_open.article)
+    def is_contacts_open(self):
+        return try_except(self.community_sections_open.contacts)
+    def is_discussion_open(self):
+        return try_except(self.community_sections_open.discussion)
 
     def get_avatar_uuid(self):
         avatar = self.get_avatar_photos().order_by('-id')[0]
@@ -372,7 +384,7 @@ class Community(models.Model):
             elif request_user.is_banned_from_community_with_name(self.name):
                 template_name = "generic/c_template/block_community.html"
             elif self.is_public():
-                if request_user.is_child() and not self.is_child_safety():
+                if request_user.is_child() and not self.is_verified():
                     template_name = "generic/c_template/no_child_safety.html"
                 else:
                     template_name = folder + template
@@ -386,7 +398,7 @@ class Community(models.Model):
             elif self.is_blocked():
                 template_name = "generic/c_template/anon_community_blocked.html"
             elif self.is_public():
-                if not self.is_child_safety():
+                if not self.is_verified():
                     template_name = "generic/c_template/anon_no_child_safety.html"
                 else:
                     template_name = folder + "anon_" + template
@@ -434,13 +446,13 @@ class Community(models.Model):
             elif request_user.is_banned_from_community_with_name(self.name):
                 raise PermissionDenied('Ошибка доступа.')
             elif self.is_public():
-                if request_user.is_child() and not self.is_child_safety():
+                if request_user.is_child() and not self.is_verified():
                     raise PermissionDenied('Ошибка доступа.')
                 else:
                     template_name = folder + template
         elif request_user.is_anonymous:
             if self.is_public():
-                if not self.is_child_safety():
+                if not self.is_verified():
                     raise PermissionDenied('Ошибка доступа.')
                 else:
                     template_name = folder + "anon_" + template

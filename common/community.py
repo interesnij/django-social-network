@@ -15,7 +15,7 @@ def check_can_get_lists(user, community):
         raise ValidationError(
             'Сообщество является закрытым. Вы должны стать участником, чтобы видеть его записи.',
         )
-    elif not community.is_child_safety() and user.is_child():
+    elif not community.is_verified() and user.is_child():
         raise ValidationError(
             'Сообщество не проверено. Его контент не доступен для детей',
         )

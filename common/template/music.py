@@ -29,7 +29,7 @@ def get_template_community_music(community, folder, template, request_user):
         elif request_user.is_banned_from_community_with_name(community.name):
             template_name = "generic/c_template/block_community.html"
         elif community.is_public():
-            if request_user.is_child() and not community.is_child_safety():
+            if request_user.is_child() and not community.is_verified():
                 template_name = "generic/c_template/no_child_safety.html"
             else:
                 template_name = folder + "public_" + template
@@ -43,7 +43,7 @@ def get_template_community_music(community, folder, template, request_user):
         elif community.is_blocked():
             template_name = "generic/c_template/anon_community_blocked.html"
         elif community.is_public():
-            if not community.is_child_safety():
+            if not community.is_verified():
                 template_name = "generic/c_template/anon_no_child_safety.html"
             else:
                 template_name = folder + "anon_public_" + template
