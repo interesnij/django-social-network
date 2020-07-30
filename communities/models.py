@@ -364,50 +364,6 @@ class Community(models.Model):
         except:
             return None
 
-    def get_template(self, folder, template, request_user):
-        if request_user.is_authenticated:
-            if self.is_suspended():
-                template_name = "generic/c_template/community_suspended.html"
-            elif self.is_blocked():
-                template_name = "generic/c_template/community_blocked.html"
-            elif request_user.is_member_of_community_with_name(self.name):
-                if request_user.is_staff_of_community_with_name(self.name):
-                    template_name = folder + "admin_" + template
-                elif request_user.is_community_manager():
-                    template_name = folder + "staff_member_" + template
-                else:
-                    template_name = folder + "member_" + template
-            elif request_user.is_follow_from_community_with_name(self.pk):
-                template_name = "generic/c_template/follow_community.html"
-            elif request_user.is_community_manager():
-                template_name = folder + "staff_" + template
-            elif request_user.is_banned_from_community_with_name(self.name):
-                template_name = "generic/c_template/block_community.html"
-            elif self.is_public():
-                if request_user.is_child() and not self.is_verified():
-                    template_name = "generic/c_template/no_child_safety.html"
-                else:
-                    template_name = folder + template
-            elif self.is_closed():
-                template_name = "generic/c_template/close_community.html"
-            elif self.is_private():
-                template_name = "generic/c_template/private_community.html"
-        elif request_user.is_anonymous:
-            if self.is_suspended():
-                template_name = "generic/c_template/anon_community_suspended.html"
-            elif self.is_blocked():
-                template_name = "generic/c_template/anon_community_blocked.html"
-            elif self.is_public():
-                if not self.is_verified():
-                    template_name = "generic/c_template/anon_no_child_safety.html"
-                else:
-                    template_name = folder + "anon_" + template
-            elif self.is_closed():
-                template_name = "generic/c_template/anon_close_community.html"
-            elif self.is_private():
-                template_name = "generic/c_template/anon_private_community.html"
-        return template_name
-
     def get_manage_template(self, folder, template, request):
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.name):
             template_name = folder + template

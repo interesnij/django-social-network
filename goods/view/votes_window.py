@@ -4,6 +4,7 @@ from users.models import User
 from goods.models import Good, GoodComment
 from communities.models import Community
 from common.model.votes import GoodVotes, GoodCommentVotes
+from common.template.good import get_permission_community_good, get_permission_user_good
 
 
 class GoodUserLikeWindow(TemplateView):
@@ -12,9 +13,11 @@ class GoodUserLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.creator.get_permission_list_user(folder="good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_user_good(self.good.creator, "good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -30,9 +33,11 @@ class GoodUserDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.creator.get_permission_list_user(folder="good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_user_good(self.good.creator, "good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -48,7 +53,9 @@ class GoodUserCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.commenter.get_permission_list_user(folder="good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_user_good(self.comment.commenter, "good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -64,7 +71,9 @@ class GoodUserCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.commenter.get_permission_list_user(folder="good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_user_good(self.comment.commenter, "good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,9 +89,11 @@ class GoodCommunityLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.community.get_template_list(folder="good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_community_good(self.good.community, "good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -98,9 +109,11 @@ class GoodCommunityDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.community.get_template_list(folder="good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_community_good(self.good.community, "good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -115,7 +128,9 @@ class GoodCommunityCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.community.get_template_list(folder="good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.comment.good.community, "good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -130,7 +145,9 @@ class GoodCommunityCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.community.get_template_list(folder="good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.comment.good.community, "good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(GoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -148,9 +165,11 @@ class AllGoodUserLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.creator.get_permission_list_user(folder="all_good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_user_good(self.good.creator, "all_good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -170,9 +189,11 @@ class AllGoodUserDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.creator.get_permission_list_user(folder="all_good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_user_good(self.good.creator, "all_good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -192,7 +213,9 @@ class AllGoodUserCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.commenter.get_permission_list_user(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_user_good(self.comment.commenter, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -212,7 +235,9 @@ class AllGoodUserCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.commenter.get_permission_list_user(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_user_good(self.comment.commenter, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -233,9 +258,11 @@ class AllGoodCommunityLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.community.get_template_list(folder="all_good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_community_good(self.good.community, "all_good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -255,9 +282,11 @@ class AllGoodCommunityDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if self.good.votes_on:
-            self.template_name = self.good.community.get_template_list(folder="all_good_votes/", template="page.html", request=request)
+            self.template_name = get_permission_community_good(self.good.community, "all_good_votes/", "page.html", request.user)
         else:
             self.template_name = "about.html"
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -277,7 +306,9 @@ class AllGoodCommunityCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.good.community.get_template_list(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.comment.good.community, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -297,7 +328,9 @@ class AllGoodCommunityCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = self.comment.good.community.get_template_list(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.comment.good.community, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -317,7 +350,9 @@ class AllGoodCommunityRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.good = good.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.good.community.get_template_list(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.good.community, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodCommunityRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -336,7 +371,9 @@ class AllGoodUserRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.good.creator.get_permission_list_user(folder="all_good_votes/", template="page.html", request=request)
+        self.template_name = get_permission_community_good(self.good.community, "all_good_votes/", "page.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(AllGoodUserRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

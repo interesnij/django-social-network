@@ -4,7 +4,7 @@ from users.models import User
 from django.views.generic import ListView
 from posts.models import Post
 from common.template.post import get_permission_user_post
-from common.template.video import get_permission_user_video
+from common.template.video import get_template_user_video
 from common.template.music import get_template_user_music
 
 

@@ -10,6 +10,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_template_user_post
 from common.template.music import get_template_user_music
 from common.template.video import get_template_user_video
+from common.template.user import get_template_user
 
 
 class UserPostView(TemplateView):
@@ -42,7 +43,7 @@ class UserCommunities(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_template_user("user_community/", "communities.html", request.user)
+        self.template_name = get_template_user(self.user, "user_community/", "communities.html", request.user)
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = "user_community/my_staffed_communities.html"
 

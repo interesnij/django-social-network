@@ -5,6 +5,7 @@ from users.models import User
 from video.models import VideoAlbum, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
+from common.template.video import get_template_user_video
 
 
 class UserVideoList(ListView):
@@ -18,7 +19,7 @@ class UserVideoList(ListView):
         else:
             self.video_list = self.album.get_queryset()
 
-        self.template_name = self.user.get_template_user("u_album_list/", "list.html", request.user)
+        self.template_name = get_template_user_video(self.user, "u_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserVideoList,self).get(request,*args,**kwargs)
@@ -51,7 +52,7 @@ class UserVideoDetail(TemplateView):
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
 
-        self.template_name = self.user.get_template_user("u_video_detail/", "video.html", request.user)
+        self.template_name = get_template_user_video(self.user, "u_video_detail/", "video.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserVideoDetail,self).get(request,*args,**kwargs)

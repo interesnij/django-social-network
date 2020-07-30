@@ -27,7 +27,7 @@ class PostCommunityCommentList(ListView):
 
         self.template_name = get_permission_community_post(self.community, "u_post_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+            self.template_name = "mob_" + template_name
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -195,7 +195,10 @@ class PostCommunityDetail(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template(folder="post_community/", template="detail.html", request=request)
+
+        self.template_name = get_permission_community_post(self.community, "post_community/", "detail.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

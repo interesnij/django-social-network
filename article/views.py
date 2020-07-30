@@ -8,6 +8,7 @@ from article.models import Article
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
 from django.views import View
+from common.template.post import get_permission_community_post, get_permission_user_post
 
 
 class ArticleView(TemplateView):
@@ -33,7 +34,10 @@ class ArticleUserDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.user.get_template_list_user(folder="u_article/", template="article.html", request=request)
+
+        self.template_name = get_permission_user_post(self.user, "u_article/", "article.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -48,8 +52,8 @@ class ArticleCommunityDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template_list("c_article/", "article.html", request_user=request.user)
-
+        
+        self.template_name = get_permission_community_post(self.community, "c_article/", "article.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)

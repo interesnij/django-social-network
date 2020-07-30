@@ -5,6 +5,7 @@ from communities.models import Community
 from video.models import VideoAlbum, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
+from common.template.video import get_template_community_video
 
 
 class CommunityVideoList(ListView):
@@ -13,7 +14,11 @@ class CommunityVideoList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template(folder="c_album_list/", template="list.html", request_user=request.user)
+        
+        self.template_name = get_template_community_video(self.community, "c_album_list/", "list.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+
         if request.user.is_staff_of_community_with_name(self.community.name):
             self.video_list = self.album.get_my_queryset()
         else:
@@ -39,7 +44,11 @@ class CommunityVideoDetail(TemplateView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_template(folder="c_video_detail/", template="video.html", request_user=request.user)
+
+        self.template_name = get_template_community_video(self.community, "c_video_detail/", "video.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+
         if request.user.is_authenticated:
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)

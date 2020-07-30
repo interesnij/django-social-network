@@ -202,7 +202,7 @@ class PostUserDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = self.user.get_template_user("post_user/", "detail.html", request.user)
+        self.template_name = get_permission_user_post(self.user, "post_user/", "detail.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(PostUserDetail,self).get(request,*args,**kwargs)
