@@ -55,7 +55,7 @@
                                         <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
                                       </span>
                                       <div class="dropdown-menu dropdown-menu-right" style="top: 65px;">
-                                          {% for list in user.get_all_audio_playlists %}
+                                          {% for list in request.user.get_all_audio_playlists %}
                                             <span data-uuid="{{ list.uuid }}">
                                               {% if list|track_in_list:object.id %}
                                                 <span class="dropdown-item u_remove_track_in_list">
