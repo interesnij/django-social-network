@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^info/(?P<pk>[0-9]+)/$', UserInfoChange.as_view(), name='user_info_form'),
     url(r'^design/(?P<pk>\d+)/$', UserDesign.as_view(), name='user_design_form'),
     url(r'^notify/(?P<pk>[0-9]+)/$', SettingsNotifyView.as_view(), name='user_notify_form'),
-    url(r'^private/(?P<pk>[0-9]+)/$', SettingsPrivateView.as_view(), name='user_private_form'),
 ] 

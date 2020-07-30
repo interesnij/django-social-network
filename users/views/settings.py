@@ -75,36 +75,6 @@ class SettingsNotifyView(TemplateView):
 			return HttpResponse ("!")
 		return super(SettingsNotifyView,self).post(request,*args,**kwargs)
 
-
-class SettingsPrivateView(TemplateView):
-	template_name = None
-	form = None
-	private_settings = None
-
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.form = SettingsPrivateForm(instance=request.user)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private.html", request=request)
-		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(SettingsPrivateView,self).get_context_data(**kwargs)
-		context["private_settings"] = self.private_settings
-		context["form"] = self.form
-		return context
-
-	def post(self,request,*args,**kwargs):
-		try:
-			self.private_settings = UserItemPrivate.objects.get(user=request.user)
-		except:
-			self.private_settings = UserItemPrivate.objects.create(user=request.user)
-		self.form = SettingsPrivateForm(request.POST, instance=self.private_settings)
-		if self.form.is_valid():
-			self.form.save()
-			return HttpResponse ('!')
-		return super(SettingsPrivateView,self).post(request,*args,**kwargs)
-
-
 class UserDesign(TemplateView):
 	template_name = None
 

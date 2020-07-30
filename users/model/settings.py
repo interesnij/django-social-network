@@ -85,13 +85,3 @@ class UserColorSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
     color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
     id = models.BigAutoField(primary_key=True)
-
-
-class UserPrivate(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_private", on_delete=models.CASCADE, verbose_name="Пользователь")
-    is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
-    open_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")
-    open_wall = models.BooleanField(default=False, verbose_name="Вам могут писать записи на стене")
-    open_photo = models.BooleanField(default=False, verbose_name="Вам могут писать статьи на стене")
-    open_good = models.BooleanField(default=False, verbose_name="Вам могут добавлять товары")
-    open_video = models.BooleanField(default=False, verbose_name="Вам могут добавлять ролики")

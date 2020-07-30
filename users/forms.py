@@ -1,6 +1,6 @@
 from django import forms
 from users.model.profile import UserProfile
-from users.model.settings import UserPrivate, UserPostNotifications
+from users.model.settings import UserPostNotifications
 
 
 class InfoUserForm(forms.ModelForm):
@@ -11,18 +11,6 @@ class InfoUserForm(forms.ModelForm):
         model = UserProfile
         fields = ('first_name','last_name','sity')
 
-
-class SettingsPrivateForm(forms.ModelForm):
-
-    class Meta:
-        model = UserPrivate
-        fields = (
-            'is_private',
-            'open_message',
-            'open_wall',
-            'open_good',
-            'open_video',
-        )
 
 class SettingsNotifyForm(forms.ModelForm):
 
