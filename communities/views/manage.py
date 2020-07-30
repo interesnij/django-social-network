@@ -48,7 +48,7 @@ class CommunitySectionsOpenView(TemplateView):
 			self.sections = CommunitySectionsOpen.objects.get(community=self.community)
 		except:
 			self.sections = CommunitySectionsOpen.objects.create(community=self.community)
-		self.form=CommunitySectionOpenForm(instance=self.notify_post)
+		self.form=CommunitySectionOpenForm(instance=self.sections)
 		return super(CommunitySectionsOpenView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
