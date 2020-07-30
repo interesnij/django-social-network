@@ -104,11 +104,15 @@
 
             {% include 'detail_sections/membersheeps.html' %}
 
-            {% include 'detail_sections/photo.html' %}
-
-            {% include 'detail_sections/music.html' %}
-
-            {% include 'detail_sections/video.html' %}
+            {% if community.is_photo_open %}
+              {% include 'detail_sections/photo.html' %}
+            {% endif %}
+            {% if community.is_music_open %}
+              {% include 'detail_sections/music.html' %}
+            {% endif %}
+            {% if community.is_video_open %}
+              {% include 'detail_sections/video.html' %}
+            {% endif %}
         </div>
 
     </div>

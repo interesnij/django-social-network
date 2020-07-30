@@ -119,11 +119,16 @@
             </div>
             {% endif %}
 
-            {% include 'detail_sections/admin_music.html' %}
+            {% if community.is_music_open %}
+              {% include 'detail_sections/admin_music.html' %}
+            {% endif %}
 
-            {% include 'detail_sections/admin_photo.html' %}
-
-            {% include 'detail_sections/admin_video.html' %}
+            {% if community.is_photo_open %}
+              {% include 'detail_sections/admin_photo.html' %}
+            {% endif %}
+            {% if community.is_video_open %}
+              {% include 'detail_sections/admin_video.html' %}
+            {% endif %}
         </div>
 
     </div>
