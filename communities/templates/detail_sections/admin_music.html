@@ -1,4 +1,4 @@
-{% if community.get_last_music and community.is_music_open %}
+{% if community.get_last_music %}
 <div class="card mb-3 music_playlist" data-pk="{{ community.get_music_list_id }}">
     <div class="card-header">
       <a href="{% url 'community_music' pk=community.pk %}" class="ajax">

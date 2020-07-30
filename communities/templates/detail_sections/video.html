@@ -1,4 +1,4 @@
-{% if community.get_last_video and community.is_video_open %}
+{% if community.get_last_video %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'community_video' pk=community.pk %}" class="ajax">

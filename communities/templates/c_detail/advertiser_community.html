@@ -81,8 +81,9 @@
               {% include 'detail_sections/frends_member.html' %}
             {% endif %}
 
-            {% include 'detail_sections/membersheeps.html' %}
-
+            {% if community.is_contacts_open %}
+              {% include 'detail_sections/membersheeps.html' %}
+            {% endif %}
             {% if community.is_photo_open %}
               {% include 'detail_sections/photo.html' %}
             {% endif %}
