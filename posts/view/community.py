@@ -24,8 +24,8 @@ class PostCommunityCommentList(ListView):
 
         if not self.item.comments_enabled:
             raise PermissionDenied('Комментарии к записи отключены')
-            
-        self.template_name = get_permission_community_post(self.user, "u_post_comment/", "comments.html", request.user)
+
+        self.template_name = get_permission_community_post(self.community, "u_post_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
