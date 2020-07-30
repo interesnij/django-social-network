@@ -1,19 +1,15 @@
 
 {% if membersheeps %}
 <div class="card mb-3" style="">
-    <div class="card-header">
-        <div class="media">
-          <div class="card-header">
-              <div class="media">
-                <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
-                  <div class="media-body">
-                      <h4 class="content-color-primary mb-0">Подписчики</h4>
-                  </div>
-                </a>
-              </div>
+  <div class="card-header">
+      <div class="media">
+        <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
+          <div class="media-body">
+              <h4 class="content-color-primary mb-0">Подписчики</h4>
           </div>
-        </div>
-    </div>
+        </a>
+      </div>
+  </div>
 
     {% for object in membersheeps %}
     <div class="card border-top border-bottom">
