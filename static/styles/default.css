@@ -4673,7 +4673,7 @@ margin-left: -15px;
 margin-right: -15px;
 background-color: rgba(0, 0, 0, 0.06) !important;
 }
-.stream_comments:first-child{
+.comments_block_container:first-child{
   margin-top: 15px
 }
 .style_removed_object,
