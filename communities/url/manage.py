@@ -3,8 +3,8 @@ from communities.views.manage import *
 
 
 urlpatterns = [
-    url(r'^(?P<pk>[0-9]+)/general/$', CommunityGeneralView.as_view(), name='community_general_form'),
-    url(r'^(?P<pk>[0-9]+)/sections/$', CommunitySectionsOpenView.as_view(), name='community_sections_form'),
+    url(r'^general/(?P<pk>[0-9]+)/$', CommunityGeneralView.as_view(), name='community_general_form'),
+    url(r'^sections/(?P<pk>[0-9]+)/$', CommunitySectionsOpenView.as_view(), name='community_sections_form'),
 
     url(r'^notify_post/(?P<pk>[0-9]+)/$', CommunityNotifyPostView.as_view(), name='community_post_notify'),
     url(r'^notify_photo/(?P<pk>[0-9]+)/$', CommunityNotifyPhotoView.as_view(), name='community_photo_notify'),
