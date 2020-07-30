@@ -1,15 +1,12 @@
 from django.contrib import admin
 from users.models import User
 from users.model.profile import *
-from users.model.settings import UserPostNotifications, UserPrivate, UserColorSettings
+from users.model.settings import UserPostNotifications, UserColorSettings
 from users.model.list import UserBlock
 
 
 class UserNotificationsSettingsInline(admin.TabularInline):
     model = UserPostNotifications
-
-class UserPrivateSettingsInline(admin.TabularInline):
-    model = UserPrivate
 
 class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings
@@ -17,7 +14,6 @@ class UserColorSettingsInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     inlines = [
         UserNotificationsSettingsInline,
-        UserPrivateSettingsInline,
         UserColorSettingsInline,
     ]
     search_fields = ('last_name','first_name')
