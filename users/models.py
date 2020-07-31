@@ -293,13 +293,6 @@ class User(AbstractUser):
         followings_query.add(names_query, Q.AND)
         return User.objects.filter(followings_query).distinct()
 
-    def _make_followers_query(self):
-        return Q(follows__followed_user_id=self.pk, is_deleted=False)
-
-    def _make_followings_query(self):
-        return Q(followers__user_id=self.pk, is_deleted=False)
-
-
     '''''проверки is для подписчиков  113-169'''''
 
     def is_connected_with_user(self, user):
@@ -992,15 +985,18 @@ class User(AbstractUser):
         return avatar.uuid
 
     def get_followers(self):
-        followers_query = self._make_followers_query()
+        followers_query = Q(follows__followed_user_id=self.pk)
+        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)
 
     def get_pop_followers(self):
-        followers_query = self._make_followers_query()
+        followers_query = Q(follows__followed_user_id=self.pk, perm=PERM.)
+        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)[0:6]
 
     def get_followings(self):
-        followings_query = self._make_followings_query()
+        followings_query = Q(followers__user_id=self.pk)
+        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followings_query)
 
     def get_timeline_posts(self):
