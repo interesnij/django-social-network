@@ -146,5 +146,4 @@ class AllUsers(ListView):
 		return super(AllUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		users = User.objects.only("pk")
-		return users
+		return self.request.user.get_all_users()

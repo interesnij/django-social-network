@@ -989,6 +989,11 @@ class User(AbstractUser):
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)
 
+    def get_all_users(self):
+        all_query = Q()
+        all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        return User.objects.filter(all_query)
+
     def get_pop_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
@@ -1048,13 +1053,6 @@ class User(AbstractUser):
         frends_queryset = Post.objects.only('created').filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
-
-    def get_follows(self):
-        followed_users = self.followers.values('user_id')
-        followed_users_ids = [followed_user['user_id'] for followed_user in followed_users]
-        followed_users_query = Q(id__in=followed_users_ids)
-        query = User.objects.filter(followed_users_query)
-        return query
 
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
