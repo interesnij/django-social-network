@@ -5,7 +5,7 @@
       <a href="{% url 'follows' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
-                <h4 class="content-color-primary mb-0">Подписчики </h4>
+                <h6 class="content-color-primary mb-0">Подписчики </h6>
             </div>
             {{ user.count_followers }}
         </div>
@@ -18,11 +18,11 @@
         <div class="card-body">
             <div class="media">
               <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                <figure style="width:50px;">
+                <figure style="width:30px;">
                   {% if object.get_avatar %}
-                    <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
+                    <img src="{{ object.get_avatar }}" style="border-radius:30px;" alt="image">
                   {% else %}
-                    <svg fill="currentColor" class="svg_default svg_default_50"viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    <svg fill="currentColor" class="svg_default svg_default_30"viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   {% endif %}
                 </figure>
               </a>
@@ -30,7 +30,6 @@
                   <a href="{% url 'user' pk=object.pk %}" class="ajax">
                       <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                   </a>
-                  <p class="text-link">Написать сообщение</p>
               </div>
             </div>
         </div>
