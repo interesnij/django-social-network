@@ -9,6 +9,7 @@ from common.checkers import *
 from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
+from notify.model.user import UserNotify, notification_handler
 
 
 class User(AbstractUser):
@@ -88,10 +89,8 @@ class User(AbstractUser):
         return str(self.first_name) + " " + str(self.last_name)
 
     def notification_follow(self, user):
-        from notifications.model.user import UserNotification, notification_handler
         notification_handler(self, user, UserNotification.CONNECTION_REQUEST, key='notification')
     def notification_connect(self, user):
-        from notifications.model.user import UserNotification, notification_handler
         notification_handler(self, user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     def create_s_avatar(self, photo_input):
