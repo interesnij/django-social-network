@@ -34,9 +34,11 @@ class User(AbstractUser):
     )
     MALE = 'Man'
     FEMALE = 'Fem'
+    UNCNOUN = 'Unc'
     GENDER = (
         (MALE, 'Мужской'),
         (FEMALE, 'Женский'),
+        (UNCNOUN, 'Неизвестно'),
     )
 
     id = models.BigAutoField(primary_key=True)
@@ -55,6 +57,8 @@ class User(AbstractUser):
         return try_except(self.perm == User.FEMALE)
     def is_men(self):
         return try_except(self.perm == User.MALE)
+    def is_no_gender(self):
+        return try_except(self.perm == User.UNCNOUN)
 
     def is_deleted(self):
         return try_except(self.perm == User.DELETED)
