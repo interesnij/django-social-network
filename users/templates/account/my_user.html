@@ -100,7 +100,7 @@
               <a href="{% url 'communities' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="content-color-primary mb-0">Группы </h4>
+                        <h6 class="content-color-primary mb-0">Группы </h6>
                     </div>
                     {{ user.count_community }}
                 </div>
@@ -152,7 +152,7 @@
               <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="content-color-primary mb-0">Аудиозаписи</h4>
+                        <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
                     </div>
                     {{ user.get_music_count }}
                 </div>
@@ -203,7 +203,7 @@
               <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="content-color-primary mb-0">Фото </h4>
+                        <h6 class="content-color-primary mb-0">Фото </h6>
                     </div>
                     {{ user.count_photos }}
                 </div>
@@ -240,7 +240,7 @@
               <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="content-color-primary mb-0">Видео </h4>
+                        <h6 class="content-color-primary mb-0">Видео</h6>
                     </div>
                     {{ user.get_video_count }}
                 </div>
