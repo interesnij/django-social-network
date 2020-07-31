@@ -334,7 +334,6 @@ class User(AbstractUser):
 
     def is_closed_profile(self):
         from users.model.settings import UserPrivate
-
         try:
             user_private = UserPrivate.objects.get(user=self)
             return user_private.is_private
@@ -886,7 +885,6 @@ class User(AbstractUser):
         except:
             list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
         music_query = list.players.filter(is_deleted=False)
-        #music_list = SoundcloudParsing.objects.filter(music_query)
         return music_query
 
     def get_music_count(self):
