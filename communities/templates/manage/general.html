@@ -5,7 +5,7 @@
 <div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-md-9 order-1">
-            <form action="" id="info_form" class="contact-form">
+            <form action="" id="community_general_info_form" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="button" id="general_button" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                        <button type="button" id="community_general_info_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                     </div>
                 </div>
             </form>
