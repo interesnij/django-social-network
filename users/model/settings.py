@@ -57,6 +57,10 @@ class UserNotificationsVideo(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
+class UserNotificationsMusic(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_music_notify', verbose_name="Пользователь")
+    repost = models.BooleanField(default=True, verbose_name="Репост аудиозаписи")
+    
 
 class UserColorSettings(models.Model):
     COLOR = (
