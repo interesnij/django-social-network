@@ -12,6 +12,7 @@ class UserNotificationsPost(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_post_notify', verbose_name="Пользователь")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к записи")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к записи")
+    mention = models.BooleanField(default=True, verbose_name="Упоминание в записи")
     comment_mention = models.BooleanField(default=True, verbose_name="Упоминание в комментарии к записи")
     repost = models.BooleanField(default=True, verbose_name="Репост записи")
     like = models.BooleanField(default=True, verbose_name="Лайк к записи")
@@ -60,7 +61,7 @@ class UserNotificationsVideo(models.Model):
 class UserNotificationsMusic(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_music_notify', verbose_name="Пользователь")
     repost = models.BooleanField(default=True, verbose_name="Репост аудиозаписи")
-    
+
 
 class UserColorSettings(models.Model):
     COLOR = (
