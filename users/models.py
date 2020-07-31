@@ -89,9 +89,9 @@ class User(AbstractUser):
         return str(self.first_name) + " " + str(self.last_name)
 
     def notification_follow(self, user):
-        notification_handler(self, user, UserNotification.CONNECTION_REQUEST, key='notification')
+        notification_handler(self, user, UserNotify.CONNECTION_REQUEST, key='notification')
     def notification_connect(self, user):
-        notification_handler(self, user, UserNotification.CONNECTION_CONFIRMED, key='notification')
+        notification_handler(self, user, UserNotify.CONNECTION_CONFIRMED, key='notification')
 
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
