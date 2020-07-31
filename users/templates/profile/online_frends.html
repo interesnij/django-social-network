@@ -14,8 +14,8 @@
 
     {% for object in user.get_pop_online_connection %}
 
-    <div class="card">
-        <div class="card-body" style="padding:7px;"> 
+    <div class="card border-top border-bottom">
+        <div class="card-body" style="padding:7px;">
             <div class="media">
               <a href="{% url 'user' pk=object.pk %}" class="ajax">
                 <figure style="width:40px;">
