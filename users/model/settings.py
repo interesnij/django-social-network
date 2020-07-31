@@ -8,7 +8,7 @@ class UserNotifications(models.Model):
     connection_confirmed = models.BooleanField(default=True, verbose_name="Заявка принята")
     community_invite = models.BooleanField(default=True, verbose_name="Приглашение в сообщество")
 
-class UserPostNotifications(models.Model):
+class UserNotificationsPost(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_post_notify', verbose_name="Пользователь")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к записи")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к записи")
@@ -21,7 +21,7 @@ class UserPostNotifications(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-class UserPhotoNotifications(models.Model):
+class UserNotificationsPhoto(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_photo_notify', verbose_name="Пользователь")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к фото")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к фото")
@@ -33,7 +33,7 @@ class UserPhotoNotifications(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-class UserGoodNotifications(models.Model):
+class UserNotificationsGood(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_good_notify', verbose_name="Пользователь")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к товару")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к товару")
@@ -45,7 +45,7 @@ class UserGoodNotifications(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-class UserVideoNotifications(models.Model):
+class UserNotificationsVideo(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_video_notify', verbose_name="Пользователь")
     comment = models.BooleanField(default=True, verbose_name="Комментарий к видео")
     comment_reply = models.BooleanField(default=True, verbose_name="Ответ на комментарий к видео")
