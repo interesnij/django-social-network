@@ -11,19 +11,44 @@ class InfoUserForm(forms.ModelForm):
         model = UserProfile
         fields = ('first_name','last_name','sity')
 
-
-class SettingsNotifyForm(forms.ModelForm):
-
+class UserNotifyPostForm(forms.ModelForm):
     class Meta:
-        model = UserPostNotifications
-        fields = (
-            'comment',
-            'comment_reply',
-            'repost',
-            'like',
-            'dislike',
-            'comment_like',
-            'comment_dislike',
-            'comment_reply_like',
-            'comment_reply_dislike',
-        )
+        model = UserNotificationsPost
+        fields = ('comment','comment_reply','comment_mention','mention','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class UserNotifyPhotoForm(forms.ModelForm):
+    class Meta:
+        model = UserNotificationsPhoto
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class UserNotifyGoodForm(forms.ModelForm):
+    class Meta:
+        model = UserNotificationsGood
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class UserNotifyVideoForm(forms.ModelForm):
+    class Meta:
+        model = UserNotificationsVideo
+        fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class UserNotifyMusicForm(forms.ModelForm):
+    class Meta:
+        model = UserNotificationsVideo
+        fields = ('repost')
+
+class UserPrivatePostForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivatePost
+		fields = ('wall', 'comment',)
+class UserPrivatePhotoForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivatePhoto
+		fields = ('photo', 'comment',)
+class UserPrivateGoodForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivateGood
+		fields = ('good', 'comment',)
+class UserPrivateVideoForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivateVideo
+		fields = ('video', 'comment',)
+class UserPrivateMusicForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivateMusic
+		fields = ('music',)

@@ -56,6 +56,9 @@ on('#ajax', 'click', '#community_private_good_btn', function() {
 on('#ajax', 'click', '#community_private_video_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/private_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_video_form"), "Изменения приняты!")
 });
+on('#ajax', 'click', '#community_private_music_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/private_music/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_music_form"), "Изменения приняты!")
+});
 
 on('#ajax', 'click', '#community_notify_post_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/notify_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_post_form"), "Изменения приняты!")
@@ -68,6 +71,9 @@ on('#ajax', 'click', '#community_notify_good_btn', function() {
 });
 on('#ajax', 'click', '#community_notify_video_btn', function() {
   send_form_with_pk_and_toast('/communities/manage/notify_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_video_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#community_notify_music_btn', function() {
+  send_form_with_pk_and_toast('/communities/manage/notify_music/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_notify_music_form"), "Изменения приняты!")
 });
 
 on('#ajax', 'click', '#community_sections_btn', function() {

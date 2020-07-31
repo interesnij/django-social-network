@@ -1,8 +1,72 @@
 <div class="col-md-3 left_menu">
-      <a href="{% url 'user_general_form' user.pk %}" class="ajax">Общее</a>
-      <a href="{% url 'user_info_form' user.pk %}" class="ajax">Информация</a>
-      <a href="{% url 'user_design_form' user.pk %}" class="ajax">Внешний вид</a>
       <a href="{% url 'user_notify_form' user.pk %}" class="ajax">Записи</a>
       <a href="{% url 'user_cuberture_day' user.pk %}" class="ajax">Обший охват</a>
       <a href="{% url 'user_traffic_day' user.pk %}" class="ajax">Посещаемость</a>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" type="button">
+    Общее
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'user_general_form' pk=user.pk %}" class="ajax">Общее</a></li>
+      <li><a href="{% url 'user_info_form' pk=user.pk %}" class="ajax">Информация</a></li>
+      <li><a href="{% url 'user_design_form' pk=user.pk %}" class="ajax">Внешний вид</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Люди
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'follows' pk=user.pk %}" class="ajax">Подписчики</a></li>
+      <li><a href="{% url 'followings' pk=user.pk %}" class="ajax">Мои заявки</a></li>
+      <li><a href="{% url 'user_black_list' pk=user.pk %}" class="ajax">Черный список</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Приватность
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'user_post_private' pk=user.pk %}" class="ajax">Записи</a></li>
+      <li><a href="{% url 'user_photo_private' pk=user.pk %}" class="ajax">Фотографии</a></li>
+      <li><a href="{% url 'user_good_private' pk=user.pk %}" class="ajax">Товары</a></li>
+      <li><a href="{% url 'user_video_private' pk=user.pk %}" class="ajax">Видеозаписи</a></li>
+      <li><a href="{% url 'user_music_private' pk=user.pk %}" class="ajax">Аудиозаписи</a></li>
+    </ul>
+  </div>
+</div>
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Уведомления
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'user_post_notify' pk=user.pk %}" class="ajax">Записи</a></li>
+      <li><a href="{% url 'user_photo_notify' pk=user.pk %}" class="ajax">Фотографии</a></li>
+      <li><a href="{% url 'user_good_notify' pk=user.pk %}" class="ajax">Товары</a></li>
+      <li><a href="{% url 'user_video_notify' pk=user.pk %}" class="ajax">Видеозаписи</a></li>
+      <li><a href="{% url 'user_music_notify' pk=user.pk %}" class="ajax">Аудиозаписи</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Статистика
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul style="list-style-type:none">
+      <li style="margin-bottom:8px;"><a href="{% url 'user_cuberture_day' user.pk %}" class="ajax">Обший охват</a></li>
+      <li style="margin-bottom:8px;"><a href="{% url 'user_traffic_day' user.pk %}" class="ajax">Посещаемость</a></li>
+    </ul>
+  </div>
 </div>

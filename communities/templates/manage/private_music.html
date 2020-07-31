@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Приватность аудиозаписей - {{ community.name }}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
+    <div class="row">
+        <div class="col-md-9 order-1">
+            <form id="community_private_music_form" class="contact-form">
+                {% csrf_token %}
+                <div class="card mb-3">
+                    <div class="card-header border-bottom">
+                        <h5 class="content-color-primary mb-0">Приватность аудиозаписей -
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                              {{ community.name }}
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                          <label>Загрузка аудиозаписей</label>
+                          {{ form.music }}
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" id="community_private_music_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-3 order-2 left_menu">
+            {% include 'manage/menu.html' %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

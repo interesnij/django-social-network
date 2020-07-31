@@ -53,6 +53,10 @@ class CommunityNotificationsVideo(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к ролику")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к ролику")
 
+class CommunityNotificationsMusic(models.Model):
+    community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_notifications_music', verbose_name="Сообщество")
+    repost = models.BooleanField(default=True, verbose_name="Репост аудиозаписи")
+
 
 class CommunityPrivatePost(models.Model):
     STAFF_POST = 'SP'
@@ -150,6 +154,18 @@ class CommunityPrivateVideo(models.Model):
     video = models.CharField(max_length=5, choices=VIDEO, default=VIDEO_ADMIN, verbose_name="Ролик")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
+class CommunityPrivateMusic(models.Model):
+
+    MUSIC_ADMIN = 'VA'
+    MUSIC_MEMBER = 'VM'
+    MUSIC_NOMEMBER = 'VNM'
+    MUSIC = (
+        (MUSIC_ADMIN, 'Аудиозаписи загружает персонал'),
+        (MUSIC_MEMBER, 'Аудиозаписи загружают подписчики'),
+        (MUSIC_NOMEMBER, 'Аудиозаписи загружают все'),
+    )
+    community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_music', verbose_name="Сообщество")
+    music = models.CharField(max_length=5, choices=MUSIC, default=MUSIC_ADMIN, verbose_name="Аудиозапись")
 
 class CommunitySectionsOpen(models.Model):
     community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_sections_open', verbose_name="Сообщество")

@@ -191,6 +191,35 @@ class CommunityNotifyVideoView(TemplateView):
 			return HttpResponse ('!')
 		return super(CommunityNotifyVideoView,self).post(request,*args,**kwargs)
 
+class CommunityNotifyMusicView(TemplateView):
+	template_name = None
+	form = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="notify_music.html", request=request)
+		try:
+			self.notify_music = CommunityNotificationsMusic.objects.get(community=self.community)
+		except:
+			self.notify_music = CommunityNotificationsMusic.objects.create(community=self.community)
+		self.form = CommunityNotifyMusicForm(instance=self.notify_music, initial={"community":self.community},)
+		return super(CommunityNotifyMusicView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityNotifyMusicView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["community"] = self.community
+		context["notify_music"] = self.notify_music
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.notify_music = CommunityNotificationsMusic.objects.get(community=self.community)
+		self.form = CommunityNotifyMusicForm(request.POST, instance=self.notify_music)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse ('!')
+		return super(CommunityNotifyMusicView,self).post(request,*args,**kwargs)
 
 class CommunityPrivatePostView(TemplateView):
 	template_name = None
@@ -296,6 +325,33 @@ class CommunityPrivatePhotoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_photo = CommunityPrivatePhoto.objects.get(community=self.community)
 		self.form = CommunityPrivatePhotoForm(request.POST, instance=self.private_photo)
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			return HttpResponse()
+
+class CommunityPrivateMusicView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_music = CommunityPrivateMusic.objects.get(community=self.community)
+		except:
+			self.private_music = CommunityPrivateMusic.objects.create(community=self.community)
+		self.form = CommunityPrivateMusicForm(instance=self.private_music)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="private_music.html", request=request)
+		return super(CommunityPrivateMusicView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityPrivateMusicView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.private_music = CommunityPrivateMusic.objects.get(community=self.community)
+		self.form = CommunityPrivateMusicForm(request.POST, instance=self.private_music)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()

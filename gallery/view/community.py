@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
-from common.template.photo import *
+from common.template.photo import get_template_community_photo, get_permission_community_photo
 from common.check.community import check_can_get_lists
 
 

@@ -47,34 +47,6 @@ class UserInfoChange(TemplateView):
 		return super(UserInfoChange,self).post(request,*args,**kwargs)
 
 
-class SettingsNotifyView(TemplateView):
-	template_name = None
-	form = None
-	notify_settings = None
-
-	def get(self,request,*args,**kwargs):
-		self.form = SettingsNotifyForm()
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notifications.html", request=request)
-		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(SettingsNotifyView,self).get_context_data(**kwargs)
-		context["form"] = self.form
-		context["notify_settings"] = self.notify_settings
-		return context
-
-	def post(self,request,*args,**kwargs):
-		try:
-			self.notify_settings = UserItemNotifications.objects.get(user=request.user)
-		except:
-			self.notify_settings = UserItemNotifications.objects.create(user=request.user)
-		self.form = SettingsNotifyForm(request.POST,instance=self.notify_settings)
-		if self.form.is_valid():
-			self.result = self.form.save()
-			return HttpResponse ("!")
-		return super(SettingsNotifyView,self).post(request,*args,**kwargs)
-
 class UserDesign(TemplateView):
 	template_name = None
 
@@ -82,3 +54,288 @@ class UserDesign(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_settings_template(folder="settings/", template="design.html", request=request)
 		return super(UserDesign,self).get(request,*args,**kwargs)
+
+
+class UserNotifyPostView(TemplateView):
+	template_name = None
+	form = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_post.html", request=request)
+		try:
+			self.notify_post = UserNotificationsPost.objects.get(user=self.user)
+		except:
+			self.notify_post = UserNotificationsPost.objects.create(user=self.user)
+		self.form=UserNotifyPostForm(instance=self.notify_post)
+		return super(UserNotifyPostView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyPostView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["notify_post"] = self.notify_post
+		context["user"] = self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify_post = UserNotificationsPost.objects.get(user=self.user)
+		self.form = UserNotifyPostForm(request.POST, instance=self.notify_post)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+
+class UserNotifyPhotoView(TemplateView):
+	template_name = None
+	form = None
+	notify_photo = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_photo.html", request=request)
+		try:
+			self.notify_photo = UserNotificationsPhoto.objects.get(user=self.user)
+		except:
+			self.notify_photo = UserNotificationsPhoto.objects.create(user=self.user)
+		self.form=UserNotifyPhotoForm(instance=self.notify_photo)
+		return super(UserNotifyPhotoView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyPhotoView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["notify_photo"] = self.notify_photo
+		context["user"] = self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify_photo = UserNotificationsPhoto.objects.get(user=self.user)
+		self.form = UserNotifyPhotoForm(request.POST, instance=self.notify_photo)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+
+class UserNotifyGoodView(TemplateView):
+	template_name = None
+	form = None
+	notify_good = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_good.html", request=request)
+		try:
+			self.notify_good = UserNotificationsGood.objects.get(user=self.user)
+		except:
+			self.notify_good = UserNotificationsGood.objects.create(user=self.user)
+		self.form=UserNotifyGoodForm(instance=self.notify_good)
+		return super(UserNotifyGoodView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyGoodView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["notify_good"] = self.notify_good
+		context["user"] = self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify_good = UserNotificationsGood.objects.get(user=self.user)
+		self.form = UserNotifyGoodForm(request.POST, instance=self.notify_good)
+		if self.form.is_valid() and request.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+
+class UserNotifyVideoView(TemplateView):
+	template_name = None
+	form = None
+	notify_video = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_video.html", request=request)
+		try:
+			self.notify_video = UserNotificationsVideo.objects.get(user=self.user)
+		except:
+			self.notify_video = UserNotificationsVideo.objects.create(user=self.user)
+		self.form = UserNotifyVideoForm(instance=self.notify_video, initial={"user":self.user},)
+		return super(UserNotifyVideoView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyVideoView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["notify_video"] = self.notify_video
+		context["user"] = self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify_video = UserNotificationsVideo.objects.get(user=self.user)
+		self.form = UserNotifyVideoForm(request.POST, instance=self.notify_video)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+
+class UserNotifyMusicView(TemplateView):
+	template_name = None
+	form = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_music.html", request=request)
+		try:
+			self.notify_music = UserNotificationsMusic.objects.get(user=self.user)
+		except:
+			self.notify_music = UserNotificationsMusic.objects.create(user=self.user)
+		self.form = UserNotifyMusicForm(instance=self.notify_music, initial={"user":self.user},)
+		return super(UserNotifyMusicView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyMusicView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["user"] = self.user
+		context["notify_music"] = self.notify_music
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify_music = UserNotificationsMusic.objects.get(user=self.user)
+		self.form = UserNotifyMusicForm(request.POST, instance=self.notify_music)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+		return super(UserNotifyMusicView,self).post(request,*args,**kwargs)
+
+class UserPrivatePostView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_post = UserPrivatePost.objects.get(user=self.user)
+		except:
+			self.private_post = UserPrivatePost.objects.create(user=self.user)
+		self.form = UserPrivatePostForm(instance=self.private_post)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private_post.html", request=request)
+		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivatePostView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private_post = UserPrivatePost.objects.get(user=self.user)
+		self.form = UserPrivatePostForm(request.POST, instance=self.private_post)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()
+
+class UserPrivateGoodView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_good = UserPrivateGood.objects.get(user=self.user)
+		except:
+			self.private_good = UserPrivateGood.objects.create(user=self.user)
+		self.form = UserPrivateGoodForm(instance=self.private_good)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private_good.html", request=request)
+		return super(UserPrivateGoodView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateGoodView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private_good = UserPrivateGood.objects.get(user=self.user)
+		self.form = UserPrivateGoodForm(request.POST, instance=self.private_good)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()
+
+class UserPrivateVideoView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_video = UserPrivateVideo.objects.get(user=self.user)
+		except:
+			self.private_video = UserPrivateVideo.objects.create(user=self.user)
+		self.form = UserPrivateVideoForm(instance=self.private_video)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private_video.html", request=request)
+		return super(UserPrivateVideoView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateVideoView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private_video = UserPrivateVideo.objects.get(user=self.user)
+		self.form = UserPrivateVideoForm(request.POST, instance=self.private_video)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()
+
+class UserPrivatePhotoView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_photo = UserPrivatePhoto.objects.get(user=self.user)
+		except:
+			self.private_photo = UserPrivatePhoto.objects.create(user=self.user)
+		self.form = UserPrivatePhotoForm(instance=self.private_photo)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private_photo.html", request=request)
+		return super(UserPrivatePhotoView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivatePhotoView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private_photo = UserPrivatePhoto.objects.get(user=self.user)
+		self.form = UserPrivatePhotoForm(request.POST, instance=self.private_photo)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()
+
+class UserPrivateMusicView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private_music = UserPrivateMusic.objects.get(user=self.user)
+		except:
+			self.private_music = UserPrivateMusic.objects.create(user=self.user)
+		self.form = UserPrivateMusicForm(instance=self.private_music)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private_music.html", request=request)
+		return super(UserPrivateMusicView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateMusicView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private_music = UserPrivateMusic.objects.get(user=self.user)
+		self.form = UserPrivateMusicForm(request.POST, instance=self.private_music)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()

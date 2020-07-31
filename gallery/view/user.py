@@ -8,7 +8,7 @@ from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
-from common.template.photo import get_template_user_photo
+from common.template.photo import get_template_user_photo, get_permission_user_photo
 
 
 class UserGalleryView(TemplateView):

@@ -46,6 +46,10 @@ class CommunityNotifyVideoForm(forms.ModelForm):
     class Meta:
         model = CommunityNotificationsVideo
         fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
+class CommunityNotifyMusicForm(forms.ModelForm):
+    class Meta:
+        model = CommunityNotificationsVideo
+        fields = ('repost')
 
 class CommunityPrivatePostForm(forms.ModelForm):
 	class Meta:
@@ -63,6 +67,10 @@ class CommunityPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateVideo
 		fields = ('video', 'comment',)
+class CommunityPrivateMusicForm(forms.ModelForm):
+	class Meta:
+		model = CommunityPrivateMusic
+		fields = ('music',)
 
 class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:

@@ -36,9 +36,10 @@
   <div class="card card-body" style="display: contents;">
     <ul>
       <li><a href="{% url 'community_post_private' community.pk %}" class="ajax">Записи</a></li>
-      <li><a href="{% url 'community_photo_private' community.pk %}" class="ajax">Фото</a></li>
+      <li><a href="{% url 'community_photo_private' community.pk %}" class="ajax">Фотографии</a></li>
       <li><a href="{% url 'community_good_private' community.pk %}" class="ajax">Товары</a></li>
-      <li><a href="{% url 'community_video_private' community.pk %}" class="ajax">Ролики</a></li>
+      <li><a href="{% url 'community_video_private' community.pk %}" class="ajax">Видеозаписи</a></li>
+      <li><a href="{% url 'community_music_private' community.pk %}" class="ajax">Аудиозаписи</a></li>
     </ul>
   </div>
 </div>
@@ -49,9 +50,10 @@
   <div class="card card-body" style="display: contents;">
     <ul>
       <li><a href="{% url 'community_post_notify' community.pk %}" class="ajax">Записи</a></li>
-      <li><a href="{% url 'community_photo_notify' community.pk %}" class="ajax">Фото</a></li>
+      <li><a href="{% url 'community_photo_notify' community.pk %}" class="ajax">Фотографии</a></li>
       <li><a href="{% url 'community_good_notify' community.pk %}" class="ajax">Товары</a></li>
-      <li><a href="{% url 'community_video_notify' community.pk %}" class="ajax">Видео</a></li>
+      <li><a href="{% url 'community_video_notify' community.pk %}" class="ajax">Видеозаписи</a></li>
+      <li><a href="{% url 'community_music_notify' community.pk %}" class="ajax">Аудиозаписи</a></li>
     </ul>
   </div>
 </div>
