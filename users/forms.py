@@ -29,7 +29,7 @@ class UserNotifyVideoForm(forms.ModelForm):
         fields = ('comment','comment_reply','repost','like','dislike','comment_like','comment_dislike','comment_reply_like','comment_reply_dislike',)
 class UserNotifyMusicForm(forms.ModelForm):
     class Meta:
-        model = UserNotificationsVideo
+        model = UserNotificationsMusic
         fields = ('repost')
 
 class UserPrivatePostForm(forms.ModelForm):
