@@ -990,7 +990,7 @@ class User(AbstractUser):
         return User.objects.filter(followers_query)
 
     def get_pop_followers(self):
-        followers_query = Q(follows__followed_user_id=self.pk, perm=PERM.)
+        followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)[0:6]
 
