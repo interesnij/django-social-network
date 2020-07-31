@@ -245,6 +245,6 @@ class UserPrivateMusic(models.Model):
         (ALL_BUT, 'Все, кроме'),
         (SOME_FRIEND, 'Некоторые друзья'),
     )
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_video', verbose_name="Пользователь")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_music', verbose_name="Пользователь")
     music = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет аудиозаписи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")
