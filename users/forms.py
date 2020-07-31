@@ -1,6 +1,6 @@
 from django import forms
 from users.model.profile import UserProfile
-from users.model.settings import UserPostNotifications
+from users.model.settings import *
 
 
 class InfoUserForm(forms.ModelForm):
