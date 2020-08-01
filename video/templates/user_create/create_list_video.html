@@ -2,8 +2,6 @@
   #video_holder{
   width: 200px;
   min-width: 200px;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  color: rgba(0,0,0,0.8);
   padding: 10px;
   text-align: center;
   margin:10px;
@@ -15,10 +13,6 @@
   #video_holder img{
   width: 172px;
   height: auto;
-  }
-  .id_image input,
-  .id_image{
-      display: none;
   }
   #id_album{
   height: auto;
@@ -64,14 +58,14 @@
                 <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     <label>Обложка</label>
-                    <div class="id_image">
+                    <div class="hide_image">
                       <input type="file" name="image" accept="image/*" id="id_image">
                     </div>
-                    <div id="video_holder">
-                      <h4 style="font-weight:bold;font-size:50px;color:#CECECE">№ 1</h4>
+                    <div id="video_holder" class="border">
+                      <h4>№ 1</h4>
                       <p>Обложка</p>
 
-                      <i style="color:#000000">(обязательно)</i>
+                      <i>(обязательно)</i>
 
                     </div>
                   </div>
