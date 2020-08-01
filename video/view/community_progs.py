@@ -22,20 +22,7 @@ class VideoCommunityCommentList(ListView):
 
         if not self.video.comments_enabled:
             raise PermissionDenied('Комментарии для видеозаписи отключены')
-
         self.template_name = get_permission_community_photo(self.video.community, "c_video_comment/", "comments.html", request.user)
-        elif request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
-                self.template_name = "c_video_comment/admin_comments.html"
-            elif request.user.is_video_manager():
-                self.template_name = "c_video_comment/staff_comments.html"
-            elif check_can_get_lists(request.user, self.community):
-                self.template_name = "c_video_comment/comments.html"
-            else:
-                self.template_name = "c_video_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.is_public():
-                self.template_name = "c_video_comment/anon_comments.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
