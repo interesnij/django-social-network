@@ -166,7 +166,7 @@ class UserPrivatePhoto(models.Model):
         (COMMENT_ALL, 'Комментарии пишут все'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_photo', verbose_name="Пользователь")
-    photo = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет фотографии")
+    photo = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет фотографии")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит фотографии")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
@@ -197,7 +197,7 @@ class UserPrivateGood(models.Model):
         (COMMENT_ALL, 'Комментарии пишут все'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_good', verbose_name="Пользователь")
-    good = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет товары")
+    good = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет товары")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит товары")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
@@ -228,7 +228,7 @@ class UserPrivateVideo(models.Model):
         (COMMENT_ALL, 'Комментарии пишут все'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_video', verbose_name="Пользователь")
-    video = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет видеозаписи")
+    video = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет видеозаписи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
@@ -251,5 +251,5 @@ class UserPrivateMusic(models.Model):
         (SOME_FRIEND, 'Некоторые друзья'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_music', verbose_name="Пользователь")
-    music = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет аудиозаписи")
+    music = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет аудиозаписи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")

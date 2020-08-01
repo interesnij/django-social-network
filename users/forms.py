@@ -11,6 +11,10 @@ class InfoUserForm(forms.ModelForm):
         model = UserProfile
         fields = ('first_name','last_name','sity')
 
+class UserNotifyForm(forms.ModelForm):
+    class Meta:
+        model = UserNotifications
+        fields = ('connection_request','connection_confirmed','community_invite',)
 class UserNotifyPostForm(forms.ModelForm):
     class Meta:
         model = UserNotificationsPost
@@ -32,6 +36,10 @@ class UserNotifyMusicForm(forms.ModelForm):
         model = UserNotificationsMusic
         fields = ('repost',)
 
+class UserPrivateForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivate
+		fields = ('community', 'friends', 'message', 'is_private',)
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePost

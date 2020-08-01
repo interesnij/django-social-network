@@ -56,6 +56,35 @@ class UserDesign(TemplateView):
 		return super(UserDesign,self).get(request,*args,**kwargs)
 
 
+class UserNotifyView(TemplateView):
+	template_name = None
+	form = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_settings_template(folder="settings/", template="notify.html", request=request)
+		try:
+			self.notify = UserNotifications.objects.get(user=self.user)
+		except:
+			self.notify = UserNotifications.objects.create(user=self.user)
+		self.form=UserNotifyForm(instance=self.notify)
+		return super(UserNotifyView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserNotifyView,self).get_context_data(**kwargs)
+		context["form"] = self.form
+		context["notify"] = self.notify
+		context["user"] = self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.notify = UserNotifications.objects.get(user=self.user)
+		self.form = UserNotifyForm(request.POST, instance=self.notify)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse ('!')
+
 class UserNotifyPostView(TemplateView):
 	template_name = None
 	form = None
@@ -204,6 +233,33 @@ class UserNotifyMusicView(TemplateView):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(UserNotifyMusicView,self).post(request,*args,**kwargs)
+
+class UserPrivateView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.private = UserPrivate.objects.get(user=self.user)
+		except:
+			self.private = UserPrivate.objects.create(user=self.user)
+		self.form = UserPrivateForm(instance=self.private)
+		self.template_name = self.user.get_settings_template(folder="settings/", template="private.html", request=request)
+		return super(UserPrivateView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateView,self).get_context_data(**kwargs)
+		context["user"] = self.user
+		context["form"] = self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.private = UserPrivate.objects.get(user=self.user)
+		self.form = UserPrivateForm(request.POST, instance=self.private)
+		if self.form.is_valid() and self.user == request.user:
+			self.form.save()
+			return HttpResponse()
 
 class UserPrivatePostView(TemplateView):
 	template_name = None

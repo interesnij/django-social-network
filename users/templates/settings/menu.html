@@ -31,6 +31,7 @@
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
     <ul>
+      <li><a href="{% url 'user_profile_private' pk=user.pk %}" class="ajax">Профиль</a></li>
       <li><a href="{% url 'user_post_private' pk=user.pk %}" class="ajax">Записи</a></li>
       <li><a href="{% url 'user_photo_private' pk=user.pk %}" class="ajax">Фотографии</a></li>
       <li><a href="{% url 'user_good_private' pk=user.pk %}" class="ajax">Товары</a></li>
@@ -45,6 +46,7 @@
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
     <ul>
+      <li><a href="{% url 'user_profile_notify' pk=user.pk %}" class="ajax">Профиль</a></li>
       <li><a href="{% url 'user_post_notify' pk=user.pk %}" class="ajax">Записи</a></li>
       <li><a href="{% url 'user_photo_notify' pk=user.pk %}" class="ajax">Фотографии</a></li>
       <li><a href="{% url 'user_good_notify' pk=user.pk %}" class="ajax">Товары</a></li>

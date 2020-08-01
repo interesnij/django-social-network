@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Приватность товаров{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container pk_saver" data-pk="{{ user.pk }}">
+    <div class="row">
+        <div class="col-md-9 order-1">
+            <form id="user_private_good_form" class="contact-form">
+                {% csrf_token %}
+                <div class="card mb-3">
+                    <div class="card-header border-bottom">
+                        <h5 class="content-color-primary mb-0">Приватность товаров</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                          <label>Кто видит товары</label>
+                          {{ form.see }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто добавляет товары</label>
+                          {{ form.good }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто пишет комментарии</label>
+                          {{ form.comment }}
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" id="user_private_good_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-3 order-2 left_menu">
+            {% include 'settings/menu.html' %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
