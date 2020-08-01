@@ -1,36 +1,4 @@
 
-
-on('#ajax', 'click', '.user_video_list_create_window', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.user_video_create_window', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
-  var list = loader.querySelectorAll('select');
-  var count = list.length;
-  for(i=0; i<count; i++) {
-    list[i].classList.add("form-control")
-  }
-});
-
-on('#ajax', 'click', '.user_video_create_attach', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_attach_window/" + pk + "/", loader);
-  var list = loader.querySelectorAll('select');
-  var count = list.length;
-  for(i=0; i<count; i++) {
-    list[i].classList.add("form-control")
-  }
-});
-
-
 function get_video_info(){
   info_video = document.body.querySelector("#info_video");
   my_playlist = document.body.querySelector("#my_playlist");
@@ -119,7 +87,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     album = document.body.querySelector("#id_album");
-    if (album.value == pk){
+
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
       elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
@@ -128,7 +96,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
       container = document.body.querySelector(".movies_list_in_list");
       container.prepend(elem_);
       try{container.querySelector(".video_none").style.display = "none"}catch{null};
-    }
+
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
     toast_info("Видеоролик создан!")
