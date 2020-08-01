@@ -133,9 +133,9 @@ class UserVideo(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
+            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
         except:
-            self.album = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
+            self.album = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
         if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
         else:

@@ -213,9 +213,9 @@ class UserVideoAttachCreate(View):
 
         if form_post.is_valid() and request.user == user:
             try:
-                my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
+                my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
             except:
-                my_list = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Все видео")
+                my_list = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
@@ -240,9 +240,9 @@ class UserVideoInListCreate(View):
 
         if form_post.is_valid() and request.user == user:
             try:
-                album = VideoAlbum.objects.get(creator_id=user.pk, community=None, is_generic=True, title="Все видео")
+                album = VideoAlbum.objects.get(creator_id=user.pk, community=None, is_generic=True, title="Основной список")
             except:
-                album = VideoAlbum.objects.create(creator_id=user.pk, community=None, is_generic=True, title="Все видео")
+                album = VideoAlbum.objects.create(creator_id=user.pk, community=None, is_generic=True, title="Основной список")
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")

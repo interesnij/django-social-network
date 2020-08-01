@@ -899,7 +899,7 @@ class User(AbstractUser):
     def get_video_count(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         video_query = Q(album=list, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
@@ -907,9 +907,9 @@ class User(AbstractUser):
     def get_video(self):
         from video.models import Video, VideoAlbum
         try:
-            list = VideoAlbum.objects.get(creator_id=self.id, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.get(creator_id=self.id, is_generic=True, title="Основной список")
         except:
-            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Основной список")
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
@@ -917,9 +917,9 @@ class User(AbstractUser):
     def get_my_video(self):
         from video.models import Video, VideoAlbum
         try:
-            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         except:
-            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Основной список")
         video_query = Q(album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
@@ -927,9 +927,9 @@ class User(AbstractUser):
     def get_last_video(self):
         from video.models import Video, VideoAlbum
         try:
-            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         except:
-            list = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+            list = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
@@ -937,9 +937,9 @@ class User(AbstractUser):
     def get_all_video_list_uuid(self):
         from video.models import VideoAlbum
         try:
-            album = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+            album = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         except:
-            album = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Все видео")
+            album = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной список")
         return album.uuid
 
     def get_music_list_id(self):
