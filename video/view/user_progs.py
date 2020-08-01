@@ -248,10 +248,10 @@ class UserVideoInListCreate(View):
             albums = form_post.cleaned_data.get("album")
             new_video.save()
             if not albums:
-                new_video.album = album
+                album.video_album.add(new_video)
             else:
-                for album in albums:
-                    album.video_album.add(new_video)
+                for _album in albums:
+                    _album.video_album.add(new_video)
 
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
