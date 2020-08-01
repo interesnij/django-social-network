@@ -141,7 +141,7 @@ class IPUser(models.Model):
     def __str__(self):
         return '{} - {}, {}, {}'.format(self.user.get_full_name(), self.ip_1, self.ip_2, self.ip_3)
 
-class UserProfileFamily(AbstractUser):
+class UserProfileFamily(models.Model):
     NO_VALUE = 'NV'
     NOT_MARRIED = 'NM'
     MEET_FRIEND = 'MF'
