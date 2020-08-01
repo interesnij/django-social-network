@@ -247,7 +247,7 @@ class UserVideoInListCreate(View):
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")
             new_video.save()
-            if not new_video.album:
+            if not albums:
                 new_video.album = album
             else:
                 for album in albums:
