@@ -43,20 +43,20 @@ class UserPrivateForm(forms.ModelForm):
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePost
-		fields = ('wall', 'comment',)
+		fields = ('see', 'wall', 'comment',)
 class UserPrivatePhotoForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePhoto
-		fields = ('photo', 'comment',)
+		fields = ('see', 'photo', 'comment',)
 class UserPrivateGoodForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateGood
-		fields = ('good', 'comment',)
+		fields = ('see', 'good', 'comment',)
 class UserPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateVideo
-		fields = ('video', 'comment',)
+		fields = ('see', 'video', 'comment',)
 class UserPrivateMusicForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateMusic
-		fields = ('music',)
+		fields = ('see', 'music',)
