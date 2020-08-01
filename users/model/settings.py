@@ -123,7 +123,7 @@ class UserPrivatePost(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья видят'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
@@ -135,7 +135,7 @@ class UserPrivatePost(models.Model):
         (COMMENT_ALL, 'Комментарии пишут все'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_private_post', verbose_name="Пользователь")
-    wall = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет записи")
+    wall = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет записи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
@@ -154,7 +154,7 @@ class UserPrivatePhoto(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья видят'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
@@ -185,7 +185,7 @@ class UserPrivateGood(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья видят'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
@@ -216,7 +216,7 @@ class UserPrivateVideo(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья видят'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
@@ -244,7 +244,7 @@ class UserPrivateMusic(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья видят'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
