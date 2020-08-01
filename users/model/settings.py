@@ -96,8 +96,8 @@ class UserPrivate(models.Model):
     ALL_BUT = 'AB'
     SOME_FRIEND = 'SF'
     PERM = (
-        (ALL_CAN, 'Все видят'),
-        (FRIEND, 'Друзья видят'),
+        (ALL_CAN, 'Все пользователи'),
+        (FRIEND, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (ALL_BUT, 'Все, кроме'),
@@ -122,7 +122,7 @@ class UserPrivatePost(models.Model):
     COMMENT_ALL = 'CA'
 
     PERM = (
-        (ALL_CAN, 'Все видят'),
+        (ALL_CAN, 'Все пользователи'),
         (FRIEND, 'Друзья видят'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
@@ -153,7 +153,7 @@ class UserPrivatePhoto(models.Model):
     COMMENT_ALL = 'CA'
 
     PERM = (
-        (ALL_CAN, 'Все видят'),
+        (ALL_CAN, 'Все пользователи'),
         (FRIEND, 'Друзья видят'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
@@ -184,7 +184,7 @@ class UserPrivateGood(models.Model):
     COMMENT_ALL = 'CA'
 
     PERM = (
-        (ALL_CAN, 'Все видят'),
+        (ALL_CAN, 'Все пользователи'),
         (FRIEND, 'Друзья видят'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
@@ -215,7 +215,7 @@ class UserPrivateVideo(models.Model):
     COMMENT_ALL = 'CA'
 
     PERM = (
-        (ALL_CAN, 'Все видят'),
+        (ALL_CAN, 'Все пользователи'),
         (FRIEND, 'Друзья видят'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
@@ -243,7 +243,7 @@ class UserPrivateMusic(models.Model):
     SOME_FRIEND = 'SF'
 
     PERM = (
-        (ALL_CAN, 'Все видят'),
+        (ALL_CAN, 'Все пользователи'),
         (FRIEND, 'Друзья видят'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
