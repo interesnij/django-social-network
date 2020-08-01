@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from video.models import Video, VideoComment
+from video.models import Video, VideoComment, VideoAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -12,6 +12,7 @@ from django.views.generic import ListView
 from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 from django.views.generic import ListView
+from common.template.video import get_permission_user_video
 
 
 class VideoUserCommentList(ListView):
@@ -22,24 +23,9 @@ class VideoUserCommentList(ListView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not self.video.comments_enabled:
-            raise PermissionDenied('Комментарии для ролика отключены')
-        elif request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "u_video_comment/my_comments.html"
-            elif request.user.is_video_manager():
-                self.template_name = "u_video_comment/staff_comments.html"
-            elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.template_name = "u_video_comment/comments.html"
-        elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            else:
-                self.template_name = "u_video_comment/anon_comments.html"
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+            raise PermissionDenied('Комментарии для видеозаписи отключены')
+
+        self.template_name = get_permission_user_video(self.video.creator, "u_video_comment/", "comments.html", request.user)
         return super(VideoUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -63,9 +49,7 @@ class VideoCommentUserCreate(View):
         if form_post.is_valid() and video_comment.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
@@ -89,9 +73,7 @@ class VideoReplyUserCreate(View):
             comment = form_post.save(commit=False)
 
             if request.user != user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
-                if user.is_closed_profile():
-                    check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
+                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)

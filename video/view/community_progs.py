@@ -9,6 +9,7 @@ from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
+from common.template.video import get_permission_community_video
 
 
 class VideoCommunityCommentList(ListView):
@@ -20,7 +21,9 @@ class VideoCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if not self.video.comments_enabled:
-            raise PermissionDenied('Комментарии для фотографии отключены')
+            raise PermissionDenied('Комментарии для видеозаписи отключены')
+
+        self.template_name = get_permission_community_photo(self.video.community, "c_video_comment/", "comments.html", request.user)
         elif request.user.is_authenticated:
             if request.user.is_staff_of_community_with_name(self.community.name):
                 self.template_name = "c_video_comment/admin_comments.html"
