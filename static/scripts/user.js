@@ -189,3 +189,41 @@ on('#ajax', 'click', '.user_unblock', function() {
   }};
   link_.send();
 })
+
+on('#ajax', 'click', '#user_private_profile_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_profile_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_private_post_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_post_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_private_photo_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private_photo/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_photo_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_private_good_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private_good/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_good_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_private_video_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_video_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_private_music_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/private_music/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_music_form"), "Изменения приняты!")
+});
+
+on('#ajax', 'click', '#user_notify_profile_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_profile_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_notify_post_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_post_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_notify_photo_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify_photo/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_photo_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_notify_good_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify_good/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_good_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_notify_video_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify_video/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_video_form"), "Изменения приняты!")
+});
+on('#ajax', 'click', '#user_notify_music_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/notify_music/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_music_form"), "Изменения приняты!")
+});
