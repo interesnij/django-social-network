@@ -245,9 +245,9 @@ class CommunityVideoInListCreate(View):
 
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             try:
-                album = VideoAlbum.objects.get(creator_id=self.user.pk, community=community, is_generic=True, title="Все видео")
+                album = VideoAlbum.objects.get(creator_id=request.pk, community=community, is_generic=True, title="Все видео")
             except:
-                album = VideoAlbum.objects.create(creator_id=self.user.pk, community=community, is_generic=True, title="Все видео")
+                album = VideoAlbum.objects.create(creator_id=request.pk, community=community, is_generic=True, title="Все видео")
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")
