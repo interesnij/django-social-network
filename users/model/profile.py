@@ -260,7 +260,5 @@ class UserProfileAnketa(models.Model):
         return self.title
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Анкета"
         verbose_name_plural = "Анкеты"
-        ordering=["-created"]
