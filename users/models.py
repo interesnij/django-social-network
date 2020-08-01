@@ -10,6 +10,7 @@ from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from notify.model.user import UserNotify, notification_handler
+from datetime import date
 
 
 class User(AbstractUser):
@@ -48,11 +49,16 @@ class User(AbstractUser):
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
     perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
+    birthday = models.DateField(default=timezone.now, blank=True, verbose_name='День рождения')
     USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
+
+    def calculate_age(birthday):
+        today = date.today()
+        return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
 
     def is_women(self):
         return try_except(self.perm == User.FEMALE)
