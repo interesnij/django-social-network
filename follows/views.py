@@ -58,7 +58,7 @@ class FollowCreate(View):
 			request.user.notification_follow(followed_user)
 			return HttpResponse("!")
 		else:
-            raise Http404
+			raise Http404
 
 class FollowView(View):
 	def get(self,request,*args,**kwargs):
@@ -69,7 +69,7 @@ class FollowView(View):
 				follow.view = True
 				follow.save(update_fields=['view'])
 			else:
-	            raise Http404
+				raise Http404
 		except:
 			pass
 
