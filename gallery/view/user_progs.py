@@ -95,7 +95,7 @@ class PhotoCommentUserDelete(View):
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class PhotoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -105,7 +105,7 @@ class PhotoCommentUserAbortDelete(View):
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserPhotoDescription(View):
     form_image = None
@@ -117,7 +117,7 @@ class UserPhotoDescription(View):
             form_image.save()
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 
 class UserPhotoDelete(View):
@@ -128,7 +128,7 @@ class UserPhotoDelete(View):
             photo.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserPhotoAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -138,7 +138,7 @@ class UserPhotoAbortDelete(View):
             photo.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -148,7 +148,7 @@ class UserOpenCommentPhoto(View):
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -158,7 +158,7 @@ class UserCloseCommentPhoto(View):
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -168,7 +168,7 @@ class UserOffVotesPhoto(View):
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -178,7 +178,7 @@ class UserOnVotesPhoto(View):
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
@@ -188,7 +188,7 @@ class UserOnPrivatePhoto(View):
             photo.save(update_fields=['is_public'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
@@ -198,7 +198,7 @@ class UserOffPrivatePhoto(View):
             photo.save(update_fields=['is_public'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class PhotoWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
@@ -209,7 +209,7 @@ class PhotoWallCommentUserDelete(View):
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class PhotoWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -220,7 +220,7 @@ class PhotoWallCommentUserAbortDelete(View):
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserAddAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -234,7 +234,7 @@ class UserAddAvatarPhoto(View):
             photo.save(update_fields=['album'])
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
 
 class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -250,4 +250,4 @@ class UserRemoveAvatarPhoto(View):
             photo.save()
             return HttpResponse()
         else:
-			raise Http404
+            raise Http404
