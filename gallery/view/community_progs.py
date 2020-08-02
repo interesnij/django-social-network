@@ -232,7 +232,7 @@ class CommunityRemoveAvatarPhoto(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
-            photo.album = None
+            photo.album = None 
             try:
                 album = Album.objects.get(community=community, title="Сохраненные фото",  is_generic=True,)
             except:

@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
 from common.template.photo import get_template_user_photo, get_permission_user_photo
+from django.http import Http404
 
 
 class UserGalleryView(TemplateView):
@@ -59,7 +60,7 @@ class UserAddAvatar(View):
     """
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if user == request.user:
+        if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
             try:
                 _album = Album.objects.get(creator=user, is_generic=True, title="Фото со страницы", community=None)
@@ -81,11 +82,13 @@ class PhotoUserCreate(View):
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
-        if self.user == request.user:
+        if request.is_ajax() and self.user == request.user:
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
+        else:
+			raise Http404
 
 class PhotoAlbumUserCreate(View):
     """
@@ -96,12 +99,14 @@ class PhotoAlbumUserCreate(View):
         _album = Album.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
-        if user == request.user:
+        if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=user)
                 _album.album.add(photo)
                 photos += [photo,]
             return render(request, 'album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user})
+        else:
+			raise Http404
 
 class PhotoAttachUserCreate(View):
     """
@@ -110,7 +115,7 @@ class PhotoAttachUserCreate(View):
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
-        if self.user == request.user:
+        if request.is_ajax() and self.user == request.user:
             try:
                 _album = Album.objects.get(creator=request.user, community=None, is_generic=True, title="Фото со стены")
             except:
@@ -120,6 +125,8 @@ class PhotoAttachUserCreate(View):
                 _album.album.add(photo)
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
+        else:
+			raise Http404
 
 class AlbumUserCreate(TemplateView):
     """
@@ -142,7 +149,7 @@ class AlbumUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = AlbumForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"

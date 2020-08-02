@@ -12,6 +12,7 @@ from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_template_community_photo, get_permission_community_photo
 from common.check.community import check_can_get_lists
+from django.http import Http404
 
 
 class CommunityAddAvatar(View):
@@ -20,7 +21,7 @@ class CommunityAddAvatar(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(community.name):
             photo_input = request.FILES.get('file')
             try:
                 _album = Album.objects.get(community=community, is_generic=True, title="Фото со страницы")
@@ -79,12 +80,15 @@ class PhotoCommunityCreate(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        photos = []
-        check_can_get_lists(request.user, community)
-        for p in request.FILES.getlist('file'):
-            photo = Photo.objects.create(file=p, community=community, creator=request.user)
-            photos += [photo,]
-        return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
+        if request.is_ajax():
+            photos = []
+            check_can_get_lists(request.user, community)
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, community=community, creator=request.user)
+                photos += [photo,]
+            return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
+        else:
+			raise Http404
 
 class PhotoAlbumCommunityCreate(View):
     """
@@ -93,14 +97,17 @@ class PhotoAlbumCommunityCreate(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         _album = Album.objects.get(uuid=self.kwargs["uuid"])
-        photos = []
-        uploaded_file = request.FILES['file']
-        check_can_get_lists(request.user, community)
-        for p in request.FILES.getlist('file'):
-            photo = Photo.objects.create(file=p, community=community, creator=request.user)
-            _album.album.add(photo)
-            photos += [photo,]
-        return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
+        if request.is_ajax():
+            photos = []
+            uploaded_file = request.FILES['file']
+            check_can_get_lists(request.user, community)
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, community=community, creator=request.user)
+                _album.album.add(photo)
+                photos += [photo,]
+            return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
+        else:
+			raise Http404
 
 class PhotoAttachCommunityCreate(View):
     """
@@ -108,19 +115,20 @@ class PhotoAttachCommunityCreate(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        photos = []
-        check_can_get_lists(request.user, community)
-        try:
-            _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены", community=community)
-        except:
-            _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
-        for p in request.FILES.getlist('file'):
-            photo = Photo.objects.create(file=p, creator=request.user)
-            _album.album.add(photo)
-            photos += [photo,]
-        return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
-
-
+        if request.is_ajax():
+            photos = []
+            check_can_get_lists(request.user, community)
+            try:
+                _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены", community=community)
+            except:
+                _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, creator=request.user)
+                _album.album.add(photo)
+                photos += [photo,]
+            return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
+        else:
+			raise Http404
 
 class AlbumCommunityCreate(TemplateView):
     """
@@ -143,7 +151,7 @@ class AlbumCommunityCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = AlbumForm(request.POST)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"

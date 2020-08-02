@@ -12,6 +12,7 @@ from users.models import User
 from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_permission_user_photo
+from django.http import Http404
 
 
 class PhotoUserCommentList(ListView):
@@ -46,7 +47,7 @@ class PhotoCommentUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid() and photo_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and photo_comment.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
@@ -69,7 +70,7 @@ class PhotoReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
-        if form_post.is_valid() and parent.photo_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.photo_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user != user:
@@ -89,18 +90,22 @@ class PhotoReplyUserCreate(View):
 class PhotoCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class PhotoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserPhotoDescription(View):
     form_image = None
@@ -108,96 +113,114 @@ class UserPhotoDescription(View):
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
-        if form_image.is_valid() and photo.creator.pk == request.user.pk:
+        if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
-            return HttpResponse(form_image.cleaned_data["description"])
-        return super(UserPhotoDescription,self).post(request,*args,**kwargs)
+            return HttpResponse()
+        else:
+			raise Http404
 
 
 class UserPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.is_deleted = True
             photo.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserPhotoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.is_deleted = False
             photo.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = False
             photo.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.is_public = False
             photo.save(update_fields=['is_public'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if photo.creator == request.user:
+        if request.is_ajax() and photo.creator == request.user:
             photo.is_public = True
             photo.save(update_fields=['is_public'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+			raise Http404
 
 class PhotoWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == user.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class PhotoWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == user.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserAddAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
@@ -207,15 +230,17 @@ class UserAddAvatarPhoto(View):
             album = Album.objects.get(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
         except:
             album = Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
-        if user == request.user:
+        if request.is_ajax() and user == request.user:
             photo.save(update_fields=['album'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
 
 class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if user == request.user:
+        if request.is_ajax() and user == request.user:
             photo.album = None
             try:
                 album = Album.objects.get(creator=user, community=None, title="Сохраненные фото",  is_generic=True,)
@@ -223,4 +248,6 @@ class UserRemoveAvatarPhoto(View):
                 album = Album.objects.create(creator=user, community=None, title="Сохраненные фото",  is_generic=True,)
             photo.album = album
             photo.save()
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+			raise Http404
