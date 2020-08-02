@@ -14,7 +14,7 @@ class PhotoUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on and not request.is_ajax():
+        if not item.votes_on or not request.is_ajax():
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -84,7 +84,7 @@ class PhotoUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on and not request.is_ajax():
+        if not item.votes_on or not request.is_ajax():
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -154,7 +154,7 @@ class PhotoCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on and not request.is_ajax():
+        if not item.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
         try:
@@ -188,7 +188,7 @@ class PhotoCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on and not request.is_ajax():
+        if not item.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
         try:
@@ -256,7 +256,7 @@ class PhotoCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax(): 
+        if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
         try:
