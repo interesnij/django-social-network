@@ -41,8 +41,9 @@ on('body', 'click', '.ajax', function(event) {
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
-  var url = this.getAttribute('href');
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  url = this.getAttribute('href');
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.open( 'GET', url, true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -56,8 +57,9 @@ on('body', 'click', '.next_item', function(event) {
 })
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
-  var url = this.getAttribute('href');
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  url = this.getAttribute('href');
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.open( 'GET', url, true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -72,10 +74,11 @@ on('body', 'click', '.prev_item', function(event) {
 
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
-  var url = this.getAttribute('href');
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url, true );
-    ajax_link.onreadystatechange = function () {
+  url = this.getAttribute('href');
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.open( 'GET', url, true );
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
@@ -87,8 +90,9 @@ on('body', 'click', '.next_photo', function(event) {
 })
 on('body', 'click', '.prev_photo', function(event) {
   event.preventDefault();
-  var url = this.getAttribute('href');
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  url = this.getAttribute('href');
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.open( 'GET', url, true );
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {

@@ -1,19 +1,21 @@
 function send_form_with_pk_and_toast(url, form, toast){
     form_data = new FormData(form);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', url, true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_info(toast);
-        }
+    ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', url, true );
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+          toast_info(toast);
       }
-      ajax_link.send(form_data);
+    }
+    ajax_link.send(form_data);
 }
 
 function send_with_pk_and_reload(url){
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', url + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     this_page_reload(document.location.href);
@@ -26,6 +28,7 @@ function comment_delete(_this, _link, _class){
   comment_pk = data.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + comment_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     comment = data.parentElement.parentElement.parentElement.parentElement;
@@ -45,6 +48,7 @@ function comment_wall_delete(_this, _link, _class){
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + pk + "/" + comment_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     comment = data.parentElement.parentElement.parentElement.parentElement;
@@ -66,6 +70,7 @@ function comment_abort_delete(_this, _link){
   block = _this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
@@ -80,6 +85,7 @@ function comment_wall_abort_delete(_this, _link){
   block = _this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + pk + "/" + comment_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
@@ -111,6 +117,7 @@ function send_photo_change(span, _link, new_class, html){
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     new_span = document.createElement("a");
@@ -223,6 +230,7 @@ function send_comment(form, block, link){
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', link, true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	(form.querySelector(".text-comment").value || form.querySelector(".img_block").firstChild) ? null : toast_error("Напишите или прикрепите что-нибудь");
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -293,20 +301,22 @@ function addStyleSheets (href) {
 
 function open_fullscreen(link, block) {
   var link_, elem;
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', link, true );
-  link_.onreadystatechange = function () {
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', link, true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
     block.innerHTML = elem
   }};
-  link_.send();
+  link.send();
 }
 
 function vote_reload(link_1, link_2, _like_block, _dislike_block){
   like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   like_link.open( 'GET', link_1, true );
+  like_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   like_link.onreadystatechange = function () {
   if ( like_link.readyState == 4 && like_link.status == 200 ) {
     span_1 = document.createElement("span");
@@ -334,6 +344,7 @@ function send_like(item, link){
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
   link__.open( 'GET', link, true );
+  link__.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
@@ -356,6 +367,7 @@ function send_dislike(item, link){
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
   link__.open( 'GET', link, true );
+  link__.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {

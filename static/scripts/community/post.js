@@ -11,6 +11,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
   	form_data = new FormData(form);
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       ajax_link.open( 'POST', '/communities/progs/add/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             elem_ = document.createElement('span');
@@ -35,6 +36,7 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/managers/progs_community/create_claim/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

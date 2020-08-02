@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 
 on('#ajax', 'click', '.u_wall_image', function() {
   uuid = this.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk"); 
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/user_wall/" + pk + "/" + uuid + "/", loader)
 });
@@ -53,6 +53,7 @@ on('#ajax', 'click', '#add_album', function() {
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/gallery/user/add_album/" + pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');

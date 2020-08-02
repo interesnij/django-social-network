@@ -52,6 +52,7 @@ on('#ajax', 'click', '#c_add_album', function() {
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/gallery/community/add_album/" + pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');

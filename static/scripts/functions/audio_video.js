@@ -401,6 +401,7 @@ function get_normal_screen(){
         function save_playlist(suffix, post_link, get_link, track_id){
             var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
             playlist_link.open( 'GET', post_link, true );
+            playlist_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             playlist_link.onreadystatechange = function () {
             if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
               document.querySelector("body").className = "";
@@ -408,6 +409,7 @@ function get_normal_screen(){
 
               var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
               _link.open( 'GET', get_link, true );
+              _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
               _link.onreadystatechange = function () {
                 if ( _link.readyState == 4 && _link.status == 200 ) {
                   var response = document.createElement('span');

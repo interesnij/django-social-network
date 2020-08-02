@@ -83,6 +83,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/user_progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -116,6 +117,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');

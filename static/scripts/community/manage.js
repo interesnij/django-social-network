@@ -13,6 +13,7 @@ on('#ajax', 'click', '.community_follow_view', function() {
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/follows/community_view/" + pk + "/" + uuid + "/", true );
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         li.remove()
@@ -25,6 +26,7 @@ on('#ajax', 'click', '.community_member_create', function() {
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/communities/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         li.remove()
@@ -37,6 +39,7 @@ on('#ajax', 'click', '.community_member_delete', function() {
     uuid = li.getAttribute("data-uuid");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/communities/progs/manager_delete_member/" + pk + "/" + uuid + "/", true );
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         li.remove()

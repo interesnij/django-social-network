@@ -143,6 +143,7 @@ on('#ajax', 'click', '#add_good_community_btn', function() {
   form_data = new FormData(document.body.querySelector("#add_good_community_form"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/community/add/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
