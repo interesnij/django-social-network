@@ -303,7 +303,6 @@ function open_fullscreen(link, block) {
   var link_, elem;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', link, true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;

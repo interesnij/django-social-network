@@ -5,6 +5,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.views.generic import ListView
 from common.template.user import get_template_user
+from django.http import Http404
 
 
 class FrendsListView(ListView):
@@ -75,17 +76,20 @@ class CommonFrendsListView(ListView):
 
 
 class ConnectCreate(View):
-
 	def get(self,request,*args,**kwargs):
 		target_user = User.objects.get(pk=self.kwargs["pk"])
-		new_frend = request.user.frend_user(target_user)
-		request.user.notification_connect(target_user)
-		return HttpResponse("")
-
+		if request.is_ajax():
+			new_frend = request.user.frend_user(target_user)
+			request.user.notification_connect(target_user)
+			return HttpResponse("")
+		else:
+			raise Http404
 
 class ConnectDelete(View):
-
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
-		request.user.unfrend_user(self.target_user)
-		return HttpResponse("")
+		if request.is_ajax():
+			request.user.unfrend_user(self.target_user)
+			return HttpResponse("")
+		else:
+			raise Http404

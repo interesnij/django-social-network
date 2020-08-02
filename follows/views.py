@@ -7,6 +7,7 @@ from users.models import User
 from django.http import HttpResponse
 from django.views.generic import ListView
 from common.template.user import get_template_user
+from django.http import Http404
 
 
 class FollowsView(ListView):
@@ -52,49 +53,66 @@ class FollowingsView(ListView):
 class FollowCreate(View):
 	def get(self,request,*args,**kwargs):
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
-		new_follow = request.user.follow_user(followed_user)
-		request.user.notification_follow(followed_user)
-		return HttpResponse("!")
+		if request.is_ajax():
+			new_follow = request.user.follow_user(followed_user)
+			request.user.notification_follow(followed_user)
+			return HttpResponse("!")
+		else:
+            raise Http404
 
 class FollowView(View):
 	def get(self,request,*args,**kwargs):
 		follow_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
-			follow = Follow.objects.get(user=follow_user, followed_user=request.user)
-			follow.view = True
-			follow.save(update_fields=['view'])
+			if request.is_ajax():
+				follow = Follow.objects.get(user=follow_user, followed_user=request.user)
+				follow.view = True
+				follow.save(update_fields=['view'])
+			else:
+	            raise Http404
 		except:
 			pass
-		return HttpResponse("!")
-
 
 class FollowDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		request.user.unfollow_user(self.followed_user)
-		return HttpResponse("!")
-
+		if request.is_ajax():
+			request.user.unfollow_user(self.followed_user)
+			return HttpResponse("!")
+		else:
+			raise Http404
 
 class CommunityFollowCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		new_follow = request.user.community_follow_user(self.community)
-		self.community.notification_community_follow(request.user)
-		return HttpResponse("!")
+		if request.is_ajax():
+			new_follow = request.user.community_follow_user(self.community)
+			self.community.notification_community_follow(request.user)
+			return HttpResponse("!")
+		else:
+			raise Http404
 
 
 class CommunityFollowDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		request.user.community_unfollow_user(self.community)
-		return HttpResponse("!")
-
+		if request.is_ajax():
+			request.user.community_unfollow_user(self.community)
+			return HttpResponse("!")
+		else:
+			raise Http404
 
 class CommunityFollowView(View):
 	def get(self,request,*args,**kwargs):
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		user = User.objects.get(uuid=self.kwargs["uuid"])
-		follow = CommunityFollow.objects.get(user=user, community=community)
-		follow.view = True
-		follow.save(update_fields=['view'])
-		return HttpResponse("!")
+		try:
+			if request.is_ajax():
+				follow = CommunityFollow.objects.get(user=user, community=community)
+				follow.view = True
+				follow.save(update_fields=['view'])
+				return HttpResponse("!")
+			else:
+				raise Http404
+		except:
+			pass
