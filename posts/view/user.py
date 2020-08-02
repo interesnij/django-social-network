@@ -11,6 +11,7 @@ from posts.forms import CommentForm
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_permission_user_post
+from django.http import Http404
 
 
 class PostUserCommentList(ListView):
@@ -148,7 +149,9 @@ class PostUserOffComment(View):
         if request.user == item.creator and request.is_ajax():
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
-        return HttpResponse("")
+            return HttpResponse("")
+        else:
+            raise Http404
 
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
@@ -156,8 +159,9 @@ class PostUserOnComment(View):
         if request.user == item.creator and request.is_ajax():
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
-        return HttpResponse("")
-
+            return HttpResponse("")
+        else:
+            raise Http404
 
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):

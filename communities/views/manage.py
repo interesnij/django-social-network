@@ -29,7 +29,7 @@ class CommunityGeneralView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(request.POST, instance=self.community)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse('!')
 		else:
@@ -62,7 +62,7 @@ class CommunitySectionsOpenView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.sections = CommunitySectionsOpen.objects.get(community=self.community)
 		self.form = CommunitySectionOpenForm(request.POST, instance=self.sections)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ()
 		return super(CommunitySectionsOpenView,self).post(request,*args,**kwargs)
@@ -93,7 +93,7 @@ class CommunityNotifyPostView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		self.form = CommunityNotifyPostForm(request.POST, instance=self.notify_post)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
@@ -124,7 +124,7 @@ class CommunityNotifyPhotoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_photo = CommunityNotificationsPhoto.objects.get(community=self.community)
 		self.form = CommunityNotifyPhotoForm(request.POST, instance=self.notify_photo)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyPhotoView,self).post(request,*args,**kwargs)
@@ -155,7 +155,7 @@ class CommunityNotifyGoodView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_good = CommunityNotificationsGood.objects.get(community=self.community)
 		self.form = CommunityNotifyGoodForm(request.POST, instance=self.notify_good)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyGoodView,self).post(request,*args,**kwargs)
@@ -186,7 +186,7 @@ class CommunityNotifyVideoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_video = CommunityNotificationsVideo.objects.get(community=self.community)
 		self.form = CommunityNotifyVideoForm(request.POST, instance=self.notify_video)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyVideoView,self).post(request,*args,**kwargs)
@@ -216,7 +216,7 @@ class CommunityNotifyMusicView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_music = CommunityNotificationsMusic.objects.get(community=self.community)
 		self.form = CommunityNotifyMusicForm(request.POST, instance=self.notify_music)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyMusicView,self).post(request,*args,**kwargs)
@@ -244,7 +244,7 @@ class CommunityPrivatePostView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_post = CommunityPrivatePost.objects.get(community=self.community)
 		self.form = CommunityPrivatePostForm(request.POST, instance=self.private_post)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()
 
@@ -271,7 +271,7 @@ class CommunityPrivateGoodView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_good = CommunityPrivateGood.objects.get(community=self.community)
 		self.form = CommunityPrivateGoodForm(request.POST, instance=self.private_good)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()
 
@@ -298,7 +298,7 @@ class CommunityPrivateVideoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_video = CommunityPrivateVideo.objects.get(community=self.community)
 		self.form = CommunityPrivateVideoForm(request.POST, instance=self.private_video)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()
 
@@ -325,7 +325,7 @@ class CommunityPrivatePhotoView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_photo = CommunityPrivatePhoto.objects.get(community=self.community)
 		self.form = CommunityPrivatePhotoForm(request.POST, instance=self.private_photo)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()
 
@@ -352,7 +352,7 @@ class CommunityPrivateMusicView(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.private_music = CommunityPrivateMusic.objects.get(community=self.community)
 		self.form = CommunityPrivateMusicForm(request.POST, instance=self.private_music)
-		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			return HttpResponse()
 

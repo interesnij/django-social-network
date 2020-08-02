@@ -6,6 +6,7 @@ from communities.forms import CommunityForm
 from gallery.models import Album
 from users.models import User
 from django.shortcuts import render
+from django.http import Http404
 
 
 class UserCreateCommunityWindow(TemplateView):
@@ -40,7 +41,7 @@ class CommunityCreate(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.form=CommunityForm(request.POST)
-		if self.form.is_valid():
+		if self.form.is_valid() and request.is_ajax():
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
 			membersheeps = [request.user,]
@@ -61,6 +62,7 @@ class CommunitiesCatsView(TemplateView):
 		context=super(CommunitiesCatsView,self).get_context_data(**kwargs)
 		context["categ"]=self.categ
 		return context
+
 
 
 class CommunityMemberCreate(View):
