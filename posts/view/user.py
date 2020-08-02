@@ -145,7 +145,7 @@ class PostUserUnFixed(View):
 class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator:
+        if request.user == item.creator and request.is_ajax():
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
         return HttpResponse("")
@@ -153,7 +153,7 @@ class PostUserOffComment(View):
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator:
+        if request.user == item.creator and request.is_ajax():
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
         return HttpResponse("")

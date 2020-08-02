@@ -1,19 +1,15 @@
+import json
 from users.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.decorators.http import require_http_methods
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from django.utils.safestring import mark_safe
-import json
-
 from chat.models import Message
-from chat.helpers import ajax_required
+from django.views.decorators.http import require_http_methods
 
 
-class MessagesListView(LoginRequiredMixin,TemplateView):
+class MessagesListView(TemplateView):
     template_name = "message_list.html"
 
 
@@ -21,8 +17,6 @@ def room(request, room_name):
     return render(request, 'room.html', {
         'room_name_json': mark_safe(json.dumps(room_name))
     })
-
-
 
 
 class ConversationListView(MessagesListView):
@@ -38,9 +32,6 @@ class ConversationListView(MessagesListView):
             username=self.kwargs["username"])
         return Message.objects.get_conversation(active_user, self.request.user)
 
-
-@login_required
-@ajax_required
 @require_http_methods(["POST"])
 def send_message(request):
     """AJAX функциональный вид, чтобы получить только минимальную информацию, процесс
@@ -61,8 +52,6 @@ def send_message(request):
     return HttpResponse()
 
 
-@login_required
-@ajax_required
 @require_http_methods(["GET"])
 def receive_message(request):
     """Простой индикатор функциональный вид, чтобы вернуть оказанные одно сообщение на

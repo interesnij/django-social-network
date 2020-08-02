@@ -160,7 +160,7 @@ on('#ajax', 'click', '.u_post_unfixed', function() {
   send_change(this, "/posts/user/unfixed/", "u_post_fixed", "Закрепить")
 })
 
-on('#ajax', 'click', '.u_post_off_comment', function() {
+on('#ajax', 'click', '.u_post_off_comment', function() { 
   send_change(this, "/posts/user/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".u_item_comments").style.display = "none"
