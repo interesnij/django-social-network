@@ -6,17 +6,16 @@ from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PhotoVotes, PhotoCommentVotes
 from common.check.user import check_user_can_get_list
-from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
+from django.http import Http404
 
 
 class PhotoUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
-
+        if not item.votes_on and not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -50,6 +49,8 @@ class PhotoCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -83,8 +84,8 @@ class PhotoUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not item.votes_on and not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -118,6 +119,8 @@ class PhotoCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -151,8 +154,8 @@ class PhotoCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not item.votes_on and not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
@@ -185,8 +188,8 @@ class PhotoCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not item.votes_on and not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
@@ -219,6 +222,8 @@ class PhotoCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
@@ -251,6 +256,8 @@ class PhotoCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax(): 
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
