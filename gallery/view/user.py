@@ -88,7 +88,7 @@ class PhotoUserCreate(View):
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
         else:
-			raise Http404
+            raise Http404
 
 class PhotoAlbumUserCreate(View):
     """
@@ -106,7 +106,7 @@ class PhotoAlbumUserCreate(View):
                 photos += [photo,]
             return render(request, 'album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user})
         else:
-			raise Http404
+            raise Http404
 
 class PhotoAttachUserCreate(View):
     """
@@ -126,7 +126,7 @@ class PhotoAttachUserCreate(View):
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
         else:
-			raise Http404
+            raise Http404
 
 class AlbumUserCreate(TemplateView):
     """
