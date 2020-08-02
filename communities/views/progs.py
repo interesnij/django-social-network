@@ -72,7 +72,7 @@ class CommunityMemberCreate(View):
 			new_member = request.user.join_community_with_name(self.community.name)
 			return HttpResponse()
 		else:
-            raise Http404
+			raise Http404
 class CommunityMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -80,7 +80,7 @@ class CommunityMemberDelete(View):
 			request.user.leave_community_with_name(self.community.name)
 			return HttpResponse()
 		else:
-            raise Http404
+			raise Http404
 
 class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
@@ -90,7 +90,7 @@ class CommunityManageMemberCreate(View):
 			new_member = user.join_community_with_name(community.name)
 			return HttpResponse()
 		else:
-            raise Http404
+			raise Http404
 class CommunityManageMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		community = Community.objects.get(pk=self.kwargs["pk"])
@@ -99,7 +99,7 @@ class CommunityManageMemberDelete(View):
 			user.leave_community_with_name(community.name)
 			return HttpResponse()
 		else:
-            raise Http404
+			raise Http404
 
 class CommunityAdminCreate(View):
 	def get(self,request,*args,**kwargs):
