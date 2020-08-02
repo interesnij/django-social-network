@@ -88,7 +88,7 @@ class PhotoCommunityCreate(View):
                 photos += [photo,]
             return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
         else:
-			raise Http404
+            raise Http404
 
 class PhotoAlbumCommunityCreate(View):
     """
@@ -107,7 +107,7 @@ class PhotoAlbumCommunityCreate(View):
                 photos += [photo,]
             return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
-			raise Http404
+            raise Http404
 
 class PhotoAttachCommunityCreate(View):
     """
@@ -128,7 +128,7 @@ class PhotoAttachCommunityCreate(View):
                 photos += [photo,]
             return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
         else:
-			raise Http404
+            raise Http404
 
 class AlbumCommunityCreate(TemplateView):
     """
