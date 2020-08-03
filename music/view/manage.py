@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
+from django.http import Http404
 
 
 class UserPlaylistCreate(View):
@@ -19,7 +20,7 @@ class UserPlaylistCreate(View):
         form_post = PlaylistForm(request.POST)
         user = User.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
             new_playlist = form_post.save(commit=False)
             new_playlist.creator = request.user
             new_playlist.save()
@@ -38,11 +39,14 @@ class TempListOn(View):
             my_list = UserTempSoundList.objects.get(user=request.user)
         except:
             my_list = UserTempSoundList.objects.create(user=request.user)
-        my_list.tag = None
-        my_list.genre = None
-        my_list.save()
-        return HttpResponse("!")
-
+        if request.is_ajax():
+            my_list.tag = None
+            my_list.genre = None
+            my_list.list = list
+            my_list.save()
+            return HttpResponse()
+        else:
+            raise Http404
 
 class TempTagOn(View):
     """
@@ -54,12 +58,14 @@ class TempTagOn(View):
             temp_tag = UserTempSoundList.objects.get(user=request.user)
         except:
             temp_tag = UserTempSoundList.objects.create(user=request.user)
-        temp_tag.list = None
-        temp_tag.genre = None
-        temp_tag.tag = tag
-        temp_tag.save()
-        return HttpResponse("!")
-
+        if request.is_ajax():
+            temp_tag.list = None
+            temp_tag.genre = None
+            temp_tag.tag = tag
+            temp_tag.save()
+            return HttpResponse()
+        else:
+            raise Http404
 
 class TempGenreOn(View):
     """
@@ -71,8 +77,11 @@ class TempGenreOn(View):
             temp_genre = UserTempSoundList.objects.get(user=request.user)
         except:
             temp_genre = UserTempSoundList.objects.create(user=request.user)
-        temp_genre.list = None
-        temp_genre.genre = genre
-        temp_genre.tag = None
-        temp_genre.save()
-        return HttpResponse("!")
+        if request.is_ajax():
+            temp_genre.list = None
+            temp_genre.genre = genre
+            temp_genre.tag = None
+            temp_genre.save()
+            return HttpResponse()
+        else:
+            raise Http404
