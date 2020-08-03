@@ -23,7 +23,7 @@ class VideoUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not self.video.comments_enabled:
+        if not request.is_ajax() or not self.video.comments_enabled:
             raise Http404
 
         self.template_name = get_permission_user_video(self.video.creator, "u_video_comment/", "comments.html", request.user)

@@ -22,7 +22,7 @@ class PostCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not self.item.comments_enabled:
+        if not request.is_ajax() or not self.item.comments_enabled:
             raise Http404
 
         self.template_name = get_permission_community_post(self.community, "c_post_comment/", "comments.html", request.user)

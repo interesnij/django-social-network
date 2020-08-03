@@ -22,7 +22,7 @@ class PhotoCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not self.photo.comments_enabled:
+        if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
         self.template_name = get_permission_community_photo(self.photo.community, "c_photo_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):

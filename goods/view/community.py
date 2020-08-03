@@ -60,8 +60,8 @@ class GoodCommunityCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not self.good.comments_enabled:
-            raise PermissionDenied('Комментарии к товару отключены')
+        if not request.is_ajax() or not self.good.comments_enabled:
+            raise Http404
         self.template_name = get_permission_user_post(self.user, "c_good_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
