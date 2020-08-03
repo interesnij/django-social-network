@@ -171,7 +171,7 @@ class CommunityPhotosList(ListView):
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "gallery_community/", "list.html", request.user)
         else:
-			raise Http404
+            raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
