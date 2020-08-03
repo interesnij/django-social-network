@@ -12,7 +12,7 @@
     </div>
     {% if album %}<a href="{% url 'user_album' pk=object.creator.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>{% endif %}
     <span>
-        <span style="cursor:pointer" class="">♦ Удалить</span> 
+        <span style="cursor:pointer" class="photo_delete_window">♦ Удалить</span> 
     </span>
   </div>
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
