@@ -106,7 +106,7 @@ class PenaltyPhotoList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_photos()
         return list
 
 class PenaltyPhotoCommentList(ListView):
@@ -127,7 +127,7 @@ class PenaltyPhotoCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_photo_comments()
         return list
 
 
@@ -149,7 +149,7 @@ class PenaltyGoodList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_goods()
         return list
 
 class PenaltyGoodCommentList(ListView):
@@ -170,7 +170,7 @@ class PenaltyGoodCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_good_comments()
         return list
 
 
@@ -192,7 +192,7 @@ class PenaltyAudioList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_audios()
         return list
 
 
@@ -214,7 +214,7 @@ class PenaltyVideoList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_videos()
         return list
 
 class PenaltyVideoCommentList(ListView):
@@ -235,7 +235,7 @@ class PenaltyVideoCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_penalty_video_comments()
         return list
 
 class PenaltyUserAdvertiserList(ListView):

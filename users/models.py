@@ -1235,7 +1235,6 @@ class User(AbstractUser):
         # записи, на которых пожаловались
         from managers.model.post import ModeratedPostComment
         return ModeratedPostComment.objects.filter(verified=False)
-
     def get_penalty_posts(self):
         # оштрафованные записи
         from managers.model.post import ModerationPenaltyPost
@@ -1244,4 +1243,64 @@ class User(AbstractUser):
         # оштрафованные записи
         from managers.model.post import ModerationPenaltyPostComment
         return ModerationPenaltyPostComment.objects.filter(manager__id=self.pk)
+
+    def get_moderation_photos(self):
+        # записи, на которых пожаловались
+        from managers.model.photo import ModeratedPhoto
+        return ModeratedPhoto.objects.filter(verified=False)
+    def get_moderation_photo_comments(self):
+        # записи, на которых пожаловались
+        from managers.model.photo import ModeratedPhotoComment
+        return ModeratedPhotoComment.objects.filter(verified=False)
+    def get_penalty_photos(self):
+        # оштрафованные записи
+        from managers.model.photo import ModerationPenaltyPhoto
+        return ModerationPenaltyPhoto.objects.filter(manager__id=self.pk)
+    def get_penalty_photo_comments(self):
+        # оштрафованные записи
+        from managers.model.photo import ModerationPenaltyPhotoComment
+        return ModerationPenaltyPhotoComment.objects.filter(manager__id=self.pk)
+
+    def get_moderation_goods(self):
+        # записи, на которых пожаловались
+        from managers.model.good import ModeratedGood
+        return ModeratedGood.objects.filter(verified=False)
+    def get_moderation_good_comments(self):
+        # записи, на которых пожаловались
+        from managers.model.good import ModeratedGoodComment
+        return ModeratedGoodComment.objects.filter(verified=False)
+    def get_penalty_goods(self):
+        # оштрафованные записи
+        from managers.model.good import ModerationPenaltyGood
+        return ModerationPenaltyGood.objects.filter(manager__id=self.pk)
+    def get_penalty_good_comments(self):
+        # оштрафованные записи
+        from managers.model.good import ModerationPenaltyGoodComment
+        return ModerationPenaltyGoodComment.objects.filter(manager__id=self.pk)
+
+    def get_moderation_videos(self):
+        # записи, на которых пожаловались
+        from managers.model.video import ModeratedVideo
+        return ModeratedVideo.objects.filter(verified=False)
+    def get_moderation_video_comments(self):
+        # записи, на которых пожаловались
+        from managers.model.video import ModeratedVideoComment
+        return ModeratedVideoComment.objects.filter(verified=False)
+    def get_penalty_videos(self):
+        # оштрафованные записи
+        from managers.model.video import ModerationPenaltyVideo
+        return ModerationPenaltyVideo.objects.filter(manager__id=self.pk)
+    def get_penalty_video_comments(self):
+        # оштрафованные записи
+        from managers.model.video import ModerationPenaltyVideoComment
+        return ModerationPenaltyVideoComment.objects.filter(manager__id=self.pk)
+
+    def get_moderation_audios(self):
+        # записи, на которых пожаловались
+        from managers.model.audio import ModeratedAudio
+        return ModeratedAudio.objects.filter(verified=False)
+    def get_penalty_audios(self):
+        # оштрафованные записи
+        from managers.model.audio import ModerationPenaltyAudio
+        return ModerationPenaltyAudio.objects.filter(manager__id=self.pk)
     ''''' конец модерации '''''

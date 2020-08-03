@@ -106,7 +106,7 @@ class ModerationPhotoList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_photos()
         return list
 
 class ModerationPhotoCommentList(ListView):
@@ -127,7 +127,7 @@ class ModerationPhotoCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_photo_comments()
         return list
 
 
@@ -149,7 +149,7 @@ class ModerationGoodList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_goods()
         return list
 
 class ModerationGoodCommentList(ListView):
@@ -170,7 +170,7 @@ class ModerationGoodCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_good_comments()
         return list
 
 
@@ -192,7 +192,7 @@ class ModerationAudioList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_audios()
         return list
 
 
@@ -214,7 +214,7 @@ class ModerationVideoList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_videos()
         return list
 
 class ModerationVideoCommentList(ListView):
@@ -235,7 +235,7 @@ class ModerationVideoCommentList(ListView):
         return context
 
     def get_queryset(self):
-        list = []
+        list = self.user.get_moderation_video_comments()
         return list
 
 
