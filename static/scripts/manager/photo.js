@@ -14,7 +14,7 @@ on('#ajax', 'click', '.photo_delete_window', function() {
     _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add("manager_removed")
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_photo/delete_window/" + uuid, loader)
+  open_fullscreen("/managers/progs_photo/delete_window/" + uuid + "/", loader)
 })
 
 on('#ajax', 'click', '.create_photo_delete_btn', function() {
