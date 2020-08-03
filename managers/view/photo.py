@@ -249,7 +249,7 @@ class PhotoDeleteWindow(TemplateView):
         if request.user.is_photo_manager or request.user.is_superuser:
             self.template_name = "manage_create/photo/photo_delete.html"
         else:
-            raise Http404
+            raise Http404 
         return super(PhotoDeleteWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

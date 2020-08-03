@@ -27,8 +27,9 @@ on('#ajax', 'click', '.create_photo_delete_btn', function() {
     uuid = div.getAttribute("data-uuid");
     moderation_container = document.body.querySelector("#moderation_photo_container");
   } else if (_this.getAttribute){
-    document.querySelector(".photo_fullscreen").style.display = "none";
-    document.getElementById("photo_loader").innerHTML="";
+    uuid = _this.getAttribute("data-uuid");
+    container_object = document.body;
+    div = container_object.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
