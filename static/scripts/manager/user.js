@@ -13,7 +13,7 @@ on('#ajax', 'click', '.user_suspend', function() {
     li.classList.add("changed")
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_user/suspend_window/" + pk, loader)
+  open_fullscreen("/managers/progs_user/suspend_window/" + pk + "/", loader)
 })
 on('#ajax', 'click', '.user_blocker', function() {
   _this = this;
@@ -30,7 +30,7 @@ on('#ajax', 'click', '.user_blocker', function() {
     li.classList.add("changed")
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_user/block_window/" + pk, loader)
+  open_fullscreen("/managers/progs_user/block_window/" + pk + "/", loader)
 })
 on('#ajax', 'click', '.user_warning_banner', function() {
   _this = this;
@@ -47,7 +47,7 @@ on('#ajax', 'click', '.user_warning_banner', function() {
     li.classList.add("changed")
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_user/warning_banner_window/" + pk, loader)
+  open_fullscreen("/managers/progs_user/warning_banner_window/" + pk + "/", loader)
 })
 
 on('#ajax', 'click', '.create_user_suspend_btn', function() {

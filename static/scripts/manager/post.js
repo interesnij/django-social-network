@@ -25,7 +25,7 @@ on('#ajax', 'click', '.post_delete_window', function() {
     uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_post/delete_window/" + uuid, loader)
+  open_fullscreen("/managers/progs_post/delete_window/" + uuid + "/", loader)
 })
 
 on('#ajax', 'click', '.create_post_delete_btn', function() {
@@ -140,7 +140,7 @@ on('#ajax', 'click', '.post_comment_delete_window', function() {
     pk = _this.parentElement.parentElement.getAttribute("data-pk");
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_post/delete_comment_window/" + pk, loader)
+  open_fullscreen("/managers/progs_post/delete_comment_window/" + pk + "/", loader)
 })
 
 on('#ajax', 'click', '.create_post_comment_delete_btn', function() {

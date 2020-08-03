@@ -129,7 +129,7 @@ on('#ajax', 'click', '.photo_comment_delete_window', function() {
     pk = _this.parentElement.parentElement.getAttribute("data-pk");
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_photo/delete_comment_window/" + pk, loader)
+  open_fullscreen("/managers/progs_photo/delete_comment_window/" + pk + "/", loader)
 })
 
 on('#ajax', 'click', '.create_photo_comment_delete_btn', function() {

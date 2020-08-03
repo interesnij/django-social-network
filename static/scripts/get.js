@@ -153,11 +153,11 @@ on('#ajax', 'click', '.tag_item', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("tag_" + tag_pk)){
-    save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
+    save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk + "/", track_id)
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-    setTimeout(function() {music_player.playSpecificTrack("tag_" + tag_pk, track_id)}, 50);
+    setTimeout(function() {music_player.playSpecificTrack("tag_" + tag_pk + "/", track_id)}, 50);
   }
   }
   });
@@ -166,11 +166,11 @@ on('#ajax', 'click', '.genre_item', function() {
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
   var genre_pk = document.querySelector(".genre_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("genre_" + genre_pk)){
-    save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
+    save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk + "/", track_id)
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-    setTimeout(function() {music_player.playSpecificTrack("genre_" + list_pk, track_id)}, 50);
+    setTimeout(function() {music_player.playSpecificTrack("genre_" + list_pk + "/", track_id)}, 50);
   }
   }
 });
