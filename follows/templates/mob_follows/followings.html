@@ -30,7 +30,7 @@
                         <button class="btn btn-outline-link" type="button">Искать</button>
                     </div>
                 </div>
-                <ul class="list-group profile_block_paginate" id="followings_container" data-link="/out/{{ user.pk }}">
+                <ul class="list-group profile_block_paginate" id="followings_container" data-link="/out/{{ user.pk }}/">
                     {% if object_list %}
                     {% for object in object_list %}
                     <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">

@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="card-body">
-            <div class="row profile_block_paginate" id="user_goods_container" style="margin-left: 0;margin-right: 0;" data-link="/goods/user/goods/{{ user.uuid }}">
+            <div class="row profile_block_paginate" id="user_goods_container" data-link="/goods/user/goods/{{ user.uuid }}/">
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-6 u_good_detail pag {% if forloop.last %}last{% endif %}" data-id="{{ object.id }}" style="cursor:pointer">

@@ -25,11 +25,11 @@
 
               {% if object_list %}
 
-              <div id="moderation_post_comment_container" data-link="/managers/moderation_list/post_comment/{{ user.pk }}">
+              <div id="moderation_post_comment_container" data-link="/managers/moderation_list/post_comment/{{ user.pk }}/">
                   {% for object in object_list %}
                   <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" data-pk="{{ object.comment.pk }}">
                       <div class="media">
-                        <div class="media-body"> 
+                        <div class="media-body">
 
                           <span style="padding:20px">{{ object.comment.text }}</span>
                           <div class="attach_container">

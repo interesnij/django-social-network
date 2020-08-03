@@ -23,7 +23,7 @@
             </div>
             <div class="card-body px-0 py-0">
 
-              <div id="moderation_post_container" data-link="/managers/moderation_list/post/{{ user.pk }}">
+              <div id="moderation_post_container" data-link="/managers/moderation_list/post/{{ user.pk }}/">
                 {% if object_list %}
                   {% for object in object_list %}
                   <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}">

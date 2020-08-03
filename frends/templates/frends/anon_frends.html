@@ -43,7 +43,7 @@
                                       </div>
                                   </div>
 
-                                  <ul class="list-group profile_block_paginate" id="friends_container" data-link="/friends/{{ user.pk }}">
+                                  <ul class="list-group profile_block_paginate" id="friends_container" data-link="/friends/{{ user.pk }}/">
                                     {% if object_list %}
                                         {% for object in object_list %}
                                           <li class="list-group-item pag {% if forloop.last %}last{% endif %}">

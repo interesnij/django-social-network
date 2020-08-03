@@ -29,7 +29,7 @@
 
               {% if object_list %}
 
-              <ul class="list-group profile_block_paginate" id="follows_container" data-link="/follows/{{ user.pk }}">
+              <ul class="list-group profile_block_paginate" id="follows_container" data-link="/follows/{{ user.pk }}/">
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">

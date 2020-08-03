@@ -17,11 +17,8 @@ function paginate(block, link, block_2){
 	if(block.getElementsByClassName('pag').length === (page-1)*15){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-		link_3.open( 'GET', window.location.href + '?page=' + page++, true );
-		//link_3.open( 'GET', link + '/?page=' + page++, true );
+		link_3.open( 'GET', link + '/?page=' + page++, true );
 		link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		console.log(window.location.href);
-		console.log(link);
 
 		link_3.onreadystatechange = function () {
 		if ( this.readyState == 4 && this.status == 200 ) {
