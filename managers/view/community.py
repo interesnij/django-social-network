@@ -52,7 +52,7 @@ class CommunityEditorCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_superuser and request.user.is_work_community_editor:
             add_community_editor(user, request.user)
-            return HttpResponse(")
+            return HttpResponse()
         else:
             raise Http404
 
