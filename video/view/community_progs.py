@@ -10,6 +10,7 @@ from django.shortcuts import render
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from common.template.video import get_permission_community_video
+from django.http import Http404
 
 
 class VideoCommunityCommentList(ListView):
@@ -50,7 +51,7 @@ class VideoCommentCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and video_comment.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
@@ -77,7 +78,7 @@ class VideoReplyCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and parent.video_comment.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
@@ -100,10 +101,10 @@ class VideoCommentCommunityDelete(View):
             community = comment.post.community
         except:
             community = comment.parent_comment.post.community
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
 
 class VideoCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -112,76 +113,92 @@ class VideoCommentCommunityAbortDelete(View):
             community = comment.post.community
         except:
             community = comment.parent_comment.post.community
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.is_deleted = True
             video.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.is_deleted = False
             video.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOpenCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.comments_enabled = True
             video.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.comments_enabled = False
             video.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOffVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.votes_on = False
             video.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOnVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.votes_on = True
             video.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.is_public = False
             video.save(update_fields=['is_public'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(photo.community.name):
             video.is_public = True
             video.save(update_fields=['is_public'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityVideoListCreate(View):
     form_post = None
@@ -195,7 +212,7 @@ class CommunityVideoListCreate(View):
         form_post = AlbumForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
@@ -216,7 +233,7 @@ class CommunityVideoAttachCreate(View):
         form_post = VideoForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             try:
                 my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=community, is_generic=True, title="Основной список")
             except:
@@ -243,7 +260,7 @@ class CommunityVideoInListCreate(View):
         form_post = VideoForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             try:
                 album = VideoAlbum.objects.get(creator_id=request.pk, community=community, is_generic=True, title="Основной список")
             except:

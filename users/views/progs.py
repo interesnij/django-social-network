@@ -1,20 +1,20 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
+from django.shortcuts import render
+from django.http import Http404
 
 class UserBanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        request.user.block_user_with_pk(self.user.pk)
-        return HttpResponse('Пользователь заблокирован')
+        if request.is_ajax():
+            request.user.block_user_with_pk(self.user.pk)
+            return HttpResponse()
 
 
 class GetUserGender(View):
     def get(self,request,*args,**kwargs):
-        if request.user.gender:
+        if not request.is_ajax() and request.user.gender:
             return HttpResponse()
         else:
             import pandas as pd
@@ -54,15 +54,18 @@ class GetUserGender(View):
 class UserUnbanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        request.user.unblock_user_with_pk(self.user.pk)
-        return HttpResponse('Пользователь разблокирован')
-
+        if request.is_ajax():
+            request.user.unblock_user_with_pk(self.user.pk)
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserColorChange(View):
-
     def get(self,request,*args,**kwargs):
         from users.model.settings import UserColorSettings
 
+        if not request.is_ajax():
+            raise Http404
         try:
             model = UserColorSettings.objects.get(user=request.user)
         except:
@@ -79,7 +82,7 @@ class UserColorChange(View):
 class UserPostView(View):
     def get(self,request,*args,**kwargs):
         from stst.models import PostNumbers
-        if request.user.is_authenticated:
+        if request.is_ajax() and request.user.is_authenticated:
             pk = self.kwargs["pk"]
             try:
                 obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
@@ -96,6 +99,8 @@ class PhoneVerify(View):
         from common.model.other import PhoneCodes
         from users.models import User
 
+        if not request.is_ajax():
+            raise Http404
         code = self.kwargs["code"]
         _phone = self.kwargs["phone"]
         phone = request.user.get_last_location().phone + _phone
@@ -125,8 +130,8 @@ class PhoneSend(View):
         from users.models import User
 
         text = ""
-        if not request.user.is_no_phone_verified():
-            return HttpResponse("")
+        if not request.is_ajax() and not request.user.is_no_phone_verified():
+            raise Http404
         else:
             _phone = self.kwargs["phone"]
             if len(_phone) > 8:

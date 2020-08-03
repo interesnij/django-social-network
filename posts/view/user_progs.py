@@ -11,12 +11,13 @@ from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
 
+
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         self.form_post = PostForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if self.form_post.is_valid():
+        if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
 
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):

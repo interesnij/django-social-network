@@ -1003,7 +1003,7 @@ class User(AbstractUser):
 
     def get_followings(self):
         followings_query = Q(followers__user_id=self.pk)
-        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        followings_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followings_query)
 
     def get_timeline_posts(self):

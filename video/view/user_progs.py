@@ -13,6 +13,7 @@ from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 from django.views.generic import ListView
 from common.template.video import get_permission_user_video
+from django.http import Http404
 
 
 class VideoUserCommentList(ListView):
@@ -46,7 +47,7 @@ class VideoCommentUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         video_comment = Video.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid() and video_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and video_comment.comments_enabled:
             comment = form_post.save(commit=False)
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
@@ -69,7 +70,7 @@ class VideoReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
 
-        if form_post.is_valid() and parent.video_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user != user:
@@ -89,94 +90,113 @@ class VideoReplyUserCreate(View):
 class VideoCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class VideoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.is_deleted = True
             video.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.is_deleted = False
             video.save(update_fields=['is_deleted'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOpenCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.comments_enabled = True
             video.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.comments_enabled = False
             video.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOffVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.votes_on = False
             video.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOnVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.votes_on = True
             video.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.is_public = False
             video.save(update_fields=['is_public'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
-        if video.creator == request.user:
+        if request.is_ajax() and video.creator == request.user:
             video.is_public = True
             video.save(update_fields=['is_public'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class VideoWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == user.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserVideoListCreate(View):
     form_post = None
@@ -190,7 +210,7 @@ class UserVideoListCreate(View):
         form_post = AlbumForm(request.POST)
         user = User.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
@@ -211,7 +231,7 @@ class UserVideoAttachCreate(View):
         form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
             try:
                 my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
             except:
@@ -238,7 +258,7 @@ class UserVideoInListCreate(View):
         form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
             try:
                 album = VideoAlbum.objects.get(creator_id=user.pk, community=None, is_generic=True, title="Основной список")
             except:

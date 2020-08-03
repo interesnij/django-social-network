@@ -47,7 +47,7 @@ class PostCommentUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         post = Post.objects.get(uuid=request.POST.get('uuid'))
 
-        if form_post.is_valid() and post.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user.pk != user.pk:
@@ -92,113 +92,127 @@ class PostReplyUserCreate(View):
 class PostCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if form_post.is_valid() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if form_post.is_valid() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if form_post.is_valid() and request.user.pk == user.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if form_post.is_valid() and request.user.pk == user.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator:
+        if form_post.is_valid() and request.user == item.creator:
             item.is_fixed = True
             item.save(update_fields=['is_fixed'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator:
+        if form_post.is_valid() and request.user == item.creator:
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
-            return HttpResponse("")
+            return HttpResponse()
         else:
-            return HttpResponse("")
+            raise Http404
 
 
 class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator and request.is_ajax():
+        if form_post.is_valid() and request.user == item.creator and request.is_ajax():
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
-            return HttpResponse("")
+            return HttpResponse()
         else:
             raise Http404
 
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user == item.creator and request.is_ajax():
+        if form_post.is_valid() and request.user == item.creator and request.is_ajax():
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
-            return HttpResponse("")
+            return HttpResponse()
         else:
             raise Http404
 
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.pk == item.creator.pk:
+        if form_post.is_valid() and request.user.pk == item.creator.pk:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallUserDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if form_post.is_valid() and request.user.pk == user.pk:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.pk == item.creator.pk:
+        if form_post.is_valid() and request.user.pk == item.creator.pk:
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
+        if form_post.is_valid() and request.user.pk == user.pk:
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostUserDetail(TemplateView):
     template_name = None
@@ -220,19 +234,22 @@ class PostUserDetail(TemplateView):
 class UserOnVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if post.creator == request.user:
+        if form_post.is_valid() and post.creator == request.user:
             post.votes_on = True
             post.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class UserOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if post.creator == request.user:
+        if form_post.is_valid() and post.creator == request.user:
             post.votes_on = False
             post.save(update_fields=['votes_on'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 def post_update_interactions(request):
     data_point = request.POST['id_value']

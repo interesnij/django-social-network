@@ -6,16 +6,16 @@ from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PostVotes, PostCommentVotes
 from common.check.user import check_user_can_get_list
-from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
+from django.http import Http404
 
 
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not item.votes_on:
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -49,6 +49,8 @@ class PostCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -82,8 +84,8 @@ class PostUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not item.votes_on:
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -117,6 +119,8 @@ class PostCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
         try:
@@ -150,8 +154,8 @@ class PostCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not item.votes_on:
+            raise Http404
         check_can_get_lists(request.user, community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
@@ -184,8 +188,8 @@ class PostCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not item.votes_on:
+            raise Http404
         check_can_get_lists(request.user, community)
         try:
             likedislike = PostVotes.objects.get(parent=item, user=request.user)
@@ -218,6 +222,8 @@ class PostCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
@@ -250,6 +256,8 @@ class PostCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)

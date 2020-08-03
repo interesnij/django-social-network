@@ -12,6 +12,7 @@ from rest_framework.exceptions import ValidationError
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_permission_community_post
+from django.http import Http404
 
 
 class PostCommunityCommentList(ListView):
@@ -50,7 +51,7 @@ class PostCommunityCommentCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and post.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
@@ -74,7 +75,7 @@ class PostCommunityReplyCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and parent.post.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
@@ -93,102 +94,126 @@ class PostCommunityReplyCreate(View):
 class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == comment.commenter.pk:
+        if request.is_ajax() and request.user.pk == comment.commenter.pk:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.is_fixed = True
             item.save(update_fields=['is_fixed'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityUnFixed(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityOffComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityOnComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.pk == item.creator.pk:
+        if request.is_ajax() and request.user.pk == item.creator.pk:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(item.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class PostCommunityDetail(TemplateView):
     template_name = None
@@ -210,19 +235,22 @@ class PostCommunityDetail(TemplateView):
 class CommunityOnVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(post.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(post.community.name):
             post.votes_on = True
             post.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_staff_of_community_with_name(post.community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(post.community.name):
             post.votes_on = False
             post.save(update_fields=['votes_on'])
-        return HttpResponse("!")
-
+            return HttpResponse()
+        else:
+            raise Http404
 
 def post_update_interactions(request):
     data_point = request.POST['id_value']

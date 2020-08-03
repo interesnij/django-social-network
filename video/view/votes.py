@@ -8,14 +8,15 @@ from common.model.votes import VideoVotes, VideoCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
+from django.http import Http404
 
 
 class VideoUserLikeCreate(View):
     def get(self, request, **kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not video.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not video.votes_on:
+            raise Http404
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -51,6 +52,8 @@ class VideoCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -86,8 +89,8 @@ class VideoUserDislikeCreate(View):
     def get(self, request, **kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not video.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not video.votes_on:
+            raise Http404
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -123,6 +126,8 @@ class VideoCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -158,8 +163,8 @@ class VideoCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not video.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not video.votes_on:
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
@@ -192,8 +197,8 @@ class VideoCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if not video.votes_on:
-            raise PermissionDenied('Реакции отключены.')
+        if not request.is_ajax() and not video.votes_on:
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
@@ -226,6 +231,8 @@ class VideoCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)
@@ -258,6 +265,8 @@ class VideoCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax():
+            raise Http404
         check_can_get_lists(request.user,community)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)

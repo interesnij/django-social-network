@@ -37,7 +37,7 @@ class UserInfoChange(TemplateView):
 		except:
 			self.profile = UserProfile.objects.create(user=request.user)
 		self.form = InfoUserForm(request.POST,instance=self.profile)
-		if self.form.is_valid():
+		if request.is_ajax() and self.form.is_valid():
 			user = self.request.user
 			user.first_name = self.form.cleaned_data['first_name']
 			user.last_name = self.form.cleaned_data['last_name']
@@ -81,9 +81,9 @@ class UserNotifyView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify = UserNotifications.objects.get(user=self.user)
 		self.form = UserNotifyForm(request.POST, instance=self.notify)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 
 class UserNotifyPostView(TemplateView):
 	template_name = None
@@ -110,9 +110,9 @@ class UserNotifyPostView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify_post = UserNotificationsPost.objects.get(user=self.user)
 		self.form = UserNotifyPostForm(request.POST, instance=self.notify_post)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 
 class UserNotifyPhotoView(TemplateView):
 	template_name = None
@@ -140,9 +140,9 @@ class UserNotifyPhotoView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify_photo = UserNotificationsPhoto.objects.get(user=self.user)
 		self.form = UserNotifyPhotoForm(request.POST, instance=self.notify_photo)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 
 class UserNotifyGoodView(TemplateView):
 	template_name = None
@@ -170,9 +170,9 @@ class UserNotifyGoodView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify_good = UserNotificationsGood.objects.get(user=self.user)
 		self.form = UserNotifyGoodForm(request.POST, instance=self.notify_good)
-		if self.form.is_valid() and request.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and request.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 
 class UserNotifyVideoView(TemplateView):
 	template_name = None
@@ -200,9 +200,9 @@ class UserNotifyVideoView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify_video = UserNotificationsVideo.objects.get(user=self.user)
 		self.form = UserNotifyVideoForm(request.POST, instance=self.notify_video)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 
 class UserNotifyMusicView(TemplateView):
 	template_name = None
@@ -229,9 +229,9 @@ class UserNotifyMusicView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.notify_music = UserNotificationsMusic.objects.get(user=self.user)
 		self.form = UserNotifyMusicForm(request.POST, instance=self.notify_music)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse ()
 		return super(UserNotifyMusicView,self).post(request,*args,**kwargs)
 
 class UserPrivateView(TemplateView):
@@ -257,7 +257,7 @@ class UserPrivateView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private = UserPrivate.objects.get(user=self.user)
 		self.form = UserPrivateForm(request.POST, instance=self.private)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
 
@@ -284,7 +284,7 @@ class UserPrivatePostView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private_post = UserPrivatePost.objects.get(user=self.user)
 		self.form = UserPrivatePostForm(request.POST, instance=self.private_post)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
 
@@ -311,7 +311,7 @@ class UserPrivateGoodView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private_good = UserPrivateGood.objects.get(user=self.user)
 		self.form = UserPrivateGoodForm(request.POST, instance=self.private_good)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
 
@@ -338,7 +338,7 @@ class UserPrivateVideoView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private_video = UserPrivateVideo.objects.get(user=self.user)
 		self.form = UserPrivateVideoForm(request.POST, instance=self.private_video)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
 
@@ -365,7 +365,7 @@ class UserPrivatePhotoView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private_photo = UserPrivatePhoto.objects.get(user=self.user)
 		self.form = UserPrivatePhotoForm(request.POST, instance=self.private_photo)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
 
@@ -392,6 +392,6 @@ class UserPrivateMusicView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.private_music = UserPrivateMusic.objects.get(user=self.user)
 		self.form = UserPrivateMusicForm(request.POST, instance=self.private_music)
-		if self.form.is_valid() and self.user == request.user:
+		if request.is_ajax() and self.form.is_valid() and self.user == request.user:
 			self.form.save()
 			return HttpResponse()
