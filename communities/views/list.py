@@ -7,6 +7,7 @@ from common.check.community import check_can_get_lists
 from common.template.post import get_template_community_post, get_permission_community_post
 from common.template.music import get_template_community_music
 from common.template.video import get_template_community_video
+from django.http import Http404
 
 
 class CommunityMembersView(ListView):
@@ -168,8 +169,10 @@ class PostsCommunity(ListView):
 			self.fixed = Post.objects.get(community=community, is_fixed=True)
 		except:
 			self.fixed = None
-
-		self.template_name = get_permission_community_post(self.community, "c_lenta/", "list.html", request.user)
+		if request.is_ajax():
+			self.template_name = get_permission_community_post(self.community, "c_lenta/", "list.html", request.user)
+		else:
+			raise Http404
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + template_name
 		return super(PostsCommunity,self).get(request,*args,**kwargs)
