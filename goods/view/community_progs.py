@@ -11,6 +11,7 @@ from django.views.generic import ListView
 from goods.forms import CommentForm, GoodForm
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
+from django.http import Http404
 
 
 class GoodCommentCommunityCreate(View):
@@ -24,7 +25,7 @@ class GoodCommentCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
-        elif form_post.is_valid() and good.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and good.comments_enabled:
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
@@ -56,7 +57,7 @@ class GoodReplyCommunityCreate(View):
                 raise PermissionDenied("Ошибка доступа.")
             elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
                 raise PermissionDenied("Ошибка доступа.")
-            elif request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
+            elif request.is_ajax() and request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment, "good_comment")
@@ -75,10 +76,12 @@ class GoodCommentCommunityDelete(View):
             community = comment.good.community
         except:
             community = comment.parent_comment.good.community
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class GoodCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
@@ -87,76 +90,92 @@ class GoodCommentCommunityAbortDelete(View):
             community = comment.good.community
         except:
             community = comment.parent_comment.good.community
-        if request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
-        return HttpResponse("")
+            return HttpResponse()
+        else:
+            raise Http404
 
 
 class CommunityOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOffVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.votes_on = False
             good.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityOnVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.votes_on = True
             good.save(update_fields=['votes_on'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 
 class CommunityHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
-        return HttpResponse("!")
+            return HttpResponse("!")
 
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_hide = False
             good.save(update_fields=['is_hide'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_delete = True
             good.save(update_fields=['is_delete'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_delete = False
             good.save(update_fields=['is_delete'])
-        return HttpResponse("!")
+            return HttpResponse()
+        else:
+            raise Http404
 
 
 class GoodCommunityCreate(TemplateView):
@@ -181,15 +200,14 @@ class GoodCommunityCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid():
+        if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
             new_good.creator = self.user
             new_good = self.form.save()
             html = render(request,'good_base/new_good.html',{'object': new_good})
-            return HttpResponse(html)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
 
 class GoodCommunityCreateAttach(TemplateView):
@@ -214,12 +232,11 @@ class GoodCommunityCreateAttach(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid():
+        if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
             new_good.creator = request.user
             new_good = self.form.save()
             html = render(request, 'c_good/good.html',{'object': new_good})
-            return HttpResponse(html)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(GoodCommunityCreateAttach,self).get(request,*args,**kwargs)

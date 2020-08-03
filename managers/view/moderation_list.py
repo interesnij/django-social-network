@@ -1,5 +1,6 @@
 from users.models import User
 from django.views.generic import ListView
+from django.http import Http404
 
 
 class ModerationUserList(ListView):
@@ -11,7 +12,7 @@ class ModerationUserList(ListView):
         if self.user.is_user_manager or self.user.is_superuser:
             self.template_name = "moderation_list/user_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationUserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -32,7 +33,7 @@ class ModerationCommunityList(ListView):
         if self.user.is_community_manager or self.user.is_superuser:
             self.template_name = "moderation_list/community_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationCommunityList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -53,7 +54,7 @@ class ModerationPostList(ListView):
         if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "moderation_list/post_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationPostList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,7 +75,7 @@ class ModerationPostCommentList(ListView):
         if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "moderation_list/post_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationPostCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -96,7 +97,7 @@ class ModerationPhotoList(ListView):
         if self.user.is_photo_manager or self.user.is_superuser:
             self.template_name = "moderation_list/photo_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -117,7 +118,7 @@ class ModerationPhotoCommentList(ListView):
         if self.user.is_photo_manager or self.user.is_superuser:
             self.template_name = "moderation_list/photo_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationPhotoCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -139,7 +140,7 @@ class ModerationGoodList(ListView):
         if self.user.is_good_manager or self.user.is_superuser:
             self.template_name = "moderation_list/good_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationGoodList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -160,7 +161,7 @@ class ModerationGoodCommentList(ListView):
         if self.user.is_good_manager or self.user.is_superuser:
             self.template_name = "moderation_list/good_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationGoodCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -182,7 +183,7 @@ class ModerationAudioList(ListView):
         if self.user.is_audio_manager or self.user.is_superuser:
             self.template_name = "moderation_list/audio_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationAudioList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -204,7 +205,7 @@ class ModerationVideoList(ListView):
         if self.user.is_video_manager or self.user.is_superuser:
             self.template_name = "moderation_list/video_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -225,7 +226,7 @@ class ModerationVideoCommentList(ListView):
         if self.user.is_video_manager or self.user.is_superuser:
             self.template_name = "moderation_list/video_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationVideoCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -247,7 +248,7 @@ class ModerationUserAdvertiserList(ListView):
         if self.user.is_user_advertiser or self.user.is_superuser:
             self.template_name = "moderation_list/user_advertiser_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationUserAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -268,7 +269,7 @@ class ModerationCommunityAdvertiserList(ListView):
         if self.user.is_community_advertiser or self.user.is_superuser:
             self.template_name = "moderation_list/community_advertiser_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(ModerationCommunityAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

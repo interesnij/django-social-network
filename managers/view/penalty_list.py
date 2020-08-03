@@ -1,5 +1,6 @@
 from users.models import User
 from django.views.generic import ListView
+from django.http import Http404
 
 
 class PenaltyUserList(ListView):
@@ -11,7 +12,7 @@ class PenaltyUserList(ListView):
         if self.user.is_user_manager or self.user.is_superuser:
             self.template_name = "penalty_list/user_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyUserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -32,7 +33,7 @@ class PenaltyCommunityList(ListView):
         if self.user.is_community_manager or self.user.is_superuser:
             self.template_name = "penalty_list/community_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyCommunityList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -53,7 +54,7 @@ class PenaltyPostList(ListView):
         if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "penalty_list/post_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyPostList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,7 +75,7 @@ class PenaltyPostCommentList(ListView):
         if self.user.is_post_manager or self.user.is_superuser:
             self.template_name = "penalty_list/post_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyPostCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -96,7 +97,7 @@ class PenaltyPhotoList(ListView):
         if self.user.is_photo_administrator or self.user.is_superuser:
             self.template_name = "penalty_list/photo_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -117,7 +118,7 @@ class PenaltyPhotoCommentList(ListView):
         if self.user.is_photo_administrator or self.user.is_superuser:
             self.template_name = "penalty_list/photo_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyPhotoCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -139,7 +140,7 @@ class PenaltyGoodList(ListView):
         if self.user.is_good_manager or self.user.is_superuser:
             self.template_name = "penalty_list/good_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyGoodList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -160,7 +161,7 @@ class PenaltyGoodCommentList(ListView):
         if self.user.is_good_manager or self.user.is_superuser:
             self.template_name = "penalty_list/good_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyGoodCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -182,7 +183,7 @@ class PenaltyAudioList(ListView):
         if self.user.is_audio_manager or self.user.is_superuser:
             self.template_name = "penalty_list/audio_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyAudioList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -204,7 +205,7 @@ class PenaltyVideoList(ListView):
         if self.user.is_video_manager or self.user.is_superuser:
             self.template_name = "penalty_list/video_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -225,7 +226,7 @@ class PenaltyVideoCommentList(ListView):
         if self.user.is_video_manager or self.user.is_superuser:
             self.template_name = "penalty_list/video_comment_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyVideoCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -246,7 +247,7 @@ class PenaltyUserAdvertiserList(ListView):
         if self.user.is_user_advertiser or self.user.is_superuser:
             self.template_name = "penalty_list/user_advertiser_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyUserAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -267,7 +268,7 @@ class PenaltyCommunityAdvertiserList(ListView):
         if self.user.is_community_advertiser or self.user.is_superuser:
             self.template_name = "penalty_list/community_advertiser_list.html"
         else:
-            self.template_name = "about.html"
+            raise Http404
         return super(PenaltyCommunityAdvertiserList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
