@@ -20,6 +20,8 @@ function paginate(block, link, block_2){
 		link_3.open( 'GET', window.location.href + '?page=' + page++, true );
 		//link_3.open( 'GET', link + '/?page=' + page++, true );
 		link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		console.log(window.location.href);
+		console.log(link);
 
 		link_3.onreadystatechange = function () {
 		if ( this.readyState == 4 && this.status == 200 ) {
