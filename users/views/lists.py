@@ -6,6 +6,7 @@ from posts.models import Post
 from common.template.post import get_permission_user_post
 from common.template.video import get_template_user_video
 from common.template.music import get_template_user_music
+from django.http import Http404
 
 
 class UserVisitCommunities(ListView):
@@ -118,8 +119,10 @@ class PostListView(ListView):
 		except:
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-
-		self.template_name = get_permission_user_post(self.user, "lenta/", "list.html", request.user)
+		if request.is_ajax():
+			self.template_name = get_permission_user_post(self.user, "lenta/", "list.html", request.user)
+		else:
+			raise Http404
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + template_name
 		return super(PostListView,self).get(request,*args,**kwargs)
