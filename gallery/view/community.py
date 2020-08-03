@@ -168,8 +168,10 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_permission_community_photo(self.community, "gallery_community/", "list.html", request.user)
-
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo(self.community, "gallery_community/", "list.html", request.user)
+        else:
+			raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
@@ -190,8 +192,10 @@ class CommunityAlbumPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_community_photo(self.community, "album_community/", "list.html", request.user)
-
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo(self.community, "album_community/", "list.html", request.user)
+        else:
+            raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)

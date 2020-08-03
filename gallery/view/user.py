@@ -166,8 +166,10 @@ class UserPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_user_photo(self.user, "gallery_user/", "list.html", request.user)
-
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "gallery_user/", "list.html", request.user)
+        else:
+            raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserPhotosList,self).get(request,*args,**kwargs)
@@ -188,8 +190,10 @@ class UserAlbumPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_user_photo(self.user, "album_user/", "list.html", request.user)
-
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "album_user/", "list.html", request.user)
+        else:
+            raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
