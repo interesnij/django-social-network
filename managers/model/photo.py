@@ -21,7 +21,7 @@ class ModeratedPhoto(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
-    def create_moderated_object(cls, post):
+    def create_moderated_object(cls, photo):
         return cls.objects.create(photo=photo)
 
     @classmethod
@@ -53,7 +53,7 @@ class ModeratedPhoto(models.Model):
         self.verified = True
         self.save()
         ModerationPenaltyPhoto.create_delete_penalty(moderated_object=self, manager_id=manager_id, photo_id=photo_id)
-        PhotoManageLog.objects.create(photo=photo_id, manager=manager_id, action_type=PhotoManageLog.DELETED) 
+        PhotoManageLog.objects.create(photo=photo_id, manager=manager_id, action_type=PhotoManageLog.DELETED)
 
     def delete_deleted(self, manager_id, photo_id):
         obj = ModerationPenaltyPhoto.objects.get(moderated_object=self, photo_id=photo_id)
