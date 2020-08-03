@@ -22,8 +22,8 @@ class PhotoUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not self.photo.comments_enabled:
-            raise PermissionDenied('Комментарии для фотографии отключены')
+        if not request.is_ajax() and not self.photo.comments_enabled:
+            raise Http404
         self.template_name = get_permission_user_photo(self.photo.creator, "u_photo_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name

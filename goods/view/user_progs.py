@@ -20,6 +20,8 @@ class GoodCommentUserCreate(View):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))
         good = Good.objects.get(uuid=request.POST.get('uuid'))
+        if not request.is_ajax() and not self.good.comments_enabled:
+            raise Http404
 
         if request.is_ajax() and form_post.is_valid() and good.comments_enabled:
             comment = form_post.save(commit=False)

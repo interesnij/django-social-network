@@ -21,9 +21,8 @@ class PostUserCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-
-        if not self.item.comments_enabled:
-            raise PermissionDenied('Комментарии к записи отключены')
+        if not request.is_ajax() and not self.item.comments_enabled:
+            raise Http404
         self.template_name = get_permission_user_post(self.user, "u_post_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
