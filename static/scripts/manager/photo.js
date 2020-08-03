@@ -13,7 +13,7 @@ on('#ajax', 'click', '.photo_delete_window', function() {
     uuid = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
     _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add("manager_removed")
   }
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("worker_loader");
   open_fullscreen("/managers/progs_photo/delete_window/" + uuid, loader)
 })
 
