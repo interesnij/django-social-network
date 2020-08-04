@@ -7,9 +7,9 @@
   </div>
   {% endfor %}
   {% for video in object.item_video.all %}
-  <div class="video" album-pk="{{ video.video_album.pk }}" data-pk="{{ object.creator.pk }}">
+  <div class="video">
       <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
-      <div class="video_icon_play_v2 c_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+      <div class="video_icon_play_v2 c_video_detail" data-pk="{{ object.creator.pk }}" data-uuid="{{ video.uuid }}" video-counter="{{ forloop.counter0 }}"></div>
   </div>
   {% endfor %}
   {% for good in object.item_good.all %}

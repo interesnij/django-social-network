@@ -5,9 +5,9 @@
   </div>
   {% endfor %}
   {% for object in reply.comment_video.all %}
-  <div class="col-md-6" album-pk="{{ object.album.pk }}" data-pk="{{ object.creator.pk }}">
+  <div class="col-md-6">
       <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
-      <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+      <div class="video_icon_play_v2 u_video_detail" data-pk="{{ object.creator.pk }}" data-uuid="{{ video.uuid }}"></div>
   </div>
   {% endfor %}
   {% for object in reply.comment_good.all %}

@@ -36,7 +36,7 @@ class UserVideoList(ListView):
 
 
 class UserVideoDetail(TemplateView):
-    template_name = None
+    template_name = None 
 
     def get(self,request,*args,**kwargs):
         from stst.models import VideoNumbers
