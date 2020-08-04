@@ -156,12 +156,14 @@ on('#ajax', 'click', '.c_post_unfixed', function() {
 on('#ajax', 'click', '.c_post_off_comment', function() {
   send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".c_item_comments").style.display = "none"
+  post.querySelector(".c_item_comments") ? post.querySelector(".c_item_comments").style.display = "unset"
+  : post.querySelector(".c_news_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_post_on_comment', function() {
   send_change(this, "/posts/community/on_comment/", "c_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".c_item_comments").style.display = "unset"
+  post.querySelector(".c_item_comments") ? post.querySelector(".c_item_comments").style.display = "unset"
+  : post.querySelector(".c_news_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.c_post_off_votes', function() {
