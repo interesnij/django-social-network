@@ -4,6 +4,12 @@ on('#ajax', 'click', '.c_fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.c_news_fullscreen', function() {
+  uuid = this.parentElement.getAttribute('data-uuid');
+  pk = this.parentElement.getAttribute('data-pk');
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
+});
 
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
