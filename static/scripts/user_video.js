@@ -55,7 +55,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
-    setTimeout(function() {video_player.playVideo(counter)}, 1000);
+    setTimeout(function() {video_player.playVideo(0)}, 1000);
     get_video_info()
     }
   }, 500);
