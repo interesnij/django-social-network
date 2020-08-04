@@ -50,12 +50,6 @@
       </div>
   </div>
 
-    <div class="c_fullscreen" style="cursor:pointer;padding-left: 15px;">
-      {% if object.text %}
-        <p class="">{{ object.text }}</p>
-      {% endif %}
-    </div>
-
     {% if object.parent %}
       {% include 'post_community/repost.html' %}
     {% endif %}

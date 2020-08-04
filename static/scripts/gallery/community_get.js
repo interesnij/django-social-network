@@ -19,7 +19,7 @@ on('#ajax', 'click', '.c_photo_detail', function() {
 });
 
 on('#ajax', 'click', '.c_wall_image', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   uuid = this.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/community_wall/" + pk + "/" + uuid + "/", loader)
