@@ -23,6 +23,7 @@ class PostUserCreate(View):
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, status="PG")
                 get_post_attach(request, new_post)
+                get_post_processing(new_post)
                 return render(request, 'post_user/my_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
