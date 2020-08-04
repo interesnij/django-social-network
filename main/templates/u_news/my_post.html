@@ -51,17 +51,16 @@
       </div>
   </div>
 
+  {% if object.parent %}
+    {% include 'post_user/repost.html' %}
+  {% endif %}
 
     <div class="fullscreen" style="cursor:pointer;padding-left: 15px;">
         <p class="">{{ object.text }}</p>
     </div>
 
-    {% include 'news_blocks/u_post_attach.html' %}
+    {% include 'generic/attach/u_post_attach.html' %}
 
-    {% if object.parent %}
-      {% include 'post_user/repost.html' %}
-    {% endif %}
-
-    {% include 'news_blocks/u_info.html' %}
+    {% include 'post_user/info.html' %}
 
 </div>
