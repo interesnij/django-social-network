@@ -1,0 +1,67 @@
+{% load humanize %}
+
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+  <div class="card-header">
+      <div class="media">
+        <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+          <figure>
+            {% if object.creator.get_avatar %}
+              <img src="{{ object.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+            {% else %}
+              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            {% endif %}
+          </figure>
+        </a>
+          <div class="media-body">
+              <h6 class="mb-0">
+                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                  {{ object.creator.get_full_name }} &nbsp;
+                </a>
+              </h6>
+              <p class="mb-0">{{ object.created|naturaltime }}</p>
+          </div>
+
+          <div class="dropdown">
+              <a style="cursor:pointer" class="btn_default drop">
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <span class="dropdown-item u_post_wall_remove">Удалить запись</span>
+                  <span class="dropdown-item">Редактировать</span>
+                  <span>
+                    {% if object.comments_enabled %}
+                      <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+                    {% else %}
+                      <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+                    {% endif %}
+                  </span>
+                  <span>
+                    {% if object.votes_on %}
+                      <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+                    {% else %}
+                      <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+                    {% endif %}
+                  </span>
+                  <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+                    <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
+                  </span>
+                  <span class="dropdown-item item_stat_f">Статистика записи</span>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+    <div class="fullscreen" style="cursor:pointer;padding-left: 15px;">
+        <p class="">{{ object.text }}</p>
+    </div>
+
+    {% include 'generic/attach/u_post_attach.html' %}
+
+    {% if object.parent %}
+      {% include 'post_user/repost.html' %}
+    {% endif %}
+
+
+    {% include 'post_user/info.html' %}
+</div>
