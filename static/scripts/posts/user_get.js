@@ -5,13 +5,6 @@ on('#ajax', 'click', '.fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
-on('#ajax', 'click', '.u_news_fullscreen', function() {
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  pk = container.getAttribute("data-pk");
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
-})
 
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
