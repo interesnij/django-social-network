@@ -1,6 +1,6 @@
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
@@ -8,7 +8,7 @@ on('#ajax', 'click', '.c_fullscreen', function() {
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('data-uuid');
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
 });
