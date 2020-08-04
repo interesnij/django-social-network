@@ -1,5 +1,6 @@
 on('#ajax', 'click', '.u_good_detail', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   uuid = this.getAttribute('good-uuid');
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader);
