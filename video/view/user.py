@@ -35,8 +35,37 @@ class UserVideoList(ListView):
         return video_list
 
 
+class UserVideoInfo(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from stst.models import VideoNumbers
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_authenticated:
+            try:
+                VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
+            except:
+                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
+                else:
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
+
+        self.template_name = get_template_user_video(self.user, "u_video_info/", "video.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserVideoInfo,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoInfo,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['object'] = self.video
+        return context
+
+
 class UserVideoDetail(TemplateView):
-    template_name = None 
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         from stst.models import VideoNumbers
@@ -62,7 +91,6 @@ class UserVideoDetail(TemplateView):
         context['user'] = self.user
         context['object'] = self.video
         return context
-
 
 class UserCreateVideoAttachWindow(TemplateView):
     template_name = None

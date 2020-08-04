@@ -7,7 +7,7 @@ function get_video_info(){
   uuid = videos[video_id].getAttribute("data-video-uuid");
   if (info_video.innerHTML == "" || info_video.getAttribute("data-uuid") != uuid){
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-    list_load(info_video, "/video/user/detail/" + pk + "/" + uuid + "/");
+    list_load(info_video, "/video/user/info/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
     console.log("Воспроизводится ролик № : " + video_id)
   }
