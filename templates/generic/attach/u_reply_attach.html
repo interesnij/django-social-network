@@ -7,7 +7,7 @@
   {% for object in reply.comment_video.all %}
   <div class="col-md-6">
       <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
-      <div class="video_icon_play_v2 u_video_detail" data-pk="{{ object.creator.pk }}" data-uuid="{{ video.uuid }}"></div>
+      <div class="video_icon_play_v2 u_video_detail" data-pk="{{ object.creator.pk }}" data-uuid="{{ object.uuid }}"></div>
   </div>
   {% endfor %}
   {% for object in reply.comment_good.all %}
