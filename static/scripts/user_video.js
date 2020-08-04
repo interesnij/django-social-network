@@ -1,28 +1,22 @@
 
-function get_video_info(){
+function get_video_info(pk){
   info_video = document.body.querySelector("#info_video");
   my_playlist = document.body.querySelector("#my_playlist");
   videos = my_playlist.querySelectorAll('.video_playlist_li');
   video_id = video_player.getVideoId();
   uuid = videos[video_id].getAttribute("data-video-uuid");
   if (info_video.innerHTML == "" || info_video.getAttribute("data-uuid") != uuid){
-    document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
     list_load(info_video, "/video/user/info/" + pk + "/" + uuid + "/");
     info_video.setAttribute("data-uuid", uuid);
     console.log("Воспроизводится ролик № : " + video_id)
   }
 }
 
-function video_onPlay(){
-    get_video_info()
-    music_player.pause();
-
-  }
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('video-counter');
   parent = this.parentElement;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   parent.parentElement.getAttribute("album-uuid") ? uuid = parent.parentElement.getAttribute("album-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
@@ -35,7 +29,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
     function onReady(){
     console.log("video player ready");
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    get_video_info()
+    get_video_info(pk)
     }
   }, 500);
 });
@@ -56,7 +50,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     function onReady(){
     console.log("video player ready");
     setTimeout(function() {video_player.playVideo(0)}, 1000);
-    get_video_info()
+    get_video_info(pk)
     }
   }, 500);
 });
