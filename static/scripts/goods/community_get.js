@@ -10,7 +10,7 @@ on('#ajax', 'click', '.c_all_good_dislikes', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_community_dislike/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.с_good_detail', function() {
+on('#ajax', 'click', '.с_good_detail', function() { 
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   uuid = this.getAttribute('good-uuid');
   loader = document.getElementById("good_loader");
