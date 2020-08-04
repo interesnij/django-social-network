@@ -2,7 +2,7 @@ function send_form_with_pk_and_toast(url, form, toast){
     form_data = new FormData(form);
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', url, true );
-    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
           toast_info(toast);
