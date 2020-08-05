@@ -770,7 +770,12 @@ class User(AbstractUser):
         return communities[0:6]
 
     def get_online_connection_count(self):
-        return self.get_online_connection().values("pk").count()
+        frends = self.get_all_connection()
+        query = []
+        for frend in frends:
+            if frend.get_online():
+                query += [frend,]
+        return len(query)
 
     def get_pop_online_connection(self):
         frends = self.get_all_connection()
