@@ -22,10 +22,12 @@ class NewsListView(ListView):
 	template_name = "news_list.html"
 	paginate_by = 15
 
-	if request.user.is_authenticated:
-		self.template_name = request.user.get_settings_template(folder="news_list/", template="posts.html", request=request)
-	else:
-		raise Http404
+	def get(self,request,*args,**kwargs):
+		if request.user.is_authenticated:
+			self.template_name = request.user.get_settings_template(folder="news_list/", template="posts.html", request=request)
+		else:
+			raise Http404
+		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
