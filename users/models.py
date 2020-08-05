@@ -1085,7 +1085,7 @@ class User(AbstractUser):
         from posts.models import Post
 
         possible_users = self.get_possible_friends()
-        query = Q()
+        query = []
         for user in possible_users:
             own_posts_query = Q(creator=user.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
             own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
@@ -1105,7 +1105,7 @@ class User(AbstractUser):
             frends_queryset = Post.objects.only('created').filter(frends_query)
 
             final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
-            query.union(final_queryset)
+            query = query + final_queryset
         return query
 
     def get_possible_friends_10(self):
