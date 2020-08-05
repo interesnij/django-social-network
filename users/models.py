@@ -735,8 +735,14 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         return my_frends_ids
 
-    def get_connect_and_poaaible_ids(self):  
-        return self.get_all_connection_ids() + self.get_possible_friends_ids()
+    def get_friend_and_friend_of_friend_ids(self):
+        frends = self.get_all_connection()
+        query = []
+        for frend of frends:
+            query + frend.get_all_connection()
+        ids = query.values('target_user_id')
+        return [target_user['target_user_id'] for target_user in ids]
+
 
     def get_all_connection(self):
         my_frends = self.connections.values('target_user_id')
