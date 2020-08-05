@@ -28,7 +28,7 @@ class NewsListView(ListView):
 			items = None
 		return items
 
-class FeaturedNewsView(ListView):
+class FeaturedPostsView(ListView):
 	template_name = None
 	paginate_by = 15
 
@@ -37,7 +37,7 @@ class FeaturedNewsView(ListView):
 			self.template_name = request.user.get_settings_template(folder="main/", template="featured_news.html", request=request)
 		else:
 			self.template_name = 'main/auth.html'
-		return super(FeaturedNewsView,self).get(request,*args,**kwargs)
+		return super(FeaturedPostsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:

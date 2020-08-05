@@ -1011,7 +1011,7 @@ class User(AbstractUser):
     def get_timeline_posts_for_possible_users(self):
         return self._get_timeline_posts_for_possible_users()
 
-    def _get_timeline_posts_for_user((self):
+    def _get_timeline_posts_for_user(self):
         from posts.models import Post
 
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
