@@ -215,7 +215,7 @@ class User(AbstractUser):
         from users.model.list import UserFeaturedFriend
 
         if not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
-            UserFeaturedFriend.objects.create(user=self.pk, featured_user=frend.pk)
+            UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
