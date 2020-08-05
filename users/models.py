@@ -741,7 +741,8 @@ class User(AbstractUser):
         frends_ids = [user['id'] for user in frends_val]
         query = []
         for frend in frends:
-            query = query + [user['id'] for user in frend.get_all_connection().values('id')]
+            i = frend.get_all_connection().values('id')
+            query = query + [user['id'] for user in i]
         return list(set(query))
 
 
