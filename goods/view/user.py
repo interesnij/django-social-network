@@ -44,20 +44,33 @@ class UserGood(TemplateView):
         self.goods = self.user.get_goods()
 
         if request.user.is_authenticated:
-            if self.user.pk == request.user.pk:
-                self.template_name = "u_good/my_good.html"
-                self.goods = self.user.get_my_goods()
-            elif request.user.is_post_manager():
-                self.template_name = "u_good/staff_good.html"
-            elif self.user != request.user:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile():
-                    if  request.user.is_connected_with_user_with_id(user_id=self.user.pk) or request.user.is_followers_user_with_id(user_id=self.user.pk):
+            if request.user.is_no_phone_verified():
+                self.template_name = "main/phone_verification.html"
+            elif self.user.pk == request.user.pk:
+                if self.user.is_suspended():
+                    self.template_name = "generic/u_template/you_suspended.html"
+                elif self.user.is_blocked():
+                    self.template_name = "generic/u_template/you_global_block.html"
+                else:
+                    self.template_name = "u_good/my_good.html"
+            elif request.user.pk != self.user.pk:
+                self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
+                if self.user.is_suspended():
+                    self.template_name = "generic/u_template/user_suspended.html"
+                elif self.user.is_blocked():
+                    self.template_name = "generic/u_template/user_global_block.html"
+                elif request.user.is_user_manager() or request.user.is_superuser:
+                    self.template_name = "u_good/staff_good.html"
+                    self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
+                elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
+                    self.template_name = "generic/u_template/block_user.html"
+                elif self.user.is_closed_profile():
+                    if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                         self.template_name = "u_good/good.html"
                     else:
-                        self.template_name = "u_good/close_good.html"
+                        self.template_name = "generic/u_template/close_user.html"
                 elif request.user.is_child() and not self.user.is_child_safety():
-                    raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
+                    self.template_name = "generic/u_template/no_child_safety.html"
                 else:
                     self.template_name = "u_good/good.html"
             try:
@@ -68,10 +81,14 @@ class UserGood(TemplateView):
                 else:
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
-            if self.user.is_closed_profile():
-                self.template_name = "u_good/anon_close_good.html"
-            elif not self.user.is_child_safety():
-                raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
+            if user.is_suspended():
+                template_name = "generic/u_template/anon_user_suspended.html"
+            elif user.is_blocked():
+                template_name = "generic/u_template/anon_user_global_block.html"
+            elif user.is_closed_profile():
+                template_name = "generic/u_template/anon_close_user.html"
+            elif not user.is_child_safety():
+                template_name = "generic/u_template/anon_no_child_safety.html"
             else:
                 self.template_name = "u_good/anon_good.html"
 
