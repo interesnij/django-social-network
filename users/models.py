@@ -211,12 +211,29 @@ class User(AbstractUser):
         follow = CommunityFollow.objects.get(user=self,community__name=community_name)
         follow.delete()
 
+    def get_or_create_possible_friend(self, user):
+        from users.model.list import UserFeaturedFriend
+
+        if not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
+            UserFeaturedFriend.objects.create(user=self.pk, featured_user=frend.pk)
+
     def frend_user(self, user):
-        return self.frend_user_with_id(user.pk)
+        self.frend_user_with_id(user.pk)
+        for frend in user.get_all_connection():
+            get_or_create_possible_friend(self, user)
+        return True
+
+    def get_possible_friends(self):
+        from users.model.list import UserFeaturedFriend
+
+        featured_ids = UserFeaturedFriend.objects.filter(user=self.pk)
+        query = Q(id__in=featured_ids)
+        return User.objects.filter(query)
 
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
         from frends.models import Connect
+        from users.model.list import UserFeaturedFriend
 
         check_can_connect_with_user_with_id(user=self, user_id=user_id)
         if self.pk == user_id:
@@ -224,6 +241,7 @@ class User(AbstractUser):
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
+
         return frend
 
     def unfollow_user(self, user):
@@ -699,8 +717,6 @@ class User(AbstractUser):
         return frends[0:5]
 
     def get_all_connection(self):
-        from managers.model.user import ModeratedUser
-
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=my_frends_ids)
@@ -1040,32 +1056,6 @@ class User(AbstractUser):
             posts = user.get_timeline_posts_for_user()
             query = query + posts
         return query
-
-    def get_possible_friends(self):
-        from users.model.list import UserFeaturedFriend
-
-        featured_ids = UserFeaturedFriend.objects.filter(user=self.pk)
-        query = Q(id__in=featured_ids)
-        return User.objects.filter(query)
-
-    def _get_possible_friends(self):
-        frends = self.connections.values('target_user_id')
-        if not frends:
-            return "not frends"
-        frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q()
-        for frend in frends_ids:
-            user = User.objects.get(pk=frend)
-            frends_frends = user.connections.values('target_user_id')
-            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            _query = Q(id__in=frend_frend_ids)
-            blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
-            connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-            _query.add(blocked, Q.AND)
-            _query.add(connections, Q.AND)
-            query.add(_query, Q.AND)
-        connection = User.objects.filter(query)
-        return connection
 
     def get_possible_friends_10(self):
         frends = self.connections.values('target_user_id')
