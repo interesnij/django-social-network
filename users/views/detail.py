@@ -174,6 +174,8 @@ class ProfileUserView(TemplateView):
                     self.template_name = "generic/u_template/you_suspended.html"
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/you_global_block.html"
+                elif self.user.is_child():
+                    self.template_name = "account/my_user_child.html"
                 else:
                     self.template_name = "account/my_user.html"
             elif request.user.pk != self.user.pk:

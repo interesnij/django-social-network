@@ -21,6 +21,8 @@ class User(AbstractUser):
     STANDART = 'ST'
     VERIFIED_SEND = 'VS'
     VERIFIED = 'VE'
+    IDENTIFIED_SEND = 'IS'
+    IDENTIFIED = 'ID'
     MANAGER = 'MA'
     SUPERMANAGER = 'SM'
     PERM = (
@@ -30,7 +32,9 @@ class User(AbstractUser):
         (PHONE_NO_VERIFIED, 'Телефон не подтвержден'),
         (STANDART, 'Обычные права'),
         (VERIFIED_SEND, 'Запрос на проверку'),
-        (VERIFIED, 'Провернный'),
+        (VERIFIED, 'Проверенный'),
+        (IDENTIFIED_SEND, 'Запрос на идентификацию'),
+        (IDENTIFIED, 'Идентифицированный'),
         (MANAGER, 'Менеджер'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
@@ -77,6 +81,10 @@ class User(AbstractUser):
         return try_except(self.perm == User.VERIFIED_SEND)
     def is_verified(self):
         return try_except(self.perm == User.VERIFIED)
+    def is_identified_send(self):
+        return try_except(self.perm == User.IDENTIFIED_SEND)
+    def is_identified(self):
+        return try_except(self.perm == User.IDENTIFIED)
     def is_child(self):
         return try_except(self.perm == User.CHILD)
     def is_no_phone_verified(self):
