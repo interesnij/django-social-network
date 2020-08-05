@@ -1042,6 +1042,13 @@ class User(AbstractUser):
         return query
 
     def get_possible_friends(self):
+        from users.model.list import UserFeaturedFriend
+
+        featured_ids = UserFeaturedFriend.objects.filter(user=self.pk)
+        query = Q(id__in=featured_ids)
+        return User.objects.filter(query)
+
+    def _get_possible_friends(self):
         frends = self.connections.values('target_user_id')
         if not frends:
             return "not frends"
