@@ -23,9 +23,27 @@ class NewsListView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = self.request.user.get_timeline_posts().order_by('-created')
+			items = self.request.user.get_timeline_posts_for_user().order_by('-created')
 		else:
-			items=None
+			items = None
+		return items
+
+class FeaturedNewsView(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		if request.user.is_authenticated:
+			self.template_name = request.user.get_settings_template(folder="main/", template="featured_news.html", request=request)
+		else:
+			self.template_name = 'main/auth.html'
+		return super(FeaturedNewsView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = self.request.user.get_timeline_posts_for_possible_users().order_by('-created')
+		else:
+			items = None
 		return items
 
 

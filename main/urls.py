@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from main.views import MainPageView, ComingView, NewsListView, MainPhoneSend
+from main.views import *
 
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
 	url(r'^main/$', MainPageView.as_view(), name="main"),
 	url(r'^phone_send/$', MainPhoneSend.as_view(), name="phone_send"),
 	url(r'^main/news/$', NewsListView.as_view(), name="news_list"),
+	url(r'^featured_posts/$', FeaturedNewsView.as_view(), name="featured_post_list"),
 ]

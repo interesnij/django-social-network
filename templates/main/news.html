@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Новости{% endblock %}
+{% block title %}Новости | Записи{% endblock %}
 {% block meta %}
 <meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
 <meta property="og:type" content="website" />
@@ -21,7 +21,7 @@
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
                 <a class="ajax" href="/main/">Новости</a>
-                <a class="ajax" href="/main/recomended/">Рекомендации</a>
+                <a class="ajax" href="{% url 'featured_news_list' %}">Рекомендации</a>
                 <a class="ajax" href="/main/like/">Вы одобрили</a>
                 <a class="ajax" href="/main/dislike/">Вы не одобрили</a>
                 <a class="ajax" href="/main/comments/">Ваши комментарии</a>
