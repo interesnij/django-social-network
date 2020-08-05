@@ -39,7 +39,8 @@ on('body', 'click', '.ajax', function(event) {
 
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
-  ajax_get_reload(document.referrer);
+  //ajax_get_reload(document.referrer);
+  ajax_get_reload(history.back());
   return
 });
 
