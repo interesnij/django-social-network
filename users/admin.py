@@ -2,7 +2,7 @@ from django.contrib import admin
 from users.models import User
 from users.model.profile import *
 from users.model.settings import *
-from users.model.list import UserBlock
+from users.model.list import *
 
 
 class UserNotificationsInline(admin.TabularInline):
@@ -67,3 +67,5 @@ admin.site.register(TwoUserLocation)
 admin.site.register(ThreeUserLocation)
 admin.site.register(IPUser)
 admin.site.register(UserProfile, UserProfileAdmin)
+
+admin.site.register(UserFeaturedFriend)
