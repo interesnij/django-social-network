@@ -32,7 +32,7 @@
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">
-                          <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
+                          <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
                               <figure>
                                 {% if object.get_avatar %}
                                   <img src="{{ object.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
@@ -88,7 +88,7 @@
                       <div class="media-body">
                           <h5 class="mt-1">Последние визиты</h5>
                       </div>
-                      <a class="ajax" href="{% url 'visit_communities' pk=user.pk %}" data-html="#ajax">
+                      <a class="ajax" href="{% url 'visit_communities' pk=user.pk %}">
                           все
                       </a>
                   </div>
@@ -98,7 +98,7 @@
                       {% for object in user.get_visited_communities %}
                       <li class="list-group-item">
                           <div class="media">
-                            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
+                            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
                               <figure>
                                 {% if object.get_avatar %}
                                   <img src="{{ object.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
@@ -108,7 +108,7 @@
                               </figure>
                             </a>
                             <div class="media-body">
-                                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
                                     <h6 class="my-0 mt-1">{{ object.name }}</h6>
                                 </a>
                                 <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>

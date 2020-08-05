@@ -79,7 +79,7 @@
                   <br><br>
                   <span style="display: flex;">
                     {% for heart in object.window_likes %}
-                    <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
+                    <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                       <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                           {% if heart.user.get_avatar %}
                             <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">

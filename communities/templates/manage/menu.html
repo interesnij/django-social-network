@@ -18,7 +18,7 @@
     <ul>
       <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
       {% if community.is_closed %}
-        <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
+        <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
       {% endif %}
       <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
       <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
