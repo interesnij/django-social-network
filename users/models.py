@@ -234,12 +234,15 @@ class User(AbstractUser):
         return True
 
     def get_possible_friends(self):
+        query = Q(id__in=self.get_possible_friends_ids())
+        return User.objects.filter(query)
+
+    def get_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
         featured_ids = [user['featured_user'] for user in featured]
-        query = Q(id__in=featured_ids)
-        return User.objects.filter(query)
+        return featured_ids
 
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
