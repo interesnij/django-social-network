@@ -1084,48 +1084,10 @@ class User(AbstractUser):
     def _get_timeline_posts_for_possible_users(self):
         from posts.models import Post
 
-        possible_users = self.get_possible_friends()
-        query = []
-        for user in possible_users:
-            own_posts_query = Q(creator=user.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
-            own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
-
-            community_posts_query = Q(community__memberships__user__id=user.pk, is_deleted=False, status=Post.STATUS_PUBLISHED)
-            community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
-            community_posts_queryset = Post.objects.only('created').filter(community_posts_query)
-
-            followed_users = user.follows.values('followed_user_id')
-            followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
-            followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
-            followed_users_queryset = Post.objects.only('created').filter(followed_users_query)
-
-            frends = user.connections.values('target_user_id')
-            frends_ids = [target_user['target_user_id'] for target_user in frends]
-            frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
-            frends_queryset = Post.objects.only('created').filter(frends_query)
-
-            final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
-            query = query | final_queryset
-        return query
-
-    def get_possible_friends_10(self):
-        frends = self.connections.values('target_user_id')
-        if not frends:
-            return False
-        frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q()
-        for frend in frends_ids:
-            user = User.objects.get(pk=frend)
-            frends_frends = user.connections.values('target_user_id')
-            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            _query = Q(id__in=frend_frend_ids)
-            blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
-            connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-            _query.add(blocked, Q.AND)
-            _query.add(connections, Q.AND)
-            query.add(_query, Q.AND)
-        connection = User.objects.filter(query)
-        return connection[0:10]
+        possible_users = self.get_possible_friends_ids()
+        posts_query = Q(creator_id__in=self.get_possible_friends_ids(), community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
+        own_posts_queryset = self.post_creator.only('created').filter(posts_query)
+        return own_posts_queryset
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
