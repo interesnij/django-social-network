@@ -742,7 +742,7 @@ class User(AbstractUser):
         query = []
         for frend in frends:
             query = query + [user['id'] for user in frend.get_all_connection().values('id')]
-        return query
+        return list(set(query))
 
 
     def get_all_connection(self):
