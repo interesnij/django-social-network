@@ -1013,6 +1013,8 @@ class User(AbstractUser):
     def get_all_users(self):
         all_query = Q()
         all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        if self.is_child():
+            all_query.add(~Q(Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
         return User.objects.filter(all_query)
 
     def get_pop_followers(self):
