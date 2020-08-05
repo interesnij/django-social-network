@@ -735,7 +735,7 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         return my_frends_ids
 
-    def get_all_connection_ids(self):
+    def get_connect_and_poaaible_ids(self):  
         return self.get_all_connection_ids() + self.get_possible_friends_ids()
 
     def get_all_connection(self):
