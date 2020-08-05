@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
+from django.http import Http404
 
 
 class MainPageView(TemplateView):
@@ -21,6 +22,11 @@ class NewsListView(ListView):
 	template_name = "news_list.html"
 	paginate_by = 15
 
+	if request.user.is_authenticated:
+		self.template_name = request.user.get_settings_template(folder="news_list/", template="posts.html", request=request)
+	else:
+		raise Http404
+
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
 			items = self.request.user.get_timeline_posts_for_user().order_by('-created')
@@ -34,7 +40,7 @@ class FeaturedPostsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = request.user.get_settings_template(folder="main/", template="featured_news.html", request=request)
+			self.template_name = request.user.get_settings_template(folder="news_list/", template="featured_posts.html", request=request)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedPostsView,self).get(request,*args,**kwargs)
