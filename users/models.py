@@ -220,7 +220,7 @@ class User(AbstractUser):
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
         for frend in user.get_all_connection():
-            get_or_create_possible_friend(self, user)
+            self.get_or_create_possible_friend(frend)
         return True
 
     def get_possible_friends(self):
