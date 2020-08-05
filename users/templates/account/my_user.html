@@ -10,7 +10,8 @@
 {% endblock %}
 {% block content %}
 
-{{ user.get_friend_and_friend_of_friend_ids }}
+{{ user.get_friend_and_friend_of_friend_ids }}<br>
+{{ user.get_all_connection }}
 <div class="mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ user.uuid }}">
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
