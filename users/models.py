@@ -730,10 +730,18 @@ class User(AbstractUser):
         frends = User.objects.filter(connection_query)
         return frends[0:5]
 
+    def get_all_connection_ids(self):
+        my_frends = self.connections.values('target_user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        return my_frends_ids
+
+    def get_all_connection_ids(self):
+        return self.get_all_connection_ids() + self.get_possible_friends_ids()
+
     def get_all_connection(self):
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        connection_query = Q(id__in=my_frends_ids)
+        connection_query = Q(id__in=self.get_all_connection_ids())
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         frends = User.objects.filter(connection_query)
         return frends
