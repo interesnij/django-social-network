@@ -40,6 +40,7 @@ on('body', 'click', '.ajax', function(event) {
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
   ajax_get_reload(window.history.go(-1));
+  return
 });
 
 on('body', 'click', '.next_item', function(event) {
