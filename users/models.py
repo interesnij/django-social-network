@@ -1105,7 +1105,7 @@ class User(AbstractUser):
             frends_queryset = Post.objects.only('created').filter(frends_query)
 
             final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
-            query = query + final_queryset
+            query = query | final_queryset
         return query
 
     def get_possible_friends_10(self):
