@@ -40,7 +40,7 @@ on('body', 'click', '.ajax', function(event) {
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
   ajax_get_reload(history.back());
-  console.log(history.back())
+  console.log(document.referrer)
 });
 
 on('body', 'click', '.next_item', function(event) {
