@@ -226,7 +226,8 @@ class User(AbstractUser):
     def get_possible_friends(self):
         from users.model.list import UserFeaturedFriend
 
-        featured_ids = UserFeaturedFriend.objects.filter(user=self.pk)
+        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
+        featured_ids = [user['featured_user'] for user in featured]
         query = Q(id__in=featured_ids)
         return User.objects.filter(query)
 
