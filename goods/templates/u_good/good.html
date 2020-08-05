@@ -1,13 +1,13 @@
 {% load liked_user %}
 
   {% if prev %}
-    <a class="prev_item btn_default" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
-      <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
+      <svg class="svg_default btn_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
   {% if next %}
-    <a class="next_item btn_default" href="{% url 'user_good' pk=next.pk uuid=user.uuid %}">
-      <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    <a class="next_item" href="{% url 'user_good' pk=next.pk uuid=user.uuid %}">
+      <svg class="svg_default btn_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
 
@@ -21,96 +21,119 @@
                 <div class="col-md-4 border-left pr-0">
                   {% include 'good_base/info.html' %}
                 </div>
+            </div>
 
-                <div class="border-top py-2" data-uuid="{{ object.uuid }}">
-                    <div class="row">
-                        <div class="col interaction" id="interaction">
-                          <span {% if not object.votes_on %}style="display:none"{% endif %} class="like u_good_like {% if object.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
-                                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
-                                  <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                                </svg>
-                                <span class="likes_count">
-                                  {% if object.likes.count %}{{ object.likes.count }}{% endif %}
-                                </span>
-                          </span>
-
-                          <span class="like_window">
-                            {% if object.window_likes %}
-                          <div class="like_pop" style="margin:15px">
-                            <span class="u_all_good_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
-                            <br><br>
-                            <span style="display: flex;">
-                              {% for heart in object.window_likes %}
-                              <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
-                                <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
-                                    {% if heart.user.get_avatar %}
-                                      <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
-                                    {% else %}
-                                      <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                                    {% endif %}
-                                </figure>
-                              </a>
-                              {% endfor %}
+            <div class="border-top py-2" data-uuid="{{ object.uuid }}">
+                <div class="row">
+                    <div class="col interaction" id="interaction">
+                      <span {% if not object.votes_on %}style="display:none"{% endif %} class="like u_good_like {% if object.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
+                            <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                              <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                            </svg>
+                            <span class="likes_count">
+                              {% if object.likes.count %}{{ object.likes.count }}{% endif %}
                             </span>
-                          </div>
-                          {% endif %}
-                        </span>
+                      </span>
 
-                          <span {% if not object.votes_on %}style="display:none"{% endif %} class="dislike u_good_dislike {% if object.dislikes|user_in:request.user %}btn_danger{% else %}btn_default{% endif %}" title="Не нравится">
-                              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
-                              <span class="dislikes_count">{% if object.dislikes.count %}{{ object.dislikes.count }}{% endif %}</span>
-                          </span>
-
-                          <span class="dislike_window">
-                            {% if object.window_dislikes %}
-                          <div class="dislike_pop" style="margin:15px">
-                            <span class="u_all_good_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
-                            <br><br>
-                            <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
-                              {% for sheet in object.window_dislikes %}
-                              <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-                                <figure style="margin: 0;">
-                                  {% if sheet.user.get_avatar %}
-                                    <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                      <span class="like_window">
+                        {% if object.window_likes %}
+                      <div class="like_pop" style="margin:15px">
+                        <span class="u_all_good_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                        <br><br>
+                        <span style="display: flex;">
+                          {% for heart in object.window_likes %}
+                          <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
+                            <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
+                                {% if heart.user.get_avatar %}
+                                  <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
                                 {% else %}
-                                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                                  {% endif %}
-                                </figure>
-                                </a>
-                                {% endfor %}
-                            </span>
-                          </div>
-                          {% endif %}
-                        </span>
-
-                        <span title="Комментарий" class="u_good_comments btn_default" style="cursor:pointer;margin-right:5px;{% if not object.comments_enabled %}display:none{% endif %}">
-                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                          <span class="comment-count">
-                              {% if object.count_comments %} {{ object.count_comments }} {% endif %}
-                          </span>
-                        </span>
-
-                        <span title="Поделиться" data-toggle="modal" class="u_good_repost btn_default" data-target="#modal_community_repost" style="cursor:pointer">
-                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                        </span>
-                        &nbsp;&nbsp;
-                        <div class="dropdown d-inline-block">
-                            <a style="cursor:pointer" class="btn_default drop">
-                              еще
-                            </a>
-                            <div class="dropdown-menu">
-                                <span class="dropdown-item good_claim">Пожаловаться</span>
-                            </div>
-                        </div>
-                        <span title="Просмотры" style="float: right;">
-                          <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                            {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}
+                                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                {% endif %}
+                            </figure>
+                          </a>
+                          {% endfor %}
                         </span>
                       </div>
-                    </div>
+                      {% endif %}
+                    </span>
 
-                    <div class="u_load_comments" style="margin-right: -15px; margin-left: -15px;margin-top:25px"></div>
+                      <span {% if not object.votes_on %}style="display:none"{% endif %} class="dislike u_good_dislike {% if object.dislikes|user_in:request.user %}btn_danger{% else %}btn_default{% endif %}" title="Не нравится">
+                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                          <span class="dislikes_count">{% if object.dislikes.count %}{{ object.dislikes.count }}{% endif %}</span>
+                      </span>
+
+                      <span class="dislike_window">
+                        {% if object.window_dislikes %}
+                      <div class="dislike_pop" style="margin:15px">
+                        <span class="u_all_good_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                        <br><br>
+                        <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
+                          {% for sheet in object.window_dislikes %}
+                          <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                            <figure style="margin: 0;">
+                              {% if sheet.user.get_avatar %}
+                                <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                            {% else %}
+                                <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                              {% endif %}
+                            </figure>
+                            </a>
+                            {% endfor %}
+                        </span>
+                      </div>
+                      {% endif %}
+                    </span>
+
+                    <span title="Комментарий" class="u_good_comments btn_default" style="cursor:pointer;margin-right:5px;{% if not object.comments_enabled %}display:none{% endif %}">
+                      <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                      <span class="comment-count">
+                          {% if object.count_comments %} {{ object.count_comments }} {% endif %}
+                      </span>
+                    </span>
+
+                    <span title="Просмотры" style="float: right;">
+                      <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}
+                    </span>
+
+                    <span title="Поделиться" data-toggle="modal" class="u_good_repost btn_default" data-target="#modal_community_repost" style="cursor:pointer">
+                      <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                    </span>
+                    &nbsp;&nbsp;
+                    <div class="dropdown d-inline-block">
+                        <a style="cursor:pointer" class="btn_default drop">
+                          еще
+                        </a>
+                        <div class="dropdown-menu">
+                            <span class="dropdown-item u_good_remove">Удалить видео</span>
+                            <span class="dropdown-item">Редактировать</span>
+                            <span>
+                              {% if object.comments_enabled %}
+                                <span class="dropdown-item u_good_off_comment">Выключить комментарии</span>
+                              {% else %}
+                                <span class="dropdown-item u_good_on_comment">Включить комментарии</span>
+                              {% endif %}
+                            </span>
+                            <span>
+                              {% if object.votes_on %}
+                                <span class="dropdown-item u_good_off_votes">Выкл. реакции</span>
+                              {% else %}
+                                <span class="dropdown-item u_good_on_votes">Вкл. реакции</span>
+                              {% endif %}
+                            </span>
+                            <span>
+                              {% if object.is_draft %}
+                                <span class="dropdown-item u_good_unhide">Товар не виден</span>
+                              {% else %}
+                                <span class="dropdown-item u_good_hide">Товар виден</span>
+                              {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="u_load_comments" style="margin-right: -15px; margin-left: -15px;margin-top:25px"></div>
             </div>
         </div>
     </div>
