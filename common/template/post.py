@@ -32,7 +32,7 @@ def get_template_community_post(community, folder, template, request_user):
             if request_user.is_child() and not community.is_verified():
                 template_name = "generic/c_template/no_child_safety.html"
             else:
-                template_name = folder + "public_" + template
+                template_name = folder + template
         elif community.is_closed():
             template_name = "generic/c_template/close_community.html"
         elif community.is_private():
