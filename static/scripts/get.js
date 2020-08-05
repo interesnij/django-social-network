@@ -37,7 +37,10 @@ on('body', 'click', '.ajax', function(event) {
   }
 })
 
-//window.addEventListener('popstate', function (e) {window.history.go(-1);});
+window.addEventListener('popstate', function (e) {
+  e.preventDefault();
+  ajax_get_reload(window.history.go(-1));
+});
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
