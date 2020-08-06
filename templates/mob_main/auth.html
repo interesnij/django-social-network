@@ -135,7 +135,7 @@ ready(() => {
           $('.login-response').html("ошибка");
       }
       var susccess_response = function(data) {
-          window.location = "{% url 'main' %}";
+          window.location = "{% url 'post_list' %}";
       }
     ready(() => {
           $('#logg').click(function() {
