@@ -2576,13 +2576,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-warning {
-    color: #212529;
+    color: white !important;
     background-color: #f5a811;
     border-color: #f5a811
 }
 
 .btn-warning:hover {
-    color: #212529;
+    color: white !important;
     background-color: #d79109;
     border-color: #ca8909
 }
