@@ -77,6 +77,10 @@ class SoundList(models.Model):
         queryset = self.players.all()
         return queryset
 
+    def playlist_50(self):
+        queryset = self.players.only("pk")[:50]
+        return queryset
+
     def count_tracks(self):
         return self.players.filter(is_deleted=False).values("pk").count()
 
