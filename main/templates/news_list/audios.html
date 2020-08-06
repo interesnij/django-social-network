@@ -81,9 +81,9 @@
                   </div>
                   {% endif %}
 
-                  <ul data-pk="{{ object.pk }}">
+                  <ul style="list-style-type:none" data-pk="{{ object.pk }}">
                     {% for track in object.playlist_too %}
-                    <li style="padding:7px">
+                    <li style="padding-left:7px; padding-right:7px;">
                         <div class="media" music-counter="{{ forloop.counter0 }}">
                             <figure style="cursor:pointer">
                               <a class="music_list_item music_thumb">
