@@ -1090,7 +1090,7 @@ class User(AbstractUser):
         own_posts_queryset = Post.objects.only('created').filter(posts_query)
 
         community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        community_query.add(~Q(Q(creator__blocked_by_users__blocker_id_=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
+        community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         community_queryset = Post.objects.only('created').filter(community_query)
         final_queryset = posts_query.union(community_queryset)
         return final_queryset
