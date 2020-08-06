@@ -6,7 +6,7 @@ urlpatterns = [
 	url(r'^$', ComingView.as_view(), name="coming"),
 	url(r'^phone_send/$', MainPhoneSend.as_view(), name="phone_send"),
 
-	url(r'^posts/$', PostsListView.as_view(), name="posts_list"),
+	url(r'^posts/$', PostsListView.as_view(), name="post_list"),
 	url(r'^featured_posts/$', FeaturedPostsView.as_view(), name="featured_posts_list"),
 	url(r'^photos/$', PhotosListView.as_view(), name="photos_list"),
 	url(r'^featured_photos/$', FeaturedPhotosView.as_view(), name="featured_photos_list"),
