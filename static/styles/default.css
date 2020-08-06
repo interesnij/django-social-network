@@ -1,5 +1,9 @@
-.comment_user_image {
-
+.music_title {
+  cursor: pointer;
+  margin: 0 0 1em;
+  width: 84%;
+  overflow: hidden;
+  padding-top: 5px;
 }
 .comment_btn{
   float:right;
