@@ -418,12 +418,14 @@ function get_normal_screen(){
                   //var count = list.length;
                   var count = 50;
                   for(i=0; i<count; i++) {
+                    try{
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
                     _thumbPath=list[i].getAttribute("data-thumbpath");
                     _duration=list[i].getAttribute("data-duration");
                     time = msToTime(_duration);
-                    music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+                    music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
+                  }catch{break}
                   }
                   music_player.loadPlaylist(0);
                   if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
