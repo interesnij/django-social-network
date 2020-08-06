@@ -273,6 +273,7 @@ class User(AbstractUser):
         follow.delete()
 
     def unfrend_user(self, user):
+        self.get_or_create_possible_friend(user)
         return self.unfrend_user_with_id(user.pk)
 
     def unfrend_user_with_id(self, user_id):
