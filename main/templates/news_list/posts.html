@@ -4,6 +4,9 @@
   <span class="stream" id="stream">
 
     {% for object in object_list %}
+      {% if forloop.counter / 5 %}
+        рыклама
+      {% endif %}
 
       {% if object.community %}
 
