@@ -11,7 +11,7 @@
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-12 col-md-8 col-lg-8">
-          <a class="mb-2 btn btn-sm btn-primary ajax">Записи</a>
+          <a href="{% url 'post_list' %}" class="mb-2 btn btn-sm btn-primary ajax">Записи</a>
           <a class="mb-2 btn btn-sm btn-secondary ajax">Фото</a>
           <a class="mb-2 btn btn-sm btn-success ajax">Товары</a>
           <a class="mb-2 btn btn-sm btn-warning ajax">Видео</a>
@@ -55,8 +55,8 @@
           <div class="card">
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                <a class="ajax" href="/main/">Новости</a>
-                <a class="ajax" href="{% url 'featured_post_list' %}">Рекомендации</a>
+                <a class="ajax" href="{% url 'post_list' %}">Новости</a>
+                <a>Рекомендации</a>
                 <a class="ajax" href="/main/like/">Вы одобрили</a>
                 <a class="ajax" href="/main/dislike/">Вы не одобрили</a>
                 <a class="ajax" href="/main/comments/">Ваши комментарии</a>
