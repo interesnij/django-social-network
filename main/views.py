@@ -18,7 +18,7 @@ class PostListView(ListView):
 		if self.request.user.is_authenticated:
 			items = self.request.user.get_timeline_posts_for_user().order_by('-created')
 		else:
-			items = None
+			items = []
 		return items
 
 class FeaturedPostsView(ListView):
