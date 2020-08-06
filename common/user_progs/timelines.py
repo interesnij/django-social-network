@@ -23,7 +23,7 @@ def get_timeline_posts_for_user(user):
     frends_ids = [target_user['target_user_id'] for target_user in frends]
     frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Post.STATUS_PUBLISHED)
     frends_queryset = Post.objects.only('created').filter(frends_query)
-    final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
+    final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset).order_by("-posted")
     return final_queryset
 
 def get_timeline_posts_for_possible_users(user):
