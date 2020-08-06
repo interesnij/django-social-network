@@ -38,30 +38,30 @@ def get_timeline_posts_for_possible_users(user):
 
 
 def get_timeline_photos_for_user(user):
-    own_photos_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    own_photos_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
     own_photos_queryset = user.photo_creator.only('created').filter(own_photos_query)
 
-    community_photos_query = Q(community__memberships__user__id=user.pk, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    community_photos_query = Q(community__memberships__user__id=user.pk, is_deleted=False, is_public=True)
     community_photos_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_photos_queryset = Photo.objects.only('created').filter(community_photos_query)
 
     followed_users = user.follows.values('followed_user_id')
     followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
-    followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, is_public=True)
     followed_users_queryset = Photo.objects.only('created').filter(followed_users_query)
 
     frends = user.connections.values('target_user_id')
     frends_ids = [target_user['target_user_id'] for target_user in frends]
-    frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    frends_query = Q(creator__in=frends_ids, is_deleted=False, status=is_public=True)
     frends_queryset = Photo.objects.only('created').filter(frends_query)
     final_queryset = own_photos_queryset.union(community_photos_queryset, followed_users_queryset, frends_queryset)
     return final_queryset
 
 def get_timeline_photos_for_possible_users(user):
     possible_users = user.get_possible_friends_ids()
-    photos_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    photos_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
     photos_queryset = Photo.objects.only('created').filter(photos_query)
-    community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Photo.STATUS_PUBLISHED)
+    community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, is_public=True)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = Photo.objects.only('created').filter(community_query)
     final_queryset = photos_queryset.union(community_queryset)
