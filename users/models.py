@@ -751,7 +751,12 @@ class User(AbstractUser):
             i = frend.get_all_connection().values('id')
             query = query + [user['id'] for user in i]
         query = query + frends_ids
-        return list(set(query))
+        set_query = list(set(query))
+        try:
+            set_query.remove(self.pk)
+        except:
+            pass
+        return set_query
 
 
     def get_all_connection(self):
