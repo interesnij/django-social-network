@@ -52,7 +52,7 @@ def get_timeline_photos_for_user(user):
 
     frends = user.connections.values('target_user_id')
     frends_ids = [target_user['target_user_id'] for target_user in frends]
-    frends_query = Q(creator__in=frends_ids, is_deleted=False, status=is_public=True)
+    frends_query = Q(creator__in=frends_ids, is_deleted=False, is_public=True)
     frends_queryset = Photo.objects.only('created').filter(frends_query)
     final_queryset = own_photos_queryset.union(community_photos_queryset, followed_users_queryset, frends_queryset)
     return final_queryset
