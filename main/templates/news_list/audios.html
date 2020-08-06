@@ -74,7 +74,9 @@
                                 <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                                   {{ object.creator.get_full_name }} &nbsp;
                                 </a>
-                                <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                                <p>
+                                  <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                                </p>
                               </h6>
                           </div>
                       </div>
