@@ -18,7 +18,7 @@ class MainPageView(TemplateView):
 		return context
 
 
-class NewsListView(ListView):
+class PostListView(ListView):
 	template_name = "news_list.html"
 	paginate_by = 15
 
@@ -27,7 +27,7 @@ class NewsListView(ListView):
 			self.template_name = request.user.get_settings_template(folder="news_list/", template="posts.html", request=request)
 		else:
 			raise Http404
-		return super(NewsListView,self).get(request,*args,**kwargs)
+		return super(PostListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:

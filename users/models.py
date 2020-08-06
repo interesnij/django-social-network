@@ -1086,8 +1086,8 @@ class User(AbstractUser):
         from posts.models import Post
 
         possible_users = self.get_possible_friends_ids()
-        posts_query = Q(creator_id__in=self.get_possible_friends_ids(), community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
-        own_posts_queryset = self.post_creator.only('created').filter(posts_query)
+        posts_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
+        own_posts_queryset = Post.filter(posts_query)
         return own_posts_queryset
 
     def get_common_friends_of_user(self, user):
