@@ -2,7 +2,7 @@ from django.db.models import Q
 from posts.models import Post
 from gallery.models import Photo
 from goods.models import Good
-from videos.models import VideoAlbum
+from video.models import VideoAlbum
 from music.models import SoundList
 
 
