@@ -11,7 +11,7 @@ class PostListView(ListView):
 		if request.user.is_authenticated:
 			self.template_name = request.user.get_settings_template(folder="news_list/", template="posts.html", request=request)
 		else:
-			raise Http404
+			self.template_name = "main/auth.html"
 		return super(PostListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
