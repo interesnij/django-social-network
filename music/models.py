@@ -58,7 +58,7 @@ class SoundSymbol(models.Model):
         verbose_name_plural = "буквы поиска музыки"
 
 
-class SoundList(models.Model):
+class SoundList(models.Model): 
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
@@ -70,7 +70,7 @@ class SoundList(models.Model):
         return self.name
 
     def is_track_in_list(self, track_id):
-        return self.players.filter(pk=track_id).values("pk").exists() 
+        return self.players.filter(pk=track_id).values("pk").exists()
 
     def playlist_too(self):
         queryset = self.players.all()

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Новости | Записи{% endblock %}
+{% block title %}Новости | Фотографии{% endblock %}
 {% block meta %}
 <meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
 <meta property="og:type" content="website" />
@@ -26,26 +26,6 @@
               {% for object in object_list %}
                 {% if forloop.counter|divisibleby:"5" %}
                   рыклама
-                {% endif %}
-
-                {% if object.community %}
-
-                    {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
-                    {% if object.community in request.user.get_staffed_communities %}
-                      {% include 'c_posts/admin_post.html' %}
-                    {% else %}
-                      {% include 'c_posts/post.html' %}
-                    {% endif %}
-
-                {% else %}
-
-                    {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
-                    {% if object.creator == request.user %}
-                      {% include 'u_posts/my_post.html' %}
-                    {% else %}
-                      {% include 'u_posts/post.html' %}
-                    {% endif %}
-
                 {% endif %}
 
               {% endfor %}
