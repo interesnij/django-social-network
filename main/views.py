@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.http import Http404
+from common.user_progs.timelines import *
 
 
 class PostListView(ListView):
@@ -16,7 +17,7 @@ class PostListView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = self.request.user.get_timeline_posts_for_user().order_by('-created')
+			items = get_timeline_posts_for_user(self.request.user)
 		else:
 			items = []
 		return items
@@ -34,7 +35,7 @@ class FeaturedPostsView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = self.request.user.get_timeline_posts_for_possible_users()
+			items = get_timeline_posts_for_possible_users(self.request.user)
 		else:
 			items = None
 		return items
