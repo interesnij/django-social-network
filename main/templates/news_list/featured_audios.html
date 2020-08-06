@@ -16,7 +16,7 @@
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
           {% if object_list %}
-            <span class="stream" id="featured_posts_stream">
+            <span class="stream" class="stream news_block_paginate" id="news_featured_post_list" data-link="/featured_posts">
               {% for object in object_list %}
                 {% if forloop.counter|divisibleby:"5" %}
                   рыклама

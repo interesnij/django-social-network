@@ -33,7 +33,7 @@ def get_timeline_posts_for_possible_users(user):
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Post.STATUS_PUBLISHED)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = Post.objects.only('created').filter(community_query)
-    final_queryset = posts_queryset.union(community_queryset)
+    final_queryset = posts_queryset.union(community_queryset).order_by("-created")
     return final_queryset
 
 
@@ -54,7 +54,7 @@ def get_timeline_photos_for_user(user):
     frends_ids = [target_user['target_user_id'] for target_user in frends]
     frends_query = Q(creator__in=frends_ids, is_deleted=False, is_public=True)
     frends_queryset = Photo.objects.only('created').filter(frends_query)
-    final_queryset = own_photos_queryset.union(community_photos_queryset, followed_users_queryset, frends_queryset)
+    final_queryset = own_photos_queryset.union(community_photos_queryset, followed_users_queryset, frends_queryset).order_by("-created")
     return final_queryset
 
 def get_timeline_photos_for_possible_users(user):
@@ -64,7 +64,7 @@ def get_timeline_photos_for_possible_users(user):
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, is_public=True)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = Photo.objects.only('created').filter(community_query)
-    final_queryset = photos_queryset.union(community_queryset)
+    final_queryset = photos_queryset.union(community_queryset).order_by("-created")
     return final_queryset
 
 
@@ -85,7 +85,7 @@ def get_timeline_goods_for_user(user):
     frends_ids = [target_user['target_user_id'] for target_user in frends]
     frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Good.STATUS_PUBLISHED)
     frends_queryset = Good.objects.only('created').filter(frends_query)
-    final_queryset = own_goods_queryset.union(community_goods_queryset, followed_users_queryset, frends_queryset)
+    final_queryset = own_goods_queryset.union(community_goods_queryset, followed_users_queryset, frends_queryset).order_by("-created")
     return final_queryset
 
 def get_timeline_goods_for_possible_users(user):
@@ -95,7 +95,7 @@ def get_timeline_goods_for_possible_users(user):
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Good.STATUS_PUBLISHED)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = Good.objects.only('created').filter(community_query)
-    final_queryset = goods_queryset.union(community_queryset)
+    final_queryset = goods_queryset.union(community_queryset).order_by("-created")
     return final_queryset
 
 
@@ -121,7 +121,7 @@ def get_timeline_videos_for_user(user):
     frends_query = Q(creator__in=frends_ids, is_deleted=False, is_public=True)
     frends_query.add(~Q(empty_list_exclude), Q.AND)
     frends_queryset = VideoAlbum.objects.only('id').filter(frends_query)
-    final_queryset = own_videos_queryset.union(community_videos_queryset, followed_users_queryset, frends_queryset)
+    final_queryset = own_videos_queryset.union(community_videos_queryset, followed_users_queryset, frends_queryset).order_by("-id")
     return final_queryset
 
 def get_timeline_videos_for_possible_users(user):
@@ -134,7 +134,7 @@ def get_timeline_videos_for_possible_users(user):
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_query.add(~Q(empty_list_exclude), Q.AND)
     community_queryset = VideoAlbum.objects.only('id').filter(community_query)
-    final_queryset = videos_queryset.union(community_queryset)
+    final_queryset = videos_queryset.union(community_queryset).order_by("-id")
     return final_queryset
 
 
@@ -160,7 +160,7 @@ def get_timeline_audios_for_user(user):
     frends_query = Q(creator__in=frends_ids, is_deleted=False)
     frends_query.add(~Q(empty_list_exclude), Q.AND)
     frends_queryset = SoundList.objects.only('id').filter(frends_query)
-    final_queryset = own_audios_queryset.union(community_audios_queryset, followed_users_queryset, frends_queryset)
+    final_queryset = own_audios_queryset.union(community_audios_queryset, followed_users_queryset, frends_queryset).order_by("-id")
     return final_queryset
 
 def get_timeline_audios_for_possible_users(user):
@@ -173,5 +173,5 @@ def get_timeline_audios_for_possible_users(user):
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_query.add(~Q(empty_list_exclude), Q.AND)
     community_queryset = SoundList.objects.only('id').filter(community_query)
-    final_queryset = audios_queryset.union(community_queryset)
+    final_queryset = audios_queryset.union(community_queryset).order_by("-id")
     return final_queryset
