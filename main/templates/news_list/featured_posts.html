@@ -24,7 +24,9 @@
             <span class="stream" id="featured_posts_stream">
 
               {% for object in object_list %}
-
+              {% if forloop.counter|divisibleby:"5" %}
+                рыклама
+              {% endif %}
                 {% if object.community %}
                   {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
                   {% include 'c_recomend_posts/post.html' %}
@@ -32,7 +34,6 @@
                 {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
                   {% include 'u_recomend_posts/post.html' %}
                 {% endif %}
-
               {% endfor %}
             </span>
 

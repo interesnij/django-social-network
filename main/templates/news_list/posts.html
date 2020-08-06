@@ -1,49 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Новости | Записи{% endblock %}
+{% block meta %}
+<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/static/images/I.jpg" />
+{% endblock %}
+{% block content %}
 
-{% if object_list %}
+<div class="container mt-4 main-container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8">
+          <a class="mb-2 btn btn-sm btn-primary">Записи</a>
+          <a class="mb-2 btn btn-sm btn-secondary ajax">Фото</a>
+          <a class="mb-2 btn btn-sm btn-success ajax">Товары</a>
+          <a class="mb-2 btn btn-sm btn-warning ajax">Видео</a>
+          <a class="mb-2 btn btn-sm btn-info ajax">Музыка</a>
+          <div class="stream-update">
+            <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
+          </div>
 
-  <span class="stream" id="stream">
+          {% if object_list %}
+            <span class="stream" id="stream">
+              {% for object in object_list %}
+                {% if forloop.counter|divisibleby:"5" %}
+                  рыклама
+                {% endif %}
 
-    {% for object in object_list %}
-      {% if forloop.counter|divisibleby:"5" %}
-        рыклама
-      {% endif %}
+                {% if object.community %}
 
-      {% if object.community %}
+                    {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
+                    {% if object.community in request.user.get_staffed_communities %}
+                      {% include 'c_posts/admin_post.html' %}
+                    {% else %}
+                      {% include 'c_posts/post.html' %}
+                    {% endif %}
 
-          {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
-          {% if object.community in request.user.get_staffed_communities %}
-            {% include 'c_posts/admin_post.html' %}
+                {% else %}
+
+                    {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
+                    {% if object.creator == request.user %}
+                      {% include 'u_posts/my_post.html' %}
+                    {% else %}
+                      {% include 'u_posts/post.html' %}
+                    {% endif %}
+
+                {% endif %}
+
+              {% endfor %}
+            </span>
           {% else %}
-            {% include 'c_posts/post.html' %}
+          <div class="card mb-3 post_empty centered">
+            <div class="card-body">
+            <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">
+              Пока новостей нет.
+              <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
+                Найдите друзей
+              </a>
+              и
+              <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
+              вступайте в сообщества
+              </a>, и их записи будут отображаться здесь.</h6>
+          </div>
           {% endif %}
 
-      {% else %}
-
-          {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
-          {% if object.creator == request.user %}
-            {% include 'u_posts/my_post.html' %}
-          {% else %}
-            {% include 'u_posts/post.html' %}
-          {% endif %}
-
-      {% endif %}
-
-    {% endfor %}
-  </span>
-
-{% else %}
-<div class="card mb-3 post_empty centered">
-  <div class="card-body">
-  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
-  </div>
-  <h6 style="margin: 20px;text-align: center;">
-    Пока новостей нет.
-    <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
-      Найдите друзей
-    </a>
-    и
-    <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
-    вступайте в сообщества
-    </a>, и их записи будут отображаться здесь.</h6>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="nav flex-column nav-pills faqnav">
+                <a class="ajax" href="/main/">Новости</a>
+                <a class="ajax" href="{% url 'featured_post_list' %}">Рекомендации</a>
+                <a class="ajax" href="/main/like/">Вы одобрили</a>
+                <a class="ajax" href="/main/dislike/">Вы не одобрили</a>
+                <a class="ajax" href="/main/comments/">Ваши комментарии</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 </div>
-{% endif %}
+
+{% endblock %}

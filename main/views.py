@@ -3,23 +3,8 @@ from django.views.generic import ListView
 from django.http import Http404
 
 
-class MainPageView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = request.user.get_settings_template(folder="main/", template="news.html", request=request)
-		else:
-			self.template_name = 'main/auth.html'
-		return super(MainPageView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(MainPageView,self).get_context_data(**kwargs)
-		return context
-
-
 class PostListView(ListView):
-	template_name = "news_list.html"
+	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
