@@ -227,11 +227,15 @@ class User(AbstractUser):
             and not (self.is_child() and not user.is_child_safety()):
             UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
+    def remove_possible_friend(self, user_id):
+        from users.model.list import UserFeaturedFriend
+        if UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user_id).exists():
+            UserFeaturedFriend.objects.get(user=self.pk, featured_user=user_id).delete()
+
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
         for frend in user.get_all_connection():
             self.get_or_create_possible_friend(frend)
-        return True
 
     def get_possible_friends(self):
         query = Q(id__in=self.get_possible_friends_ids())
@@ -255,7 +259,7 @@ class User(AbstractUser):
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
-
+        remove_possible_friend(self, user_id)
         return frend
 
     def unfollow_user(self, user):
@@ -315,6 +319,7 @@ class User(AbstractUser):
             user_to_block.unfollow_user_with_id(self.pk)
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
+        remove_possible_friend(self, user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
