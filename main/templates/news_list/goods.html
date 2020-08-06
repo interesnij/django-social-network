@@ -22,7 +22,7 @@
           </div>
 
           {% if object_list %}
-            <span class="stream" id="news_good_list" class="news_block_paginate" data-link="{% url 'goods_list' %}">
+            <span class="stream news_block_paginate" id="news_good_list" data-link="{% url 'goods_list' %}">
               {% for object in object_list %}
                 {% if forloop.counter|divisibleby:"5" %}
                   рыклама
