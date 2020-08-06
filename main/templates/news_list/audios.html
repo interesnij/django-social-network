@@ -41,7 +41,9 @@
                               <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                                 {{ object.community.name }} &nbsp;
                               </a>
-                              <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                              <p>
+                                <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                              </p>
                             </h6>
                           </div>
                           <div class="dropdown d-inline-block">

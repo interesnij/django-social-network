@@ -132,20 +132,25 @@ def get_timeline_videos_for_possible_users(user):
 
 def get_timeline_audios_for_user(user):
     own_audios_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False)
+    empty_list_exclude = Q(players__isnull=True)
+    own_audios_query.add(~Q(empty_list_exclude), Q.AND)
     own_audios_queryset = user.user_playlist.only('id').filter(own_audios_query)
 
     community_audios_query = Q(community__memberships__user__id=user.pk, is_deleted=False)
     community_audios_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
+    community_audios_query.add(~Q(empty_list_exclude), Q.AND)
     community_audios_queryset = SoundList.objects.only('id').filter(community_audios_query)
 
     followed_users = user.follows.values('followed_user_id')
     followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
     followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False)
+    followed_users_query.add(~Q(empty_list_exclude), Q.AND)
     followed_users_queryset = SoundList.objects.only('id').filter(followed_users_query)
 
     frends = user.connections.values('target_user_id')
     frends_ids = [target_user['target_user_id'] for target_user in frends]
     frends_query = Q(creator__in=frends_ids, is_deleted=False)
+    frends_query.add(~Q(empty_list_exclude), Q.AND)
     frends_queryset = SoundList.objects.only('id').filter(frends_query)
     final_queryset = own_audios_queryset.union(community_audios_queryset, followed_users_queryset, frends_queryset)
     return final_queryset
