@@ -148,7 +148,7 @@
         {% endif %}
 
         {% if user.get_last_music %}
-        <div class="card mb-3 music_playlist" data-pk="{{ user.get_music_list_id }}">
+        <div class="card mb-3">
             <div class="card-header">
               <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
                 <div class="media">
@@ -161,7 +161,7 @@
             </div>
 
             {% for object in user.get_last_music %}
-            <div class="card border-top border-bottom">
+            <div data-pk="{{ user.get_music_list_id }}" class="card border-top border-bottom">
                 <div class="card-body" style="padding:7px;">
                     <div class="media" music-counter="{{ forloop.counter0 }}">
                         <figure style="cursor:pointer">

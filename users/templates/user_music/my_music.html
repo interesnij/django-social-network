@@ -24,9 +24,7 @@
               </div>
               <div class="card-body">
                 {% if object_list %}
-
-                <div class="music_playlist" data-pk="{{ user.get_music_list_id }}">
-                    <ul id="user_tracks_container" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music/">
+                    <ul id="user_tracks_container" data-pk="{{ user.get_music_list_id }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music/">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
@@ -74,7 +72,6 @@
                       </li>
                       {% endfor %}
                     </ul>
-                </div>
 
                 {% else %}
                 <div class="card centered">
