@@ -259,7 +259,7 @@ class User(AbstractUser):
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
-        remove_possible_friend(self, user_id)
+        self.remove_possible_friend(self, user_id)
         return frend
 
     def unfollow_user(self, user):
@@ -319,7 +319,7 @@ class User(AbstractUser):
             user_to_block.unfollow_user_with_id(self.pk)
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
-        remove_possible_friend(self, user_id)
+        self.remove_possible_friend(self, user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
