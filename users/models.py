@@ -294,6 +294,7 @@ class User(AbstractUser):
 
     def unblock_user_with_pk(self, pk):
         user = User.objects.get(pk=pk)
+        self.get_or_create_possible_friend(user)
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
