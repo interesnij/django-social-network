@@ -136,7 +136,7 @@ def get_timeline_audios_for_user(user):
 
     community_audios_query = Q(community__memberships__user__id=user.pk, is_deleted=False)
     community_audios_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
-    community_audios_queryset = VideoAlbum.objects.only('created').filter(community_audios_query)
+    community_audios_queryset = SoundList.objects.only('id').filter(community_audios_query)
 
     followed_users = user.follows.values('followed_user_id')
     followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
