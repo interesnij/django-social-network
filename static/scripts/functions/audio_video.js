@@ -415,7 +415,8 @@ function get_normal_screen(){
                   var response = document.createElement('span');
                   response.innerHTML = _link.responseText;
                   var list = response.querySelectorAll("li");
-                  var count = list.length;
+                  //var count = list.length;
+                  var count = 50;
                   for(i=0; i<count; i++) {
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
