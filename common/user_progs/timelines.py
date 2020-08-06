@@ -1,3 +1,4 @@
+from django.db.models import Q
 from posts.models import Post
 
 
