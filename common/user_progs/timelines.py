@@ -153,7 +153,7 @@ def get_timeline_audios_for_user(user):
 def get_timeline_audios_for_possible_users(user):
     possible_users = user.get_possible_friends_ids()
     audios_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False)
-    audios_queryset = SoundList.objects.only('id').filter(videos_query)
+    audios_queryset = SoundList.objects.only('id').filter(audios_query)
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = SoundList.objects.only('id').filter(community_query)
