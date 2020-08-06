@@ -21,10 +21,120 @@
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
           {% if object_list %}
-
             <span class="stream" id="featured_posts_stream">
               {% for object in object_list %}
+                {% if forloop.counter|divisibleby:"5" %}
+                  рыклама
+                {% endif %}
 
+                <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+                  {% if object.community %}
+                  <div class="card-header">
+                      <div class="media">
+                        <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                          <figure>
+                            {% if community.get_avatar %}
+                              <img src="{{ community.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                            {% else %}
+                              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            {% endif %}
+                          </figure>
+                        </a>
+                          <div class="media-body">
+                            <h6 class="mb-0">
+                              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                                {{ object.community.name }} &nbsp;
+                              </a>
+                              <p>
+                                <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                              </p>
+                            </h6>
+                          </div>
+                          <div class="dropdown d-inline-block">
+                              <a style="cursor:pointer" class="icon-30 btn_default drop">
+                                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+                                  <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'community_item_detail' uuid=object.uuid %}</textarea>
+                                </span>
+                                  <span class="dropdown-item post_claim">Пожаловаться</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  {% else %}
+                  <div class="card-header">
+                      <div class="media">
+                        <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                          <figure>
+                            {% if object.creator.get_avatar %}
+                              <img src="{{ object.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+                            {% else %}
+                              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                            {% endif %}
+                          </figure>
+                        </a>
+                          <div class="media-body">
+                              <h6 class="mb-0">
+                                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                                  {{ object.creator.get_full_name }} &nbsp;
+                                </a>
+                                <p>
+                                  <a href="{% url 'user_music_list' pk=object.creator.pk uuid=object.uuid %}" class="ajax" class="mb-0">{{ object.name }}</a>
+                                </p>
+                              </h6>
+                          </div>
+                      </div>
+                  </div>
+                  {% endif %}
+                  <br>
+                  <ul style="list-style-type:none" data-pk="{{ object.pk }}">
+                    {% for track in object.playlist_50 %}
+                    <li style="padding-left:7px; padding-right:7px;position: relative;">
+                        <div class="media" music-counter="{{ forloop.counter0 }}">
+                            <figure style="cursor:pointer">
+                              <a class="music_list_item music_thumb">
+                                {% if track.artwork_url %}
+                                  <img style="width:30px;heigth:auto" class="lazyload" data-src="{{ track.artwork_url }}" />
+                                {% else %}
+                                  <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                                {% endif %}
+                              </a>
+                            </figure>
+                            <div class="media-body" style="display: flex;">
+                                <h6 class="music_list_item music_title"><a>{{ track.title }}</a></h6>
+                                <span class='span_btn' style="margin-left: auto;" data-pk="{{ track.pk }}">
+                                  <span class='dropdown' style="position: inherit;">
+                                    <span class='btn_default pointer drop' title="Добавить в плейлист">
+                                      <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
+                                    </span>
+                                    <div class="dropdown-menu dropdown-menu-right" style="top: 35px;margin-top: -10px;">
+                                        {% for list in request.user.get_all_audio_playlists %}
+                                          <span data-uuid="{{ list.uuid }}">
+                                            {% if list|track_in_list:track.id %}
+                                              <span class="dropdown-item u_remove_track_in_list">
+                                                <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                                                {{ list.name }}
+                                              </span>
+                                            {% else %}
+                                              <span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">{{ list.name }}</span>
+                                            {% endif %}
+                                          </span>
+                                        {% endfor %}
+                                      <span class="dropdown-item u_create_music_list_track_add" style="padding-left: 30px;">В новый плейлист</span>
+                                    </div>
+                                  </span>
+                                  <span class='u_track_repost btn_default pointer' title="Поделиться">
+                                    <svg class='svg_default' style="width:20px;height:20px;" fill='currentColor' viewBox="0 0 24 24"><path d='M0 0h24v24H0z' fill='none'/><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>
+                                  </span>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
               {% endfor %}
             </span>
 
