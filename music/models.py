@@ -58,13 +58,14 @@ class SoundSymbol(models.Model):
         verbose_name_plural = "буквы поиска музыки"
 
 
-class SoundList(models.Model): 
+class SoundList(models.Model):
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
 
     def __str__(self):
         return self.name
