@@ -1,13 +1,13 @@
 on('body', 'click', '.clean_panel', function(event) {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
     document.body.querySelector(".create_fullscreen").style.display = "none";
-    document.body.getElementById("create_fullscreen").innerHTML=""
+    document.getElementById("create_fullscreen").innerHTML=""
   } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
     document.body.querySelector(".photo_fullscreen").style.display = "none";
-    document.body.getElementById("photo_loader").innerHTML=""
+    document.getElementById("photo_loader").innerHTML=""
   } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
     document.body.querySelector(".article_fullscreen").style.display = "none";
-    document.body.getElementById("article_loader").innerHTML=""
+    document.getElementById("article_loader").innerHTML=""
   } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
     document.body.querySelector(".item_fullscreen").style.display = "none";
     document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""

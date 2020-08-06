@@ -17,7 +17,7 @@
           </div>
 
           {% if object_list %}
-            <span class="stream" id="stream">
+            <span class="stream" id="news_audio_list" class="news_block_paginate" data-link="{% url 'audios_list' %}">
               {% for object in object_list %}
                 {% if forloop.counter|divisibleby:"5" %}
                   рыклама

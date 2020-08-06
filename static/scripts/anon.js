@@ -163,15 +163,11 @@ function open_fullscreen(link, block) {
 }
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
-  if(block.querySelector('#news_load')){
-    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
-    list_load(block.querySelector("#news_load"), link);
-  }else if(block.querySelector('#lenta_load')){
+  if(block.querySelector('#lenta_load')){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
 		scrolled(lenta_load, link, '#lenta_load')
-
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
@@ -188,7 +184,6 @@ function if_list(block){
 }
 
 function list_load(block,link) {
-  // подгрузка списка
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
 }
 function ajax_get_reload(url) {

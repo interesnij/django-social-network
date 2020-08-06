@@ -40,8 +40,7 @@ function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
 
 	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#lenta_load')){lenta_load = block.querySelector('#lenta_load'); scrolled(lenta_load, lenta_load.getAttribute("data-link"), '#lenta_load')}
-		else if(block.querySelector('#user_tracks_container')){user_tracks = block.querySelector('#user_tracks_container'); scrolled(user_tracks, user_tracks.getAttribute("data-link"), '#user_tracks_container')}
+		if(block.querySelector('#user_tracks_container')){user_tracks = block.querySelector('#user_tracks_container'); scrolled(user_tracks, user_tracks.getAttribute("data-link"), '#user_tracks_container')}
 		else if(block.querySelector('#user_tracks_list_container')){user_tracks = block.querySelector('#user_tracks_list_container'); scrolled(user_tracks, user_tracks.getAttribute("data-link"), '#user_tracks_list_container')}
 		else if(block.querySelector('#user_video_container')){user_video = block.querySelector('#user_video_container'); scrolled(user_video, user_video.getAttribute("data-link"), '#user_video_container')}
 		else if(block.querySelector('#friends_container')){friends = block.querySelector('#friends_container'); scrolled(friends, friends.getAttribute("data-link"), '#friends_container')}
@@ -54,7 +53,13 @@ function create_pagination(block){
 		else if(block.querySelector('#communities_container')){communities = block.querySelector('#communities_container'); scrolled(communities, communities.getAttribute("data-link"), '#communities_container')}
 		else if(block.querySelector('#staff_communities_container')){staff_communities = block.querySelector('#staff_communities_container'); scrolled(staff_communities, staff_communities.getAttribute("data-link"), '#staff_communities_container')}
 		else if(block.querySelector('#user_blacklist_container')){user_blacklist = block.querySelector('#user_blacklist_container'); scrolled(user_blacklist, user_blacklist.getAttribute("data-link"), '#user_blacklist_container')}
-
+	}
+	else if(block.querySelector('.news_block_paginate')){
+		if(block.querySelector('#news_post_list')){post_list = block.querySelector('#news_post_list'); scrolled(post_list, post_list.getAttribute("data-link"), '#news_post_list')}
+		else if(block.querySelector('#news_photo_list')){photo_list = block.querySelector('#news_photo_list'); scrolled(photo_list, photo_list.getAttribute("data-link"), '#news_photo_list')}
+		else if(block.querySelector('#news_video_list')){video_list = block.querySelector('#news_video_list'); scrolled(video_list, video_list.getAttribute("data-link"), '#news_video_list')}
+		else if(block.querySelector('#news_good_list')){good_list = block.querySelector('#news_good_list'); scrolled(good_list, good_list.getAttribute("data-link"), '#news_good_list')}
+		else if(block.querySelector('#news_audio_list')){audio_list = block.querySelector('#news_audio_list'); scrolled(audio_list, audio_list.getAttribute("data-link"), '#news_audio_list')}
 	}
 	else if(block.querySelector('.community_block_paginate')){
 		if(block.querySelector('#community_members_container')){community_members = block.querySelector('#community_members_container'); scrolled(community_members, community_members.getAttribute("data-link"), '#community_members_container')}
@@ -62,7 +67,6 @@ function create_pagination(block){
 		else if(block.querySelector('#community_goods_container')){community_goods = block.querySelector('#community_goods_container'); scrolled(community_goods, community_goods.getAttribute("data-link"), '#community_goods_container')}
 		else if(block.querySelector('#community_draft_post_container')){draft_post = block.querySelector('#community_draft_post_container'); scrolled(draft_post, draft_post.getAttribute("data-link"), '#community_draft_post_container')}
 		else if(block.querySelector('#community_user_draft_post_container')){draft_post = block.querySelector('#community_user_draft_post_container'); scrolled(draft_post, draft_post.getAttribute("data-link"), '#community_user_draft_post_container')}
-
 	}
 	else if(block.querySelector('.staff_community_block_paginate')){
 		if(block.querySelector('#community_admins_container')){admins_container = block.querySelector('#com_admins_container'); scrolled(admins_container, admins_container.getAttribute("data-link"), '#community_admins_container')}
@@ -93,15 +97,11 @@ function create_pagination(block){
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
-  if(block.querySelector('#news_load')){
-    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
-    list_load(block.querySelector("#news_load"), link);
-  }else if(block.querySelector('#lenta_load')){
+  if(block.querySelector('#lenta_load')){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
 		scrolled(lenta_load, link, '#lenta_load')
-
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
