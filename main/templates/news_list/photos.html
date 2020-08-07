@@ -112,7 +112,7 @@
               </div>
             {% else %}
             <span>
-              Альбом {{ object.album }}
+              Альбом {{ object.album.0 }}
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
