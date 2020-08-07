@@ -34,12 +34,11 @@ class UserPostView(View):
         from stst.models import PostNumbers
 
         if request.is_ajax() and request.user.is_authenticated:
-            uuid = self.kwargs["uuid"]
             try:
-                obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
+                obj = PostNumbers.objects.get(user=request.user.pk, post=self.kwargs["pk"])
                 return HttpResponse()
             except:
-                obj = PostNumbers.objects.create(user=request.user.pk, post=pk)
+                obj = PostNumbers.objects.create(user=request.user.pk, post=self.kwargs["pk"])
                 return HttpResponse()
         else:
             raise Http404
@@ -49,12 +48,11 @@ class UserAdPostView(View):
         from stst.models import PostAdNumbers
 
         if request.is_ajax() and request.user.is_authenticated:
-            uuid = self.kwargs["uuid"]
             try:
-                obj = PostAdNumbers.objects.get(user=request.user.pk, post=pk)
+                obj = PostAdNumbers.objects.get(user=request.user.pk, post=self.kwargs["pk"])
                 return HttpResponse('')
             except:
-                obj = PostAdNumbers.objects.create(user=request.user.pk, post=pk)
+                obj = PostAdNumbers.objects.create(user=request.user.pk, post=self.kwargs["pk"])
                 return HttpResponse('')
         else:
             raise Http404
