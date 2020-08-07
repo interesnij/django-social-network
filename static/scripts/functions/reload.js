@@ -23,8 +23,9 @@ function get_post_view(){
 
 function scrolled(link, block_id, target){
 	// скрипты для работы с прокруткой:
-	// 1. блок, к которому применяется скролл
-	// 2.
+	// 1. Ссылка на страницу с пагинацией
+	// 2. id блока, куда нужно грузить следующие страницы
+	// 3. Указатель на нужность работы просмотров элементов в ленте. Например, 1 - просмотры постов в ленте
 	onscroll = function(){
 		_block = document.body.querySelector(block_id);
 		box = _block.querySelector('.last');
@@ -133,27 +134,27 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		scrolled(link, '#lenta_load')
+		scrolled(link, '#lenta_load', target=1)
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
-		scrolled(link, '#lenta_community')
+		scrolled(link, '#lenta_community', target=1)
   }else if(block.querySelector('#photo_load')){
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
-		scrolled(link, '#photo_load')
+		scrolled(link, '#photo_load', target=0)
   }else if(block.querySelector('#c_photo_load')){
     photo_load = block.querySelector('#c_photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_photo_load"), link);
-		scrolled(link, '#c_photo_load')
+		scrolled(link, '#c_photo_load', target=0)
   }else if(block.querySelector('#album_photo_load')){
     album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#album_photo_load"), link);
-		scrolled(link, '#album_photo_load')
+		scrolled(link, '#album_photo_load', target=0)
   }else if(block.querySelector('#c_album_photo_load')){
     album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_album_photo_load"), link);
-		scrolled(link, '#c_album_photo_load')
+		scrolled(link, '#c_album_photo_load', target=0)
   };
 }
 if_list(document.getElementById('ajax'));
