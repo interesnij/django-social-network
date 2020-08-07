@@ -6,7 +6,7 @@ on('#ajax', 'click', '.avatar_detail', function() {
 
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   container = this.parentElement;
-  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('album-uuid') : uuid = this.getAttribute('album-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/user_album_photo/" + pk + "/" + uuid + "/", loader)
