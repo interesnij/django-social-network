@@ -78,7 +78,7 @@ function create_pagination(block){
 		else if(block.querySelector('#user_blacklist_container')){user_blacklist = block.querySelector('#user_blacklist_container'); scrolled(user_blacklist, user_blacklist.getAttribute("data-link"), '#user_blacklist_container')}
 	}
 	else if(block.querySelector('.news_block_paginate')){
-		if(block.querySelector('#news_post_list')){post_list = block.querySelector('#news_post_list'); scrolled(post_list, post_list.getAttribute("data-link"), '#news_post_list')}
+		if(block.querySelector('#news_post_list')){post_list = block.querySelector('#news_post_list'); scrolled(post_list, post_list.getAttribute("data-link"), '#news_post_list', true)}
 		else if(block.querySelector('#news_photo_list')){photo_list = block.querySelector('#news_photo_list'); scrolled(photo_list, photo_list.getAttribute("data-link"), '#news_photo_list')}
 		else if(block.querySelector('#news_video_list')){video_list = block.querySelector('#news_video_list'); scrolled(video_list, video_list.getAttribute("data-link"), '#news_video_list')}
 		else if(block.querySelector('#news_good_list')){good_list = block.querySelector('#news_good_list'); scrolled(good_list, good_list.getAttribute("data-link"), '#news_good_list')}
