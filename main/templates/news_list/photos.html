@@ -27,12 +27,11 @@
             {% if object.album and object.album.title == "Фото со страницы" %}
 
             {% if object.community %}
-              <span class="small">
-                Собщество
+              <span class="">
+                Новый аватар сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-                изменило аватар
               </span>
               <div class="c_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
@@ -44,7 +43,12 @@
                   </div>
               </div>
             {% else %}
-            <span>{{ object.creator.get_full_name }} изменил{% if object.creator.is_women %}а{% endif %} аватар</span>
+            <span>
+              Новый аватар
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                {{ object.creator.first_name|gent }}
+              </a>
+            </span>
             <div class="u_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -57,11 +61,11 @@
             {% endif %}
             {% elif object.album and object.album.title == "Фото со стены" %}
             {% if object.community %}
-              <span class="small">На стену собщества
+              <span class="">
+                Стена собщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-                загрузили фотографию
               </span>
               <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
@@ -73,7 +77,12 @@
                   </div>
               </div>
             {% else %}
-            <span>На стену {{ object.creator.first_name|gent }} загрузили фотографию</span>
+            <span>
+              Стена
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                {{ object.creator.first_name|gent }}
+              </a>
+            </span>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -86,12 +95,12 @@
             {% endif %}
             {% elif object.album and not object.album.is_generic %}
             {% if object.community %}
-              <span class="small">
-                В альбом
+              <span class="">
+                Альбом сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-                загрузили фотографию</span>
+              </span>
               <div class="c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -102,7 +111,12 @@
                   </div>
               </div>
             {% else %}
-            <span>В альбом {{ object.creator.first_name|gent }} загрузили фотографию</span>
+            <span>
+              Альбом
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+              {{ object.creator.first_name|gent }}
+              </a>
+            </span>
             <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -115,12 +129,12 @@
             {% endif %}
             {% elif object.album and object.album.title == "Фото со стены" %}
             {% if object.community %}
-              <span class="small">
-                На стену
+              <span class="">
+                Стена сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-                загрузили фотографию</span>
+              </span>
               <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -131,7 +145,12 @@
                   </div>
               </div>
             {% else %}
-            <span>На стену {{ object.creator.first_name|gent }} загрузили фотографию</span>
+            <span>
+              Стена
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                {{ object.creator.first_name|gent }}
+              </a>
+            </span>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -144,12 +163,12 @@
             {% endif %}
             {% elif not object.album %}
             {% if object.community %}
-              <span class="small">
-                В
+              <span class="">
+                Фото в сообществе
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
-                {{ object.community }}
-              </a>
-              появилась фотография</span>
+                  {{ object.community }}
+                </a>
+              </span>
               <div class="c_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -160,7 +179,12 @@
                   </div>
               </div>
             {% else %}
-            <span>У {{ object.creator.first_name|gent }} появилась фотография</span>
+            <span>
+              Фото
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                {{ object.creator.first_name|gent }}
+              </a>
+            </span>
             <div class="u_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
