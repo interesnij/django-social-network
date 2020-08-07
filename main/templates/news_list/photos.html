@@ -46,7 +46,7 @@
             <span>
               Новый аватар
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                {{ object.creator.first_name|gent }}
+                {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
             <div class="u_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -80,7 +80,7 @@
             <span>
               Стена
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                {{ object.creator.first_name|gent }}
+                {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -114,7 +114,7 @@
             <span>
               Альбом
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-              {{ object.creator.first_name|gent }}
+              {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
             <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.creator.pk }}">
@@ -148,7 +148,7 @@
             <span>
               Стена
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                {{ object.creator.first_name|gent }}
+                {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -182,7 +182,7 @@
             <span>
               Фото
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                {{ object.creator.first_name|gent }}
+                {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
             <div class="u_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
