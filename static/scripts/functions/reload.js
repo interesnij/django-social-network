@@ -8,7 +8,7 @@ function get_post_view(){
       if(!list[i].classList.contains("showed")){
         inViewport = elementInViewport(list[i]);
         if(inViewport){
-          pk = list[i].getAttribute('post-pk');
+          pk = list[i].getAttribute('data-uuid');
 					if (list[i].querySelector(".reklama")){
 						link.open( 'GET', '/posts/user_progs/post_market_view/' + pk + "/", true );
 					} else if(!list[i].querySelector(".reklama")){
