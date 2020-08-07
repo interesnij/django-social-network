@@ -101,7 +101,7 @@
                   {{ object.community }}
                 </a>
               </span>
-              <div class="c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.community.pk }}">
+              <div class="c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" album-uuid="{{ object.album.uuid }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
                       <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
@@ -117,7 +117,7 @@
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
-            <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.creator.pk }}">
+            <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" album-uuid="{{ object.creator.uuid }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
                     <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
