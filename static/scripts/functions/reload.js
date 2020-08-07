@@ -21,24 +21,26 @@ function get_post_view(){
 				console.log(i + " получил класс showed");
     }}}}}
 
-function scrolled(block, link, block_2, target){
+function scrolled(link, block_id, target){
 	// скрипты для работы с прокруткой:
 	// 1. блок, к которому применяется скролл
 	// 2.
 	onscroll = function(){
-		box = block.querySelector('.last');
+		_block = document.body.querySelector(block_id);
+		box = _block.querySelector('.last');
 		if(box && box.classList.contains("last")){
 				inViewport = elementInViewport(box);
 				if(inViewport){
 					box.classList.remove("last");
-					paginate(block, link, block_2);
+					paginate(link, block_id);
 		}};
 		if (target == 1){get_post_view()}
 	}
 }
 page = 2;
 loaded = false;
-function paginate(block, link, block_2){
+function paginate(link, block_id){
+	block = document.body.querySelector(block_id);
 	if(block.getElementsByClassName('pag').length === (page-1)*15){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -50,9 +52,9 @@ function paginate(block, link, block_2){
 			var elem = document.createElement('span');
 			elem.innerHTML = link_3.responseText;
 			if(elem.getElementsByClassName('pag').length < 15){loaded = true};
-			if (elem.querySelector(block)){ //
+			if (elem.querySelector(block_id)){
 				xxx = document.createElement("span");
-				xxx.innerHTML = elem.querySelector(block).innerHTML; //
+				xxx.innerHTML = elem.querySelector(block_id).innerHTML; 
 				block.append(xxx);
 			} else {block.append(elem)}
 			}
@@ -65,63 +67,63 @@ function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
 
 	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#user_tracks_container')){user_tracks = block.querySelector('#user_tracks_container'); scrolled(user_tracks, user_tracks.getAttribute("data-link"), '#user_tracks_container', target=0)}
-		else if(block.querySelector('#user_tracks_list_container')){user_tracks = block.querySelector('#user_tracks_list_container'); scrolled(user_tracks, user_tracks.getAttribute("data-link"), '#user_tracks_list_container', target=0)}
-		else if(block.querySelector('#user_video_container')){user_video = block.querySelector('#user_video_container'); scrolled(user_video, user_video.getAttribute("data-link"), '#user_video_container', target=0)}
-		else if(block.querySelector('#friends_container')){friends = block.querySelector('#friends_container'); scrolled(friends, friends.getAttribute("data-link"), '#friends_container', target=0)}
-		else if(block.querySelector('#follows_container')){follows = block.querySelector('#follows_container'); scrolled(follows, follows.getAttribute("data-link"), '#follows_container', target=0)}
-		else if(block.querySelector('#followings_container')){followings = block.querySelector('#followings_container'); scrolled(followings, followings.getAttribute("data-link"), '#followings_container', target=0)}
-		else if(block.querySelector('#online_friends_container')){online_friends = block.querySelector('#online_friends_container'); scrolled(online_friends, online_friends.getAttribute("data-link"), '#online_friends_container', target=0)}
-		else if(block.querySelector('#possible_friends_container')){possible_friends = block.querySelector('#possible_friends_container'); scrolled(possible_friends, possible_friends.getAttribute("data-link"), '#possible_friends_container', target=0)}
-		else if(block.querySelector('#common_friends_container')){common_friends = block.querySelector('#common_friends_container'); scrolled(common_friends, common_friends.getAttribute("data-link"), '#common_friends_container', target=0)}
-		else if(block.querySelector('#user_goods_container')){user_goods = block.querySelector('#user_goods_container'); scrolled(user_goods, user_goods.getAttribute("data-link"), '#user_goods_container', target=0)}
-		else if(block.querySelector('#communities_container')){communities = block.querySelector('#communities_container'); scrolled(communities, communities.getAttribute("data-link"), '#communities_container', target=0)}
-		else if(block.querySelector('#staff_communities_container')){staff_communities = block.querySelector('#staff_communities_container'); scrolled(staff_communities, staff_communities.getAttribute("data-link"), '#staff_communities_container', target=0)}
-		else if(block.querySelector('#user_blacklist_container')){user_blacklist = block.querySelector('#user_blacklist_container'); scrolled(user_blacklist, user_blacklist.getAttribute("data-link"), '#user_blacklist_container', target=0)}
+		if(block.querySelector('#user_tracks_container')){scrolled(block.querySelector('#user_tracks_container').getAttribute("data-link"), '#user_tracks_container', target=0)}
+		else if(block.querySelector('#user_tracks_list_container')){scrolled(block.querySelector('#user_tracks_list_container').getAttribute("data-link"), '#user_tracks_list_container', target=0)}
+		else if(block.querySelector('#user_video_container')){scrolled(block.querySelector('#user_video_container').getAttribute("data-link"), '#user_video_container', target=0)}
+		else if(block.querySelector('#friends_container')){scrolled(block.querySelector('#friends_container').getAttribute("data-link"), '#friends_container', target=0)}
+		else if(block.querySelector('#follows_container')){scrolled(block.querySelector('#follows_container').getAttribute("data-link"), '#follows_container', target=0)}
+		else if(block.querySelector('#followings_container')){scrolled(block.querySelector('#followings_container').getAttribute("data-link"), '#followings_container', target=0)}
+		else if(block.querySelector('#online_friends_container')){scrolled(block.querySelector('#online_friends_container').getAttribute("data-link"), '#online_friends_container', target=0)}
+		else if(block.querySelector('#possible_friends_container')){scrolled(block.querySelector('#possible_friends_container').getAttribute("data-link"), '#possible_friends_container', target=0)}
+		else if(block.querySelector('#common_friends_container')){scrolled(block.querySelector('#common_friends_container').getAttribute("data-link"), '#common_friends_container', target=0)}
+		else if(block.querySelector('#user_goods_container')){scrolled(block.querySelector('#user_goods_container').getAttribute("data-link"), '#user_goods_container', target=0)}
+		else if(block.querySelector('#communities_container')){scrolled(block.querySelector('#communities_container').getAttribute("data-link"), '#communities_container', target=0)}
+		else if(block.querySelector('#staff_communities_container')){scrolled(block.querySelector('#staff_communities_container').getAttribute("data-link"), '#staff_communities_container', target=0)}
+		else if(block.querySelector('#user_blacklist_container')){scrolled(block.querySelector('#user_blacklist_container').getAttribute("data-link"), '#user_blacklist_container', target=0)}
 	}
 	else if(block.querySelector('.news_block_paginate')){
-		if(block.querySelector('#news_post_list')){post_list = block.querySelector('#news_post_list'); scrolled(post_list, post_list.getAttribute("data-link"), '#news_post_list', target=1)}
-		else if(block.querySelector('#news_photo_list')){photo_list = block.querySelector('#news_photo_list'); scrolled(photo_list, photo_list.getAttribute("data-link"), '#news_photo_list', target=0)}
-		else if(block.querySelector('#news_video_list')){video_list = block.querySelector('#news_video_list'); scrolled(video_list, video_list.getAttribute("data-link"), '#news_video_list', target=0)}
-		else if(block.querySelector('#news_good_list')){good_list = block.querySelector('#news_good_list'); scrolled(good_list, good_list.getAttribute("data-link"), '#news_good_list', target=0)}
-		else if(block.querySelector('#news_audio_list')){audio_list = block.querySelector('#news_audio_list'); scrolled(audio_list, audio_list.getAttribute("data-link"), '#news_audio_list', target=0)}
-		else if(block.querySelector('#news_featured_post_list')){post_list = block.querySelector('#news_featured_post_list'); scrolled(post_list, post_list.getAttribute("data-link"), '#news_featured_post_list', target=1)}
-		else if(block.querySelector('#news_featured_photo_list')){photo_list = block.querySelector('#news_featured_photo_list'); scrolled(photo_list, photo_list.getAttribute("data-link"), '#news_featured_photo_list', target=0)}
-		else if(block.querySelector('#news_featured_video_list')){video_list = block.querySelector('#news_featured_video_list'); scrolled(video_list, video_list.getAttribute("data-link"), '#news_featured_video_list', target=0)}
-		else if(block.querySelector('#news_featured_good_list')){good_list = block.querySelector('#news_featured_good_list'); scrolled(good_list, good_list.getAttribute("data-link"), '#news_featured_good_list', target=0)}
-		else if(block.querySelector('#news_featured_audio_list')){audio_list = block.querySelector('#news_featured_audio_list'); scrolled(audio_list, audio_list.getAttribute("data-link"), '#news_featured_audio_list', target=0)}
+		if(block.querySelector('#news_post_list')){scrolled(block.querySelector('#news_post_list').getAttribute("data-link"), '#news_post_list', target=1)}
+		else if(block.querySelector('#news_photo_list')){scrolled(block.querySelector('#news_photo_list').getAttribute("data-link"), '#news_photo_list', target=0)}
+		else if(block.querySelector('#news_video_list')){scrolled(block.querySelector('#news_video_list').getAttribute("data-link"), '#news_video_list', target=0)}
+		else if(block.querySelector('#news_good_list')){scrolled(block.querySelector('#news_good_list').getAttribute("data-link"), '#news_good_list', target=0)}
+		else if(block.querySelector('#news_audio_list')){scrolled(block.querySelector('#news_audio_list').getAttribute("data-link"), '#news_audio_list', target=0)}
+		else if(block.querySelector('#news_featured_post_list')){scrolled(block.querySelector('#news_featured_post_list').getAttribute("data-link"), '#news_featured_post_list', target=1)}
+		else if(block.querySelector('#news_featured_photo_list')){scrolled(block.querySelector('#news_featured_photo_list').getAttribute("data-link"), '#news_featured_photo_list', target=0)}
+		else if(block.querySelector('#news_featured_video_list')){scrolled(block.querySelector('#news_featured_video_list').getAttribute("data-link"), '#news_featured_video_list', target=0)}
+		else if(block.querySelector('#news_featured_good_list')){scrolled(block.querySelector('#news_featured_good_list').getAttribute("data-link"), '#news_featured_good_list', target=0)}
+		else if(block.querySelector('#news_featured_audio_list')){scrolled(block.querySelector('#news_featured_audio_list').getAttribute("data-link"), '#news_featured_audio_list', target=0)}
 	}
 	else if(block.querySelector('.community_block_paginate')){
-		if(block.querySelector('#community_members_container')){community_members = block.querySelector('#community_members_container'); scrolled(community_members, community_members.getAttribute("data-link"), '#community_members_container', target=0)}
-		else if(block.querySelector('#community_friends_container')){frends_community = block.querySelector('#community_friends_container'); scrolled(community_communities, community_communities.getAttribute("data-link"), '#community_friends_container', target=0)}
-		else if(block.querySelector('#community_goods_container')){community_goods = block.querySelector('#community_goods_container'); scrolled(community_goods, community_goods.getAttribute("data-link"), '#community_goods_container', target=0)}
-		else if(block.querySelector('#community_draft_post_container')){draft_post = block.querySelector('#community_draft_post_container'); scrolled(draft_post, draft_post.getAttribute("data-link"), '#community_draft_post_container', target=0)}
-		else if(block.querySelector('#community_user_draft_post_container')){draft_post = block.querySelector('#community_user_draft_post_container'); scrolled(draft_post, draft_post.getAttribute("data-link"), '#community_user_draft_post_container', target=0)}
+		if(block.querySelector('#community_members_container')){scrolled(block.querySelector('#community_members_container').getAttribute("data-link"), '#community_members_container', target=0)}
+		else if(block.querySelector('#community_friends_container')){scrolled(block.querySelector('#community_friends_container').getAttribute("data-link"), '#community_friends_container', target=0)}
+		else if(block.querySelector('#community_goods_container')){scrolled(block.querySelector('#community_goods_container').getAttribute("data-link"), '#community_goods_container', target=0)}
+		else if(block.querySelector('#community_draft_post_container')){scrolled(block.querySelector('#community_draft_post_container').getAttribute("data-link"), '#community_draft_post_container', target=0)}
+		else if(block.querySelector('#community_user_draft_post_container')){scrolled(block.querySelector('#community_user_draft_post_container').getAttribute("data-link"), '#community_user_draft_post_container', target=0)}
 	}
 	else if(block.querySelector('.staff_community_block_paginate')){
-		if(block.querySelector('#community_admins_container')){admins_container = block.querySelector('#com_admins_container'); scrolled(admins_container, admins_container.getAttribute("data-link"), '#community_admins_container', target=0)}
-		else if(block.querySelector('#community_advertisers_container')){com_advertisers = block.querySelector('#community_advertisers_container'); scrolled(com_advertisers, com_advertisers.getAttribute("data-link"), '#community_advertisers_container', target=0)}
-		else if(block.querySelector('#community_blacklist_container')){com_blacklist = block.querySelector('#community_blacklist_container'); scrolled(com_blacklist, com_blacklist.getAttribute("data-link"), '#community_blacklist_container', target=0)}
-		else if(block.querySelector('#community_editors_container')){com_editors = block.querySelector('#community_editors_container'); scrolled(com_editors, com_editors.getAttribute("data-link"), '#community_editors_container', target=0)}
-		else if(block.querySelector('#community_follows_container')){com_follows = block.querySelector('#community_follows_container'); scrolled(com_follows, com_follows.getAttribute("data-link"), '#community_follows_container', target=0)}
-		else if(block.querySelector('#community_staff_members_container')){com_members = block.querySelector('#community_staff_members_container'); scrolled(com_members, com_members.getAttribute("data-link"), '#community_staff_members_container', target=0)}
-		else if(block.querySelector('#community_moders_container')){com_moders = block.querySelector('#community_moders_container'); scrolled(com_moders, com_moders.getAttribute("data-link"), '#community_moders_container', target=0)}
+		if(block.querySelector('#community_admins_container')){scrolled(block.querySelector('#community_admins_container').getAttribute("data-link"), '#community_admins_container', target=0)}
+		else if(block.querySelector('#community_advertisers_container')){scrolled(block.querySelector('#community_advertisers_container').getAttribute("data-link"), '#community_advertisers_container', target=0)}
+		else if(block.querySelector('#community_blacklist_container')){scrolled(block.querySelector('#community_blacklist_container').getAttribute("data-link"), '#community_blacklist_container', target=0)}
+		else if(block.querySelector('#community_editors_container')){scrolled(block.querySelector('#community_editors_container').getAttribute("data-link"), '#community_editors_container', target=0)}
+		else if(block.querySelector('#community_follows_container')){scrolled(block.querySelector('#community_follows_container').getAttribute("data-link"), '#community_follows_container', target=0)}
+		else if(block.querySelector('#community_staff_members_container')){scrolled(block.querySelector('#community_staff_members_container').getAttribute("data-link"), '#community_staff_members_container', target=0)}
+		else if(block.querySelector('#community_moders_container')){scrolled(block.querySelector('#community_moders_container').getAttribute("data-link"), '#community_moders_container', target=0)}
 	}
 	else if(block.querySelector('.music_block_paginate')){
-		if(block.querySelector('#genre_container')){music_genre = block.querySelector('#genre_container'); scrolled(music_genre, music_genre.getAttribute("data-link"), '#genre_container', target=0)}
-		else if(block.querySelector('#music_tags_container')){music_tags = block.querySelector('#music_tags_container'); scrolled(music_tags, music_tags.getAttribute("data-link"), '#music_tags_container', target=0)}
-		else if(block.querySelector('#tag_container')){music_tag = block.querySelector('#tag_container');scrolled(music_tag, music_tag.getAttribute("data-link"), '#tag_container', target=0)}
+		if(block.querySelector('#genre_container')){scrolled(block.querySelector('#genre_container').getAttribute("data-link"), '#genre_container', target=0)}
+		else if(block.querySelector('#music_tags_container')){scrolled(block.querySelector('#music_tags_container').getAttribute("data-link"), '#music_tags_container', target=0)}
+		else if(block.querySelector('#tag_container')){scrolled(block.querySelector('#tag_container').getAttribute("data-link"), '#tag_container', target=0)}
 	}
 	else if(block.querySelector('.list_block_paginate')){
-		if(block.querySelector('#all_communities_container')){all_communities = block.querySelector('#all_communities_container'); scrolled(all_communities, all_communities.getAttribute("data-link"), '#all_communities_container', target=0)}
-		else if(block.querySelector('#all_users_container')){all_users = block.querySelector('#all_users_container'); scrolled(all_users, all_users.getAttribute("data-link"), '#all_users_container'), target=0}
-		else if(block.querySelector('#quan_container')){quan = block.querySelector('#quan_container'); scrolled(quan, quan.getAttribute("data-link"), '#quan_container'), target=0}
-		else if(block.querySelector('#cat_communities_container')){cat_communities = block.querySelector('#cat_communities_container'); scrolled(cat_communities, cat_communities.getAttribute("data-link"), '#cat_communities_container', target=0)}
-		else if(block.querySelector('#articles_load_container')){articles_load = block.querySelector('#articles_load_container'); scrolled(articles_load, articles_load.getAttribute("data-link"), '#articles_load_container', target=0)}
-		else if(block.querySelector('#music_load_container')){music_load = block.querySelector('#music_load_container'); scrolled(music_load, music_load.getAttribute("data-link"), '#music_load_container', target=0)}
-		else if(block.querySelector('#img_load_container')){img_load = block.querySelector('#img_load_container'); scrolled(img_load, img_load.getAttribute("data-link"), '#img_load_container', target=0)}
-		else if(block.querySelector('#video_load_container')){video_load = block.querySelector('#video_load_container'); scrolled(video_load, video_load.getAttribute("data-link"), '#video_load_container', target=0)}
-		else if(block.querySelector('#goods_load_container')){goods_load = block.querySelector('#goods_load_container'); scrolled(goods_load, goods_load.getAttribute("data-link"), '#goods_load_container', target=0)}
+		if(block.querySelector('#all_communities_container')){scrolled(block.querySelector('#all_communities_container').getAttribute("data-link"), '#all_communities_container', target=0)}
+		else if(block.querySelector('#all_users_container')){scrolled(block.querySelector('#all_users_container').getAttribute("data-link"), '#all_users_container'), target=0}
+		else if(block.querySelector('#quan_container')){scrolled(block.querySelector('#quan_container').getAttribute("data-link"), '#quan_container'), target=0}
+		else if(block.querySelector('#cat_communities_container')){scrolled(block.querySelector('#cat_communities_container').getAttribute("data-link"), '#cat_communities_container', target=0)}
+		else if(block.querySelector('#articles_load_container')){scrolled(block.querySelector('#articles_load_container').getAttribute("data-link"), '#articles_load_container', target=0)}
+		else if(block.querySelector('#music_load_container')){scrolled(block.querySelector('#music_load_container').getAttribute("data-link"), '#music_load_container', target=0)}
+		else if(block.querySelector('#img_load_container')){scrolled(block.querySelector('#img_load_container').getAttribute("data-link"), '#img_load_container', target=0)}
+		else if(block.querySelector('#video_load_container')){scrolled(block.querySelector('#video_load_container').getAttribute("data-link"), '#video_load_container', target=0)}
+		else if(block.querySelector('#goods_load_container')){scrolled(block.querySelector('#goods_load_container').getAttribute("data-link"), '#goods_load_container', target=0)}
 	}
 }
 
