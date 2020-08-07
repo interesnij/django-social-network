@@ -34,7 +34,7 @@ class UserPostView(View):
         from stst.models import PostNumbers
 
         if request.is_ajax() and request.user.is_authenticated:
-            post = User.objects.get(uuid=self.kwargs["uuid"])
+            post = Post.objects.get(uuid=self.kwargs["uuid"])
             try:
                 obj = PostNumbers.objects.get(user=request.user.pk, post=post.pk)
                 return HttpResponse()
@@ -49,7 +49,7 @@ class UserAdPostView(View):
         from stst.models import PostAdNumbers
 
         if request.is_ajax() and request.user.is_authenticated:
-            post = User.objects.get(uuid=self.kwargs["uuid"])
+            post = Post.objects.get(uuid=self.kwargs["uuid"])
             try:
                 obj = PostAdNumbers.objects.get(user=request.user.pk, post=post.pk)
                 return HttpResponse()
