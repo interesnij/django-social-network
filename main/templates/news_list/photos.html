@@ -112,7 +112,7 @@
               </div>
             {% else %}
             <span>
-              Альбом {% for album in object.album.all %}{{ album.title }} {% endfor %}
+              Альбом {% for album in object.photo_album.all %}{{ album.title }} {% endfor %}
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
