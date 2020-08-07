@@ -15,7 +15,6 @@ function get_post_view(){
 						link.open( 'GET', '/posts/user_progs/post_view/' + pk + "/", true );
 				}
 				link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-				link.onreadystatechange = function () {
 					
 				link.send();
 				list[i].classList.add("showed");
