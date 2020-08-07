@@ -21,8 +21,8 @@ function get_post_view(){
 					list[i].classList.add("showed");
           console.log(i + " получил класс showed");
 					}
+					link.send();
 				}
-				link.send();
     }}}}}
 
 function scrolled(block, link, block_2){
