@@ -1,4 +1,3 @@
-function get_post_view()
 
 function get_post_view(){
 	if(document.querySelector(".post_stream")){
