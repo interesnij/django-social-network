@@ -20,13 +20,15 @@
             <span class="stream news_block_paginate" id="news_photo_list" data-link="/photos">
               {% for object in object_list %}
                 {% if forloop.counter|divisibleby:"5" %}
-                  <img class="col-12 lazyload" data-src="/static/images/r.jpg" alt="img">
+                <br>
+                <img class="col-12 lazyload" data-src="/static/images/r.jpg" alt="img">
+                <br>
                 {% endif %}
 
             {% if object.album and object.album.title == "Фото со страницы" %}
 
             {% if object.community %}
-              Собщество {{ object.community }} изменило аватар
+              <p>Собщество {{ object.community }} изменило аватар</p>
               <div class="c_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -37,7 +39,7 @@
                   </div>
               </div>
             {% else %}
-            {{ object.creator.get_full_name }} изменил{% if object.creator.is_women %}а{% endif %} аватар
+            <p>{{ object.creator.get_full_name }} изменил{% if object.creator.is_women %}а{% endif %} аватар</p>
             <div class="u_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -50,7 +52,7 @@
             {% endif %}
             {% elif object.album and object.album.title == "Фото со стены" %}
             {% if object.community %}
-              На стену собщества "{{ object.community }}" загрузили фотографию
+              <p>На стену собщества "{{ object.community }}" загрузили фотографию</p>
               <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -61,7 +63,7 @@
                   </div>
               </div>
             {% else %}
-            На стену {{ object.creator.first_name|gent }} загрузили фотографию
+            <p>На стену {{ object.creator.first_name|gent }} загрузили фотографию</p>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -74,7 +76,7 @@
             {% endif %}
             {% elif object.album and not object.album.is_generic %}
             {% if object.community %}
-              В альбом собщества "{{ object.community }}" загрузили фотографию
+              <p>В альбом собщества "{{ object.community }}" загрузили фотографию</p>
               <div class="c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -85,7 +87,7 @@
                   </div>
               </div>
             {% else %}
-            В альбом {{ object.creator.first_name|gent }} загрузили фотографию
+            <p>В альбом {{ object.creator.first_name|gent }} загрузили фотографию</p>
             <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -98,7 +100,7 @@
             {% endif %}
             {% elif object.album and object.album.title == "Фото со стены" %}
             {% if object.community %}
-              На стену собщества "{{ object.community }}" загрузили фотографию
+              <p>На стену собщества "{{ object.community }}" загрузили фотографию</p>
               <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -109,7 +111,7 @@
                   </div>
               </div>
             {% else %}
-            На стену {{ object.creator.first_name|gent }} загрузили фотографию
+            <p>На стену {{ object.creator.first_name|gent }} загрузили фотографию</p>
             <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
@@ -122,7 +124,7 @@
             {% endif %}
             {% elif not object.album %}
             {% if object.community %}
-              В собществе "{{ object.community }}" появилась фотография
+              <p>В собществе "{{ object.community }}" появилась фотография</p>
               <div class="c_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
@@ -133,7 +135,7 @@
                   </div>
               </div>
             {% else %}
-            У {{ object.creator.first_name|gent }} появилась фотография
+            <p>У {{ object.creator.first_name|gent }} появилась фотография</p>
             <div class="u_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
