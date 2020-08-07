@@ -24,7 +24,7 @@
                 <br><br>
                 {% endif %}
 
-            {% if object.album and object.album.title == "Фото со страницы" %}
+            {% if object.is_album_exists and object.album.title == "Фото со страницы" %}
 
             {% if object.community %}
               <span class="">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             {% endif %}
-            {% elif object.album and object.album.title == "Фото со стены" %}
+            {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
             {% if object.community %}
               <span class="">
                 Стена собщества
@@ -93,7 +93,7 @@
                 </div>
             </div>
             {% endif %}
-            {% elif object.album and not object.album.is_generic %}
+            {% elif object.is_album_exists and not object.album.is_generic %}
             {% if object.community %}
               <span class="">
                 Альбом {{ object.album.title }} сообщества
@@ -127,7 +127,7 @@
                 </div>
             </div>
             {% endif %}
-            {% elif object.album and object.album.title == "Фото со стены" %}
+            {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
             {% if object.community %}
               <span class="">
                 Стена сообщества
@@ -161,7 +161,7 @@
                 </div>
             </div>
             {% endif %}
-            {% elif not object.album %}
+            {% elif not object.is_album_exists %}
             {% if object.community %}
               <span class="">
                 Фото в сообществе

@@ -102,6 +102,9 @@ class Photo(models.Model):
         photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description,)
         return photo
 
+    def is_album_exists(self):
+        return self.photo_album.filter(creator=self.creator).exists()
+
     def notification_user_repost(self, user):
         photo_notification_handler(user, self.creator, verb=PhotoNotify.REPOST, key='social_update', photo=self, comment=None)
 
