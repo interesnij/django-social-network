@@ -28,7 +28,123 @@
                   рыклама
                 {% endif %}
 
-              {% endfor %}
+            {% if object.album and object.album.title == "Фото со страницы" %}
+              {% if object.community %}
+                Собщество {{ object.community }} изменило аватар
+                <div class="col-sm-12 col-md-6 col-lg-4 c_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                </div>
+              {% else %}
+              {{ object.creator.get_full_name }} изменил{% if object.creator.is_women %}а{% endif %} аватар
+              <div class="col-sm-12 col-md-6 col-lg-4 u_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              {% endif %}
+              {% elif object.album and object.album.title == "Фото со стены" %}
+              {% if object.community %}
+                На стену собщества "{{ object.community }}" загрузили фотографию
+                <div class="col-sm-12 col-md-6 col-lg-4 c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                </div>
+              {% else %}
+              На стену {{ object.creator.first_name|gent }} загрузили фотографию
+              <div class="col-sm-12 col-md-6 col-lg-4 u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              {% elif object.album and not object.album.is_generic %}
+              {% if object.community %}
+                В альбом собщества "{{ object.community }}" загрузили фотографию
+                <div class="col-sm-12 col-md-6 col-lg-4 c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                </div>
+              {% else %}
+              В альбом {{ object.creator.first_name|gent }} загрузили фотографию
+              <div class="col-sm-12 col-md-6 col-lg-4 u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              {% elif object.album and object.album.title == "Фото со стены" %}
+              {% if object.community %}
+                На стену собщества "{{ object.community }}" загрузили фотографию
+                <div class="col-sm-12 col-md-6 col-lg-4 c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                </div>
+              {% else %}
+              На стену {{ object.creator.first_name|gent }} загрузили фотографию
+              <div class="col-sm-12 col-md-6 col-lg-4 u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              {% elif not object.album %}
+              {% if object.community %}
+                В собществе "{{ object.community }}" появилась фотография
+                <div class="col-sm-12 col-md-6 col-lg-4 c_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                </div>
+              {% else %}
+              У {{ object.creator.first_name|gent }} появилась фотография
+              <div class="col-sm-12 col-md-6 col-lg-4 u_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              {% endif %}
             </span>
           {% else %}
           <div class="card mb-3 post_empty centered">
@@ -36,14 +152,14 @@
             <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
             </div>
             <h6 style="margin: 20px;text-align: center;">
-              Пока новостей нет.
+              Пока фотографий нет.
               <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
                 Найдите друзей
               </a>
               и
               <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
               вступайте в сообщества
-              </a>, и их записи будут отображаться здесь.</h6>
+              </a>, и их фотографии будут отображаться здесь.</h6>
           </div>
           {% endif %}
 

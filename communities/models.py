@@ -76,8 +76,8 @@ class Community(models.Model):
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
-    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
-    s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
 
     class Meta:
