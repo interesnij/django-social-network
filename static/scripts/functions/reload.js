@@ -9,7 +9,7 @@ function get_post_view(){
         if(inViewport){
           list[i].classList.add("showed");
           console.log(i + " получил класс showed");
-          pk = list[i].getAttribute('data-uuid');
+          uuid = list[i].getAttribute('data-uuid');
 					if (list[i].querySelector(".reklama")){
 						fetch('/posts/user_progs/post_market_view/' + uuid + "/")
 					} else if(!list[i].querySelector(".reklama")){
