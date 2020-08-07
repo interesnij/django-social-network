@@ -8,20 +8,20 @@ function get_post_view(){
       if(!list[i].classList.contains("showed")){
         inViewport = elementInViewport(list[i]);
         if(inViewport){
-          pk = list[i].getAttribute('data-uuid');
+          uuid = list[i].getAttribute('data-uuid');
 					if (list[i].querySelector(".reklama")){
-						link.open( 'GET', '/posts/user_progs/post_market_view/' + pk + "/", true );
+						link.open( 'GET', '/posts/user_progs/post_market_view/' + uuid + "/", true );
 					} else if(!list[i].querySelector(".reklama")){
-						link.open( 'GET', '/posts/user_progs/post_view/' + pk + "/", true );
+						link.open( 'GET', '/posts/user_progs/post_view/' + uuid + "/", true );
 				}
 				link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-					
+
 				link.send();
 				list[i].classList.add("showed");
 				console.log(i + " получил класс showed");
     }}}}}
 
-function scrolled(block, link, block_2){
+function scrolled(block, link, block_2, post_view){
 	// скрипты для работы с прокруткой: пагинация, просмотры и т.д.
 	onscroll = function(){
 		box = block.querySelector('.last');
@@ -31,7 +31,7 @@ function scrolled(block, link, block_2){
 					box.classList.remove("last");
 					paginate(block, link, block_2);
 		}};
-		get_post_view()
+		if (post_view){get_post_view()}
 	}
 }
 page = 2;
