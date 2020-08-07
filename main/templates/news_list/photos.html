@@ -70,6 +70,7 @@
                     {% endif %}
                   </div>
               </div>
+              {% endif %}
               {% elif object.album and not object.album.is_generic %}
               {% if object.community %}
                 В альбом собщества "{{ object.community }}" загрузили фотографию
@@ -93,6 +94,7 @@
                     {% endif %}
                   </div>
               </div>
+              {% endif %}
               {% elif object.album and object.album.title == "Фото со стены" %}
               {% if object.community %}
                 На стену собщества "{{ object.community }}" загрузили фотографию
@@ -116,6 +118,7 @@
                     {% endif %}
                   </div>
               </div>
+              {% endif %}
               {% elif not object.album %}
               {% if object.community %}
                 В собществе "{{ object.community }}" появилась фотография
