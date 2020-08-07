@@ -1,7 +1,7 @@
 from users.models import User
 from django.shortcuts import render
 from posts.models import Post
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from posts.forms import PostForm
 from common.post_attacher import get_post_attach
