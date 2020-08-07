@@ -37,10 +37,10 @@ class UserPostView(View):
             uuid = self.kwargs["uuid"]
             try:
                 obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
-                return HttpResponse('')
+                return HttpResponse()
             except:
                 obj = PostNumbers.objects.create(user=request.user.pk, post=pk)
-                return HttpResponse('')
+                return HttpResponse()
         else:
             raise Http404
 

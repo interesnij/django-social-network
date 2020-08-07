@@ -1,20 +1,28 @@
 
 function get_post_view(){
 	if(document.querySelector(".post_stream")){
-		container = document.querySelector(".post_stream")
-    var list = container.querySelectorAll('.pag');
+		container = document.querySelector(".post_stream");
+		link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+		link.onreadystatechange = function () {
+
+    list = container.querySelectorAll('.pag');
     for (var i = 0; i < list.length; i++) {
       if(!list[i].classList.contains("showed")){
         inViewport = elementInViewport(list[i]);
         if(inViewport){
-          list[i].classList.add("showed");
-          console.log(i + " получил класс showed");
           uuid = list[i].getAttribute('data-uuid');
 					if (list[i].querySelector(".reklama")){
-						fetch('/posts/user_progs/post_market_view/' + uuid + "/")
+						link.open( 'GET', '/posts/user_progs/post_market_view/' + uuid + "/", true );
 					} else if(!list[i].querySelector(".reklama")){
-          fetch('/posts/user_progs/post_view/' + uuid + "/")
+						link.open( 'GET', '/posts/user_progs/post_view/' + uuid + "/", true );
 				}
+				link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+				if ( this.readyState == 4 && this.status == 200 ) {
+					list[i].classList.add("showed");
+          console.log(i + " получил класс showed");
+					}
+				}
+				link.send();
     }}}}}
 
 function scrolled(block, link, block_2){
