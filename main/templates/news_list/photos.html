@@ -29,7 +29,7 @@
             {% if object.community %}
               <span class="small">
                 Собщество
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
                 изменило аватар
@@ -58,7 +58,7 @@
             {% elif object.album and object.album.title == "Фото со стены" %}
             {% if object.community %}
               <span class="small">На стену собщества
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
                 загрузили фотографию
@@ -88,7 +88,7 @@
             {% if object.community %}
               <span class="small">
                 В альбом
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
                 загрузили фотографию</span>
@@ -117,7 +117,7 @@
             {% if object.community %}
               <span class="small">
                 На стену
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
                 загрузили фотографию</span>
@@ -146,7 +146,7 @@
             {% if object.community %}
               <span class="small">
                 В
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                 {{ object.community }}
               </a>
               появилась фотография</span>
