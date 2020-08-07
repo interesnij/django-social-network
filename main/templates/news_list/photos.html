@@ -96,7 +96,7 @@
             {% elif object.album and not object.album.is_generic %}
             {% if object.community %}
               <span class="">
-                Альбом сообщества
+                Альбом {{ object.album.title }} сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
@@ -112,7 +112,7 @@
               </div>
             {% else %}
             <span>
-              Альбом
+              Альбом {{ object.album.title }}
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
