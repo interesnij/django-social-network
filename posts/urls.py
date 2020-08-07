@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', PostsView.as_view(), name='posts'),
-    url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', PostDetailView.as_view(), name='post_detail'),
 
     url(r'^repost_user_user/(?P<uuid>[0-9a-f-]+)/$', login_required(RepostUserUser.as_view()), name='user_user_repost'),
     url(r'^repost_user_community/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(RepostUserCommunity.as_view()), name="repost_user_community"),

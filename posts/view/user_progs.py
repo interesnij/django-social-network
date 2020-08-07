@@ -1,15 +1,13 @@
-from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render
 from posts.models import Post
 from django.http import HttpResponseBadRequest
 from django.views import View
-from communities.models import Community
 from posts.forms import PostForm
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-
+from django.http import Http404
 
 
 class PostUserCreate(View):
@@ -29,3 +27,34 @@ class PostUserCreate(View):
                 return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
+
+
+class UserPostView(View):
+    def get(self,request,*args,**kwargs):
+        from stst.models import PostNumbers
+
+        if request.is_ajax() and request.user.is_authenticated:
+            uuid = self.kwargs["uuid"]
+            try:
+                obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
+                return HttpResponse('')
+            except:
+                obj = PostNumbers.objects.create(user=request.user.pk, post=pk)
+                return HttpResponse('')
+        else:
+            raise Http404
+
+class UserAdPostView(View):
+    def get(self,request,*args,**kwargs):
+        from stst.models import PostAdNumbers
+
+        if request.is_ajax() and request.user.is_authenticated:
+            uuid = self.kwargs["uuid"]
+            try:
+                obj = PostAdNumbers.objects.get(user=request.user.pk, post=pk)
+                return HttpResponse('')
+            except:
+                obj = PostAdNumbers.objects.create(user=request.user.pk, post=pk)
+                return HttpResponse('')
+        else:
+            raise Http404

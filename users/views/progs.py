@@ -4,13 +4,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import Http404
 
-class UserBanCreate(View):
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            request.user.block_user_with_pk(self.user.pk)
-            return HttpResponse()
-
 
 class GetUserGender(View):
     def get(self,request,*args,**kwargs):
@@ -51,6 +44,13 @@ class GetUserGender(View):
             return HttpResponse()
 
 
+class UserBanCreate(View):
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax():
+            request.user.block_user_with_pk(self.user.pk)
+            return HttpResponse()
+
 class UserUnbanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -77,21 +77,6 @@ class UserColorChange(View):
             model.color = color
             model.save(update_fields=['color'])
             return HttpResponse('Цвет выбран')
-
-
-class UserPostView(View):
-    def get(self,request,*args,**kwargs):
-        from stst.models import PostNumbers
-        if request.is_ajax() and request.user.is_authenticated:
-            pk = self.kwargs["pk"]
-            try:
-                obj = PostNumbers.objects.get(user=request.user.pk, post=pk)
-                return HttpResponse('')
-            except:
-                obj = PostNumbers.objects.create(user=request.user.pk, post=pk)
-                return HttpResponse('')
-        else:
-            return HttpResponse('')
 
 
 class PhoneVerify(View):

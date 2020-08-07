@@ -1,14 +1,34 @@
+function get_post_view()
+
+function get_post_view(){
+	if(document.querySelector(".post_stream")){
+		container = document.querySelector(".post_stream")
+    var list = container.querySelectorAll('.pag');
+    for (var i = 0; i < list.length; i++) {
+      if(!list[i].classList.contains("showed")){
+        inViewport = elementInViewport(list[i]);
+        if(inViewport){
+          list[i].classList.add("showed");
+          console.log(i + " получил класс showed");
+          pk = list[i].getAttribute('data-uuid');
+					if (list[i].querySelector(".reklama")){
+						fetch('/posts/user_progs/post_market_view/' + uuid + "/")
+					} else if(!list[i].querySelector(".reklama")){
+          fetch('/posts/user_progs/post_view/' + uuid + "/")
+				}
+    }}}}}
 
 function scrolled(block, link, block_2){
 	// скрипты для работы с прокруткой: пагинация, просмотры и т.д.
 	onscroll = function(){
-		var box = block.querySelector('.last');
+		box = block.querySelector('.last');
 		if(box && box.classList.contains("last")){
 				inViewport = elementInViewport(box);
 				if(inViewport){
 					box.classList.remove("last");
 					paginate(block, link, block_2);
 		}};
+		get_post_view()
 	}
 }
 page = 2;

@@ -156,28 +156,36 @@ class Post(models.Model):
         count_reposts = parents.count()
         return count_reposts
 
-    def get_visiter_users(self):
-        from stst.models import ItemNumbers
+    def get_visiter_sity(self):
+        from stst.models import PostNumbers, PostAdNumbers
         from users.model.profile import OneUserLocation
 
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
+        posts = PostNumbers.objects.filter(post=self.pk).values('user')
+        ads_posts = PostAdNumbers.objects.filter(post=self.pk).values('user')
+        user_ids = posts + ads_posts
+        ids = [use['user'] for use in user_ids]
         sities = OneUserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
         return sities
 
     def get_sity_count(self, sity):
-        from stst.models import ItemNumbers
+        from stst.models import PostNumbers, PostAdNumbers
         from users.model.profile import OneUserLocation
 
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
+        posts = PostNumbers.objects.filter(post=self.pk).values('user')
+        ads_posts = PostAdNumbers.objects.filter(post=self.pk).values('user')
+        user_ids = posts + ads_posts
+        ids = [use['user'] for use in user_ids]
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
 
+    def post_visits_count(self):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk).values('pk').count()
+    def post_ad_visits_count(self):
+        from stst.models import PostAdNumbers
+        return PostAdNumbers.objects.filter(post=self.pk).values('pk').count()
     def all_visits_count(self):
-        from stst.models import ItemNumbers
-        return ItemNumbers.objects.filter(item=self.pk).values('pk').count()
-
+        return self.post_visits_count() + self.post_ad_visits_count()
 
 class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")

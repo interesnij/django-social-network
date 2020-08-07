@@ -63,12 +63,22 @@ class MusicNumbers(models.Model):
         verbose_name_plural = "Прослушивания трека"
 
 
-class ItemNumbers(models.Model):
+class PostNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
-    item = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
+    post = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
     created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Просмотр записи"
-        verbose_name_plural = "Просмотры записи"
+        verbose_name = "Охват записи на стене и в лентах"
+        verbose_name_plural = "Охват записей на стене и в лентах"
+
+class PostAdNumbers(models.Model):
+    user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
+    post = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Охват рекламной записи на стене и в лентах"
+        verbose_name_plural = "Охват рекламных записей на стене и в лентах"
