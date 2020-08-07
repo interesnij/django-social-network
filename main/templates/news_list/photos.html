@@ -25,7 +25,7 @@
                 {% endif %}
 
             {% if object.is_album_exists and object.album.title == "Фото со страницы" %}
-
+            111
             {% if object.community %}
               <span class="">
                 Новый аватар сообщества
@@ -60,6 +60,7 @@
             </div>
             {% endif %}
             {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
+            222
             {% if object.community %}
               <span class="">
                 Стена собщества
@@ -94,6 +95,7 @@
             </div>
             {% endif %}
             {% elif object.is_album_exists and not object.album.is_generic %}
+            333
             {% if object.community %}
               <span class="">
                 Альбом {{ object.album.title }} сообщества
@@ -128,6 +130,7 @@
             </div>
             {% endif %}
             {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
+            444
             {% if object.community %}
               <span class="">
                 Стена сообщества
@@ -162,6 +165,7 @@
             </div>
             {% endif %}
             {% elif not object.is_album_exists %}
+            555
             {% if object.community %}
               <span class="">
                 Фото в сообществе
