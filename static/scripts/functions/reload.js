@@ -54,7 +54,7 @@ function paginate(link, block_id){
 			if(elem.getElementsByClassName('pag').length < 15){loaded = true};
 			if (elem.querySelector(block_id)){
 				xxx = document.createElement("span");
-				xxx.innerHTML = elem.querySelector(block_id).innerHTML; 
+				xxx.innerHTML = elem.querySelector(block_id).innerHTML;
 				block.append(xxx);
 			} else {block.append(elem)}
 			}
@@ -133,27 +133,27 @@ function if_list(block){
     lenta_load = block.querySelector('#lenta_load');
 		link = lenta_load.getAttribute("data-link");
     list_load(lenta_load, link);
-		scrolled(lenta_load, link, '#lenta_load')
+		scrolled(link, '#lenta_load')
   }else if(block.querySelector('#lenta_community')){
     lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
     list_load(block.querySelector("#lenta_community"), link);
-		scrolled(lenta_community, link, '#lenta_community')
+		scrolled(link, '#lenta_community')
   }else if(block.querySelector('#photo_load')){
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
-		scrolled(photo_load, link, '#photo_load')
+		scrolled(link, '#photo_load')
   }else if(block.querySelector('#c_photo_load')){
     photo_load = block.querySelector('#c_photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_photo_load"), link);
-		scrolled(photo_load, link, '#c_photo_load')
+		scrolled(link, '#c_photo_load')
   }else if(block.querySelector('#album_photo_load')){
     album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#album_photo_load"), link);
-		scrolled(album_photo_load, link, '#album_photo_load')
+		scrolled(link, '#album_photo_load')
   }else if(block.querySelector('#c_album_photo_load')){
     album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_album_photo_load"), link);
-		scrolled(album_photo_load, link, '#c_album_photo_load')
+		scrolled(link, '#c_album_photo_load')
   };
 }
 if_list(document.getElementById('ajax'));
