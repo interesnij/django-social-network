@@ -1,6 +1,6 @@
 {% load humanize liked_user %}
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" post-pk="{{ object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
