@@ -16,12 +16,10 @@ function get_post_view(){
 				}
 				link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 				link.onreadystatechange = function () {
-				if ( this.readyState == 4 && this.status == 200 ) {
-					list[i].classList.add("showed");
-          console.log(i + " получил класс showed");
-					}
-				}
+					
 				link.send();
+				list[i].classList.add("showed");
+				console.log(i + " получил класс showed");
     }}}}}
 
 function scrolled(block, link, block_2){
