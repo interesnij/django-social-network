@@ -35,11 +35,10 @@ class UserPostView(View):
 
         if request.is_ajax() and request.user.is_authenticated:
             post = Post.objects.get(uuid=self.kwargs["uuid"])
-            try:
+            if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
                 obj = PostNumbers.objects.get(user=request.user.pk, post=post.pk)
                 return HttpResponse()
-            except:
-                obj = PostNumbers.objects.create(user=request.user.pk, post=post.pk)
+            else:
                 return HttpResponse()
         else:
             raise Http404
@@ -50,11 +49,10 @@ class UserAdPostView(View):
 
         if request.is_ajax() and request.user.is_authenticated:
             post = Post.objects.get(uuid=self.kwargs["uuid"])
-            try:
+            if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
                 obj = PostAdNumbers.objects.get(user=request.user.pk, post=post.pk)
                 return HttpResponse()
-            except:
-                obj = PostAdNumbers.objects.create(user=request.user.pk, post=post.pk)
+            else:
                 return HttpResponse()
         else:
             raise Http404
