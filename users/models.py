@@ -714,6 +714,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_photos(self):
+        from gallery.models import Album
         try:
             album = Album.objects.get(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
         except:

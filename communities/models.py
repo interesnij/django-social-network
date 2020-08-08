@@ -285,6 +285,7 @@ class Community(models.Model):
         return self.album_community.filter(community=self, is_deleted=False).exists()
 
     def count_photos(self):
+        from gallery.models import Album
         try:
             album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
         except:
