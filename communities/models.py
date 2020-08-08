@@ -112,42 +112,6 @@ class Community(models.Model):
     def is_discussion_open(self):
         return try_except(self.community_sections_open.discussion)
 
-    def get_avatar_uuid(self):
-        avatar = self.get_avatar_photos().order_by('-id')[0]
-        return avatar.uuid
-
-    def create_s_avatar(self, photo_input):
-        from easy_thumbnails.files import get_thumbnailer
-
-        self.s_avatar = photo_input
-        self.save(update_fields=['s_avatar'])
-        new_img = get_thumbnailer(self.s_avatar)['small_avatar'].url.replace('media/', '')
-        self.s_avatar = new_img
-        self.save(update_fields=['s_avatar'])
-        return self.s_avatar
-
-    def create_b_avatar(self, photo_input):
-        from easy_thumbnails.files import get_thumbnailer
-
-        self.b_avatar = photo_input
-        self.save(update_fields=['b_avatar'])
-        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
-        self.b_avatar = new_img
-        self.save(update_fields=['b_avatar'])
-        return self.b_avatar
-
-    def get_b_avatar(self):
-        try:
-            return self.b_avatar.url
-        except:
-            return None
-
-    def get_avatar(self):
-        try:
-            return self.s_avatar.url
-        except:
-            return None
-
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, invites_enabled=None):
         from communities.model.settings import CommunityPrivatePost
@@ -286,17 +250,20 @@ class Community(models.Model):
         return photos
 
     def get_photos(self):
-        from gallery.models import Photo
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.get_photos()
 
-        photos_query = Q(is_deleted=False, is_public=True, community=self)
-        photos = Photo.objects.filter(photos_query)
-        return photos
     def get_admin_photos(self):
-        from gallery.models import Photo
-
-        photos_query = Q(is_deleted=False, community=self)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.get_photos()
 
     def get_avatar_photos(self):
         from gallery.models import Photo
@@ -319,11 +286,7 @@ class Community(models.Model):
         return self.photo_community.values('is_deleted').filter(is_deleted=False).count()
 
     def get_profile_photos(self):
-        from gallery.models import Photo
-
-        photos_query = Q(community=self, is_deleted=False, is_public=True)
-        photos = Photo.objects.filter(photos_query)
-        return photos[0:6]
+        return self.get_photos()[0:6]
 
     def get_admin_albums(self):
         from gallery.models import Album
@@ -331,6 +294,52 @@ class Community(models.Model):
         albums_query = Q(is_deleted=False, community=None)
         albums = Album.objects.filter(albums_query)
         return albums
+
+    def get_avatar_uuid(self):
+        try:
+            avatar = self.get_avatar_photos().order_by('-id')[0]
+            return avatar.uuid
+        except:
+            None
+
+    def get_main_album_uuid(self):
+        try:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.uuid
+
+    def create_s_avatar(self, photo_input):
+        from easy_thumbnails.files import get_thumbnailer
+
+        self.s_avatar = photo_input
+        self.save(update_fields=['s_avatar'])
+        new_img = get_thumbnailer(self.s_avatar)['small_avatar'].url.replace('media/', '')
+        self.s_avatar = new_img
+        self.save(update_fields=['s_avatar'])
+        return self.s_avatar
+
+    def create_b_avatar(self, photo_input):
+        from easy_thumbnails.files import get_thumbnailer
+
+        self.b_avatar = photo_input
+        self.save(update_fields=['b_avatar'])
+        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
+        self.b_avatar = new_img
+        self.save(update_fields=['b_avatar'])
+        return self.b_avatar
+
+    def get_b_avatar(self):
+        try:
+            return self.b_avatar.url
+        except:
+            return None
+
+    def get_avatar(self):
+        try:
+            return self.s_avatar.url
+        except:
+            return None
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing

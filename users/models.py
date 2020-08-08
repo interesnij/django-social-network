@@ -833,25 +833,30 @@ class User(AbstractUser):
         return articles
 
     def get_photos(self):
-        from gallery.models import Photo
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.get_photos()
 
-        photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+    def get_main_album_uuid(self):
+        try:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.uuid
 
     def get_profile_photos(self):
-        from gallery.models import Photo
-
-        photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        photos = Photo.objects.filter(photos_query)
-        return photos[0:6]
+        return self.get_photos()[0:6]
 
     def get_my_photos(self):
-        from gallery.models import Photo
-
-        photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        except:
+            album = Album.objects.get(creator_id=self.id, is_deleted=False, title="Основной альбом")
+        return album.get_staff_photos()
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Photo
