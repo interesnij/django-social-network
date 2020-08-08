@@ -161,7 +161,7 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
 
 on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/community/add_album_photo/" + pk + "/" + uuid + "/", true );
