@@ -89,7 +89,7 @@ class PhotoCommunityCreate(View):
                 _album = Album.objects.create(creator=community.creator, community=community, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
-                _album.photo_album.add(photo) 
+                _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
         else:
@@ -107,7 +107,7 @@ class PhotoAlbumCommunityCreate(View):
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, community=community, creator=request.user)
+                photo = Photo.objects.create(file=p, creator=request.user)
                 _album.album.add(photo)
                 photos += [photo,]
             return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
