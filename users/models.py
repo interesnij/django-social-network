@@ -860,28 +860,16 @@ class User(AbstractUser):
             album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN)
         return album.uuid
 
-    def get_profile_photos(self):
-        return self.get_photos()[0:6]
-
-    def get_photos_for_album(self, album_id):
-        from gallery.models import Album
-
-        album = Album.objects.get(creator_id=self.id, id=album_id, is_deleted=False)
-        return album.get_photos()
-
-    def get_photos_for_my_album(self, album_id):
-        from gallery.models import Album
-
-        album = Album.objects.get(creator_id=self.id, id=album_id, is_deleted=False)
-        return album.get_staff_photos()
-
-    def get_avatar_photos(self):
+    def get_avatar_uuid(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(creator_id=self.id, type=Album.AVATAR, community=None)
+            album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.id, type=Album.AVATAR, community=None)
-        return album.get_photos()
+            album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN)
+        return album.uuid
+
+    def get_profile_photos(self):
+        return self.get_photos()[0:6]
 
     def get_albums(self):
         from gallery.models import Album

@@ -305,10 +305,10 @@ class Community(models.Model):
 
     def get_avatar_uuid(self):
         try:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
-            return album.uuid
+            album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
         except:
-            None
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
+        return album.uuid
 
     def get_main_album_uuid(self):
         from gallery.models import Album
