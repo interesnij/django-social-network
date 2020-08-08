@@ -894,8 +894,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        exclude_main = ~Q(title="Основной альбом")
-        albums_query.add(~Q(exclude_main), Q.AND)
+        albums_query.add(~Q(title="Основной альбом"), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
