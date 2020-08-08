@@ -86,7 +86,7 @@ class PhotoCommunityCreate(View):
             try:
                 album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
             except:
-                album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
+                album = Album.objects.create(creator=community.creator, community_id=self.id, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, album=album, creator=request.user)
                 photos += [photo,]
