@@ -714,7 +714,11 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_photos(self):
-        return self.photo_creator.values('pk').count()
+        try:
+            album = Album.objects.get(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
+        except:
+            album = Album.objects.create(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
+        return album.count_photo()
 
     def count_albums(self):
         return self.created_user.values('pk').count()

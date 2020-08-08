@@ -285,7 +285,11 @@ class Community(models.Model):
         return self.album_community.filter(community=self, is_deleted=False).exists()
 
     def count_photos(self):
-        return self.photo_community.values('is_deleted').filter(is_deleted=False).count()
+        try:
+            album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+        except:
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
+        return album.count_photo()
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
