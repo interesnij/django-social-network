@@ -2,7 +2,7 @@
 {% block title %}{{ community.name }} - {{ album.title }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
   <h5 class="mt-1">
     <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
       {{ community.name }}
@@ -13,7 +13,7 @@
   </h5>
   Фото: {{ album.count_photo }}
 
-  {% if album.is_user_album %} 
+  {% if album.is_user_album %}
   {% if community.is_photo_upload_member or community.is_photo_upload_nomember %}
   <form id="c_add_photos" method="post">
       {% csrf_token %}

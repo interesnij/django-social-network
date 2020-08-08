@@ -14,4 +14,9 @@ urlpatterns=[
 	url(r'^add_album/(?P<pk>\d+)/$', AlbumUserCreate.as_view(), name="album_add_user"),
 
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
+
+	url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhoto.as_view(), name="user_photo"),
+    url(r'^album_photo/(?P<pk>\d+)/(?P<album_uuid>[0-9a-f-]+)/$', UserAlbumPhoto.as_view(), name="user_album_photo"),
+    url(r'^wall/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserWallPhoto.as_view(), name="u_wall_photo"),
+    url(r'^avatar/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDetailAvatar.as_view(), name="user_avatar"),
 ]

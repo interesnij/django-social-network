@@ -213,3 +213,124 @@ class UserAlbumPhotosList(ListView):
     def get_queryset(self):
         photo_list = self.user.get_photos_for_album(album_id=self.album.pk).order_by('-created')
         return photo_list
+
+
+class UserPhoto(TemplateView):
+    """
+    страница фото, не имеющего альбома для пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.album = Album.objects.get(creator=self.photo.creator, type=Album.MAIN)
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.photo.creator.get_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "u_photo/photo/", "photo.html", request.user)
+        else:
+            raise Http404
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["album"] = self.album
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["avatar"] = self.photo.is_avatar(self.request.user)
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
+
+
+class UserAlbumPhoto(TemplateView):
+    """
+    страница отдельного фото в альбоме для пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.album = Album.objects.get(creator=self.photo.creator, type=Album.ALBUM)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.album.get_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "u_photo/album_photo/", "photo.html", request.user)
+        else:
+            raise Http404
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserAlbumPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["album"] = self.album
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["avatar"] = self.photo.is_avatar(self.request.user)
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
+
+
+class UserWallPhoto(TemplateView):
+    """
+    страница отдельного фото альбома пользователя "Фото со стены"
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.album = Album.objects.get(creator=self.photo.creator, type=Album.WALL)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.album.get_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "u_photo/wall_photo/", "photo.html", request.user)
+        else:
+            raise Http404
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserWallPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserWallPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        context["avatar"] = self.photo.is_avatar(self.request.user)
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["album"] = self.album
+        return context
+
+
+class UserDetailAvatar(TemplateView):
+    """
+    страница отдельного фото аватаров (альбом "Фото со страницы") пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.album = Album.objects.get(creator=self.photo.creator, type=Album.AVATAR, community=None)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.album.get_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
+        else:
+            raise Http404
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserDetailAvatar,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserDetailAvatar,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        context["album"] = self.album
+        return context

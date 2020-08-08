@@ -2,7 +2,7 @@
 {% block title %}{{ album.title }} - мой альбом{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
   <h5 class="mt-1">
     <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
       Моя галерея
