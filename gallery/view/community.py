@@ -76,15 +76,19 @@ class CommunityAlbumView(TemplateView):
 
 class PhotoCommunityCreate(View):
     """
-    асинхронная мульти загрузка фотографий пользователя прямо в галерею
+    асинхронная мульти загрузка фотографий пользователя в основной альбом
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
+            try:
+                album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+            except:
+                album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, community=community, creator=request.user)
+                photo = Photo.objects.create(file=p, album=album, creator=request.user)
                 photos += [photo,]
             return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
         else:

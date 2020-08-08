@@ -872,15 +872,17 @@ class User(AbstractUser):
     def get_avatar_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(creator_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы", community=None)
+            album = Album.objects.get(creator_id=self.id, is_generic=True, title="Фото со страницы", community=None)
         except:
-            album = Album.objects.create(creator_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы", community=None)
+            album = Album.objects.create(creator_id=self.id, is_generic=True, title="Фото со страницы", community=None)
         return album.get_photos()
 
     def get_albums(self):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, is_generic=False, community=None)
+        exclude_main = ~Q(title="Основной альбом")
+        albums_query.add(~Q(exclude_main), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -888,6 +890,8 @@ class User(AbstractUser):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        exclude_main = ~Q(title="Основной альбом")
+        albums_query.add(~Q(exclude_main), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 

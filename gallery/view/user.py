@@ -77,14 +77,18 @@ class UserAddAvatar(View):
 
 class PhotoUserCreate(View):
     """
-    асинхронная мульти загрузка фотографий пользователя прямо в галерею
+    асинхронная мульти загрузка фотографий пользователя в основной альбом
     """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
+            try:
+                album = Album.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
+            except:
+                album = Album.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=self.user)
+                photo = Photo.objects.create(file=p, album=album, creator=self.user)
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
         else:
