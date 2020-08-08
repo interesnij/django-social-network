@@ -3,7 +3,7 @@ on('#ajax', 'click', '.u_photo_detail', function() {
   //uuid = this.getAttribute('photo-uuid');
   data_img = this.getAttribute("photo-uuid");
   data_img.substr(8,);
-  console.log(data_img[:4]);
+  console.log(data_img);
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
 });
