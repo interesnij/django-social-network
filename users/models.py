@@ -1042,8 +1042,11 @@ class User(AbstractUser):
             return queryset
 
     def get_avatar_uuid(self):
-        avatar = self.get_avatar_photos().order_by('-id')[0]
-        return avatar.uuid
+        try:
+            avatar = self.get_avatar_photos().order_by('-id')[0]
+            return avatar.uuid
+        except:
+            return None
 
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
