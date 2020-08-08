@@ -9,9 +9,10 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 
 on('#ajax', 'click', '.avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  uuid = this.getAttribute('photo-uuid');
+  data_img = this.getAttribute("data-src");
+  data_img.substr(8, -4)
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user/avatar/" + pk + "/" + data_img.substr(8, -4) + "/", loader)
 });
 
 on('#ajax', 'click', '.u_album_photo_detail', function() {
