@@ -500,13 +500,6 @@ class User(AbstractUser):
         except:
             return False
 
-    def try_except(key, value):
-        try:
-            if key == value:
-                return True
-        except:
-            return False
-
     def is_user_administrator(self):
         return try_except(self.user_staff.level == "A")
     def is_user_moderator(self):
@@ -866,7 +859,7 @@ class User(AbstractUser):
             album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
         except:
             album = Album.objects.create(creator_id=self.id, community=None, type=Album.AVATAR)
-        return album.last().uuid 
+        return album.last().uuid
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
