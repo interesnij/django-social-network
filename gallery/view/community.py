@@ -24,9 +24,9 @@ class CommunityAddAvatar(View):
         if request.is_ajax() and request.user.is_administrator_of_community_with_name(community.name):
             photo_input = request.FILES.get('file')
             try:
-                _album = Album.objects.get(community=community, is_generic=True, title="Фото со страницы")
+                _album = Album.objects.get(community=community, type=Album.AVATAR)
             except:
-                _album = Album.objects.create(creator=request.user, community=community, is_generic=True, title="Фото со страницы", description="Фото со страницы сообщества")
+                _album = Album.objects.create(creator=request.user, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
             photo = Photo.objects.create(file=photo_input, creator=request.user, community=community)
             _album.album.add(photo)
             community.create_s_avatar(photo_input)
@@ -84,9 +84,9 @@ class PhotoCommunityCreate(View):
             photos = []
             check_can_get_lists(request.user, community)
             try:
-                _album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+                _album = Album.objects.get(community_id=self.id, type=Album.MAIN)
             except:
-                _album = Album.objects.create(creator=community.creator, community=community, is_generic=True, title="Основной альбом")
+                _album = Album.objects.create(creator=community.creator, community=community, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
@@ -124,9 +124,9 @@ class PhotoAttachCommunityCreate(View):
             photos = []
             check_can_get_lists(request.user, community)
             try:
-                _album = Album.objects.get(creator=request.user, is_generic=True, title="Фото со стены", community=community)
+                _album = Album.objects.get(creator=request.user, type=Album.WALL, community=community)
             except:
-                _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
+                _album = Album.objects.create(creator=request.user, type=Album.WALL, community=community, description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
@@ -160,7 +160,7 @@ class AlbumCommunityCreate(TemplateView):
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
+            new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
             return render(request, 'album_community/admin_album.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()

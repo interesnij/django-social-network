@@ -63,9 +63,9 @@ class UserAddAvatar(View):
         if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
             try:
-                _album = Album.objects.get(creator=user, is_generic=True, title="Фото со страницы", community=None)
+                _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
             except:
-                _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
+                _album = Album.objects.create(creator=user, type=Album.AVATAR, description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
             _album.photo_album.add(photo)
 
@@ -84,9 +84,9 @@ class PhotoUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _album = Album.objects.get(creator_id=self.user.id, community=None, is_generic=True, title="Основной альбом")
+                _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
             except:
-                _album = Album.objects.create(creator_id=self.user.id, community=None, is_generic=True, title="Основной альбом")
+                _album = Album.objects.create(creator_id=self.user.id, community=None, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -123,9 +123,9 @@ class PhotoAttachUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _album = Album.objects.get(creator=request.user, community=None, is_generic=True, title="Фото со стены")
+                _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
             except:
-                _album = Album.objects.create(creator=request.user, community=None, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
+                _album = Album.objects.create(creator=request.user, community=None, type=Album.WALL, description="Фото со стены")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -159,7 +159,7 @@ class AlbumUserCreate(TemplateView):
             album = self.form.save(commit=False)
             if not album.description:
                 album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
+            new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
             return render(request, 'album_user/my_album.html',{'album': new_album, 'user': self.user})
         else:
             return HttpResponseBadRequest()

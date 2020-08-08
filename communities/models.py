@@ -251,32 +251,32 @@ class Community(models.Model):
     def get_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
         return album.get_photos()
 
     def get_admin_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
         return album.get_staff_photos()
 
     def get_avatar_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(community_id=self.id, is_generic=True, title="Фото со страницы")
+            album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Фото со страницы")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
         return album.get_photos()
 
     def get_albums(self):
         from gallery.models import Album
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
-        albums_query.add(~Q(title="Основной альбом"), Q.AND)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -286,9 +286,9 @@ class Community(models.Model):
     def count_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_generic=True, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
         return album.count_photo()
 
     def get_profile_photos(self):
@@ -298,7 +298,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False, community=None)
-        exclude_main = ~Q(title="Основной альбом")
+        exclude_main = ~Q(type=Album.MAIN)
         albums_query.add(~Q(exclude_main), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
@@ -313,9 +313,9 @@ class Community(models.Model):
     def get_main_album_uuid(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
         return album.uuid
 
     def create_s_avatar(self, photo_input):

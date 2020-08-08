@@ -13,7 +13,7 @@
   </h5>
   Фото: {{ album.count_photo }}
 
-  {% if not album.is_generic and community.community_private_settings.open_photo %}
+  {% if not album.is_user_album and community.community_private_settings.open_photo %}
   <form id="c_add_photos" method="post">
       {% csrf_token %}
         <input type="file" id="c_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">

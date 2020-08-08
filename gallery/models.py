@@ -14,13 +14,24 @@ from channels.layers import get_channel_layer
 
 
 class Album(models.Model):
+    AVATAR = 'AV'
+    WALL = 'WA'
+    MAIN = 'MA'
+    ALBUM = 'AL'
+    TYPE = (
+        (AVATAR, 'Фото со страницы'),
+        (WALL, 'Фото со стены'),
+        (MAIN, 'Основной альбом'),
+        (ALBUM, 'Пользовательский альбом'),
+    )
+
     community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    is_generic = models.BooleanField(default=False, verbose_name="Сгенерированный альбом")
+    type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
@@ -33,6 +44,15 @@ class Album(models.Model):
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
 
+    def is_avatar_album(self):
+        return self.type is self.AVATAR
+    def is_wall_album(self):
+        return self.type is self.WALL
+    def is_main_album(self):
+        return self.type is self.MAIN
+    def is_user_album(self):
+        return self.type is self.ALBUM
+
     def __str__(self):
         return self.title
 
@@ -40,27 +60,18 @@ class Album(models.Model):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return Photo.objects.filter(album=self, is_generic=True, title="Фото со страницы").last()
+            return self.photo_album.last()
     def get_cover_photo(self):
         if self.cover_photo:
             return self.cover_photo
-        elif Photo.objects.filter(album=self, is_deleted=False).exists():
-            photo = Photo.objects.filter(album=self, is_deleted=False).last()
-            return photo
         else:
-            return False
+            self.photo_album.last()
 
     def count_photo(self):
         try:
             return self.photo_album.filter(is_deleted=False).values("pk").count()
         except:
             return 0
-
-    def album_is_generic(self):
-        if self.is_generic:
-            return True
-        else:
-            return False
 
     def get_photos(self):
         return self.photo_album.filter(is_deleted=False, is_public=True)

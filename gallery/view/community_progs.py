@@ -245,9 +245,9 @@ class CommunityAddAvatarPhoto(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         try:
-            album = Album.objects.get(community=community, title="Фото со страницы",  is_generic=True,)
+            album = Album.objects.get(community=community, title="Фото со страницы", type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator=request.user, community=community, title="Фото со страницы",  is_generic=True,)
+            album = Album.objects.create(creator=request.user, community=community, type=Album.AVATAR)
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.save(update_fields=['album'])
             return HttpResponse()
@@ -261,7 +261,7 @@ class CommunityRemoveAvatarPhoto(View):
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.album = None
             try:
-                album = Album.objects.get(community=community, title="Сохраненные фото",  is_generic=True,)
+                album = Album.objects.get(community=community, type=Album.AVATAR)
             except:
                 return HttpResponse()
             photo.album = album

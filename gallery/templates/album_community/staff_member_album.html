@@ -13,7 +13,7 @@
   </h5>
   Фото: {{ album.count_photo }}
 
-  {% if not album.is_generic %}
+  {% if album.is_user_album %}
   {% if community.is_photo_upload_member or community.is_photo_upload_nomember %}
   <form id="c_add_photos" method="post">
       {% csrf_token %}

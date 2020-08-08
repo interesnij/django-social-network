@@ -14,7 +14,7 @@
   Фото: {{ album.count_photo }}
 </div>
 
-{% if not album.is_generic and community.is_photo_upload_nomember %}
+{% if album.is_user_album and community.is_photo_upload_nomember %}
 <form id="c_add_photos" method="post">
     {% csrf_token %}
       <input type="file" id="c_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">

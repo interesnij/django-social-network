@@ -35,7 +35,7 @@
                 <div class="media-body" style="white-space:nowrap;overflow:hidden;">
                     <h6 class="mb-0">{{ object.title }}</h6>
                 </div>
-                {% if not object.album_is_generic and object.creator == request.user %}
+                {% if object.is_user_album and object.creator == request.user %}
                 <div class="dropdown d-inline-block" style="position:absolute;right:10px;top: -5px;">
                     <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <svg class="svg_default" style="width:20px;height:20px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>

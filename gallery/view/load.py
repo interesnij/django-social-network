@@ -77,7 +77,7 @@ class UserWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=self.user.pk, is_generic=True, community=None, title="Фото со стены")
+        self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.WALL)
         self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.photo.creator, "u_photo/wall_photo/", "photo.html", request.user)
@@ -121,7 +121,7 @@ class UserDetailAvatar(TemplateView):
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        context["album"] = Album.objects.get(creator=self.photo.creator, is_generic=True, title="Фото со страницы", community=None)
+        context["album"] = Album.objects.get(creator=self.photo.creator, type=Album.AVATAR, community=None)
         return context
 
 class CommunityDetailAvatar(TemplateView):
@@ -147,7 +147,7 @@ class CommunityDetailAvatar(TemplateView):
         context["object"] = self.photo
         context["next"] = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["album"] = Album.objects.get(is_generic=True, title="Фото со страницы", community=self.photo.community)
+        context["album"] = Album.objects.get(community=self.photo.community, type=Album.AVATAR)
         return context
 
 
@@ -219,7 +219,7 @@ class CommunityWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(community=self.community, is_generic=True, title="Фото со стены")
+        self.album = Album.objects.get(community=self.community, type=Album.WALL)
         self.photos = self.community.get_photos_for_album(album_id=self.album.pk)
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_photo/wall_photo/", "photo.html", request.user)

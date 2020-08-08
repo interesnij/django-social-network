@@ -10,7 +10,7 @@
   </h5>
   Фото: {{ album.count_photo }}
 
-  {% if not album.is_generic %}
+  {% if album.is_user_album %}
   <form id="add_photos" method="post">
       {% csrf_token %}
         <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">

@@ -10,7 +10,7 @@
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
                         <h6 class="mb-0">{{ object.title }}</h6>
                     </div>
-                    {% if not object.album_is_generic %}
+                    {% if object.is_user_album %}
                     <div class="dropdown d-inline-block">
                         <a style="cursor:pointer;width:20px;display:inline-block">
                           <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
