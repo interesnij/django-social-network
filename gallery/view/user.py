@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
 from django.views.generic import ListView
-from gallery.forms import AlbumForm
+from gallery.forms import AlbumForm, PhotoDescriptionForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
@@ -67,7 +67,7 @@ class UserAddAvatar(View):
             except:
                 _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
-            photo.album.add(_album) 
+            photo.album.add(_album)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)

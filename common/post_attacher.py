@@ -8,7 +8,7 @@ from article.models import Article
 def photo_attach(value, post):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        _select_photo.item.add(post)
+        _select_photo.item.add(post) 
     except:
         raise ValidationError('Фото не найдено')
 

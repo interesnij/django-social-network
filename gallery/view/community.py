@@ -5,7 +5,7 @@ from users.models import User
 from communities.models import Community
 from gallery.models import Album, Photo
 from django.views.generic import ListView
-from gallery.forms import AlbumForm
+from gallery.forms import AlbumForm, PhotoDescriptionForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
