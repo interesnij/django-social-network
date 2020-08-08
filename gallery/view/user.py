@@ -316,7 +316,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community=None)
-        self.photo = self.album.objects.last()
+        #self.photo = self.album.objects.last()
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
@@ -328,7 +328,7 @@ class UserDetailAvatar(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserDetailAvatar,self).get_context_data(**kwargs)
-        context["object"] = self.photo
+        context["object"] = self.album.get_photos()[0]
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
