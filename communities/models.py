@@ -254,7 +254,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
-            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(community_id=self.id, is_deleted=False, title="Основной альбом")
         return album.get_photos()
 
     def get_admin_photos(self):
@@ -262,7 +262,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
-            album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(community_id=self.id, is_deleted=False, title="Основной альбом")
         return album.get_photos()
 
     def get_avatar_photos(self):
