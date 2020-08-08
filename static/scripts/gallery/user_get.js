@@ -1,8 +1,6 @@
 on('#ajax', 'click', '.u_photo_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  //uuid = this.getAttribute('photo-uuid');
-  data_img = this.getAttribute("data-src");
-  console.log(data_img);
+  uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
 });
