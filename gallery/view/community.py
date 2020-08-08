@@ -26,8 +26,8 @@ class CommunityAddAvatar(View):
             try:
                 _album = Album.objects.get(community=community, type=Album.AVATAR)
             except:
-                _album = Album.objects.create(creator=request.user, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
-            photo = Photo.objects.create(file=photo_input, creator=request.user, community=community)
+                _album = Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
+            photo = Photo.objects.create(file=photo_input, creator=request.user)
             _album.album.add(photo)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
