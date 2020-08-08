@@ -52,7 +52,7 @@ class Album(models.Model):
 
     def count_photo(self):
         try:
-            return self.album_photo.filter(is_deleted=False).values("pk").count()
+            return self.photo_album.filter(is_deleted=False).values("pk").count()
         except:
             return 0
 
