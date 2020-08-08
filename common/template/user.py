@@ -28,7 +28,7 @@ def get_template_user(user, folder, template, request_user):
                     template_name = folder + template
                 else:
                     template_name = "generic/u_template/close_user.html"
-            elif request_user.is_child() and not user.is_verified():
+            elif request_user.is_child() and not user.is_child_safety():
                 template_name = "generic/u_template/no_child_safety.html"
             else:
                 template_name = folder + template
@@ -39,7 +39,7 @@ def get_template_user(user, folder, template, request_user):
             template_name = "generic/u_template/anon_user_global_block.html"
         elif user.is_closed_profile():
             template_name = "generic/u_template/anon_close_user.html"
-        elif not user.is_verified():
+        elif not user.is_child_safety():
             template_name = "generic/u_template/anon_no_child_safety.html"
         else:
             template_name = folder + "anon_" + template
