@@ -883,13 +883,6 @@ class User(AbstractUser):
             album = Album.objects.create(creator_id=self.id, type=Album.AVATAR, community=None)
         return album.get_photos()
 
-    def get_avatar_uuid(self):
-        try:
-            album = Album.objects.create(creator_id=self.id, type=Album.AVATAR, community=None)
-            return album.uuid 
-        except:
-            return None
-
     def get_albums(self):
         from gallery.models import Album
 

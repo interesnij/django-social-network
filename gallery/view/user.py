@@ -314,8 +314,8 @@ class UserDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(creator=self.photo.creator, type=Album.AVATAR, community=None)
+        self.photo = album.objects.last()
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
