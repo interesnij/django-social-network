@@ -51,7 +51,7 @@ class Album(models.Model):
     def is_main_album(self):
         return self.type is self.MAIN
     def is_user_album(self):
-        return self.type is self.ALBUM
+        return self.type == self.ALBUM
 
     def __str__(self):
         return self.title
