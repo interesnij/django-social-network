@@ -305,8 +305,8 @@ class Community(models.Model):
 
     def get_avatar_uuid(self):
         try:
-            avatar = self.get_avatar_photos().order_by('-id')[0]
-            return avatar.uuid
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
+            return album.uuid
         except:
             None
 
