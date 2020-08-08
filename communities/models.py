@@ -237,17 +237,16 @@ class Community(models.Model):
         return goods
 
     def get_photos_for_album(self, album_id):
-        from gallery.models import Photo
+        from gallery.models import Album
 
-        photos_query = Q(is_deleted=False, album__pk=album_id, is_public=True)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+        album = Album.objects.get(community_id=self.id, id=album_id, is_deleted=False)
+        return album.get_photos()
+
     def get_photos_for_admin_album(self, album_id):
-        from gallery.models import Photo
+        from gallery.models import Album
 
-        photos_query = Q(is_deleted=False, album_id=album_id)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+        album = Album.objects.get(community_id=self.id, id=album_id, is_deleted=False)
+        return album.get_staff_photos()
 
     def get_photos(self):
         from gallery.models import Album
@@ -263,14 +262,15 @@ class Community(models.Model):
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
             album = Album.objects.create(community_id=self.id, is_deleted=False, title="Основной альбом")
-        return album.get_photos()
+        return album.get_staff_photos()
 
     def get_avatar_photos(self):
-        from gallery.models import Photo
-
-        photos_query = Q(is_deleted=False, album__title="Фото со страницы", album__is_generic=True, album__community=self)
-        avatar_photos = Photo.objects.filter(photos_query)
-        return avatar_photos
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(community_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы")
+        except:
+            album = Album.objects.create(community_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы")
+        return album.get_photos()
 
     def get_albums(self):
         from gallery.models import Album
