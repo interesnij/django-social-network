@@ -253,7 +253,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
-            album = Album.objects.create(creator_id=community.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
         return album.get_photos()
 
     def get_admin_photos(self):
@@ -261,7 +261,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
-            album = Album.objects.create(creator_id=community.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
         return album.get_staff_photos()
 
     def get_avatar_photos(self):
@@ -269,7 +269,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы")
         except:
-            album = Album.objects.create(creator_id=community.creator.pk, community_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_deleted=False, is_generic=True, title="Фото со страницы")
         return album.get_photos()
 
     def get_albums(self):
@@ -306,7 +306,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
-            album = Album.objects.create(creator_id=community.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, is_deleted=False, title="Основной альбом")
         return album.uuid
 
     def create_s_avatar(self, photo_input):
