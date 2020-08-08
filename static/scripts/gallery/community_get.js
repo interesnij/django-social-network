@@ -11,12 +11,6 @@ on('#ajax', 'click', '.c_album_photo_detail', function() {
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/community_album_photo/" + pk + "/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.c_photo_detail', function() {
-  container = this.parentElement;
-  uuid = this.getAttribute('photo-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/community_photo/" + uuid + "/", loader)
-});
 
 on('#ajax', 'click', '.c_wall_image', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');

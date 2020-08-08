@@ -2,7 +2,7 @@
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ community.get_main_album_uuid }}">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">

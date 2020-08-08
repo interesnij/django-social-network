@@ -11,12 +11,6 @@ on('#ajax', 'click', '.u_album_photo_detail', function() {
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/user_album_photo/" + pk + "/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.u_photo_detail', function() {
-  container = this.parentElement;
-  uuid = this.getAttribute('photo-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/user_photo/" + uuid + "/", loader)
-});
 
 on('#ajax', 'click', '.u_wall_image', function() {
   uuid = this.getAttribute('data-uuid');
