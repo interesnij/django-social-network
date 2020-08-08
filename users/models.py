@@ -859,7 +859,7 @@ class User(AbstractUser):
             album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
         except:
             album = Album.objects.create(creator_id=self.id, community=None, type=Album.AVATAR)
-        return album.last().uuid
+        return album.get_photos()[0].uuid
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
