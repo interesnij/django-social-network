@@ -65,13 +65,13 @@ class UserAddAvatar(View):
             try:
                 _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
             except:
-                _album = Album.objects.create(creator=user, type=Album.AVATAR, description="Фото с моей страницы")
+                _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
-            _album.photo_album.add(photo)
+            photo.photo_album.add(_album) 
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
-            return render(request, 'photo_user/my_photo.html',{'object': photo, 'user': request.user})
+            return render(request, 'u_photo/my_photo.html',{'object': photo, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
