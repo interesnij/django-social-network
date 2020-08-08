@@ -45,11 +45,11 @@ class Album(models.Model):
         verbose_name_plural = 'Фотоальбомы'
 
     def is_avatar_album(self):
-        return self.type is self.AVATAR
+        return self.type == self.AVATAR
     def is_wall_album(self):
-        return self.type is self.WALL
+        return self.type == self.WALL
     def is_main_album(self):
-        return self.type is self.MAIN
+        return self.type == self.MAIN
     def is_user_album(self):
         return self.type == self.ALBUM
 
