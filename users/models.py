@@ -835,28 +835,27 @@ class User(AbstractUser):
     def get_photos(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
+            album = Album.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
         except:
-            album = Album.objects.create(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
         return album.get_photos()
+    def get_my_photos(self):
+        from gallery.models import Album
+        try:
+            album = Album.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
+        except:
+            album = Album.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
+        return album.get_staff_photos()
 
     def get_main_album_uuid(self):
         try:
-            album = Album.objects.get(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
+            album = Album.objects.get(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
         except:
-            album = Album.objects.create(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
+            album = Album.objects.create(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
         return album.uuid
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
-
-    def get_my_photos(self):
-        from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
-        except:
-            album = Album.objects.create(creator_id=self.id, is_deleted=False, is_generic=True, title="Основной альбом")
-        return album.get_staff_photos()
 
     def get_photos_for_album(self, album_id):
         from gallery.models import Album
