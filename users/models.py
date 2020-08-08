@@ -853,6 +853,7 @@ class User(AbstractUser):
         return album.get_staff_photos()
 
     def get_main_album_uuid(self):
+        from gallery.models import Album
         try:
             album = Album.objects.get(creator_id=self.id, is_generic=True, community=None, title="Основной альбом")
         except:

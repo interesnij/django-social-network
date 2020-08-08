@@ -311,6 +311,7 @@ class Community(models.Model):
             None
 
     def get_main_album_uuid(self):
+        from gallery.models import Album
         try:
             album = Album.objects.get(community_id=self.id, is_deleted=False, title="Основной альбом")
         except:
