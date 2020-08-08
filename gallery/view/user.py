@@ -67,7 +67,7 @@ class UserAddAvatar(View):
             except:
                 _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
-            photo.photo_album.add(_album) 
+            photo.album.add(_album) 
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
