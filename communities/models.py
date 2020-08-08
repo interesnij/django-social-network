@@ -304,6 +304,7 @@ class Community(models.Model):
         return albums
 
     def get_avatar_uuid(self):
+        from gallery.models import Album
         try:
             album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
         except:
