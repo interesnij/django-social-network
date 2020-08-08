@@ -67,7 +67,7 @@ class UserAddAvatar(View):
             except:
                 _album = Album.objects.create(creator=user, is_generic=True, title="Фото со страницы", description="Фото с моей страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
-            _album.album.add(photo)
+            _album.photo_album.add(photo)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
@@ -128,7 +128,7 @@ class PhotoAttachUserCreate(View):
                 _album = Album.objects.create(creator=request.user, community=None, is_generic=True, title="Фото со стены", description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
-                _album.album.add(photo)
+                _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
         else:

@@ -129,7 +129,7 @@ class PhotoAttachCommunityCreate(View):
                 _album = Album.objects.create(creator=request.user, is_generic=True, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
-                _album.album.add(photo)
+                _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
         else:
