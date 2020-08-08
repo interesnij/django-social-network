@@ -276,8 +276,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
-        exclude_main = ~Q(title="Основной альбом")
-        albums_query.add(~Q(exclude_main), Q.AND)
+        albums_query.add(~Q(title="Основной альбом"), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
