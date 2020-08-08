@@ -63,10 +63,10 @@ class Album(models.Model):
             return False
 
     def get_photos(self):
-        return self.album.filter(is_deleted=False, is_public=True)
+        return self.photo_album.filter(is_deleted=False, is_public=True)
 
     def get_staff_photos(self):
-        return self.album.filter(is_deleted=False)
+        return self.photo_album.filter(is_deleted=False)
 
 
 class Photo(models.Model):
