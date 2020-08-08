@@ -14,7 +14,7 @@ on('#ajax', 'click', '.c_avatar_detail', function() {
 
 on('#ajax', 'click', '.c_album_photo_detail', function() {
   container = this.parentElement;
-  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('album-uuid') : uuid = this.getAttribute('album-uuid');
+  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-pk') : uuid = this.getAttribute('data-pk');
   uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/album_photo/" + pk + "/" + uuid + "/", loader)

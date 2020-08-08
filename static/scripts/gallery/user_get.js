@@ -14,10 +14,10 @@ on('#ajax', 'click', '.avatar_detail', function() {
 
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   container = this.parentElement;
-  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('album-uuid') : uuid = this.getAttribute('album-uuid');
-  pk = this.getAttribute('photo-pk');
+  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-pk') : uuid = this.getAttribute('data-pk');
+  photo_uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/album_photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user/album_photo/" + uuid + "/" + photo_uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_wall_image', function() {
