@@ -253,7 +253,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.get_photos()
 
     def get_admin_photos(self):
@@ -261,7 +261,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.get_staff_photos()
 
     def get_avatar_photos(self):
@@ -269,7 +269,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
         return album.get_photos()
 
     def get_albums(self):
@@ -288,7 +288,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.count_photo()
 
     def get_profile_photos(self):
@@ -307,7 +307,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
         return album.uuid
 
     def get_main_album_uuid(self):
@@ -315,7 +315,7 @@ class Community(models.Model):
         try:
             album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN)
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.uuid
 
     def create_s_avatar(self, photo_input):

@@ -86,7 +86,7 @@ class PhotoCommunityCreate(View):
             try:
                 _album = Album.objects.get(community_id=self.id, type=Album.MAIN)
             except:
-                _album = Album.objects.create(creator=community.creator, community=community, type=Album.MAIN)
+                _album = Album.objects.create(creator=community.creator, community=community, type=Album.MAIN, title="Основной альбом")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
@@ -126,7 +126,7 @@ class PhotoAttachCommunityCreate(View):
             try:
                 _album = Album.objects.get(creator=request.user, type=Album.WALL, community=community)
             except:
-                _album = Album.objects.create(creator=request.user, type=Album.WALL, community=community, description="Фото, прикрепленные к записям и комментариям")
+                _album = Album.objects.create(creator=request.user, type=Album.WALL, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
@@ -223,8 +223,8 @@ class CommunityDetailAvatar(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(community=self.photo.community, type=Album.AVATAR)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
         if request.is_ajax():
@@ -254,7 +254,7 @@ class CommunityPhoto(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(community=self.community, type=Album.MAIN)
-        self.photos = self.photo.community.get_photos()
+        self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_photo/photo/", "photo.html", request.user)
         else:
@@ -280,8 +280,8 @@ class CommunityAlbumPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(community=self.photo.community, type=Album.ALBUM)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(community=self.community, type=Album.ALBUM)
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_photo/album_photo/", "photo.html", request.user)
         else:
@@ -316,7 +316,7 @@ class CommunityWallPhoto(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(community=self.community, type=Album.WALL)
-        self.photos = self.community.get_photos_for_album(album_id=self.album.pk)
+        self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_photo/wall_photo/", "photo.html", request.user)
         else:

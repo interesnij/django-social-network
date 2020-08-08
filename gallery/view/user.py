@@ -86,7 +86,7 @@ class PhotoUserCreate(View):
             try:
                 _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
             except:
-                _album = Album.objects.create(creator_id=self.user.id, community=None, type=Album.MAIN)
+                _album = Album.objects.create(creator_id=self.user.id, community=None, type=Album.MAIN, title="Основной альбом")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -222,10 +222,10 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album = Album.objects.get(creator=self.photo.creator, type=Album.MAIN)
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.photo.creator.get_photos()
+        self.album = Album.objects.get(creator=self.user, type=Album.MAIN)
+        self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/photo/", "photo.html", request.user)
         else:
@@ -254,8 +254,8 @@ class UserAlbumPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(creator=self.photo.creator, type=Album.ALBUM)
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator=self.user, type=Album.ALBUM)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/album_photo/", "photo.html", request.user)
@@ -285,8 +285,8 @@ class UserWallPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(creator=self.photo.creator, type=Album.WALL)
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator=self.user, type=Album.WALL)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/wall_photo/", "photo.html", request.user)

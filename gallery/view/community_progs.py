@@ -247,7 +247,7 @@ class CommunityAddAvatarPhoto(View):
         try:
             album = Album.objects.get(community=community, title="Фото со страницы", type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator=request.user, community=community, type=Album.AVATAR)
+            album = Album.objects.create(creator=request.user, community=community, type=Album.AVATAR, title="Фото со страницы")
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.save(update_fields=['album'])
             return HttpResponse()

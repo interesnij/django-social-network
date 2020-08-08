@@ -229,7 +229,7 @@ class UserAddAvatarPhoto(View):
         try:
             album = Album.objects.get(creator=user, community=None, type=Album.AVATAR)
         except:
-            album = Album.objects.create(creator=user, community=None, type=Album.AVATAR)
+            album = Album.objects.create(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
         if request.is_ajax() and user == request.user:
             photo.save(update_fields=['album'])
             return HttpResponse()
@@ -245,7 +245,7 @@ class UserRemoveAvatarPhoto(View):
             try:
                 album = Album.objects.get(creator=user, community=None, type=Album.AVATAR)
             except:
-                album = Album.objects.create(creator=user, community=None, type=Album.AVATAR)
+                album = Album.objects.create(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
             photo.album = album
             photo.save()
             return HttpResponse()
