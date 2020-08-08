@@ -8,6 +8,7 @@ from common.template.post import get_template_community_post, get_permission_com
 from common.template.music import get_template_community_music
 from common.template.video import get_template_community_video
 from django.http import Http404
+from common.get_template import get_default_template
 
 
 class CommunityMembersView(ListView):
@@ -16,6 +17,7 @@ class CommunityMembersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_default_template(folder="c_detail/", template="members.html", request=request)
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -24,15 +26,7 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.name):
-			membersheeps = None
-			self.template_name = "c_detail/private_community.html"
-		else:
-			membersheeps = self.community.get_community_with_name_members(self.community.name)
-			self.template_name = "c_detail/members.html"
-		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+		membersheeps = self.community.get_community_with_name_members(self.community.name)
 		return membersheeps
 
 
@@ -66,7 +60,6 @@ class AllCommunities(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.get_template import get_default_template
 		self.template_name = get_default_template(folder="c_list/", template="all_communities.html", request=request)
 		return super(AllCommunities,self).get(request,*args,**kwargs)
 
