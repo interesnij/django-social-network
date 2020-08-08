@@ -6,10 +6,9 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 });
 
 on('#ajax', 'click', '.avatar_detail', function() {
-  uuid = this.getAttribute('photo-uuid');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user/avatar/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_album_photo_detail', function() {
