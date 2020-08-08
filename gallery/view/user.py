@@ -84,9 +84,9 @@ class PhotoUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _album = Album.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
+                _album = Album.objects.get(creator_id=self.user.id, community=None, is_generic=True, title="Основной альбом")
             except:
-                _album = Album.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной альбом")
+                _album = Album.objects.create(creator_id=self.user.id, community=None, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
