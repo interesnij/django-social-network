@@ -224,19 +224,6 @@ on('body', 'click', '.ajax', function(event) {
 
 if_list(document.getElementById('ajax'));
 
-
-function scrolled(block, link, block_2){
-	// скрипты для работы с прокруткой: пагинация, просмотры и т.д.
-	onscroll = function(){
-		var box = block.querySelector('.last');
-		if(box && box.classList.contains("last")){
-				inViewport = elementInViewport(box);
-				if(inViewport){
-					box.classList.remove("last");
-					paginate(block, link, block_2);
-		}};
-	}
-}
 page = 2;
 loaded = false;
 function paginate(link, block_id){
