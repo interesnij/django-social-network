@@ -84,11 +84,12 @@ class PhotoCommunityCreate(View):
             photos = []
             check_can_get_lists(request.user, community)
             try:
-                album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
+                _album = Album.objects.get(community_id=self.id, is_generic=True, title="Основной альбом")
             except:
-                album = Album.objects.create(creator=community.creator, community=community, is_generic=True, title="Основной альбом")
+                _album = Album.objects.create(creator=community.creator, community=community, is_generic=True, title="Основной альбом")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, album=album, creator=request.user)
+                photo = Photo.objects.create(file=p, creator=request.user)
+                _album.photo_album.add(photo) 
                 photos += [photo,]
             return render(request, 'gallery_community/admin_list.html',{'object_list': photos, 'community': community})
         else:
