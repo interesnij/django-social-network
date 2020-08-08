@@ -108,7 +108,7 @@ class PhotoAlbumUserCreate(View):
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=user)
-                _album.album.add(photo)
+                _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'album_user/my_list.html',{'object_list': photos, 'album': _album, 'user': request.user})
         else:

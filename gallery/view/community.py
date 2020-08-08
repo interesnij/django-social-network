@@ -108,7 +108,7 @@ class PhotoAlbumCommunityCreate(View):
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
-                _album.album.add(photo)
+                _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'album_community/admin_list.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
