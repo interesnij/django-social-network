@@ -3,30 +3,32 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-  <h5 class="mt-1">
-    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
-      {{ community.name }}
-    </a> -
-    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
-      Галерея
-    </a> - {{ album.title }}
-  </h5>
-  Фото: {{ album.count_photo }}
-
-  {% if album.is_user_album %}
-  <form id="c_add_photos" method="post">
-      {% csrf_token %}
-        <input type="file" id="c_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
-        <button id="c_add_multi_photos" class="btn btn-outline-success" type="button">
-          Добавить фотографии
-        </button>
-  </form>
-  {% endif %}
+  <div class="row mb-3">
+      <div class="col-12 col-md-8">
+        <h5 class="mt-1">
+          <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+            {{ community.name }}
+          </a> -
+          <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+            Галерея
+          </a> - {{ album.title }}
+        </h5>
+        Фото: {{ album.count_photo }}
+      </div>
+      <div class="col-12 col-md-4">
+        {% if album.is_user_album %}
+        <form id="c_add_photos" method="post">
+            {% csrf_token %}
+              <input type="file" id="c_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
+              <button id="c_add_multi_photos" class="btn btn-outline-success" type="button">
+                Добавить фотографии
+              </button>
+        </form>
+        {% endif %}
+      </div>
 </div>
 
-<div class="container mt-4 main-container">
-
-    <div id="c_album_photo_load" data-link="/gallery/community/album_photos/{{ community.pk }}/{{ album.uuid }}/"></div>
+<div id="c_album_photo_load" data-link="/gallery/community/album_photos/{{ community.pk }}/{{ album.uuid }}/"></div>
 
 </div>
 {% endblock %}
