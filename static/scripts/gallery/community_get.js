@@ -22,7 +22,7 @@ on('#ajax', 'click', '.c_AL_photo', function() {
 
 on('#ajax', 'click', '.c_WA_photo', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  uuid = this.getAttribute('data-uuid');
+  uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/wall/" + pk + "/" + uuid + "/", loader)
 });
