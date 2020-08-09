@@ -34,7 +34,7 @@
               </span>
               <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
-                    {% if object.file %}
+                    {% if object.get_first_photo.file %}
                       <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -50,7 +50,7 @@
             </span>
             <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3 pointer">
-                  {% if object.file %}
+                  {% if object.get_first_photo.file %}
                     <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                   {% else %}
                     <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -71,7 +71,7 @@
                 {% for photo in object.get_6_photos %}
                   <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
-                      {% if object.file %}
+                      {% if photo.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
                         <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -91,7 +91,7 @@
               {% for photo in object.get_6_photos %}
                 <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
-                    {% if object.file %}
+                    {% if photo.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -114,7 +114,7 @@
                 {% for photo in object.get_6_photos %}
                   <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
-                      {% if object.file %}
+                      {% if photo.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
                         <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -134,7 +134,7 @@
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
-                    {% if object.file %}
+                    {% if photo.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -156,7 +156,7 @@
                 {% for photo in object.get_6_photos %}
                   <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
-                      {% if object.file %}
+                      {% if photo.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
                         <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -176,7 +176,7 @@
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
-                    {% if object.file %}
+                    {% if photo.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
