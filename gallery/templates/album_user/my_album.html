@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-  <div class="row">
+  <div class="row mb-3">
       <div class="col-12 col-md-8">
         <h5 class="mt-1">
           <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
