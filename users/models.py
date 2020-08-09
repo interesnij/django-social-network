@@ -842,7 +842,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
-        return album.photo_album.last().uuid 
+        return album.photo_album.first().uuid 
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
