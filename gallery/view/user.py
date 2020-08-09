@@ -224,7 +224,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator=self.user, type=Album.MAIN)
+        self.album = Album.objects.get(creator=self.user, type=Album.MAIN, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/photo/", "photo.html", request.user)
