@@ -38,7 +38,7 @@ def get_timeline_posts_for_possible_users(user):
 
 
 def get_timeline_photos_for_user(user):
-    empty_list_exclude = Q(players__isnull=True)
+    empty_list_exclude = Q(photo_album__isnull=True)
     own_albums_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
     own_albums_query.add(~Q(empty_list_exclude), Q.AND)
     own_albums_queryset = user.photo_album_creator.only('created').filter(own_albums_query)
@@ -63,7 +63,7 @@ def get_timeline_photos_for_user(user):
     return final_queryset
 
 def get_timeline_photos_for_possible_users(user):
-    empty_list_exclude = Q(players__isnull=True)
+    empty_list_exclude = Q(photo_album__isnull=True)
     possible_users = user.get_possible_friends_ids()
     albums_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
     albums_query.add(~Q(followed_users_query), Q.AND)
