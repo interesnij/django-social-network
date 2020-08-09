@@ -62,10 +62,8 @@ class UserAddAvatar(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
-            try:
-                _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
-            except:
-                _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото с моей страницы")
+
+            _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
             photo = Photo.objects.create(file=photo_input, creator=user)
             photo.album.add(_album)
 
@@ -83,10 +81,8 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            try:
-                _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
-            except:
-                _album = Album.objects.create(creator_id=self.user.id, community=None, type=Album.MAIN, title="Основной альбом")
+
+            _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -122,10 +118,7 @@ class PhotoAttachUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            try:
-                _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
-            except:
-                _album = Album.objects.create(creator=request.user, community=None, type=Album.WALL, description="Фото со стены")
+            _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)

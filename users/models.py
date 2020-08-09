@@ -706,14 +706,6 @@ class User(AbstractUser):
     def count_community(self):
         return self.communities_memberships.values('pk').count()
 
-    def count_photos(self):
-        from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN, title="Основной альбом")
-        return album.count_photo()
-
     def count_albums(self):
         return self.created_user.values('pk').count()
 
@@ -832,33 +824,24 @@ class User(AbstractUser):
 
     def get_photos(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN, title="Основной альбом")
+        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
         return album.get_photos()
     def get_my_photos(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN, title="Основной альбом")
+
+        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
         return album.get_staff_photos()
 
     def get_main_album_uuid(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.id, community=None, type=Album.MAIN, title="Основной альбом")
+
+        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
         return album.uuid
 
     def get_avatar_uuid(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
-        except:
-            album = Album.objects.create(creator_id=self.id, community=None, type=Album.AVATAR, title="Фото со страницы")
+
+        album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
         return album.get_photos().order_by('-id')[0]
 
     def get_profile_photos(self):

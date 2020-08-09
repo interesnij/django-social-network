@@ -28,7 +28,7 @@ class CommunityAddAvatar(View):
             except:
                 _album = Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
             photo = Photo.objects.create(file=photo_input, creator=request.user)
-            photo.album.add(_album) 
+            photo.album.add(_album)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
             return render(request, 'c_photo/admin_photo.html',{'object': photo, 'community': community})
@@ -83,10 +83,7 @@ class PhotoCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            try:
-                _album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-            except:
-                _album = Album.objects.create(creator=community.creator, community=community, type=Album.MAIN, title="Основной альбом")
+            _album = Album.objects.get(community_id=self.id, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
@@ -123,10 +120,7 @@ class PhotoAttachCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            try:
-                _album = Album.objects.get(creator=request.user, type=Album.WALL, community=community)
-            except:
-                _album = Album.objects.create(creator=request.user, type=Album.WALL, title="Фото со стены", community=community, description="Фото, прикрепленные к записям и комментариям")
+            _album = Album.objects.get(creator=request.user, type=Album.WALL, community=community)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
