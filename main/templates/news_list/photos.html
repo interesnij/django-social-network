@@ -26,11 +26,13 @@
 
             {% if object.is_avatar_album %}
             {% if object.community %}
-              <div class="card mb-3">
+              <div class="card mb-3" style="display:block;margin-left: 0;margin-right: 0;">
+                <span>
                 Новый аватар сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
+                </span>
               <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if object.get_first_photo.file %}
@@ -42,11 +44,13 @@
               </div>
               </div>
             {% else %}
-            <div class="card mb-3">
+            <div class="card mb-3" style="display:block;margin-left: 0;margin-right: 0;">
+              <span>
               Новый аватар
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
+              </span>
             <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3 pointer">
                   {% if object.get_first_photo.file %}
@@ -61,11 +65,13 @@
 
             {% elif object.is_wall_album %}
             {% if object.community %}
-              <div class="card mb-3">
+              <div class="card mb-3" style="display:block">
+                <span>
                 Стена собщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
+                </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
@@ -81,11 +87,13 @@
               </div>
             </div>
             {% else %}
-            <div class="card mb-3">
+            <div class="card mb-3" style="display:block">
+              <span>
               Стена
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
+              </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -104,11 +112,13 @@
 
             {% elif object.is_user_album %}
             {% if object.community %}
-              <div class="card mb-3">
+              <div class="card mb-3" style="display:block">
+                <span>
                 Альбом {{ object.title }} сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
+                </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
@@ -124,11 +134,13 @@
               </div>
             </div>
             {% else %}
-            <div class="card mb-3">
+            <div class="card mb-3" style="display:block">
+              <span>
               Альбом
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
+              </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -146,11 +158,13 @@
             {% endif %}
             {% elif not object.is_album_exists %}
             {% if object.community %}
-              <div class="card mb-3">
+              <div class="card mb-3" style="display:block">
+                <span>
                 Фото в сообществе
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
+                </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
@@ -166,11 +180,13 @@
               </div>
             </div>
             {% else %}
-            <div class="card mb-3">
+            <div class="card mb-3" style="display:block">
+              <span>
               Фото
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
+              </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
