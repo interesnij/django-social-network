@@ -66,7 +66,7 @@
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-              <div class="row pag {% if forloop.last %}last{% endif %}">
+              <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
@@ -86,7 +86,7 @@
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
-            <div class="row pag {% if forloop.last %}last{% endif %}">
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
@@ -109,7 +109,7 @@
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-              <div class="row pag {% if forloop.last %}last{% endif %}">
+              <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
@@ -129,7 +129,7 @@
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
-            <div class="row pag {% if forloop.last %}last{% endif %}">
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
@@ -151,7 +151,7 @@
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
-              <div class="row pag {% if forloop.last %}last{% endif %}">
+              <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
                   <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
@@ -171,7 +171,7 @@
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
-            <div class="row pag {% if forloop.last %}last{% endif %}">
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
                 <div class="u_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
