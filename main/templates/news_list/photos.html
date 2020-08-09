@@ -26,7 +26,7 @@
 
             {% if object.is_avatar_album %}
             {% if object.community %}
-              <div class="card">
+              <div class="card mb-3">
                 Новый аватар сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
@@ -42,7 +42,7 @@
               </div>
               </div>
             {% else %}
-            <div class="card">
+            <div class="card mb-3">
               Новый аватар
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
@@ -61,7 +61,7 @@
 
             {% elif object.is_wall_album %}
             {% if object.community %}
-              <div class="card">
+              <div class="card mb-3">
                 Стена собщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
@@ -81,7 +81,7 @@
               </div>
             </div>
             {% else %}
-            <div class="card">
+            <div class="card mb-3">
               Стена
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
@@ -104,7 +104,7 @@
 
             {% elif object.is_user_album %}
             {% if object.community %}
-              <div class="card">
+              <div class="card mb-3">
                 Альбом {{ object.title }} сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
@@ -124,7 +124,7 @@
               </div>
             </div>
             {% else %}
-            <div class="card">
+            <div class="card mb-3">
               Альбом
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
@@ -146,7 +146,7 @@
             {% endif %}
             {% elif not object.is_album_exists %}
             {% if object.community %}
-              <div class="card">
+              <div class="card mb-3">
                 Фото в сообществе
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
@@ -166,7 +166,7 @@
               </div>
             </div>
             {% else %}
-            <div class="card">
+            <div class="card mb-3">
               Фото
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
