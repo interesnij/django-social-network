@@ -49,7 +49,7 @@ class VideoAlbum(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     id = models.BigAutoField(primary_key=True)
-    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
+    type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
 
     class Meta:
         verbose_name = 'Видеоальбом'

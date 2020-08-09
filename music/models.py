@@ -68,7 +68,7 @@ class SoundList(models.Model):
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип листа")
+    type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
