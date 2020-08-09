@@ -41,7 +41,7 @@ class UserPostView(View):
                 PostNumbers.objects.create(user=request.user.pk, post=post.pk)
                 return HttpResponse()
         else:
-            raise Http404
+            raise HttpResponse()
 
 class UserAdPostView(View):
     def get(self,request,*args,**kwargs):
