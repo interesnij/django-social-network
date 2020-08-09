@@ -2,7 +2,7 @@
 <div class="row" id="photos_container" style="margin-left: 0;margin-right: 0;">
 {% if photo_list %}
 {% for object in photo_list %}
-  <div class="col-sm-12 col-md-6 col-lg-4 u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}">
+  <div class="col-sm-12 col-md-6 col-lg-4 u_{{ album.type }}_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}">
       <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}
           <img class="lazyload image_fit_200" data-src="{{ object.file.url }}" alt="img">

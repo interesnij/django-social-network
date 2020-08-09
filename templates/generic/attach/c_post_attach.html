@@ -3,7 +3,7 @@
 <div class="attach_container" data-pk="{{ object.pk }}">
   {% for photo in object.item_photo.all %}
   <div class="photo">
-      <img data-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}" class="c_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
+      <img data-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}" class="c_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
   </div>
   {% endfor %}
   {% for video in object.item_video.all %}
