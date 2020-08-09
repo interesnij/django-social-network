@@ -2,6 +2,10 @@
 
   {% include 'post_user/my_card_header.html' %}
 
+  {% if object.parent %}
+    {% include 'post_user/repost.html' %}
+  {% endif %}
+
     <div style="padding-left: 15px;">
 
       {% if object.text %}
@@ -10,10 +14,6 @@
 
       {% include 'generic/attach/u_post_attach.html' %}
     </div>
-
-    {% if object.parent %}
-    {% include 'post_user/repost_detail.html' %}
-    {% endif %}
 
     {% include 'post_user/info.html' %}
 </div>
