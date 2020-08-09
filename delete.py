@@ -18,7 +18,7 @@ from music.models import SoundList
 from video.models import VideoAlbum
 from gallery.models import Album
 
-user = User.objects.get(pk=1)
+user = User.objects.get(pk=7)
 
 SoundList.objects.create(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
 VideoAlbum.objects.create(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
