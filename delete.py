@@ -19,9 +19,9 @@ from video.models import VideoAlbum
 from gallery.models import Album
 
 
-SoundList.objects.create(creator__pk=1, community=None, type=SoundList.MAIN, name="Основной плейлист")
-VideoAlbum.objects.create(creator__pk=1, community=None, type=VideoAlbum.MAIN, title="Основной список")
+SoundList.objects.create(creator_pk=1, community=None, type=SoundList.MAIN, name="Основной плейлист")
+VideoAlbum.objects.create(creator_pk=1, community=None, type=VideoAlbum.MAIN, title="Основной список")
 
-Album.objects.create(creator__pk=1, community=None, type=Album.AVATAR, title="Фото со страницы")
-Album.objects.create(creator__pk=1, community=None, type=Album.MAIN, title="Основной альбом")
-Album.objects.create(creator__pk=1, community=None, type=Album.WALL, title="Фото со стены")
+Album.objects.create(creator_pk=1, community=None, type=Album.AVATAR, title="Фото со страницы")
+Album.objects.create(creator_pk=1, community=None, type=Album.MAIN, title="Основной альбом")
+Album.objects.create(creator_pk=1, community=None, type=Album.WALL, title="Фото со стены")
