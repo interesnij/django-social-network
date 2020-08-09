@@ -335,7 +335,9 @@ transform: translateX(-50%) translateY(-50%) scale(1.2);
   object-fit: cover;
   max-height: 400px;
   height: 100%;
-  width:100%
+  width:100%;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 .image_fit_200{
   object-fit: cover;
