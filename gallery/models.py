@@ -62,6 +62,12 @@ class Album(models.Model):
         else:
             return self.photo_album.filter(is_deleted=False).first()
 
+    def get_first_photo(self):
+        return self.photo_album.filter(is_deleted=False).first()
+
+    def get_6_photos(self):
+        return self.photo_album.filter(is_deleted=False)[:5]
+
     def count_photo(self):
         try:
             return self.photo_album.filter(is_deleted=False).values("pk").count()

@@ -24,8 +24,7 @@
                 <br><br>
                 {% endif %}
 
-            {% if object.is_album_exists and object.album.title == "Фото со страницы" %}
-            111
+            {% if object.is_avatar_album %}
             {% if object.community %}
               <span class="">
                 Новый аватар сообщества
@@ -33,10 +32,10 @@
                   {{ object.community }}
                 </a>
               </span>
-              <div class="c_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+              <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
-                      <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
+                      <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                     {% endif %}
@@ -49,18 +48,18 @@
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
-            <div class="u_avatar_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+            <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
                 <div class="card rounded-0 border-0 mb-3">
                   {% if object.file %}
-                    <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
+                    <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                   {% else %}
                     <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                   {% endif %}
                 </div>
             </div>
             {% endif %}
-            {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
-            222
+
+            {% elif object.is_wall_album %}
             {% if object.community %}
               <span class="">
                 Стена собщества
@@ -68,13 +67,16 @@
                   {{ object.community }}
                 </a>
               </span>
-              <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
-                    {% if object.file %}
-                      <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                    {% else %}
-                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                    {% endif %}
+              <div class="row pag {% if forloop.last %}last{% endif %}">
+                {% for photo in object.get_6_photos %}
+                  <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
                   </div>
               </div>
             {% else %}
@@ -84,32 +86,38 @@
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
-            <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
-                <div class="card rounded-0 border-0 mb-3">
-                  {% if object.file %}
-                    <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                  {% else %}
-                    <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
+            <div class="row pag {% if forloop.last %}last{% endif %}">
+              {% for photo in object.get_6_photos %}
+                <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
                 </div>
             </div>
             {% endif %}
-            {% elif object.is_album_exists and not object.album.is_generic %}
-            333
+
+            {% elif object.is_user_album %}
             {% if object.community %}
               <span class="">
-                Альбом {{ object.album.title }} сообщества
+                Альбом {{ object.title }} сообщества
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                   {{ object.community }}
                 </a>
               </span>
-              <div class="c_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" album-uuid="{{ object.photo_album.uuid }}">
-                  <div class="card rounded-0 border-0 mb-3">
-                    {% if object.file %}
-                      <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                    {% else %}
-                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                    {% endif %}
+              <div class="row pag {% if forloop.last %}last{% endif %}">
+                {% for photo in object.get_6_photos %}
+                  <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
                   </div>
               </div>
             {% else %}
@@ -119,53 +127,20 @@
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
-            <div class="u_album_photo_detail pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" album-uuid="{{ object.photo_album.uuid }}">
-                <div class="card rounded-0 border-0 mb-3">
-                  {% if object.file %}
-                    <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                  {% else %}
-                    <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
-                </div>
-            </div>
-            {% endif %}
-            {% elif object.is_album_exists and object.album.title == "Фото со стены" %}
-            444
-            {% if object.community %}
-              <span class="">
-                Стена сообщества
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
-                  {{ object.community }}
-                </a>
-              </span>
-              <div class="c_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
+            <div class="row pag {% if forloop.last %}last{% endif %}">
+              {% for photo in object.get_6_photos %}
+                <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3">
                     {% if object.file %}
-                      <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
+                      <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
                       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                     {% endif %}
                   </div>
-              </div>
-            {% else %}
-            <span>
-              Стена
-              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
-              </a>
-            </span>
-            <div class="u_wall_image pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
-                <div class="card rounded-0 border-0 mb-3">
-                  {% if object.file %}
-                    <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                  {% else %}
-                    <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
                 </div>
             </div>
             {% endif %}
             {% elif not object.is_album_exists %}
-            555
             {% if object.community %}
               <span class="">
                 Фото в сообществе
@@ -173,13 +148,16 @@
                   {{ object.community }}
                 </a>
               </span>
-              <div class="c_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
-                    {% if object.file %}
-                      <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                    {% else %}
-                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                    {% endif %}
+              <div class="row pag {% if forloop.last %}last{% endif %}">
+                {% for photo in object.get_6_photos %}
+                  <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3">
+                      {% if object.file %}
+                        <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
                   </div>
               </div>
             {% else %}
@@ -189,13 +167,16 @@
                 {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
             </span>
-            <div class="u_photo_detail pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
-                <div class="card rounded-0 border-0 mb-3">
-                  {% if object.file %}
-                    <img class="lazyload image_fit" data-src="{{ object.file.url }}" alt="img">
-                  {% else %}
-                    <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
+            <div class="row pag {% if forloop.last %}last{% endif %}">
+              {% for photo in object.get_6_photos %}
+                <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3">
+                    {% if object.file %}
+                      <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
                 </div>
             </div>
             {% endif %}
