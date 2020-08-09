@@ -232,6 +232,7 @@ class CommunityDetailAvatar(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
+        context["community"] = self.community
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["album"] = self.album
@@ -260,6 +261,7 @@ class CommunityPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
+        context["community"] = self.community
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
@@ -292,6 +294,7 @@ class CommunityAlbumPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityAlbumPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
+        context["community"] = self.community
         context["album"] = self.album
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
@@ -322,6 +325,7 @@ class CommunityWallPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityWallPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
+        context["community"] = self.community
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
