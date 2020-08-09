@@ -850,14 +850,14 @@ class User(AbstractUser):
     def get_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, type=Album.ALBUM, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         albums = Album.objects.filter(albums_query)
         return albums
 
     def get_my_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=Album.ALBUM)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums = Album.objects.filter(albums_query)
         return albums
 
