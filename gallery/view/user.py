@@ -255,7 +255,7 @@ class UserAlbumPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator=self.user, type=Album.ALBUM)
+        self.album = Album.objects.get(creator=self.user, type=Album.ALBUM, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/album_photo/", "photo.html", request.user)
@@ -287,7 +287,7 @@ class UserWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator=self.user, type=Album.WALL)
+        self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/wall_photo/", "photo.html", request.user)
