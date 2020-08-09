@@ -288,7 +288,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         album = Album.objects.get(community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
-        return album.uuid
+        return album.photo_album.last().uuid
 
     def get_main_album_uuid(self):
         from gallery.models import Album
