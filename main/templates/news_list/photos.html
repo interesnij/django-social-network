@@ -197,8 +197,8 @@
             <div class="card mb-3">
               <span style="padding: 5px;">
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
-                  Новое фото 
-                </a>
+                  Новое фото
+                </a> 
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                   {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
                 </a>
