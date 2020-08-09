@@ -34,7 +34,7 @@ class Album(models.Model):
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     class Meta:
@@ -60,7 +60,7 @@ class Album(models.Model):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return self.photo_album.filter(is_deleted=False).first() 
+            return self.photo_album.filter(is_deleted=False).first()
 
     def count_photo(self):
         try:

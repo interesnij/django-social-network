@@ -1,6 +1,6 @@
 from django.db.models import Q
 from posts.models import Post
-from gallery.models import Photo
+from gallery.models import Photo, Album
 from goods.models import Good
 from video.models import VideoAlbum
 from music.models import SoundList
@@ -38,33 +38,33 @@ def get_timeline_posts_for_possible_users(user):
 
 
 def get_timeline_photos_for_user(user):
-    own_photos_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
-    own_photos_queryset = user.photo_creator.only('created').filter(own_photos_query)
+    own_albums_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
+    own_albums_queryset = user.photo_album_creator.only('created').filter(own_albums_query)
 
-    community_photos_query = Q(community__memberships__user__id=user.pk, is_deleted=False, is_public=True)
-    community_photos_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
-    community_photos_queryset = Photo.objects.only('created').filter(community_photos_query)
+    community_albums_query = Q(community__memberships__user__id=user.pk, is_deleted=False, is_public=True)
+    community_albums_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
+    community_albums_queryset = Album.objects.only('created').filter(community_albums_query)
 
     followed_users = user.follows.values('followed_user_id')
     followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
     followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, is_public=True)
-    followed_users_queryset = Photo.objects.only('created').filter(followed_users_query)
+    followed_users_queryset = Album.objects.only('created').filter(followed_users_query)
 
     frends = user.connections.values('target_user_id')
     frends_ids = [target_user['target_user_id'] for target_user in frends]
     frends_query = Q(creator__in=frends_ids, is_deleted=False, is_public=True)
-    frends_queryset = Photo.objects.only('created').filter(frends_query)
-    final_queryset = own_photos_queryset.union(community_photos_queryset, followed_users_queryset, frends_queryset).order_by("-created")
+    frends_queryset = Album.objects.only('created').filter(frends_query)
+    final_queryset = own_albums_queryset.union(community_albums_queryset, followed_users_queryset, frends_queryset).order_by("-created")
     return final_queryset
 
 def get_timeline_photos_for_possible_users(user):
     possible_users = user.get_possible_friends_ids()
-    photos_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
-    photos_queryset = Photo.objects.only('created').filter(photos_query)
+    albums_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
+    albums_queryset = Album.objects.only('created').filter(albums_query)
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, is_public=True)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
-    community_queryset = Photo.objects.only('created').filter(community_query)
-    final_queryset = photos_queryset.union(community_queryset).order_by("-created")
+    community_queryset = Album.objects.only('created').filter(community_query)
+    final_queryset = albums_queryset.union(community_queryset).order_by("-created")
     return final_queryset
 
 
