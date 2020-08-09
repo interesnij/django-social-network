@@ -30,7 +30,7 @@
                 <span style="padding: 5px;">
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Новый аватар
-                  </a>
+                  </a>&nbsp;
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                     сообщества {{ object.community }}
                   </a>
@@ -50,7 +50,7 @@
               <span style="padding: 5px;">
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
                   Новый аватар
-                </a>
+                </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                   {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
                 </a>
@@ -73,7 +73,7 @@
                 <span style="padding: 5px;">
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Фото на стене
-                  </a>
+                  </a>&nbsp;
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                     собщества {{ object.community }}
                   </a>
@@ -97,7 +97,7 @@
               <span style="padding: 5px;">
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
                   Фото на стене
-                </a>
+                </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                   {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
                 </a>
@@ -124,7 +124,7 @@
                 <span style="padding: 5px;">
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Альбом {{ object.title }}
-                  </a>
+                  </a>&nbsp;
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                     сообщества {{ object.community }}
                   </a>
@@ -148,7 +148,7 @@
               <span style="padding: 5px;">
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
                   Альбом {{ object.title }}
-                </a>
+                </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                   {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
                 </a>
@@ -174,7 +174,7 @@
                 <span style="padding: 5px;">
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Новое фото
-                  </a>
+                  </a>&nbsp;
                   <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
                     в сообществе {{ object.community }}
                   </a>
@@ -198,7 +198,7 @@
               <span style="padding: 5px;">
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
                   Новое фото
-                </a> 
+                </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
                   {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
                 </a>
