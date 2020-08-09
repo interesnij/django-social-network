@@ -7,9 +7,9 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 
 on('#ajax', 'click', '.u_AV_photo', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  data_img = this.getAttribute("data-src");
+  uuid = this.getAttribute("photo-uuid");
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/" + data_img.substr(8, -4) + "/", loader)
+  open_fullscreen("/gallery/user/avatar/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_AL_photo', function() {
@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_AL_photo', function() {
   open_fullscreen("/gallery/user/album_photo/" + uuid + "/" + photo_uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_WA_photo', function() { 
+on('#ajax', 'click', '.u_WA_photo', function() {
   uuid = this.getAttribute('data-uuid');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
