@@ -167,7 +167,7 @@
                 </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
-                  <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                  <div class="c_photo_detail col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
                     <div class="card rounded-0 border-0 mb-3 pointer">
                       {% if photo.file %}
                         <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
@@ -189,7 +189,7 @@
               </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
               {% for photo in object.get_6_photos %}
-                <div class="u_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                <div class="u_photo_detail col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if photo.file %}
                       <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
