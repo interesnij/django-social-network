@@ -13,17 +13,17 @@ import django, json, requests
 django.setup()
 
 from django.conf import settings
-from music.models import UserTempSoundList
-from notifications.model2.user import UserNotification, UserCommunityNotification
-from notifications.model2.item import ItemNotification, ItemCommunityNotification
-from notifications.model2.photo import PhotoNotification, PhotoCommunityNotification
-from notifications.model2.good import GoodNotification, GoodCommunityNotification
 
-UserNotification.objects.all().delete()
-UserCommunityNotification.objects.all().delete()
-ItemNotification.objects.all().delete()
-ItemCommunityNotification.objects.all().delete()
-PhotoNotification.objects.all().delete()
-PhotoCommunityNotification.objects.all().delete()
-GoodNotification.objects.all().delete()
-GoodCommunityNotification.objects.all().delete()
+from user.model.settings import *
+from music.models import SoundList
+from video.models import VideoAlbum
+from gallery.models import Album
+
+def create_user_models(community):
+
+    SoundList.objects.create(creator__pk=1, community=None, type=SoundList.MAIN, name="Основной плейлист")
+    VideoAlbum.objects.create(creator__pk=1, community=None, type=VideoAlbum.MAIN, title="Основной список")
+
+    Album.objects.create(creator__pk=1, community=None, type=Album.AVATAR, title="Фото со страницы")
+    Album.objects.create(creator__pk=1, community=None, type=Album.MAIN, title="Основной альбом")
+    Album.objects.create(creator__pk=1, community=None, type=Album.WALL, title="Фото со стены")
