@@ -69,7 +69,7 @@ class UserAddAvatar(View):
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
-            return render(request, 'u_photo/my_photo.html',{'object': photo, 'user': request.user})
+            return render(request, 'u_photo/avatar/my_photo.html',{'object': photo, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
