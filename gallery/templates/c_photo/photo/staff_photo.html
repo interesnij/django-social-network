@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <span class="text-hide-xs">
   {% if prev %}
     <a class="prev_photo btn_default" href="{% url 'community_photo' pk=community.pk uuid=prev.uuid %}">
@@ -11,5 +13,51 @@
   {% endif %}
 </span>
 
+<div class="mb-3 data_display" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        {% if object.file %}
+          <img style="width: 100%;" src="{{ object.file.url }}" alt="">
+        {% else %}
+          <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        {% endif %}
+    </div>
+    <a href="{% url 'community_album' pk=community.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>
+    <span>
+        <span style="cursor:pointer" class="photo_delete_window">♦ Удалить</span>
+    </span>
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
 
-{% include 'c_photo/staff_foto.html' %}
+      <div class="card-header">
+          <div class="media">
+            <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
+              <figure>
+                {% if community.get_avatar %}
+                  <img src="{{ community.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
+                {% else %}
+                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                {% endif %}
+              </figure>
+            </a>
+              <div class="media-body">
+                  <h6 class="mb-0">
+                    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
+                      {{ community.name }} &nbsp;
+                    </a>
+                  </h6>
+                  <p class="mb-0">{{ object.created|naturaltime }}</p>
+              </div>
+          </div>
+      </div>
+        {% if object.description %}
+          {{ object.description }}
+        {% else %}
+          Нет описания
+        {% endif %}
+      <br><br>
+      {% include 'c_photo/info.html' %}
+    </div>
+  </div>
+</div>
