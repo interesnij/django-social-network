@@ -36,12 +36,12 @@ class UserPostView(View):
         if request.is_ajax() and request.user.is_authenticated:
             post = Post.objects.get(uuid=self.kwargs["uuid"])
             if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
-                return HttpResponse()
+                return HttpResponse('')
             else:
                 PostNumbers.objects.create(user=request.user.pk, post=post.pk)
-                return HttpResponse()
+                return HttpResponse('')
         else:
-            return HttpResponse()
+            return HttpResponse('')
 
 class UserAdPostView(View):
     def get(self,request,*args,**kwargs):
