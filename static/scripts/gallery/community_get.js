@@ -1,4 +1,4 @@
-on('#ajax', 'click', '.с_photo_detail', function() {
+on('#ajax', 'click', '.c_photo_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   uuid = this.getAttribute('photo-uuid');
   loader = document.getElementById("photo_loader");
