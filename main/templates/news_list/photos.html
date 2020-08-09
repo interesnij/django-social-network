@@ -33,7 +33,7 @@
                 </a>
               </span>
               <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if object.file %}
                       <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                     {% else %}
@@ -49,7 +49,7 @@
               </a>
             </span>
             <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
-                <div class="card rounded-0 border-0 mb-3">
+                <div class="card rounded-0 border-0 mb-3 pointer">
                   {% if object.file %}
                     <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
                   {% else %}
@@ -70,7 +70,7 @@
               <div class="row pag {% if forloop.last %}last{% endif %}">
                 {% for photo in object.get_6_photos %}
                   <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
-                    <div class="card rounded-0 border-0 mb-3">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
                       {% if object.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
@@ -90,7 +90,7 @@
             <div class="row pag {% if forloop.last %}last{% endif %}">
               {% for photo in object.get_6_photos %}
                 <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if object.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
@@ -113,7 +113,7 @@
               <div class="row pag {% if forloop.last %}last{% endif %}">
                 {% for photo in object.get_6_photos %}
                   <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
-                    <div class="card rounded-0 border-0 mb-3">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
                       {% if object.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
@@ -125,7 +125,7 @@
               </div>
             {% else %}
             <span>
-              Альбом {{ object.photo_album.all }}
+              Альбом
               <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
               {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
               </a>
@@ -133,7 +133,7 @@
             <div class="row pag {% if forloop.last %}last{% endif %}">
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if object.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
@@ -155,7 +155,7 @@
               <div class="row pag {% if forloop.last %}last{% endif %}">
                 {% for photo in object.get_6_photos %}
                   <div class="c_MA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
-                    <div class="card rounded-0 border-0 mb-3">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
                       {% if object.file %}
                         <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                       {% else %}
@@ -175,7 +175,7 @@
             <div class="row pag {% if forloop.last %}last{% endif %}">
               {% for photo in object.get_6_photos %}
                 <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
-                  <div class="card rounded-0 border-0 mb-3">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
                     {% if object.file %}
                       <img class="lazyload image_fit" data-src="{{ photo.file.url }}" alt="img">
                     {% else %}
