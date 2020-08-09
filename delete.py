@@ -14,7 +14,6 @@ django.setup()
 
 from django.conf import settings
 
-from user.model.settings import *
 from music.models import SoundList
 from video.models import VideoAlbum
 from gallery.models import Album

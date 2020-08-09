@@ -1,4 +1,4 @@
-from user.model.settings import *
+from users.model.settings import *
 from music.models import SoundList
 from video.models import VideoAlbum
 from gallery.models import Album
