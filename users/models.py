@@ -886,23 +886,23 @@ class User(AbstractUser):
         return albums
 
     def my_user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, is_generic=False).exists()
+        return self.video_user_creator.filter(creator_id=self.id, type="AL").exists()
     def user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, is_public=True, is_generic=False).exists()
+        return self.video_user_creator.filter(creator_id=self.id, is_public=True, type="AL").exists()
     def user_music_playlist_exists(self):
-        return self.user_playlist.filter(creator_id=self.id, is_generic=False).exists()
+        return self.user_playlist.filter(creator_id=self.id, type="LI").exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, is_generic=False)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type="AL")
         albums = VideoAlbum.objects.filter(albums_query)
         return albums
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community=None, is_generic=False)
+        playlists_query = Q(creator_id=self.id, community=None, type=SoundList.LIST)
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
 
@@ -928,17 +928,15 @@ class User(AbstractUser):
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
-        try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-        except:
-            list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
+
+        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
         music_query = list.players.filter(is_deleted=False)
         return music_query
 
     def get_music_count(self):
         from music.models import SoundList, SoundcloudParsing
 
-        list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True)
+        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
         music_query = Q(list=list, is_deleted=False)
         count = SoundcloudParsing.objects.filter(music_query).values("pk")
         return count.count()
@@ -955,55 +953,45 @@ class User(AbstractUser):
     def get_video_count(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
 
     def get_video(self):
         from video.models import Video, VideoAlbum
-        try:
-            list = VideoAlbum.objects.get(creator_id=self.id, is_generic=True, title="Основной список")
-        except:
-            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Основной список")
+
+        list = VideoAlbum.objects.get(creator_id=self.id, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
     def get_my_video(self):
         from video.models import Video, VideoAlbum
-        try:
-            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
-        except:
-            list = VideoAlbum.objects.create(creator_id=self.id, is_generic=True, title="Основной список")
+
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
-        try:
-            list = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
-        except:
-            list = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной список")
+
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
 
     def get_generic_video_list_uuid(self):
         from video.models import VideoAlbum
-        try:
-            album = VideoAlbum.objects.get(creator_id=self.id, community=None, is_generic=True, title="Основной список")
-        except:
-            album = VideoAlbum.objects.create(creator_id=self.id, community=None, is_generic=True, title="Основной список")
+
+        album = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
         return album.uuid
 
     def get_music_list_id(self):
         from music.models import SoundList
-        try:
-            list = SoundList.objects.get(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
-        except:
-            list = SoundList.objects.create(creator_id=self.id, community=None, is_generic=True, name="Основной плейлист")
+
+        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
         return list.pk
 
     def my_playlist_too(self):

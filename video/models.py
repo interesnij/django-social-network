@@ -35,6 +35,12 @@ class VideoCategory(models.Model):
 
 
 class VideoAlbum(models.Model):
+    MAIN = 'MA'
+    ALBUM = 'AL'
+    TYPE = (
+        (MAIN, 'Основной видеоальбом'),
+        (ALBUM, 'Пользовательский видеоальбом'),
+    )
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
@@ -42,8 +48,8 @@ class VideoAlbum(models.Model):
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
     id = models.BigAutoField(primary_key=True)
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -71,6 +77,12 @@ class VideoAlbum(models.Model):
     def get_my_video_count(self):
         count = self.video_album.all().values("pk").count()
         return count
+
+    def is_main_album(self):
+        return self.type == self.MAIN
+
+    def is_user_album(self):
+        return self.type == self.ALBUM
 
 
 class Video(models.Model):

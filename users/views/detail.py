@@ -103,10 +103,7 @@ class UserMusic(ListView):
         from music.models import SoundList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
-        except:
-            self.playlist = SoundList.objects.create(creator_id=self.user.pk, community=None, is_generic=True, name="Основной плейлист")
+        self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
 
         self.template_name = get_template_user_music(self.user, "user_music/", "music.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -132,10 +129,8 @@ class UserVideo(ListView):
         from video.models import VideoAlbum
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
-        except:
-            self.album = VideoAlbum.objects.create(creator_id=self.user.pk, community=None, is_generic=True, title="Основной список")
+
+        self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
         if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
         else:

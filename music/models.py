@@ -59,10 +59,16 @@ class SoundSymbol(models.Model):
 
 
 class SoundList(models.Model):
+    MAIN = 'MA'
+    LIST = 'LI'
+    TYPE = (
+        (MAIN, 'Основной видеоальбом'),
+        (LIST, 'Пользовательский плейлист'),
+    )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
-    is_generic = models.BooleanField(verbose_name="Сгенерированный", default=False )
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
@@ -83,6 +89,11 @@ class SoundList(models.Model):
 
     def count_tracks(self):
         return self.players.filter(is_deleted=False).values("pk").count()
+
+    def is_main_list(self):
+        return self.type == self.MAIN
+    def is_user_list(self):
+        return self.type == self.LIST
 
     class Meta:
         verbose_name = "список: весь, человека или сообщества"

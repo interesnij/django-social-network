@@ -114,8 +114,7 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type, description=None, invites_enabled=None):
-        from communities.model.settings import CommunityPrivatePost
-
+        from common.processing.community import create_community_models
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
         else:
@@ -123,7 +122,7 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
-        CommunityPrivatePost.objects.create(community=community)
+        create_community_models(community)
         return community
 
     @classmethod
@@ -236,41 +235,17 @@ class Community(models.Model):
         goods = Good.objects.filter(goods_query)
         return goods
 
-    def get_photos_for_album(self, album_id):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, id=album_id, is_deleted=False)
-        return album.get_photos()
-
-    def get_photos_for_admin_album(self, album_id):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, id=album_id, is_deleted=False)
-        return album.get_staff_photos()
-
     def get_photos(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
+
+        album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.get_photos()
 
     def get_admin_photos(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
-        return album.get_staff_photos()
 
-    def get_avatar_photos(self):
-        from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
-        return album.get_photos()
+        album = Album.objects.get(community_id=self.id, type=Album.MAIN)
+        return album.get_staff_photos()
 
     def get_albums(self):
         from gallery.models import Album
@@ -285,10 +260,8 @@ class Community(models.Model):
 
     def count_photos(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
+
+        album = Album.objects.get(community_id=self.id, type=Album.MAIN)
         return album.count_photo()
 
     def get_profile_photos(self):
@@ -305,18 +278,14 @@ class Community(models.Model):
 
     def get_avatar_uuid(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.AVATAR)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
+
+        album = Album.objects.get(community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
         return album.uuid
 
     def get_main_album_uuid(self):
         from gallery.models import Album
-        try:
-            album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        except:
-            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.id, type=Album.MAIN, title="Основной альбом")
+
+        album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.uuid
 
     def create_s_avatar(self, photo_input):
@@ -354,7 +323,7 @@ class Community(models.Model):
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
+        list = SoundList.objects.get(community=self, type=SoundList.MAIN)
         music_query = Q(list=list, is_deleted=False)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
@@ -362,7 +331,7 @@ class Community(models.Model):
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        list = SoundList.objects.get(community=self, is_generic=True, name="Основной плейлист")
+        list = SoundList.objects.get(community=self, type=SoundList.MAIN)
         music_query = Q(list=list, is_deleted=False)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
@@ -370,13 +339,13 @@ class Community(models.Model):
     def get_music_list_id(self):
         from music.models import SoundList
 
-        list = SoundList.objects.get(community_id=self.pk, is_generic=True, name="Основной плейлист")
+        list = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
         return list.pk
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
         try:
-            list = VideoAlbum.objects.get(community_id=self.pk, is_generic=True, title="Основной список")
+            list = VideoAlbum.objects.get(community_id=self.pk, type=SoundList.MAIN)
             video_query = Q(album=list, is_deleted=False, is_public=True)
             video_list = Video.objects.filter(video_query).order_by("-created")
             return video_list[0:2]

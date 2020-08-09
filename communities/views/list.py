@@ -103,10 +103,7 @@ class CommunityMusic(ListView):
         from music.models import SoundList
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.playlist = SoundList.objects.get(community_id=self.community.pk, is_generic=True, name="Основной плейлист")
-        except:
-            self.playlist = SoundList.objects.get(creator=self.community.creator, community_id=self.community.pk, is_generic=True, name="Основной плейлист")
+        self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
         self.template_name = get_template_community_music(self.user, "c_music/", "list.html", request.user)
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
@@ -130,11 +127,8 @@ class CommunityVideo(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
-		try:
-			self.album = VideoAlbum.objects.get(community_id=self.community.pk, is_generic=True, title="Основной список")
-		except:
-			creator = self.community.creator
-			self.album = VideoAlbum.objects.create(creator=self.community.creator, community_id=self.community.pk, community=self.community, is_generic=True, title="Основной список")
+
+		self.album = VideoAlbum.objects.get(community_id=self.community.pk, type=VideoAlbum.MAIN)
 		if request.user.is_staff_of_community_with_name(self.community.name):
 			self.video_list = self.album.get_my_queryset()
 		else:
