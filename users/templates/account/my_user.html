@@ -26,12 +26,12 @@
                         {% endif %}
                       </figure>
                   </a>
-                  <form id="add_user_avatar" method="post">
-                    {% csrf_token %}
-                    <input type="file" id="user_avatar_upload" name="file" style="display:none">
-                    <span id="user_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
-                  </form>
               </div>
+              <form id="add_user_avatar" method="post">
+                {% csrf_token %}
+                <input type="file" id="user_avatar_upload" name="file" style="display:none">
+                <span id="user_avatar_btn" style="cursor:pointer">Загрузить аватар</span>
+              </form>
               <span style="margin-bottom: 10px;" class="centered">
                   <a class="btn btn-sm btn-secondary ajax" style="color:white !important;" href="{% url 'user_general_form' request.user.pk %}">Редактировать</a>
               </span>
