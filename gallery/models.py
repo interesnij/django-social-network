@@ -65,7 +65,7 @@ class Album(models.Model):
         if self.cover_photo:
             return self.cover_photo
         else:
-            self.photo_album.last()
+            self.album.last()
 
     def count_photo(self):
         try:
