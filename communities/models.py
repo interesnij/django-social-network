@@ -255,6 +255,14 @@ class Community(models.Model):
         albums = Album.objects.filter(albums_query)
         return albums
 
+    def get_admin_albums(self):
+        from gallery.models import Album
+
+        albums_query = Q(community=self, is_deleted=False)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        albums = Album.objects.filter(albums_query)
+        return albums
+
     def is_album_exists(self):
         return self.album_community.filter(community=self, is_deleted=False).exists()
 

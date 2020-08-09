@@ -851,6 +851,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -858,6 +859,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
