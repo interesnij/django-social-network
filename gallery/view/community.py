@@ -83,7 +83,7 @@ class PhotoCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            _album = Album.objects.get(community_id=self.id, type=Album.MAIN)
+            _album = Album.objects.get(community=community, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
