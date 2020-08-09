@@ -56,16 +56,11 @@ class Album(models.Model):
     def __str__(self):
         return self.title
 
-    def get_cover_photo_for_avatars(self):
-        if self.cover_photo:
-            return self.cover_photo
-        else:
-            return self.photo_album.last()
     def get_cover_photo(self):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return self.photo_album.filter(is_deleted=False).last()
+            return self.photo_album.filter(is_deleted=False).last() 
 
     def count_photo(self):
         try:

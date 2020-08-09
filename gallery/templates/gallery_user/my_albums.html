@@ -10,7 +10,7 @@
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
                         <h6 class="mb-0">{{ object.title }}</h6>
                     </div>
-                    {% if object.is_user_album %} 
+                    {% if object.is_user_album %}
                     <div class="dropdown d-inline-block">
                         <a style="cursor:pointer;width:20px;display:inline-block">
                           <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -27,7 +27,7 @@
               <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
                   {% if object.get_cover_photo %}
                     <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
-                  {% else %}
+                  {% else %} 
                     <svg class="svg_default image_fit_200" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                   {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
