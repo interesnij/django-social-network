@@ -8,7 +8,7 @@ on('#ajax', 'click', '.c_photo_detail', function() {
 on('#ajax', 'click', '.c_avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/photo/" + pk + "/", loader)
+  open_fullscreen("/gallery/community/avatar/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_AV_photo', function() {
