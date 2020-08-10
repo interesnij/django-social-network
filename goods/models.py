@@ -265,7 +265,6 @@ class GoodComment(models.Model):
 	    from django.contrib.humanize.templatetags.humanize import naturaltime
 	    return naturaltime(self.created)
 
-
 	def count_replies_ru(self):
         count = self.good_comment_replies.count()
         a = count % 10
