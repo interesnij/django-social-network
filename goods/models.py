@@ -198,10 +198,6 @@ class GoodComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
-	def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
-
     def notification_user_comment(self, user):
         good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
     def notification_user_reply_comment(self, user):
@@ -264,3 +260,7 @@ class GoodComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
+
+	def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
