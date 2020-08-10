@@ -108,8 +108,8 @@ class User(AbstractUser):
         surname = morph.parse(self.last_name)[0]
         v1 = name.inflect({'gent'})
         v2 = surname.inflect({'gent'})
-        first_name = v1.name.title()
-        last_name = v2.name.title()
+        first_name = v1.title()
+        last_name = v2.title()
         return first_name + " " + last_name
 
     def notification_follow(self, user):
