@@ -48,6 +48,9 @@ class Article(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return article
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
     class Meta:
         ordering = ["-created"]

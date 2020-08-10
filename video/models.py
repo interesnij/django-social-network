@@ -120,6 +120,10 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
     def likes(self):
         likes = VideoVotes.objects.filter(parent=self, vote__gt=0)
         return likes
@@ -185,6 +189,10 @@ class VideoComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
     def get_replies(self):
         get_comments = VideoComment.objects.filter(parent_comment=self).all()

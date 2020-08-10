@@ -81,6 +81,10 @@ class Good(models.Model):
 	def __str__(self):
 		return self.title
 
+	def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
 	@classmethod
 	def create_good(cls, image, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
 		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
@@ -193,6 +197,10 @@ class GoodComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+	def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
     def notification_user_comment(self, user):
         good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')

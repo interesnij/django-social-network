@@ -106,6 +106,10 @@ class Photo(models.Model):
         verbose_name_plural = 'Фото'
         ordering = ["-created"]
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
     @classmethod
     def create_photo(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
         photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description, item=item, )
@@ -205,6 +209,10 @@ class PhotoComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
     def notification_user_comment(self, user):
         photo_notification_handler(user, self.commenter, verb=PhotoNotify.POST_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
 
@@ -234,7 +242,15 @@ class PhotoComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.photo_comment_replies.count()
+        count = self.photo_comment_replies.count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return count + " ответ"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return count + " ответа"
+        else:
+            return count + " ответов"
 
     def likes(self):
         likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)

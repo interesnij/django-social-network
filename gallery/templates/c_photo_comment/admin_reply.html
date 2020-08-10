@@ -1,4 +1,4 @@
-{% load humanize liked_user %}
+{% load liked_user %}
 
 <div class="media reply border-bottom">
   <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
@@ -15,7 +15,7 @@
           <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
             <span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
           </a>
-          <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
+          <small class="text-muted float-right">{{ reply.get_created }}</small>
         </h5>
 
         <p>{{ reply.text }}</p>

@@ -207,6 +207,10 @@ class PostComment(models.Model):
         verbose_name = "комментарий к записи"
         verbose_name_plural = "комментарии к записи"
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
     def get_replies(self):
         get_comments = PostComment.objects.filter(parent_comment=self).all()
         return get_comments

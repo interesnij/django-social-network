@@ -14,14 +14,14 @@ class MessageQuerySet(models.query.QuerySet):
         """Возвращает все сообщения, отправленные между двумя пользователями."""
         qs_one = self.filter(sender=sender, recipient=recipient)
         qs_two = self.filter(sender=recipient, recipient=sender)
-        return qs_one.union(qs_two).order_by('timestamp')
+        return qs_one.union(qs_two).order_by('created')
 
     def get_most_recent_conversation(self, recipient):
         """Возвращает имя пользователя самого последнего собеседника."""
         try:
             qs_sent = self.filter(sender=recipient)
             qs_recieved = self.filter(recipient=recipient)
-            qs = qs_sent.union(qs_recieved).latest("posted")
+            qs = qs_sent.union(qs_recieved).latest("created")
             if qs.sender == recipient:
                 return qs.recipient
 
@@ -40,7 +40,7 @@ class Message(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sent_messages',verbose_name="Sender", null=True, on_delete=models.SET_NULL)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='received_messages', null=True,blank=True, verbose_name="Recipient", on_delete=models.SET_NULL)
-    posted = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     message = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
     objects = MessageQuerySet.as_manager()
@@ -48,7 +48,7 @@ class Message(models.Model):
     class Meta:
         verbose_name = "Message"
         verbose_name_plural = "Messages"
-        ordering = "-posted",
+        ordering = "-created",
 
     def __str__(self):
         return self.message
@@ -76,3 +76,7 @@ class Message(models.Model):
             }
         async_to_sync(channel_layer.group_send)(recipient.username, payload)
         return new_message
+
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)

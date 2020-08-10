@@ -1,4 +1,3 @@
-{% load humanize %}
 
 <span class="text-hide-xs">
   {% if prev %}
@@ -46,7 +45,7 @@
                       {{ object.creator.get_full_name }} &nbsp;
                     </a>
                   </h6>
-                  <p class="mb-0">{{ object.created|naturaltime }}</p>
+                  <p class="mb-0">{{ object.get_created }}</p>
               </div>
           </div>
       </div>
