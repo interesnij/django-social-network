@@ -238,6 +238,34 @@ class CommunityDetailAvatar(TemplateView):
         context["album"] = self.album
         return context
 
+class CommunityFirstAvatar(TemplateView):
+    """
+    страница отдельного аватара сообщества с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+        self.photo = self.album.get_first_photo()
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
+        self.photos = self.album.get_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo(self.community, "c_photo/avatar/", "photo.html", request.user)
+        else:
+            raise Http404
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityFirstAvatar,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["community"] = self.community
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["album"] = self.album
+        return context
+
 
 class CommunityPhoto(TemplateView):
     """

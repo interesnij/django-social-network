@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load liked_user %}
 {% block title %}{{ album.title }} - альбом {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
