@@ -103,17 +103,19 @@ class User(AbstractUser):
         import pymorphy2
         from string import ascii_letters
 
-        if all(map(lambda c: c in ascii_letters, self.first_name)):
-            return self.get_full_name()
-        if all(map(lambda c: c in ascii_letters, self.last_name)):
-            return self.get_full_name()
         morph = pymorphy2.MorphAnalyzer()
-        name = morph.parse(self.first_name)[0]
-        surname = morph.parse(self.last_name)[0]
-        v1 = name.inflect({'gent'})
-        v2 = surname.inflect({'gent'})
-        first_name = v1.word.title()
-        last_name = v2.word.title()
+        if all(map(lambda c: c in ascii_letters, self.first_name)):
+            first_name = self.first_name
+        else:
+            name = morph.parse(self.first_name)[0]
+            v1 = name.inflect({'gent'})
+            first_name = v1.word.title()
+        if all(map(lambda c: c in ascii_letters, self.last_name)):
+            last_name = self.last_name
+        else:
+            surname = morph.parse(self.last_name)[0]
+            v2 = surname.inflect({'gent'})
+            last_name = v2.word.title()
         return first_name + " " + last_name
 
     def notification_follow(self, user):
