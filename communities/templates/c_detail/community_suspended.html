@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 {% block title %}{{ community.name }} - Сообщество заморожено{% endblock %}
-{% block meta %}
-<meta property="og:url" content="dvizhenie.tv" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="{% if community.get_avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ community.get_avatar }}{% else %}/static/images/user.png{% endif %}"/>
-{% endblock %}
 {% block content %}
 
 <div class="card mt-3 centered">
