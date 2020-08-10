@@ -232,44 +232,42 @@ class GoodComment(models.Model):
 		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 		return dislikes
 
-    def window_dislikes(self):
-        dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
-        return dislikes[0:6]
+	def window_dislikes(self):
+		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
+		return dislikes[0:6]
 
-    def likes_count(self):
-	    likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
-	    return likes.count()
+	def likes_count(self):
+		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
+		return likes.count()
 
-    def dislikes_count(self):
-	    dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
-	    return dislikes.count()
-    def __str__(self):
-	    return str(self.good_comment)
+	def dislikes_count(self):
+		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
+		return dislikes.count()
 
-    @classmethod
-    def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):
-        comment = GoodComment.objects.create(commenter=commenter, parent_comment=parent_comment, good_comment=good_comment, text=text)
-        channel_layer = get_channel_layer()
-        payload = {
-                "type": "receive",
-                "key": "comment_photo",
-                "actor_name": comment.commenter.get_full_name()
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
-        comment.save()
-        return comment
+	@classmethod
+	def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):
+		comment = GoodComment.objects.create(commenter=commenter, parent_comment=parent_comment, good_comment=good_comment, text=text)
+		channel_layer = get_channel_layer()
+		payload = {
+			"type": "receive",
+			"key": "comment_photo",
+			"actor_name": comment.commenter.get_full_name()
+			}
+		async_to_sync(channel_layer.group_send)('notifications', payload)
+		comment.save()
+		return comment
 
-    def get_created(self):
-	    from django.contrib.humanize.templatetags.humanize import naturaltime
-	    return naturaltime(self.created)
+	def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 	def count_replies_ru(self):
-        count = self.good_comment_replies.count()
-        a = count % 10
-        b = count % 100
-        if (a == 1) and (b != 11):
-            return str(count) + " ответ"
-        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return str(count) + " ответа"
-        else:
-            return str(count) + " ответов"
+		count = self.good_comment_replies.count()
+		a = count % 10
+		b = count % 100
+		if (a == 1) and (b != 11):
+			return str(count) + " ответ"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " ответа"
+		else:
+			return str(count) + " ответов"
