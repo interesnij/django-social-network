@@ -261,6 +261,6 @@ class GoodComment(models.Model):
         comment.save()
         return comment
 
-	def get_created(self):
+    def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
 		return naturaltime(self.created)
