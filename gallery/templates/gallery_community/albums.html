@@ -14,11 +14,11 @@
             </div>
             <div class="card-body">
               <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
-                  {% if object.get_cover_photo %}
-                    <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
-                  {% else %}
-                    <svg class="svg_default image_fit_200" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                  {% endif %}
+                {% if object.get_cover_photo %}
+                  <img class="lazyload image_fit_200" data-src="{{ object.get_cover_photo.file.url }}" />
+                {% else %}
+                  <img class="lazyload image_fit_200" data-src="/static/images/no_img/album.jpg" />
+                {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
               </a>
             </div>
