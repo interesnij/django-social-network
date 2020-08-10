@@ -1,6 +1,5 @@
 {% extends "base_anon.html" %}
-{% load liked_user %}
-{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }} - {{ playlist.name }}{% endblock %}
+{% block title %}Музыка {{ user.get_full_name_genitive }} - {{ playlist.name }}{% endblock %}
 {% block meta %}
 <meta property="og:url" content="dvizhenie.tv" />
 <meta property="og:type" content="website" />

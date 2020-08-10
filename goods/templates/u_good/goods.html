@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load liked_user %}
-{% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Товары {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
@@ -22,7 +21,7 @@
                 <div class="media-body">
                     <h5 class="mt-1">Товары
                       <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                        {{ user.first_name|gent }} {{ user.last_name|gent }}
+                        {{ user.get_full_name_genitive }}
                       </a>
                       <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
                     </h5>

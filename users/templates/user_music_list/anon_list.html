@@ -1,6 +1,6 @@
 {% extends "base_anon.html" %}
 {% load liked_user %}
-{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Музыка {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
 <div class="container mt-3 main-container">

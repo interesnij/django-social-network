@@ -1,6 +1,6 @@
 {% extends "base_anon.html" %}
 {% load liked_user %}
-{% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Сообщества {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
 <div class="row">
@@ -20,7 +20,7 @@
                       <h5 class="mt-1">
                         Сообщества
                         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                          {{ user.get_full_name_genitive }}
                         </a>
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_community }}</small>
                      </h5>
@@ -49,7 +49,7 @@
                                   <h6 class="my-0 mt-1">{{ object.name }}
                                   </h6>
                               </a>
-                              <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                              <p class="small"> {{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
                           </div>
                       </div>
                   </li>

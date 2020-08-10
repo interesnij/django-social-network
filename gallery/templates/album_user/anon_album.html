@@ -1,13 +1,12 @@
 {% extends "base_anon.html" %}
-{% load liked_user %}
-{% block title %}{{ album.title }} - альбом {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}{{ album.title }} - альбом {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
   <div class="row mb-3">
       <div class="col-12 col-md-8">
         <h5 class="mt-1">{{ album.title }} - <a class="ajax" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
-          <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">{{ user.first_name|gent }} {{ user.last_name|gent }}</a>
+          <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">{{ user.get_full_name_genitive }}</a>
         </h5>
         Фото: {{ album.count_photo }}
       </div>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load get_key liked_user %}
-{% block title %}{{ playlist.name }} - музыка {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% load get_key %}
+{% block title %}{{ playlist.name }} - музыка {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
@@ -19,7 +19,7 @@
                   <div class="media-body">
                       <h5 class="mt-1">{{ playlist.name }} -
                         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                          музыка {{ user.first_name|gent }} {{ user.last_name|gent }}
+                          музыка {{ user.get_full_name_genitive }}
                         </a>
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ playlist.count_tracks }}</small>
                       </h5>
@@ -90,7 +90,7 @@
                   <h6 style="margin: 20px;text-align: center;">
                     Этот список
                     <a href="{% url 'user' pk=user.pk %}" style="text-decoration:underline;" class="ajax">
-                      {{ user.first_name|gent }} {{ user.last_name|gent }}
+                      {{ user.get_full_name_genitive }}
                     </a>
                     пуст.
                   </h6>

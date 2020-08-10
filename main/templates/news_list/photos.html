@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Новости | Фотографии{% endblock %}
-{% load liked_user %}
 {% block content %}
 
 <div class="container mt-4 main-container">
@@ -52,7 +51,7 @@
                   Новый аватар
                 </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                  {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
+                  {{ user.get_full_name_genitive }}
                 </a>
               </span>
               <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -99,7 +98,7 @@
                   Фото на стене
                 </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                  {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
+                  {{ user.get_full_name_genitive }}
                 </a>
               </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
@@ -150,7 +149,7 @@
                   Альбом {{ object.title }}
                 </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                  {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
+                  {{ user.get_full_name_genitive }}
                 </a>
               </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
@@ -200,7 +199,7 @@
                   Новое фото
                 </a>&nbsp;
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                  {{ object.creator.first_name|gent }} {{ object.creator.last_name|gent }}
+                  {{ user.get_full_name_genitive }}
                 </a>
               </span>
             <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">

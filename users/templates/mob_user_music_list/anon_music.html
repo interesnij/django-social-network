@@ -1,6 +1,5 @@
 {% extends "base_anon_mobile.html" %}
-{% load liked_user %}
-{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Музыка {{ user.get_full_name_genitive }}{% endblock %}
 
 {% block content %}
 <div class="container mt-3 main-container">
@@ -18,7 +17,7 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Моя музыка
+                      <h5 class="mt-1">Музыка {{ user.get_full_name_genitive }}
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music.count }}</small>
                       </h5>
                   </div>

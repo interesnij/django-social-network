@@ -23,14 +23,3 @@ def rupluralize(value, arg="единица,единицы,единиц"):
         return args[1]
     else:
         return args[2]
-
-
-@register.filter
-def gent(value):
-    if all(map(lambda c: c in ascii_letters, value)):
-        return value
-    morph = pymorphy2.MorphAnalyzer()
-    word = morph.parse(value)[0]
-    v1 = word.inflect({'gent'})
-    result = v1.word.title()
-    return result

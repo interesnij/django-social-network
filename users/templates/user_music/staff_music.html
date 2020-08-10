@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load liked_user get_key %}
-{% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }} - {{ playlist.name }}{% endblock %}
+{% load get_key %}
+{% block title %}Музыка {{ user.get_full_name_genitive }} - {{ playlist.name }}{% endblock %}
 {% block content %}
 
 <div class="container main-container">
@@ -20,7 +20,7 @@
                   <div class="media-body">
                       <h5 class="mt-1">{{ playlist.name }} - музыка
                         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                          {{ user.get_full_name_genitive }}
                         </a>
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music_count }}</small>
                       </h5>
@@ -84,14 +84,14 @@
                     </ul>
 
                 {% else %}
-                <div class="card" style="align-items: center;justify-content:center;">
+                <div class="card centered" style="align-items: center;justify-content:center;">
                   <div class="card-body" style="margin-top: 10%;">
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>
                   <h6 style="margin: 20px;text-align: center;">
                     У
                     <a href="{% url 'user' pk=user.pk %}" style="text-decoration:underline;" class="ajax">
-                      {{ user.first_name|gent }} {{ user.last_name|gent }}
+                      {{ user.get_full_name_genitive }}
                     </a>
                     пока нет музыки.
                   </h6>

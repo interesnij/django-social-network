@@ -1,13 +1,12 @@
 {% extends "base_mobile.html" %}
-{% load liked_user %}
-{% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
 <div class="container mt-3">
   <div class="card-header p-0" style="margin-bottom:30px">
     <div class="dropdown">
         <button type="button" class="btn btn-secondary" style="width:100%;">
-            Галерея {{ user.first_name|gent }} {{ user.last_name|gent }}
+            Галерея {{ user.get_full_name_genitive }}
         </button>
     </div>
   </div>
@@ -22,31 +21,5 @@
 <div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}/"></div>
 
 </div>
-<script>
-
-  var page = 2;
-  var loaded = false;
-  onscroll = function(){
-    try{
-    var photos = document.getElementById("photos_container");
-    if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*30){
-    var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
-      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
-      link_3.send();
-      link_3.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        var elem = document.createElement('span');
-        elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('u_photo_detail').length < 30){loaded = true;};
-        photos.append(elem);
-        }
-      }
-    }}
-  }catch{return}
-}
-</script>
 
 {% endblock %}
