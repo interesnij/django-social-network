@@ -178,15 +178,15 @@ class Good(models.Model):
 
 
 class GoodComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
-    text = models.TextField(blank=True,null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    good_comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
-    id = models.BigAutoField(primary_key=True)
+	id = models.BigAutoField(primary_key=True)
+	parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
+	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
+	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
+	text = models.TextField(blank=True,null=True)
+	is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
+	is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+	good_comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )
