@@ -264,3 +264,15 @@ class GoodComment(models.Model):
     def get_created(self):
 	    from django.contrib.humanize.templatetags.humanize import naturaltime
 	    return naturaltime(self.created)
+
+
+	def count_replies_ru(self):
+        count = self.good_comment_replies.count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " ответ"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " ответа"
+        else:
+            return str(count) + " ответов"
