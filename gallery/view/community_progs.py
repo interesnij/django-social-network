@@ -48,7 +48,7 @@ class PhotoCommentCommunityCreate(View):
         photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
         if not community.is_comment_photo_send_all() and not request.user.is_member_of_community_with_name(community.name):
-            raise PermissionDenied("Ошибка доступа.")
+            raise PermissionDenied("Ошибка доступа.") 
         elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
             raise PermissionDenied("Ошибка доступа.")
         elif request.is_ajax() and form_post.is_valid() and photo_comment.comments_enabled:

@@ -535,7 +535,7 @@ class Community(models.Model):
         return try_except(self.community_private_photo.comment == "CA")
     def is_comment_photo_send_member(self):
         return try_except(self.community_private_photo.comment == "CM")
-    def is_comment_photo_send_nomember(self):
+    def is_comment_photo_send_all(self):
         return try_except(self.community_private_photo.comment == "CNM")
 
     def is_good_upload_admin(self):
@@ -548,7 +548,7 @@ class Community(models.Model):
         return try_except(self.community_private_good.comment == "CA")
     def is_comment_good_send_member(self):
         return try_except(self.community_private_good.comment == "CM")
-    def is_comment_good_send_nomember(self):
+    def is_comment_good_send_all(self):
         return try_except(self.community_private_good.comment == "CNM")
 
     def is_video_upload_admin(self):
@@ -561,7 +561,7 @@ class Community(models.Model):
         return try_except(self.community_private_video.comment == "CA")
     def is_comment_video_send_member(self):
         return try_except(self.community_private_video.comment == "CM")
-    def is_comment_video_send_nomember(self):
+    def is_comment_video_send_all(self):
         return try_except(self.community_private_video.comment == "CNM")
 
     def add_administrator(self, user):
