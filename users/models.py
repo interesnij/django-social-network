@@ -103,6 +103,10 @@ class User(AbstractUser):
         import pymorphy2
         from string import ascii_letters
 
+        if all(map(lambda c: c in ascii_letters, self.first_name)):
+            return self.get_full_name()
+        if all(map(lambda c: c in ascii_letters, self.last_name)):
+            return self.get_full_name()
         morph = pymorphy2.MorphAnalyzer()
         name = morph.parse(self.first_name)[0]
         surname = morph.parse(self.last_name)[0]
