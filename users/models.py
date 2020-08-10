@@ -99,8 +99,18 @@ class User(AbstractUser):
     def get_full_name(self):
         return str(self.first_name) + " " + str(self.last_name)
 
-    def get_full_name(self):
-        return str(self.first_name) + " " + str(self.last_name)
+    def get_full_name_genitive(self):
+        import pymorphy2
+        from string import ascii_letters
+
+        morph = pymorphy2.MorphAnalyzer()
+        name = morph.parse(self.first_name)[0]
+        surname = morph.parse(self.last_name)[0]
+        v1 = name.inflect({'gent'})
+        v2 = surname.inflect({'gent'})
+        first_name = v1.name.title()
+        last_name = v2.name.title()
+        return first_name + " " + last_name
 
     def notification_follow(self, user):
         notification_handler(self, user, UserNotify.CONNECTION_REQUEST, key='notification')
@@ -842,7 +852,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
-        return album.photo_album.first().uuid 
+        return album.photo_album.first().uuid
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
