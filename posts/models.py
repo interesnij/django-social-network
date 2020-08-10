@@ -281,3 +281,14 @@ class PostComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
+
+    def count_replies_ru(self):
+		count = self.replies.count()
+		a = count % 10
+		b = count % 100
+		if (a == 1) and (b != 11):
+			return str(count) + " ответ"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " ответа"
+		else:
+			return str(count) + " ответов"
