@@ -25,9 +25,10 @@
             <span class="post_stream stream news_block_paginate" id="news_featured_post_list" data-link="/featured_posts">
 
               {% for object in object_list %}
-              {% if forloop.counter|divisibleby:"5" %}
-                рыклама
-              {% endif %}
+                {% if forloop.counter|divisibleby:"5" %}
+                  <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
+                  <br><br>
+                {% endif %}
                 {% if object.community %}
                   {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
                   {% include 'c_recomend_posts/post.html' %}

@@ -49,18 +49,14 @@
           </div>
       </div>
   </div>
-
-    {% if object.parent %}
-      {% include 'post_community/repost.html' %}
+  <div class="c_fullscreen" style="cursor:pointer;padding-left: 15px;">
+    {% if object.text %}
+      <p class="">{{ object.text }}</p>
     {% endif %}
-      <div class="c_fullscreen" style="cursor:pointer;padding-left: 15px;">
-        {% if object.text %}
-          <p class="">{{ object.text }}</p>
-        {% endif %}
-      </div>
+  </div>
 
-      {% include 'generic/attach/c_post_attach.html' %}
+  {% include 'generic/attach/c_post_attach.html' %}
 
-      {% include 'post_community/info.html' %}
+  {% include 'post_community/info.html' %}
 
 </div>

@@ -58,6 +58,10 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturalday(self.posted)
+
     def count_comments(self):
         parent_comments = PostComment.objects.filter(post_id=self.pk)
         parents_count = parent_comments.count()

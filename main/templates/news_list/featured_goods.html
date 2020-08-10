@@ -24,6 +24,10 @@
 
             <span class="stream news_block_paginate" id="news_featured_good_list" data-link="/featured_goods">
               {% for object in object_list %}
+                {% if forloop.counter|divisibleby:"5" %}
+                  <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
+                  <br><br>
+                {% endif %}
 
               {% endfor %}
             </span>

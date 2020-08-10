@@ -18,7 +18,7 @@
                   {{ object.creator.get_full_name }} &nbsp;
                 </a>
               </h6>
-              <p class="mb-0">{{ object.created|naturaltime }}</p>
+              <p class="mb-0">{{ object.get_created }}</p>
           </div>
 
           <div class="dropdown">
@@ -51,16 +51,12 @@
       </div>
   </div>
 
-  {% if object.parent %}
-    {% include 'post_user/repost.html' %}
-  {% endif %}
+  <div class="fullscreen" style="cursor:pointer;padding-left: 15px;">
+      <p class="">{{ object.text }}</p>
+  </div>
 
-    <div class="fullscreen" style="cursor:pointer;padding-left: 15px;">
-        <p class="">{{ object.text }}</p>
-    </div>
+  {% include 'generic/attach/u_post_attach.html' %}
 
-    {% include 'generic/attach/u_post_attach.html' %}
-
-    {% include 'post_user/info.html' %}
+  {% include 'post_user/info.html' %}
 
 </div>
