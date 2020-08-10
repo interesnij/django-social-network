@@ -188,18 +188,16 @@ class GoodComment(models.Model):
     good_comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
     id = models.BigAutoField(primary_key=True)
 
-    class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
-        verbose_name = "комментарий к записи"
-        verbose_name_plural = "комментарии к записи"
+	class Meta:
+		indexes = (BrinIndex(fields=['created']), )
+		verbose_name = "комментарий к записи"
+		verbose_name_plural = "комментарии к записи"
 
-    def __str__(self):
-        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+	def __str__(self):
+		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
-    def notification_user_comment(self, user):
-        good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
+	def notification_user_comment(self, user):
+		good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
     def notification_user_reply_comment(self, user):
         good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
     def notification_user_comment_like(self, user):
