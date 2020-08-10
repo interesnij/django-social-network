@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize liked_user %}
+{% load liked_user %}
 {% block title %}{{ album.title }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
@@ -42,7 +42,7 @@
                         </div>
                         <div class="card-body">
                           <h5 class="text-truncate w-100">{{ object.title }}</h5>
-                          <span class="small">{{ object.created|naturaltime }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          <span class="small">{{ object.get_created }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
                         </div>
                     </div>
                       {% empty %}

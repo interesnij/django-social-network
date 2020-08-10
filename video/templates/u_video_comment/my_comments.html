@@ -1,4 +1,3 @@
-{% load liked_user %}
 
 <span class="video_stream_comments comments_block_container">
   {% for comment in object_list %}
@@ -7,7 +6,7 @@
         <p style="text-decoration:underline;display: flex; padding-left:10px;margin: 0;">Комментарий удален</p>
         <span style="cursor:pointer;" class="show_replies content-color-primary">
             {% if comment.count_replies %}
-            ---- {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+            ---- {{ comment.count_replies_ru }} ----
             {% endif %}
         </span>
         <span class="stream_reply_comments">

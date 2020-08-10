@@ -1,4 +1,4 @@
-{% load humanize %}
+
 <header class="main-header">
     <div class="container">
         <div class="align-items-center" style="display:flex;flex-wrap:wrap;">
@@ -27,7 +27,7 @@
                             </figure>
                             <div class="media-body">
                                 <h5 class="mt-0">{{ notification|safe }}</h5>
-                                <p>{{ notification.timestamp|naturaltime }}</p>
+                                <p>{{ notification.timestamp }}</p>
                             </div>
                         </a>
                         <br>

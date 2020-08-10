@@ -1,12 +1,5 @@
 {% extends "base_mobile.html" %}
-{% load staticfiles humanize %}
 {% block title %}Подтверждение профиля{% endblock %}
-{% block meta %}
-<meta property="og:url" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/I.jpg' %}" />
-{% endblock %}
 {% block content %}
     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">{{ request.user.get_full_name }}!</h1>
     <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>

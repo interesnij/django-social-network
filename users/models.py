@@ -60,6 +60,10 @@ class User(AbstractUser):
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
+    def get_last_activity(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.last_activity)
+
     def calculate_age(birthday):
         today = date.today()
         return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))

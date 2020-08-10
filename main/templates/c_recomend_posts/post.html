@@ -1,4 +1,3 @@
-{% load humanize %}
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
   <div class="card-header">
@@ -19,7 +18,7 @@
                   {{ object.community.name }} &nbsp;
                 </a>
               </h6>
-              <p class="mb-0">{{ object.created|naturaltime }}</p>
+              <p class="mb-0">{{ object.get_created }}</p>
           </div>
           <div class="dropdown d-inline-block">
               <a style="cursor:pointer" class="icon-30 btn_default drop">

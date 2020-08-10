@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Жалобы на записи{% endblock %}
-{% load liked_user humanize %}
 {% block content %}
 
 <div class="row">
@@ -48,7 +47,7 @@
                                         </a>
                                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                                       </h6>
-                                      <p class="mb-0">{{ object.post.created|naturaltime }}</p>
+                                      <p class="mb-0">{{ object.post.get_created }}</p>
                                   </div>
                               </div>
                           </div>
@@ -142,7 +141,7 @@
                                         </a>
                                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                                       </h6>
-                                      <p class="mb-0">{{ object.post.created|naturaltime }}</p>
+                                      <p class="mb-0">{{ object.post.get_created }}</p>
                                   </div>
                               </div>
                           </div>

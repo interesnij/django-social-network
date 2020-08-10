@@ -1,4 +1,4 @@
-{% load humanize %}
+
 <span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
   <div class="card-header border-bottom" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
@@ -36,7 +36,7 @@
               {% endif %}
               <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
-            <p class="mb-0">{{ object.parent.created|naturaltime }}</p>
+            <p class="mb-0">{{ object.parent.get_created }}</p>
         </div>
     </div>
   </div>

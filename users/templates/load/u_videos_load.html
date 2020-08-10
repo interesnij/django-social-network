@@ -1,4 +1,4 @@
-{% load humanize liked_user %}
+
 <style>
   .user_video_create_attach {
     border: 1px dashed green;
@@ -35,7 +35,7 @@
   </span>
   <div class="card-body">
     <h5 class="text-truncate w-100">{{ object.title }}</h5>
-    <span class="small">{{ object.created|naturaltime }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+    <span class="small">{{ object.get_created }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
   </div>
 </div>
 {% endfor %}

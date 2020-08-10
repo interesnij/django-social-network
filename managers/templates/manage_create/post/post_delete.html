@@ -1,4 +1,4 @@
-{% load staticfiles humanize %}
+
 <form id="post_delete_form" method="post">
   {% csrf_token %}
 
@@ -26,7 +26,7 @@
                         </a>
                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                       </h6>
-                      <p class="mb-0">{{ object.created|naturaltime }}</p>
+                      <p class="mb-0">{{ object.get_created }}</p>
                   </div>
               </div>
           </div>
@@ -124,7 +124,7 @@
                         </a>
                         <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                       </h6>
-                      <p class="mb-0">{{ object.created|naturaltime }}</p>
+                      <p class="mb-0">{{ object.get_created }}</p>
                   </div>
               </div>
           </div>
