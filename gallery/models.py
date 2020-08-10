@@ -246,11 +246,11 @@ class PhotoComment(models.Model):
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):
-            return count + " ответ"
+            return str(count) + " ответ"
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return count + " ответа"
+            return str(count) + " ответа"
         else:
-            return count + " ответов"
+            return str(count) + " ответов"
 
     def likes(self):
         likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
