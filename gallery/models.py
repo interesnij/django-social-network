@@ -242,6 +242,9 @@ class PhotoComment(models.Model):
         return get_comments
 
     def count_replies(self):
+        return self.photo_comment_replies.count()
+
+    def count_replies_ru(self):
         count = self.photo_comment_replies.count()
         a = count % 10
         b = count % 100
