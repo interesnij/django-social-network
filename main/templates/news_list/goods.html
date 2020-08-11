@@ -29,7 +29,7 @@
                         {{ object.community }}
                     </a>
                 </span>
-                <div class="col-md-3 border c_good_detail pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.community.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
+                <div class="col-md-3 border c_good_detail pag mt-3 {% if forloop.last %}last{% endif %}" data-pk="{{ obect.community.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
                     <div class="row align-items-center no-gutters pointer">
                         <div class="col">
                             <div class="text-center">
@@ -50,10 +50,10 @@
                 <span style="padding: 5px;">
                     Новый товар &nbsp;
                     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
-                        {{ user.get_full_name_genitive }}
+                        {{ object.user.get_full_name_genitive }}
                     </a>
                 </span>
-                <div class="col-md-3 border u_good_detail pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.creator.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
+                <div class="col-md-3 border u_good_detail mt-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.creator.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
                     <div class="row align-items-center no-gutters pointer">
                         <div class="col">
                             <div class="text-center">

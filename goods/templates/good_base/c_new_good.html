@@ -1,0 +1,16 @@
+
+<div class="border c_good_detail pointer" good-uuid="{{ object.uuid }}" style="padding-top:15px">
+    <div class="row align-items-center no-gutters">
+        <div class="col">
+                <div class="text-center">
+                  {% if object.image %}
+                    <img class="image_fit_200 lazyload img" data-src="{{ object.image.url }}" alt="">
+                  {% else %}
+                    <img class="lazyload image_fit_200 img" data-src="/static/images/no_img/album.jpg" />
+                  {% endif %}
+                </div>
+        </div>
+    </div>
+    <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+    <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+</div>

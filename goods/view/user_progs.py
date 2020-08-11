@@ -200,7 +200,7 @@ class GoodUserCreate(TemplateView):
                 votes_on=good.votes_on,
                 status="PG")
             get_good_processing(new_good)
-            return render(request, 'good_base/new_good.html',{'object': good})
+            return render(request, 'good_base/u_new_good.html',{'object': good})
         else:
             return HttpResponseBadRequest("")
 
@@ -230,7 +230,7 @@ class GoodUserCreateAttach(TemplateView):
             new_good.creator = self.user
             new_good = self.form.save()
             html = render(request, 'u_good/good.html',{'object': new_good})
-            return HttpResponse(html)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
         return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
