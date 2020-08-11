@@ -203,7 +203,7 @@ class GoodCommunityCreate(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
-            new_good.creator = self.user
+            new_good.creator = request.user
             new_good = self.form.save()
             html = render(request,'good_base/u_new_good.html',{'object': new_good})
             return HttpResponse()
