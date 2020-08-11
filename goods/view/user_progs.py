@@ -187,7 +187,7 @@ class GoodUserCreate(TemplateView):
             good = self.form.save(commit=False)
             #good.creator = self.user
             #good.sub_category = request.POST.get('sub_category')
-            good.save()
+            #good.save()
             new_good = good.create_good(
                 title=good.title,
                 image=good.image,
