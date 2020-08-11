@@ -195,7 +195,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
 
-    goods = document.body.querySelector("#goods_container");
+    goods = document.body.querySelector("#user_goods_container");
     new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
                                             goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
     : null;
