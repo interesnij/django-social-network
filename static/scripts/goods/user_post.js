@@ -205,9 +205,8 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
-    new_good = document.createElement("span");
+    new_good = document.createElement("div");
     new_good.innerHTML = elem;
-
     if (document.querySelector(".current_file_dropdown")){
       dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
       is_full_dropdown();
@@ -261,7 +260,8 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     is_full_attach();
     }
     else {
-      goods = document.body.querySelector("#goods_container");
+      new_good.classList.add("col-md-4"); 
+      goods = document.body.querySelector("#user_goods_container");
       new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
                                               goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
                : null;
