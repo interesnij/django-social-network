@@ -185,9 +185,11 @@ class GoodUserCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             good = self.form.save(commit=False)
-            new_good = good.create_good(title=good.title, image=good.image, sub_category=good.sub_category, creator=self.user, description=good.description, community=None, price=good.price, comments_enabled=good.comments_enabled, votes_on=good.votes_on, status="PG")
+            good.creator = self.user;
+            good.save()
+            #new_good = good.create_good(title=good.title, image=good.image, sub_category=good.sub_category, creator=self.user, description=good.description, community=None, price=good.price, comments_enabled=good.comments_enabled, votes_on=good.votes_on, status="PG")
             #get_good_offer_processing(new_good)
-            return render(request, 'good_base/new_good.html',{'object': new_good})
+            return render(request, 'good_base/new_good.html',{'object': good})
         else:
             return HttpResponseBadRequest("")
 
