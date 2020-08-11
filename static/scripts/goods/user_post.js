@@ -263,7 +263,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       new_good.classList.add("col-md-4");
       goods = document.body.querySelector("#user_goods_container");
       goods.prepend(new_good);
-      goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null);
+      goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null;
       toast_info("Товар создан!");
   }
   document.querySelector(".create_fullscreen").style.display = "none";
