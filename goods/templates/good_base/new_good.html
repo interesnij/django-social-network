@@ -1,25 +1,16 @@
 
-        <div class="u_good_detail pointer" good-pk="{{ object.pk }}"">
-            <div class="row align-items-center no-gutters">
-                <div class="col new_image" good-pk="{{ object.pk }}">
+<div class="border u_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer;padding-top:15px">
+    <div class="row align-items-center no-gutters">
+        <div class="col">
+                <div class="text-center">
                   {% if object.image %}
-                    <img class="lazyload image_fit_200 img" data-src="{{ object.image.url }}" alt="">
+                    <img class="image_fit_200 lazyload img" data-src="{{ object.image.url }}" alt="">
                   {% else %}
                     <img class="lazyload image_fit_200 img" data-src="/static/images/no_img/album.jpg" />
                   {% endif %}
                 </div>
-            </div>
-            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
-            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
-            <br>
-            <div class="row bg-light-secondary text-center">
-                <div class="col py-3">
-                    <h5 class="content-color-primary mb-0 good_title">{{ object.price }}</h5>
-                    <p class="content-color-secondary small mb-0">Цена</p>
-                </div>
-                <div class="col py-3">
-                    <h5 class="content-color-primary mb-0">12</h5>
-                    <p class="content-color-secondary small mb-0">Просмотров</p>
-                </div>
-            </div>
         </div>
+    </div>
+    <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+    <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+</div>
