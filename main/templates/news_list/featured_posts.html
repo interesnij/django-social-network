@@ -23,14 +23,203 @@
                   <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
                   <br><br>
                 {% endif %}
-                {% if object.community %}
-                  {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
-                  {% include 'c_recomend_posts/post.html' %}
-                {% else %}
-                {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
-                  {% include 'u_recomend_posts/post.html' %}
-                {% endif %}
+
+            {% if object.is_avatar_album %}
+            {% if object.community %}
+              <div class="card mb-3">
+                <span style="padding: 5px;">
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
+                    Новый аватар
+                  </a>&nbsp;
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                    сообщества {{ object.community }}
+                  </a>
+                </span>
+              <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
+                    {% if object.get_first_photo.file %}
+                      <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+              </div>
+              </div>
+            {% else %}
+            <div class="card mb-3">
+              <span style="padding: 5px;">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
+                  Новый аватар
+                </a>&nbsp;
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                  {{ user.get_full_name_genitive }}
+                </a>
+              </span>
+              <div class="u_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                <div class="card rounded-0 border-0 mb-3 pointer">
+                  {% if object.get_first_photo.file %}
+                    <img class="lazyload image_fit" data-src="{{ object.get_first_photo.file.url }}" alt="img">
+                  {% else %}
+                    <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% elif object.is_wall_album %}
+            {% if object.community %}
+              <div class="card mb-3">
+                <span style="padding: 5px;">
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
+                    Фото на стене
+                  </a>&nbsp;
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                    собщества {{ object.community }}
+                  </a>
+                </span>
+                <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                  {% for photo in object.get_6_photos %}
+                  <div class="c_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
+                      {% if photo.file %}
+                        <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="card mb-3">
+              <span style="padding: 5px;">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
+                  Фото на стене
+                </a>&nbsp;
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                  {{ user.get_full_name_genitive }}
+                </a>
+              </span>
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+              {% for photo in object.get_6_photos %}
+                <div class="u_WA_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
+                    {% if photo.file %}
+                      <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+                </div>
               {% endfor %}
+            </div>
+            </div>
+            {% endif %}
+
+            {% elif object.is_user_album %}
+            {% if object.community %}
+              <div class="card mb-3">
+                <span style="padding: 5px;">
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
+                    Альбом {{ object.title }}
+                  </a>&nbsp;
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                    сообщества {{ object.community }}
+                  </a>
+                </span>
+              <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                {% for photo in object.get_6_photos %}
+                  <div class="c_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
+                      {% if photo.file %}
+                        <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="card mb-3">
+              <span style="padding: 5px;">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
+                  Альбом {{ object.title }}
+                </a>&nbsp;
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                  {{ user.get_full_name_genitive }}
+                </a>
+              </span>
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+              {% for photo in object.get_6_photos %}
+                <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
+                    {% if photo.file %}
+                      <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            </div>
+            {% endif %}
+            {% elif not object.is_album_exists %}
+            {% if object.community %}
+              <div class="card mb-3">
+                <span style="padding: 5px;">
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
+                    Новое фото
+                  </a>&nbsp;
+                  <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                    в сообществе {{ object.community }}
+                  </a>
+                </span>
+              <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                {% for photo in object.get_6_photos %}
+                  <div class="c_photo_detail col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}">
+                    <div class="card rounded-0 border-0 mb-3 pointer">
+                      {% if photo.file %}
+                        <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                      {% else %}
+                        <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="card mb-3">
+              <span style="padding: 5px;">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user_album' pk=object.creator.pk uuid=object.uuid %}">
+                  Новое фото
+                </a>&nbsp;
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                  {{ user.get_full_name_genitive }}
+                </a>
+              </span>
+            <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+              {% for photo in object.get_6_photos %}
+                <div class="u_photo_detail col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ object.creator.pk }}">
+                  <div class="card rounded-0 border-0 mb-3 pointer">
+                    {% if photo.file %}
+                      <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+                    {% else %}
+                      <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
             </span>
 
           {% else %}
