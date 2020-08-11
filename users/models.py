@@ -262,7 +262,7 @@ class User(AbstractUser):
         return User.objects.filter(query)
 
     def get_6_possible_friends(self):
-        query = Q(id__in=self.get_10_possible_friends_ids())
+        query = Q(id__in=self.get_6_possible_friends_ids())
         return User.objects.filter(query)
 
     def get_possible_friends_ids(self):
