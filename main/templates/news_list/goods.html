@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Новости | Товары{% endblock %}
-{% block meta %}
-<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/static/images/I.jpg" />
-{% endblock %}
 {% block content %}
 
 <div class="container mt-4 main-container">
@@ -52,12 +46,10 @@
                             <br>
                             <div class="row bg-light-secondary text-center">
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
-                                    <p class="content-color-secondary small mb-0">Цена</p>
+                                    <p class="content-color-secondary small mb-0">{{ object.price }}</p>
                                 </div>
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">{{ object.all_visits_count }}</h5>
-                                    <p class="content-color-secondary small mb-0">{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</p>
+                                    <p class="content-color-secondary small mb-0">{{ object.all_visits_count }}</p>
                                 </div>
                             </div>
                 </div>
@@ -85,12 +77,10 @@
                             <br>
                             <div class="row bg-light-secondary text-center">
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
-                                    <p class="content-color-secondary small mb-0">Цена</p>
+                                    <p class="content-color-secondary small mb-0">{{ object.price }}</p>
                                 </div>
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">{{ object.all_visits_count }}</h5>
-                                    <p class="content-color-secondary small mb-0">{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</p>
+                                    <p class="content-color-secondary small mb-0">{{ object.all_visits_count }}</p>
                                 </div>
                             </div>
                 </div>
