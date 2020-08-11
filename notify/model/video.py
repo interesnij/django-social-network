@@ -66,19 +66,19 @@ class VideoNotify(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_notifications', verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  VideoNotificationQS.as_manager()
-    video = models.ForeignKey('video.Video', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
+    video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('video.VideoComment', null=True, blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - ролики пользователя"
         verbose_name_plural = "Уведомления - ролики пользователя"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         if self.video and not self.comment:
@@ -90,6 +90,10 @@ class VideoNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 
 class VideoCommunityNotify(models.Model):
@@ -121,19 +125,19 @@ class VideoCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_recipient', verbose_name="Получатель")
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = VideoNotificationQS.as_manager()
-    video = models.ForeignKey('video.Video', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('video.VideoComment', blank=True, on_delete=models.CASCADE)
+    video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - ролики сообщества"
         verbose_name_plural = "Уведомления - ролики сообщества"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         if self.video and not self.comment:
@@ -145,6 +149,10 @@ class VideoCommunityNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 
 def video_notification_handler(actor, recipient, verb, video, comment, **kwargs):

@@ -67,19 +67,23 @@ class GoodNotify(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_notifications', verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
+    good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
         verbose_name_plural = "Уведомления - товары пользователя"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
     def __str__(self):
         return '{} {} {}'.format(self.actor, self.get_verb_display(), self.good)
@@ -119,19 +123,19 @@ class GoodCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = GoodNotificationQS.as_manager()
-    good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
+    good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"
         verbose_name_plural = "Уведомления - товары сообщества"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
@@ -140,6 +144,10 @@ class GoodCommunityNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 
 def good_notification_handler(actor, recipient, verb, good, comment, **kwargs):

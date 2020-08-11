@@ -1,4 +1,3 @@
-{% load humanize %}
 <!DOCTYPE html>
   {% if notifications %}
   <span class="clean_notify" style="cursor:pointer">Очистить</span>
@@ -13,7 +12,7 @@
         </figure>
         <div class="media-body">
             <h5 class="mt-0">{{ notification|safe }}</h5>
-            <p>{{ notification.timestamp|naturaltime }}</p>
+            <p>{{ notification.get_created }}</p>
         </div>
       </a>
     {% endfor %}

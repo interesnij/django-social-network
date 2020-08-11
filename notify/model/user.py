@@ -53,7 +53,7 @@ class UserNotify(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = UserNotificationQS.as_manager()
@@ -62,8 +62,8 @@ class UserNotify(models.Model):
     class Meta:
         verbose_name = "Уведомление пользователя"
         verbose_name_plural = "Уведомления пользователя"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} {}'.format(self.actor, self.get_verb_display())
@@ -72,6 +72,10 @@ class UserNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 
 class UserCommunityNotify(models.Model):
@@ -88,7 +92,7 @@ class UserCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_users_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_user_recipient', on_delete=models.CASCADE, verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = UserNotificationQS.as_manager()
@@ -97,8 +101,8 @@ class UserCommunityNotify(models.Model):
     class Meta:
         verbose_name = "Уведомление сообщества"
         verbose_name_plural = "Уведомления сообщества"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} {}'.format(self.actor, self.get_verb_display())
@@ -108,6 +112,10 @@ class UserCommunityNotify(models.Model):
             self.unread = True
             self.save()
 
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
+
 def notification_handler(actor, recipient, verb, **kwargs):
 
     key = kwargs.pop('key', 'notification')
@@ -116,7 +124,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
 
 def community_notification_handler(actor, community, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-    persons = community.get_staff_members() 
+    persons = community.get_staff_members()
     for user in persons:
         UserCommunityNotify.objects.create(actor=actor, community=community, recipient=user, verb=verb)
     user_notification_broadcast(actor, key)

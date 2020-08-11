@@ -67,22 +67,26 @@ class ItemNotify(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='item_notifications', verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
+    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.PostComment', null=True, blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
         verbose_name_plural = "Уведомления - записи пользователя"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} {}'.format(self.actor, self.get_verb_display())
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -119,19 +123,19 @@ class ItemCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_item_recipient', verbose_name="Получатель")
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('posts.PostComment', blank=True, on_delete=models.CASCADE)
+    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
         verbose_name_plural = "Уведомления - записи сообщества"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         if self.item and not self.comment:
@@ -143,6 +147,10 @@ class ItemCommunityNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 
 def item_notification_handler(actor, recipient, verb, item, comment, **kwargs):

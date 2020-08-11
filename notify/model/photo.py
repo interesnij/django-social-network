@@ -65,22 +65,26 @@ class PhotoNotify(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_notifications', verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  PhotoNotificationQS.as_manager()
-    photo = models.ForeignKey('gallery.Photo', blank=True, on_delete=models.CASCADE)
+    photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
         verbose_name_plural = "Уведомления - фотографии пользователя"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} {}'.format(self.actor, self.get_verb_display())
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -117,19 +121,19 @@ class PhotoCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_photo_recipient', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = PhotoNotificationQS.as_manager()
-    photo = models.ForeignKey('gallery.Photo', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('gallery.PhotoComment', blank=True, on_delete=models.CASCADE)
+    photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('gallery.PhotoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"
         verbose_name_plural = "Уведомления - фотографии сообщества"
-        ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['timestamp']),)
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} {}'.format(self.actor, self.get_verb_display())
@@ -138,6 +142,10 @@ class PhotoCommunityNotify(models.Model):
         if not self.unread:
             self.unread = True
             self.save()
+
+    def get_created(self):
+		from django.contrib.humanize.templatetags.humanize import naturaltime
+		return naturaltime(self.created)
 
 def photo_notification_handler(actor, recipient, verb, photo, comment, **kwargs):
     from users.models import User
