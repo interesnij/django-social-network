@@ -186,6 +186,7 @@ class GoodUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             good = self.form.save(commit=False)
             good.creator = self.user
+            good.sub_category = good.cleaned_data["sub_category"]
             good.save()
             #new_good = good.create_good(
                 #title=good.title,
