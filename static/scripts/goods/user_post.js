@@ -194,9 +194,10 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
     toast_error("Фотография на обложку обязательна!")
   }
-  pk_block = document.body.querySelector(".pk_saver");
-  pk = pk_block.getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_good_user_form"));
+
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_post = document.body.querySelector("#add_good_user_form");
+  form_data = new FormData(form_post);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/user_progs/add/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
