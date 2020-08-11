@@ -273,10 +273,9 @@ class User(AbstractUser):
         return featured_ids
 
     def get_possible_friends_count(self):
-        try:
-            return self.get_possible_friends_ids().count()
-        except:
-            return 0
+        from users.model.list import UserFeaturedFriend
+        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
+        return featured.count()
 
     def get_6_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
