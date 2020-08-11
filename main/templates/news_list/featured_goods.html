@@ -18,10 +18,74 @@
 
             <span class="stream news_block_paginate" id="news_featured_good_list" data-link="/featured_goods">
               {% for object in object_list %}
-                {% if forloop.counter|divisibleby:"5" %}
-                  <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
-                  <br><br>
-                {% endif %}
+                  {% if forloop.counter|divisibleby:"5" %}
+                    <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
+                    <br><br>
+                  {% endif %}
+                  {% if object.community %}
+                  <span style="padding: 5px;">
+                    Новый товар в сообществе &nbsp;
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                      {{ object.community }}
+                    </a>
+                  </span>
+                  <div class="col-md-3 border c_good_detail pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.community.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
+                              <div class="row align-items-center no-gutters pointer">
+                                  <div class="col">
+                                          <div class="text-center">
+                                            {% if object.image %}
+                                              <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                            {% else %}
+                                              <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                            {% endif %}
+                                          </div>
+                                  </div>
+                              </div>
+                              <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+                              <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+                              <br>
+                              <div class="row bg-light-secondary text-center">
+                                  <div class="col py-3">
+                                      <p class="content-color-secondary small mb-0">{{ object.price }}</p>
+                                  </div>
+                                  <div class="col py-3">
+                                      <p class="content-color-secondary small mb-0">{{ object.all_visits_count }}</p>
+                                  </div>
+                              </div>
+                  </div>
+                  {% else %}
+                  <span style="padding: 5px;">
+                    Новый товар &nbsp;
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                      {{ user.get_full_name_genitive }}
+                    </a>
+                  </span>
+                  <div class="col-md-3 border u_good_detail pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.creator.pk }}" good-uuid="{{ object.uuid }}" style="padding-top:15px">
+                              <div class="row align-items-center no-gutters pointer">
+                                  <div class="col">
+                                          <div class="text-center">
+                                            {% if object.image %}
+                                              <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                            {% else %}
+                                              <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                            {% endif %}
+                                          </div>
+                                  </div>
+                              </div>
+                              <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+                              <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+                              <br>
+                              <div class="row bg-light-secondary text-center">
+                                  <div class="col py-3">
+                                      <p class="content-color-secondary small mb-0">{{ object.price }}</p>
+                                  </div>
+                                  <div class="col py-3">
+                                      <p class="content-color-secondary small mb-0">{{ object.all_visits_count }}</p>
+                                  </div>
+                              </div>
+                  </div>
+                  {% endif %}
+                {% endfor %}
 
               {% endfor %}
             </span>
