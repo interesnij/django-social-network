@@ -1,9 +1,4 @@
-on('#ajax', 'click', '.user_video_list_create_window', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
-});
+
 on('#ajax', 'click', '.user_video_create_window', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
