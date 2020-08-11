@@ -273,7 +273,10 @@ class User(AbstractUser):
         return featured_ids
 
     def get_possible_friends_count(self):
-        self.get_possible_friends_ids().count()
+        try:
+            return self.get_possible_friends_ids().count()
+        except:
+            return 0
 
     def get_6_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
