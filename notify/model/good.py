@@ -72,7 +72,7 @@ class GoodNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  GoodNotificationQS.as_manager()
     good = models.ForeignKey('goods.Good', blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
