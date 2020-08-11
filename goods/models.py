@@ -174,7 +174,17 @@ class Good(models.Model):
 
 	def all_visits_count(self):
 		from stst.models import GoodNumbers
-		return GoodNumbers.objects.filter(good=self.pk).values('pk').count()
+
+		count = GoodNumbers.objects.filter(good=self.pk).values('pk').count()
+		a = count % 10
+		b = count % 100
+		if (a == 1) and (b != 11):
+			return str(count) + " просмотр"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " просмотра"
+		else:
+			return str(count) + " просмотров"
+
 
 
 class GoodComment(models.Model):
