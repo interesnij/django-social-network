@@ -191,7 +191,7 @@ class GoodUserCreate(TemplateView):
             new_good = good.create_good(
                 title=good.title,
                 image=good.image,
-                sub_category_id=request.POST.get('sub_category'),
+                sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
                 creator=self.user,
                 description=good.description,
                 community=None,
