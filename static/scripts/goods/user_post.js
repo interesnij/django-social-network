@@ -181,19 +181,6 @@ on('#ajax', 'click', '#u_good_add_attach', function() {
 });
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
-  if (!document.body.querySelector("#id_title").value){
-    document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else if (!document.body.querySelector("#category").value){
-    document.body.querySelector("#category").style.border = "1px #FF0000 solid";
-    toast_error("Категория - обязательное поле!")
-  } else if (!document.body.querySelector("#id_description").value){
-    document.body.querySelector("#id_description").style.border = "1px #FF0000 solid";
-    toast_error("Описание товара - обязательное поле!");
-  } else if (!document.body.querySelector("#id_image").value){
-    document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
-    toast_error("Фотография на обложку обязательна!")
-  }
 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_post = document.body.querySelector("#add_good_user_form");
@@ -208,64 +195,11 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     new_good = document.createElement("span");
     new_good.innerHTML = elem;
 
-    if (document.querySelector(".current_file_dropdown")){
-      dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-      is_full_dropdown();
-      img_block = dropdown.parentElement.previousElementSibling;
-      data_pk = new_good.querySelector(".new_image").getAttribute('good-pk');
+    goods = document.body.querySelector("#goods_container");
+    new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
+                                            goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
+    : null;
 
-      if (img_block.querySelector( '[good-pk=' + '"' + data_pk + '"]' )){
-        new_good.setAttribute("tooltip", "Товар уже выбран");
-        new_good.setAttribute("flow", "up");
-        return
-      };
-      new_good.classList.add("attach_toggle");
-      title = new_good.querySelector(".good_title").innerHTML;
-      if (!img_block.querySelector(".select_good1")){
-        div = create_preview_good("select_good1", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)
-      } else if (!img_block.querySelector(".select_good2")){
-        div = create_preview_good("select_good2", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)
-      }
-      img_block.append(div);
-      img_block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', img_block.append($good_input));
-
-      add_file_dropdown()
-      is_full_dropdown();
-
-    } else if (document.querySelector(".attach_block")){
-      block = document.body.querySelector(".attach_block");
-      is_full_attach();
-      data_pk = new_good.querySelector(".new_image").getAttribute('good-pk');
-      title = new_good.querySelector(".good_title").innerHTML;
-
-      if (block.querySelector( '[good-pk=' + '"' + data_pk + '"]' )){
-        new_good.setAttribute("tooltip", "Товар уже выбран");
-        new_good.setAttribute("flow", "up");
-        return
-      };
-      new_good.classList.add("attach_toggle");
-      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", new_good.querySelector(".img").getAttribute('data-src'), data_pk, title)}
-    block.append(div);
-    block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
-
-    add_file_attach()
-    is_full_attach();
-    }
-    else {
-      goods = document.body.querySelector("#goods_container");
-      new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
-                                              goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
-               : null;
-  }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
   toast_info("Товар создан!")
