@@ -260,11 +260,11 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     is_full_attach();
     }
     else {
-      new_good.classList.add("col-md-4"); 
+      new_good.classList.add("col-md-4");
       goods = document.body.querySelector("#user_goods_container");
-      new_good.querySelector(".new_image") ? (goods.prepend(new_good), toast_info("Товар создан!"),
-                                              goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null)
-               : null;
+      goods.prepend(new_good);
+      goods.querySelector(".goods_empty") ? goods.querySelector(".goods_empty").style.display = "none" : null);
+      toast_info("Товар создан!");
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
