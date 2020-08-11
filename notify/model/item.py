@@ -72,7 +72,7 @@ class ItemNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  ItemNotificationQS.as_manager()
     item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('posts.PostComment', null=True, blank=True, null=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:

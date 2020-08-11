@@ -71,7 +71,7 @@ class VideoNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  VideoNotificationQS.as_manager()
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('video.VideoComment', null=True, blank=True, null=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
