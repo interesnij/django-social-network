@@ -15,15 +15,18 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Рекомендованные друзья</h5>
-                    </div>
+                        <h5 class="mt-1">
+                          Рекомендованные друзья
+                          <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_possible_friends_count }}</small>
+                        </h5>
+                    </div> 
                 </div>
             </div>
             <div class="card-body">
               <ul class="list-group profile_block_paginate" id="possible_friends_container" data-link="/users/detail/possible/{{ user.pk }}/">
                   {% if object_list %}
                   {% for object in object_list %}
-                  <li class="list-group-item border-top pag {% if forloop.last %}last{% endif %}">
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                       <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax">
                               <figure>
