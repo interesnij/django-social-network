@@ -261,11 +261,25 @@ class User(AbstractUser):
         query = Q(id__in=self.get_possible_friends_ids())
         return User.objects.filter(query)
 
+    def get_6_possible_friends(self):
+        query = Q(id__in=self.get_10_possible_friends_ids())
+        return User.objects.filter(query)
+
     def get_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
         featured_ids = [user['featured_user'] for user in featured]
+        return featured_ids
+
+    def get_possible_friends_count(self):
+        self.get_possible_friends_ids().count()
+
+    def get_6_possible_friends_ids(self):
+        from users.model.list import UserFeaturedFriend
+
+        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
+        featured_ids = [user['featured_user'] for user in featured][:6]
         return featured_ids
 
     def frend_user_with_id(self, user_id):
