@@ -92,8 +92,8 @@ class VideoNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 
 class VideoCommunityNotify(models.Model):
@@ -151,8 +151,8 @@ class VideoCommunityNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 
 def video_notification_handler(actor, recipient, verb, video, comment, **kwargs):

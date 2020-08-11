@@ -82,8 +82,8 @@ class GoodNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
     def __str__(self):
         return '{} {} {}'.format(self.actor, self.get_verb_display(), self.good)
@@ -146,8 +146,8 @@ class GoodCommunityNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 
 def good_notification_handler(actor, recipient, verb, good, comment, **kwargs):

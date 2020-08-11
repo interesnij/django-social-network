@@ -74,8 +74,8 @@ class UserNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 
 class UserCommunityNotify(models.Model):
@@ -113,8 +113,8 @@ class UserCommunityNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 def notification_handler(actor, recipient, verb, **kwargs):
 

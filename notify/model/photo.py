@@ -83,8 +83,8 @@ class PhotoNotify(models.Model):
         return '{} {}'.format(self.actor, self.get_verb_display())
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -144,8 +144,8 @@ class PhotoCommunityNotify(models.Model):
             self.save()
 
     def get_created(self):
-		from django.contrib.humanize.templatetags.humanize import naturaltime
-		return naturaltime(self.created)
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
 
 def photo_notification_handler(actor, recipient, verb, photo, comment, **kwargs):
     from users.models import User
