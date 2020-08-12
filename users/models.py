@@ -805,6 +805,12 @@ class User(AbstractUser):
         frends = User.objects.filter(pk__in=frends_ids)
         return frends
 
+    def get_6_populate_object(self):
+        from users.model.list import UserPopulateFriend
+
+        frends_query = UserPopulateFriend.objects.filter(user=self.pk)
+        return frends_query
+
     def get_6_friends(self):
         try:
             return self.get_6_populate_friends()
