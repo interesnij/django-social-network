@@ -107,7 +107,7 @@ on('#ajax', 'click', '.u_photo_like', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
   like_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling);
-  dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
+  //dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -115,7 +115,7 @@ on('#ajax', 'click', '.u_photo_dislike', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
   like_reload("/gallery/window/u_like_window/" + uuid + "/", this.previousElementSibling);
-  dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
+  //dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;
