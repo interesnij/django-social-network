@@ -288,7 +288,7 @@ class User(AbstractUser):
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
-        for frend in user.get_all_connection():
+        for frend in user.get_6_friends():
             self.get_or_create_possible_friend(frend)
 
     def get_possible_friends(self):
@@ -797,13 +797,16 @@ class User(AbstractUser):
         frends = User.objects.filter(connection_query)
         return frends[0:6]
 
-    def get_6_populate_friends(self):
+    def get_6_populate_friends_ids(self):
         from users.model.list import UserPopulateFriend
 
         frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
         frends_ids = [user['friend'] for user in frends_query][:6]
+        return frends_ids
+
+    def get_6_populate_friends(self):
         query = []
-        for frend_id in frends_ids:
+        for frend_id in self.get_6_populate_friends_ids():
             user = User.objects.get(pk=frend_id)
             query = query + [user,]
         return query
