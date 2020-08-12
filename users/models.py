@@ -823,7 +823,7 @@ class User(AbstractUser):
         from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        communities_ids = [user['friend'] for user in communities_query][:6]
+        communities_ids = [community['community'] for community in communities_query][:6]
         communities = Community.objects.filter(pk__in=communities_ids)
         return communities
 
