@@ -33,8 +33,8 @@
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %} id_{{ object.id }}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
-                              <figure style="cursor:pointer">
-                                <a class="music_list_item">
+                              <figure>
+                                <a class="music_list_item pointer">
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
                                   {% else %}
@@ -43,7 +43,7 @@
                                 </a>
                               </figure>
                               <div class="media-body">
-                                  <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
+                                  <h6 class="music_list_item pointer"><a>{{ object.title }}</a></h6>
                                   {% if object.genre %}
                                   <a class="small ajax" href="{% url 'genre_music' pk=object.genre.pk %}">{{ object.genre }}</a>
                                   {% endif %}
@@ -84,7 +84,7 @@
                     </ul>
 
                 {% else %}
-                <div class="card centered" style="align-items: center;justify-content:center;">
+                <div class="card centered centered">
                   <div class="card-body" style="margin-top: 10%;">
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>

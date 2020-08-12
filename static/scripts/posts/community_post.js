@@ -192,7 +192,7 @@ on('#ajax', 'click', '.c_post_remove', function() {
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
     p.style.display =  "block";
-    p.innerHTML = "Запись удалена. <span class='c_post_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    p.innerHTML = "Запись удалена. <span class='c_post_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_container"),
@@ -218,7 +218,7 @@ on('#ajax', 'click', '.c_post_wall_remove', function() {
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
     p.style.display =  "block";
-    p.innerHTML = "Запись удалена. <span class='c_post_wall_abort_remove' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    p.innerHTML = "Запись удалена. <span class='c_post_wall_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_container"),

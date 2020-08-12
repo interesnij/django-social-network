@@ -34,8 +34,8 @@
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %} id_{{ object.id }}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">
-                              <figure style="cursor:pointer">
-                                <a class="music_list_item">
+                              <figure>
+                                <a class="music_list_item pointer">
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
                                   {% else %}
@@ -44,7 +44,7 @@
                                 </a>
                               </figure>
                               <div class="media-body">
-                                  <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
+                                  <h6 class="music_list_item pointer"><a>{{ object.title }}</a></h6>
                                   {% if object.genre %}
                                   <a class="small ajax" href="{% url 'genre_music' pk=object.genre.pk %}">{{ object.genre }}</a>
                                   {% endif %}

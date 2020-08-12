@@ -23,7 +23,7 @@
         <div class="row" data-pk="{{ reply.pk }}">
           {% for object in reply.good_comment_photo.all %}
           <div class="col-md-6">
-              <img data-uuid="{{ object.uuid }}" photo-pk="{{ comment.commenter.pk }}" class="c_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
+              <img data-uuid="{{ object.uuid }}" photo-pk="{{ comment.commenter.pk }}" class="c_wall_image image_fit lazyload pointer" data-src="{{ object.file.url }}" alt="img">
           </div>
           {% endfor %}
           {% for object in reply.good_comment_video.all %}
@@ -35,8 +35,8 @@
           {% for object in reply.good_comment_music.all %}
           <div class="col-md-12">
             <div class="media" data-path="{{ object.uri }}" data-duration="{{ object.duration }}" music-counter="{{ forloop.counter0 }}">
-                <figure style="cursor:pointer">
-                  <a class="music_list_comment">
+                <figure>
+                  <a class="music_list_comment pointer">
                     {% if object.artwork_url %}
                       <img style="width:30px;heigth:auto" data-src="{{ object.artwork_url }}" class="lazyload" />
                     {% else %}
@@ -45,7 +45,7 @@
                   </a>
                 </figure>
                 <div class="media-body" style="display: flex;">
-                    <h6 class="music_list_comment music_title" style="cursor:pointer;padding-top: 6px;">
+                    <h6 class="music_list_comment music_title pointer" style="padding-top: 6px;">
                       <a>{{ object.title }}</a>
                     </h6>
                 </div>
@@ -67,7 +67,7 @@
                   <span class="comment_like_window">
                       {% if comment.window_likes %}
                       <div class="comment_like_pop" style="margin:15px">
-                          <span class="c_all_good_comment_likes" style="cursor:pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                          <span class="c_all_good_comment_likes pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <span style="display: flex;">
                               {% for heart in reply.window_likes %}
                               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
@@ -93,7 +93,7 @@
                   <span class="comment_dislike_window">
                   {% if reply.window_dislikes %}
                   <div class="comment_dislike_pop" style="margin:15px">
-                  <span class="c_all_good_comment_dislikes" style="cursor:pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="c_all_good_comment_dislikes pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <span style="display: flex;">
                     {% for sheet in reply.window_dislikes %}
                     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
@@ -112,7 +112,7 @@
                   </span>
 
                     <span class="commenter_first_name" style="display:none">{{ reply.commenter.first_name }}</span>
-                    <span class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
+                    <span class="content-color-secondary reply_comment pointer" style="font-size:15px">
                         ответить
                     </span>
 

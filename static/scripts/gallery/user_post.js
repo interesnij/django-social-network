@@ -63,9 +63,9 @@ on('#ajax', 'click', '.u_photo_description', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
 
     elem = link_.responseText;
-    new_post = document.createElement("span"); 
+    new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span style="cursor:pointer" class="u_photo_edit">Редактировать</span>';
+    form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span class="u_photo_edit pointer">Редактировать</span>';
     form.style.display = "none";
     form.querySelector('#id_description').value = new_post.innerHTML;
   }}

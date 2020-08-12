@@ -47,7 +47,7 @@
                             </h6>
                           </div>
                           <div class="dropdown d-inline-block">
-                              <a style="cursor:pointer" class="icon-30 btn_default drop">
+                              <a class="icon-30 btn_default drop pointer">
                                 <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                               </a>
                               <div class="dropdown-menu dropdown-menu-right">
@@ -89,8 +89,8 @@
                     {% for track in object.playlist_50 %}
                     <li style="padding-left:7px; padding-right:7px;position: relative;">
                         <div class="media" music-counter="{{ forloop.counter0 }}">
-                            <figure style="cursor:pointer">
-                              <a class="music_list_item music_thumb">
+                            <figure>
+                              <a class="music_list_item music_thumb pointer">
                                 {% if track.artwork_url %}
                                   <img style="width:30px;heigth:auto" class="lazyload" data-src="{{ track.artwork_url }}" />
                                 {% else %}
