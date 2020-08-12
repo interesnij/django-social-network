@@ -44,6 +44,40 @@ class PhotoUserLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
+class PhotoUserDislikeCreate(View):
+    def get(self, request, **kwargs):
+        item = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if not item.votes_on or not request.is_ajax():
+            raise Http404
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+            item.notification_user_dislike(request.user)
+        try:
+            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PhotoVotes.DISLIKE:
+                likedislike.vote = PhotoVotes.DISLIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+            else:
+                likedislike.delete()
+                result = False
+        except PhotoVotes.DoesNotExist:
+            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
+            result = True
+        likes = item.likes_count()
+        if likes != 0:
+            like_count = likes
+        else:
+            like_count = ""
+        dislikes = item.dislikes_count()
+        if dislikes != 0:
+            dislike_count = dislikes
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+
+
 class PhotoCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -72,41 +106,6 @@ class PhotoCommentUserLikeCreate(View):
         else:
             like_count = ""
         dislikes = comment.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
-
-
-class PhotoUserDislikeCreate(View):
-    def get(self, request, **kwargs):
-        item = Photo.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on or not request.is_ajax():
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.DISLIKE:
-                likedislike.vote = PhotoVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoVotes.DoesNotExist:
-            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
-            result = True
-        if user != request.user:
-            item.notification_user_dislike(request.user)
-        likes = item.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
-        dislikes = item.dislikes_count()
         if dislikes != 0:
             dislike_count = dislikes
         else:
