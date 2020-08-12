@@ -835,7 +835,7 @@ class User(AbstractUser):
         communities_ids = [community['community'] for community in communities_query][:6]
         query = []
         for community_id in communities_ids:
-            community = User.objects.get(pk=community_id)
+            community = Community.objects.get(pk=community_id)
             query = query + [community,]
         return query
 
