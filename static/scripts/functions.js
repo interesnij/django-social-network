@@ -311,17 +311,18 @@ function open_fullscreen(url, block) {
   }};
   link.send();
 }
-function vote_reload(link, block){
+function vote_reload(url, block){
   _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', link, true );
+  _link.open( 'GET', url, true );
   _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   _link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     span = document.createElement("span");
     span.innerHTML = _link.responseText;
     block.innerHTML = "";
-    block.innerHTML = span;
-    console.log(block.innerHTML);
+    block.innerHTML = span.innerHTML;
+    console.log(span);
+    console.log(_link.responseText);
   }}
   _link.send( null );
 }
