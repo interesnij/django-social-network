@@ -167,7 +167,7 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
-      : (a = document.createElement("a"), a.classList.add("small", "connect_create", "pointer"), a.innerHTML = 'Добавить в друзья', _this.parentElement.append(a), _this.remove());
+      : (_a = document.createElement("a"), _a.classList.add("small", "connect_create", "pointer"), _a.innerHTML = 'Добавить в друзья', _this.parentElement.append(_a), _this.remove());
       toast_info("Друг добавлен!")
   }};
   link_.send();
