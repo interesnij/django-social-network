@@ -329,7 +329,7 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
   dislike_link.open( 'GET', link_2, true );
   dislike_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   dislike_link.onreadystatechange = function () {
-  if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
+  if ( dislike_link.readyState == 4 && dislike_link.status == 200 ) {
     span_2 = document.createElement("span");
     span_2.innerHTML = dislike_link.responseText;
     _dislike_block.innerHTML = "";
