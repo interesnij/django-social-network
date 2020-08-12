@@ -186,7 +186,7 @@ class ProfileUserView(TemplateView):
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "account/block_user.html"
                 elif request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                    template_name = folder + template
+                    self.template_name = "account/user.html"
                     try:
                         populate_friend = UserPopulateFriend.objects.get(user=request.user, friend=self.user)
                         populate_friend.count += 1
