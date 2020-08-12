@@ -317,10 +317,10 @@ function vote_reload(link, block){
   _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   _link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    block = document.createElement("span");
-    block.innerHTML = _link.responseText;
+    span = document.createElement("span");
+    span.innerHTML = _link.responseText;
     block.innerHTML = "";
-    block.innerHTML = block.innerHTML;
+    block.innerHTML = span.innerHTML;
   }}
   _link.send( null );
 }
