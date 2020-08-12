@@ -833,8 +833,11 @@ class User(AbstractUser):
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
         communities_ids = [community['community'] for community in communities_query][:6]
-        communities = Community.objects.filter(pk__in=communities_ids)
-        return communities
+        query = []
+        for community_id in communities_ids:
+            community = User.objects.get(pk=community_id)
+            query = query + [community,]
+        return query
 
     def get_6_communities(self):
         try:
