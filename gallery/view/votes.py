@@ -14,8 +14,6 @@ class PhotoUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on or not request.is_ajax():
-            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
             item.notification_user_like(request.user)
@@ -48,8 +46,6 @@ class PhotoUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if not item.votes_on or not request.is_ajax():
-            raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
             item.notification_user_dislike(request.user)
