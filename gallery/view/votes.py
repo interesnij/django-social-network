@@ -18,6 +18,7 @@ class PhotoUserLikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
+            item.notification_user_like(request.user)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
             if likedislike.vote is not PhotoVotes.LIKE:
@@ -30,8 +31,6 @@ class PhotoUserLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-        if user != request.user:
-            item.notification_user_like(request.user)
         likes = item.likes_count()
         if likes != 0:
             like_count = likes
