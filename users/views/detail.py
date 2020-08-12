@@ -158,6 +158,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
+        from users.model.list import UserPopulateFriend
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
@@ -184,6 +185,14 @@ class ProfileUserView(TemplateView):
                     self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "account/block_user.html"
+                elif request_user.is_connected_with_user_with_id(user_id=user.pk):
+                    template_name = folder + template
+                    try:
+                        populate_friend = UserPopulateFriend.objects.get(user=request_user, friend=user)
+                        populate_friend.count += 1
+                        populate_friend.save(update_fields=['count'])
+                    except:
+                        UserPopulateFriend.objects.create(user=request_user, friend=user, count=1)
                 elif self.user.is_closed_profile():
                     if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                         self.template_name = "account/user.html"

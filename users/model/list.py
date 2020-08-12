@@ -27,3 +27,23 @@ class UserFeaturedFriend(models.Model):
     class Meta:
         verbose_name = 'Рекомендованные друзья'
         verbose_name_plural = 'Рекомендованные друзья'
+
+class UserPopulateFriend(models.Model):
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    friend = models.PositiveIntegerField(default=0, verbose_name="Друг")
+    count = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
+
+    class Meta:
+        verbose_name = 'Популярность друзей' 
+        verbose_name_plural = 'Популярность друзей'
+        ordering = ['count']
+
+class UserPopulateCommunity(models.Model):
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    count = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
+
+    class Meta:
+        verbose_name = 'Популярность сообществ'
+        verbose_name_plural = 'Популярность сообществ'
+        ordering = ['count']

@@ -754,8 +754,6 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
-        from managers.model.user import ModeratedUser
-
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=my_frends_ids)

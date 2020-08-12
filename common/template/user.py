@@ -1,6 +1,7 @@
 from rest_framework.exceptions import PermissionDenied
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from common.check.community import check_can_get_lists, check_anon_can_get_list
+from users.model.list import UserPopulateFriend
 
 
 def get_template_user(user, folder, template, request_user):
@@ -23,6 +24,14 @@ def get_template_user(user, folder, template, request_user):
                 template_name = folder + "staff_" + template
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 template_name = "generic/u_template/block_user.html"
+            elif request_user.is_connected_with_user_with_id(user_id=user.pk):
+                template_name = folder + template
+                try:
+                    populate_friend = UserPopulateFriend.objects.get(user=request_user, friend=user)
+                    populate_friend.count += 1
+                    populate_friend.save(update_fields=['count'])
+                except:
+                    UserPopulateFriend.objects.create(user=request_user, friend=user, count=1)
             elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                     template_name = folder + template
