@@ -321,8 +321,9 @@ function vote_reload(url, block){
     span.innerHTML = _link.responseText;
     block.innerHTML = "";
     block.innerHTML = span.innerHTML;
-    console.log(span);
+    console.log(span.innerHTML);
     console.log(_link.responseText);
+    console.log(block);
   }}
   _link.send( null );
 }
