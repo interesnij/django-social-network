@@ -14,10 +14,7 @@ class PhotoUserLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
-        else:
-            self.template_name = "about.html"
+        self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
         return super(PhotoUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -32,10 +29,7 @@ class PhotoUserDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if self.photo.votes_on:
-            self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
-        else:
-            self.template_name = "about.html"
+        self.template_name = get_template_user_photo(self.photo.creator, "photo_votes/", "page.html", request.user)
         return super(PhotoUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
