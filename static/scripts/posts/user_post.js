@@ -81,7 +81,7 @@ on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user/delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
