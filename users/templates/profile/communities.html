@@ -1,5 +1,5 @@
 {% load liked_user %}
-{% if user.get_pop_communities %}
+{% if user.get_6_communities %}
 <div class="card mb-3" style="">
     <div class="card-header">
       <a href="{% url 'communities' pk=user.pk %}" class="ajax">
@@ -12,7 +12,7 @@
       </a>
     </div>
 
-    {% for object in user.get_pop_communities %}
+    {% for object in user.get_6_communities %}
     <div class="card border-top border-bottom">
         <div class="card-body">
             <div class="media">

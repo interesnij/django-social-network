@@ -35,7 +35,7 @@
           </div>
       </div>
 
-      {% if user.get_pop_connection %}
+      {% if user.get_6_friends %}
       <div class="card mb-3">
         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
           <div class="card-body py-2">
@@ -44,7 +44,7 @@
                     <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
                     <p class="small">{{ user.get_online_connection_count }} онлайн</p>
                   </div>
-                  {% for object in user.get_pop_connection %}
+                  {% for object in user.get_6_friends %}
                     <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                       {% if object.get_avatar %}
                       <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
@@ -82,7 +82,7 @@
           </div>
           {% endif %}
 
-      {% if user.get_pop_communities %}
+      {% if user.get_6_communities %}
       <div class="card mb-3">
         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
           <div class="card-body py-2">
@@ -91,7 +91,7 @@
                     <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
                     <p class="small">нет осоьых</p>
                   </div>
-                  {% for object in user.get_pop_communities %}
+                  {% for object in user.get_6_communities %}
                     <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                       {% if object.get_avatar %}
                       <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">

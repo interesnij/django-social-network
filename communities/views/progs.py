@@ -70,6 +70,7 @@ class CommunityMemberCreate(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_member = request.user.join_community_with_name(self.community.name)
+			request.user.create_or_plus_populate_community(self.community.pk)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -78,6 +79,7 @@ class CommunityMemberDelete(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			request.user.leave_community_with_name(self.community.name)
+			request.user.delete_populate_community(self.community.pk)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -88,6 +90,7 @@ class CommunityManageMemberCreate(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			new_member = user.join_community_with_name(community.name)
+			user.create_or_plus_populate_community(self.community.pk)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -97,6 +100,7 @@ class CommunityManageMemberDelete(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			user.leave_community_with_name(community.name)
+			user.delete_populate_community(self.community.pk)
 			return HttpResponse()
 		else:
 			raise Http404

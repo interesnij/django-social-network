@@ -41,7 +41,7 @@
 
         {% include 'profile/online_frends.html' %}
 
-        {% if user.get_pop_connection %}
+        {% if user.get_6_friends %}
         <div class="card mb-3">
             <div class="card-header">
               <a href="{% url 'frends' pk=user.pk %}" class="ajax">
@@ -54,7 +54,7 @@
               </a>
             </div>
 
-            {% for object in user.get_pop_connection %}
+            {% for object in user.get_6_friends %}
 
             <div class="card border-top border-bottom">
                 <div class="card-body" style="padding:7px;">
