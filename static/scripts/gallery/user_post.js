@@ -114,8 +114,8 @@ on('#ajax', 'click', '.u_photo_dislike', function() {
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling);
-  vote_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
+  vote_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
+  vote_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;
