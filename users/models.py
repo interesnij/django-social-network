@@ -800,10 +800,13 @@ class User(AbstractUser):
     def get_6_populate_friends(self):
         from users.model.list import UserPopulateFriend
 
-        frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend").order_by('pk')
+        frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
         frends_ids = [user['friend'] for user in frends_query][:6]
-        frends = User.objects.filter(pk__in=frends_ids)
-        return frends
+        query = []
+        for frend_id in frends_ids:
+            user = User.objects.get(pk=frend_id)
+            query = query + [user,]
+        return query
 
     def get_6_populate_object(self):
         from users.model.list import UserPopulateFriend
