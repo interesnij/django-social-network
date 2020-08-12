@@ -102,21 +102,20 @@ on('#ajax', 'click', '.user_photo_abort_remove', function() {
 })
 
 on('#ajax', 'click', '.u_photo_like', function() {
-  _this = this;
-  photo = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/u_like_window/" + uuid + "/", _this.nextElementSibling);
-  //vote_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
+  like_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling);
+  dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/u_like_window/" + uuid + "/", this.previousElementSibling);
-  //vote_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
+  like_reload("/gallery/window/u_like_window/" + uuid + "/", this.previousElementSibling);
+  dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;

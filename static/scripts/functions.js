@@ -311,7 +311,23 @@ function open_fullscreen(url, block) {
   }};
   link.send();
 }
-function vote_reload(url, block){
+function like_reload(url, block){
+  _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  _link.open( 'GET', url, true );
+  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  _link.onreadystatechange = function () {
+  if ( _link.readyState == 4 && _link.status == 200 ) {
+    span = document.createElement("span");
+    span.innerHTML = _link.responseText;
+    block.innerHTML = "";
+    block.innerHTML = span.innerHTML;
+    console.log(span.innerHTML);
+    console.log(_link.responseText);
+    console.log(block);
+  }}
+  _link.send( null );
+}
+function dislike_reload(url, block){
   _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   _link.open( 'GET', url, true );
   _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
