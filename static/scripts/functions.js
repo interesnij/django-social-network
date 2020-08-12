@@ -311,31 +311,18 @@ function open_fullscreen(url, block) {
   }};
   link.send();
 }
-
-function vote_reload(link_1, link_2, _like_block, _dislike_block){
-  like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  like_link.open( 'GET', link_1, true );
-  like_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  like_link.onreadystatechange = function () {
+function vote_reload(link, block){
+  _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  _link.open( 'GET', link, true );
+  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  _link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    span_1 = document.createElement("span");
-    span_1.innerHTML = like_link.responseText;
-    _like_block.innerHTML = "";
-    _like_block.innerHTML = span_1.innerHTML;
+    block = document.createElement("span");
+    block.innerHTML = _link.responseText;
+    block.innerHTML = "";
+    block.innerHTML = span_1.innerHTML;
   }}
-  like_link.send( null );
-
-  dislike_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  dislike_link.open( 'GET', link_2, true );
-  dislike_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  dislike_link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    span_2 = document.createElement("span");
-    span_2.innerHTML = dislike_link.responseText;
-    _dislike_block.innerHTML = "";
-    _dislike_block.innerHTML = span_2.innerHTML;
-  }}
-  dislike_link.send( null );
+  _link.send( null );
 }
 
 function send_like(item, link){

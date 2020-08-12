@@ -106,12 +106,8 @@ on('#ajax', 'click', '.u_photo_like', function() {
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/u_like_window/" + uuid + "/",
-              "/gallery/window/u_dislike_window/" + uuid + "/",
-              this.nextElementSibling,
-              this.nextElementSibling.nextElementSibling.nextElementSibling);
-  console.log(this.nextElementSibling);
-  console.log(this.nextElementSibling.nextElementSibling.nextElementSibling);
+  vote_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling);
+  vote_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
