@@ -789,7 +789,7 @@ class User(AbstractUser):
 
 
     ''''' GET всякие  219-186 '''''
-    def _get_6_connection(self):
+    def get_6_default_connection(self):
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=my_frends_ids)
@@ -797,7 +797,7 @@ class User(AbstractUser):
         frends = User.objects.filter(connection_query)
         return frends[0:6]
 
-    def _get_6_populate_friends(self):
+    def get_6_populate_friends(self):
         from users.model.list import UserPopulateFriend
 
         frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
@@ -807,18 +807,18 @@ class User(AbstractUser):
 
     def get_6_friends(self):
         try:
-            return self._get_6_populate_friends()
+            return self.get_6_populate_friends()
         except:
-            return self._get_6_connection()
+            return self.get_6_default_connection()
 
-    def _get_6_communities(self):
+    def get_6_default_communities(self):
         from communities.models import Community
 
         query = Q(memberships__user=self)
         communities = Community.objects.filter(query)
         return communities[0:6]
 
-    def _get_6_populate_communities(self):
+    def get_6_populate_communities(self):
         from users.model.list import UserPopulateCommunity
         from communities.model import Community
 
@@ -829,9 +829,9 @@ class User(AbstractUser):
 
     def get_6_communities(self):
         try:
-            return self._get_6_populate_communities()
+            return self.get_6_populate_communities()
         except:
-            return self._get_6_communities()
+            return self.get_6_default_communities()
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')
