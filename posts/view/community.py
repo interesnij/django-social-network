@@ -175,7 +175,7 @@ class PostCommunityOnComment(View):
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == item.creator.pk:
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(item.community.name):
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
             return HttpResponse()
