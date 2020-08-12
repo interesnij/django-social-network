@@ -327,6 +327,7 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
 
   dislike_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   dislike_link.open( 'GET', link_2, true );
+  dislike_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   dislike_link.onreadystatechange = function () {
   if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
     span_2 = document.createElement("span");
