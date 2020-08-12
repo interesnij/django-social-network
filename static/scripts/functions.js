@@ -320,7 +320,7 @@ function vote_reload(link, block){
     block = document.createElement("span");
     block.innerHTML = _link.responseText;
     block.innerHTML = "";
-    block.innerHTML = span_1.innerHTML;
+    block.innerHTML = block.innerHTML;
   }}
   _link.send( null );
 }
