@@ -820,7 +820,7 @@ class User(AbstractUser):
 
     def get_6_populate_communities(self):
         from users.model.list import UserPopulateCommunity
-        from communities.model import Community
+        from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
         communities_ids = [user['friend'] for user in communities_query][:6]
