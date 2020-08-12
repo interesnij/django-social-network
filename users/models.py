@@ -247,6 +247,24 @@ class User(AbstractUser):
             and not (self.is_child() and not user.is_child_safety()):
             UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
+    def create_or_plus_populate_friend(self, user_id):
+        from users.model.list import UserPopulateFriend
+        try:
+            populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+            populate_friend.count += 1
+            populate_friend.save(update_fields=['count'])
+        except:
+            UserPopulateFriend.objects.create(user=self.pk, friend=user_id, count=1)
+
+    def create_or_plus_populate_community(self, community):
+        from users.model.list import UserPopulateCommunity
+        try:
+            populate_friend = UserPopulateCommunity.objects.get(user=self.pk, community=community.pk)
+            populate_friend.count += 1
+            populate_friend.save(update_fields=['count'])
+        except:
+            UserPopulateCommunity.objects.create(user=self.pk, community=community.pk, count=1)
+
     def remove_possible_friend(self, user_id):
         from users.model.list import UserFeaturedFriend
         if UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user_id).exists():

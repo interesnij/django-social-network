@@ -34,7 +34,7 @@ class UserPopulateFriend(models.Model):
     count = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
 
     class Meta:
-        verbose_name = 'Популярность друзей' 
+        verbose_name = 'Популярность друзей'
         verbose_name_plural = 'Популярность друзей'
         ordering = ['count']
 

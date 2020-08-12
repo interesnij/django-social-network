@@ -22,16 +22,12 @@ def get_template_user(user, folder, template, request_user):
                 template_name = "generic/u_template/user_global_block.html"
             elif request_user.is_manager() or request_user.is_superuser:
                 template_name = folder + "staff_" + template
+                request_user.create_or_plus_populate_friend(user.pk)
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
                 template_name = "generic/u_template/block_user.html"
             elif request_user.is_connected_with_user_with_id(user_id=user.pk):
                 template_name = folder + template
-                try:
-                    populate_friend = UserPopulateFriend.objects.get(user=request_user.pk, friend=user.pk)
-                    populate_friend.count += 1
-                    populate_friend.save(update_fields=['count'])
-                except:
-                    UserPopulateFriend.objects.create(user=request_user.pk, friend=user.pk, count=1)
+                request_user.create_or_plus_populate_friend(user.pk)
             elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                     template_name = folder + template

@@ -182,17 +182,13 @@ class ProfileUserView(TemplateView):
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
                     self.template_name = "account/staff_user.html"
+                    request.user.create_or_plus_populate_friend(self.user.pk)
                     self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "account/block_user.html"
                 elif request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "account/user.html"
-                    try:
-                        populate_friend = UserPopulateFriend.objects.get(user=request.user.pk, friend=self.user.pk)
-                        populate_friend.count += 1
-                        populate_friend.save(update_fields=['count'])
-                    except:
-                        UserPopulateFriend.objects.create(user=request.user.pk, friend=self.user.pk, count=1)
+                    request.user.create_or_plus_populate_friend(self.user.pk)
                 elif self.user.is_closed_profile():
                     if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                         self.template_name = "account/user.html"
