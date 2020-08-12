@@ -316,7 +316,7 @@ function vote_reload(url, block){
   _link.open( 'GET', url, true );
   _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   _link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
+  if ( _link.readyState == 4 && _link.status == 200 ) {
     span = document.createElement("span");
     span.innerHTML = _link.responseText;
     block.innerHTML = "";
