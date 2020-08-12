@@ -802,7 +802,7 @@ class User(AbstractUser):
 
         frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
         frends_ids = [user['friend'] for user in frends_query][:6]
-        frends = User.objects.filter(pk__in=frends_ids)
+        frends = User.objects.filter(pk__in=frends_ids).order_by('pk'))
         return frends
 
     def get_6_populate_object(self):

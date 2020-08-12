@@ -46,4 +46,4 @@ class UserPopulateCommunity(models.Model):
     class Meta:
         verbose_name = 'Популярность сообществ'
         verbose_name_plural = 'Популярность сообществ'
-        ordering = ['count']
+        ordering = ['-count']
