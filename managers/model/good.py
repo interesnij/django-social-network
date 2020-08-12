@@ -94,8 +94,8 @@ class ModeratedGoodComment(models.Model):
         (STATUS_DELETED, 'Товар удален'),
         (STATUS_REJECTED, 'Товар отвергнут'),
     )
-    description = models.TextField(max_length=300, blank=True, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
+    description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, related_name='moderated_good_comment', blank=True, verbose_name="Комментарий к товару")
     id = models.BigAutoField(primary_key=True)
@@ -198,7 +198,7 @@ class GoodModerationReport(models.Model):
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedGood, on_delete=models.CASCADE, related_name='good_reports', null=False, verbose_name="Объект")
-    description = models.CharField(max_length=300, null=True, verbose_name="Описание")
+    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
     id = models.BigAutoField(primary_key=True)
 
@@ -249,7 +249,7 @@ class GoodCommentModerationReport(models.Model):
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_comment_reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedGoodComment, on_delete=models.CASCADE, related_name='good_comment_reports', null=False, verbose_name="Объект")
-    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
+    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
     id = models.BigAutoField(primary_key=True)
 

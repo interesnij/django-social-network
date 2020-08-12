@@ -20,8 +20,8 @@ class ModeratedUser(models.Model):
         (STATUS_BANNER_GET, 'Объекту присвоен баннер'),
         (STATUS_REJECTED, 'Отвергнутый'),
     )
-    description = models.TextField(max_length=300, blank=True, null=True, verbose_name="Описание")
-    verified = models.BooleanField(default=False, blank=False, null=False, verbose_name="Проверено")
+    description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
+    verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderated_user', blank=True, verbose_name="Пользователь")
     id = models.BigAutoField(primary_key=True)
@@ -165,7 +165,7 @@ class UserModerationReport(models.Model):
 
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedUser, on_delete=models.CASCADE, related_name='user_reports', null=False, verbose_name="Объект")
-    description = models.CharField(max_length=300, blank=False, null=True, verbose_name="Описание")
+    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
     id = models.BigAutoField(primary_key=True)
 
