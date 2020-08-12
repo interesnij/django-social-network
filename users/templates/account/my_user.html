@@ -10,29 +10,6 @@
 {% endblock %}
 {% block content %}
 
-{% for object in user.get_6_communities %}
-  нужное сообщество {{ object.name }},
-{% endfor %}
-<br>
-{% for object in user.get_6_populate_communities %}
-  популярное сообщество {{ object.name }},
-{% endfor %}
-<br>
-{% for object in user.get_6_default_communities %}
-  дефолтное сообщество {{ object.name }},
-{% endfor %}
-
-{% for object in user.get_6_friends %}
-  нужный друг {{ object.get_full_name }},
-{% endfor %}
-<br>
-{% for object in user.get_6_populate_friends %}
-  популярный друг {{ object.get_full_name }},
-{% endfor %}
-<br>
-{% for object in user.get_6_default_connection %}
-  дефолтный друг {{ object.get_full_name }},
-{% endfor %}
 <div class="mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ user.uuid }}">
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
