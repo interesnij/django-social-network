@@ -27,11 +27,11 @@ def get_template_user(user, folder, template, request_user):
             elif request_user.is_connected_with_user_with_id(user_id=user.pk):
                 template_name = folder + template
                 try:
-                    populate_friend = UserPopulateFriend.objects.get(user=request_user, friend=user)
+                    populate_friend = UserPopulateFriend.objects.get(user=request_user.pk, friend=user.pk)
                     populate_friend.count += 1
                     populate_friend.save(update_fields=['count'])
                 except:
-                    UserPopulateFriend.objects.create(user=request_user, friend=user, count=1)
+                    UserPopulateFriend.objects.create(user=request_user.pk, friend=user.pk, count=1)
             elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                     template_name = folder + template
