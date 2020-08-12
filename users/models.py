@@ -831,7 +831,7 @@ class User(AbstractUser):
         try:
             return self._get_6_populate_communities()
         except:
-            return self._get_pop_communities()
+            return self._get_6_communities()
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')
