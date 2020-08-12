@@ -62,7 +62,7 @@ class CommunityDetail(TemplateView):
                     self.template_name = "c_detail/staff_member_community.html"
                 else:
                     self.template_name = "c_detail/member_community.html"
-                request.user.create_or_plus_populate_friend(self.community.pk)
+                request.user.create_or_plus_populate_community(self.community.pk)
             elif request.user.is_follow_from_community_with_name(self.community.pk):
                 self.template_name = "c_detail/follow_community.html"
             elif request.user.is_community_manager():
