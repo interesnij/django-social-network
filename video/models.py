@@ -165,6 +165,20 @@ class Video(models.Model):
         dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
         return dislikes.count()
 
+    def count_comments(self):
+        parent_comments = VideoComment.objects.filter(video_id=self.pk)
+        parents_count = parent_comments.count()
+        i = 0
+        for comment in parent_comments:
+            i = i + comment.count_replies()
+        i = i + parents_count
+        return i
+
+    def get_comments(self):
+        comments_query = Q(video_id=self.pk)
+        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        return VideoComment.objects.filter(comments_query)
+
 
 class VideoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
