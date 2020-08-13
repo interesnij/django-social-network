@@ -56,7 +56,7 @@
                 {% else %}
                 <div class="card mb-3">
                   <span style="padding: 5px;">
-                    Альбом 
+                    Альбом
                     <a style="text-decoration:underline;" class="ajax" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
                      {{ object.title }}
                     </a>&nbsp;
@@ -96,7 +96,7 @@
                       </a>
                     </span>
                     <div album-uuid="{{ object.uuid }}">
-                      <div class="row pag {% if forloop.last %}last{% endif %}">
+                      <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                       {% for video in object.get_2_videos %}
                         <div class="col-12 col-md-6 c_video_list_detail pointer" data-pk="{{ video.community.pk }}" video-counter="{{ forloop.counter0 }}">
                           {% if video.image %}
@@ -124,7 +124,7 @@
                     </a>
                   </span>
                   <div album-uuid="{{ object.uuid }}">
-                    <div class="row pag {% if forloop.last %}last{% endif %}">
+                    <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                     {% for video in object.get_2_videos %}
                       <div class="col-12 col-md-6 u_video_list_detail pointer" data-pk="{{ video.creator.pk }}" video-counter="{{ forloop.counter0 }}">
                         {% if video.image %}
