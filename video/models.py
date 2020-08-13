@@ -216,7 +216,7 @@ class VideoComment(models.Model):
         return self.video_comment_replies.count()
 
     def likes(self):
-        likes = VideoCommentVotes.objects.filter(video=self, vote__gt=0)
+        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes
 
     def likes_count(self):
@@ -228,15 +228,15 @@ class VideoComment(models.Model):
         return dislikes.count()
 
     def window_likes(self):
-        likes = VideoCommentVotes.objects.filter(video=self, vote__gt=0)
+        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
-        dislikes = VideoCommentVotes.objects.filter(video=self, vote__lt=0)
+        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes
 
     def window_dislikes(self):
-        dislikes = VideoCommentVotes.objects.filter(video=self, vote__lt=0)
+        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes[0:6]
 
     def likes_count(self):
