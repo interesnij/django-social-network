@@ -1,11 +1,18 @@
-{% load liked_user %}
-<h3>{{ object.title }}</h3>
 
-{% include 'u_video_detail/my_card_header.html' %}
-<p>{{ object.description }}</p>
+<br>
+<div class="row">
+  <div class="col-sm-12 col-md-8 col-lg-8">
+    <h3>{{ object.title }}</h3>
 
-{% include 'u_video_detail/info.html' %}
-<div class="u_load_comments"></div>
+    {% include 'u_video_detail/my_card_header.html' %}
+    <p>{{ object.description }}</p>
+
+    {% include 'u_video_detail/info.html' %}
+
+    <div class="u_load_comments"></div>
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-4"></div>
+</div>
 <br>
 <br>
 <br>

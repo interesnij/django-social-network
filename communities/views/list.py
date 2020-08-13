@@ -146,6 +146,36 @@ class CommunityVideo(ListView):
 		return video_list
 
 
+class CommunityVideoList(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
+
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		if self.user == request.user:
+			self.video_list = self.album.get_my_queryset()
+		else: 
+			self.video_list = self.album.get_queryset()
+
+		self.template_name = get_template_community_video(self.user, "c_video_list/", "list.html", request.user)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+		return super(CommunityVideoList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityVideoList,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['album'] = self.album
+		return context
+
+	def get_queryset(self):
+		video_list = self.video_list
+		return video_list
+
+
 class PostsCommunity(ListView):
 	template_name = None
 	paginate_by = 15

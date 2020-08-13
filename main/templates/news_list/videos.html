@@ -22,6 +22,125 @@
                   <img class="col-12 lazyload pag {% if forloop.last %}last{% endif %}" data-src="/static/images/r.jpg" alt="img">
                   <br><br>
                 {% endif %}
+                {% if object.is_user_album %}
+                {% if object.community %}
+                  <div class="card mb-3">
+                    <span style="padding: 5px;">
+                      Новое видео в альбоме
+                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_video_list' pk=object.community.pk uuid=object.uuid %}">
+                       {{ object.title }}
+                      </a>&nbsp;
+                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                        сообщества {{ object.community }}
+                      </a>
+                    </span>
+                    <div album-uuid="{{ object.uuid }}">
+                      <div class="row pag {% if forloop.last %}last{% endif %}">
+                      {% for video in object.get_2_videos %}
+                        <div class="col-12 col-md-6 c_video_list_detail pointer" data-pk="{{ video.community.pk }}" video-counter="{{ forloop.counter0 }}">
+                          {% if video.image %}
+                            <img class="image_fit_200 lazyload" data-src="{{ video.image.url }}" alt="">
+                          {% else %}
+                            <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                            <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                <div class="card mb-3">
+                  <span style="padding: 5px;">
+                    Новое видео в альбоме
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
+                     {{ object.title }}
+                    </a>&nbsp;
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                      {{ object.creator.get_full_name_genitive }}
+                    </a>
+                  </span>
+                  <div album-uuid="{{ object.uuid }}">
+                    <div class="row pag {% if forloop.last %}last{% endif %}">
+                    {% for video in object.get_2_videos %}
+                      <div class="col-12 col-md-6 u_video_list_detail pointer" data-pk="{{ video.creator.pk }}" video-counter="{{ forloop.counter0 }}">
+                        {% if video.image %}
+                          <img class="image_fit_200 lazyload" data-src="{{ video.image.url }}" alt="">
+                        {% else %}
+                          <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                          <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+
+                {% elif object.is_main_album %}
+                {% if object.community %}
+                  <div class="card mb-3">
+                    <span style="padding: 5px;">
+                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_video' pk=object.community.pk %}">
+                       Новое видео
+                      </a>&nbsp;
+                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                        сообщества {{ object.community }}
+                      </a>
+                    </span>
+                    <div album-uuid="{{ object.uuid }}">
+                      <div class="row pag {% if forloop.last %}last{% endif %}">
+                      {% for video in object.get_2_videos %}
+                        <div class="col-12 col-md-6 c_video_list_detail pointer" data-pk="{{ video.community.pk }}" video-counter="{{ forloop.counter0 }}">
+                          {% if video.image %}
+                            <img class="image_fit_200 lazyload" data-src="{{ video.image.url }}" alt="">
+                          {% else %}
+                            <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                            <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                <div class="card mb-3">
+                  <span style="padding: 5px;">
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user_video' pk=object.creator.pk %}">
+                     Новое видео
+                    </a>&nbsp;
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                      {{ object.creator.get_full_name_genitive }}
+                    </a>
+                  </span>
+                  <div album-uuid="{{ object.uuid }}">
+                    <div class="row pag {% if forloop.last %}last{% endif %}">
+                    {% for video in object.get_2_videos %}
+                      <div class="col-12 col-md-6 u_video_list_detail pointer" data-pk="{{ video.creator.pk }}" video-counter="{{ forloop.counter0 }}">
+                        {% if video.image %}
+                          <img class="image_fit_200 lazyload" data-src="{{ video.image.url }}" alt="">
+                        {% else %}
+                          <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                          <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
 
               {% endfor %}
             </span>

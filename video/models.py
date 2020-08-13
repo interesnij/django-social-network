@@ -84,6 +84,9 @@ class VideoAlbum(models.Model):
     def is_user_album(self):
         return self.type == self.ALBUM
 
+    def get_2_videos(self):
+        return self.video_album.filter(is_deleted=False)[:2]
+
 
 class Video(models.Model):
     image = ProcessedImageField(format='JPEG',
