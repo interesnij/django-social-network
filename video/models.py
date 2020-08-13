@@ -166,7 +166,7 @@ class Video(models.Model):
         return dislikes.count()
 
     def count_comments(self):
-        parent_comments = VideoComment.objects.filter(video_id=self.pk)
+        parent_comments = VideoComment.objects.filter(video_comment_id=self.pk)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -175,7 +175,7 @@ class Video(models.Model):
         return i
 
     def get_comments(self):
-        comments_query = Q(video_id=self.pk)
+        comments_query = Q(video_comment_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
         return VideoComment.objects.filter(comments_query)
 
