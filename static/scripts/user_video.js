@@ -116,7 +116,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
       elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
       elem_.setAttribute("video-counter", "0");
       elem_.style.cursor = "pointer";
-      container = document.body.querySelector(".movies_list_in_list");
+      container = document.body.querySelector("#user_video_container");
       container.prepend(elem_);
       try{container.querySelector(".video_none").style.display = "none"}catch{null};
 
