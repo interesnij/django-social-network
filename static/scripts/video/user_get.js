@@ -35,10 +35,10 @@ on('#ajax', 'click', '.u_all_video_reposts', function() {
 
 on('#ajax', 'click', '.u_video_comments', function() {
   clear_comment_dropdown();
-  data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("user-pk");
-  uuid = data.getAttribute("data-uuid");
+  video_display = this.parentElement.parentElement.parentElement;
+  pk = video_display.getAttribute("data-pk");
+  uuid = video_display.getAttribute("data-uuid");
   url = "/video/user_progs/comment/" + uuid + "/" + pk + "/";
-  list_load(data.querySelector(".u_load_comments"), url);
+  list_load(video_display.nextElementSibling, url);
   this.classList.toggle("comments_open");
 });
