@@ -143,6 +143,17 @@ class Video(models.Model):
         dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
 
+    def visits_count_ru(self):
+        count = self.all_visits_count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " просмотр"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " просмотра"
+        else:
+            return str(count) + " просмотров"
+
     def all_visits_count(self):
         from stst.models import VideoNumbers
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()

@@ -45,7 +45,7 @@
                           {% endif %}
                           <div class="card-body">
                             <h5 class="text-truncate w-100">{{ video.title }}</h5>
-                            <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                            <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
                           </div>
                         </div>
                       {% endfor %}
@@ -74,7 +74,7 @@
                         {% endif %}
                         <div class="card-body">
                           <h5 class="text-truncate w-100">{{ video.title }}</h5>
-                          <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
                         </div>
                       </div>
                     {% endfor %}
@@ -105,7 +105,7 @@
                           {% endif %}
                           <div class="card-body">
                             <h5 class="text-truncate w-100">{{ video.title }}</h5>
-                            <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                            <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
                           </div>
                         </div>
                       {% endfor %}
@@ -133,7 +133,7 @@
                         {% endif %}
                         <div class="card-body">
                           <h5 class="text-truncate w-100">{{ video.title }}</h5>
-                          <span class="small">{{ video.get_created }} | {{ video.all_visits_count }}&nbsp;{{ video.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
                         </div>
                       </div>
                     {% endfor %}
