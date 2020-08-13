@@ -33,7 +33,7 @@ on('#ajax', 'click', '.u_all_video_reposts', function() {
   open_fullscreen("/video/window/all_user_reposts/" + uuid + "/", loader)
 });
 
-on('body', 'click', '.u_video_comments', function() {
+on('#video_loader', 'click', '.u_video_comments', function() {
   clear_comment_dropdown();
   video_display = this.parentElement.parentElement.parentElement;
   pk = video_display.getAttribute("data-pk");
