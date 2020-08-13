@@ -1001,6 +1001,13 @@ class User(AbstractUser):
         albums = VideoAlbum.objects.filter(albums_query)
         return albums
 
+    def get_all_video_albums(self):
+        from video.models import VideoAlbum
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums = VideoAlbum.objects.filter(albums_query)
+        return albums
+
     def get_audio_playlists(self):
         from music.models import SoundList
 

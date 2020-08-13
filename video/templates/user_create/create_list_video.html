@@ -50,7 +50,7 @@
                   <div class="form-group">
                     <label>Альбом</label>
                     <select name="album" multiple="">
-                      {% for object in user.get_my_video_albums %}
+                      {% for object in user.get_all_video_albums %}
                         <option value="{{ object.pk }}">{{ object.title }}</option>
                       {% endfor %}
                     </select>
