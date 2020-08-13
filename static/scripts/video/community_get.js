@@ -33,9 +33,9 @@ on('#ajax', 'click', '.c_all_video_reposts', function() {
 
 on('#ajax', 'click', '.c_video_comments', function() {
   clear_comment_dropdown();
-  data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk");
-  uuid = data.getAttribute("data-uuid");
+  video_display = this.parentElement.parentElement.parentElement;
+  pk = video_display.getAttribute("data-pk");
+  uuid = video_display.getAttribute("data-uuid");
   url = "/video/community_progs/comment/" + uuid + "/" + pk + "/";
   list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
