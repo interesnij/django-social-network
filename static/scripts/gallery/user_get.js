@@ -81,14 +81,12 @@ on('#ajax', 'click', '#add_album', function() {
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('photo-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_all_photo_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('photo-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader)
 });
@@ -107,8 +105,7 @@ on('#ajax', 'click', '.u_all_photo_comment_dislikes', function() {
 });
 
 on('#ajax', 'click', '.u_all_photo_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_user_reposts/" + uuid + "/", loader)
 });
