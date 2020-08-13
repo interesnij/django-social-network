@@ -138,7 +138,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
+    ajax_link.open( 'POST', "/video/user_progs/create_list/" + pk + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
