@@ -214,7 +214,7 @@ class UserVideoListCreate(View):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
-            return render(request, 'u_video_list/my_list.html',{'album': new_album, 'user': request.user})
+            return render(request, 'user_video_list/my_list.html',{'album': new_album, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
