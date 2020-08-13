@@ -81,7 +81,7 @@ on('#ajax', 'click', '#add_album', function() {
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('photo-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
