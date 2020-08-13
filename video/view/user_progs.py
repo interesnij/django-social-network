@@ -55,7 +55,7 @@ class VideoCommentUserCreate(View):
                 from common.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
                 get_comment_attach(request, new_comment, "video_comment")
-                if request.user.pk != photo_comment.creator.pk:
+                if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render(request, 'u_video_comment/my_parent.html',{'comment': new_comment})
             else:
