@@ -71,6 +71,7 @@ function like_reload(like_block, dislike_block, _class){
     value = dislike_block.querySelector('[data-count=dislike]').innerHTML;
     value = value*1;
     value -= 1;
+    dislike_block.querySelector('.pointer').innerHTML = "Всего не одобрили :<span data-count='dislike'> " + value + "</span>";
   }
     console.log("удаляем пользователя из дизлайков")
   }
@@ -134,7 +135,7 @@ function dislike_reload(like_block, dislike_block, _class){
       $figure.append($img)
       $a.append($figure);
       all_dislikes.nextElementSibling.prepend($a);
-      value = all_dislikes.querySelector('[data-count=like]').innerHTML;
+      value = all_dislikes.querySelector('[data-count=dislike]').innerHTML;
       value = value*1;
       value += 1;
       dislike_block.querySelector('.pointer').innerHTML = "Всего не одобрили :<span data-count='dislike'> " + value + "</span>";
@@ -148,6 +149,7 @@ function dislike_reload(like_block, dislike_block, _class){
     value = like_block.querySelector('[data-count=like]').innerHTML;
     value = value*1;
     value -= 1
+    like_block.querySelector('.pointer').innerHTML = "Всего одобрили :<span data-count='like'> " + value + "</span>";
   }
   console.log("удаляем пользователя из дизлайков")
   }
