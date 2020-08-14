@@ -252,7 +252,7 @@ function like_reload(like_block, dislike_block, _class){
         value -= 1;
         like_block.querySelector('[data-count=like]').innerHTML = value;
         console.log("удаляем пользователя из лайков");
-      if (!like_block.querySelector('figure')){ {
+      if (!like_block.querySelector('figure')) {
         like_block.innerHTML = ""
         console.log("удаляем блок лайков");
       }
