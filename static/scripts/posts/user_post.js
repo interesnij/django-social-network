@@ -206,6 +206,7 @@ function like_block_create(_class, user_pk){
   $span1.innerHTML = "Одобрил 1 человек";
   $span2 = document.createElement("span");
   $span2.style.display = "flex";
+  $span2.style.marginTop = "10px";
   $img = document.createElement("img");
   $img.src = user_img;
   $img.style.borderRadius = "50%";
