@@ -246,16 +246,16 @@ function like_reload(like_block, dislike_block, _class){
     like_block.append(div)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
-      if (!like_block.querySelector('figure')){
-        like_block.innerHTML = ""
-        console.log("удаляем блок лайков");
-      } else {
+      if (like_block.querySelector('figure')){
         like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
         value = like_block.querySelector('[data-count=like]').innerHTML;
         value = value*1;
         value -= 1;
         like_block.querySelector('[data-count=like]').innerHTML = value;
         console.log("удаляем пользователя из лайков");
+      } else {
+        like_block.innerHTML = ""
+        console.log("удаляем блок лайков");
       }
   }
   else {
