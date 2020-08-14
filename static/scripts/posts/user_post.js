@@ -246,9 +246,8 @@ function like_reload(like_block, dislike_block, _class){
   }
   else {
       all_likes = like_block.querySelector('.pointer');
-      a = document.createElement("a");
       a = user_vote_thumb_create(user_pk);
-      all_likes.nextElementSibling.prepend(a.innerHTML);
+      all_likes.nextElementSibling.prepend(a);
       value = all_likes.querySelector('[data-count=like]').innerHTML;
       value = value*1;
       value += 1;
