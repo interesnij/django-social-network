@@ -243,7 +243,6 @@ function like_reload(like_block, dislike_block, _class){
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
     $div = document.createElement("div");
-    $div.style.paddingRight = "div";
     $a = document.createElement("a");
     $a.style.paddingRight = "10px";
     $a.setAttribute("data-pk", user_pk);
