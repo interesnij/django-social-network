@@ -244,7 +244,7 @@ function like_reload(like_block, dislike_block, _class){
       all_likes = like_block.querySelector('.pointer');
       a = user_vote_thumb_create(user_pk)
       all_likes.nextElementSibling.prepend(a);
-      value = all_likes.querySelector('[data-count=like]').innerHTML;
+      value = like_block.querySelector('[data-count=like]').innerHTML;
       value = value*1;
       value += 1;
       console.log("создаем пользователя в лайках")
