@@ -208,7 +208,7 @@ function like_reload(like_block, dislike_block){
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
      dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
    }
-   !like_block.innerHTML ? like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ) ?
+   like_block.innerHTML ? like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ) ?
                                 like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
                                 :  console.log("добавляем пользователя")
                          : console.log("создаем блок")
