@@ -1,3 +1,7 @@
+#user_goods_container .border{
+  padding-top: 15px;
+}
+
 .like_window div, .dislike_window div {
   margin:15px
 }
@@ -2661,12 +2665,16 @@ body.dragging * {
   font-size: 1.2em;
   line-height: 1.8em;
   font-weight: normal;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .card .card-subtitle {
   font-size: 0.9em;
   line-height: 1em;
   font-weight: normal;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .card .card-text {
