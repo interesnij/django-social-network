@@ -219,9 +219,8 @@ function user_vote_thumb_create(user_pk){
   $figure.style.margin = "0";
   $figure.title = user_name;
   $figure.append($img)
-  a.append($figure);
-  console.log(user_img);
-  return a
+  $a.append($figure);
+  return $a
 }
 function like_reload(like_block, dislike_block, _class){
   user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
