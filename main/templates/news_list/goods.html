@@ -28,7 +28,7 @@
                         {{ object.community }}
                     </a>
                 </span>
-                <div class="ccol-12 border c_good_detail pag mb-3 {% if forloop.last %}last{% endif %}" data-pk="{{ obect.community.pk }}" good-uuid="{{ object.uuid }}">
+                <div class="col-12 c_good_detail pag mb-3 {% if forloop.last %}last{% endif %}" data-pk="{{ object.community.pk }}" good-uuid="{{ object.uuid }}">
                     <div class="row align-items-center no-gutters pointer">
                         <div class="col">
                             <div class="text-center">
@@ -52,7 +52,7 @@
                         {{ object.creator.get_full_name_genitive }}
                     </a>
                 </span>
-                <div class="col-12 border u_good_detail mb-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ obect.creator.pk }}" good-uuid="{{ object.uuid }}">
+                <div class="col-12 u_good_detail mb-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.creator.pk }}" good-uuid="{{ object.uuid }}">
                     <div class="row align-items-center no-gutters pointer">
                         <div class="col">
                             <div class="text-center">
