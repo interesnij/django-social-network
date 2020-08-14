@@ -192,7 +192,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 
-function block_vote_create(_class, user_pk){
+function like_block_create(_class, user_pk){
   userpic = document.body.querySelector(".userpic");
   userpic.querySelector("img") ? user_img = userpic.querySelector("img") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   user_name = userpic.getAttribute("data-name");
@@ -206,13 +206,25 @@ function block_vote_create(_class, user_pk){
   div.append(span1); div.append(span2);
   return div
 }
+user_vote_thumb_create(user_pk){
+  userpic = document.body.querySelector(".userpic");
+  userpic.querySelector("img") ? user_img = userpic.querySelector("img") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  user_name = userpic.getAttribute("data-name");
+  div = document.createElement("div");
+  a = document.createElement("a");
+  a.style.paddingRight = "10px";
+  a.setAttribute("data-pk", user_pk)
+  a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure>';
+  div.append(a);
+  return div
+}
 function like_reload(like_block, dislike_block, _class){
   user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
     div = document.createElement("div");
     div.style.margin = "15px";
-    div.innerHTML = block_vote_create(_class, user_pk);
+    div.innerHTML = like_block_create(_class, user_pk);
     like_block.append(div)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
@@ -221,18 +233,27 @@ function like_reload(like_block, dislike_block, _class){
         console.log("удаляем блок лайков");
       } else {
         like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
-        console.log("удаляем пользователя из лайков");
         value = like_block.querySelector('[data-count=like]').innerHTML;
-        value = value*1,
-        value -= 1,
+        value = value*1;
+        value -= 1;
         like_block.querySelector('[data-count=like]').innerHTML = value;
+        console.log("удаляем пользователя из лайков");
       }
   }
   else {
+      all_likes = like_block.querySelector('.pointer');
+      a = user_vote_thumb_create(user_pk)
+      all_likes.nextElementSibling.prepend(a);
+      value = all_likes.querySelector('[data-count=like]').innerHTML;
+      value = value*1;
+      value += 1;
       console.log("создаем пользователя в лайках")
   }
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
-    dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+    dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove();
+    value = dislike_block.querySelector('[data-count=dislike]').innerHTML;
+    value = value*1;
+    value -= 1;
     console.log("удаляем пользователя из дизлайков")
     if (dislike_block.querySelector('figure')){
       dislike_block.innerHTML = ""
