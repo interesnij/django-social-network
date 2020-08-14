@@ -208,11 +208,12 @@ function block_vote_create(_class){
   span2.style.display = "flex";
   span2.innerHTML = '<a style="padding-right:10px" data-pk="' + user_pk + '"><figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure></a>';
   div.append(span1); div.append(span2)
+  return div
 }
 function like_reload(like_block, dislike_block, _class){
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
-    block_vote_create(_class)
+    like_block.innerHTML = block_vote_create(_class)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       if (like_block.querySelector('figure')){
