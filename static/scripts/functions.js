@@ -114,7 +114,7 @@ function dislike_reload(like_block, dislike_block, _class){
         dislike_block.innerHTML = ""
         console.log("удаляем блок дизлайков");
       } else {
-        value = dislike_block.querySelector('[data-count=like]').innerHTML;
+        value = dislike_block.querySelector('[data-count=dislike]').innerHTML;
         value = value*1;
         value -= 1;
         dislike_block.querySelector('.pointer').innerHTML = "Всего не одобрили :<span data-count='like'> " + value + "</span>";
