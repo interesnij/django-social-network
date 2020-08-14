@@ -15,10 +15,10 @@
 
           <span class="like_window">
             {% if object.window_likes %}
-          <div class="like_pop" style="margin:15px">
-            <span class="u_all_video_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+          <div class="like_pop">
+            <span class="u_all_video_likes pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
-            <span style="display: flex;">
+            <span style="display: flex;margin-top: 10px;">
               {% for heart in object.window_likes %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
@@ -42,10 +42,10 @@
 
           <span class="dislike_window">
             {% if object.window_dislikes %}
-          <div class="dislike_pop" style="margin:15px">
-            <span class="c_all_video_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+          <div class="dislike_pop">
+            <span class="c_all_video_dislike pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
-            <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
+            <span style="display: flex;margin-top: 10px;" title="{{ sheet.user.get_full_name }}">
               {% for sheet in object.window_dislikes %}
               <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
