@@ -281,8 +281,18 @@ function like_reload(like_block, dislike_block, _class){
   }
   else {
       all_likes = like_block.querySelector('.pointer');
-      a = user_vote_thumb_create(user_pk);
-      all_likes.nextElementSibling.prepend(a);
+      $a = document.createElement("a");
+      $a.style.paddingRight = "10px";
+      $a.setAttribute("data-pk", user_pk);
+      $img = document.createElement("img");
+      $img.src = user_img;
+      $img.style.borderRadius = "50%";
+      $figure = document.createElement("figure");
+      $figure.style.margin = "0";
+      $figure.title = user_name;
+      $figure.append($img)
+      $a.append($figure);
+      all_likes.nextElementSibling.prepend($a);
       value = all_likes.querySelector('[data-count=like]').innerHTML;
       value = value*1;
       value += 1;
