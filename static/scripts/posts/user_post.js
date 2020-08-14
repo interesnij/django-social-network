@@ -214,7 +214,7 @@ function like_reload(like_block, dislike_block){
       like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
       console.log("удаляем пользователя из лайков")
   }
-  else if {
+  else {
       console.log("создаем пользователя в лайках")
   }
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
