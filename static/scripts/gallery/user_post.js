@@ -106,16 +106,14 @@ on('#ajax', 'click', '.u_photo_like', function() {
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
-  like_reload("/gallery/window/u_like_window/" + uuid + "/", this.nextElementSibling);
-  //dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling.nextElementSibling.nextElementSibling);
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_likes");
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = photo.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
-  like_reload("/gallery/window/u_like_window/" + uuid + "/", this.previousElementSibling);
-  //dislike_reload("/gallery/window/u_dislike_window/" + uuid + "/", this.nextElementSibling);
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_dislikes");
 });
 on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;
@@ -123,7 +121,7 @@ on('#ajax', 'click', '.u_photo_like2', function() {
   comment_pk = photo.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/gallery/window/u_comment_like_window/" + comment_pk + "/", "/gallery/window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_comment_likes")
 });
 on('#ajax', 'click', '.u_photo_dislike2', function() {
   _this = this;
@@ -131,7 +129,7 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   comment_pk = photo.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/gallery/window/u_comment_like_window/" + comment_pk + "/", "/gallery/window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
 on('body', 'click', '#u_add_multi_photos', function(event) {

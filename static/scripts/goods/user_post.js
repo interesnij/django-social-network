@@ -122,14 +122,14 @@ on('#ajax', 'click', '.u_good_like', function() {
   pk = block.getAttribute("data-pk");
   uuid = block.getAttribute("data-uuid");
   send_like(block, "/goods/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/goods/window/u_like_window/" + uuid + "/", "/goods/window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_good_likes");
 });
 on('#ajax', 'click', '.u_good_dislike', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
   uuid = block.getAttribute("data-uuid");
   send_dislike(block, "/goods/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/goods/window/u_like_window/" + uuid + "/", "/goods/window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_dislikes");
 });
 on('#ajax', 'click', '.u_good_like2', function() {
   _this = this;
@@ -137,7 +137,7 @@ on('#ajax', 'click', '.u_good_like2', function() {
   comment_pk = good.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(good, "/goods/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/goods/window/u_comment_like_window/" + comment_pk + "/", "/goods/window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_good_comment_likes")
 });
 on('#ajax', 'click', '.u_good_dislike2', function() {
   _this = this;
@@ -145,7 +145,7 @@ on('#ajax', 'click', '.u_good_dislike2', function() {
   comment_pk = good.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(good, "/goods/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/goods/window/u_comment_like_window/" + comment_pk + "/", "/goods/window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_comment_dislikes")
 });
 
 

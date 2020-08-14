@@ -101,28 +101,28 @@ on('#ajax', 'click', '.c_good_like', function() {
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_like(good, "/goods/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/goods/window/c_like_window/" + uuid + "/", "/goods/window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_likes");
 });
 on('#ajax', 'click', '.c_good_dislike', function() {
   good = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_dislike(good, "/goods/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/goods/window/c_like_window/" + uuid + "/", "/goods/window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_dislikes");
 });
 on('#ajax', 'click', '.c_good_like2', function() {
   _this = this;
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
   send_like(good, "/goods/votes/community_comment/" + comment_pk + "/like/");
-  vote_reload("/goods/window/c_comment_like_window/" + comment_pk + "/", "/gooda/window/c_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_comment_likes")
 });
 on('#ajax', 'click', '.c_good_dislike2', function() {
   _this = this;
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
   send_dislike(good, "/goods/votes/community_comment/" + comment_pk + "/" + "/dislike/");
-  vote_reload("/goods/window/c_comment_like_window/" + comment_pk + "/", "/goods/window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_comment_dislikes")
 });
 
 on('#ajax', 'click', '#add_good_community_btn', function() {

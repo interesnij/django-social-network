@@ -108,28 +108,28 @@ on('#ajax', 'click', '.c_photo_like', function() {
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/c_like_window/" + uuid + "/", "/gallery/window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_photo_likes");
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   photo = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
   pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/gallery/window/c_like_window/" + uuid + "/", "/gallery/window/c_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_photo_dislikes");
 });
 on('#ajax', 'click', '.c_photo_like2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
   send_like(photo, "/gallery/votes/community_comment/" + comment_pk + "/like/");
-  vote_reload("/gallery/window/c_comment_like_window/" + comment_pk + "/", "/gallery/window/c_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_comment_likes")
 });
 on('#ajax', 'click', '.c_photo_dislike2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/community_comment/" + comment_pk + "/" + "/dislike/");
-  vote_reload("/gallery/window/c_comment_like_window/" + comment_pk + "/", "/gallery/window/c_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
 on('body', 'click', '#c_add_multi_photos', function(event) {
