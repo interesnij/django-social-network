@@ -223,6 +223,9 @@ function like_reload(like_block, dislike_block){
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
     dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
     console.log("удаляем пользователя из дизлайков")
+    if (dislike_block.querySelector('figure'){
+      dislike_block.innerHTML = ""
+    }
   }
 }
 function dislike_reload(like_block, dislike_block){
