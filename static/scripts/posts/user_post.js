@@ -211,10 +211,12 @@ function like_reload(like_block, dislike_block){
     console.log("создаем блок лайков")
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
-      like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
-      console.log("удаляем пользователя из лайков");
       if (like_block.querySelector('figure')){
         like_block.innerHTML = ""
+        console.log("удаляем создаем лайков");
+      } else {
+        like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+        console.log("удаляем пользователя из лайков");
       }
   }
   else {
