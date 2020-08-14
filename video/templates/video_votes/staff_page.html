@@ -1,10 +1,9 @@
 {% load liked_user %}
 
 {% if likes %}
-<div class="like_pop" style="margin:15px">
-  <span class="{{ class_name }}" style="cursor:pointer">{{ text }} {{ likes.count }} {{ likes.count|rupluralize:"человек,человека,людей" }}</span>
-  <br><br>
-  <span style="display: flex;">
+<div class="like_pop">
+  <span class="{{ class_name }} pointer">{{ text }} {{ likes.count }} {{ likes.count|rupluralize:"человек,человека,людей" }}</span>
+  <span style="display: flex;margin-top: 10px;">
     {% for heart in likes %}
     <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
