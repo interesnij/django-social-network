@@ -15,7 +15,8 @@
           <span class="like_window">
             {% if object.window_likes %}
           <div class="like_pop">
-            <span class="u_all_posts_likes pointer" style="margin-bottom:10px">Оценили: <span data-count="like">{{ object.likes.count }}</span> {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+            <span class="u_all_posts_likes pointer">Оценили: <span data-count="like">{{ object.likes.count }}</span> {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+            <br>
             <span style="display: flex;">
               {% for heart in object.window_likes %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
@@ -41,6 +42,7 @@
           {% if object.window_dislikes %}
         <div class="dislike_pop">
           <span class="u_all_posts_dislikes pointer" style="margin-bottom:10px">Не оценили: <span data-count="dislike">{{ object.dislikes.count }}</span> {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+          <br>
           <span style="display: flex;">
             {% for sheet in object.window_dislikes %}
             <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
