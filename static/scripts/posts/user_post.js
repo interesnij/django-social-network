@@ -207,12 +207,15 @@ function like_reload(like_block, dislike_block){
   user_name = userpic.getAttribute("data-name");
   console.log(like_block);
   console.log(dislike_block);
-  if (!like_block.firstChild){
+  if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков")
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
-      console.log("удаляем пользователя из лайков")
+      console.log("удаляем пользователя из лайков");
+      if (like_block.querySelector('figure'){
+        like_block.innerHTML = ""
+      }
   }
   else {
       console.log("создаем пользователя в лайках")
