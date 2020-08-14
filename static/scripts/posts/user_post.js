@@ -254,7 +254,7 @@ function like_reload(like_block, dislike_block, _class){
         value = like_block.querySelector('[data-count=like]').innerHTML;
         value = value*1;
         value -= 1;
-        like_block.querySelector('.pointer').innerHTML = "Всего одобрили :" + value;
+        like_block.querySelector('.pointer').innerHTML = "Всего одобрили :<span data-count='like'>" + value + "</span>";
         console.log("удаляем пользователя из лайков");
       }
   }
@@ -265,7 +265,7 @@ function like_reload(like_block, dislike_block, _class){
       value = all_likes.querySelector('[data-count=like]').innerHTML;
       value = value*1;
       value += 1;
-      all_likes.querySelector('[data-count=like]').innerHTML = value;
+      like_block.querySelector('.pointer').innerHTML = "Всего одобрили :<span data-count='like'>" + value + "</span>";
       console.log("создаем пользователя в лайках")
   }
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
