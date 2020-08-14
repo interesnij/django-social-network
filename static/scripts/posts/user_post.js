@@ -213,7 +213,7 @@ function like_reload(like_block, dislike_block){
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
       console.log("удаляем пользователя из лайков");
-      if (like_block.querySelector('figure'){
+      if (like_block.querySelector('figure')){
         like_block.innerHTML = ""
       }
   }
@@ -223,7 +223,7 @@ function like_reload(like_block, dislike_block){
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
     dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
     console.log("удаляем пользователя из дизлайков")
-    if (dislike_block.querySelector('figure'){
+    if (dislike_block.querySelector('figure')){
       dislike_block.innerHTML = ""
     }
   }
