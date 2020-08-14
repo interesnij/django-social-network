@@ -229,6 +229,7 @@ function dislike_reload(like_block, dislike_block){
   user_name = userpic.getAttribute("data-name");
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
       dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+      console.log("добавляем пользователя")
     } else{
       console.log("добавляем пользователя")
     }
