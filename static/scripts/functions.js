@@ -65,13 +65,14 @@ function like_reload(like_block, dislike_block, _class){
   }
   if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
     dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove();
+    if (!dislike_block.querySelector('figure')){
+      dislike_block.innerHTML = ""
+    } else {
     value = dislike_block.querySelector('[data-count=dislike]').innerHTML;
     value = value*1;
     value -= 1;
+  }
     console.log("удаляем пользователя из дизлайков")
-    if (!dislike_block.querySelector('figure')){
-      dislike_block.innerHTML = ""
-    }
   }
 }
 function dislike_reload(like_block, dislike_block, _class){
@@ -141,13 +142,14 @@ function dislike_reload(like_block, dislike_block, _class){
   }
   if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
     like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove();
-    value = like_block.querySelector('[data-count=like]').innerHTML;
-    value = value*1;
-    value -= 1;
-    console.log("удаляем пользователя из дизлайков")
     if (!like_block.querySelector('figure')){
       like_block.innerHTML = ""
-    }
+    } else{
+    value = like_block.querySelector('[data-count=like]').innerHTML;
+    value = value*1;
+    value -= 1
+  }
+  console.log("удаляем пользователя из дизлайков")
   }
 }
 
