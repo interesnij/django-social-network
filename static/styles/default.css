@@ -1,6 +1,9 @@
 .like_window div, .dislike_window div {
   margin:15px
 }
+.comment_like_window div, .comment_dislike_window div {
+  margin:10px
+}
 
 #c_photos_container .pag,
 #photos_container .pag {

@@ -37,7 +37,7 @@
                           <span class="c_all_photo_comment_likes pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <span style="display: flex;margin-top: 10px;">
                               {% for heart in reply.window_likes %}
-                              <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                              <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
                                 <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                                   {% if heart.user.get_avatar %}
                                     <img src="{{ heart.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">
@@ -63,7 +63,7 @@
                   <span class="c_all_photo_comment_dislikes pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <span style="display: flex;margin-top: 10px;">
                     {% for sheet in reply.window_dislikes %}
-                    <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                    <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ sheet.user.pk }}">
                       <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                         {% if sheet.user.get_avatar %}
                           <img src="{{ sheet.user.get_avatar }}" style="border-radius: 50px;width:50px;" alt="image">

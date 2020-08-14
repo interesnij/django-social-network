@@ -213,7 +213,7 @@ on('#ajax', 'click', '.u_like2', function() {
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.nextElementSibling, _this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_comment_likes")
 });
 on('#ajax', 'click', '.u_dislike2', function() {
   _this = this;
@@ -221,7 +221,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  vote_reload("/posts/item_window/u_comment_like_window/" + comment_pk + "/", "/posts/item_window/u_comment_dislike_window/" + comment_pk + "/", _this.previousElementSibling, _this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_comment_dislikes")
 });
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
