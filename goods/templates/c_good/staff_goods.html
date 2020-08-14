@@ -32,7 +32,7 @@
             <div class="row" id="community_goods_container community_block_paginate" data-link="/goods/community/goods/{{ user.uuid }}/">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-4 u_good_detail pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}" style="cursor:pointer">
+              <div class="col-md-4 u_good_detail pag pointer {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}">
                       <div class="">
                           <div class="row align-items-center no-gutters">
                               <div class="col">
