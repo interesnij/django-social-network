@@ -213,7 +213,7 @@ function like_reload(like_block, dislike_block, _class){
   user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
-    div = block_vote_create(_class, user_pk;
+    div = block_vote_create(_class, user_pk);
     like_block.innerHTML = div
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
