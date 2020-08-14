@@ -215,7 +215,7 @@ function user_vote_thumb_create(user_pk){
   a.style.paddingRight = "10px";
   a.setAttribute("data-pk", user_pk)
   a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure>';
-  div.append(a);
+  div.innerHTML = a;
   return div
 }
 function like_reload(like_block, dislike_block, _class){
