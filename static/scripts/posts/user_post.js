@@ -206,7 +206,7 @@ function like_reload(like_block, dislike_block){
   user_pk = userpic.getAttribute("data-pk");
   user_name = userpic.getAttribute("data-name");
 
-  if (like_block.innerHTML){
+  if (like_block.firstChild){
     if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
       console.log("удаляем пользователя из лайков")
