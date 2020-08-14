@@ -193,9 +193,6 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
 })
 
 function like_block_create(_class, user_pk){
-  userpic = document.body.querySelector(".userpic");
-  userpic.querySelector("img") ? user_img = userpic.querySelector("img").getAttribute("data-src") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
-  user_name = userpic.getAttribute("data-name");
   $div = document.createElement("div");
   $div.style.paddingRight = "div";
   $a = document.createElement("a");
@@ -238,13 +235,38 @@ function user_vote_thumb_create(user_pk){
   return $a
 }
 function like_reload(like_block, dislike_block, _class){
+  userpic = document.body.querySelector(".userpic");
+  userpic.querySelector("img") ? user_img = userpic.querySelector("img").getAttribute("data-src") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  user_name = userpic.getAttribute("data-name");
   user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
+
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
-    div = document.createElement("div");
-    div.style.margin = "15px";
-    div = like_block_create(_class, user_pk);
-    like_block.append(div)
+    $div = document.createElement("div");
+    $div.style.paddingRight = "div";
+    $a = document.createElement("a");
+    $a.style.paddingRight = "10px";
+    $a.setAttribute("data-pk", user_pk);
+    $span1 = document.createElement("span");
+    $span1.classList.add(_class, "pointer");
+    $span1.innerHTML = "Одобрил 1 человек";
+    $span2 = document.createElement("span");
+    $span2.style.display = "flex";
+    $span2.style.marginTop = "10px";
+    $img = document.createElement("img");
+    $img.src = user_img;
+    $img.style.borderRadius = "50%";
+    $figure = document.createElement("figure");
+    $figure.style.margin = "0";
+    $figure.title = user_name;
+    $figure.append($img)
+    $a.append($figure);
+    $span2.append($a);
+    $div.append($span1);
+    $div.append($span2);
+    $div = document.createElement("div");
+    $div.style.margin = "15px";
+    like_block.append($div)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
         like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
