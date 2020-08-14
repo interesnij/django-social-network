@@ -243,7 +243,7 @@ function like_reload(like_block, dislike_block, _class){
   else {
       all_likes = like_block.querySelector('.pointer');
       a = document.createElement("a");
-      a.innerHTML = user_vote_thumb_create(user_pk)
+      a.innerHTML = user_vote_thumb_create(user_pk).innerHTML
       all_likes.nextElementSibling.prepend(a);
       value = all_likes.querySelector('[data-count=like]').innerHTML;
       value = value*1;
