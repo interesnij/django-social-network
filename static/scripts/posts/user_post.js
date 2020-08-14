@@ -215,7 +215,7 @@ function like_reload(like_block, dislike_block, _class){
     div.classList.add("like_pop");
     div.style.margin = "15px";
     div.innerHTML = block_vote_create(_class, user_pk);
-    like_block.innerHTML = div
+    like_block.append(div)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       if (like_block.querySelector('figure')){
