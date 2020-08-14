@@ -254,7 +254,7 @@ function like_reload(like_block, dislike_block, _class){
         value = like_block.querySelector('[data-count=like]').innerHTML;
         value = value*1;
         value -= 1;
-        like_block.querySelector('[data-count=like]').innerHTML = value;
+        like_block.querySelector('.pointer').innerHTML = "Всего одобрили :" + value;
         console.log("удаляем пользователя из лайков");
       }
   }
