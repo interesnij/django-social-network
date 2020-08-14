@@ -214,7 +214,7 @@ function user_vote_thumb_create(user_pk){
   a.style.paddingRight = "10px";
   a.setAttribute("data-pk", user_pk);
   $img = document.createElement("img");
-  $img.setAttribute("data-src", user_img);
+  $img.src = user_img;
   a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + $img + '</figure>';
   return a
 }
