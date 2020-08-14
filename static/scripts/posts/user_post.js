@@ -192,23 +192,27 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 
-function user_vote_create(){
-  div = document.createElement("div");
-  div.classList.add(_class);
-  div.style.margin = "15px";
-
-  span1 = document.createElement("span");
-  span1.classList.add(_class2);
-}
-function like_reload(like_block, dislike_block){
+function block_vote_create(_class){
   userpic = document.body.querySelector(".userpic");
   userpic.querySelector(".img") ? user_img = userpic.querySelector(".img") : user_img = '<svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   user_pk = userpic.getAttribute("data-pk");
   user_name = userpic.getAttribute("data-name");
-  console.log(like_block);
-  console.log(dislike_block);
+  div = document.createElement("div");
+  div.classList.add("like_pop");
+  div.style.margin = "15px";
+
+  span1 = document.createElement("span");
+  span1.classList.add(_class, "pointer");
+  span1.innerHTML = "Одобрил 1 человек";
+  span2 = document.createElement("span");
+  span2.style.display = "flex";
+  span2.innerHTML = '<a style="padding-right:10px" data-pk="' + user_pk + '"><figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure></a>';
+  div.append(span1); div.append(span2)
+}
+function like_reload(like_block, dislike_block, _class){
   if (!like_block.querySelector('figure')){
-    console.log("создаем блок лайков")
+    console.log("создаем блок лайков");
+    block_vote_create(_class)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       if (like_block.querySelector('figure')){
@@ -230,31 +234,13 @@ function like_reload(like_block, dislike_block){
     }
   }
 }
-function dislike_reload(like_block, dislike_block){
-  userpic = document.body.querySelector(".userpic");
-  userpic.querySelector(".img") ? user_img = userpic.querySelector(".img") : user_img = '<svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
-  user_pk = userpic.getAttribute("data-pk");
-  user_name = userpic.getAttribute("data-name");
-  if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
-      dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
-      console.log("добавляем пользователя")
-    } else{
-      console.log("добавляем пользователя")
-    }
-  if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
-     like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
-   }
-   if (!dislike_block.innerHTML) {
-     console.log("создаем блок")
-   }
-}
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling);
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_likes");
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
