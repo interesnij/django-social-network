@@ -13,7 +13,7 @@ on('#ajax', 'click', '.c_all_good_dislikes', function() {
 on('#ajax', 'click', '.с_good_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   uuid = this.getAttribute('good-uuid');
-  loader = document.getElementById("item_loader");
+  loader = document.getElementById("good_loader");
   open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
   setTimeout(function() {good_gallery(loader)}, 1000)
 });
