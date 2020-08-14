@@ -263,7 +263,6 @@ function like_reload(like_block, dislike_block, _class){
     $span2.append($a);
     $div.append($span1);
     $div.append($span2);
-    $div = document.createElement("div");
     $div.style.margin = "15px";
     like_block.append($div)
   }
