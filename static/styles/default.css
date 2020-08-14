@@ -1,3 +1,7 @@
+.like_pop, .dislike_pop {
+  margin:15px
+}
+
 #c_photos_container .pag,
 #photos_container .pag {
   cursor:pointer
