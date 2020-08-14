@@ -208,12 +208,14 @@ function like_block_create(_class, user_pk){
 }
 function user_vote_thumb_create(user_pk){
   userpic = document.body.querySelector(".userpic");
-  userpic.querySelector("img") ? user_img = userpic.querySelector("img") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  userpic.querySelector("img") ? user_img = userpic.querySelector("img").getAttribute("data-src") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   user_name = userpic.getAttribute("data-name");
   a = document.createElement("a");
   a.style.paddingRight = "10px";
-  a.setAttribute("data-pk", user_pk)
-  a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure>';
+  a.setAttribute("data-pk", user_pk);
+  $img = document.createElement("img");
+  $img.setAttribute("data-src", user_img);
+  a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + $img + '</figure>';
   return a
 }
 function like_reload(like_block, dislike_block, _class){
