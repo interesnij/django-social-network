@@ -202,7 +202,15 @@ function like_block_create(_class, user_pk){
   span1.innerHTML = "Одобрил 1 человек";
   span2 = document.createElement("span");
   span2.style.display = "flex";
-  span2.innerHTML = '<a style="padding-right:10px" data-pk="' + user_pk + '"><figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure></a>';
+  $img = document.createElement("img");
+  $img.src = user_img;
+  $img.style.borderRadius = "50%";
+  $figure = document.createElement("figure");
+  $figure.style.margin = "0";
+  $figure.title = user_name;
+  $figure.append($img)
+  $a.append($figure);
+  span2.innerHTML = '<a style="padding-right:10px" data-pk="' + user_pk + '"><figure style="margin: 0;" title="' + user_name + '">' + $img + '</figure></a>';
   div.append(span1); div.append(span2);
   return div
 }
@@ -215,6 +223,7 @@ function user_vote_thumb_create(user_pk){
   $a.setAttribute("data-pk", user_pk);
   $img = document.createElement("img");
   $img.src = user_img;
+  $img.style.borderRadius = "50%";
   $figure = document.createElement("figure");
   $figure.style.margin = "0";
   $figure.title = user_name;
