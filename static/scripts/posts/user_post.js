@@ -192,19 +192,62 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 
+function user_vote_create(){
+  div = document.createElement("div");
+  div.classList.add(_class);
+  div.style.margin = "15px";
+
+  span1 = document.createElement("span");
+  span1.classList.add(_class2);
+}
+function like_reload(like_block, dislike_block){
+  userpic = document.body.querySelector(".userpic");
+  userpic.querySelector(".img") ? user_img = userpic.querySelector(".img") : user_img = '<svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  user_pk = userpic.getAttribute("data-pk");
+  user_name = userpic.getAttribute("data-name");
+  if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
+      like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+    } else{
+      console.log("добавляем пользователя")
+    }
+  if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
+     dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+   }
+   if (!like_block.innerHTML) {
+     console.log("создаем блок")
+   }
+}
+function dislike_reload(like_block, dislike_block){
+  userpic = document.body.querySelector(".userpic");
+  userpic.querySelector(".img") ? user_img = userpic.querySelector(".img") : user_img = '<svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  user_pk = userpic.getAttribute("data-pk");
+  user_name = userpic.getAttribute("data-name");
+  if (dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
+      dislike_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+    } else{
+      console.log("добавляем пользователя")
+    }
+  if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )) {
+     like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' ).remove()
+   }
+   if (!dislike_block.innerHTML) {
+     console.log("создаем блок")
+   }
+}
+
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling);
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
-  vote_reload("/posts/item_window/u_like_window/" + uuid + "/", "/posts/item_window/u_dislike_window/" + uuid + "/", this.previousElementSibling, this.nextElementSibling)
+  dislike_reload(this.previousElementSibling, this.nextElementSibling);
 });
 
 on('#ajax', 'click', '.u_like2', function() {
