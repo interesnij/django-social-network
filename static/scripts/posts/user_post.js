@@ -215,7 +215,7 @@ function user_vote_thumb_create(user_pk){
   a.style.paddingRight = "10px";
   a.setAttribute("data-pk", user_pk)
   a.innerHTML = '<figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure>';
-  div.innerHTML = a;
+  div.append(a);
   return div
 }
 function like_reload(like_block, dislike_block, _class){
@@ -242,8 +242,9 @@ function like_reload(like_block, dislike_block, _class){
   }
   else {
       all_likes = like_block.querySelector('.pointer');
-      a = user_vote_thumb_create(user_pk)
-      all_likes.nextElementSibling.prepend(a.innerHTML);
+      a = document.createElement("a");
+      a.innerHTML = user_vote_thumb_create(user_pk)
+      all_likes.nextElementSibling.prepend(a);
       value = all_likes.querySelector('[data-count=like]').innerHTML;
       value = value*1;
       value += 1;
