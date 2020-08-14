@@ -228,7 +228,7 @@ function like_reload(like_block, dislike_block, _class){
     like_block.append(div)
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
-      if (like_block.querySelector('figure')){
+      if (!like_block.querySelector('figure')){
         like_block.innerHTML = ""
         console.log("удаляем блок лайков");
       } else {
@@ -255,7 +255,7 @@ function like_reload(like_block, dislike_block, _class){
     value = value*1;
     value -= 1;
     console.log("удаляем пользователя из дизлайков")
-    if (dislike_block.querySelector('figure')){
+    if (!dislike_block.querySelector('figure')){
       dislike_block.innerHTML = ""
     }
   }
