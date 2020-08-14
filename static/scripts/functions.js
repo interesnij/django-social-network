@@ -311,38 +311,6 @@ function open_fullscreen(url, block) {
   }};
   link.send();
 }
-function like_reload(url, block){
-  _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', url, true );
-  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  _link.onreadystatechange = function () {
-  if ( _link.readyState == 4 && _link.status == 200 ) {
-    span = document.createElement("span");
-    span.innerHTML = _link.responseText;
-    block.innerHTML = "";
-    block.innerHTML = span.innerHTML;
-    console.log(span.innerHTML);
-    console.log(_link.responseText);
-    console.log(block);
-  }}
-  _link.send( null );
-}
-function dislike_reload(url, block){
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url, true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    span = document.createElement("span");
-    span.innerHTML = link.responseText;
-    block.innerHTML = "";
-    block.innerHTML = span.innerHTML;
-    console.log(span.innerHTML);
-    console.log(link.responseText);
-    console.log(block);
-  }}
-  link.send( null );
-}
 
 function send_like(item, link){
   like = item.querySelector(".like");
