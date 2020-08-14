@@ -197,8 +197,6 @@ function block_vote_create(_class, user_pk){
   userpic.querySelector(".img") ? user_img = userpic.querySelector(".img") : user_img = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   user_name = userpic.getAttribute("data-name");
   div = document.createElement("div");
-  div.classList.add("like_pop");
-  div.style.margin = "15px";
 
   span1 = document.createElement("span");
   span1.classList.add(_class, "pointer");
@@ -207,17 +205,17 @@ function block_vote_create(_class, user_pk){
   span2.style.display = "flex";
   span2.innerHTML = '<a style="padding-right:10px" data-pk="' + user_pk + '"><figure style="margin: 0;" title="' + user_name + '">' + user_img + '</figure></a>';
   div.append(span1); div.append(span2);
-  final_div = document.createElement("div");
-  final_div.append(div);
-  return final_div
+  return div
 }
 function like_reload(like_block, dislike_block, _class){
   user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
   if (!like_block.querySelector('figure')){
     console.log("создаем блок лайков");
     div = document.createElement("div");
+    div.classList.add("like_pop");
+    div.style.margin = "15px";
     div.innerHTML = block_vote_create(_class, user_pk);
-    like_block.innerHTML = div.innerHTML
+    like_block.innerHTML = div
   }
   else if (like_block.querySelector( '[data-pk=' + '"' + user_pk + '"' + ']' )){
       if (like_block.querySelector('figure')){
