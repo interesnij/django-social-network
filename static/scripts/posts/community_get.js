@@ -1,7 +1,7 @@
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
-  loader = document.getElementById("item_loader");
+  loader = document.getElementById("votes_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.c_ucm_post_repost', function() {

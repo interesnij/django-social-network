@@ -7,7 +7,7 @@ on('#ajax', 'click', '.fullscreen', function() {
 })
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("votes_loader");
   open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader)
 })
 
