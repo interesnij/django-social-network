@@ -192,9 +192,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
-    def get_favorite_communities(self):
-        return self.favorite_communities.all()
-
     def get_blocked_users(self):
         blocked_users_query = Q(blocked_by_users__blocker_id=self.pk)
         return User.objects.filter(blocked_users_query).distinct()
@@ -202,7 +199,7 @@ class User(AbstractUser):
     def get_staffed_communities(self):
         from communities.models import Community
 
-        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(memberships__user=self, memberships__is_editor=True))
+        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_editor=True))
         return Community.objects.filter(query)
 
         '''''проги для подписчиков  60-109'''''

@@ -31,6 +31,28 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#u_u_post_btn', function() {
+  form_post = document.body.querySelector("#u_u_post_form");
+  form_data = new FormData(form_post);
+  uuid = this.getAttribute("data-uuid")
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  if (document.getElementById('repost_radio_wall').checked) {
+    link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
+  }
+  else if(document.getElementById('repost_radio_community').checked){}
+  else if(document.getElementById('repost_radio_message').checked){};
+
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector(".worker_fullscreen").style.display = "none";
+    document.getElementById("worker_loader").innerHTML="";
+  }}
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '#article_post', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.forms.new_post);

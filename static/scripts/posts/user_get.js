@@ -5,6 +5,16 @@ on('#ajax', 'click', '.fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
+on('#ajax', 'click', '.u_uсm_post_repost', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  loader = document.getElementById("worker_loader");
+  open_fullscreen("/posts/repost/u_uсm_post_window/" + uuid + "/", loader)
+})
+on('#ajax', 'click', '.c_uсm_post_repost', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  loader = document.getElementById("worker_loader");
+  open_fullscreen("/posts/repost/c_uсm_post_window/" + uuid + "/", loader)
+})
 
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");

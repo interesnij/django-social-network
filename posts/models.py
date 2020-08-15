@@ -38,8 +38,8 @@ class Post(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 
     @classmethod
-    def create_post(cls, creator, text, community, comments_enabled, is_signature, status):
-        post = Post.objects.create(creator=creator, text=text, community=community, is_signature=is_signature, comments_enabled=comments_enabled, status=status, )
+    def create_post(cls, creator, text, community, parent, comments_enabled, is_signature, status):
+        post = Post.objects.create(creator=creator, text=text, parent=parent, community=community, is_signature=is_signature, comments_enabled=comments_enabled, status=status, )
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
