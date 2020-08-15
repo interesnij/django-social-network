@@ -13,7 +13,7 @@
     </div>
 
     {% for object in user.get_last_music %}
-    <div data-pk="{{ user.get_music_list_id }}" class="card border-top border-bottom">
+    <div data-pk="{{ user.get_music_list_id }}" class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter0 }}">
                 <figure style="cursor:pointer">

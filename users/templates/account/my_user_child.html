@@ -56,7 +56,7 @@
 
             {% for object in user.get_6_friends %}
 
-            <div class="card border-top border-bottom">
+            <div class="card border-top">
                 <div class="card-body" style="padding:7px;">
                     <div class="media">
                       <a href="{% url 'user' pk=object.pk %}" class="ajax">
@@ -109,7 +109,7 @@
             </div>
 
             {% for object in communities %}
-            <div class="card border-top border-bottom">
+            <div class="card border-top">
                 <div class="card-body">
                     <div class="media">
                       <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
@@ -161,7 +161,7 @@
             </div>
 
             {% for object in user.get_last_music %}
-            <div data-pk="{{ user.get_music_list_id }}" class="card border-top border-bottom">
+            <div data-pk="{{ user.get_music_list_id }}" class="card border-top">
                 <div class="card-body" style="padding:7px;">
                     <div class="media" music-counter="{{ forloop.counter0 }}">
                         <figure style="cursor:pointer">
