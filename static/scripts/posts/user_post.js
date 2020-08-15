@@ -37,11 +37,11 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   uuid = this.getAttribute("data-uuid")
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  if (form_post.getElementById('repost_radio_wall').checked) {
+  if (form_post.querySelector('#repost_radio_wall').checked) {
     link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
   }
-  else if(form_post.getElementById('repost_radio_community').checked){}
-  else if(form_post.getElementById('repost_radio_message').checked){};
+  else if(form_post.querySelector('#repost_radio_community').checked){}
+  else if(form_post.querySelector('#repost_radio_message').checked){};
 
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
