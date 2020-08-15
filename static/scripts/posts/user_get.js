@@ -8,7 +8,8 @@ on('#ajax', 'click', '.fullscreen', function() {
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader)
+  open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader);
+  clear_attach_block();
 })
 
 on('#ajax', 'click', '.u_article_detail', function() {

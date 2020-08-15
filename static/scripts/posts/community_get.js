@@ -7,7 +7,8 @@ on('#ajax', 'click', '.c_fullscreen', function() {
 on('#ajax', 'click', '.c_ucm_post_repost', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/posts/repost/c_ucm_post_window/" + uuid + "/", loader)
+  open_fullscreen("/posts/repost/c_ucm_post_window/" + uuid + "/", loader);
+  clear_attach_block();
 })
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
