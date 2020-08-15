@@ -1,0 +1,39 @@
+{% if user.get_last_video %}
+
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Видео</h6>
+            </div>
+            {{ user.get_video_count }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        <div class="row no-gutters" album-uuid="{{ user.get_generic_video_list_uuid }}">
+          {% for object in user.get_last_video %}
+            <div style="position:relative">
+              <img class="lazyload image_fit_small" data-src="{{ object.image.url }}" alt="">
+              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+              <p>{{ object.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% else %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'user_video_list' pk=user.pk uuid=user.get_generic_video_list_uuid %}" class="ajax">
+                <div class="media-body">
+                    <h4 class="content-color-primary mb-0">Добавьте видео</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -43,7 +43,7 @@
             {% if user.get_online %}
               <i class="text-success">Онлайн</i>
             {% else %}
-              <i style="color:#888888">Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
+              <i>Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
             {% endif %}
             <br><br>
         </div>
