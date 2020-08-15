@@ -4,7 +4,11 @@ on('#ajax', 'click', '.c_fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
-
+on('#ajax', 'click', '.c_ucm_post_repost', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/posts/repost/c_ucm_post_window/" + uuid + "/", loader)
+})
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('data-uuid');

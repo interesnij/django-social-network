@@ -7,13 +7,8 @@ on('#ajax', 'click', '.fullscreen', function() {
 })
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  loader = document.getElementById("worker_loader");
+  loader = document.getElementById("create_loader");
   open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader)
-})
-on('#ajax', 'click', '.c_ucm_post_repost', function() {
-  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/posts/repost/c_ucm_post_window/" + uuid + "/", loader)
 })
 
 on('#ajax', 'click', '.u_article_detail', function() {
