@@ -1,3 +1,28 @@
+<div class="form-group">
+    <div class="custom-control custom-radio">
+        <input type="radio" name="radiogroup-1" {% if object.creator == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
+        <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
+    </div>
+    {% if request.user.get_staffed_communities %}
+    <div class="custom-control custom-radio">
+        <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
+        <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
+    </div>
+    <div id="show_user_staff_communities"></div>
+    {% else %}
+    <div class="custom-control custom-radio">
+        <input type="radio" disabled="disabled" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
+        <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
+    </div>
+    {% endif %}
+
+    <div class="custom-control custom-radio">
+        <input type="radio" name="radiogroup-1"{% if object.creator == request.user %} checked="checked"{% endif %} class="custom-control-input" id="repost_radio_message">
+        <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
+    </div>
+    <div id="show_user_message_members"></div>
+</div>
+
 <div class="card mb-3 border">
         <div class="card-body p-0">
             <textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>

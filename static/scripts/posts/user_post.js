@@ -47,8 +47,8 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".worker_fullscreen").style.display = "none";
-    document.getElementById("worker_loader").innerHTML="";
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
   }}
   link_.send(form_data);
 });
