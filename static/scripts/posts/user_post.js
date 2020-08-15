@@ -31,8 +31,8 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#u_ucm_post_btn', function() {
-  form_post = document.body.querySelector("#u_u_post_form");
+on('#ajax', 'click', '#u_ucm_repost_btn', function() {
+  form_post = document.body.querySelector("#u_uсm_repost_form");
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid")
 
