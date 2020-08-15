@@ -46,7 +46,7 @@ function paginate(link, block_id){
 	if(block.getElementsByClassName('pag').length === (page-1)*15){
 		if (loaded){return};
 		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-		link_3.open( 'GET', link + '/?page=' + page++, true );
+		link_3.open( 'GET', link + '?page=' + page++, true );
 		link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
 		link_3.onreadystatechange = function () {
