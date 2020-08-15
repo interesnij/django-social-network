@@ -23,7 +23,7 @@ class UUCMPostWindow(TemplateView):
         if request.user.is_authenticated and request.is_ajax():
             self.template_name = "repost_window/u_ucm_post.html"
         else:
-            Http404
+            pass
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
