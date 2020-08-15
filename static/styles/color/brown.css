@@ -14,6 +14,12 @@ a {
 .border{
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.border-left {
+  border-left: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+.border-bottom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
 body {
   background-color: #67473c;
   font-size: 1em;

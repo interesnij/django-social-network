@@ -36,6 +36,12 @@ body {
 .border{
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.border-left {
+  border-left: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+.border-bottom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
 .bg-light-opac {
   background-color: #009fda;
 }

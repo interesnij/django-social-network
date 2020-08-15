@@ -46,7 +46,12 @@ body {
 .border{
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
-
+.border-left {
+  border-left: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+.border-bottom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
 .list-group-item.new {
   background-color: rgba(121, 121, 255, 0.05);
 }
