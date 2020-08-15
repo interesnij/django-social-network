@@ -36,21 +36,21 @@ class CUCMPostWindow(TemplateView):
     """
     форма репоста записи сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.is_authenticated and request.is_ajax():
-			self.template_name = "repost_window/c_ucm_post.html"
-		else:
-			Http404
-		return super(CUCMPostWindow,self).get(request,*args,**kwargs)
+        if request.user.is_authenticated and request.is_ajax():
+            self.template_name = "repost_window/c_ucm_post.html"
+        else:
+            Http404
+        return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(CUCMPostWindow,self).get_context_data(**kwargs)
-		context["form"] = PostForm()
-		context["object"] = self.post
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(CUCMPostWindow,self).get_context_data(**kwargs)
+        context["form"] = PostForm()
+        context["object"] = self.post
+        return context
 
 class UUPostRepost(View):
     def post(self, request, *args, **kwargs):
