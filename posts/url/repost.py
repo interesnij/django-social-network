@@ -1,5 +1,5 @@
 from posts.view.repost import *
-from django.conf.urls import url, include
+from django.conf.urls import url
 
 urlpatterns = [
 # u_ucm_post - запись пользователя(u) к себе на стену(u), в сообщество (c) или в сообщения(m)

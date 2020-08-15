@@ -20,10 +20,7 @@ class UUCMPostWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_authenticated and request.is_ajax():
-            self.template_name = "repost_window/u_ucm_post.html"
-        else:
-            pass
+        self.template_name = "repost_window/u_ucm_post.html"
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
