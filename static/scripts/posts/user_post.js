@@ -49,6 +49,7 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     document.querySelector(".votes_fullscreen").style.display = "none";
     document.getElementById("votes_loader").innerHTML="";
+    toast_info("Репост записи на стену")
   }}
   link_.send(form_data);
 });

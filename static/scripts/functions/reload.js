@@ -28,6 +28,7 @@ function scrolled(link, block_id, target){
 	// 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
 	onscroll = function(){
 		_block = document.body.querySelector(block_id);
+		console.log(_block);
 		box = _block.querySelector('.last');
 		if(box && box.classList.contains("last")){
 				inViewport = elementInViewport(box);
@@ -68,7 +69,11 @@ function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
 
 	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#user_tracks_container')){scrolled(block.querySelector('#user_tracks_container').getAttribute("data-link"), '#user_tracks_container', target=0)}
+		if(block.querySelector('#user_tracks_container')){
+			scrolled(block.querySelector('#user_tracks_container').getAttribute("data-link"),
+							 '#user_tracks_container',
+							 target=0)
+			}
 		else if(block.querySelector('#user_tracks_list_container')){scrolled(block.querySelector('#user_tracks_list_container').getAttribute("data-link"), '#user_tracks_list_container', target=0)}
 		else if(block.querySelector('#user_video_container')){scrolled(block.querySelector('#user_video_container').getAttribute("data-link"), '#user_video_container', target=0)}
 		else if(block.querySelector('#friends_container')){scrolled(block.querySelector('#friends_container').getAttribute("data-link"), '#friends_container', target=0)}

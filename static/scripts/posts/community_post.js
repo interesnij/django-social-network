@@ -30,6 +30,29 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#c_ucm_repost_btn', function() {
+  form_post = document.body.querySelector("#c_uсm_repost_form");
+  form_data = new FormData(form_post);
+  uuid = this.getAttribute("data-uuid")
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  if (form_post.querySelector('#repost_radio_wall').checked) {
+    link_.open( 'POST', "/posts/repost/c_u_post_repost/" + uuid + "/", true );
+  }
+  else if(form_post.querySelector('#repost_radio_community').checked){}
+  else if(form_post.querySelector('#repost_radio_message').checked){};
+
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
+    toast_info("Репост записи на стену")
+  }}
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '#c_add_offer_post', function() {
   form_post = document.body.querySelector("#admin_offer_post");
   form_data = new FormData(form_post);
@@ -52,7 +75,7 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
                                                        value += 1,
                                                        document.body.querySelector(".user_draft_count").innerHTML = value)
     : (document.body.querySelector(".draft_post_container").innerHTML = '<div class="card mt-3 user_draft_list"><div class="card-header"><a href="/communities/user_draft/' + pk + '/" class="ajax"><div class="media"><div class="media-body"><h4 class="content-color-primary mb-0">Предложенные записи</h4></div><span class="user_draft_count">1</span></div></a></div></div>',
-    toast_info("Запись предложена,"))
+    toast_info("Запись предложена"))
   }};
   link_.send(form_data);
 });
