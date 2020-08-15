@@ -4,12 +4,12 @@
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Поделиться записью {{ post.creator.get_full_name_genitive }}</h5>
+                <h5 class="content-color-primary mb-0">Поделиться записью {{ object.creator.get_full_name_genitive }}</h5>
             </div>
             <div class="card-body">
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" name="radiogroup-1" {% if user == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
+                                <input type="radio" name="radiogroup-1" {% if object.creator == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
                                 <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                             </div>
                             {% if request.user.get_staffed_communities %}
@@ -26,7 +26,7 @@
                             {% endif %}
 
                             <div class="custom-control custom-radio">
-                                <input type="radio" name="radiogroup-1"{% if user == request.user %} checked="checked"{% endif %} class="custom-control-input" id="repost_radio_message">
+                                <input type="radio" name="radiogroup-1"{% if object.creator == request.user %} checked="checked"{% endif %} class="custom-control-input" id="repost_radio_message">
                                 <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
                             </div>
                             <div id="show_user_message_members"></div>
