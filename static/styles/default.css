@@ -1,4 +1,6 @@
-
+.fullscreen, .c_fullscreen {
+  padding-left: 10px;
+}
 .like_window div, .dislike_window div {
   margin:15px
 }
