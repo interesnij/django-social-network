@@ -259,7 +259,7 @@ class UserVideoInListCreate(View):
             album = VideoAlbum.objects.get(creator_id=user.pk, community=None, type=VideoAlbum.MAIN)
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
-            albums = form_post.cleaned_data.get("album")
+            albums = form_post.cleaned_data.getlist("album")
             new_video.save()
             if not albums:
                 album.video_album.add(new_video)

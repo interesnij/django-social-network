@@ -40,7 +40,13 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   if (form_post.querySelector('#repost_radio_wall').checked) {
     link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
   }
-  else if(form_post.querySelector('#repost_radio_community').checked){}
+  else if(form_post.querySelector('#repost_radio_community').checked){
+    staff_communities = form_post.getElementsByName('choice');
+    for (var i = 0, length = radios.length; i < length; i++) { if (radios[i].checked) {val = radios[i].value; break;}}
+    if (val != "" ) {
+    alert('yeaaa!');
+  } else {alert('o nooo!');}
+  }
   else if(form_post.querySelector('#repost_radio_message').checked){};
 
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
