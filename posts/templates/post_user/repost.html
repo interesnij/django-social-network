@@ -1,7 +1,7 @@
 {% load get_key %}
 
 <span style="margin-left: 5%;" class="border-left" data-uuid="{{ object.parent.uuid }}">
-  <div class="card-header border-bottom">
+  <div class="card-header">
     <div class="media" style="font-size: 0.8em;">
       {% if object.parent.community %}
       <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
@@ -44,6 +44,7 @@
   </div>
   <div class="card-body fullscreen pointer">
     <p class="">{{ object.parent.text }}</p>
+
 
     <div class="attach_container" data-pk="{{ object.pk }}">
       {% for photo in objec.parent.item_photo.all %}

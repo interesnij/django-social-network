@@ -1,17 +1,26 @@
+{% load get_key %}
 
-<span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
-  <div class="card-header border-bottom" style="margin-top: -20px;">
+<span style="margin-left: 5%" class="border-left" data-uuid="{{ object.parent.uuid }}">
+  <div class="card-header" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
-      {% if object.community %}
-      <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+      {% if object.parent.community %}
+      <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
         <figure>
-          {% if object.community.get_avatar %}
-            <img src="{{ object.community.get_avatar.file }}" style="border-radius: 50px;width:40px;" alt="image">
+          {% if object.parent.community.get_avatar %}
+            <img src="{{ object.parent.community.get_avatar }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
             <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
           {% endif %}
         </figure>
       </a>
+      <div class="media-body">
+          <h6 class="mb-0">
+            <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
+              {{ object.community.name }} &nbsp;
+            </a>
+          </h6>
+          <p class="mb-0">{{ object.parent.get_created }}</p>
+      </div>
       {% else %}
       <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
         <figure>
@@ -22,32 +31,102 @@
           {% endif %}
         </figure>
       </a>
+      <div class="media-body">
+          <h6 class="mb-0">
+            <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+              {{ object.parent.creator.get_full_name }} &nbsp;
+            </a>
+          </h6>
+          <p class="mb-0">{{ object.parent.get_created }}</p>
+      </div>
       {% endif %}
-        <div class="media-body">
-            <h6 class="mb-0">
-              {% if object.community %}
-              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
-                {{ object.community.name }} &nbsp;
-              </a>
-              {% else %}
-              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
-                {{ object.parent.creator.get_full_name }} &nbsp;
-              </a>
-              {% endif %}
-              <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
-            </h6>
-            <p class="mb-0">{{ object.parent.get_created }}</p>
-        </div>
     </div>
   </div>
 
   {% if object.parent %}
   <div class="card-body">
+    <p class="">{{ object.parent.text }}</p>
 
-    {% if object.parent.text %}
-      <p class="">{{ object.parent.text }}</p>
-    {% endif %}
-    {% include 'generic/attach/u_post_attach.html' %}
+    <div class="attach_container" data-pk="{{ object.pk }}">
+      {% for photo in objec.parent.item_photo.all %}
+      <div class="photo">
+          <img photo-uuid="{{ photo.uuid }}" data-pk="{{ object.parent.creator.pk }}" class="u_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
+      </div>
+      {% endfor %}
+      {% for video in object.parent.item_video.all %}
+      <div class="video">
+          <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
+          <div class="video_icon_play_v2 u_video_detail" data-pk="{{ object.parent.creator.pk }}" data-uuid="{{ object.uuid }}" video-counter="{{ forloop.counter0 }}"></div>
+      </div>
+      {% endfor %}
+      {% for good in object.parent.item_good.all %}
+      <div class="u_good_detail good" good-uuid="{{ good.uuid }}" style="cursor:pointer" data-pk="{{ object.parent.creator.pk }}">
+        <span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;">
+          <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+          {{ good.title }}
+        </span>
+        {% if good.image %}
+          <img class="image_fit lazyload" data-src="{{ good.image.url }}" alt="img">
+        {% else %}
+          <svg class="image_fit svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        {% endif %}
+      </div>
+      {% endfor %}
+      {% for item in object.parent.attached_item.all %}
+      <div class="article" data-uuid="{{ item.uuid }}" data-pk="{{ object.parent.creator.pk }}">
+        <span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;">
+          <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          {{ item.title}}
+        </span>
+        <div class="text-center u_article_detail" style="cursor:pointer">
+          <div class="align-items-center">
+              {% if item.g_image %}
+                <img class="lazyload image_fit" data-src="{{ item.g_image.url }}" alt="img">
+              {% else %}
+                <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
+              {% endif %}
+          </div>
+       </div>
+      </div>
+      {% endfor %}
+      {% for music in object.parent.item_music.all %}
+      <div class="col-md-12 music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;">
+        <div class="media" music-counter="{{ forloop.counter0 }}">
+            <figure style="cursor:pointer">
+              <a class="music_list_post music_thumb">
+                {% if music.artwork_url %}
+                  <img style="width:30px;heigth:auto" data-src="{{ music.artwork_url }}" class="lazyload" alt="img" />
+                {% else %}
+                  <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                {% endif %}
+              </a>
+            </figure>
+            <div class="media-body" style="display: flex;">
+                <h6 class="music_list_post music_title">
+                  <a>{{ music.title }}</a>
+                </h6>
+                  <span class='span_btn' style="margin-left: auto;" data-pk="{{ object.pk }}">
+                    <span style="cursor:pointer">
+                      {% if not request.user|is_track_exists:music.id %}
+                      <span class='u_track_add' title="Добавить">
+                        <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
+                      </span>
+                      {% else %}
+                      <span class='u_track_remove' title="Удалить">
+                        <svg fill="currentColor" style="width:20px;height:20px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                      </span>
+                      {% endif %}
+                    </span>
+                    &nbsp;
+                    <span style="cursor:pointer" class='u_track_repost' title="Поделиться">
+                      <svg class='svg_default' style="width:20px;height:20px;" fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>
+                    </span>
+                  </span>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
 
   </div>
 {% endif %}
