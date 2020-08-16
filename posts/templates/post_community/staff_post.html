@@ -1,17 +1,17 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
-
     {% include 'post_community/staff_card_header.html' %}
 
     {% if object.parent %}
     {% include 'post_community/repost.html' %}
     {% endif %}
 
-    <div class="c_fullscreen" style="cursor:pointer;padding-left: 15px;">
-      {% if object.text %}
-        <p class="">{{ object.text }}</p>
-      {% endif %}
+    <div class="c_fullscreen pointer">
+      <p class="">{{ object.text }}</p>
     </div>
     {% include 'generic/attach/c_post_attach.html' %}
+    {% if object.parent %}
+      {% include 'post_community/repost.html' %}
+    {% endif %}
 
     {% include 'post_community/info.html' %}
 </div>

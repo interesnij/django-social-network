@@ -1,17 +1,12 @@
 <div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
-
     {% include 'post_community/staff_card_header.html' %}
 
-    {% if object.parent %}
-    {% include 'post_community/repost.html' %}
-    {% endif %}
+    <p class="">{{ object.text }}</p>
 
-    <div style="padding-left: 15px;">
-      {% if object.text %}
-        <p class="">{{ object.text }}</p>
-      {% endif %}
-    </div>
     {% include 'generic/attach/c_post_attach.html' %}
+    {% if object.parent %}
+      {% include 'post_community/repost.html' %}
+    {% endif %}
 
     {% include 'post_community/info.html' %}
 </div>

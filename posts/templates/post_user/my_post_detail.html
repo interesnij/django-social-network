@@ -2,18 +2,13 @@
 
   {% include 'post_user/my_card_header.html' %}
 
+  <p class="">{{ object.text }}</p>
+
+  {% include 'generic/attach/u_post_attach.html' %}
+
   {% if object.parent %}
     {% include 'post_user/repost.html' %}
   {% endif %}
-
-    <div style="padding-left: 15px;">
-
-      {% if object.text %}
-        <p class="">{{ object.text }}</p>
-      {% endif %}
-
-      {% include 'generic/attach/u_post_attach.html' %}
-    </div>
 
     {% include 'post_user/info.html' %}
 </div>
