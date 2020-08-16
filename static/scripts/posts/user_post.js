@@ -42,7 +42,7 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#staff_communities");
-    radios = staff_communities.querySelectorAll('choice');
+    radios = staff_communities.querySelectorAll('option');
     for (var i = 0, length = radios.length; i < length; i++) { if (radios[i].checked) {val = radios[i].value; break;}}
     if (val != "" ) {
     alert('yeaaa!');
