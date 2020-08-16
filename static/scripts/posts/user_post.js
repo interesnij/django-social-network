@@ -42,7 +42,10 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
-    if (staff_communities.selectedOptions) {alert('yeaaa!')} else {alert('o nooo!');}
+    selectedOptions = staff_communities.selectedOptions;
+    for (var i = 0; i < 3; i++) {
+      alert(selectedOptions[i].value);
+    }
   }
   else if(form_post.querySelector('#repost_radio_message').checked){};
 
