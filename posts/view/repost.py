@@ -51,6 +51,9 @@ class CUCMPostWindow(TemplateView):
         return context
 
 class UUPostRepost(View):
+    """
+    создание репоста записи пользователя на свою стену
+    """
     def post(self, request, *args, **kwargs):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
@@ -71,11 +74,14 @@ class UUPostRepost(View):
                 return HttpResponseBadRequest()
 
 class CUPostRepost(View):
+    """
+    создание репоста записи сообщества на свою стену
+    """
     def post(self, request, *args, **kwargs):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, self.parent.community)
+        check_can_get_lists(request.user, self.user)
         if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
@@ -86,5 +92,54 @@ class CUPostRepost(View):
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             return HttpResponse("")
+        else:
+            return HttpResponseBadRequest()
+
+
+class UCPostRepost(View):
+    """
+    создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
+    """
+    def post(self, request, *args, **kwargs):
+        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.form_post = PostForm(request.POST)
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.parent.community):
+            post = self.form_post.save(commit=False)
+            if self.parent.parent:
+                self.parent = self.parent.parent
+            else:
+                self.parent = self.parent
+            communities = form_post.cleaned_data.getlist("staff_communities")
+            if not communities:
+                return HttpResponseBadRequest()
+            for community in communities:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                get_post_attach(request, new_post)
+                get_post_processing(new_post)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CCPostRepost(View):
+    """
+    создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
+    """
+    def post(self, request, *args, **kwargs):
+        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.form_post = PostForm(request.POST)
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.parent.community):
+            post = self.form_post.save(commit=False)
+            if self.parent.parent:
+                self.parent = self.parent.parent
+            else:
+                self.parent = self.parent
+            communities = form_post.cleaned_data.getlist("staff_communities")
+            if not communities:
+                return HttpResponseBadRequest()
+            for community in communities:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                get_post_attach(request, new_post)
+                get_post_processing(new_post)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
