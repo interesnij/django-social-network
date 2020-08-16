@@ -103,7 +103,7 @@ class UCPostRepost(View):
     def post(self, request, *args, **kwargs):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.form_post = PostForm(request.POST)
-        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.parent.community.name):
+        if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
                 self.parent = self.parent.parent
@@ -111,12 +111,14 @@ class UCPostRepost(View):
                 self.parent = self.parent
             communities = form_post.cleaned_data.get("staff_communities")
             if not communities:
-                return HttpResponse("no staff_communities")
+                return HttpResponseBadRequest()
             for community_id in communities:
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community_id, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
+                community = Community.objects.get(pk=community_id)
+                if request.user.is_staff_of_community_with_name(community.name):
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_processing(new_post)
+                    return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
