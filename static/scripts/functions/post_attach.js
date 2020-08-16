@@ -146,7 +146,7 @@ function music_post_attach(_this, block) {
   _this.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
     if (!block.querySelector(".music_input")){
-      _this.querySelector("img") ? img = _this.querySelector("img").getAttribute('data-src') ? img = "/static/images/no_track_img.jpg";
+      _this.querySelector("img") ? img = _this.querySelector("img").getAttribute('data-src') : img = "/static/images/no_track_img.jpg";
       div = create_preview_music("select_music1", img, pk, counter);
       $music_input = document.createElement("span");
       $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">';
