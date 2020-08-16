@@ -75,8 +75,8 @@ class CUPostRepost(View):
         self.user = self.parent.creator
         try:
             self.community = self.parent.community
-        except: 
-            return HttpResponse()
+        except:
+            return HttpResponseBadRequest()
         if self.user != request.user:
             self.form_post = PostForm(request.POST)
             if request.is_ajax() and request.user.is_staff_of_community_with_name(self.community.name) and self.form_post.is_valid():
