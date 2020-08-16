@@ -44,7 +44,7 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
     val = "";
     staff_communities = form_post.querySelector("#show_user_staff_communities");
     radios = staff_communities.querySelectorAll('option');
-    for (var i = 0, length = radios.length; i < length; i++) { if (radios[i].checked) {val = radios[i].value; break;}}
+    for (var i = 0, length = radios.length; i < length; i++) { if (radios[i].checked) {val = "1"; break;}}
     if (val != "" ) {
     alert('yeaaa!');
   } else {alert('o nooo!');}
