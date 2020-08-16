@@ -108,7 +108,529 @@ function B(t, o, p) {
 		4 == n.readyState && ("200" == n.status && i(this), n = null)
 	}), n.open("HEAD", e, !0), n.send(null))
 }
+document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(strBinary, iOffset)\r\n\tIEBinary_getByteAt = AscB(MidB(strBinary,iOffset+1,1))\r\nEnd Function\r\nFunction IEBinary_getLength(strBinary)\r\n\tIEBinary_getLength = LenB(strBinary)\r\nEnd Function\r\n<\/script>\r\n"),
+	function(e) {
+		e.FileAPIReader = function(s, i) {
+			return function(e, t) {
+				var o = i || new FileReader;
+				o.onload = function(e) {
+					t(new A(e.target.result))
+				}, o.readAsBinaryString(s)
+			}
+		}
+	}(this),
+	function(e) {
+		var t = e.p = {},
+			a = {},
+			o = [0, 7];
+		t.t = function(e) {
+			delete a[e]
+		}, t.s = function() {
+			a = {}
+		}, t.B = function(n, l, r) {
+			((r = r || {}).dataReader || B)(n, function(i) {
+				i.f(o, function() {
+					var s = "ftypM4A" == i.c(4, 7) ? ID4 : "ID3" == i.c(0, 3) ? ID3v2 : ID3v1;
+					s.m(i, function() {
+						var e, t = r.tags,
+							o = s.n(i, t);
+						t = a[n] || {};
+						for (e in o) o.hasOwnProperty(e) && (t[e] = o[e]);
+						a[n] = t, l && l()
+					})
+				})
+			})
+		}, t.v = function(e) {
+			if (!a[e]) return null;
+			var t, o = {};
+			for (t in a[e]) a[e].hasOwnProperty(t) && (o[t] = a[e]
+				[t]);
+			return o
+		}, t.A = function(e, t) {
+			return a[e] ? a[e][t] : null
+		}, e.ID3 = e.p, t.loadTags = t.B, t.getAllTags = t.v, t.getTag = t.A, t.clearTags = t.t, t.clearAll = t.s
+	}(this),
+	function(e) {
+		var t = e.q = {},
+			a = "Blues;Classic Rock;Country;Dance;Disco;Funk;Grunge;Hip-Hop;Jazz;Metal;New Age;Oldies;Other;Pop;R&B;Rap;Reggae;Rock;Techno;Industrial;Alternative;Ska;Death Metal;Pranks;Soundtrack;Euro-Techno;Ambient;Trip-Hop;Vocal;Jazz+Funk;Fusion;Trance;Classical;Instrumental;Acid;House;Game;Sound Clip;Gospel;Noise;AlternRock;Bass;Soul;Punk;Space;Meditative;Instrumental Pop;Instrumental Rock;Ethnic;Gothic;Darkwave;Techno-Industrial;Electronic;Pop-Folk;Eurodance;Dream;Southern Rock;Comedy;Cult;Gangsta;Top 40;Christian Rap;Pop/Funk;Jungle;Native American;Cabaret;New Wave;Psychadelic;Rave;Showtunes;Trailer;Lo-Fi;Tribal;Acid Punk;Acid Jazz;Polka;Retro;Musical;Rock & Roll;Hard Rock;Folk;Folk-Rock;National Folk;Swing;Fast Fusion;Bebob;Latin;Revival;Celtic;Bluegrass;Avantgarde;Gothic Rock;Progressive Rock;Psychedelic Rock;Symphonic Rock;Slow Rock;Big Band;Chorus;Easy Listening;Acoustic;Humour;Speech;Chanson;Opera;Chamber Music;Sonata;Symphony;Booty Bass;Primus;Porn Groove;Satire;Slow Jam;Club;Tango;Samba;Folklore;Ballad;Power Ballad;Rhythmic Soul;Freestyle;Duet;Punk Rock;Drum Solo;Acapella;Euro-House;Dance Hall".split(";");
+		t.m = function(e, t) {
+			var o = e.h();
+			e.f([o - 128 - 1, o], t)
+		}, t.n = function(e) {
+			var t = e.h() - 128;
+			if ("TAG" != e.c(t, 3)) return {};
+			var o = e.c(3 + t, 30).replace(/\0/g, ""),
+				s = e.c(33 + t, 30).replace(/\0/g, ""),
+				i = e.c(63 + t, 30).replace(/\0/g, ""),
+				n = e.c(93 + t, 4).replace(/\0/g, "");
+			if (0 == e.a(97 + t + 28)) var l = e.c(97 + t, 28).replace(/\0/g, ""),
+				r = e.a(97 + t + 29);
+			else l = "", r = 0;
+			return {
+				version: "1.1",
+				title: o,
+				artist: s,
+				album: i,
+				year: n,
+				comment: l,
+				track: r,
+				genre: (e = e.a(97 + t + 30)) < 255 ? a[e] : ""
+			}
+		}, e.ID3v1 = e.q
+	}(this),
+	function(e) {
+		function g(e, t) {
+			var o = t.a(e),
+				s = t.a(e + 1),
+				i = t.a(e + 2);
+			return 127 & t.a(e + 3) | (127 & i) << 7 | (127 & s) << 14 | (127 & o) << 21
+		}
+		var S = e.D = {};
+		S.b = {}, S.frames = {
+			BUF: "Recommended buffer size",
+			CNT: "Play counter",
+			COM: "Comments",
+			CRA: "Audio encryption",
+			CRM: "Encrypted meta frame",
+			ETC: "Event timing codes",
+			EQU: "Equalization",
+			GEO: "General encapsulated object",
+			IPL: "Involved people list",
+			LNK: "Linked information",
+			MCI: "Music CD Identifier",
+			MLL: "MPEG location lookup table",
+			PIC: "Attached picture",
+			POP: "Popularimeter",
+			REV: "Reverb",
+			RVA: "Relative volume adjustment",
+			SLT: "Synchronized lyric/text",
+			STC: "Synced tempo codes",
+			TAL: "Album/Movie/Show title",
+			TBP: "BPM (Beats Per Minute)",
+			TCM: "Composer",
+			TCO: "Content type",
+			TCR: "Copyright message",
+			TDA: "Date",
+			TDY: "Playlist delay",
+			TEN: "Encoded by",
+			TFT: "File type",
+			TIM: "Time",
+			TKE: "Initial key",
+			TLA: "Language(s)",
+			TLE: "Length",
+			TMT: "Media type",
+			TOA: "Original artist(s)/performer(s)",
+			TOF: "Original filename",
+			TOL: "Original Lyricist(s)/text writer(s)",
+			TOR: "Original release year",
+			TOT: "Original album/Movie/Show title",
+			TP1: "Lead artist(s)/Lead performer(s)/Soloist(s)/Performing group",
+			TP2: "Band/Orchestra/Accompaniment",
+			TP3: "Conductor/Performer refinement",
+			TP4: "Interpreted, remixed, or otherwise modified by",
+			TPA: "Part of a set",
+			TPB: "Publisher",
+			TRC: "ISRC (International Standard Recording Code)",
+			TRD: "Recording dates",
+			TRK: "Track number/Position in set",
+			TSI: "Size",
+			TSS: "Software/hardware and settings used for encoding",
+			TT1: "Content group description",
+			TT2: "Title/Songname/Content description",
+			TT3: "Subtitle/Description refinement",
+			TXT: "Lyricist/text writer",
+			TXX: "User defined text information frame",
+			TYE: "Year",
+			UFI: "Unique file identifier",
+			ULT: "Unsychronized lyric/text transcription",
+			WAF: "Official audio file webpage",
+			WAR: "Official artist/performer webpage",
+			WAS: "Official audio source webpage",
+			WCM: "Commercial information",
+			WCP: "Copyright/Legal information",
+			WPB: "Publishers official webpage",
+			WXX: "User defined URL link frame",
+			AENC: "Audio encryption",
+			APIC: "Attached picture",
+			COMM: "Comments",
+			COMR: "Commercial frame",
+			ENCR: "Encryption method registration",
+			EQUA: "Equalization",
+			ETCO: "Event timing codes",
+			GEOB: "General encapsulated object",
+			GRID: "Group identification registration",
+			IPLS: "Involved people list",
+			LINK: "Linked information",
+			MCDI: "Music CD identifier",
+			MLLT: "MPEG location lookup table",
+			OWNE: "Ownership frame",
+			PRIV: "Private frame",
+			PCNT: "Play counter",
+			POPM: "Popularimeter",
+			POSS: "Position synchronisation frame",
+			RBUF: "Recommended buffer size",
+			RVAD: "Relative volume adjustment",
+			RVRB: "Reverb",
+			SYLT: "Synchronized lyric/text",
+			SYTC: "Synchronized tempo codes",
+			TALB: "Album/Movie/Show title",
+			TBPM: "BPM (beats per minute)",
+			TCOM: "Composer",
+			TCON: "Content type",
+			TCOP: "Copyright message",
+			TDAT: "Date",
+			TDLY: "Playlist delay",
+			TENC: "Encoded by",
+			TEXT: "Lyricist/Text writer",
+			TFLT: "File type",
+			TIME: "Time",
+			TIT1: "Content group description",
+			TIT2: "Title/songname/content description",
+			TIT3: "Subtitle/Description refinement",
+			TKEY: "Initial key",
+			TLAN: "Language(s)",
+			TLEN: "Length",
+			TMED: "Media type",
+			TOAL: "Original album/movie/show title",
+			TOFN: "Original filename",
+			TOLY: "Original lyricist(s)/text writer(s)",
+			TOPE: "Original artist(s)/performer(s)",
+			TORY: "Original release year",
+			TOWN: "File owner/licensee",
+			TPE1: "Lead performer(s)/Soloist(s)",
+			TPE2: "Band/orchestra/accompaniment",
+			TPE3: "Conductor/performer refinement",
+			TPE4: "Interpreted, remixed, or otherwise modified by",
+			TPOS: "Part of a set",
+			TPUB: "Publisher",
+			TRCK: "Track number/Position in set",
+			TRDA: "Recording dates",
+			TRSN: "Internet radio station name",
+			TRSO: "Internet radio station owner",
+			TSIZ: "Size",
+			TSRC: "ISRC (international standard recording code)",
+			TSSE: "Software/Hardware and settings used for encoding",
+			TYER: "Year",
+			TXXX: "User defined text information frame",
+			UFID: "Unique file identifier",
+			USER: "Terms of use",
+			USLT: "Unsychronized lyric/text transcription",
+			WCOM: "Commercial information",
+			WCOP: "Copyright/Legal information",
+			WOAF: "Official audio file webpage",
+			WOAR: "Official artist/performer webpage",
+			WOAS: "Official audio source webpage",
+			WORS: "Official internet radio station homepage",
+			WPAY: "Payment",
+			WPUB: "Publishers official webpage",
+			WXXX: "User defined URL link frame"
+		};
+		var y = {
+				title: ["TIT2", "TT2"],
+				artist: ["TPE1", "TP1"],
+				album: ["TALB", "TAL"],
+				year: ["TYER", "TYE"],
+				comment: ["COMM", "COM"],
+				track: ["TRCK", "TRK"],
+				genre: ["TCON", "TCO"],
+				picture: ["APIC", "PIC"],
+				lyrics: ["USLT", "ULT"]
+			},
+			v = ["title", "artist", "album", "track"];
+		S.m = function(e, t) {
+			e.f([0, g(6, e)], t)
+		}, S.n = function(e, t) {
+			var o = 0;
+			if (4 < (d = e.a(o + 3))) return {
+				version: ">2.4"
+			};
+			var s = e.a(o + 4),
+				i = e.d(o + 5, 7),
+				n = e.d(o + 5, 6),
+				l = e.d(o + 5, 5),
+				r = g(o + 6, e);
+			o += 10;
+			if (n) o = o + ((c = e.i(o)) + 4);
+			var a, d = {
+				version: "2." + d + "." + s,
+				major: d,
+				revision: s,
+				flags: {
+					unsynchronisation: i,
+					extended_header: n,
+					experimental_indicator: l
+				},
+				size: r
+			};
+			if (i) a = {};
+			else {
+				r = r - 10, i = e, s = t, n = {}, l = d.major;
+				for (var u, c = [], h = 0; u = (s || v)[h]; h++) c = c.concat(y[u] || [u]);
+				for (s = c; o < r;) {
+					h = i, u = o;
+					var _ = c = null;
+					switch (l) {
+						case 2:
+							a = h.c(u, 3);
+							var f = h.o(u + 3),
+								p = 6;
+							break;
+						case 3:
+							a = h.c(u, 4), f = h.i(u + 4), p = 10;
+							break;
+						case 4:
+							a = h.c(u, 4), f = g(u + 4, h), p = 10
+					}
+					if ("" == a) break;
+					o += p + f, s.indexOf(a) < 0 || (2 < l && (_ = {
+						message: {
+							P: h.d(u + 8, 6),
+							I: h.d(u + 8, 5),
+							M: h.d(u + 8, 4)
+						},
+						k: {
+							K: h.d(u + 8 + 1, 7),
+							F: h.d(u + 8 + 1, 3),
+							H: h.d(u + 8 + 1, 2),
+							C: h.d(u + 8 + 1, 1),
+							u: h.d(u + 8 + 1, 0)
+						}
+					}), u += p, _ && _.k.u && (g(u, h), u += 4, f -= 4), _ && _.k.C || (a in S.b ? c = S.b[a] : "T" == a[0] && (c = S.b["T*"]), c = c ? c(u, f, h, _) : void 0, c = {
+						id: a,
+						size: f,
+						description: a in S.frames ? S.frames[a] : "Unknown",
+						data: c
+					}, a in n ? (n[a].id && (n[a] = [
+						n[a]
+					]), n[a].push(c)) : n[a] = c))
+				}
+				a = n
+			}
+			for (var m in y)
+				if (y.hasOwnProperty(m)) {
+					e: {
+						for ("string" == typeof(f = y[m]) && (f = [f]), o = void(p = 0); o = f[p]; p++)
+							if (o in a) {
+								e = a[o].data;
+								break e
+							} e = void 0
+					}
+					e && (d[m] = e)
+				} for (var b in a) a.hasOwnProperty(b) && (d[b] = a[b]);
+			return d
+		}, e.ID3v2 = S
+	}(this),
+	function() {
+		function r(e) {
+			var t;
+			switch (e) {
+				case 0:
+					t = "iso-8859-1";
+					break;
+				case 1:
+					t = "utf-16";
+					break;
+				case 2:
+					t = "utf-16be";
+					break;
+				case 3:
+					t = "utf-8"
+			}
+			return t
+		}
+		var a = "32x32 pixels 'file icon' (PNG only);Other file icon;Cover (front);Cover (back);Leaflet page;Media (e.g. lable side of CD);Lead artist/lead performer/soloist;Artist/performer;Conductor;Band/Orchestra;Composer;Lyricist/text writer;Recording Location;During recording;During performance;Movie/video screen capture;A bright coloured fish;Illustration;Band/artist logotype;Publisher/Studio logotype".split(";");
+		ID3v2.b.APIC = function(e, t, o, s, i) {
+			i = i || "3", s = e;
+			var n = r(o.a(e));
+			switch (i) {
+				case "2":
+					var l = o.c(e + 1, 3);
+					e += 4;
+					break;
+				case "3":
+				case "4":
+					e += 1 + (l = o.e(e + 1, t - (e - s), n)).g
+			}
+			return i = o.a(e, 1), i = a[i], e += 1 + (n = o.e(e + 1, t - (e - s), n)).g, {
+				format: l.toString(),
+				type: i,
+				description: n.toString(),
+				data: o.l(e, s + t - e)
+			}
+		}, ID3v2.b.COMM = function(e, t, o) {
+			var s = e,
+				i = r(o.a(e)),
+				n = o.c(e + 1, 3),
+				l = o.e(e + 4, t - 4, i);
+			return e += 4 + l.g, e = o.e(e, s + t - e, i), {
+				language: n,
+				O: l.toString(),
+				text: e.toString()
+			}
+		}, ID3v2.b.COM = ID3v2.b.COMM, ID3v2.b.PIC = function(e, t, o, s) {
+			return ID3v2.b.APIC(e, t, o, s, "2")
+		}, ID3v2.b.PCNT = function(e, t, o) {
+			return o.J(e)
+		}, ID3v2.b.CNT = ID3v2.b.PCNT, ID3v2.b["T*"] = function(e, t, o) {
+			var s = r(o.a(e));
+			return o.e(e + 1, t - 1, s).toString()
+		}, ID3v2.b.TCON = function(e, t, o) {
+			return ID3v2.b["T*"].apply(this, arguments).replace(/^\(\d+\)/, "")
+		}, ID3v2.b.TCO = ID3v2.b.TCON, ID3v2.b.USLT = function(e, t, o) {
+			var s = e,
+				i = r(o.a(e)),
+				n = o.c(e + 1, 3),
+				l = o.e(e + 4, t - 4, i);
+			return e += 4 + l.g, e = o.e(e, s + t - e, i), {
+				language: n,
+				G: l.toString(),
+				L: e.toString()
+			}
+		}, ID3v2.b.ULT = ID3v2.b.USLT
+	}(),
+	function(e) {
+		var _ = e.r = {};
+		_.types = {
+			0: "uint8",
+			1: "text",
+			13: "jpeg",
+			14: "png",
+			21: "uint8"
+		}, _.j = {
+			"Â©alb": ["album"],
+			"Â©art": ["artist"],
+			"Â©ART": ["artist"],
+			aART: ["artist"],
+			"Â©day": ["year"],
+			"Â©nam": ["title"],
+			"Â©gen": ["genre"],
+			trkn: ["track"],
+			"Â©wrt": ["composer"],
+			"Â©too": ["encoder"],
+			cprt: ["copyright"],
+			covr: ["picture"],
+			"Â©grp": ["grouping"],
+			keyw: ["keyword"],
+			"Â©lyr": ["lyrics"],
+			"Â©cmt": ["comment"],
+			tmpo: ["tempo"],
+			cpil: ["compilation"],
+			disk: ["disc"]
+		}, _.m = function(e, t) {
+			e.f([0, 7], function() {
+				! function e(t, o, s, i) {
+					var n = t.i(o);
+					if (0 == n) i();
+					else {
+						var l = t.c(o + 4, 4); - 1 < ["moov", "udta", "meta", "ilst"].indexOf(l) ? ("meta" == l && (o += 4), t.f([o + 8, o + 8 + 8], function() {
+							e(t, o + 8, n - 8, i)
+						})) : t.f([o + (l in _.j ? 0 : n), o + n + 8], function() {
+							e(t, o + n, s, i)
+						})
+					}
+				}(e, 0, e.h(), t)
+			})
+		}, _.n = function(e) {
+			var t = {};
+			return function e(t, o, s, i, n) {
+				n = void 0 === n ? "" : n + "  ";
+				for (var l = s; l < s + i;) {
+					var r = o.i(l);
+					if (0 == r) break;
+					var a = o.c(l + 4, 4);
+					if (-1 < ["moov", "udta", "meta", "ilst"].indexOf(a)) {
+						"meta" == a && (l += 4), e(t, o, l + 8, r - 8, n);
+						break
+					}
+					if (_.j[a]) {
+						var d = o.o(l + 16 + 1),
+							u = _.j[a];
+						if (d = _.types[d], "trkn" == a) t[u[0]] = o.a(l + 16 + 11), t.count = o.a(l + 16 + 13);
+						else {
+							a = l + 16 + 4 + 4;
+							var c, h = r - 16 - 4 - 4;
+							switch (d) {
+								case "text":
+									c = o.e(a, h, "UTF-8");
+									break;
+								case "uint8":
+									c = o.w(a);
+									break;
+								case "jpeg":
+								case "png":
+									c = {
+										k: "image/" + d,
+										data: o.l(a, h)
+									}
+							}
+							t[u[0]] = "comment" === u[0] ? {
+								text: c
+							} : c
+						}
+					}
+					l += r
+				}
+			}(t, e, 0, e.h()), t
+		}, e.ID4 = e.r
+	}(this),
+	function(a) {
+		var e = navigator.platform,
+			t = !1;
+		if ("iPad" != e && "iPhone" != e || (t = !0), t) {
+			var o = !1;
+			if (-1 != navigator.userAgent.indexOf("6") && (o = !0), o) {
+				var s = {},
+					i = {},
+					n = a.setTimeout,
+					d = a.setInterval,
+					l = a.clearTimeout,
+					r = a.clearInterval;
+				a.setTimeout = function() {
+					return u(n, s, arguments)
+				}, a.setInterval = function() {
+					return u(d, i, arguments)
+				}, a.clearTimeout = function(e) {
+					var t = s[e];
+					t && (delete s[e], l(t.id))
+				}, a.clearInterval = function(e) {
+					var t = i[e];
+					t && (delete i[e], r(t.id))
+				}, a.addEventListener("scroll", function() {
+					var e;
+					for (e in s) c(n, l, s, e);
+					for (e in i) c(d, r, i, e)
+				})
+			}
+		}
 
+		function u(e, t, o) {
+			var s, i = o[0],
+				n = e === d;
+			return o[0] = function() {
+				i && (i.apply(a, arguments), n || (delete t[s], i = null))
+			}, s = e.apply(a, o), t[s] = {
+				args: o,
+				created: Date.now(),
+				cb: i,
+				id: s
+			}, s
+		}
+
+		function c(e, t, o, s) {
+			var i = o[s];
+			if (i) {
+				var n = e === d;
+				if (t(i.id), !n) {
+					var l = i.args[1],
+						r = Date.now() - i.created;
+					r < 0 && (r = 0), (l -= r) < 0 && (l = 0), i.args[1] = l
+				}
+				i.args[0] = function() {
+					i.cb && (i.cb.apply(a, arguments), n || (delete o[s], i.cb = null))
+				}, i.created = Date.now(), i.id = e.apply(a, i.args)
+			}
+		}
+	}(window),
 	function() {
 		var s, _, e;
 		s = ("undefined" != typeof window && null !== window ? window.DOMParser : void 0) || ("function" == typeof require ? require("xmldom").DOMParser : void 0) || function() {}, _ = function(e, t) {
