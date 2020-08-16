@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^c_u_post_repost/(?P<uuid>[0-9a-f-]+)/$', CUPostRepost.as_view()),
     url(r'^u_c_post_repost/(?P<uuid>[0-9a-f-]+)/$', UCPostRepost.as_view()),
     url(r'^c_c_post_repost/(?P<uuid>[0-9a-f-]+)/$', CCPostRepost.as_view()),
+    url(r'^u_m_post_repost/(?P<uuid>[0-9a-f-]+)/$', UMPostRepost.as_view()),
+    url(r'^c_m_post_repost/(?P<uuid>[0-9a-f-]+)/$', CMPostRepost.as_view()),
 ]

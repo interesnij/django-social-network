@@ -13,14 +13,17 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 })
 on('#ajax', 'click', '.repost_for_wall', function() {
   parent = this.parentElement;
-  parent.querySelector("#show_user_staff_communities").style.display = "none"
+  parent.querySelector("#show_user_staff_communities").style.display = "none";
+  parent.querySelector("#show_user_connections").style.display = "none";
 })
 on('#ajax', 'click', '.repost_for_community', function() {
-  this.nextElementSibling.style.display = "unset"
+  this.nextElementSibling.style.display = "unset";
+  parent.querySelector("#show_user_connections").style.display = "none";
 })
 on('#ajax', 'click', '.repost_for_message', function() {
   parent = this.parentElement;
-  parent.querySelector("#show_user_staff_communities").style.display = "none"
+  parent.querySelector("#show_user_staff_communities").style.display = "none";
+  this.nextElementSibling.style.display = "unset"
 })
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
