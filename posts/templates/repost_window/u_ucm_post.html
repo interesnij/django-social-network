@@ -8,12 +8,12 @@
             </div>
             <div class="card-body">
               <div class="form-group">
-                  <div class="custom-control custom-radio" style="margin-bottom:10px">
+                  <div class="custom-control custom-radio repost_for_wall" style="margin-bottom:10px">
                       <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
                       <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                   </div>
                   {% if request.user.get_staffed_communities %}
-                  <div class="custom-control custom-radio" style="margin-bottom:10px">
+                  <div class="custom-control custom-radio repost_for_community" style="margin-bottom:10px">
                       <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
                       <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
                   </div>
@@ -32,7 +32,7 @@
                       <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
                   </div>
                   {% endif %}
-                  <div class="custom-control custom-radio" style="margin-bottom:10px">
+                  <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
                       <input type="radio" {% if object.creator.pk == request.user.pk %}checked="checked"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
                       <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
                   </div>

@@ -11,14 +11,16 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '#repost_radio_wall', function() {
-  console.log("checked!!!")
+on('#ajax', 'click', '.repost_for_wall', function() {
+  parent = this.parentElement;
+  parent.querySelector("#show_user_staff_communities").style.display = "none"
 })
-on('#ajax', 'click', '#repost_radio_community', function() {
-  console.log("checked!!!")
+on('#ajax', 'click', '.repost_for_community', function() {
+  this.nextElementSibling.style.display = "unset"
 })
-on('#ajax', 'click', '#repost_radio_message', function() {
-  console.log("checked!!!")
+on('#ajax', 'click', '.repost_for_message', function() {
+  parent = this.parentElement;
+  parent.querySelector("#show_user_staff_communities").style.display = "none"
 })
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
