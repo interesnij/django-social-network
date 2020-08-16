@@ -17,8 +17,8 @@
                       <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
                       <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
                   </div>
-                  <div id="show_user_staff_communities" style="height: 100%; display:none">
-                    <select name="staff_communities" multiple="" id="id_staff_communities">
+                  <div id="show_user_staff_communities" style="display:none">
+                    <select name="staff_communities" multiple="" id="id_staff_communities" style="height: 100%">
                       {% for community in request.user.get_staffed_communities %}
                         {% if community.pk != object.community.pk %}
                           <option value="{{ community.pk }}">{{ community.name }}</option>
