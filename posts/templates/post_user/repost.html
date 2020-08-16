@@ -16,7 +16,7 @@
       <div class="media-body">
           <h6 class="mb-0">
             <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
-              {{ object.community.name }} &nbsp;
+              {{ object.parent.community.name }} &nbsp;
             </a>
           </h6>
           <p class="mb-0">{{ object.parent.get_created }}</p>
