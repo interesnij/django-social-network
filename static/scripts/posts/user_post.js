@@ -41,11 +41,8 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
     link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
-    staff_communities = form_post.querySelector("#show_user_staff_communities");
-    
-    if (staff_communities.selectedOptions) {
-    alert('yeaaa!');
-  } else {alert('o nooo!');}
+    staff_communities = form_post.querySelector("#id_staff_communities");
+    if (staff_communities.selectedOptions) {alert('yeaaa!')} else {alert('o nooo!');}
   }
   else if(form_post.querySelector('#repost_radio_message').checked){};
 
