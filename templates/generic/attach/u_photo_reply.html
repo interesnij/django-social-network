@@ -1,3 +1,5 @@
+{% load get_key %}
+
 <div class="row" data-pk="{{ reply.pk }}">
   {% for object in reply.gallery_comment_photo.all %}
   <div class="col-md-6">
