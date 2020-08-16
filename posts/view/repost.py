@@ -75,7 +75,7 @@ class CUPostRepost(View):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
-        check_can_get_list(request.user, self.user)
+        check_can_get_list(request.user, self.parent.community) 
         if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
