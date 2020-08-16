@@ -1,6 +1,6 @@
 <div class="form-group">
     <div class="custom-control custom-radio">
-        <input type="radio" name="radiogroup-1" {% if object.creator == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
+        <input type="radio" name="radiogroup-1" checked="checked" class="custom-control-input" id="repost_radio_wall">
         <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
     </div>
     {% if request.user.get_staffed_communities %}
@@ -8,7 +8,15 @@
         <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
         <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
     </div>
-    <div id="show_user_staff_communities"></div>
+    <div id="show_user_staff_communities">
+      <select name="staff_communities" multiple="" id="id_staff_communities">
+        {% for community in request.user.get_staffed_communities %}
+          {% if community.pk != object.community.pk %}
+            <option value="{{ community.pk }}">{{ community.name }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
     {% else %}
     <div class="custom-control custom-radio">
         <input type="radio" disabled="disabled" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
@@ -17,7 +25,7 @@
     {% endif %}
 
     <div class="custom-control custom-radio">
-        <input type="radio" name="radiogroup-1"{% if object.creator == request.user %} checked="checked"{% endif %} class="custom-control-input" id="repost_radio_message">
+        <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     <div id="show_user_message_members"></div>
