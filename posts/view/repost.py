@@ -111,7 +111,7 @@ class UCPostRepost(View):
                 self.parent = self.parent
             communities = self.form_post.cleaned_data.get("staff_communities")
             if not communities:
-                return HttpResponseBadRequest()
+                return HttpResponse("no staff_communities")
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community_with_name(community.name):
