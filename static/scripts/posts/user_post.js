@@ -39,6 +39,8 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   if (form_post.querySelector('#repost_radio_wall').checked) {
     link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.send(form_data);
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
@@ -46,13 +48,13 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
     for (var i = 0; i < selectedOptions.length; i++) {
       if(selectedOptions[i].value) {
         link_.open( 'POST', "/posts/repost/u_c_post_repost/" + uuid + "/", true );
+        link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        link_.send(form_data);
         break;
       } else {toast_error("Выберите сообщества для репоста");}
     }
   }
   else if(form_post.querySelector('#repost_radio_message').checked){};
-
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -60,7 +62,6 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
     document.getElementById("votes_loader").innerHTML="";
     toast_info("Репост записи на стену")
   }}
-  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#article_post', function() {
