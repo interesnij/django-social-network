@@ -11,13 +11,13 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'checked', '#repost_radio_wall', function() {
+on('#ajax', 'click', '#repost_radio_wall', function() {
   console.log("checked!!!")
 })
-on('#ajax', 'checked', '#repost_radio_community', function() {
+on('#ajax', 'click', '#repost_radio_community', function() {
   console.log("checked!!!")
 })
-on('#ajax', 'checked', '#repost_radio_message', function() {
+on('#ajax', 'click', '#repost_radio_message', function() {
   console.log("checked!!!")
 })
 on('#ajax', 'click', '.u_article_detail', function() {
