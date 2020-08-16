@@ -9,7 +9,7 @@
             <div class="card-body">
               <div class="form-group">
                   <div class="custom-control custom-radio">
-                      <input type="radio" name="radiogroup-1" {% if object.creator == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
+                      <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
                       <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                   </div>
                   {% if request.user.get_staffed_communities %}
@@ -34,7 +34,7 @@
                   {% endif %}
 
                   <div class="custom-control custom-radio">
-                      <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
+                      <input type="radio" {% if object.creator.pk == request.user.pk %}checked="checked"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
                       <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
                   </div>
                   <div id="show_user_message_members"></div>
@@ -42,7 +42,7 @@
               {% include 'repost_window/form.html' %}
             </div>
             <div class="card-footer">
-                <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button class="btn btn-secondary votes_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
                 <button type="button" class="btn btn-success float-right" id="u_ucm_repost_btn" data-uuid="{{ object.uuid }}">Создать</button>
             </div>
         </div>
