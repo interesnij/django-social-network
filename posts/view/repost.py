@@ -8,7 +8,7 @@ from users.models import User
 from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
-from common.check.community import check_can_get_list
+from common.check.community import check_can_get_lists
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 
@@ -75,7 +75,7 @@ class CUPostRepost(View):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
-        check_can_get_list(request.user, self.parent.community)
+        check_can_get_lists(request.user, self.parent.community)
         if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
