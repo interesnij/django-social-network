@@ -121,7 +121,6 @@ on('#ajax', 'click', '.c_like', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_posts_likes");
-  vote_reload("/posts/item_window/c_like_window/" + uuid + "/", "/posts/item_window/c_dislike_window/" + uuid + "/", this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling)
 });
 on('#ajax', 'click', '.c_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
