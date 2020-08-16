@@ -11,7 +11,15 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader);
   clear_attach_block();
 })
-
+on('#ajax', 'checked', '#repost_radio_wall', function() {
+  console.log("checked!!!")
+})
+on('#ajax', 'checked', '#repost_radio_community', function() {
+  console.log("checked!!!")
+})
+on('#ajax', 'checked', '#repost_radio_message', function() {
+  console.log("checked!!!")
+})
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
