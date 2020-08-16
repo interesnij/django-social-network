@@ -109,7 +109,7 @@ class UCPostRepost(View):
                 self.parent = self.parent.parent
             else:
                 self.parent = self.parent
-            communities = self.form_post.cleaned_data.get("staff_communities")
+            communities = request.POST.get("staff_communities")
             if not communities:
                 return HttpResponse("no staff_communities")
             for community_id in communities:
