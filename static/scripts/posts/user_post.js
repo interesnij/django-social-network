@@ -43,8 +43,11 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
     selectedOptions = staff_communities.selectedOptions;
-    for (var i = 0; i < 3; i++) {
-      alert(selectedOptions[i].value);
+    for (var i = 0; i < selectedOptions.length; i++) {
+      if(selectedOptions[i].value) {
+        link_.open( 'POST', "/posts/repost/u_c_post_repost/" + uuid + "/", true );
+        break;
+      } else {toast_error("Выберите сообщества для репоста");}
     }
   }
   else if(form_post.querySelector('#repost_radio_message').checked){};
