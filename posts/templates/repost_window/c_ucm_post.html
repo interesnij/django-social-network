@@ -12,12 +12,13 @@
                       <input type="radio" name="radiogroup-1" checked="checked" class="custom-control-input" id="repost_radio_wall">
                       <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                   </div>
+                  <br>
                   {% if request.user.get_staffed_communities %}
                   <div class="custom-control custom-radio">
                       <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
                       <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
                   </div>
-                  <div id="show_user_staff_communities">
+                  <div id="show_user_staff_communities" style="height: 100%;">
                     <select name="staff_communities" multiple="" id="id_staff_communities">
                       {% for community in request.user.get_staffed_communities %}
                         {% if community.pk != object.community.pk %}
@@ -32,7 +33,7 @@
                       <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
                   </div>
                   {% endif %}
-
+                  <br>
                   <div class="custom-control custom-radio">
                       <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
                       <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
