@@ -111,7 +111,7 @@ class UCPostRepost(View):
                 self.parent = self.parent
             communities = form_post.cleaned_data.getlist("staff_communities")
             if not communities:
-                return HttpResponseBadRequest()
+                return HttpResponse("no staff_communities")
             for community in communities:
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
                 get_post_attach(request, new_post)

@@ -51,7 +51,7 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
         link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         link_.send(form_data);
         break;
-      } else {toast_error("Выберите сообщества для репоста");}
+      } else {toast_error("Выберите сообщества для репоста")}
     }
   }
   else if(form_post.querySelector('#repost_radio_message').checked){};
