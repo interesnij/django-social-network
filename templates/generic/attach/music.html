@@ -1,7 +1,7 @@
 {% load get_key %}
 
-<div class="col-md-12">
-  <div class="media" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" music-counter="{{ forloop.counter0 }}">
+<div class="col-md-12 music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;">
+  <div class="media" music-counter="{{ forloop.counter0 }}">
       <figure style="cursor:pointer">
         <a class="music_list_comment">
           {% if music.artwork_url %}
@@ -15,7 +15,7 @@
           <h6 class="music_list_post music_title">
             <a>{{ music.title }}</a>
           </h6>
-          <span class='span_btn' style="float:right;" data-pk="{{ music.pk }}">
+          <span class='span_btn' style="margin-left: auto;" data-pk="{{ music.pk }}">
             <span class='dropdown' style="position: inherit;">
               <span class='btn_default pointer drop' title="Добавить в плейлист">
                 <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
