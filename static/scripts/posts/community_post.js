@@ -45,11 +45,11 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".votes_fullscreen").style.display = "none";
-    document.getElementById("votes_loader").innerHTML="";
-    toast_info("Репост записи на стену")
-  }}
+    if ( this.readyState == 4 && this.status == 200 ) {
+      document.querySelector(".votes_fullscreen").style.display = "none";
+      document.getElementById("votes_loader").innerHTML="";
+      toast_info("Репост записи на стену")
+    }}
   link_.send(form_data);
 });
 
