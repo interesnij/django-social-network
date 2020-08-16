@@ -77,17 +77,16 @@ class CUPostRepost(View):
             self.community = self.parent.community
         except:
             return HttpResponseBadRequest()
-        if self.user != request.user:
-            self.form_post = PostForm(request.POST)
-            if request.is_ajax() and request.user.is_staff_of_community_with_name(self.community.name) and self.form_post.is_valid():
-                post = self.form_post.save(commit=False)
-                if self.parent.parent:
-                    self.parent = self.parent.parent
-                else:
-                    self.parent = self.parent
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-                return HttpResponse("")
+        self.form_post = PostForm(request.POST)
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(self.community.name) and self.form_post.is_valid():
+            post = self.form_post.save(commit=False)
+            if self.parent.parent:
+                self.parent = self.parent.parent
             else:
-                return HttpResponseBadRequest()
+                self.parent = self.parent
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+            get_post_attach(request, new_post)
+            get_post_processing(new_post)
+            return HttpResponse("")
+        else:
+            return HttpResponseBadRequest()
