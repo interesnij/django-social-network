@@ -416,16 +416,17 @@ function get_normal_screen(){
                   response.innerHTML = _link.responseText;
                   var list = response.querySelectorAll("li");
                   var count = 50;
+                  //list[i]>=track_id
+                  console.log(track_id);
                   for(i=0; i<count; i++) {
+                    console.log(list[i]);
                     try{
-                      if (list[i]>=track_id){
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
                     _thumbPath=list[i].getAttribute("data-thumbpath");
                     _duration=list[i].getAttribute("data-duration");
                     time = msToTime(_duration);
                     music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
-                  }
                   }catch{break}
                 }
                   music_player.loadPlaylist(0);
