@@ -136,7 +136,7 @@ class CCPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            communities = form_post.cleaned_data.get("staff_communities")
+            communities = form_post.cleaned_data.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community in communities:
