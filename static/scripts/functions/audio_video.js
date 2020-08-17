@@ -518,6 +518,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
     on('#ajax', 'click', '.music_list_item', function() {
       var track_id = this.parentElement.parentElement.getAttribute('music-counter');
       id = 0;
+      var list= this.parentElement.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
         if (list[i]==event.target) {
           alert("li под номером " + (i+1)); id = i+1;
