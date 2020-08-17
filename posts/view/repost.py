@@ -82,7 +82,7 @@ class CUPostRepost(View):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, self.user)
+        check_can_get_lists(request.user, self.parent.community)
         if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
@@ -183,14 +183,14 @@ class CMPostRepost(View):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, self.user)
+        check_can_get_lists(request.user, self.parent.community)
         if request.is_ajax() and self.form_post.is_valid():
             post = self.form_post.save(commit=False)
             if self.parent.parent:
                 self.parent = self.parent.parent
             else:
                 self.parent = self.parent
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.parent.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
