@@ -517,13 +517,21 @@ function music_onReady(){console.log("Аудио плеер готов");}
     }
     on('#ajax', 'click', '.music_list_item', function() {
       var track_id = this.parentElement.parentElement.getAttribute('music-counter');
+      id = 0;
+      for (var i=0; i!= list.length; ++i) {
+        if (list[i]==event.target) {
+          alert("li под номером " + (i+1)); id = i+1;
+          return;
+        };
+      }
+
       var list_pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
       if (!document.body.classList.contains("list_" + list_pk)){
         save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", track_id)
       }else{
         music_player.loadPlaylist(0);
         if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-        setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
+        setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, id)}, 50);
       }
       }
     });
