@@ -136,7 +136,7 @@ class CCPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            communities = form_post.cleaned_data.getlist("staff_communities")
+            communities = form_post.cleaned_data.get("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community in communities:
@@ -161,7 +161,7 @@ class UMPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            connections = request.POST.getlist("user_connections")
+            connections = request.POST.get("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
             for user_id in connections:
@@ -189,7 +189,7 @@ class CMPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            connections = request.POST.getlist("user_connections")
+            connections = request.POST.get("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
             for user_id in connections:
