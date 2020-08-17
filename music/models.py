@@ -62,7 +62,7 @@ class SoundList(models.Model):
     MAIN = 'MA'
     LIST = 'LI'
     TYPE = (
-        (MAIN, 'Основной видеоальбом'),
+        (MAIN, 'Основной плейлист'),
         (LIST, 'Пользовательский плейлист'),
     )
     name = models.CharField(max_length=255)

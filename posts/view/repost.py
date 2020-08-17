@@ -56,18 +56,18 @@ class UUPostRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = self.parent.creator
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
-            self.form_post = PostForm(request.POST)
-            if request.is_ajax() and self.form_post.is_valid():
-                post = self.form_post.save(commit=False)
-                if self.parent.parent:
-                    self.parent = self.parent.parent
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = self.parent.creator
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+            form_post = PostForm(request.POST)
+            if request.is_ajax() and form_post.is_valid():
+                post = form_post.save(commit=False)
+                if parent.parent:
+                    parent = parent.parent
                 else:
-                    self.parent = self.parent
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                    parent = parent
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 return HttpResponse()
@@ -79,17 +79,17 @@ class CUPostRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = self.parent.creator
-        self.form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, self.parent.community)
-        if request.is_ajax() and self.form_post.is_valid():
-            post = self.form_post.save(commit=False)
-            if self.parent.parent:
-                self.parent = self.parent.parent
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = parent.creator
+        form_post = PostForm(request.POST)
+        check_can_get_lists(request.user, parent.community)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                self.parent = self.parent
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                parent = parent
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             return HttpResponse("")
@@ -102,21 +102,21 @@ class UCPostRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.form_post = PostForm(request.POST)
-        if request.is_ajax() and self.form_post.is_valid():
-            post = self.form_post.save(commit=False)
-            if self.parent.parent:
-                self.parent = self.parent.parent
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                self.parent = self.parent
+                parent = parent
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community_with_name(community.name):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
             return HttpResponse()
@@ -128,19 +128,19 @@ class CCPostRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.form_post = PostForm(request.POST)
-        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.parent.community):
-            post = self.form_post.save(commit=False)
-            if self.parent.parent:
-                self.parent = self.parent.parent
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(parent.community):
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                self.parent = self.parent
+                parent = parent
             communities = form_post.cleaned_data.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community in communities:
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community_id=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
             return HttpResponse()
@@ -153,20 +153,20 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.form_post = PostForm(request.POST)
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        form_post = PostForm(request.POST)
         if request.is_ajax() and self.form_post.is_valid():
-            post = self.form_post.save(commit=False)
-            if self.parent.parent:
-                self.parent = self.parent.parent
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                self.parent = self.parent
+                parent = parent
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
@@ -180,21 +180,21 @@ class CMPostRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, self.parent.community)
-        if request.is_ajax() and self.form_post.is_valid():
-            post = self.form_post.save(commit=False)
-            if self.parent.parent:
-                self.parent = self.parent.parent
+        parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        form_post = PostForm(request.POST)
+        check_can_get_lists(request.user, parent.community)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                self.parent = self.parent
+                parent = parent
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.parent.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=parent.community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
