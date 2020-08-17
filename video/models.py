@@ -50,6 +50,7 @@ class VideoAlbum(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     id = models.BigAutoField(primary_key=True)
     type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_video_album')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -114,6 +115,7 @@ class Video(models.Model):
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_video')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_video')
     video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_video')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_video')
 
     class Meta:
         verbose_name = "Видео-ролики"

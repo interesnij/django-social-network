@@ -77,6 +77,7 @@ class Good(models.Model):
 	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
 	good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
 	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good')
+	message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good')
 
 	def __str__(self):
 		return self.title

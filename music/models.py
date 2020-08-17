@@ -72,6 +72,7 @@ class SoundList(models.Model):
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
 
     def __str__(self):
         return self.name
@@ -165,6 +166,7 @@ class SoundcloudParsing(models.Model):
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_music')
     video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_music')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_music')
 
     def __str__(self):
         return self.title

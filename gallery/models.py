@@ -37,6 +37,8 @@ class Album(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_alnum')
+
     class Meta:
         indexes = (
             BrinIndex(fields=['created']),
@@ -99,6 +101,7 @@ class Photo(models.Model):
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_photo')
     video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_photo')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_photo')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

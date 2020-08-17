@@ -36,6 +36,7 @@ class Post(models.Model):
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_post')
 
     @classmethod
     def create_post(cls, creator, text, community, parent, comments_enabled, is_signature, status):
