@@ -169,8 +169,8 @@ class UMPostRepost(View):
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
-                Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
-                message = new_post.message_post.add(message)
+                message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
+                new_post.message_post.add(message)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
