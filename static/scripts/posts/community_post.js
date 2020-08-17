@@ -38,6 +38,8 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   if (form_post.querySelector('#repost_radio_wall').checked) {
     link_.open( 'POST', "/posts/repost/c_u_post_repost/" + uuid + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.send(form_data);
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
@@ -65,15 +67,12 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
     }else{toast_error("Выберите пользователя для репоста")}
   };
 
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
   link_.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       document.querySelector(".votes_fullscreen").style.display = "none";
       document.getElementById("votes_loader").innerHTML="";
       toast_info("Репост записи на стену")
     }}
-  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#c_add_offer_post', function() {
