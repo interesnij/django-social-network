@@ -57,8 +57,19 @@ on('#ajax', 'click', '#u_ucm_repost_btn', function() {
       toast_info("Репост записи в сообщества сделан")
     }else{toast_error("Выберите сообщества для репоста")}
   }
-  
-  else if(form_post.querySelector('#repost_radio_message').checked){};
+
+  else if(form_post.querySelector('#repost_radio_message').checked){
+    user_connections = form_post.querySelector("#id_user_connections");
+    selectedOptions = user_connections.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/posts/repost/u_m_post_repost/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост записи в сообщения сделан")
+    }else{toast_error("Выберите пользователя для репоста")}
+  };
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

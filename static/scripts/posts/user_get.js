@@ -18,6 +18,7 @@ on('#ajax', 'click', '.repost_for_wall', function() {
 })
 on('#ajax', 'click', '.repost_for_community', function() {
   this.nextElementSibling.style.display = "unset";
+  parent = this.parentElement;
   parent.querySelector("#show_user_connections").style.display = "none";
 })
 on('#ajax', 'click', '.repost_for_message', function() {

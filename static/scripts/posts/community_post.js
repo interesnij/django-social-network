@@ -39,8 +39,31 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
   if (form_post.querySelector('#repost_radio_wall').checked) {
     link_.open( 'POST', "/posts/repost/c_u_post_repost/" + uuid + "/", true );
   }
-  else if(form_post.querySelector('#repost_radio_community').checked){}
-  else if(form_post.querySelector('#repost_radio_message').checked){};
+  else if(form_post.querySelector('#repost_radio_community').checked){
+    staff_communities = form_post.querySelector("#id_staff_communities");
+    selectedOptions = staff_communities.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/posts/repost/c_c_post_repost/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост записи в сообщества сделан")
+    }else{toast_error("Выберите сообщества для репоста")}
+  }
+
+  else if(form_post.querySelector('#repost_radio_message').checked){
+    user_connections = form_post.querySelector("#id_user_connections");
+    selectedOptions = user_connections.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/posts/repost/c_m_post_repost/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост записи в сообщения сделан")
+    }else{toast_error("Выберите пользователя для репоста")}
+  };
 
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
