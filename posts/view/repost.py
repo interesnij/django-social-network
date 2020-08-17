@@ -181,7 +181,6 @@ class CMPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         self.parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = self.parent.creator
         self.form_post = PostForm(request.POST)
         check_can_get_lists(request.user, self.parent.community)
         if request.is_ajax() and self.form_post.is_valid():
@@ -190,11 +189,16 @@ class CMPostRepost(View):
                 self.parent = self.parent.parent
             else:
                 self.parent = self.parent
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.parent.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
-            get_post_attach(request, new_post)
-            get_post_processing(new_post)
-            message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
-            new_post.post_message.add(message)
-            return HttpResponse("")
+            connections = request.POST.getlist("user_connections")
+            if not connections:
+                return HttpResponseBadRequest()
+            for user_id in connections:
+                user = User.objects.get(pk=user_id)
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=self.parent.community, comments_enabled=post.comments_enabled, parent = self.parent, status="PG")
+                get_post_attach(request, new_post)
+                get_post_processing(new_post)
+                message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
+                new_post.post_message.add(message)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
