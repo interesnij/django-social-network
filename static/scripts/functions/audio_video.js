@@ -419,7 +419,7 @@ function get_normal_screen(){
                   //list[i]>=track_id
                   console.log(track_id);
                   for(i=0; i<count && i>=track_id; i++) {
-                    console.log(list[i]);
+                    console.log(i);
                     try{
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
