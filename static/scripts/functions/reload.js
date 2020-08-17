@@ -58,7 +58,10 @@ function paginate(link, block_id){
 				xxx.innerHTML = elem.querySelector(block_id).innerHTML;
 				block.insertAdjacentHTML('beforeend', xxx.innerHTML)
 				//block.append(xxx);
-			} else {block.append(elem)}
+			} else {
+				//block.append(elem)
+				block.insertAdjacentHTML('beforeend', elem.innerHTML)
+			}
 			}
 		}
 		link_3.send();
