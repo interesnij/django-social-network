@@ -398,47 +398,6 @@ function get_normal_screen(){
             music_player.addListener(FWDMSP.PAUSE, music_onPause);
         });
 
-        function save_playlist(suffix, post_link, get_link, track_id){
-            var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-            playlist_link.open( 'GET', post_link, true );
-            playlist_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            playlist_link.onreadystatechange = function () {
-            if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-              document.querySelector("body").className = "";
-              document.querySelector("body").classList.add(suffix);
-
-              var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-              _link.open( 'GET', get_link, true );
-              _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-              _link.onreadystatechange = function () {
-                if ( _link.readyState == 4 && _link.status == 200 ) {
-                  var response = document.createElement('span');
-                  response.innerHTML = _link.responseText;
-                  var list = response.querySelectorAll("li");
-                  var count = 50;
-                  //list[i]>=track_id
-                  console.log(track_id);
-                  for(i=0; i<count && i>=track_id; i++) {
-                    console.log(i);
-                    try{
-                    _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
-                    _title=list[i].getAttribute("data-title");
-                    _thumbPath=list[i].getAttribute("data-thumbpath");
-                    _duration=list[i].getAttribute("data-duration");
-                    time = msToTime(_duration);
-                    music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
-                  }catch{break}
-                }
-                  music_player.loadPlaylist(0);
-                  if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-                  setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
-                }
-              }};
-              _link.send( null );
-            }};
-            playlist_link.send( null );
-            };
-
 function music_onReady(){console.log("Аудио плеер готов");}
 
     function music_onPause(){
@@ -537,3 +496,43 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
       }
     });
+
+    function save_playlist(suffix, post_link, get_link, track_id){
+        var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        playlist_link.open( 'GET', post_link, true );
+        playlist_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        playlist_link.onreadystatechange = function () {
+        if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+          document.querySelector("body").className = "";
+          document.querySelector("body").classList.add(suffix);
+
+          var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          _link.open( 'GET', get_link, true );
+          _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          _link.onreadystatechange = function () {
+            if ( _link.readyState == 4 && _link.status == 200 ) {
+              var response = document.createElement('span');
+              response.innerHTML = _link.responseText;
+              var list = response.querySelectorAll("li");
+              var count = 50;
+              console.log(track_id);
+              for(i=0; i<count && i>=track_id; i++) {
+                console.log(i+1);
+                try{
+                _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+                _title=list[i].getAttribute("data-title");
+                _thumbPath=list[i].getAttribute("data-thumbpath");
+                _duration=list[i].getAttribute("data-duration");
+                time = msToTime(_duration);
+                music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
+              }catch{break}
+            }
+              music_player.loadPlaylist(0);
+              if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+              setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
+            }
+          }};
+          _link.send( null );
+        }};
+        playlist_link.send( null );
+        };
