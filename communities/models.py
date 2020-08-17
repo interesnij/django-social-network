@@ -181,45 +181,45 @@ class Community(models.Model):
     def get_posts(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
+        posts_query = Q(community_id=self.pk, is_deleted=False, post_message__isnull=True, is_fixed=False, status=Post.STATUS_PUBLISHED)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, post_message__isnull=True, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, post_message__isnull=True, is_fixed=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
     def id_draft_posts_exists(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, post_message__isnull=True, status=Post.STATUS_DRAFT)
         return Post.objects.filter(posts_query).exists()
 
     def get_draft_posts_for_user(self, user_pk):
         from posts.models import Post
 
-        posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(creator_id=user_pk, community_id=self.pk, post_message__isnull=True, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts_for_user(self, user_pk):
         from posts.models import Post
 
-        posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(creator_id=user_pk, community_id=self.pk, post_message__isnull=True, is_deleted=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
     def get_archive_posts(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
+        posts_query = Q(community_id=self.pk, is_deleted=False, post_message__isnull=True, is_fixed=False, status=Post.STATUS_ARHIVED)
         posts = Post.objects.filter(posts_query)
         return posts
 

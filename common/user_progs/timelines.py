@@ -7,7 +7,7 @@ from music.models import SoundList
 
 
 def get_timeline_posts_for_user(user):
-    own_posts_query = Q(creator_id=user.pk, community__isnull=True, post_message=None, is_deleted=False, status=Post.STATUS_PUBLISHED)
+    own_posts_query = Q(creator_id=user.pk, community__isnull=True, post_message__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
     own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
 
     community_posts_query = Q(community__memberships__user__id=user.pk, is_deleted=False, status=Post.STATUS_PUBLISHED)
@@ -28,7 +28,7 @@ def get_timeline_posts_for_user(user):
 
 def get_timeline_posts_for_possible_users(user):
     possible_users = user.get_possible_friends_ids()
-    posts_query = Q(creator_id__in=possible_users, creator__user_private__is_private=False, community__isnull=True, is_deleted=False, post_message=None, status=Post.STATUS_PUBLISHED)
+    posts_query = Q(creator_id__in=possible_users, creator__user_private__is_private=False, community__isnull=True, is_deleted=False, post_message__isnull=True, status=Post.STATUS_PUBLISHED)
     posts_queryset = Post.objects.only('created').filter(posts_query)
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Post.STATUS_PUBLISHED)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)

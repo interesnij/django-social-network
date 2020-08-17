@@ -913,21 +913,21 @@ class User(AbstractUser):
     def get_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, post_message__isnull=True, status=Post.STATUS_DRAFT, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(creator_id=self.id, community_id=community_pk, post_message__isnull=True, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_archive_posts(self):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, post_message__isnull=True, status=Post.STATUS_ARHIVED, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
 
