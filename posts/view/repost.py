@@ -161,7 +161,7 @@ class UMPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            connections = request.POST.get("user_connections")
+            connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
             for user_id in connections:
