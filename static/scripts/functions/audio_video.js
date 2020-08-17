@@ -518,9 +518,9 @@ function music_onReady(){console.log("Аудио плеер готов");}
     on('#ajax', 'click', '.music_list_item', function() {
       var track_id = this.parentElement.parentElement.getAttribute('music-counter');
       id = 0;
-      var list= this.parentElement.getElementsByTagName("li");
+      var list= this.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
-        if (list[i]==this.target) {
+        if (list[i]==this.parentElement.parentElement.parentElement) {
           alert("li под номером " + (i+1)); id = i+1;
           return;
         };
