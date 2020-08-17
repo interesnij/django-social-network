@@ -99,7 +99,7 @@ class SoundList(models.Model):
     class Meta:
         verbose_name = "список: весь, человека или сообщества"
         verbose_name_plural = "списки: весь, человека или сообщества"
-        ordering = ['-players__id']
+        ordering = ['order']
 
 
 class SoundTags(models.Model):
@@ -181,3 +181,4 @@ class SoundcloudParsing(models.Model):
         verbose_name = "спарсенные треки"
         verbose_name_plural = "спарсенные треки"
         indexes = (BrinIndex(fields=['created_at']),)
+        ordering = ['-pk']
