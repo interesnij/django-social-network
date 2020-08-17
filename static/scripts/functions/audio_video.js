@@ -418,7 +418,7 @@ function get_normal_screen(){
                   var count = 50;
                   for(i=0; i<count; i++) {
                     try{
-                      if (list[i]=>track_id){
+                      if (list[i]>=track_id){
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
                     _thumbPath=list[i].getAttribute("data-thumbpath");
