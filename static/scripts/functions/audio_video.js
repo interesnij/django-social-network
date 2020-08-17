@@ -520,7 +520,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       id = 0;
       var list= this.parentElement.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
-        if (list[i]==event.target) {
+        if (list[i]==this.target) {
           alert("li под номером " + (i+1)); id = i+1;
           return;
         };
