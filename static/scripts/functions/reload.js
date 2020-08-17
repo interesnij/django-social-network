@@ -57,7 +57,7 @@ function paginate(link, block_id){
 				xxx = document.createElement("span");
 				xxx.innerHTML = elem.querySelector(block_id).innerHTML;
 				block.append(xxx);
-			} else {block.append(elem)}
+			} else {block.append(elem.innerHTML)}
 			}
 		}
 		link_3.send();
