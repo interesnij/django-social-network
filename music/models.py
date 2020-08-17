@@ -99,7 +99,7 @@ class SoundList(models.Model):
     class Meta:
         verbose_name = "список: весь, человека или сообщества"
         verbose_name_plural = "списки: весь, человека или сообщества"
-        ordering = ['players__id']
+        ordering = ['-players__id']
 
 
 class SoundTags(models.Model):
