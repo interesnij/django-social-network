@@ -117,7 +117,7 @@ class UserMusic(ListView):
         return context
 
     def get_queryset(self):
-        music_list = self.user.get_music()
+        music_list = self.playlist.playlist_too()
         return music_list
 
 
