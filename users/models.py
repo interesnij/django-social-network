@@ -907,7 +907,7 @@ class User(AbstractUser):
     def get_posts(self):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, post_message=False, status=Post.STATUS_PUBLISHED, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, post_message=None, status=Post.STATUS_PUBLISHED, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_draft_posts(self):
