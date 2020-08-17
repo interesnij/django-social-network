@@ -7,7 +7,7 @@ from music.models import SoundList
 
 
 def get_timeline_posts_for_user(user):
-    own_posts_query = Q(creator_id=user.pk, community__isnull=True, post_message__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
+    own_posts_query = Q(creator_id=user.pk, community__isnull=True, post_message=None, is_deleted=False, status=Post.STATUS_PUBLISHED)
     own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
 
     community_posts_query = Q(community__memberships__user__id=user.pk, is_deleted=False, status=Post.STATUS_PUBLISHED)
