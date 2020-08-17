@@ -75,7 +75,7 @@ class SoundList(models.Model):
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
 
     def __str__(self):
-        return self.name
+        return self.name + " " + self.creator.get_full_name()
 
     def is_track_in_list(self, track_id):
         return self.players.filter(pk=track_id).values("pk").exists()
