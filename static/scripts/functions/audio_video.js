@@ -487,7 +487,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
 
       var list_pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
-      if (!document.body.classList.contains("list_" + id)){
+      if (!document.body.classList.contains("list_" + list_pk)){
         save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", id)
       }else{
         music_player.loadPlaylist(0);
