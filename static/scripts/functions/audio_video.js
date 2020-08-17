@@ -416,7 +416,7 @@ function get_normal_screen(){
                   response.innerHTML = _link.responseText;
                   var list = response.querySelectorAll("li");
                   //var count = list.length;
-                  var count = 50;
+                  var count = 1000;
                   for(i=0; i<count; i++) {
                     try{
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
