@@ -44,6 +44,7 @@ class Message(models.Model):
     message = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
     objects = MessageQuerySet.as_manager()
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Message"
