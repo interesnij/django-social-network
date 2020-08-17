@@ -415,9 +415,8 @@ function get_normal_screen(){
                   var response = document.createElement('span');
                   response.innerHTML = _link.responseText;
                   var list = response.querySelectorAll("li");
-                  //var count = list.length;
-                  var count = 1000;
-                  for(i=0; i<count; i++) {
+                  var count = 50;
+                  for(i=0; i<count && list[i]>=track_id; i++) {
                     try{
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
                     _title=list[i].getAttribute("data-title");
@@ -426,7 +425,7 @@ function get_normal_screen(){
                     time = msToTime(_duration);
                     music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
                   }catch{break}
-                  }
+                }
                   music_player.loadPlaylist(0);
                   if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
                   setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
@@ -521,7 +520,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       var list= this.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
         if (list[i]==this.parentElement.parentElement.parentElement) {
-          alert("li под номером " + (i+1)); id = i;
+          id = i;
         };
       }
 
