@@ -521,7 +521,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       var list= this.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
         if (list[i]==this.parentElement.parentElement.parentElement) {
-          alert("li под номером " + (i+1)); id = i+1;
+          alert("li под номером " + (i+1)); id = i;
         };
       }
 
