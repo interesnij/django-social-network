@@ -155,7 +155,7 @@ class UMPostRepost(View):
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         form_post = PostForm(request.POST)
-        if request.is_ajax() and self.form_post.is_valid():
+        if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
                 parent = parent.parent
