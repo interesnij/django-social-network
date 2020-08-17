@@ -418,7 +418,7 @@ function get_normal_screen(){
                   var count = 50;
                   //list[i]>=track_id
                   console.log(track_id);
-                  for(i=0; i<count; i++) {
+                  for(i=0; i<count && i>=track_id; i++) {
                     console.log(list[i]);
                     try{
                     _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
