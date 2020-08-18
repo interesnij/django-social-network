@@ -16,12 +16,27 @@ class Post(models.Model):
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
     STATUS_ARHIVED = 'A'
-    STATUS_CONTAINER = 'C'
+
+    PHOTO_REPOST = 'C'
+    PHOTO_ALBUM_REPOST = 'PAR'
+    GOOD_REPOST = 'GR'
+    MUSIC_REPOST = 'MR'
+    MUSIC_LIST_REPOST = 'MLR'
+    USER_REPOST = 'UR'
+    COMMUNITY_REPOST = 'CR'
     STATUSES = (
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PROCESSING, 'Обработка'),
         (STATUS_PUBLISHED, 'Опубликована'),
         (STATUS_ARHIVED, 'Архивирована'),
+
+        (PHOTO_REPOST, 'Репост фотографии'),
+        (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
+        (GOOD_REPOST, 'Репост товара'),
+        (MUSIC_REPOST, 'Репост аудиозаписи'),
+        (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
+        (USER_REPOST, 'Репост пользователя'),
+        (COMMUNITY_REPOST, 'Репост сообщества'),
     )
     id = models.BigAutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -50,8 +65,8 @@ class Post(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return post
     @classmethod
-    def create_parent_post(cls, creator, community):
-        post = cls.objects.create(creator=creator, community=community, status=Post.STATUS_CONTAINER, )
+    def create_parent_post(cls, creator, community, status):
+        post = cls.objects.create(creator=creator, community=community, status=status, )
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",

@@ -72,9 +72,9 @@ class UUPhotoRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=None)
-            photo.item.add(parent) 
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            parent = Post.create_parent_post(creator=photo.creator, community=None, Post.PHOTO_REPOST)
+            photo.item.add(parent)
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             return HttpResponse()
@@ -92,7 +92,9 @@ class CUPhotoRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            parent = Post.create_parent_post(creator=photo.creator, community=None, Post.PHOTO_REPOST)
+            photo.item.add(parent)
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             return HttpResponse("")
@@ -115,10 +117,12 @@ class UCPhotoRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
+            parent = Post.create_parent_post(creator=photo.creator, community=None, Post.PHOTO_REPOST)
+            photo.item.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community_with_name(community.name):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
             return HttpResponse()
@@ -139,6 +143,8 @@ class CCPhotoRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
+            parent = Post.create_parent_post(creator=photo.creator, community=community, Post.PHOTO_REPOST)
+            photo.item.add(parent)
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
@@ -164,9 +170,11 @@ class UMPhotoRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
+            parent = Post.create_parent_post(creator=photo.creator, community=None, Post.PHOTO_REPOST)
+            photo.item.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
@@ -189,9 +197,11 @@ class CMPhotoRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
+            parent = Post.create_parent_post(creator=photo.creator, community=community, Post.PHOTO_REPOST)
+            photo.item.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
