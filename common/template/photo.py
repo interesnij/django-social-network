@@ -137,3 +137,23 @@ def get_permission_user_photo(user, folder, template, request_user):
         if check_anon_user_can_get_list(user):
             template_name = folder + "anon_" + template
     return template_name
+
+def get_permission_user_photo_detail(user, photo, folder, template, request_user):
+    if user.is_suspended():
+        raise PermissionDenied('Ошибка доступа')
+    elif user.is_blocked():
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated:
+        if request_user.is_no_phone_verified():
+            raise PermissionDenied('Ошибка доступа')
+        elif photo.creator.pk == request_user.pk:
+            template_name = folder + "my_" + template
+        elif request_user.is_photo_manager():
+            template_name = folder + "staff_" + template
+        elif request_user.pk != user.pk:
+            if check_user_can_get_list(request_user, user):
+                template_name = folder + template
+    elif request_user.is_anonymous:
+        if check_anon_user_can_get_list(user):
+            template_name = folder + "anon_" + template
+    return template_name

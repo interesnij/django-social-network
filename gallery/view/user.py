@@ -220,7 +220,7 @@ class UserPhoto(TemplateView):
         self.album = Album.objects.get(creator=self.user, type=Album.MAIN, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "u_photo/photo/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/photo/", "photo.html", request.user)
         else:
             raise Http404
 
@@ -251,7 +251,7 @@ class UserAlbumPhoto(TemplateView):
         self.album = Album.objects.get(creator=self.user, type=Album.ALBUM, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "u_photo/album_photo/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/album_photo/", "photo.html", request.user)
         else:
             raise Http404
 
@@ -283,7 +283,7 @@ class UserWallPhoto(TemplateView):
         self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "u_photo/wall_photo/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -313,7 +313,7 @@ class UserDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/avatar/", "photo.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -342,7 +342,7 @@ class UserFirstAvatar(TemplateView):
         self.photo = self.album.get_first_photo()
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/avatar/", "photo.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
