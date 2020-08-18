@@ -35,7 +35,7 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
   form_post = document.body.querySelector("#u_uсm_post_repost_form");
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
+  pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 

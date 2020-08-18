@@ -33,7 +33,8 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 on('#ajax', 'click', '#c_ucm_repost_btn', function() {
   form_post = document.body.querySelector("#c_uсm_repost_form");
   form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid")
+  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   if (form_post.querySelector('#repost_radio_wall').checked) {
