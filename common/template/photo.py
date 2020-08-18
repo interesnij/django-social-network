@@ -76,6 +76,29 @@ def get_permission_community_photo(community, folder, template, request_user):
             raise PermissionDenied('Ошибка доступа')
     return template_name
 
+def get_permission_community_photo_detail(community, photo, folder, template, request_user):
+    if community.is_suspended():
+        raise PermissionDenied('Ошибка доступа')
+    elif community.is_blocked():
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated:
+        if request_user.pk == photo.creator.pk:
+            template_name = folder + "admin_" + template
+        elif request_user.is_photo_manager():
+            template_name = folder + "staff_" + template
+        elif check_can_get_lists(request_user, community):
+            template_name = folder + template
+        elif community.is_public():
+            template_name = folder + template
+        else:
+            raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_anonymous:
+        if check_anon_can_get_list(community):
+            template_name = folder + "anon_" + template
+        else:
+            raise PermissionDenied('Ошибка доступа')
+    return template_name
+
 def get_template_user_photo(user, folder, template, request_user):
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
