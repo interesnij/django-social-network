@@ -16,6 +16,7 @@ class Post(models.Model):
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
     STATUS_ARHIVED = 'A'
+    STATUS_CONTAINER = 'C'
     STATUSES = (
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PROCESSING, 'Обработка'),
@@ -50,7 +51,7 @@ class Post(models.Model):
         return post
     @classmethod
     def create_parent_post(cls, creator, community):
-        post = cls.objects.create(creator=creator, community=community, status=Post.STATUS_PUBLISHED, )
+        post = cls.objects.create(creator=creator, community=community, status=Post.STATUS_CONTAINER, )
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",

@@ -73,7 +73,7 @@ class UUPhotoRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=None)
-            photo.item.add(parent)
+            photo.item.add(parent) 
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
