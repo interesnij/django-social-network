@@ -49,13 +49,13 @@
     </div>
   {% endif %}
 
-  <div class="attach_container" data-pk="{{ object.pk }}">
       {% if object.get_c_attach_items %}
         {{ object.get_c_attach_items|safe }}
       {% else %}
+      <div class="attach_container" data-pk="{{ object.pk }}">
         {% include 'generic/attach/parent_user.html' %}
+      </div>
       {% endif %}
-  </div>
 
   {% include 'post_community/info.html' %}
 

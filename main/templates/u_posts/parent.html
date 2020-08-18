@@ -49,15 +49,13 @@
     </div>
   {% endif %}
 
+  {% if object.get_u_attach_items %}
+    {{ object.get_u_attach_items|safe }}
+  {% else %}
   <div class="attach_container" data-pk="{{ object.pk }}">
-    <div class="attach_container" data-pk="{{ object.pk }}">
-      {% if object.get_u_attach_items %}
-        {{ object.get_u_attach_items|safe }}
-      {% else %}
-        {% include 'generic/attach/parent_user.html' %}
-      {% endif %}
-    </div>
+    {% include 'generic/attach/parent_user.html' %}
   </div>
+  {% endif %}
 
 
   <div class="card-footer border-top py-2">
