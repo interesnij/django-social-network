@@ -171,6 +171,8 @@ def get_permission_user_photo_detail(user, photo, folder, template, request_user
             raise PermissionDenied('Ошибка доступа')
         elif photo.creator.pk == request_user.pk:
             template_name = folder + "my_" + template
+        elif user.pk == request_user.pk:
+            template_name = folder + template
         elif request_user.is_photo_manager():
             template_name = folder + "staff_" + template
         elif request_user.pk != user.pk:
