@@ -6,9 +6,11 @@ on('#ajax', 'click', '.fullscreen', function() {
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
-  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  parent = this.parentElement.parentElement.parentElement.parentElement
+  uuid = parent.getAttribute("data-uuid");
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/posts/repost/u_ucm_post_window/" + uuid + "/", loader);
+  open_fullscreen("/posts/repost/u_ucm_post_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
 on('#ajax', 'click', '.repost_for_wall', function() {

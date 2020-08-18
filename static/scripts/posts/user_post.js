@@ -34,12 +34,13 @@ on('#ajax', 'click', '#form_post_btn', function() {
 on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
   form_post = document.body.querySelector("#u_uсm_post_repost_form");
   form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid")
+  uuid = this.getAttribute("data-uuid");
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
   if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/posts/repost/u_u_post_repost/" + uuid + "/", true );
+    link_.open( 'POST', "/posts/repost/u_u_post_repost/" + pk + "/" + uuid + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
     toast_info("Репост записи на стену сделан")
@@ -51,7 +52,7 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/posts/repost/u_c_post_repost/" + uuid + "/", true );
+      link_.open( 'POST', "/posts/repost/u_c_post_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост записи в сообщества сделан")
@@ -64,7 +65,7 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/posts/repost/u_m_post_repost/" + uuid + "/", true );
+      link_.open( 'POST', "/posts/repost/u_m_post_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост записи в сообщения сделан")

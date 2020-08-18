@@ -37,7 +37,7 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/posts/repost/c_u_post_repost/" + uuid + "/", true );
+    link_.open( 'POST', "/posts/repost/c_u_post_repost/" + pk + "/" + uuid + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
   }
@@ -47,7 +47,7 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/posts/repost/c_c_post_repost/" + uuid + "/", true );
+      link_.open( 'POST', "/posts/repost/c_c_post_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост записи в сообщества сделан")
@@ -60,7 +60,7 @@ on('#ajax', 'click', '#c_ucm_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/posts/repost/c_m_post_repost/" + uuid + "/", true );
+      link_.open( 'POST', "/posts/repost/c_m_post_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост записи в сообщения сделан")
