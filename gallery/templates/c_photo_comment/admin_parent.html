@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.get_created }}</small>
         </h5>
-        <p>{{ comment.text }}</p>
+        {% if comment.text %}<p class="">{{ comment.text }}</p>{% endif %}
 
         {% include 'generic/attach/c_photo_comment.html' %}
 

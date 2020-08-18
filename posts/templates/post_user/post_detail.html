@@ -6,7 +6,7 @@
     {% include 'post_user/repost_detail.html' %}
     {% endif %}
 
-    <p class="">{{ object.text }}</p>
+    {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
 
     {% include 'generic/attach/u_post_attach.html' %}
 

@@ -1,8 +1,8 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
     {% include 'post_user/card_header.html' %}
 
-    <div class="fullscreen" style="cursor:pointer;padding-left: 15px;">
-        <p class="">{{ object.text }}</p>
+    <div class="fullscreen pointer">
+        {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
     </div>
     {% include 'generic/attach/u_post_attach.html' %}
     {% if object.parent %}

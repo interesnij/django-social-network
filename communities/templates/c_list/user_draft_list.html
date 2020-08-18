@@ -60,7 +60,7 @@
                               <div>
                                 <div>
                               <div style="padding-left: 15px;">
-                                  <p class="">{{ object.text }}</p>
+                                {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
                               </div>
                               {% include 'generic/attach/c_post_attach.html' %}
 

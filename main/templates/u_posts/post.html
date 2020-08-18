@@ -35,7 +35,7 @@
   </div>
 
   <div class="fullscreen pointer">
-      <p class="">{{ object.text }}</p>
+      {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
   </div>
 
   {% include 'generic/attach/u_post_attach.html' %}

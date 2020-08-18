@@ -45,7 +45,7 @@
 
   {% if object.parent %}
   <div class="card-body">
-    <p class="">{{ object.parent.text }}</p>
+    {% if object.parent.text %}<p class="">{{ object.parent.text }}</p>{% endif %}
 
     <div class="attach_container" data-pk="{{ object.pk }}">
       {% for photo in object.parent.item_photo.all %}

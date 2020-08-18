@@ -2,7 +2,7 @@
 
   {% include 'post_user/my_card_header.html' %}
 
-  <p class="">{{ object.text }}</p>
+  {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
 
   {% include 'generic/attach/u_post_attach.html' %}
 
