@@ -89,7 +89,7 @@ class Post(models.Model):
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_repost(self):
-        return self.parent.item_photo.all[0]
+        return self.parent.item_photo.all()[0]
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def is_good_repost(self):
