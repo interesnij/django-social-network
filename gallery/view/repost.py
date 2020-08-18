@@ -26,7 +26,7 @@ class UUCMPhotoWindow(TemplateView):
             self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
-                check_user_can_get_list(request.user, user)
+                check_user_can_get_list(request.user, self.user)
             self.template_name = "photo_repost_window/u_ucm_post.html"
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 

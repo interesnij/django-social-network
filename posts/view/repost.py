@@ -25,8 +25,7 @@ class UUCMPostWindow(TemplateView):
             self.post = Post.objects.get(uuid=self.kwargs["uuid"])
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
-                check_user_can_get_list(request.user, user)
-            check_can_get_lists(request.user, community)
+                check_user_can_get_list(request.user, self.user)
             self.template_name = "post_repost_window/u_ucm_post.html"
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
