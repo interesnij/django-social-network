@@ -9,6 +9,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from notify.model.item import *
 from common.model.votes import PostVotes, PostCommentVotes
+from common.utils import try_except
 
 
 class Post(models.Model):
@@ -84,6 +85,21 @@ class Post(models.Model):
 
     def __str__(self):
         return self.creator.get_full_name()
+
+    def is_photo_repost(self):
+        return try_except(self.parent.status == Post.PHOTO_REPOST)
+    def is_photo_album_repost(self):
+        return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
+    def is_good_repost(self):
+        return try_except(self.status == Post.GOOD_REPOST)
+    def is_music_repost(self):
+        return try_except(self.status == Post.MUSIC_REPOST)
+    def is_music_list_repost(self):
+        return try_except(self.status == Post.MUSIC_LIST_REPOST)
+    def is_user_repost(self):
+        return try_except(self.status == Post.USER_REPOST)
+    def is_cpmmunity_repost(self):
+        return try_except(self.status == Post.COMMUNITY_REPOST)
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
