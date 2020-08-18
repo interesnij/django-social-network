@@ -89,7 +89,8 @@ class Post(models.Model):
     def is_photo_repost(self):
         return try_except(self.parent.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        return self.parent.item_photo.all()[0]
+        photo = self.parent.item_photo.all()[0]
+        return '<img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img">'.format(photo.uuid, photo.creator.pk, photo.file.url)
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def is_good_repost(self):

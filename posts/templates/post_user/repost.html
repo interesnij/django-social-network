@@ -50,7 +50,7 @@
 
   <div class="attach_container" data-pk="{{ object.pk }}">
     {% if object.is_photo_repost %}
-    <div class="photo">vnytjytr
+    <div class="photo">{{ object.get_photo_repost }}
         <img photo-uuid="{{ object.get_photo_repost.uuid }}" data-pk="{{ object.parent.creator.pk }}" class="c_WA_photo image_fit lazyload pointer" data-src="{{ object.get_photo_repost.file.url }}" alt="img">
     </div>
     {% endif %}
