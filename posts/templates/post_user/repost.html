@@ -42,9 +42,12 @@
       {% endif %}
     </div>
   </div>
-  <div class="card-body fullscreen pointer border-left">
-    {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
-  </div>
+  {% if object.text %}
+    <div class="fullscreen pointer">
+      <p class="">{{ object.text }}</p>
+    </div>
+  {% endif %}
+
   <div class="attach_container" data-pk="{{ object.pk }}">
     {% for photo in object.parent.item_photo.all %}
     <div class="photo">

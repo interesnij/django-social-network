@@ -42,11 +42,12 @@
       {% endif %}
     </div>
   </div>
+  
+  {% if object.parent.text %}
   <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
-    {% if object.parent.text %}
       <p class="">{{ object.parent.text }}</p>
-    {% endif %}
   </div>
+  {% endif %}
   <div class="attach_container" data-pk="{{ object.pk }}">
     {% for photo in object.parent.item_photo.all %}
     <div class="photo">
