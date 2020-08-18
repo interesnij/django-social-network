@@ -10,4 +10,5 @@ urlpatterns=[
 
 	url(r'^votes/', include('gallery.url.votes')),
 	url(r'^window/', include('gallery.url.window')),
+	url(r'^repost/', include('gallery.url.repost')),
 ]
