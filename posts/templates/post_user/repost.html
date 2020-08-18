@@ -49,7 +49,11 @@
   {% endif %}
 
   <div class="attach_container" data-pk="{{ object.pk }}">
-    {% if object.is_photo_repost %} True {% endif %}
+    {% if object.is_photo_repost %}
+    <div class="photo">
+        <img photo-uuid="{{ object.parent.item_photo.0 }}" data-pk="{{ object.parent.creator.pk }}" class="c_WA_photo image_fit lazyload pointer" data-src="{{ object.parent.item_photo.0.file.url }}" alt="img">
+    </div>
+    {% endif %}
     {% for photo in object.parent.item_photo.all %}
     <div class="photo">
         <img photo-uuid="{{ photo.uuid }}" data-pk="{{ object.parent.creator.pk }}" class="c_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
