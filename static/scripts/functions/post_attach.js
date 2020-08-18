@@ -169,8 +169,8 @@ function music_post_attach(_this, block) {
 
 function good_post_attach(_this, block) {
   is_full_attach();
-  pk = _this.getAttribute('good-pk');
-  if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
+  uuid = _this.getAttribute('good-uuid');
+  if (block.querySelector( '[good-uuid=' + '"' + uuid + '"]' )){
     _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
