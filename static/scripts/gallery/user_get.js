@@ -6,9 +6,9 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 });
 
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("data-pk");
+  pk = parent.getAttribute("user-pk");
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/repost/u_ucm_post_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();

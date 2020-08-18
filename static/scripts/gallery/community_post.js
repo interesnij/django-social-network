@@ -151,15 +151,15 @@ on('#ajax', 'click', '.community_photo_abort_remove', function() {
 on('#ajax', 'click', '.c_photo_like', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  uuid = parent.getAttribute("data-uuid");
-  send_like(photo, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
+  pk = parent.getAttribute("user-pk");
+  send_like(parent, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_photo_likes");
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  uuid = parent.getAttribute("data-uuid");
-  send_dislike(photo, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
+  pk = parent.getAttribute("user-pk");
+  send_dislike(parent, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_photo_dislikes");
 });
 on('#ajax', 'click', '.c_photo_like2', function() {
