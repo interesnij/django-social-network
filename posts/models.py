@@ -103,10 +103,10 @@ class Post(models.Model):
         return try_except(self.parent.status == Post.PHOTO_REPOST)
     def get_c_photo_repost(self):
         photo = self.parent.item_photo.all()[0]
-        return '<div class="photo"><img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img"></div>'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
+        return '<img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img">'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
     def get_u_photo_repost(self):
         photo = self.parent.item_photo.all()[0]
-        return '<div class="photo"><img photo-uuid="{}" data-pk="{}" class="u_WA_photo image_fit lazyload pointer" data-src="{}" alt="img"></div>'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
+        return '<img photo-uuid="{}" data-pk="{}" class="u_WA_photo image_fit lazyload pointer" data-src="{}" alt="img">'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
 
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
@@ -149,10 +149,10 @@ class Post(models.Model):
         return try_except(self.status == Post.VIDEO_REPOST)
     def get_u_video_repost(self):
         video = self.parent.item_video.all()[0]
-        return '<div class="video"><img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 u_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div></div>'.format(video.image.url, video.creator.pk, video.uuid)
+        return '<img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 u_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div>'.format(video.image.url, video.creator.pk, video.uuid)
     def get_u_video_repost(self):
         video = self.parent.item_video.all()[0]
-        return '<div class="video"><img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 c_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div></div>'.format(video.image.url, video.creator.pk, video.uuid)
+        return '<img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 c_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div>'.format(video.image.url, video.creator.pk, video.uuid)
 
     def is_video_list_repost(self):
         return try_except(self.status == Post.VIDEO_LIST_REPOST)
