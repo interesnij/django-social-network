@@ -5,6 +5,15 @@ on('#ajax', 'click', '.c_photo_detail', function() {
   open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.c_ucm_photo_repost', function() {
+  parent = this.parentElement.parentElement.parentElement.parentElement
+  uuid = parent.getAttribute("data-uuid");
+  pk = parent.getAttribute("data-pk");
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/gallery/repost/c_ucm_post_window/" + pk + "/" + uuid + "/", loader);
+  clear_attach_block();
+})
+
 on('#ajax', 'click', '.c_avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
