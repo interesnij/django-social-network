@@ -23,6 +23,8 @@ class Post(models.Model):
     GOOD_REPOST = 'GR'
     MUSIC_REPOST = 'MR'
     MUSIC_LIST_REPOST = 'MLR'
+    VIDEO_REPOST = 'VR'
+    VIDEO_LIST_REPOST = 'VLR'
     USER_REPOST = 'UR'
     COMMUNITY_REPOST = 'CR'
     STATUSES = (
@@ -86,22 +88,81 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def get_attach_photos(self):
+        return self.parent.item_photo.all()
+    def get_attach_videos(self):
+        return self.parent.item_video.all()
+    def get_attach_goods(self):
+        return self.parent.item_good.all()
+    def get_attach_articles(self):
+        return self.parent.attached_item.all()
+    def get_attach_tracks(self):
+        return self.parent.item_music.all()
+
     def is_photo_repost(self):
         return try_except(self.parent.status == Post.PHOTO_REPOST)
-    def get_photo_repost(self):
+    def get_c_photo_repost(self):
         photo = self.parent.item_photo.all()[0]
-        return '<div class="photo"><img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img"></div>'.format(photo.uuid, photo.creator.pk, photo.file.url)
+        return '<div class="photo"><img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img"></div>'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
+    def get_u_photo_repost(self):
+        photo = self.parent.item_photo.all()[0]
+        return '<div class="photo"><img photo-uuid="{}" data-pk="{}" class="u_WA_photo image_fit lazyload pointer" data-src="{}" alt="img"></div>'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
+
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
+    def get_photo_album_repost(self):
+        photo_album = self.parent.post_alnum.all()[0]
+        return photo_album
+
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
+    def get_u_good_repost(self):
+        good = self.parent.item_good.all()[0]
+        badge = '<span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>{}</span>'.format(photo.title)
+        if good.image:
+            image = good.image
+        else:
+            image = '<svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>'
+        return '<div class="u_good_detail good pointer" good-uuid="{}" data-pk="{}">{badge}{image}</div>'.format(photo.uuid, photo.creator.pk, badge, image)
+    def get_c_good_repost(self):
+        good = self.parent.item_good.all()[0]
+        badge = '<span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>{}</span>'.format(photo.title)
+        if good.image:
+            image = good.image
+        else:
+            image = '<svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>'
+        return '<div class="c_good_detail good pointer" good-uuid="{}" data-pk="{}">{badge}{image}</div>'.format(photo.uuid, photo.creator.pk, badge, image)
+
     def is_music_repost(self):
         return try_except(self.status == Post.MUSIC_REPOST)
+
+    def get_music_repost(self):
+        music = self.parent.item_music.all()[0]
+        return music
     def is_music_list_repost(self):
         return try_except(self.status == Post.MUSIC_LIST_REPOST)
+    def get_music_list_repost(self):
+        music_list = self.parent.post_soundlist.all()[0]
+        return music_list
+
+    def is_video_repost(self):
+        return try_except(self.status == Post.VIDEO_REPOST)
+    def get_u_video_repost(self):
+        video = self.parent.item_video.all()[0]
+        return '<div class="video"><img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 u_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div></div>'.format(video.image.url, video.creator.pk, video.uuid)
+    def get_u_video_repost(self):
+        video = self.parent.item_video.all()[0]
+        return '<div class="video"><img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 c_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div></div>'.format(video.image.url, video.creator.pk, video.uuid)
+
+    def is_video_list_repost(self):
+        return try_except(self.status == Post.VIDEO_LIST_REPOST)
+    def get_video_list_repost(self):
+        video_list = self.parent.post_video_album.all()[0]
+        return video_list
+
     def is_user_repost(self):
         return try_except(self.status == Post.USER_REPOST)
-    def is_cpmmunity_repost(self):
+    def is_community_repost(self):
         return try_except(self.status == Post.COMMUNITY_REPOST)
 
     def get_created(self):
