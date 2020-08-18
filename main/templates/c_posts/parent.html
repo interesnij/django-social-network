@@ -43,9 +43,11 @@
     </div>
   </div>
 
-  <div class="c_fullscreen pointer">
-      {% if object.parent.text %}<p class="">{{ object.parent.text }}</p>{% endif %}
-  </div>
+  {% if object.parent.text %}
+    <div class="c_fullscreen pointer">
+      <p class="">{{ object.parent.text }}</p>
+    </div>
+  {% endif %}
 
   <div class="attach_container" data-pk="{{ object.pk }}">
     {% for photo in object.parent.item_photo.all %}

@@ -51,9 +51,11 @@
       </div>
   </div>
 
+{% if object.text %}
   <div class="fullscreen pointer">
-    {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
+    <p class="">{{ object.text }}</p>
   </div>
+{% endif %}
 
   {% include 'generic/attach/u_post_attach.html' %}
 

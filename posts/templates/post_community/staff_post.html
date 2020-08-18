@@ -5,9 +5,11 @@
     {% include 'post_community/repost.html' %}
     {% endif %}
 
-    <div class="c_fullscreen pointer">
-      {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
-    </div>
+    {% if object.text %}
+      <div class="c_fullscreen pointer">
+        <p class="">{{ object.text }}</p>
+      </div>
+    {% endif %}
     {% include 'generic/attach/c_post_attach.html' %}
     {% if object.parent %}
       {% include 'post_community/repost.html' %}
