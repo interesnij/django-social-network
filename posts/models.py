@@ -185,6 +185,26 @@ class Post(models.Model):
         else:
             return False
 
+    def get_c_attach_items(self):
+        if self.is_photo_repost():
+            return self.get_c_photo_repost()
+        elif self.is_photo_album_repost():
+            return 'Пользователь поделился фотоальбомом!'
+        elif self.get_good_repost():
+            return self.get_c_good_repost()
+        elif self.get_music_repost():
+            return "Пользователь поделился music!"
+        elif self.is_video_repost():
+            return self.get_c_video_repost()
+        elif self.is_video_list_repost():
+            return "Пользователь поделился плейлистом!"
+        elif self.is_user_repost():
+            return "Пользователь поделился пользователем!"
+        elif self.is_community_repost():
+            return "Пользователь поделился сообществом!"
+        else:
+            return False
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
