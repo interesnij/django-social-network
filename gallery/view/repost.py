@@ -3,6 +3,7 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
+from posts.models import Post
 from gallery.models import Photo
 from users.models import User
 from chat.models import Message
@@ -21,14 +22,19 @@ class UUCMPhotoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = "photo_repost_window/u_ucm_post.html"
+        if request.user.is_authenticated:
+            self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+            self.user = User.objects.get(pk=self.kwargs["pk"])
+            if self.user != request.user:
+                check_user_can_get_list(request.user, user)
+            self.template_name = "photo_repost_window/u_ucm_post.html"
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UUCMPhotoWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.post
+        context["object"] = self.photo
+        context["user"] = self.user
         return context
 
 class CUCMPhotoWindow(TemplateView):
@@ -39,7 +45,9 @@ class CUCMPhotoWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated and request.is_ajax():
+            check_can_get_lists(request.user, self.community)
             self.template_name = "photo_repost_window/c_ucm_post.html"
         else:
             Http404
@@ -48,7 +56,8 @@ class CUCMPhotoWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CUCMPhotoWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.post
+        context["object"] = self.photo
+        context["community"] = self.community
         return context
 
 class UUPhotoRepost(View):
@@ -57,18 +66,19 @@ class UUPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        user = photo.creator
+        user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-            form_post = PostForm(request.POST)
-            if request.is_ajax() and form_post.is_valid():
-                post = form_post.save(commit=False)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-                return HttpResponse()
-            else:
-                return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=request.user, community=None)
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            get_post_attach(request, new_post)
+            get_post_processing(new_post)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
 
 class CUPhotoRepost(View):
     """
@@ -76,9 +86,9 @@ class CUPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        user = photo.creator
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, parent.community)
+        check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
@@ -95,6 +105,9 @@ class UCPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -117,15 +130,17 @@ class CCPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
         form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(parent.community):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             post = form_post.save(commit=False)
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                _community = Community.objects.get(pk=community_id)
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
             return HttpResponse()
@@ -139,6 +154,9 @@ class UMPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -162,8 +180,9 @@ class CMPhotoRepost(View):
     """
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, parent.community)
+        check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             connections = request.POST.getlist("user_connections")
@@ -171,7 +190,7 @@ class CMPhotoRepost(View):
                 return HttpResponseBadRequest()
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=parent.community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")

@@ -21,14 +21,20 @@ class UUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = "post_repost_window/u_ucm_post.html"
+        if request.user.is_authenticated:
+            self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+            self.user = User.objects.get(pk=self.kwargs["pk"])
+            if self.user != request.user:
+                check_user_can_get_list(request.user, user)
+            check_can_get_lists(request.user, community)
+            self.template_name = "post_repost_window/u_ucm_post.html"
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.post
+        context["user"] = self.user
         return context
 
 class CUCMPostWindow(TemplateView):
@@ -38,17 +44,21 @@ class CUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_authenticated and request.is_ajax():
-            self.template_name = "post_repost_window/c_ucm_post.html"
-        else:
-            Http404
+        if request.user.is_authenticated:
+            self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+            self.community = Community.objects.get(pk=self.kwargs["pk"])
+            check_can_get_lists(request.user, self.community)
+            if request.is_ajax():
+                self.template_name = "post_repost_window/c_ucm_post.html"
+            else:
+                Http404
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.post
+        context["community"] = self.community
         return context
 
 class UUPostRepost(View):
@@ -57,22 +67,22 @@ class UUPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = self.parent.creator
+        user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-            form_post = PostForm(request.POST)
-            if request.is_ajax() and form_post.is_valid():
-                post = form_post.save(commit=False)
-                if parent.parent:
-                    parent = parent.parent
-                else:
-                    parent = parent
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-                return HttpResponse()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent.parent:
+                parent = parent.parent
             else:
-                return HttpResponseBadRequest()
+                parent = parent
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            get_post_attach(request, new_post)
+            get_post_processing(new_post)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
 
 class CUPostRepost(View):
     """
@@ -80,9 +90,9 @@ class CUPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = parent.creator
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, parent.community)
+        check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
@@ -103,6 +113,9 @@ class UCPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -129,8 +142,9 @@ class CCPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(parent.community):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             post = form_post.save(commit=False)
             if parent.parent:
                 parent = parent.parent
@@ -140,8 +154,8 @@ class CCPostRepost(View):
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                _community = Community.objects.get(pk=community_id)
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
             return HttpResponse()
@@ -155,6 +169,9 @@ class UMPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -182,8 +199,9 @@ class CMPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, parent.community)
+        check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
@@ -195,7 +213,7 @@ class CMPostRepost(View):
                 return HttpResponseBadRequest()
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=parent.community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")

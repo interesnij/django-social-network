@@ -48,6 +48,17 @@ class Post(models.Model):
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return post
+    @classmethod
+    def create_parent_post(cls, creator, community):
+        post = cls.objects.create(creator=creator, community=community, status=Post.STATUS_PUBLISHED, )
+        channel_layer = get_channel_layer()
+        payload = {
+            "type": "receive",
+            "key": "additional_post",
+            "actor_name": post.creator.get_full_name()
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+        return post
 
     class Meta:
         ordering = ["-created"]
