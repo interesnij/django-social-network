@@ -27,7 +27,7 @@ class UUCMPhotoWindow(TemplateView):
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
                 check_user_can_get_list(request.user, self.user)
-            self.template_name = "photo_repost_window/u_ucm_post.html"
+            self.template_name = "photo_repost_window/u_ucm_photo.html"
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -48,7 +48,7 @@ class CUCMPhotoWindow(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated and request.is_ajax():
             check_can_get_lists(request.user, self.community)
-            self.template_name = "photo_repost_window/c_ucm_post.html"
+            self.template_name = "photo_repost_window/c_ucm_photo.html"
         else:
             Http404
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
