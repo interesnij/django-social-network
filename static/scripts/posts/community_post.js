@@ -30,8 +30,8 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#c_ucm_repost_btn', function() {
-  form_post = document.body.querySelector("#c_uсm_repost_form");
+on('#ajax', 'click', '#c_ucm_post_repost_btn', function() {
+  form_post = document.body.querySelector("#c_uсm_post_repost_form");
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
