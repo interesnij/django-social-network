@@ -8,7 +8,7 @@ from article.models import Article
 def photo_attach(value, post):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        _select_photo.item.add(post) 
+        _select_photo.item.add(post)
     except:
         raise ValidationError('Фото не найдено')
 
@@ -28,7 +28,7 @@ def music_attach(value, post):
 
 def good_attach(value, post):
     try:
-        _select_good = Good.objects.get(pk=value)
+        _select_good = Good.objects.get(uuid=value)
         _select_good.item.add(post)
     except:
         raise ValidationError('Товар не найден')

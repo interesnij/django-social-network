@@ -35,7 +35,7 @@ def music_attach(value, comment):
 
 def good_attach(value, comment):
     try:
-        _select_good = Good.objects.get(pk=value)
+        _select_good = Good.objects.get(uuid=value)
         _select_good.item_comment.add(comment)
     except:
         raise ValidationError('Товар не найден')
