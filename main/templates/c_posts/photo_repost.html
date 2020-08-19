@@ -1,3 +1,4 @@
+{% load liked_user %}
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
   <span style="padding: 5px;">
@@ -8,16 +9,6 @@
     поделилось фотографией
   </span>
   {% include 'c_posts/card_header.html' %}
-
-  {% if object.parent.text %}
-    <div class="fullscreen pointer">
-      <p class="">{{ object.parent.text }}</p>
-    </div>
-  {% endif %}
-
-  {{ object.get_c_photo_repost|safe }}
-
-  {% load liked_user %}
 
   <div class="card-footer border-top py-2">
       <div class="row">
