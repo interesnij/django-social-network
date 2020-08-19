@@ -32,9 +32,7 @@
                     {% else %}
                       {% include 'c_posts/post.html' %}
                     {% endif %}
-                  {% endif %}
-
-                {% else %}
+                  {% else %}
                     {% if object.creator == request.user %}
                       {% include 'u_posts/my_post.html' %}
                     {% else %}
