@@ -1,4 +1,9 @@
-{{ object.creator }} поделился фотографией
+<span style="padding: 5px;">
+  <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+    {{ object.creator }}
+  </a> 
+  поделился фотографией
+</span>
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
   {% include 'u_posts/card_header.html' %}
 
