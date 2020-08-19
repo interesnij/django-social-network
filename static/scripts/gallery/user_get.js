@@ -36,7 +36,7 @@ on('#ajax', 'click', '.u_AL_photo', function() {
 
 on('#ajax', 'click', '.u_WA_photo', function() {
   uuid = this.getAttribute('photo-uuid');
-  pk = this.getAttribute('data-pk');
+  this.getAttribute('data-pk') ? pk = this.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/wall_photo/" + pk + "/" + uuid + "/", loader)
 });
