@@ -11,6 +11,7 @@ on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
     link_.open( 'POST', "/gallery/repost/c_u_photo_repost/" + pk + "/" + uuid + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
+    toast_info("Репост фотографии на стену сделан")
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
@@ -42,7 +43,6 @@ on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
     if ( this.readyState == 4 && this.status == 200 ) {
       document.querySelector(".votes_fullscreen").style.display = "none";
       document.getElementById("votes_loader").innerHTML="";
-      toast_info("Репост фотографии на стену")
     }}
 });
 
