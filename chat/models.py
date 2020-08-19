@@ -46,13 +46,6 @@ class Message(models.Model):
     objects = MessageQuerySet.as_manager()
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message')
-    photo = models.ManyToManyField("gallery.Photo", blank=True, related_name='photo_message')
-    photo_album = models.ManyToManyField("gallery.Album", blank=True, related_name='photo_album_message')
-    good = models.ManyToManyField("goods.Good", blank=True, related_name='good_message')
-    music = models.ManyToManyField("music.SoundCloudParsing", blank=True, related_name='music_message')
-    music_list = models.ManyToManyField("music.SoundList", blank=True, related_name='music_list_message')
-    video = models.ManyToManyField("video.Video", blank=True, related_name='video_message')
-    video_list = models.ManyToManyField("video.VideoAlbum", blank=True, related_name='video_list_message')
 
     class Meta:
         verbose_name = "Message"
