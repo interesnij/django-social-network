@@ -84,7 +84,7 @@ def get_permission_community_photo_detail(community, photo, folder, template, re
     elif request_user.is_authenticated:
         if request_user.pk == photo.creator.pk:
             template_name = folder + "admin_" + template
-        elif user.pk == request_user.pk:
+        elif request_user.is_staff_of_community_with_name(community.name):
             template_name = folder + template
         elif request_user.is_photo_manager():
             template_name = folder + "staff_" + template
