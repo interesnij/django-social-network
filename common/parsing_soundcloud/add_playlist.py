@@ -5,8 +5,6 @@ import json, requests
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-genres_list = SoundGenres.objects.values('name')
-genres_list_names = [name['name'] for name in genres_list]
 
 
 def add_playlist(url, request_user, list):
@@ -23,13 +21,13 @@ def add_playlist(url, request_user, list):
             else:
                 description = None
 
-            if track['genre'] and track['duration'] > 9000 and track['genre'] in genres_list_names:
+            if track['genre'] and track['duration'] > 9000:
                 track_genre = track['genre'].replace("'", '')
                 try:
                     genre = SoundGenres.objects.get(name=track_genre)
                 except:
                     genre = SoundGenres.objects.create(name=track_genre, order=SoundGenres.get_new_order())
-                    
+
                 new_track = SoundcloudParsing.objects.create(artwork_url=track['artwork_url'],
                                                         created_at=created_at,
                                                         description=description,
