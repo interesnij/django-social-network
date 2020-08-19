@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from music.models import SoundList, SoundCloudParsing
+from music.models import SoundList, SoundcloudParsing
 from users.models import User
 from chat.models import Message
 from django.shortcuts import render
@@ -23,7 +23,7 @@ class UUCMMusicWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         if request.user.is_authenticated:
-            self.track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+            self.track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
                 check_user_can_get_list(request.user, self.user)
@@ -44,7 +44,7 @@ class CUCMMusicWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        self.track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated and request.is_ajax():
             check_can_get_lists(request.user, self.community)
@@ -111,7 +111,7 @@ class UUMusicRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -132,7 +132,7 @@ class CUMusicRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -153,7 +153,7 @@ class UCMusicRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -180,7 +180,7 @@ class CCMusicRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         form_post = PostForm(request.POST)
@@ -206,7 +206,7 @@ class UMMusicRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -234,7 +234,7 @@ class CMMusicRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        track = SoundCloudParsing.objects.get(pk=self.kwargs["track_pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
