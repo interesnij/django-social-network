@@ -20,7 +20,7 @@
             <span class="post_stream stream news_block_paginate" id="news_post_list" data-link="/main">
               {% for object in object_list %}
                 {% if object.parent %}
-                  {% if object.parent.community %}
+                  {% if object.community %}
                     {% include object.get_c_attach_parent %}
                   {% else %}
                     {% include object.get_u_attach_parent %}
