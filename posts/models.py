@@ -217,11 +217,11 @@ class Post(models.Model):
             return "u_posts/photo_repost.html"
         elif self.is_photo_album_repost():
             return "u_posts/photo_album_repost.html"
-        elif self.get_good_repost():
+        elif self.is_good_repost():
             return "u_posts/good_repost.html"
-        elif self.get_music_repost():
+        elif self.is_music_repost():
             return "u_posts/music_repost.html"
-        elif self.get_music_list_repost():
+        elif self.is_music_list_repost():
             return "u_posts/music_list_repost.html"
         elif self.is_video_repost():
             return "u_posts/video_repost.html"
@@ -239,11 +239,11 @@ class Post(models.Model):
             return "c_posts/photo_repost.html"
         elif self.is_photo_album_repost():
             return "c_posts/photo_album_repost.html"
-        elif self.get_good_repost():
+        elif self.is_good_repost():
             return "c_posts/good_repost.html"
-        elif self.get_music_repost():
+        elif self.is_music_repost():
             return "c_posts/music_repost.html"
-        elif self.get_music_list_repost():
+        elif self.is_music_list_repost():
             return "c_posts/music_list_repost.html"
         elif self.is_video_repost():
             return "c_posts/video_repost.html"
