@@ -178,7 +178,7 @@ class UMPhotoRepost(View):
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
-                new_post.post_message.add(message)
+                new_post.photo_message.add(message)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -205,7 +205,7 @@ class CMPhotoRepost(View):
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
-                new_post.post_message.add(message)
+                new_post.photo_message.add(message)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

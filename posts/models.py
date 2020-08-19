@@ -38,6 +38,8 @@ class Post(models.Model):
         (GOOD_REPOST, 'Репост товара'),
         (MUSIC_REPOST, 'Репост аудиозаписи'),
         (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
+        (VIDEO_REPOST, 'Репост видеозаписи'),
+        (VIDEO_LIST_REPOST, 'Репост списка видеозаписей'),
         (USER_REPOST, 'Репост пользователя'),
         (COMMUNITY_REPOST, 'Репост сообщества'),
     )
