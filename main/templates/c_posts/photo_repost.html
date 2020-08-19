@@ -1,10 +1,13 @@
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
   <span style="padding: 5px;">
-    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
-    поделился фотографией
+    Сообщество&nbsp;
+    <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">
+     {{ object.parent.community.name }}
+    </a>&nbsp;
+    поделилось фотографией
   </span>
-  {% include 'u_posts/card_header.html' %}
+  {% include 'с_posts/card_header.html' %}
 
   {% if object.parent.text %}
     <div class="fullscreen pointer">
@@ -12,7 +15,7 @@
     </div>
   {% endif %}
 
-  {{ object.get_u_photo_repost|safe }}
+  {{ object.get_с_photo_repost|safe }}
 
   {% load liked_user %}
 
