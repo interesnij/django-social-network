@@ -173,14 +173,16 @@ class Post(models.Model):
             return self.get_u_photo_repost()
         elif self.is_photo_album_repost():
             return 'Пользователь поделился фотоальбомом!'
-        elif self.get_good_repost():
+        elif self.is_good_repost():
             return self.get_u_good_repost()
-        elif self.get_music_repost():
+        elif self.is_music_repost():
             return "Пользователь поделился music!"
+        elif self.is_music_repost():
+            return "Пользователь поделился плейлистом!"
         elif self.is_video_repost():
             return self.get_u_video_repost()
         elif self.is_video_list_repost():
-            return "Пользователь поделился плейлистом!"
+            return "Пользователь поделился видео-альбомом!"
         elif self.is_user_repost():
             return "Пользователь поделился пользователем!"
         elif self.is_community_repost():
@@ -193,16 +195,16 @@ class Post(models.Model):
             return self.get_c_photo_repost()
         elif self.is_photo_album_repost():
             return 'Пользователь поделился фотоальбомом!'
-        elif self.get_good_repost():
+        elif self.is_good_repost():
             return self.get_c_good_repost()
-        elif self.get_music_repost():
+        elif self.is_music_repost():
             return "Пользователь поделился music!"
-        elif self.get_music_list_repost():
-            return "Пользователь поделился music playlist!"
+        elif self.is_music_repost():
+            return "Пользователь поделился плейлистом!"
         elif self.is_video_repost():
             return self.get_c_video_repost()
         elif self.is_video_list_repost():
-            return "Пользователь поделился плейлистом!"
+            return "Пользователь поделился видео-альбомом!"
         elif self.is_user_repost():
             return "Пользователь поделился пользователем!"
         elif self.is_community_repost():
