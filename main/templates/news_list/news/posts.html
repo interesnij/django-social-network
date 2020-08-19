@@ -19,11 +19,14 @@
           {% if object_list %}
             <span class="post_stream stream news_block_paginate" id="news_post_list" data-link="/main">
               {% for object in object_list %}
-
-                {% if object.community %}
-                  {% if object.parent %}
+                {% if object.parent %}
+                  {% if object.parent.community %}
                     {% include object.get_c_attach_parent %}
                   {% else %}
+                    {% include object.get_u_attach_parent %}
+                  {% endif %}
+                {% else %}
+                  {% if object.community %}
                     {% if object.community in request.user.get_staffed_communities %}
                       {% include 'c_posts/admin_post.html' %}
                     {% else %}
@@ -32,10 +35,6 @@
                   {% endif %}
 
                 {% else %}
-
-                  {% if object.parent %}
-                    {% include object.get_u_attach_parent %}
-                  {% else %}
                     {% if object.creator == request.user %}
                       {% include 'u_posts/my_post.html' %}
                     {% else %}
