@@ -118,7 +118,7 @@ class UUMusicRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=track.creator, community=None, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=user, community=None, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
@@ -138,7 +138,7 @@ class CUMusicRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=track.creator, community=community, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=request.user, community=community, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
@@ -163,7 +163,7 @@ class UCMusicRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=track.creator, community=None, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=user, community=None, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
@@ -189,7 +189,7 @@ class CCMusicRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=track.creator, community=community, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=request.user, community=community, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
@@ -216,7 +216,7 @@ class UMMusicRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=track.creator, community=None, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=user, community=None, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
@@ -243,7 +243,7 @@ class CMMusicRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=track.creator, community=community, status=Post.MUSIC_REPOST)
+            parent = Post.create_parent_post(creator=request.user, community=community, status=Post.MUSIC_REPOST)
             track.item.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
