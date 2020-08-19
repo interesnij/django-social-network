@@ -53,7 +53,7 @@
         {{ object.get_c_attach_items|safe }}
       {% else %}
       <div class="attach_container" data-pk="{{ object.pk }}">
-        {% include 'generic/attach/parent_user.html' %}
+        {% include 'generic/attach/parent_community.html' %}
       </div>
       {% endif %}
 
