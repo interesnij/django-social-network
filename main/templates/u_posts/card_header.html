@@ -20,7 +20,12 @@
       </div>
     </div>
   </div>
-
+  {% if object.parent.text %}
+  <div class="fullscreen pointer">
+    <p class="">{{ object.parent.text }}</p>
+  </div>
+  {% endif %}
+  {{ object.get_c_photo_repost|safe }}
 {% else %}
   <div class="card-header">
     <div class="media" style="font-size: 0.8em;">
