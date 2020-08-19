@@ -35,8 +35,7 @@
                 {% else %}
 
                   {% if object.parent %}
-                    {{ object.creator }} поделился записью
-                    {% include 'u_posts/parent.html' %}
+                    {% include object.get_u_attach_parent %}
                   {% else %}
                     {% if object.creator == request.user %}
                       {% include 'u_posts/my_post.html' %}
