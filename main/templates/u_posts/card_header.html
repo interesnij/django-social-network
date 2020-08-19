@@ -1,7 +1,6 @@
 {% if object.parent.community %}
   <div class="card-header">
     <div class="media" style="font-size: 0.8em;">
-      {% if object.parent.community %}
       <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
         <figure>
           {% if object.parent.community.get_avatar %}
