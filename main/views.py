@@ -16,7 +16,7 @@ class PostsListView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_posts_for_user(self.request.user)
+			items = get_timeline_posts_for_user(self.request.user).order_by('-created')
 		else:
 			items = []
 		return items
