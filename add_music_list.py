@@ -25,7 +25,6 @@ data = response.json()
 
 if data:
     playlist_url = data['artwork_url']
-    playlist_url.replace("large.jpg", "crop.jpg")
     img_response = requests.get(url=playlist_url.replace("large.jpg", "crop.jpg"))
     img = Image.open(BytesIO(img_response.content))
     img.thumbnail((300, 300), Image.ANTIALIAS)
