@@ -15,6 +15,7 @@ import soundcloud
 from music.models import *
 from PIL import Image
 from io import BytesIO
+from django.core.files import File
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
@@ -25,7 +26,8 @@ data = response.json()
 if data:
     playlist_url = data['artwork_url']
     playlist_url.replace("large.jpg", "crop.jpg")
-    print(playlist_url)
     img_response = requests.get(url=playlist_url.replace("large.jpg", "crop.jpg"))
     img = Image.open(BytesIO(img_response.content))
-    print(img)
+    list = SoundList.objects.get(uuid='2759b12e-20ba-4214-85a6-0f303da28276')
+    list.image = img
+    list.save()
