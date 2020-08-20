@@ -177,7 +177,7 @@ class Post(models.Model):
             return self.get_u_good_repost()
         elif self.is_music_repost():
             return "Пользователь поделился music!"
-        elif self.is_music_repost():
+        elif self.is_music_list_repost():
             return "Пользователь поделился плейлистом!"
         elif self.is_video_repost():
             return self.get_u_video_repost()
@@ -199,7 +199,7 @@ class Post(models.Model):
             return self.get_c_good_repost()
         elif self.is_music_repost():
             return "Пользователь поделился music!"
-        elif self.is_music_repost():
+        elif self.is_music_list_repost():
             return "Пользователь поделился плейлистом!"
         elif self.is_video_repost():
             return self.get_c_video_repost()
