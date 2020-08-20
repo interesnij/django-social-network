@@ -14,7 +14,7 @@ django.setup()
 import soundcloud
 from music.models import *
 from PIL import Image
-import io import BytesIO
+from io import BytesIO
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
