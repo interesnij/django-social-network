@@ -19,7 +19,7 @@ on('#ajax', 'click', '#u_ucm_music_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/music/repost/u_c_music_repost/" + pk + "/" + uuid + "/", true );
+      link_.open( 'POST', "/music/repost/u_c_music_repost/" + pk + "/" + track_pk + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост аудиозаписи в сообщества сделан")
@@ -32,7 +32,7 @@ on('#ajax', 'click', '#u_ucm_music_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/music/repost/u_m_music_repost/" + pk + "/" + uuid + "/", true );
+      link_.open( 'POST', "/music/repost/u_m_music_repost/" + pk + "/" + track_pk + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост аудиозаписи в сообщения сделан")
