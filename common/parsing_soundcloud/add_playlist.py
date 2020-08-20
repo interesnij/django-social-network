@@ -3,6 +3,7 @@ from music.models import *
 from datetime import datetime, date, time
 import json, requests
 from PIL import Image
+from io import BytesIO
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
@@ -15,9 +16,8 @@ def add_playlist(url, request_user, list):
     if data:
         try:
             playlist_url = data['artwork_url']
-            playlist_url.replace("large.jpg", "crop.jpg")
-            img_response = requests.get(url=playlist_url)
-            img = Image.open(img_response)
+            img_response = requests.get(url=playlist_url.replace("large.jpg", "crop.jpg"))
+            img = Image.open(BytesIO(img_response.content))
             list.image = img
             list.save(update_fields=["image"])
         except:
