@@ -213,45 +213,47 @@ class Post(models.Model):
             return False
 
     def get_u_attach_parent(self):
-        if self.is_photo_repost():
+        parent = self.parent
+        if parent.is_photo_repost():
             return "u_posts/photo_repost.html"
-        elif self.is_photo_album_repost():
+        elif parent.is_photo_album_repost():
             return "u_posts/photo_album_repost.html"
-        elif self.is_good_repost():
+        elif parent.is_good_repost():
             return "u_posts/good_repost.html"
-        elif self.is_music_repost():
+        elif parent.is_music_repost():
             return "u_posts/music_repost.html"
-        elif self.is_music_list_repost():
+        elif parent.is_music_list_repost():
             return "u_posts/music_list_repost.html"
-        elif self.is_video_repost():
+        elif parent.is_video_repost():
             return "u_posts/video_repost.html"
-        elif self.is_video_list_repost():
+        elif parent.is_video_list_repost():
             return "u_posts/video_list_repost.html"
-        elif self.is_user_repost():
+        elif parent.is_user_repost():
             return "u_posts/user_repost.html"
-        elif self.is_community_repost():
+        elif parent.is_community_repost():
             return "u_posts/community_repost.html"
         else:
             return "generic/attach/parent_user.html"
 
     def get_c_attach_parent(self):
-        if self.is_photo_repost():
+        parent = self.parent
+        if parent.is_photo_repost():
             return "c_posts/photo_repost.html"
-        elif self.is_photo_album_repost():
+        elif parent.is_photo_album_repost():
             return "c_posts/photo_album_repost.html"
-        elif self.is_good_repost():
+        elif parent.is_good_repost():
             return "c_posts/good_repost.html"
-        elif self.parent.is_music_repost():
+        elif parent.is_music_repost():
             return "c_posts/music_repost.html"
-        elif self.is_music_list_repost():
+        elif parent.is_music_list_repost():
             return "c_posts/music_list_repost.html"
-        elif self.is_video_repost():
+        elif parent.is_video_repost():
             return "c_posts/video_repost.html"
-        elif self.is_video_list_repost():
+        elif parent.is_video_list_repost():
             return "c_posts/video_list_repost.html"
-        elif self.is_user_repost():
+        elif parent.is_user_repost():
             return "c_posts/user_repost.html"
-        elif self.is_community_repost():
+        elif parent.is_community_repost():
             return "c_posts/community_repost.html"
         else:
             return "generic/attach/parent_community.html"

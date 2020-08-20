@@ -1,0 +1,10 @@
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
+  <span style="padding: 5px;">
+    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+      {{ object.creator }}</a>&nbsp;{% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} аудиозаписью
+  </span>
+  {% include 'generic/attach/u_music.html' %}
+
+  {% include 'post_community/info.html' %}
+
+</div>
