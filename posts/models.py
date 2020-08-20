@@ -109,6 +109,9 @@ class Post(models.Model):
     def get_photo_album_repost(self):
         photo_album = self.parent.post_alnum.all()[0]
         return photo_album
+    def get_playlist_repost(self):
+        playlist = self.parent.post_soundlist.all()[0]
+        return playlist
 
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
