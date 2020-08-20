@@ -2,7 +2,7 @@
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
   <span style="padding: 5px;">
-    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось аудиозаписью
+    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось аудиозаписью
   </span>
   <div class="col-md-12 music" data-path="{{ object.get_music_repost.uri }}" data-duration="{{ object.get_music_repost.duration }}" style="flex-basis: 100%;">
       <div class="media" music-counter="{{ forloop.counter0 }}">
