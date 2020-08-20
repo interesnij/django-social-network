@@ -130,7 +130,7 @@ class UUMusicRepost(View):
 class CUMusicRepost(View):
     """
     создание репоста записи сообщества на свою стену
-    """
+    """ 
     def post(self, request, *args, **kwargs):
         track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])

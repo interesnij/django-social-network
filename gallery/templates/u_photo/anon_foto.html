@@ -61,7 +61,7 @@
                 <span class="like_window">
                   {% if object.window_likes %}
                 <div class="like_pop" style="margin:15px">
-                  <span class="u_all_photo_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="u_all_photo_likes" style="cursor:pointer">Оценили: <span data-count="like">{{ object.likes.count }}</span> {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
                   <br><br>
                   <span style="display: flex;">
                     {% for heart in object.window_likes %}
@@ -88,7 +88,7 @@
                 <span class="dislike_window">
                   {% if object.window_dislikes %}
                 <div class="dislike_pop" style="margin:15px">
-                  <span class="c_all_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="c_all_dislikes" style="cursor:pointer">Не оценили: <span data-count="dislike">{{ object.dislikes.count }}</span> {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <br><br>
                   <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
                     {% for sheet in object.window_dislikes %}

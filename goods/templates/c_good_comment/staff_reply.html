@@ -66,7 +66,7 @@
                   <span class="comment_like_window">
                       {% if comment.window_likes %}
                       <div class="comment_like_pop">
-                          <span class="c_all_good_comment_likes pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                          <span class="c_all_good_comment_likes pointer">Оценили: <span data-count="like">{ reply.likes.count }}</span> {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <span style="display: flex;margin-top: 10px;">
                               {% for heart in reply.window_likes %}
                               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
@@ -92,7 +92,7 @@
                   <span class="comment_dislike_window">
                   {% if reply.window_dislikes %}
                   <div class="comment_dislike_pop">
-                  <span class="c_all_good_comment_dislikes pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="c_all_good_comment_dislikes pointer">Не оценили: <span data-count="dislike">{{ reply.dislikes.count }}</span> {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <span style="display: flex;margin-top: 10px;">
                     {% for sheet in reply.window_dislikes %}
                     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ sheet.user.pk }}">

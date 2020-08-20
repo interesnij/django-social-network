@@ -33,7 +33,7 @@
                     <span class="comment_like_window">
                         {% if reply.window_likes %}
                         <div class="comment_like_pop">
-                            <span class="c_all_photo_comment_likes pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                            <span class="c_all_photo_comment_likes pointer">Оценили: <span data-count="like">{{ reply.likes.count }}</span> {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <span style="display: flex;margin-top: 10px;">
                                 {% for heart in reply.window_likes %}
                                 <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
@@ -53,13 +53,13 @@
 
                     <span class="dislike dislike2 btn_default" title="Не нравится">
                           <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
-                          <span data-count="dislike">{% if reply.dislikes.count %}{{ reply.dislikes.count }}{% endif %}</span>
+                          <span data-count="dislike">{% if reply.dislikes.count %}<span data-count="dislike">{{ reply.dislikes.count }}</span>{% endif %}</span>
                     </span>
 
                       <span class="comment_dislike_window">
                           {% if reply.window_dislikes %}
                           <div class="comment_dislike_pop">
-                              <span class="c_all_photo_comment_dislikes pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                              <span class="c_all_photo_comment_dislikes pointer">Не оценили: <span data-count="dislike">{{ reply.dislikes.count }}</span> {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <span style="display: flex;margin-top: 10px;">
                                   {% for sheet in reply.window_dislikes %}
                                   <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
