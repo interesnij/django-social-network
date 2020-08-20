@@ -1,6 +1,6 @@
 {% load get_key %}
 
-<div class="card mb-2" style="margin-left: -5%;"> 
+<div class="card mb-2" style="margin-left: -5%;">
     <div class="card-body" style="padding: 10px;padding-bottom: 0;">
       <div style="display:flex" data-pk="{{ object.get_playlist_repost.creator.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
         {% if object.get_playlist_repost.image %}
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-<div class="card mb-2">
+<div class="card mb-2" style="margin-left: -5%;">
     <div class="card-body">
           <ul id="user_tracks_list_container" data-pk="{{ playlist.pk }}" class="profile_block_paginate" data-link="/users/detail/music_list/{{ user.pk }}/{{ playlist.uuid }}/">
             {% for object in object.get_playlist_repost.playlist_30 %}
