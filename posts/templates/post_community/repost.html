@@ -29,11 +29,7 @@
     </div>
   {% endif %}
   <div class="attach_container" data-pk="{{ object.pk }}">
-    {% if object.get_c_post_parent %}
-      {{ object.get_c_post_parent }}
-    {% else %}
-      {% include 'generic/attach/parent_community.html' %}
-    {% endif %}
+    {% include object.get_c_post_parent %}
   </div>
 {% else %}
 <div class="card-header">
@@ -63,11 +59,7 @@
   </div>
 {% endif %}
 <div class="attach_container" data-pk="{{ object.pk }}">
-  {% if object.get_u_attach_items %}
-    {{ object.get_u_attach_items|safe }}
-  {% else %}
-    {% include 'generic/attach/parent_user.html' %}
-  {% endif %}
+  {% include object.get_u_post_parent %}
 </div>
 {% endif %}
 </span>
