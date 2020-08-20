@@ -2,7 +2,7 @@
 
 <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
   {% if object.parent.community %}
-  <div class="card-header"> 
+  <div class="card-header">
     <div class="media" style="font-size: 0.8em;">
       <a href="{% url 'community_detail' pk=object.parent.community.pk %}" class="ajax">
         <figure>
@@ -29,8 +29,8 @@
     </div>
   {% endif %}
   <div class="attach_container" data-pk="{{ object.pk }}">
-    {% if object.get_c_attach_items %}
-      {{ object.get_c_attach_items|safe }}
+    {% if object.get_c_post_parent %}
+      {{ object.get_c_post_parent|safe }}
     {% else %}
       {% include 'generic/attach/parent_community.html' %}
     {% endif %}

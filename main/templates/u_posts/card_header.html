@@ -25,7 +25,10 @@
     <p class="">{{ object.parent.text }}</p>
   </div>
   {% endif %}
-  {{ object.get_c_photo_repost|safe }}
+
+  <div class="photo">
+      <img photo-uuid="{{ object.get_photo_repost.uuid }}" data-pk="{{ object.parent.creator.pk }}" class="u_WA_photo image_fit lazyload poiner" data-src="{{ object.get_photo_repost.file.url }}" alt="img">
+  </div>
 {% else %}
   <div class="card-header">
     <div class="media" style="font-size: 0.8em;">

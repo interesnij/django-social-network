@@ -22,9 +22,9 @@
 
                 {% if object.parent %}
                   {% if object.community %}
-                    {% include object.get_c_attach_parent %}
+                    {% include object.get_c_news_parent %}
                   {% else %}
-                    {% include object.get_u_attach_parent %}
+                    {% include object.get_c_news_parent %}
                   {% endif %}
                 {% else %}
                   {% if object.community %}

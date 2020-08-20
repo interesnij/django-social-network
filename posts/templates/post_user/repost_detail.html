@@ -49,8 +49,8 @@
 
     <div class="attach_container" data-pk="{{ object.pk }}">
       <div class="attach_container" data-pk="{{ object.pk }}">
-        {% if object.get_c_attach_items %}
-          {{ object.get_c_attach_items|safe }}
+        {% if object.get_u_post_parent %}
+          {{ object.get_u_post_parent|safe }}
         {% else %}
           {% include 'generic/attach/parent_user.html' %}
         {% endif %}

@@ -103,13 +103,6 @@ class Post(models.Model):
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
-    def get_c_photo_repost(self):
-        photo = self.parent.item_photo.all()[0]
-        pk = self.parent.community.pk
-        return '<img photo-uuid="{}" data-pk="{}" class="c_WA_photo image_fit lazyload pointer" data-src="{}" alt="img">'.format(photo.uuid, pk, photo.file.url)
-    def get_u_photo_repost(self):
-        photo = self.parent.item_photo.all()[0]
-        return '<img photo-uuid="{}" data-pk="{}" class="u_WA_photo image_fit lazyload pointer" data-src="{}" alt="img">'.format(photo.uuid, self.parent.creator.pk, photo.file.url)
 
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
@@ -119,22 +112,6 @@ class Post(models.Model):
 
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
-    def get_u_good_repost(self):
-        good = self.parent.item_good.all()[0]
-        badge = '<span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>{}</span>'.format(photo.title)
-        if good.image:
-            image = good.image
-        else:
-            image = '<svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>'
-        return '<div class="u_good_detail good pointer" good-uuid="{}" data-pk="{}">{badge}{image}</div>'.format(photo.uuid, photo.creator.pk, badge, image)
-    def get_c_good_repost(self):
-        good = self.parent.item_good.all()[0]
-        badge = '<span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>{}</span>'.format(photo.title)
-        if good.image:
-            image = good.image
-        else:
-            image = '<svg class="image_fit svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>'
-        return '<div class="c_good_detail good pointer" good-uuid="{}" data-pk="{}">{badge}{image}</div>'.format(photo.uuid, photo.creator.pk, badge, image)
 
     def is_music_repost(self):
         return try_except(self.status == Post.MUSIC_REPOST)
@@ -142,6 +119,9 @@ class Post(models.Model):
     def get_music_repost(self):
         music = self.parent.item_music.all()[0]
         return music
+    def get_photo_repost(self):
+        photo = self.parent.item_photo.all()[0]
+        return photo
     def is_music_list_repost(self):
         return try_except(self.status == Post.MUSIC_LIST_REPOST)
     def get_music_list_repost(self):
@@ -150,12 +130,6 @@ class Post(models.Model):
 
     def is_video_repost(self):
         return try_except(self.status == Post.VIDEO_REPOST)
-    def get_u_video_repost(self):
-        video = self.parent.item_video.all()[0]
-        return '<img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 u_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div>'.format(video.image.url, video.creator.pk, video.uuid)
-    def get_u_video_repost(self):
-        video = self.parent.item_video.all()[0]
-        return '<img class="image_fit lazyload" data-src="{}" alt="img"><div class="video_icon_play_v2 c_video_detail" data-pk="{}" data-uuid="{}" video-counter="0"></div>'.format(video.image.url, video.creator.pk, video.uuid)
 
     def is_video_list_repost(self):
         return try_except(self.status == Post.VIDEO_LIST_REPOST)
@@ -168,53 +142,53 @@ class Post(models.Model):
     def is_community_repost(self):
         return try_except(self.status == Post.COMMUNITY_REPOST)
 
-    def get_u_attach_items(self):
+    def get_c_post_parent(self):
         parent = self.parent
         if parent.is_photo_repost():
-            return self.get_u_photo_repost()
-        elif self.is_photo_album_repost():
-            return 'Пользователь поделился фотоальбомом!'
-        elif self.is_good_repost():
-            return self.get_u_good_repost()
+            return "post_community/photo_repost.html"
+        elif parent.is_photo_album_repost():
+            return "post_community/photo_album_repost.html"
+        elif parent.is_good_repost():
+            return "post_community/good_repost.html"
         elif parent.is_music_repost():
-            return "Пользователь поделился music!"
-        elif self.is_music_list_repost():
-            return "Пользователь поделился плейлистом!"
-        elif self.is_video_repost():
-            return self.get_u_video_repost()
-        elif self.is_video_list_repost():
-            return "Пользователь поделился видео-альбомом!"
-        elif self.is_user_repost():
-            return "Пользователь поделился пользователем!"
-        elif self.is_community_repost():
-            return "Пользователь поделился сообществом!"
+            return "post_community/music_repost.html"
+        elif parent.is_music_list_repost():
+            return "post_community/music_list_repost.html"
+        elif parent.is_video_repost():
+            return "post_community/video_repost.html"
+        elif parent.is_video_list_repost():
+            return "post_community/video_list_repost.html"
+        elif parent.is_user_repost():
+            return "post_community/user_repost.html"
+        elif parent.is_community_repost():
+            return "post_community/community_repost.html"
         else:
-            return False
+            return "generic/attach/parent_community.html"
 
-    def get_c_attach_items(self):
+    def get_u_post_parent(self):
         parent = self.parent
         if parent.is_photo_repost():
-            return self.get_c_photo_repost()
-        elif self.is_photo_album_repost():
-            return 'Пользователь поделился фотоальбомом!'
-        elif self.is_good_repost():
-            return self.get_c_good_repost()
+            return "post_user/photo_repost.html"
+        elif parent.is_photo_album_repost():
+            return "post_user/photo_album_repost.html"
+        elif parent.is_good_repost():
+            return "post_user/good_repost.html"
         elif parent.is_music_repost():
-            return "Пользователь поделился music!"
-        elif self.is_music_list_repost():
-            return "Пользователь поделился плейлистом!"
-        elif self.is_video_repost():
-            return self.get_c_video_repost()
-        elif self.is_video_list_repost():
-            return "Пользователь поделился видео-альбомом!"
-        elif self.is_user_repost():
-            return "Пользователь поделился пользователем!"
-        elif self.is_community_repost():
-            return "Пользователь поделился сообществом!"
+            return "post_user/music_repost.html"
+        elif parent.is_music_list_repost():
+            return "post_user/music_list_repost.html"
+        elif parent.is_video_repost():
+            return "post_user/video_repost.html"
+        elif parent.is_video_list_repost():
+            return "post_user/video_list_repost.html"
+        elif parent.is_user_repost():
+            return "post_user/user_repost.html"
+        elif parent.is_community_repost():
+            return "post_user/community_repost.html"
         else:
-            return False
+            return "generic/attach/parent_user.html"
 
-    def get_u_attach_parent(self):
+    def get_u_news_parent(self):
         parent = self.parent
         if parent.is_photo_repost():
             return "u_posts/photo_repost.html"
@@ -237,7 +211,7 @@ class Post(models.Model):
         else:
             return "generic/attach/parent_user.html"
 
-    def get_c_attach_parent(self):
+    def get_c_news_parent(self):
         parent = self.parent
         if parent.is_photo_repost():
             return "c_posts/photo_repost.html"
