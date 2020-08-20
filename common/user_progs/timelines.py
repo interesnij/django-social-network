@@ -33,7 +33,7 @@ def get_timeline_posts_for_possible_users(user):
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Post.STATUS_PUBLISHED)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
     community_queryset = Post.objects.only('created').filter(community_query)
-    final_queryset = posts_queryset.union(community_queryset).order_by("-created")
+    final_queryset = posts_queryset.union(community_queryset)
     return final_queryset
 
 
