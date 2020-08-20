@@ -19,7 +19,7 @@ from PIL import Image
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 
 
-response = requests.get("https://api.soundcloud.com/resolve?url=https://soundcloud.com/discover/sets/charts-trending:all-music:ru&client_id=dce5652caa1b66331903493735ddd64d")
+response = requests.get("https://api.soundcloud.com/resolve?url=https://soundcloud.com/ilyanaazman/sets/tsyn&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
 
 if data:
