@@ -241,7 +241,7 @@ class Post(models.Model):
             return "c_posts/photo_album_repost.html"
         elif self.is_good_repost():
             return "c_posts/good_repost.html"
-        elif self.is_music_repost():
+        elif self.parent.is_music_repost():
             return "c_posts/music_repost.html"
         elif self.is_music_list_repost():
             return "c_posts/music_list_repost.html"
