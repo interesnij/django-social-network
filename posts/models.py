@@ -102,7 +102,7 @@ class Post(models.Model):
         return self.parent.item_music.all()
 
     def is_photo_repost(self):
-        return try_except(self.parent.status == Post.PHOTO_REPOST)
+        return try_except(self.status == Post.PHOTO_REPOST)
     def get_c_photo_repost(self):
         photo = self.parent.item_photo.all()[0]
         pk = self.parent.community.pk
