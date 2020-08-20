@@ -23,7 +23,9 @@ response = requests.get("https://api.soundcloud.com/resolve?url=https://soundclo
 data = response.json()
 
 if data:
-    print(data)
-    #print(data['uri'])
-    #print(data['duration'])
-    #print(data['permalink_url'])
+    playlist_url = data['artwork_url']
+    playlist_url.replace("large.jpg", "crop.jpg")
+    img_response = requests.get(url=playlist_url)
+    img = Image.open(img_response)
+    print(playlist_url)
+    print(img)
