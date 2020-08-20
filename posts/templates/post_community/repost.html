@@ -13,15 +13,15 @@
   <div class="attach_container" data-pk="{{ object.pk }}">
     {% include object.get_c_post_parent %}
   </div>
-{% else %}
+{% else %} 
 
   {% include 'u_posts/card_header.html' %}
-  
-{% if object.text %}
+
+  {% if object.text %}
   <div class="fullscreen pointer">
     <p class="">{{ object.text }}</p>
   </div>
-{% endif %}
+  {% endif %}
 <div class="attach_container" data-pk="{{ object.pk }}">
   {% include object.get_u_post_parent %}
 </div>
