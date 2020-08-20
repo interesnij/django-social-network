@@ -29,5 +29,6 @@ if data:
     img_response = requests.get(url=playlist_url.replace("large.jpg", "crop.jpg"))
     img = Image.open(BytesIO(img_response.content))
     list = SoundList.objects.get(uuid='2759b12e-20ba-4214-85a6-0f303da28276')
-    list.image = img.filename
+    image = img.save(img.filename, quality=90)
+    list.image = image
     list.save()
