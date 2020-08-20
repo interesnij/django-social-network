@@ -23,7 +23,7 @@ response = requests.get("https://api.soundcloud.com/resolve?url=https://soundclo
 data = response.json()
 
 if data:
-
-    print(data['uri'])
-    print(data['duration'])
-    print(data['permalink_url'])
+    print(data)
+    #print(data['uri'])
+    #print(data['duration'])
+    #print(data['permalink_url'])
