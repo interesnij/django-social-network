@@ -1,18 +1,27 @@
 # -*- coding: utf-8 -*-
 from locale import *
-import sys,os
+import csv,sys,os
 
 project_dir = '../tr/tr/'
 
 sys.path.append(project_dir)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+import django, json, requests
 
-import django
 django.setup()
 
-from django.conf import settings
-from music.models import SoundList
+import soundcloud
+from music.models import *
+from PIL import Image
 
 
-SoundList.objects.create(creator_id=1, community=None, name="my_first_generic_playlist_number_12345678900000000")
+client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
+
+
+response = requests.get(url= "https://api.soundcloud.com/resolve?url=" + url + "&client_id=dce5652caa1b66331903493735ddd64d")
+data = response.json()
+
+if data:
+    playlist_url = data['artwork_url']
+    print(playlist_url)
