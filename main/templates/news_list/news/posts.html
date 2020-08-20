@@ -21,7 +21,7 @@
               {% for object in object_list %}
 
                 {% if object.parent %}
-                  {% if object.community %}
+                  {% if object.parent.community %}
                     {% include object.get_c_news_parent %}
                   {% else %}
                     {% include object.get_u_news_parent %}
