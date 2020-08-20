@@ -19,10 +19,6 @@ import io
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 byteImgIO = io.BytesIO()
-byteImg = Image.open("some/location/to/a/file/in/my/directories.png")
-byteImg.save(byteImgIO, "JPG")
-byteImgIO.seek(0)
-byteImg = byteImgIO.read()
 
 response = requests.get("https://api.soundcloud.com/resolve?url=https://soundcloud.com/yeonkkot/sets/s12&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
@@ -36,4 +32,5 @@ if data:
     byteImg = Image.open(img_response)
     byteImg.save(byteImgIO, "JPG")
     byteImgIO.seek(0)
+    byteImg = byteImgIO.read()
     print(byteImg)
