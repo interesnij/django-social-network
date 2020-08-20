@@ -4,6 +4,9 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from communities.models import Community
+from pilkit.processors import ResizeToFill, ResizeToFit
+from imagekit.models import ProcessedImageField
+from gallery.helpers import upload_to_photo_directory
 
 
 class SoundGenres(models.Model):
@@ -72,6 +75,11 @@ class SoundList(models.Model):
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
+    image = ProcessedImageField(format='JPEG',
+                                options={'quality': 90},
+                                upload_to=upload_to_photo_directory,
+                                processors=[ResizeToFit(width=300, upscale=False)],
+                                verbose_name="Обложка")
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
 
     def __str__(self):

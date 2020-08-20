@@ -2,6 +2,7 @@ import soundcloud
 from music.models import *
 from datetime import datetime, date, time
 import json, requests
+from PIL import Image
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
@@ -12,6 +13,12 @@ def add_playlist(url, request_user, list):
     data = response.json()
 
     if data:
+        playlist_url = data['artwork_url']
+        playlist_url.replace("large.jpg", "crop.jpg")
+        img_response = requests.get(url=playlist_url)
+        img = Image.open(img_response)
+        list.image = img
+        list.save(update_fields=["image"])
         for track in data['tracks']:
             created_at = track['created_at']
             created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
