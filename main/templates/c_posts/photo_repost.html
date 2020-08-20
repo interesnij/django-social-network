@@ -2,7 +2,7 @@
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
   <span style="padding: 5px;">
-    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось фотографией
+    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось фотографией
   </span>
   {% if object.parent.community %}
 
