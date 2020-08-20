@@ -191,13 +191,14 @@ class Post(models.Model):
             return False
 
     def get_c_attach_items(self):
-        if self.is_photo_repost():
+        parent = self.parent
+        if parent.is_photo_repost():
             return self.get_c_photo_repost()
         elif self.is_photo_album_repost():
             return 'Пользователь поделился фотоальбомом!'
         elif self.is_good_repost():
             return self.get_c_good_repost()
-        elif self.is_music_repost():
+        elif parent.is_music_repost():
             return "Пользователь поделился music!"
         elif self.is_music_list_repost():
             return "Пользователь поделился плейлистом!"
