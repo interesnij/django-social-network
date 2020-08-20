@@ -73,9 +73,9 @@ class SoundList(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    image = ProcessedImageField(format='JPEG',
+    image = ProcessedImageField(format='JPEG', blank=True
                                 options={'quality': 90},
                                 upload_to=upload_to_photo_directory,
                                 processors=[ResizeToFit(width=300, upscale=False)],
