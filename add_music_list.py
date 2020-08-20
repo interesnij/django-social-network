@@ -24,7 +24,7 @@ data = response.json()
 
 if data:
     playlist_url = data['artwork_url']
-    playlist_url.replace("large.jpg", "crop.jpg")
+    #playlist_url.replace("large.jpg", "crop.jpg")
     img_response = requests.get(url=playlist_url).raw
     img = Image.open(img_response)
     print(playlist_url)
