@@ -23,7 +23,7 @@
   </div>
 <div class="card" style="margin-left: -5%;">
     <div class="card-body">
-          <ul data-pk="{{ object.get_playlist_repost.pk }}">
+          <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
             {% for music in object.get_playlist_repost.playlist_30 %}
               {% include 'generic/attach/c_music.html' %}
             {% endfor %}

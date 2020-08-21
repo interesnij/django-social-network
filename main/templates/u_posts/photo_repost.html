@@ -19,6 +19,4 @@
     <div class="photo">
         <img photo-uuid="{{ object.get_photo_repost.uuid }}" data-pk="{{ object.parent.creator.pk }}" class="u_WA_photo image_fit lazyload pointer" data-src="{{ object.get_photo_repost.file.url }}" alt="img">
     </div>
-  {% endif %}
-
-  {% include 'post_user/info.html' %}
+{% endif %}
