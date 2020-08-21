@@ -479,14 +479,16 @@ function music_onReady(){console.log("Аудио плеер готов");}
     on('#ajax', 'click', '.music_list_item', function() {
       var track_id = this.parentElement.parentElement.getAttribute('music-counter');
       id = 0;
-      var list= this.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("li");
+      parents = this.parentElement.parentElement.parentElement.parentElement;
+      var list= this.parents.getElementsByTagName("li");
       for (var i=0; i!= list.length; ++i) {
         if (list[i]==this.parentElement.parentElement.parentElement) {
           id = i;
         };
       }
 
-      list_pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
+      list_pk = this.parents.getAttribute('data-pk');
+      console.log(list_pk);
       if (!document.body.classList.contains("list_" + list_pk)){
         save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", id)
       }else{
