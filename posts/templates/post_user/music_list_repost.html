@@ -4,18 +4,22 @@
     <div class="card-body" style="padding: 10px;padding-bottom: 0;">
       <div style="display:flex" data-pk="{{ object.get_playlist_repost.creator.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
         <figure>
-        {% if object.get_playlist_repost.image %}
-          <img src="{{ object.get_playlist_repost.image }}" style="width:120px;height:120px;" alt="image">
-        {% else %}
-          <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-        {% endif %}
+          <a class="ajax" href="{% url 'user_music_list' pk=object.get_playlist_repost.creator.pk uuid=object.get_playlist_repost.uuid %}">
+            {% if object.get_playlist_repost.image %}
+              <img src="{{ object.get_playlist_repost.image }}" style="width:120px;height:120px;" alt="image">
+            {% else %}
+              <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+            {% endif %}
+          </a>
         </figure>
         <div class="media-body" style="margin-left: 10px;">
           <h6 class="my-0 mt-1">{{ object.get_playlist_repost.name }}</h6>
           <p class="">
             Треков: {{ object.get_playlist_repost.count_tracks }}
             <br>
-            {{ object.get_playlist_repost.creator.get_full_name }}
+            <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+              {{ object.get_playlist_repost.creator.get_full_name }}
+            </a>
           </p>
         </div>
           <span class='u_ucm_music_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
@@ -28,7 +32,7 @@
     </div>
   </div>
 <div class="card" style="margin-left: -5%;">
-    <div class="card-body">
+    <div class="card-body" style="margin-left: -3.3%;">
           <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
             {% for music in object.get_playlist_repost.playlist_30 %}
               {% include 'generic/attach/u_music.html' %}
