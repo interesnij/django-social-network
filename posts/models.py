@@ -235,7 +235,7 @@ class Post(models.Model):
         elif parent.is_community_repost():
             return "u_posts/community_repost.html"
         else:
-            return "generic/attach/parent_user.html"
+            return "u_posts/parent_user.html"
 
     def get_c_news_parent(self):
         parent = self.parent
@@ -258,7 +258,7 @@ class Post(models.Model):
         elif parent.is_community_repost():
             return "c_posts/community_repost.html"
         else:
-            return "generic/attach/parent_community.html"
+            return "c_posts/parent_community.html"
 
 
     def get_created(self):
