@@ -1,13 +1,6 @@
-{% load liked_user %}
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
   {% include 'u_posts/card_header.html' %}
-
-  {% if object.parent.text %}
-    <div class="fullscreen pointer">
-      <p class="">{{ object.parent.text }}</p>
-    </div>
-  {% endif %}
 
   {% if object.get_u_attach_items %}
     {{ object.get_u_attach_items|safe }}
@@ -16,6 +9,4 @@
     {% include 'generic/attach/parent_user.html' %}
   </div>
   {% endif %}
-
-
 </div>
