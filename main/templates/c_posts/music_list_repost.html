@@ -6,7 +6,7 @@
   {% if object.parent.community %}
 
   <div class="card">
-      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+      <div class="card-body" style="padding: 8px;padding-bottom: 0;">
         <div style="display:flex" data-pk="{{ object.get_playlist_repost.creator.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'community_music_list' pk=object.get_playlist_repost.community.pk uuid=object.get_playlist_repost.uuid %}">
@@ -50,7 +50,7 @@
   {% else %}
 
   <div class="card">
-      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+      <div class="card-body" style="padding: 8px;padding-bottom: 0;">
         <div style="display:flex" data-pk="{{ object.get_playlist_repost.community.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'user_music_list' pk=object.get_playlist_repost.creator.pk uuid=object.get_playlist_repost.uuid %}">
