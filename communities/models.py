@@ -345,11 +345,21 @@ class Community(models.Model):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
+    def community_music_playlist_exists(self):
+        return self.community_playlist.filter(community_id=self.id, type="LI").exists()
+
     def get_music_list_id(self):
         from music.models import SoundList
 
         list = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
         return list.pk
+
+    def get_audio_playlists(self):
+        from music.models import SoundList
+
+        playlists_query = Q(community_id=self.id, type=SoundList.LIST)
+        playlists = SoundList.objects.filter(playlists_query)
+        return playlists
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
