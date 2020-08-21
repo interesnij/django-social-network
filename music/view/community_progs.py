@@ -1,5 +1,5 @@
 from music.models import *
-from community.models import Community
+from communities.models import Community
 from django.views import View
 from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
