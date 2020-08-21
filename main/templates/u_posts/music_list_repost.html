@@ -7,7 +7,7 @@
 
   {% if object.parent.community %}
 
-  <div class="card mb-2">
+  <div class="card">
       <div class="card-body" style="padding: 10px;padding-bottom: 0;">
         <div style="display:flex" data-pk="{{ object.get_playlist_repost.community.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
           {% if object.get_playlist_repost.image %}
@@ -28,9 +28,9 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2">
+  <div class="card">
       <div class="card-body">
-            <ul data-pk="{{ object.get_playlist_repost.pk }}">
+            <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
               {% for object in music.get_playlist_repost.playlist_30 %}
                 {% include 'generic/attach/c_music.html' %}
               {% endfor %}
@@ -39,7 +39,7 @@
   </div>
   {% else %}
 
-  <div class="card mb-2">
+  <div class="card">
       <div class="card-body" style="padding: 10px;padding-bottom: 0;">
         <div style="display:flex" data-pk="{{ object.get_playlist_repost.creator.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
           {% if object.get_playlist_repost.image %}
@@ -60,9 +60,9 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2">
+  <div class="card">
       <div class="card-body">
-            <ul data-pk="{{ object.get_playlist_repost.pk }}">
+            <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
               {% for music in object.get_playlist_repost.playlist_30 %}
                 {% include 'generic/attach/u_music.html' %}
               {% endfor %}
