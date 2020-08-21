@@ -32,7 +32,7 @@
   <div class="card mb-2" style="margin-left: -5%;">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
-              {% for object in object.get_playlist_repost.playlist_30 %}
+              {% for object in music.get_playlist_repost.playlist_30 %}
                 {% include 'generic/attach/c_music.html' %}
               {% endfor %}
             </ul>
@@ -64,7 +64,7 @@
   <div class="card mb-2" style="margin-left: -5%;">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
-              {% for object in object.get_playlist_repost.playlist_30 %}
+              {% for music in object.get_playlist_repost.playlist_30 %}
                 {% include 'generic/attach/u_music.html' %}
               {% endfor %}
             </ul>
