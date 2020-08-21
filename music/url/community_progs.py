@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     url(r'^souncloud_create_list_window/(?P<pk>\d+)/$', CommunitySoundcloudSetPlaylistWindow.as_view()),
     url(r'^souncloud_list_window/(?P<pk>\d+)/$', CommunitySoundcloudSetWindow.as_view()),
-    url(r'^create_list_window/(?P<pk>\d+)/$', UserCreatePlaylistWindow.as_view()),
+    url(r'^create_list_window/(?P<pk>\d+)/$', CommunityCreatePlaylistWindow.as_view()),
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', CommunitySoundcloudSetCreate.as_view()),
     url(r'^soundcloud_set/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunitySoundcloudSet.as_view()),
