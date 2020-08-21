@@ -54,7 +54,7 @@ class CommunitySoundcloudSetCreate(View):
             new_list.community = community
             new_list.save()
             add_playlist(request.POST.get('permalink'), request.user, new_list)
-            return render(request, 'community_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'community': community})
+            return render(request, 'community_music_list/admin_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'community': community})
         else:
             return HttpResponseBadRequest()
 
