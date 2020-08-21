@@ -23,7 +23,7 @@
   </div>
 <div class="card mb-2" style="margin-left: -5%;">
     <div class="card-body">
-          <ul data-pk="{{ playlist.pk }}">
+          <ul data-pk="{{ object.get_playlist_repost.pk }}">
             {% for object in object.get_playlist_repost.playlist_30 %}
             <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                 <div class="media" music-counter="{{ forloop.counter0 }}" style="align-items: unset;position: relative;">
