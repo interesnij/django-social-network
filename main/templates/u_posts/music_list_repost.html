@@ -1,6 +1,5 @@
 {% load get_key %}
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
   <span style="padding: 5px;">
     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
     {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} плейлистом
@@ -29,7 +28,7 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2" style="margin-left: -5%;">
+  <div class="card mb-2">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
               {% for object in music.get_playlist_repost.playlist_30 %}
@@ -61,7 +60,7 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2" style="margin-left: -5%;">
+  <div class="card mb-2">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
               {% for music in object.get_playlist_repost.playlist_30 %}
@@ -74,4 +73,3 @@
   {% endif %}
 
   {% include 'post_user/info.html' %}
-</div>

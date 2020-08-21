@@ -1,7 +1,5 @@
 <!-- прикрепленные элементы к записям сообществ, которыми поделились -->
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
-
 {% include 'c_posts/card_header.html' %}
 
 {% if object.parent.text %}
@@ -55,5 +53,4 @@
 {% for music in object.get_attach_tracks %}
   {% include 'generic/attach/c_music.html' %}
 {% endfor %}
-</div>
 </div>

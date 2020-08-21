@@ -1,6 +1,5 @@
 {% load get_key %}
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
   <span style="padding: 5px;">
     Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось фотографией
   </span>
@@ -27,7 +26,7 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2" style="margin-left: -5%;">
+  <div class="card mb-2">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
               {% for music in object.get_playlist_repost.playlist_30 %}
@@ -59,7 +58,7 @@
         </div>
       </div>
     </div>
-  <div class="card mb-2" style="margin-left: -5%;">
+  <div class="card mb-2">
       <div class="card-body">
             <ul data-pk="{{ object.get_playlist_repost.pk }}">
               {% for music in object.get_playlist_repost.playlist_30 %}
@@ -72,4 +71,3 @@
   {% endif %}
 
   {% include 'post_community/info.html' %}
-</div>

@@ -1,6 +1,5 @@
 <!-- прикрепленные элементы к записям пользователей, которыми поделились -->
 
-<div class="card">
 {% include 'u_posts/card_header.html' %}
 
 {% if object.parent.text %}
@@ -54,5 +53,4 @@
 {% for music in object.get_parent_attach_tracks %}
   {% include 'generic/attach/u_music.html' %}
 {% endfor %}
-</div>
 </div>
