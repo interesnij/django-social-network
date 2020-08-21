@@ -41,6 +41,7 @@ on('#ajax', 'click', '#c_ucm_post_repost_btn', function() {
     link_.open( 'POST', "/posts/repost/c_u_post_repost/" + pk + "/" + uuid + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
+    toast_info("Репост записи на стену сделан")
   }
   else if(form_post.querySelector('#repost_radio_community').checked){
     staff_communities = form_post.querySelector("#id_staff_communities");
