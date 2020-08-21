@@ -15,7 +15,7 @@ class UserSoundcloudSetPlaylistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_add_playlist.html", request=request)
+        self.template_name = self.user.get_settings_template(folder="music_create/", template="u_soundcloud_add_playlist.html", request=request)
         return super(UserSoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class UserSoundcloudSetWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="soundcloud_set_playlist.html", request=request)
+        self.template_name = self.user.get_settings_template(folder="music_create/", template="u_soundcloud_set_playlist.html", request=request)
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
