@@ -1,7 +1,7 @@
 <!-- прикрепленные элементы к записям сообществ, которыми поделились -->
 
 <span style="padding: 5px;">
-  Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось записью
+  Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось записью
 </span>
 {% include 'c_posts/card_header.html' %}
 
