@@ -90,16 +90,39 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
-    def get_attach_photos(self):
+    def get_parent_attach_photos(self):
         return self.parent.item_photo.all()
-    def get_attach_videos(self):
+    def get_parent_attach_photos_list(self):
+        return self.parent.post_album.all()
+    def get_parent_attach_videos(self):
         return self.parent.item_video.all()
-    def get_attach_goods(self):
+    def get_parent_attach_videos_list(self):
+        return self.parent.post_video_album.all()
+    def get_parent_attach_goods(self):
         return self.parent.item_good.all()
-    def get_attach_articles(self):
+    def get_parent_attach_articles(self):
         return self.parent.attached_item.all()
-    def get_attach_tracks(self):
+    def get_parent_attach_tracks(self):
         return self.parent.item_music.all()
+    def get_parent_attach_music_list(self):
+        return self.parent.post_soundlist.all()
+
+    def get_attach_photos(self):
+        return self.item_photo.all()
+    def get_attach_photos_list(self):
+        return self.post_album.all()
+    def get_attach_videos(self):
+        return self.item_video.all()
+    def get_attach_videos_list(self):
+        return self.post_video_album.all()
+    def get_attach_goods(self):
+        return self.item_good.all()
+    def get_attach_articles(self):
+        return self.attached_item.all()
+    def get_attach_tracks(self):
+        return self.item_music.all()
+    def get_attach_music_list(self):
+        return self.post_soundlist.all()
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)

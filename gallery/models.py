@@ -37,7 +37,7 @@ class Album(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_alnum')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
 
     class Meta:
         indexes = (
