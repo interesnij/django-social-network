@@ -169,7 +169,7 @@ on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
 
 on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
   this.disabled = true;
-  form = document.body.querySelector("c_#soundcloud_set_form");
+  form = document.body.querySelector("#c_soundcloud_set_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
