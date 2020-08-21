@@ -15,7 +15,7 @@ class CommunitySoundcloudSetPlaylistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="c_soundcloud_add_playlist.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="music_create/", template="c_soundcloud_add_playlist.html", request=request)
         return super(CommunitySoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class CommunitySoundcloudSetWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="c_soundcloud_set_playlist.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="music_create/", template="c_soundcloud_set_playlist.html", request=request)
         return super(CommunitySoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -127,6 +127,6 @@ class CommunityCreatePlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="music_create/", template="c_create_list.html", request=request)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_manage_template(folder="music_create/", template="c_create_list.html", request=request)
         return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
