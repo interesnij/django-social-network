@@ -1,6 +1,6 @@
 <!-- прикрепленные элементы к записям пользователей, которыми поделились -->
 
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
+<div class="card">
 {% include 'u_posts/card_header.html' %}
 
 {% if object.parent.text %}
