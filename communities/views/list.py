@@ -104,7 +104,7 @@ class CommunityMusic(ListView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
-        self.template_name = get_template_community_music(self.user, "c_music/", "list.html", request.user)
+        self.template_name = get_template_community_music(self.community, "c_music/", "list.html", request.user)
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -116,6 +116,31 @@ class CommunityMusic(ListView):
     def get_queryset(self):
         music_list = self.community.get_music()
         return music_list
+
+class CommunityMusicList(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from music.models import SoundList
+
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+
+		self.template_name = get_template_community_music(self.community, "c_music_list/", "list.html", request.user)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+		return super(CommunityMusicList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityMusicList,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['playlist'] = self.playlist
+		return context
+
+	def get_queryset(self):
+		playlist = self.playlist.playlist_too()
+		return playlist
 
 
 class CommunityVideo(ListView):
@@ -157,7 +182,7 @@ class CommunityVideoList(ListView):
 		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
 		if self.user == request.user:
 			self.video_list = self.album.get_my_queryset()
-		else: 
+		else:
 			self.video_list = self.album.get_queryset()
 
 		self.template_name = get_template_community_video(self.user, "c_video_list/", "list.html", request.user)
