@@ -68,6 +68,7 @@ class FollowView(View):
 				follow = Follow.objects.get(user=follow_user, followed_user=request.user)
 				follow.view = True
 				follow.save(update_fields=['view'])
+				return HttpResponse()
 			else:
 				raise Http404
 		except:
@@ -78,7 +79,7 @@ class FollowDelete(View):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			request.user.unfollow_user(self.followed_user)
-			return HttpResponse("!")
+			return HttpResponse()
 		else:
 			raise Http404
 
