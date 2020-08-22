@@ -240,7 +240,7 @@ class User(AbstractUser):
         from users.model.list import UserFeaturedFriend
 
         if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
-            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk)):
+            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
             #and not (self.is_child() and not user.is_child_safety()):
             UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
