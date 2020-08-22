@@ -2,7 +2,7 @@
 
 <div class="card" style="margin-left: -5%;">
     <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-      <div style="display:flex" data-pk="{{ object|playlist_repost_creator.pk }}" data-uuid="{{ object|playlist_repost.uuid }}">
+      <div style="display:flex" data-pk="{{ object|playlist_repost_creator:pk }}" data-uuid="{{ object|playlist_repost:uuid }}">
         <figure>
           <a class="ajax" href="{% url 'user_music_list' pk=object|playlist_repost_creator:pk uuid=object|playlist_repost:uuid %}">
             {% if object|playlist_repost.image %}
