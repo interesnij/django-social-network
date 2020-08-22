@@ -272,3 +272,51 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   }};
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '#u_ucm_good_repost_btn', function() {
+  form_post = document.body.querySelector("#u_uсm_good_repost_form");
+  form_data = new FormData(form_post);
+  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+
+  if (form_post.querySelector('#repost_radio_wall').checked) {
+    link_.open( 'POST', "/goods/repost/u_u_good_repost/" + pk + "/" + uuid + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.send(form_data);
+    toast_info("Репост товара на стену сделан")
+  }
+
+  else if(form_post.querySelector('#repost_radio_community').checked){
+    staff_communities = form_post.querySelector("#id_staff_communities");
+    selectedOptions = staff_communities.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/goods/repost/u_c_good_repost/" + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост товара в сообщества сделан")
+    }else{toast_error("Выберите сообщества для репоста")}
+  }
+
+  else if(form_post.querySelector('#repost_radio_message').checked){
+    user_connections = form_post.querySelector("#id_user_connections");
+    selectedOptions = user_connections.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/goods/repost/u_m_good_repost/" + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост товара в сообщения сделан")
+    }else{toast_error("Выберите пользователя для репоста")}
+  };
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
+  }}
+});

@@ -1,4 +1,3 @@
-{% load get_key %}
 
   <span style="padding: 5px;">
     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
@@ -25,7 +24,7 @@
               Треков: {{ object.get_playlist_repost.count_tracks }}
               <br>
               <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.get_playlist_repost.community.pk %}">
-                {{ object.get_playlist_repost.community.name }}
+                {{ object.get_playlist_repost.creator.get_full_name }}
               </a>
             </p>
           </div>

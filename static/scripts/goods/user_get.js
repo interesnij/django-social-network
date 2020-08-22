@@ -7,6 +7,15 @@ on('#ajax', 'click', '.u_good_detail', function() {
   setTimeout(function() {good_gallery(loader)}, 1000)
 });
 
+on('#ajax', 'click', '.u_ucm_good_repost', function() {
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
+  uuid = parent.getAttribute("data-uuid");
+  parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/goods/repost/u_ucm_good_window/" + pk + "/" + uuid + "/", loader);
+  clear_attach_block();
+})
+
 on('#ajax', 'click', '.u_all_good_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");

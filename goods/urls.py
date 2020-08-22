@@ -12,5 +12,5 @@ urlpatterns=[
 	url(r'^votes/', include('goods.url.votes')),
 	url(r'^window/', include('goods.url.window')),
 
-	#url(r'^repost/', include('goods.url.repost')),
+	url(r'^repost/', include('goods.url.repost')),
 ]
