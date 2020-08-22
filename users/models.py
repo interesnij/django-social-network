@@ -255,11 +255,11 @@ class User(AbstractUser):
 
     def delete_populate_friend(self, user_id):
         from users.model.list import UserPopulateFriend
-        try:
-            populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
-            populate_friend.delete()
-        except:
-            pass
+        #try:
+        populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+        populate_friend.delete()
+        #except:
+        #    pass
 
     def create_or_plus_populate_community(self, community_id):
         from users.model.list import UserPopulateCommunity
