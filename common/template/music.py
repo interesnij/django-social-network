@@ -10,14 +10,8 @@ def get_template_community_music(community, folder, template, request_user):
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
         if request_user.is_member_of_community_with_name(community.name):
-            if request_user.is_administrator_of_community_with_name(community.name):
+            if request_user.is_staff_of_community_with_name(community.name):
                 template_name = folder + "admin_" + template
-            elif request_user.is_moderator_of_community_with_name(community.name):
-                template_name = folder + "moderator_" + template
-            elif request_user.is_editor_of_community_with_name(community.name):
-                template_name = folder + "editor_" + template
-            elif request_user.is_advertiser_of_community_with_name(community.name):
-                template_name = folder + "advertiser_" + template
             elif request_user.is_audio_manager():
                 template_name = folder + "staff_member_" + template
             else:
@@ -46,7 +40,7 @@ def get_template_community_music(community, folder, template, request_user):
             if not community.is_verified():
                 template_name = "generic/c_template/anon_no_child_safety.html"
             else:
-                template_name = folder + "anon_public_" + template
+                template_name = folder + "anon_" + template
         elif community.is_closed():
             template_name = "generic/c_template/anon_close_community.html"
         elif community.is_private():
