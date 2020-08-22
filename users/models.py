@@ -285,11 +285,11 @@ class User(AbstractUser):
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
-        #try:
-        for frend in user.get_6_friends():
-            self.get_or_create_possible_friend(frend)
-        #except:
-        #    pass
+        try:
+            for frend in user.get_6_friends():
+                self.get_or_create_possible_friend(frend)
+        except:
+            pass
 
     def get_possible_friends(self):
         query = Q(id__in=self.get_possible_friends_ids())
@@ -343,9 +343,17 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
 
+    def get_or_create_possible_friend(self, user):
+        from users.model.list import UserFeaturedFriend
+
+        if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
+            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk) \
+            and not (self.is_child() and not user.is_child_safety()):
+            UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
+
     def unfrend_user(self, user):
-        self.get_or_create_possible_friend(user)
-        return self.unfrend_user_with_id(user.pk)
+        self.unfrend_user_with_id(user.pk)
+        return self.get_or_create_possible_friend(user)
 
     def unfrend_user_with_id(self, user_id):
         from follows.models import Follow
