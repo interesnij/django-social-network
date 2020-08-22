@@ -24,8 +24,6 @@
                   <br><br>
                 {% endif %}
 
-                {% for object in object_list %}
-
                   {% if object.parent %}
                     {% if object.parent.community %}
                       <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
@@ -56,7 +54,7 @@
                     {% endif %}
                   {% endif %}
 
-              {% endfor %}
+                {% endfor %}
             </span>
 
           {% else %}
