@@ -285,11 +285,11 @@ class User(AbstractUser):
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
-        try:
-            for frend in user.get_6_friends():
-                self.get_or_create_possible_friend(frend)
-        except:
-            pass
+        #try:
+        for frend in user.get_6_friends():
+            self.get_or_create_possible_friend(frend)
+        #except:
+        #    pass
 
     def get_possible_friends(self):
         query = Q(id__in=self.get_possible_friends_ids())
