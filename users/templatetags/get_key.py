@@ -29,8 +29,24 @@ def playlist_repost(post):
     return post.parent.post_soundlist.all()[0]
 
 @register.filter
-def playlist_repost_creator(post):
-    return post.playlist_repost().creator
+def playlist_repost_creator_pk(post):
+    return post.playlist_repost().creator.pk
+
+@register.filter
+def playlist_repost_creator_name(post):
+    return post.playlist_repost().creator.get_full_name()
+
+@register.filter
+def playlist_repost_name(post):
+    return post.playlist_repost().name
+
+@register.filter
+def playlist_repost_pk(post):
+    return post.playlist_repost().pk
+
+@register.filter
+def playlist_repost_uuid(post):
+    return post.playlist_repost().uuid
 
 @register.filter
 def playlist_repost_community(post):
