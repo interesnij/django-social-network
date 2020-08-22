@@ -30,7 +30,7 @@ def playlist_repost(post):
 
 @register.filter
 def playlist_repost_creator_pk(post):
-    return post.playlist_repost().creator.pk
+    return post.parent.post_soundlist.all()[0].creator.pk
 
 @register.filter
 def playlist_repost_creator_name(post):
