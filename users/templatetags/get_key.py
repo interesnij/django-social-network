@@ -23,3 +23,15 @@ def track_in_list(list, track_id):
         return True
     else:
         return False
+
+@register.filter
+def playlist_repost(post):
+    return post.parent.post_soundlist.all()[0]
+
+@register.filter
+def playlist_repost_creator(post):
+    return post.playlist_repost().creator
+
+@register.filter
+def playlist_repost_community(post):
+    return post.playlist_repost().community
