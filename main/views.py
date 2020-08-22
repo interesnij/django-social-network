@@ -36,7 +36,7 @@ class FeaturedPostsView(ListView):
 		if self.request.user.is_authenticated:
 			items = get_timeline_posts_for_possible_users(self.request.user)
 		else:
-			items = None
+			items = []
 		return items
 
 
@@ -73,7 +73,7 @@ class FeaturedPhotosView(ListView):
 		if self.request.user.is_authenticated:
 			items = get_timeline_photos_for_possible_users(self.request.user)
 		else:
-			items = None
+			items = []
 		return items
 
 
@@ -110,7 +110,7 @@ class FeaturedGoodsView(ListView):
 		if self.request.user.is_authenticated:
 			items = get_timeline_goods_for_possible_users(self.request.user)
 		else:
-			items = None
+			items = []
 		return items
 
 
@@ -147,7 +147,7 @@ class FeaturedVideosView(ListView):
 		if self.request.user.is_authenticated:
 			items = get_timeline_videos_for_possible_users(self.request.user)
 		else:
-			items = None
+			items = []
 		return items
 
 class AudiosListView(ListView):
@@ -171,20 +171,18 @@ class AudiosListView(ListView):
 class FeaturedAudiosView(ListView):
 	template_name = None
 	paginate_by = 15
+	items = []
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
 			self.template_name = request.user.get_settings_template(folder="news_list/featured/", template="audios.html", request=request)
+			self.items = get_timeline_audios_for_possible_users(request.user)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedAudiosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_audios_for_possible_users(self.request.user)
-		else:
-			items = None
-		return items
+		return self.items
 
 
 class ComingView(TemplateView):
