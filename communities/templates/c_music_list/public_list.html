@@ -22,6 +22,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
+                    <p>
                     <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
                       {{ community.name }}
                     </a>
