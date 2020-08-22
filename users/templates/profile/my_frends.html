@@ -1,3 +1,7 @@
+{% for object in user.get_6_populate_friends %}
+  {{ object.friend }}
+{% endfor %}
+
 {% if user.get_6_friends %}
 <div class="card mb-3">
     <div class="card-header">
