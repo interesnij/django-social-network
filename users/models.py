@@ -256,8 +256,8 @@ class User(AbstractUser):
     def delete_populate_friend(self, user_id):
         from users.model.list import UserPopulateFriend
         #try:
-        populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id).delete()
-        return True
+        populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+        populate_friend.delete()
         #except:
         #    pass
 
@@ -354,10 +354,10 @@ class User(AbstractUser):
         follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
         follow.view = True
         follow.save(update_fields=["view"])
+        self.delete_populate_friend(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
-        self.delete_populate_friend(user_id)
-        return True
+        return connection.delete()
 
     def disconnect_from_user_with_id(self, user_id):
         check_is_connected_with_user_with_id(user=self, user_id=user_id)
