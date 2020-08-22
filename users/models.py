@@ -356,7 +356,6 @@ class User(AbstractUser):
         follow.save(update_fields=["view"])
         self.delete_populate_friend(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
-        connection.delete()
         return connection.delete()
 
     def disconnect_from_user_with_id(self, user_id):
