@@ -174,7 +174,7 @@
             </div>
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                {% for object in user.get_audio_playlists %}
+                {% for object in community.get_audio_playlists %}
                   <a class="ajax" href="{% url 'community_music_list' pk=community.pk uuid=object.uuid %}">
                     {{ object.name }}
                   </a>
