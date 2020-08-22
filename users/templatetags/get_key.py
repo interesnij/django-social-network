@@ -45,6 +45,10 @@ def playlist_repost_pk(post):
     return post.playlist_repost().pk
 
 @register.filter
+def playlist_repost_pk(post):
+    return post.playlist_repost().pk
+
+@register.filter
 def playlist_repost_uuid(post):
     return post.playlist_repost().uuid
 
