@@ -23,7 +23,3 @@ def track_in_list(list, track_id):
         return True
     else:
         return False
-
-@register.filter
-def playlist_repost(post):
-    return post.parent.post_soundlist.all()[0]
