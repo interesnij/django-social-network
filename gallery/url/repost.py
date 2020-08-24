@@ -5,8 +5,8 @@ urlpatterns = [
 # u_ucm_photo - фотография пользователя(u) к себе на стену(u), в сообщество (c) или в сообщения(m)
     url(r'^u_ucm_photo_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UUCMPhotoWindow.as_view()),
     url(r'^c_ucm_photo_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CUCMPhotoWindow.as_view()),
-    url(r'^u_ucm_list_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UUCMPhotoListWindow.as_view()),
-    url(r'^c_ucm_list_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CUCMPhotoListWindow.as_view()),
+    url(r'^u_ucm_list_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UUCMPhotoAlbumWindow.as_view()),
+    url(r'^c_ucm_list_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CUCMPhotoAlbumWindow.as_view()),
 
     url(r'^u_u_photo_repost/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UUPhotoRepost.as_view()),
     url(r'^c_u_photo_repost/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CUPhotoRepost.as_view()),
