@@ -32,7 +32,7 @@ DJANGO_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.vk',
     'rest_auth',
-    'django_extensions',
+    #'django_extensions',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -112,9 +112,9 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new_db',
-        'USER': 'tr',
-        'PASSWORD': 'DuhVremeni3',
+        'NAME': 'data_1',
+        'USER': 'serg',
+        'PASSWORD': 'ulihos46',
         'HOST': 'localhost',
         'PORT': '5432',
     }
