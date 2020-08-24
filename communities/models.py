@@ -702,7 +702,7 @@ class CommunityMembership(models.Model):
         return super(CommunityMembership, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = (('user', 'community'),)
+        #unique_together = (('user', 'community'),)
         indexes = [
             models.Index(fields=['community', 'user']),
             models.Index(fields=['community', 'user', 'is_administrator']),
@@ -763,6 +763,6 @@ class CommunityInvite(models.Model):
         return cls.objects.filter(community__name=community_name, invited_user__username=username).exists()
 
     class Meta:
-        unique_together = (('invited_user', 'community', 'creator'),)
+        #unique_together = (('invited_user', 'community', 'creator'),)
         verbose_name = 'Приглашение в сообщество'
         verbose_name_plural = 'Приглашения в сообщества'
