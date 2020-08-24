@@ -2,7 +2,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUserna
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.utils.six import six
+from six import text_type
 
 
 class UserInvite(models.Model):
