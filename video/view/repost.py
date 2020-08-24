@@ -73,7 +73,7 @@ class UUCMVideoAlbumWindow(TemplateView):
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
                 check_user_can_get_list(request.user, self.user)
-            self.template_name = "video_repost_window/u_ucm_video_album.html.html"
+            self.template_name = "video_repost_window/u_ucm_video_album.html"
         return super(UUCMVideoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
