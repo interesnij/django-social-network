@@ -15,6 +15,7 @@
 </head>
   <body class="fixed-header">
     <div class="wrapper">
+       {% include "base_block/navbar.html" %}
         <div class="col-md-1"></div>
         <div class="col-md-10">
         </div>
@@ -28,7 +29,7 @@
     <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-4 col-offset-1" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
+        <div class="col-md-4" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
           <div class="input-group-prepend">
             <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
           </div>
