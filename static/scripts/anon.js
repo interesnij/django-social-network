@@ -59,7 +59,7 @@ on('body', 'click', '#logg', function() {
   link.open( 'POST', "/rest-auth/login/", true );
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    window.location.href = "/main/";
+    window.location.href = "/";
     }};
   link.send(form_data);
 });
