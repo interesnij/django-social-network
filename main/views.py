@@ -185,9 +185,9 @@ class FeaturedAudiosView(ListView):
 		return self.items
 
 
-class ComingView(TemplateView):
-	template_name = "base_coming.html"
-
-
 class MainPhoneSend(TemplateView):
 	template_name = "phone_verification.html"
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = request.user.get_settings_template(folder="main/", template="phone_verification.html", request=request)
+		return super(UserInfoChange,self).get(request,*args,**kwargs)
