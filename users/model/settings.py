@@ -66,7 +66,7 @@ class UserNotificationsMusic(models.Model):
 class UserColorSettings(models.Model):
     COLOR = (
         ('white', 'white'),
-        ('blue', 'blue'),
+        ('blue', 'blue'), 
         ('brown', 'brown'),
         ('dark-blue', 'dark-blue'),
         ('dark-brown', 'dark-brown'),
