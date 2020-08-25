@@ -1,58 +1,6 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
-function loadScripts( src ) {
-    var script = document.createElement("SCRIPT"),
-        head = document.getElementsByTagName( "head" )[ 0 ],
-        error = false;
-
-    script.type = "text/javascript";
-
-    script.onload = script.onreadystatechange = function( e ){
-
-        if ( ( !this.readyState || this.readyState == "loaded" || this.readyState == "complete" ) ) {
-            if ( !error ) {
-                removeListeners();
-            } else {
-                null
-            }
-        }
-    };
-
-    script.onerror = function() {
-        error = true;
-        removeListeners();
-    }
-
-    function errorHandle( msg, url, line ) {
-
-        if ( url == src ) {
-            error = true;
-            removeListeners();
-        }
-        return false;
-    }
-
-    function removeListeners() {
-        script.onreadystatechange = script.onload = script.onerror = null;
-
-        if ( window.removeEventListener ) {
-            window.removeEventListener('error', errorHandle, false );
-        } else {
-            window.detachEvent("onerror", errorHandle );
-        }
-    }
-
-    if ( window.addEventListener ) {
-        window.addEventListener('error', errorHandle, false );
-    } else {
-        window.attachEvent("onerror", errorHandle );
-    }
-
-    script.src = src;
-    head.appendChild( script );
-}
-
-function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
+function on(e,t,i,c){var l=document.querySelector(e);l.addEventListener(t,function(e){for(var t=l.querySelectorAll(i),n=e.target,r=0,o=t.length;r<o;r++)for(var a=n,d=t[r];a&&a!==l;){if(a===d)return c.call(d,e);a=a.parentNode}})}function loadScripts(r){var e=document.createElement("SCRIPT"),t=document.getElementsByTagName("head")[0],o=!1;function n(e,t,n){return t==r&&(o=!0,a()),!1}function a(){e.onreadystatechange=e.onload=e.onerror=null,window.removeEventListener?window.removeEventListener("error",n,!1):window.detachEvent("onerror",n)}e.type="text/javascript",e.onload=e.onreadystatechange=function(e){this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||o||a()},e.onerror=function(){o=!0,a()},window.addEventListener?window.addEventListener("error",n,!1):window.attachEvent("onerror",n),e.src=r,t.appendChild(e)}
 
 function clear_comment_dropdown(){
   try{
@@ -73,6 +21,20 @@ function clear_comment_dropdown(){
 }
 
 on('body', 'click', '#register_ajax', function() {
+  if (!document.body.querySelector("#id_first_name").value){
+    document.body.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
+    toast_error("Имя - обязательное поле!");
+  } else if (!document.body.querySelector("#id_last_name").value){
+    document.body.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
+    toast_error("Фамилия - обязательное поле!")
+  }
+} else if (!document.body.querySelector("#password1").value){
+  document.body.querySelector("#password1").style.border = "1px #FF0000 solid";
+  toast_error("Пароль - обязательное поле!")
+}else if (!document.body.querySelector("#password2").value){
+  document.body.querySelector("#password2").style.border = "1px #FF0000 solid";
+  toast_error("Введите пароль еще раз!")
+}
   form_data = new FormData(document.querySelector("#signup"));
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'POST', "/rest-auth/registration/", true );
@@ -83,6 +45,13 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.send(form_data);
 })
 on('body', 'click', '#logg', function() {
+  if (!document.body.querySelector("#id_username").value){
+    document.body.querySelector("#id_username").style.border = "1px #FF0000 solid";
+    toast_error("Введите телефон!");
+  } else if (!document.body.querySelector("#id_password").value){
+    document.body.querySelector("#id_password").style.border = "1px #FF0000 solid";
+    toast_error("Введите пароль!")
+  }
   form_data = new FormData(document.querySelector("#login_form"));
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'POST', "/rest-auth/login/", true );
