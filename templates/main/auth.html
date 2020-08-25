@@ -74,7 +74,7 @@
                 <br>
                 <div class="col">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" id="register_" onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
+                        <input type="checkbox" id="register_" onchange="document.getElementById('register_ajax').enabled = this.checked;" class="custom-control-input">
                         <label class="custom-control-label" for="register_">
                             Я принимаю <a href="{% url 'terms' %}" style="text-decoration:underline;" class="ajax">Правила сайта</a>.
                         </label>
@@ -83,7 +83,7 @@
                 <br>
                 <small class="form-text text-muted reg-response"></small>
                 <div class="text-left mb-3">
-                    <button type="button" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
+                    <button type="button" class=" btn btn-primary pink-gradient" desabled id="register_ajax">Создать аккаунт</button>
                 </div>
             </div>
         </form>
