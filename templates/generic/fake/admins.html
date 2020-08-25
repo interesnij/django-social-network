@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-
 {% block title %}Администраторы сообщества "Самые умные"{% endblock %}
 
 {% block content %}
@@ -37,7 +35,7 @@
                                 {% if request.user.get_avatar %}
                                 <img src="{{ request.user.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                <img class="thumb" src="{% static 'images/fuck_you.jpg' %}" />
+                                <img class="thumb" src="/static/images/fuck_you.jpg" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">

@@ -1,5 +1,4 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+
   {% if notifications %}
   <a class="" href="{% url 'mark_all_read' %}">Очистить</a>
     {% for notification in notifications %}
