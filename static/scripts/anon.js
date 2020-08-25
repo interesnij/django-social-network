@@ -28,14 +28,13 @@ on('body', 'click', '#register_ajax', function() {
   } else if (!document.body.querySelector("#id_last_name").value){
     document.body.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
     toast_error("Фамилия - обязательное поле!")
+  } else if (!document.body.querySelector("#password1").value){
+    document.body.querySelector("#password1").style.border = "1px #FF0000 solid";
+    toast_error("Пароль - обязательное поле!")
+  }else if (!document.body.querySelector("#password2").value){
+    document.body.querySelector("#password2").style.border = "1px #FF0000 solid";
+    toast_error("Введите пароль еще раз!")
   }
-} else if (!document.body.querySelector("#password1").value){
-  document.body.querySelector("#password1").style.border = "1px #FF0000 solid";
-  toast_error("Пароль - обязательное поле!")
-}else if (!document.body.querySelector("#password2").value){
-  document.body.querySelector("#password2").style.border = "1px #FF0000 solid";
-  toast_error("Введите пароль еще раз!")
-}
   form_data = new FormData(document.querySelector("#signup"));
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'POST', "/rest-auth/registration/", true );
