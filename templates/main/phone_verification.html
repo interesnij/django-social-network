@@ -1,6 +1,7 @@
 {% load static %}
 <!doctype html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Подтверждение профиля</title>
@@ -10,102 +11,121 @@
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
     <script>
-    function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
-  </script>
+        function on(elSelector, eventName, selector, fn) {
+            var element = document.querySelector(elSelector);
+            element.addEventListener(eventName, function(event) {
+                var possibleTargets = element.querySelectorAll(selector);
+                var target = event.target;
+                for (var i = 0, l = possibleTargets.length; i < l; i++) {
+                    var el = target;
+                    var p = possibleTargets[i];
+                    while (el && el !== element) {
+                        if (el === p) {
+                            return fn.call(p, event);
+                        }
+                        el = el.parentNode;
+                    }
+                }
+            });
+        };
+    </script>
 </head>
-  <body class="fixed-header">
+
+<body class="fixed-header">
     <div class="wrapper">
-       {% include "base_block/navbar.html" %}
+        {% include "base_block/navbar.html" %}
         <div class="col-md-1"></div>
         <div class="col-md-10">
         </div>
         <div class="col-md-1"></div>
 
-				<span class="main-container col-xs-12 col-md-12 text-hide-xs jambotron-fluid" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
-          <div class="col-md-1"></div>
-					<div class="col-md-2"></div>
+        <span class="main-container col-xs-12 col-md-12 text-hide-xs jambotron-fluid" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
+            <div class="col-md-1"></div>
+            <div class="col-md-2"></div>
             <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
-    <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">{{ request.user.get_full_name }}!</h1>
-    <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
-          <div class="input-group-prepend">
-            <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
-          </div>
-          <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
-          <hr class="my-0">
-        </div>
-        <div class="col-md-4" style="margin-top: 12px;">
-          <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
-        </div>
-        <div class="col-md-2"></div>
+                <h1 class="font-weight-light mb-3 mt-4">{{ request.user.get_full_name }}!</h1>
+                <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
+                        </div>
+                        <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
+                        <hr class="my-0">
+                    </div>
+                    <div class="col-md-4" style="margin-top: 12px;">
+                        <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div id='jsondata' style="margin-top:50px"></div>
+
+                <div id='jsondata2' style="margin-top:50px"></div>
+
+
+                <script type="text/javascript">
+                    function phone_check() {
+                        if (document.getElementById('phone').value.length > 9)
+                            document.getElementById("phone_send").removeAttribute('disabled');
+                        else
+                            document.getElementById("phone_send").setAttribute("disabled", "true");
+                    }
+
+                    function code_check() {
+                        if (document.getElementById('code').value.length === 4)
+                            document.getElementById("code_send").removeAttribute('disabled');
+                        else
+                            document.getElementById("code_send").setAttribute("disabled", "true");
+                    }
+
+                    document.getElementById("phone_send").addEventListener("click", (e) => {
+                        var phone = document.getElementById('phone').value;
+                        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                        request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
+                        request.onreadystatechange = function() {
+                            if (request.readyState == 4 && request.status == 200) {
+                                var div = document.getElementById('jsondata');
+                                div.innerHTML = request.responseText;
+                                document.getElementById("phone").setAttribute("disabled", "true");
+                                document.getElementById("phone_send").setAttribute("disabled", "true");
+                            }
+                        };
+                        request.send(null);
+                    });
+
+                    on('#ajax', 'click', '#code_send', function(e) {
+                        var phone = document.getElementById('phone').value;
+                        var code = document.getElementById('code').value;
+                        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                        request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
+                        request.onreadystatechange = function() {
+                            if (request.readyState == 4 && request.status == 200) {
+                                var div = document.getElementById('jsondata2');
+                                div.innerHTML = request.responseText;
+                                console.log(request.responseText);
+                                if (request.responseText.indexOf("ok") != -1) {
+                                    window.location.href = "{% url 'user' pk=request.user.pk %}";
+                                }
+                            }
+                        };
+                        request.send(null)
+                    });
+
+
+                    var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                    gender.open('GET', "/users/progs/get_gender/", true);
+                    gender.onreadystatechange = function() {
+                        if (gender.readyState == 4 && gender.status == 200) {
+                            console.log("Пол сохранен!");
+                        }
+                    };
+                    gender.send(null)
+                </script>
+
+        </span>
     </div>
-    <div id='jsondata' style="margin-top:50px"></div>
+    <div class="col-md-2"></div>
+</body>
 
-    <div id='jsondata2' style="margin-top:50px"></div>
-
-
-
-     <script type="text/javascript">
-     function phone_check() {
-      if (document.getElementById('phone').value.length > 9)
-        document.getElementById("phone_send").removeAttribute('disabled');
-      else
-        document.getElementById("phone_send").setAttribute("disabled", "true");
-      }
-      function code_check() {
-       if (document.getElementById('code').value.length === 4)
-         document.getElementById("code_send").removeAttribute('disabled');
-       else
-         document.getElementById("code_send").setAttribute("disabled", "true");
-       }
-
-       document.getElementById("phone_send").addEventListener("click", (e) => {
-        var phone = document.getElementById('phone').value;
-       var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-       request.open( 'GET', "/users/progs/phone_send/" + phone + "/", true );
-       request.onreadystatechange = function () {
-         if ( request.readyState == 4 && request.status == 200) {
-           var div = document.getElementById('jsondata');
-           div.innerHTML = request.responseText;
-           document.getElementById("phone").setAttribute("disabled", "true");
-           document.getElementById("phone_send").setAttribute("disabled", "true");
-         }
-       };
-       request.send( null );
-     });
-
-     on('#ajax', 'click', '#code_send', function(e) {
-     var phone = document.getElementById('phone').value;
-     var code = document.getElementById('code').value;
-     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-     request.open( 'GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true );
-     request.onreadystatechange = function () {
-       if ( request.readyState == 4 && request.status == 200 ) {
-         var div = document.getElementById('jsondata2');
-         div.innerHTML = request.responseText;
-         console.log(request.responseText);
-         if (request.responseText.indexOf("ok") != -1){window.location.href = "{% url 'user' pk=request.user.pk %}";}
-       }
-     };
-     request.send( null )
-     });
-
-
-     var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-     gender.open( 'GET', "/users/progs/get_gender/", true );
-     gender.onreadystatechange = function () {
-       if ( gender.readyState == 4 && gender.status == 200 ) {
-         console.log("Пол сохранен!");
-       }
-     };
-     gender.send( null )
-
-     </script>
-
-     </span>
-     </div>
-     <div class="col-md-2"></div>
-   </body>
-   </html>
+</html>

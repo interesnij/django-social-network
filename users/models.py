@@ -1182,14 +1182,7 @@ class User(AbstractUser):
         result=list(set(my_frends_ids) & set(community_frends_ids))
         query = Q(id__in=result)
         connection = User.objects.filter(query)
-        return connection
-
-    def get_settings_template(self, folder, template, request):
-        template_name = folder + template
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
-        return template_name
+        return connection 
 
     def get_target_users(self):
         from stst.models import UserNumbers

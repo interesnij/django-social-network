@@ -1,3 +1,6 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from rest_framework.exceptions import PermissionDenied
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from common.check.community import check_can_get_lists, check_anon_can_get_list
@@ -48,4 +51,20 @@ def get_template_user(user, folder, template, request_user):
             template_name = "generic/u_template/anon_no_child_safety.html"
         else:
             template_name = folder + "anon_" + template
+    return template_name
+
+def get_settings_template(folder, template, request):
+    if request.user.is_authenticated:
+        if request.user.is_no_phone_verified():
+            template_name = "main/phone_verification.html"
+        elif request.user.is_suspended():
+            template_name = "generic/u_template/you_suspended.html"
+        elif request.user.is_blocked():
+            template_name = "generic/u_template/you_global_block.html"
+        else:
+            template_name = folder + template
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+    elif request.user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
     return template_name
