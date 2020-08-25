@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from common.template.user import get_template_user
 from django.http import Http404
+from common.template.user import get_settings_template
 
 
 class FrendsListView(ListView):
@@ -60,7 +61,7 @@ class CommonFrendsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 
-		self.template_name = self.user.get_settings_template("frends_common/", "frends.html", request=request)
+		self.template_name = get_settings_template("frends_common/", "frends.html", request)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)

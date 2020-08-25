@@ -4,6 +4,7 @@ from users.model.settings import *
 from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
 from users.models import User
+from common.template.user import get_settings_template
 
 
 class UserGeneralChange(TemplateView):
@@ -11,7 +12,7 @@ class UserGeneralChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="general.html", request=request)
+		self.template_name = get_settings_template("settings/", "general.html", request)
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 
@@ -22,7 +23,7 @@ class UserInfoChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="info.html", request=request)
+		self.template_name = get_settings_template("settings/", "info.html", request)
 		return super(UserInfoChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -52,7 +53,7 @@ class UserDesign(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="design.html", request=request)
+		self.template_name = get_settings_template("settings/", "design.html", request)
 		return super(UserDesign,self).get(request,*args,**kwargs)
 
 
@@ -62,7 +63,7 @@ class UserNotifyView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify.html", request)
 		try:
 			self.notify = UserNotifications.objects.get(user=self.user)
 		except:
@@ -91,7 +92,7 @@ class UserNotifyPostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_post.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify_post.html", request)
 		try:
 			self.notify_post = UserNotificationsPost.objects.get(user=self.user)
 		except:
@@ -121,7 +122,7 @@ class UserNotifyPhotoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_photo.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify_photo.html", request)
 		try:
 			self.notify_photo = UserNotificationsPhoto.objects.get(user=self.user)
 		except:
@@ -151,7 +152,7 @@ class UserNotifyGoodView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_good.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify_good.html", request)
 		try:
 			self.notify_good = UserNotificationsGood.objects.get(user=self.user)
 		except:
@@ -181,7 +182,7 @@ class UserNotifyVideoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_video.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify_video.html", request)
 		try:
 			self.notify_video = UserNotificationsVideo.objects.get(user=self.user)
 		except:
@@ -210,7 +211,7 @@ class UserNotifyMusicView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_settings_template(folder="settings/", template="notify_music.html", request=request)
+		self.template_name = get_settings_template("settings/", "notify_music.html", request)
 		try:
 			self.notify_music = UserNotificationsMusic.objects.get(user=self.user)
 		except:
@@ -244,7 +245,7 @@ class UserPrivateView(TemplateView):
 		except:
 			self.private = UserPrivate.objects.create(user=self.user)
 		self.form = UserPrivateForm(instance=self.private)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private.html", request=request)
+		self.template_name = get_settings_template("settings/", "private.html", request)
 		return super(UserPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -271,7 +272,7 @@ class UserPrivatePostView(TemplateView):
 		except:
 			self.private_post = UserPrivatePost.objects.create(user=self.user)
 		self.form = UserPrivatePostForm(instance=self.private_post)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private_post.html", request=request)
+		self.template_name = get_settings_template("settings/", "private_post.html", request)
 		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -298,7 +299,7 @@ class UserPrivateGoodView(TemplateView):
 		except:
 			self.private_good = UserPrivateGood.objects.create(user=self.user)
 		self.form = UserPrivateGoodForm(instance=self.private_good)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private_good.html", request=request)
+		self.template_name = get_settings_template("settings/", "private_good.html", request)
 		return super(UserPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -325,7 +326,7 @@ class UserPrivateVideoView(TemplateView):
 		except:
 			self.private_video = UserPrivateVideo.objects.create(user=self.user)
 		self.form = UserPrivateVideoForm(instance=self.private_video)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private_video.html", request=request)
+		self.template_name = get_settings_template("settings/", "private_video.html", request)
 		return super(UserPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -352,7 +353,7 @@ class UserPrivatePhotoView(TemplateView):
 		except:
 			self.private_photo = UserPrivatePhoto.objects.create(user=self.user)
 		self.form = UserPrivatePhotoForm(instance=self.private_photo)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private_photo.html", request=request)
+		self.template_name = get_settings_template("settings/", "private_photo.html", request)
 		return super(UserPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -379,7 +380,7 @@ class UserPrivateMusicView(TemplateView):
 		except:
 			self.private_music = UserPrivateMusic.objects.create(user=self.user)
 		self.form = UserPrivateMusicForm(instance=self.private_music)
-		self.template_name = self.user.get_settings_template(folder="settings/", template="private_music.html", request=request)
+		self.template_name = get_settings_template("settings/", "private_music.html", request)
 		return super(UserPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

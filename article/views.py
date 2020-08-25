@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
 from django.views import View
 from common.template.post import get_permission_community_post, get_permission_user_post
+from common.template.user import get_settings_template
 
 
 class ArticleView(TemplateView):
@@ -96,7 +97,7 @@ class ArticleUserWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="u_article_add/", template="create_article.html", request=request)
+        self.template_name = get_settings_template("u_article_add/", "create_article.html", request)
         return super(ArticleUserWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -110,7 +111,7 @@ class ArticleCommunityWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.user.get_settings_template(folder="c_article_add/", template="create_article.html", request=request)
+        self.template_name = get_settings_template("c_article_add/", "create_article.html", request)
         return super(ArticleCommunityWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

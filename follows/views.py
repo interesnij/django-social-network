@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from common.template.user import get_template_user
 from django.http import Http404
+from common.template.user import get_settings_template
 
 
 class FollowsView(ListView):
@@ -36,13 +37,12 @@ class FollowingsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.user = request.user
-		self.template_name = self.user.get_settings_template(folder="follows/", template="followings.html", request=request)
+		self.template_name = get_settings_template("follows/", "followings.html", request)
 		return super(FollowingsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(FollowingsView,self).get_context_data(**kwargs)
-		context['user'] = self.user
+		context['user'] = self.request.user
 		return context
 
 	def get_queryset(self):
