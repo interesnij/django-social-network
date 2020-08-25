@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from slugify import slugify
+from django.utils.text import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
