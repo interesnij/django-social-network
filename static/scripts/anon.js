@@ -47,10 +47,10 @@ on('body', 'click', '#register_ajax', function() {
 on('body', 'click', '#logg', function() {
   if (!document.body.querySelector("#id_username").value){
     document.body.querySelector("#id_username").style.border = "1px #FF0000 solid";
-    toast_error("Введите телефон!")}else{document.body.querySelector("#id_username").style.border = "rgba(0, 0, 0, 0.2);"};
-  if (!document.body.querySelector("#id_password").value){
+    toast_error("Введите телефон!")}
+  else if (!document.body.querySelector("#id_password").value){
     document.body.querySelector("#id_password").style.border = "1px #FF0000 solid";
-    toast_error("Введите пароль!")} else {document.body.querySelector("#id_password").style.border = "rgba(0, 0, 0, 0.2);"};
+    toast_error("Введите пароль!")}
 
   form_data = new FormData(document.querySelector("#login_form"));
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
