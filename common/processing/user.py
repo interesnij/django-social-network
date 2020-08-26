@@ -7,30 +7,91 @@ from gallery.models import Album
 
 
 def create_user_models(user):
-    UserNotifications.objects.create(user=user)
-    UserNotificationsPost.objects.create(user=user)
-    UserNotificationsPhoto.objects.create(user=user)
-    UserNotificationsGood.objects.create(user=user)
-    UserNotificationsVideo.objects.create(user=user)
-    UserNotificationsMusic.objects.create(user=user)
+    try:
+        UserNotifications.objects.get(user=user)
+    except:
+        UserNotifications.objects.create(user=user)
+    try:
+        UserNotificationsPost.objects.get(user=user)
+    except:
+        UserNotificationsPost.objects.create(user=user)
+    try:
+        UserNotificationsPhoto.objects.get(user=user)
+    except:
+        UserNotificationsPhoto.objects.create(user=user)
+    try:
+        UserNotificationsGood.objects.get(user=user)
+    except:
+        UserNotificationsVideo.objects.create(user=user)
+    try:
+        UserNotificationsMusic.objects.get(user=user)
+    except:
+        UserNotificationsMusic.objects.create(user=user)
 
-    UserPrivate.objects.create(user=user)
-    UserPrivatePost.objects.create(user=user)
-    UserPrivatePhoto.objects.create(user=user)
-    UserPrivateGood.objects.create(user=user)
-    UserPrivateVideo.objects.create(user=user)
-    UserPrivateMusic.objects.create(user=user)
+    try:
+        UserPrivate.objects.get(user=user)
+    except:
+        UserPrivate.objects.create(user=user)
+    try:
+        UserPrivatePost.objects.get(user=user)
+    except:
+        UserPrivatePost.objects.create(user=user)
+    try:
+        UserPrivatePhoto.objects.get(user=user)
+    except:
+        UserPrivatePhoto.objects.create(user=user)
+    try:
+        UserPrivateGood.objects.get(user=user)
+    except:
+        UserPrivateGood.objects.create(user=user)
+    try:
+        UserPrivateVideo.objects.get(user=user)
+    except:
+        UserPrivateMusic.objects.create(user=user)
 
-    UserColorSettings.objects.create(user=user)
-    UserProfile.objects.create(user=user)
-    OneUserLocation.objects.create(user=user)
-    IPUser.objects.create(user=user)
-    UserProfileFamily.objects.create(user=user)
-    UserProfileAnketa.objects.create(user=user)
+    try:
+        UserColorSettings.objects.get(user=user)
+    except:
+        UserColorSettings.objects.create(user=user)
+    try:
+        UserProfile.objects.get(user=user)
+    except:
+        UserProfile.objects.create(user=user)
+    try:
+        OneUserLocation.objects.get(user=user)
+    except:
+        OneUserLocation.objects.create(user=user)
+    try:
+        IPUser.objects.get(user=user)
+    except:
+        IPUser.objects.create(user=user)
+    try:
+        UserProfileFamily.objects.get(user=user)
+    except:
+        UserProfileFamily.objects.create(user=user)
+    try:
+        UserProfileAnketa.objects.get(user=user)
+    except:
+        UserProfileAnketa.objects.create(user=user)
 
-    SoundList.objects.create(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
-    VideoAlbum.objects.create(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
+    try:
+        SoundList.objects.get(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
+    except:
+        SoundList.objects.create(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
+    try:
+        VideoAlbum.objects.get(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
+    except:
+        VideoAlbum.objects.create(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
 
-    Album.objects.create(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
-    Album.objects.create(creator=user, community=None, type=Album.MAIN, title="Основной альбом")
-    Album.objects.create(creator=user, community=None, type=Album.WALL, title="Фото со стены")
+    try:
+        Album.objects.get(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
+    except:
+        Album.objects.create(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
+    try:
+        Album.objects.get(creator=user, community=None, type=Album.MAIN, title="Основной альбом")
+    except:
+        Album.objects.create(creator=user, community=None, type=Album.MAIN, title="Основной альбом")
+    try:
+        Album.objects.get(creator=user, community=None, type=Album.WALL, title="Фото со стены")
+    except:
+        Album.objects.create(creator=user, community=None, type=Album.WALL, title="Фото со стены")
