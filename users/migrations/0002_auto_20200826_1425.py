@@ -15,37 +15,37 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='oneuserlocation',
             name='city_lat',
-            field=models.FloatField(blank=True, default='', verbose_name='Ширина города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Ширина города'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='oneuserlocation',
             name='city_lon',
-            field=models.FloatField(blank=True, default='', verbose_name='Долгота города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Долгота города'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='threeuserlocation',
             name='city_lat',
-            field=models.FloatField(blank=True, default='', verbose_name='Ширина города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Ширина города'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='threeuserlocation',
             name='city_lon',
-            field=models.FloatField(blank=True, default='', verbose_name='Долгота города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Долгота города'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='twouserlocation',
             name='city_lat',
-            field=models.FloatField(blank=True, default='', verbose_name='Ширина города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Ширина города'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='twouserlocation',
             name='city_lon',
-            field=models.FloatField(blank=True, default='', verbose_name='Долгота города'),
+            field=models.FloatField(blank=True, default=0, verbose_name='Долгота города'),
             preserve_default=False,
         ),
         migrations.AlterField(
