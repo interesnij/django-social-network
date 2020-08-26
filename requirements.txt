@@ -1,0 +1,18 @@
+django
+djangorestframework
+django-imagekit
+pip install -U channels
+easy_thumbnails
+django-allauth
+django-rest-auth
+ckeditor
+django-ckeditor
+jwt
+six
+soundcloud
+pymorphy2
+psycopg2
+psycopg2==2.7.4
+channels_redis[cryptography]
+psycopg2-binary
+asgiref-3.2.0
