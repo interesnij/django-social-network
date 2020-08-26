@@ -1,7 +1,10 @@
 from users.model.settings import *
+from users.model.list import *
+from users.model.profile import *
 from music.models import SoundList
 from video.models import VideoAlbum
 from gallery.models import Album
+
 
 def create_user_models(user):
     UserNotifications.objects.create(user=user)
