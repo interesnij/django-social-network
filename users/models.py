@@ -990,7 +990,7 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, photo_album__isnull=False)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
+        #albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
