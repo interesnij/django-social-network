@@ -88,9 +88,6 @@ function dislike_reload(like_block, dislike_block, _class){
     $span2 = document.createElement("span");
     $span2.style.display = "flex";
     $span2.style.marginTop = "10px";
-    $img = document.createElement("img");
-    $img.src = user_img;
-    $img.style.borderRadius = "50%";
     $figure = document.createElement("figure");
     $figure.style.margin = "0";
     $figure.title = user_name;
@@ -120,9 +117,6 @@ function dislike_reload(like_block, dislike_block, _class){
       $a = document.createElement("a");
       $a.style.paddingRight = "10px";
       $a.setAttribute("data-pk", user_pk);
-      $img = document.createElement("img");
-      $img.src = user_img;
-      $img.style.borderRadius = "50%";
       $figure = document.createElement("figure");
       $figure.style.margin = "0";
       $figure.title = user_name;
