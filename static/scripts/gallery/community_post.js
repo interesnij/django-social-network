@@ -243,12 +243,7 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelector("#c_photos_container");
-    response.innerHTML = photo_list.innerHTML;
-    response.classList.add("row");
-    response.style.marginLeft = "0";
-    response.style.marginRight = "0";
-    document.body.querySelector("#c_photos_container").prepend(response);
+    document.body.querySelector("#c_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
   link_.send(form_data);
