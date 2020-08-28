@@ -19,6 +19,7 @@ class UserGalleryView(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
         if self.user.pk == request.user.pk:
             self.albums_list = self.user.get_my_albums().order_by('-created')
         else:
@@ -33,6 +34,7 @@ class UserGalleryView(TemplateView):
         context = super(UserGalleryView,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['albums_list'] = self.albums_list
+        context['album'] = self.album
         return context
 
 class UserAlbumView(TemplateView):

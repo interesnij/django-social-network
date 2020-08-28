@@ -2,20 +2,37 @@
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ community.get_main_album_uuid }}">
-    <div class="row">
-        <div class="col-12 col-md-8">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" album-uuid="{{ album.uuid }}">
+{% if albums_list %}
+  <div class="container-fluid mt-3">
+      <div class="row">
+          <div class="col-12 col-md-8">
             <h5 class="mt-1">
               <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                 {{ community.name }}
-              </a> - альбомы</h5> {% if not community.is_album_exists %}- альбомов нет{% endif %}
-        </div>
-    </div>
-</div>
-
-<div class="container mt-4">
-  {% include 'gallery_community/albums.html' %}
-</div>
+              </a> - альбомы
+            </h5>
+          </div>
+          <div class="col-12 col-md-4"></div>
+      </div>
+  </div>
+  <div class="container mt-4">
+    {% include 'gallery_community/albums.html' %}
+  </div>
+{% else %}
+  <div class="container-fluid mt-3">
+      <div class="row">
+          <div class="col-12 col-md-8">
+              <h5 class="mt-1">
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                  {{ community.name }}
+                </a>
+                - Альбомов нет</h5>
+          </div>
+          <div class="col-12 col-md-4"></div>
+      </div>
+  </div>
+{% endif %}
 
 <div class="container-fluid mt-3">
     <div class="row">
@@ -25,7 +42,7 @@
                 {{ community.name }}
               </a> - фотографии
             </h5>
-            Фото: {{ community.count_photos }}
+            Фото: {{ album.count_photo }}
         </div>
     </div>
 </div>
@@ -33,5 +50,5 @@
 <div class="container mt-4 main-container">
       <div id="c_photo_load" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
   </div>
-
+</div>
 {% endblock %}

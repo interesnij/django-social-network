@@ -950,6 +950,11 @@ class User(AbstractUser):
         from gallery.models import Album
         album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
         return album.get_photos()
+
+    def get_count_photos(self):
+        from gallery.models import Album
+        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
+        return album.count_photo() 
     def get_my_photos(self):
         from gallery.models import Album
 

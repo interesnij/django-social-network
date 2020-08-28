@@ -242,6 +242,11 @@ class Community(models.Model):
         album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.get_photos()
 
+    def get_count_photos(self):
+        from gallery.models import Album
+        album = Album.objects.get(community_id=self.id, community=None, type=Album.MAIN)
+        return album.count_photo()
+
     def get_admin_photos(self):
         from gallery.models import Album
 
