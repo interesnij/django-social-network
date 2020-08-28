@@ -2,22 +2,28 @@
 {% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
+{% if albums_list %}
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ user.get_main_album_uuid }}">
     <div class="row">
-        <div class="col-12">
-            <h5 class="mt-1">Альбомы
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                  {{ user.get_full_name_genitive }}
-                </a>
-                {% if not user.is_album_exists %}- альбомов нет{% endif %}
-            </h5>
+        <div class="col-12 col-md-8">
+            <h5 class="mt-1">Альбомы {{ user.get_full_name_genitive }}</h5>
         </div>
+        <div class="col-12 col-md-4"></div>
     </div>
 </div>
-
 <div class="container mt-4">
   {% include 'gallery_user/albums.html' %}
 </div>
+{% else %}
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ user.get_main_album_uuid }}">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <h5 class="mt-1">У {{ user.get_full_name_genitive }} нет альбомов</h5>
+        </div>
+        <div class="col-12 col-md-4"></div>
+    </div>
+</div>
+{% endif %}
 
   <div class="container-fluid mt-3">
       <div class="row">
