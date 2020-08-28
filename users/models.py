@@ -976,14 +976,16 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
     def get_my_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, photo_album__isnull=False)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -1182,7 +1184,7 @@ class User(AbstractUser):
         result=list(set(my_frends_ids) & set(community_frends_ids))
         query = Q(id__in=result)
         connection = User.objects.filter(query)
-        return connection 
+        return connection
 
     def get_target_users(self):
         from stst.models import UserNumbers
