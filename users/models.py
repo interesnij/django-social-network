@@ -60,6 +60,9 @@ class User(AbstractUser):
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
+    def __str__(self):
+        return str(self.pk)
+
     def get_last_activity(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.last_activity)
@@ -188,9 +191,6 @@ class User(AbstractUser):
         else:
             ip = request.META.get('REMOTE_ADDR')
         return ip
-
-    def __str__(self):
-        return self.get_full_name()
 
     def get_blocked_users(self):
         blocked_users_query = Q(blocked_by_users__blocker_id=self.pk)
@@ -954,7 +954,7 @@ class User(AbstractUser):
     def get_count_photos(self):
         from gallery.models import Album
         album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        return album.count_photo() 
+        return album.count_photo()
     def get_my_photos(self):
         from gallery.models import Album
 
