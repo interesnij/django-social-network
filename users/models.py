@@ -61,7 +61,7 @@ class User(AbstractUser):
         verbose_name_plural = 'пользователи'
 
     def __str__(self):
-        return str(self.pk)
+        return self.get_full_name()
 
     def get_last_activity(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
