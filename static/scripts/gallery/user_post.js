@@ -244,15 +244,10 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelector("#photos_container");
-    photo_list.classList.add("row");
-    photo_list.style.marginLeft = "0";
-    photo_list.style.marginRight = "0";
-    response.innerHTML = photo_list.innerHTML;
-    document.body.querySelector("#photos_container").prepend(response);
+    document.body.querySelector("#photos_container").insertAdjacentHTML('beforeend', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
-  link_.send(form_data);
+  link_.send(form_data); 
 });
 
 on('#ajax', 'change', '#u_gallery_album_photo_add', function() {

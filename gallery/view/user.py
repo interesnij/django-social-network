@@ -90,7 +90,7 @@ class PhotoUserCreate(View):
                 _album.photo_album.add(photo)
                 photos += [photo,]
 
-            return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
+            return render(request, 'u_photo/new_photos.html',{'photos': photos, 'user': request.user})
         else:
             raise Http404
 
