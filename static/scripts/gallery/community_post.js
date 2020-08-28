@@ -235,7 +235,7 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community/add_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -254,7 +254,7 @@ on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community/add_album_photo/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_album_photo/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -263,12 +263,8 @@ on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
     response = document.createElement("span");
     photo_list = document.createElement("div");
     response.innerHTML = elem;
-    photo_list.innerHTML = response.querySelector("#c_photos_container").innerHTML;
-    photo_list.classList.add("row");
-    photo_list.style.marginLeft = "0";
-    photo_list.style.marginRight = "0";
+    document.body.querySelector("#c_album_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
-    document.body.querySelector("#c_photos_container").prepend(photo_list);
   }}
   link_.send(form_data);
 });

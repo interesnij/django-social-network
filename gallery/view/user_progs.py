@@ -3,7 +3,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo, PhotoComment
-from gallery.forms import PhotoDescriptionForm, CommentForm
+from gallery.forms import PhotoDescriptionForm, CommentForm, AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
@@ -13,6 +13,112 @@ from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_permission_user_photo
 from django.http import Http404
+
+
+class UserAddAvatar(View):
+    """
+    загрузка аватара пользователя
+    """
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and user == request.user:
+            photo_input = request.FILES.get('file')
+
+            _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
+            photo = Photo.objects.create(file=photo_input, creator=user)
+            photo.album.add(_album)
+
+            request.user.create_s_avatar(photo_input)
+            request.user.create_b_avatar(photo_input)
+            return render(request, 'u_photo/avatar/my_photo.html',{'object': photo, 'user': request.user})
+        else:
+            return HttpResponseBadRequest()
+
+class PhotoUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя в основной альбом
+    """
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        photos = []
+        if request.is_ajax() and self.user == request.user:
+
+            _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, creator=self.user)
+                _album.photo_album.add(photo)
+                photos += [photo,]
+
+            return render(request, 'u_photo/new_photos.html',{'photos': photos, 'user': request.user})
+        else:
+            raise Http404
+
+class PhotoAlbumUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя в альбом
+    """
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        _album = Album.objects.get(uuid=self.kwargs["uuid"])
+        photos = []
+        uploaded_file = request.FILES['file']
+        if request.is_ajax() and user == request.user:
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, creator=user)
+                _album.photo_album.add(photo)
+                photos += [photo,]
+            return render(request, 'u_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'user': request.user})
+        else:
+            raise Http404
+
+class PhotoAttachUserCreate(View):
+    """
+    мульти сохранение изображений с моментальным выводом в превью
+    """
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        photos = []
+        if request.is_ajax() and self.user == request.user:
+            _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(file=p, creator=self.user)
+                _album.photo_album.add(photo)
+                photos += [photo,]
+            return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
+        else:
+            raise Http404
+
+
+class AlbumUserCreate(TemplateView):
+    """
+    создание альбома пользователя
+    """
+    template_name = "album_user/add_album.html"
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.form = AlbumForm()
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(AlbumUserCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["user"] = self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = AlbumForm(request.POST)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            album = self.form.save(commit=False)
+            if not album.description:
+                album.description = "Без описания"
+            new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
+            return render(request, 'album_user/my_album.html',{'album': new_album, 'user': self.user})
+        else:
+            return HttpResponseBadRequest()
+        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
 
 class PhotoUserCommentList(ListView):
@@ -115,7 +221,7 @@ class UserPhotoDescription(View):
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
-            return HttpResponse(form_image.cleaned_data["description"])  
+            return HttpResponse(form_image.cleaned_data["description"])
         else:
             raise Http404
 

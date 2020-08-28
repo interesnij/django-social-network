@@ -236,7 +236,7 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -255,7 +255,7 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_album_photo/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_album_photo/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -264,12 +264,8 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
     response = document.createElement("span");
     photo_list = document.createElement("div");
     response.innerHTML = elem;
-    photo_list.innerHTML = response.querySelector("#photos_container").innerHTML;
-    photo_list.classList.add("row");
-    photo_list.style.marginLeft = "0";
-    photo_list.style.marginRight = "0";
+    document.body.querySelector("#u_album_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
-    document.body.querySelector("#photos_container").prepend(photo_list);
   }}
   link_.send(form_data);
 });
@@ -281,7 +277,7 @@ on('#ajax', 'change', '#user_avatar_upload', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_user_avatar"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_avatar/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_avatar/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -301,7 +297,7 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_comment_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

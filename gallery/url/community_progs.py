@@ -21,4 +21,10 @@ urlpatterns=[
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityAbortDelete.as_view())),
     url(r'^delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentCommunityDelete.as_view())),
 	url(r'^abort_delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentCommunityAbortDelete.as_view())),
+
+    url(r'^add_photo/(?P<pk>\d+)/$', PhotoCommunityCreate.as_view()),
+	url(r'^add_comment_photo/(?P<pk>\d+)/$', PhotoAttachCommunityCreate.as_view()),
+	url(r'^add_album_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoAlbumCommunityCreate.as_view()),
+	url(r'^add_album/(?P<pk>\d+)/$', AlbumCommunityCreate.as_view()),
+	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
 ]
