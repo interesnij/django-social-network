@@ -58,7 +58,7 @@ on('#ajax', 'click', '.u_albums_add', function() {
   container = this.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user/add_album/" + pk + "/", loader)
+  open_fullscreen("/gallery/user_progs/add_album/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_photo_edit', function() {
@@ -76,7 +76,7 @@ on('#ajax', 'click', '#add_album', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/gallery/user/add_album/" + pk + "/", true );
+    ajax_link.open( 'POST', "/gallery/user_progs/add_album/" + pk + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
