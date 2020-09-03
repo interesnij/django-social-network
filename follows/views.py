@@ -40,13 +40,8 @@ class FollowingsView(ListView):
 		self.template_name = get_settings_template("follows/", "followings.html", request)
 		return super(FollowingsView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(FollowingsView,self).get_context_data(**kwargs)
-		context['user'] = self.request.user
-		return context
-
 	def get_queryset(self):
-		possible_list = request.user.get_followings()
+		possible_list = self.request.user.get_followings()
 		return possible_list
 
 
