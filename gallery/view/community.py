@@ -22,7 +22,7 @@ class CommunityGalleryView(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(commuity_id=self.community.pk, type=Album.MAIN)
+        self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
         self.albums_list = self.community.get_albums().order_by('-created')
 
         self.template_name = get_template_community_photo(self.community, "gallery_community/", "gallery.html", request.user)

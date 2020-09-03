@@ -103,13 +103,13 @@ on('#ajax', 'click', '#article_post', function() {
 
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/user/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/post-comment/');
 });
 
 on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/posts/user/reply-comment/')
+  send_comment(form, block, '/posts/user_progs/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
@@ -117,7 +117,7 @@ on('#ajax', 'click', '.u_replyItemComment', function() {
 on('#ajax', 'click', '.u_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/posts/user/reply-comment/')
+  send_comment(form, block.parentElement, '/posts/user_progs/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
@@ -129,7 +129,7 @@ on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -154,7 +154,7 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/wall_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/wall_delete/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -181,7 +181,7 @@ on('#ajax', 'click', '.u_post_abort_remove', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/abort_delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/abort_delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -197,7 +197,7 @@ on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user/wall_abort_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/wall_abort_delete/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -208,33 +208,33 @@ on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
 });
 
 on('#ajax', 'click', '.u_post_fixed', function() {
-  send_change(this, "/posts/user/fixed/", "u_post_unfixed", "Открепить")
+  send_change(this, "/posts/user_progs/fixed/", "u_post_unfixed", "Открепить")
 })
 on('#ajax', 'click', '.u_post_unfixed', function() {
-  send_change(this, "/posts/user/unfixed/", "u_post_fixed", "Закрепить")
+  send_change(this, "/posts/user_progs/unfixed/", "u_post_fixed", "Закрепить")
 })
 
 on('#ajax', 'click', '.u_post_off_comment', function() {
-  send_change(this, "/posts/user/off_comment/", "u_post_on_comment", "Вкл. комментарии");
+  send_change(this, "/posts/user_progs/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".u_item_comments") ? post.querySelector(".u_item_comments").style.display = "none"
   : post.querySelector(".u_news_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
-  send_change(this, "/posts/user/on_comment/", "u_post_off_comment", "Выкл. комментарии");
+  send_change(this, "/posts/user_progs/on_comment/", "u_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".u_item_comments") ? post.querySelector(".u_item_comments").style.display = "unset"
   : post.querySelector(".u_news_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.u_post_off_votes', function() {
-  send_change(this, "/posts/user/off_votes/", "u_post_on_votes", "Вкл. реакции");
+  send_change(this, "/posts/user_progs/off_votes/", "u_post_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.u_post_on_votes', function() {
-  send_change(this, "/posts/user/on_votes/", "u_post_off_votes", "Выкл. реакции");
+  send_change(this, "/posts/user_progs/on_votes/", "u_post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
@@ -273,26 +273,26 @@ on('#ajax', 'click', '.u_dislike2', function() {
 });
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
-  comment_delete(this, "/posts/user/delete_comment/", "u_post_comment_abort_remove")
+  comment_delete(this, "/posts/user_progs/delete_comment/", "u_post_comment_abort_remove")
 })
 
 on('#ajax', 'click', '.u_post_comment_abort_remove', function() {
-  comment_abort_delete(this, "/posts/user/abort_delete_comment/")
+  comment_abort_delete(this, "/posts/user_progs/abort_delete_comment/")
 });
 
 on('#ajax', 'click', '.u_post_wall_comment_delete', function() {
-  comment_wall_delete(this, "/posts/user/delete_wall_comment/", "u_post_comment_abort_remove")
+  comment_wall_delete(this, "/posts/user_progs/delete_wall_comment/", "u_post_comment_abort_remove")
 })
 
 on('#ajax', 'click', '.u_post_wall_comment_abort_remove', function() {
-  comment_wall_abort_delete(this, "/posts/user/abort_delete_wall_comment/")
+  comment_wall_abort_delete(this, "/posts/user_progs/abort_delete_wall_comment/")
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -317,7 +317,7 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_comment_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

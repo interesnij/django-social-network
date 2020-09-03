@@ -106,13 +106,13 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
 
 on('#ajax', 'click', '.c_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/community/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/post-comment/');
 });
 
 on('#ajax', 'click', '.c_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/posts/community/reply-comment/')
+  send_comment(form, block, '/posts/community_progs/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
@@ -120,23 +120,23 @@ on('#ajax', 'click', '.c_replyItemComment', function() {
 on('#ajax', 'click', '.c_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/posts/community/reply-comment/')
+  send_comment(form, block.parentElement, '/posts/community_progs/reply-comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
 
 on('#ajax', 'click', '.c_post_comment_delete', function() {
-  comment_delete(this, "/posts/community/delete_comment/", "c_post_comment_abort_remove")
+  comment_delete(this, "/posts/community_progs/delete_comment/", "c_post_comment_abort_remove")
 })
 on('#ajax', 'click', '.c_post_comment_abort_remove', function() {
-  comment_abort_delete(this, "/posts/community/abort_delete_comment/")
+  comment_abort_delete(this, "/posts/community_progs/abort_delete_comment/")
 });
 on('#ajax', 'click', '.c_post_wall_comment_delete', function() {
-  comment_wall_delete(this, "/posts/community/delete_wall_comment/", "c_post_comment_abort_remove")
+  comment_wall_delete(this, "/posts/community_progs/delete_wall_comment/", "c_post_comment_abort_remove")
 })
 
 on('#ajax', 'click', '.c_post_wall_comment_abort_remove', function() {
-  comment_wall_abort_delete(this, "/posts/community/abort_delete_wall_comment/")
+  comment_wall_abort_delete(this, "/posts/community_progs/abort_delete_wall_comment/")
 });
 
 on('#ajax', 'click', '.c_like', function() {
@@ -177,7 +177,7 @@ on('#ajax', 'change', '#community_avatar_upload', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_community_avatar"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community/add_avatar/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_avatar/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -194,33 +194,33 @@ on('#ajax', 'change', '#community_avatar_upload', function() {
 })
 
 on('#ajax', 'click', '.c_post_fixed', function() {
-  send_change(this, "/posts/community/fixed/", "c_post_unfixed", "Открепить")
+  send_change(this, "/posts/community_progs/fixed/", "c_post_unfixed", "Открепить")
 })
 on('#ajax', 'click', '.c_post_unfixed', function() {
-  send_change(this, "/posts/community/unfixed/", "c_post_fixed", "Закрепить")
+  send_change(this, "/posts/community_progs/unfixed/", "c_post_fixed", "Закрепить")
 })
 
 on('#ajax', 'click', '.c_post_off_comment', function() {
-  send_change(this, "/posts/community/off_comment/", "c_post_on_comment", "Вкл. комментарии");
+  send_change(this, "/posts/community_progs/off_comment/", "c_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".c_item_comments") ? post.querySelector(".c_item_comments").style.display = "unset"
   : post.querySelector(".c_news_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_post_on_comment', function() {
-  send_change(this, "/posts/community/on_comment/", "c_post_off_comment", "Выкл. комментарии");
+  send_change(this, "/posts/community_progs/on_comment/", "c_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".c_item_comments") ? post.querySelector(".c_item_comments").style.display = "unset"
   : post.querySelector(".c_news_item_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.c_post_off_votes', function() {
-  send_change(this, "/posts/community/off_votes/", "c_post_on_votes", "Вкл. реакции");
+  send_change(this, "/posts/community_progs/off_votes/", "c_post_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.c_post_on_votes', function() {
-  send_change(this, "/posts/community/on_votes/", "c_post_off_votes", "Выкл. реакции");
+  send_change(this, "/posts/community_progs/on_votes/", "c_post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
@@ -230,7 +230,7 @@ on('#ajax', 'click', '.c_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -256,7 +256,7 @@ on('#ajax', 'click', '.c_post_wall_remove', function() {
   uuid = item.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/wall_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/wall_delete/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -284,7 +284,7 @@ on('#ajax', 'click', '.c_post_abort_remove', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/abort_delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/abort_delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -302,7 +302,7 @@ on('#ajax', 'click', '.c_post_wall_abort_remove', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community/wall_abort_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/wall_abort_delete/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -322,7 +322,7 @@ on('#ajax', 'change', '#c_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_attach_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -344,7 +344,7 @@ on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_comment_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
