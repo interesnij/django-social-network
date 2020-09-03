@@ -9,6 +9,7 @@ from django.views import View
 from django.shortcuts import render
 from common.template.photo import get_template_user_photo, get_permission_user_photo, get_permission_user_photo_detail
 from django.http import Http404
+from gallery.forms import PhotoDescriptionForm
 
 
 class UserGalleryView(TemplateView):

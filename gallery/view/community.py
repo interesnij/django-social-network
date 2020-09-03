@@ -12,6 +12,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_template_community_photo, get_permission_community_photo , get_permission_community_photo_detail
 from common.check.community import check_can_get_lists
 from django.http import Http404
+from gallery.forms import PhotoDescriptionForm
 
 
 class CommunityGalleryView(TemplateView):
