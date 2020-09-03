@@ -25,8 +25,9 @@
     </div>
     {% endif %}
 
+    {% if request.user.get_all_connection %}
     <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
-        <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
+        <input type="radio" {% if object.creator.pk == request.user.pk %}checked="checked"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     <div id="show_user_connections" {% if object.creator.pk != request.user.pk %}style="display:none"{% endif %}>
@@ -38,6 +39,11 @@
         {% endfor %}
       </select>
     </div>
-    <div id="show_user_message_members"></div>
+    {% else %}
+    <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
+        <input type="radio" disabled="disabled" name="radiogroup-1" class="custom-control-input">
+        <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
+    </div>
+    {% endif %}
 
 </div>
