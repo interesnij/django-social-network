@@ -18,6 +18,12 @@
       </select>
     </div>
     {% else %}
+    <div class="custom-control custom-radio" style="margin-bottom:10px">
+        <input type="radio" disabled="disabled" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
+        <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
+    </div>
+    {% endif %}
+    
     {% if request.user.get_all_connection %}
     <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
         <input type="radio" {% if object.creator.pk == request.user.pk %}checked="checked"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
