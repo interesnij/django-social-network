@@ -12,7 +12,7 @@ function send_form_with_pk_and_toast(url, form, toast){
     ajax_link.send(form_data);
 }
 
-function send_with_pk_and_reload(url){
+function get_with_pk_and_reload(url){
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', url + pk + "/", true );
@@ -22,6 +22,19 @@ function send_with_pk_and_reload(url){
     this_page_reload(document.location.href);
   }};
   link_.send();
+}
+function post_with_pk_and_reload(parent, url){
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  form_data = new FormData(parent);
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this_page_reload(document.location.href);
+  }};
+  link_.send(form_data); 
 }
 
 function comment_delete(_this, _link, _class){

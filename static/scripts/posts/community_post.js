@@ -174,7 +174,8 @@ on('body', 'click', '#community_avatar_btn', function(event) {
   this.previousElementSibling.click();
 })
 on('#ajax', 'change', '#community_avatar_upload', function() {
-  send_with_pk_and_reload("/gallery/community_progs/add_avatar/")
+  parent = this.parentElement;
+  post_with_pk_and_reload(parent, "/gallery/community_progs/add_avatar/")
 })
 
 on('#ajax', 'click', '.c_post_fixed', function() {
