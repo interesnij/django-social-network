@@ -26,11 +26,6 @@ class SoundGenres(models.Model):
         queryset = self.track_genre.all()
         return queryset[:300]
 
-    def get_new_order():
-        last = SoundGenres.objects.last()
-        new_order = last.order + 1
-        return new_order
-
     class Meta:
         verbose_name = "жанр"
         verbose_name_plural = "жанры"
