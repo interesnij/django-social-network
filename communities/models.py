@@ -35,7 +35,7 @@ class CommunitySubCategory(models.Model):
     order = models.IntegerField(default=0, verbose_name="Номер")
 
     def __str__(self):
-        return 'ПодКатегория: ' + self.name
+        return self.name
 
     class Meta:
         verbose_name="Подкатегория сообществ"
