@@ -22,8 +22,8 @@
                         <div class="form-group ">
                             <label>Категория</label>
                             <select class="form-control" id="sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
-                                {% for object in categories %}
                                 <option value="">Выберите тематику</option>
+                                {% for object in categories %}
                                 <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
                                 {% endfor %}
                             </select>

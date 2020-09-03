@@ -36,7 +36,6 @@ class CommunityCreate(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
-		context["categories"]=self.categories
 		return context
 
 	def post(self,request,*args,**kwargs):
