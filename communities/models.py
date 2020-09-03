@@ -20,7 +20,7 @@ class CommunityCategory(models.Model):
     order = models.IntegerField(default=0, verbose_name="Номер")
 
     def __str__(self):
-        return 'Категория: ' + self.name
+        return self.name
 
     class Meta:
         verbose_name="Категория сообществ"
@@ -29,7 +29,7 @@ class CommunityCategory(models.Model):
 
 class CommunitySubCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
-    sudcategory = models.ForeignKey(CommunityCategory, on_delete=models.CASCADE, related_name='community_categories', verbose_name="Подкатегория сообщества")
+    sudcategory = models.ForeignKey(CommunityCategory, on_delete=models.CASCADE, related_name='community_categories', verbose_name="Категория сообщества")
     avatar = models.ImageField(blank=True, verbose_name="Аватар")
     order = models.IntegerField(default=0, verbose_name="Номер")
 

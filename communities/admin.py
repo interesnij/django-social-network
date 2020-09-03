@@ -30,6 +30,7 @@ class CommunityCategoryAdmin(admin.ModelAdmin):
 
 class CommunitySubCategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
+    list_filter = ['sudcategory', ]
 
 class CommunityAdmin(admin.ModelAdmin):
     inlines = [
