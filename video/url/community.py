@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from video.view.community import *
-
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoList.as_view()),
