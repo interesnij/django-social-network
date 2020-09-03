@@ -25,6 +25,7 @@ class CommunityCategory(models.Model):
     class Meta:
         verbose_name="Категория сообществ"
         verbose_name_plural="Категории сообществ"
+        ordering = ["order"]
 
 
 class CommunitySubCategory(models.Model):
@@ -39,6 +40,7 @@ class CommunitySubCategory(models.Model):
     class Meta:
         verbose_name="Подкатегория сообществ"
         verbose_name_plural="Подкатегории сообществ"
+        ordering = ["order"]
 
 
 class Community(models.Model):
