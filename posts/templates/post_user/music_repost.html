@@ -1,6 +1,7 @@
 {% load get_key %}
 
-<div class="col-md-12 music" data-path="{{ object.get_music_repost.uri }}" data-duration="{{ object.get_music_repost.duration }}" style="flex-basis: 100%;">
+{% with playlist=object.get_music_repost %}
+<div class="col-md-12 music" data-path="{{ playlist.uri }}" data-duration="{{ object.get_music_repost.duration }}" style="flex-basis: 100%;">
     <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure>
           <a class="music_list_post music_thumb pointer">
@@ -43,3 +44,4 @@
         </div>
     </div>
   </div>
+{% endwith %}
