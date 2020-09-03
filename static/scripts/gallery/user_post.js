@@ -274,23 +274,7 @@ on('body', 'click', '#user_avatar_btn', function(event) {
   this.previousElementSibling.click();
 })
 on('#ajax', 'change', '#user_avatar_upload', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_user_avatar"));
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_avatar/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    document.body.querySelector(".avatar_figure").innerHTML = "";
-    img = response.querySelector("img");
-    document.body.querySelector(".avatar_figure").append(img);
-    }
-  }
-  link_.send(form_data);
+  send_with_pk_and_reload("/gallery/user_progs/add_avatar/")
 })
 
 on('#ajax', 'change', '#u_photo_comment_attach', function() {

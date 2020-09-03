@@ -118,7 +118,7 @@ class CommunityAddAvatar(View):
             photo.album.add(_album)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
-            return render(request, 'c_photo/avatar/admin_photo.html',{'object': photo, 'community': community})
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
