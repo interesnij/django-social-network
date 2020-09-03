@@ -46,7 +46,7 @@ class FollowingsView(ListView):
 		return context
 
 	def get_queryset(self):
-		possible_list = self.user.get_followings()
+		possible_list = request.user.get_followings()
 		return possible_list
 
 
