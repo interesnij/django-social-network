@@ -46,11 +46,8 @@ class CUCMPostWindow(TemplateView):
         if request.user.is_authenticated:
             self.post = Post.objects.get(uuid=self.kwargs["uuid"])
             self.community = Community.objects.get(pk=self.kwargs["pk"])
-            #check_can_get_lists(request.user, self.community)
-            if request.is_ajax():
-                self.template_name = "post_repost_window/c_ucm_post.html"
-            else:
-                Http404
+            check_can_get_lists(request.user, self.community)
+            self.template_name = "post_repost_window/c_ucm_post.html"
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
