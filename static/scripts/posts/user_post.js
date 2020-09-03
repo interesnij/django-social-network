@@ -243,14 +243,14 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_likes");
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_dislikes");
 });
