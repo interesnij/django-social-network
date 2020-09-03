@@ -30,9 +30,9 @@ def add_playlist(url, request_user, list):
 
             if track['genre'] and track['duration'] > 9000:
                 track_genre = track['genre'].replace("'", '')
-                if track_genre:
+                try:
                     genre = SoundGenres.objects.get(name=track_genre)
-                else:
+                except:
                     genre = SoundGenres.objects.create(name=track_genre)
                 new_track = SoundcloudParsing.objects.create(artwork_url=track['artwork_url'],
                                                         created_at=created_at,
