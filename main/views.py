@@ -14,12 +14,11 @@ class PostsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
 			self.template_name = get_settings_template("news_list/news/", "posts.html", request)
-			self.template_name = "mob_news_list/news/posts.html"
+			#self.template_name = "mob_news_list/news/posts.html"
 		else:
 			self.template_name = "main/auth.html"
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
-		self.template_name = "mob_main/auth.html"
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
