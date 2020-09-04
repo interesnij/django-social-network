@@ -852,11 +852,36 @@ class User(AbstractUser):
             query = query + [community,]
         return query
 
+    def get_default_communities(self):
+        from communities.models import Community
+
+        query = Q(memberships__user=self)
+        communities = Community.objects.filter(query)
+        return communities
+
+    def get_populate_communities(self):
+        from users.model.list import UserPopulateCommunity
+        from communities.models import Community
+
+        communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
+        communities_ids = [community['community'] for community in communities_query]
+        query = []
+        for community_id in communities_ids:
+            community = Community.objects.get(pk=community_id)
+            query = query + [community,]
+        return query
+
     def get_6_communities(self):
         try:
             return self.get_6_populate_communities()
         except:
             return self.get_6_default_communities()
+
+    def get_communities(self):
+        try:
+            return self.get_populate_communities()
+        except:
+            return self.get_default_communities()
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')

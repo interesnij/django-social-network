@@ -57,7 +57,7 @@ class UserCommunities(ListView):
         return context
 
     def get_queryset(self):
-        communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
+        communities_list = self.user.get_communities()
         return communities_list
 
 class UserStaffCommunities(ListView):
