@@ -1,8 +1,11 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.http import Http404
 from common.user_progs.timelines import *
 from common.template.user import get_settings_template
+
 
 class PostsListView(ListView):
 	template_name = None
@@ -13,6 +16,8 @@ class PostsListView(ListView):
 			self.template_name = get_settings_template("news_list/news/", "posts.html", request)
 		else:
 			self.template_name = "main/auth.html"
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
