@@ -80,7 +80,8 @@ class SoundList(models.Model):
         return self.players.filter(pk=track_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.players[0]
+        if not self.players:
+            return True
 
     def playlist_too(self):
         queryset = self.players.all()
