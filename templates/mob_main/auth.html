@@ -5,7 +5,6 @@
 <div class="container mt-3">
     <div class="h-md-100 h-sm-auto">
         <form action="{% url 'rest_login' %}" id="login_form"class="row align-items-center h-sm-auto">
-            <div class="col-12">
                 <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
                 <div class="card-body p-0">
                     <input type="text" name="username" id="id_username" class="form-control form-control-lg border-0" placeholder="Телефон">
@@ -13,16 +12,14 @@
                     <input type="password" name="password" id="id_password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
                 </div>
                 <small class="form-text text-muted login-response"></small>
-                <div class="text-left mb-3">
+                <div class="text-left mb-3 mt-3">
                     <button type="submit" id="logg" class=" btn btn-primary pink-gradient">Войти</button>
                     <a href="" class="ajax" style="float:right;padding-top: 9px;">Забыли пароль?</a>
                 </div>
-            </div>
         </form>
         <br><br><br>
 
         <form action="{% url 'rest_register' %}" id="signup" class="row align-items-center h-sm-auto">
-            <div class="col-12">
                 <h1 class="font-weight-light mb-3 content-color-secondary text-left">Регистрация</h1>
                 <div class="card mb-2">
                     <div class="card-body p-0">
@@ -49,7 +46,6 @@
                 <div class="text-left mb-3">
                     <button type="submit" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
                 </div>
-            </div>
         </form>
     </div>
 </div>
