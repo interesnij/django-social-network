@@ -37,16 +37,12 @@
                     </div>
                 </div>
                 <br>
-                <div class="col">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
-                        <label class="custom-control-label" for="register_">
-                            Я принимаю <a href="{% url 'terms' %}" style="text-decoration:underline;" class="ajax">Правила сайта</a>.
-                        </label>
-                    </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
+                    <label class="custom-control-label" for="register_">
+                        Я принимаю <a href="{% url 'terms' %}" style="text-decoration:underline;" class="ajax">Правила сайта</a>.
+                    </label>
                 </div>
-                <br>
-                <small class="form-text text-muted reg-response"></small>
                 <div class="text-left mb-3">
                     <button type="button" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
                 </div>
