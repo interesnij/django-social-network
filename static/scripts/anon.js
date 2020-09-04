@@ -55,8 +55,13 @@ on('body', 'click', '#logg', function() {
   if (document.body.querySelector("#id_password").value){document.body.querySelector("#id_password").style.border = "rgba(0, 0, 0, 0.2)";}
 
   form_data = new FormData(document.querySelector("#login_form"));
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : XDomainRequest();
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'POST', "/rest-auth/login/", true );
+  params = "";
+  link.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  link.setRequestHeader("Content-length", params.length);
+  link.setRequestHeader("Connection", "close");
+
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     window.location.href = "/";
