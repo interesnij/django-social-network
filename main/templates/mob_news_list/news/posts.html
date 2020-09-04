@@ -2,15 +2,8 @@
 {% block title %}Новости | Записи{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container">
-    <div class="row">
-        <div class="col-12 col-md-8 col-lg-8">
-          <a href="{% url 'post_list' %}" class="mb-2 btn btn-sm btn-primary ajax">Записи</a>
-          <a href="{% url 'photos_list' %}" class="mb-2 btn btn-sm btn-secondary ajax">Фото</a>
-          <a href="{% url 'goods_list' %}" class="mb-2 btn btn-sm btn-success ajax">Товары</a>
-          <a href="{% url 'videos_list' %}" class="mb-2 btn btn-sm btn-warning ajax">Видео</a>
-          <a href="{% url 'audios_list' %}" class="mb-2 btn btn-sm btn-info ajax">Музыка</a>
-          <br><br>
+<div class="container mt-3">
+  {% include 'mob_news_list/menu.html' %}
 
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
@@ -69,15 +62,6 @@
           </div>
           {% endif %}
 
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              {% include 'news_list/left_menu.html' %}
-            </div>
-          </div>
-        </div>
-    </div>
 </div>
 
 {% endblock %}
