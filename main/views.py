@@ -17,7 +17,7 @@ class PostsListView(ListView):
 		else:
 			self.template_name = "main/auth.html"
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+			self.template_name = "mob_" + self.template_name
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
