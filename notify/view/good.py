@@ -8,7 +8,7 @@ from notify.model.good import GoodNotify, GoodCommunityNotify
 class GoodNotificationListView(LoginRequiredMixin, ListView):
     model = GoodNotify
     context_object_name = 'notification_list'
-    template_name = 'not_good/user_notify_list.html'
+    template_name = 'notify_good/user_notify_list.html'
 
     def get_queryset(self, **kwargs):
         notify = GoodNotify.objects.filter(recipient=self.request.user)
@@ -18,7 +18,7 @@ class GoodNotificationListView(LoginRequiredMixin, ListView):
 class GoodCommunityNotificationListView(LoginRequiredMixin, ListView):
     model = GoodCommunityNotify
     context_object_name = 'notification_list'
-    template_name = 'not_good/community_notify_list.html'
+    template_name = 'notify_good/community_notify_list.html'
 
     def get_queryset(self, **kwargs):
         notify = GoodCommunityNotify.objects.filter(community__creator=self.request.user)
@@ -42,7 +42,10 @@ def good_community_all_read(request):
     return redirect('good_community_all_read')
 
 
-@login_required
-def good_get_latest_notifications(request):
-    notifications = request.user.good_notifications.get_most_recent()
-    return render(request, 'not_good/most_recent.html', {'notifications': notifications})
+class GoodLastNotify(ListView):
+    template_name = "notify_good/most_recent.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        notifications = self.request.user.good_notifications.get_most_recent()
+        return notifications

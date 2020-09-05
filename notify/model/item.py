@@ -7,7 +7,7 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
 
-class ItemNotificationQS(models.query.QuerySet):
+class PostNotificationQS(models.query.QuerySet):
     def unread(self):
         return self.filter(unread=True)
     def read(self):
@@ -38,7 +38,7 @@ class ItemNotificationQS(models.query.QuerySet):
         return qs
 
 
-class ItemNotify(models.Model):
+class PostNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     POST_USER_MENTION = 'PUM'
@@ -65,13 +65,13 @@ class ItemNotify(models.Model):
         (REPOST, 'поделился Вашей записью'),
     )
 
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='item_notifications', verbose_name="Получатель")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects =  ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    objects =  PostNotificationQS.as_manager()
+    post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
@@ -94,7 +94,7 @@ class ItemNotify(models.Model):
             self.save()
 
 
-class ItemCommunityNotify(models.Model):
+class PostCommunityNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
     COMMUNITY_INVITE = 'CI'
@@ -120,14 +120,14 @@ class ItemCommunityNotify(models.Model):
         (REPOST, 'поделился записью сообщества'),
     )
 
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_item_recipient', verbose_name="Получатель")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_post_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects = ItemNotificationQS.as_manager()
-    item = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    objects = PostNotificationQS.as_manager()
+    post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
@@ -138,10 +138,10 @@ class ItemCommunityNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        if self.item and not self.comment:
-            return '{} {}'.format(self.actor, self.get_verb_display(), self.item)
+        if self.post and not self.comment:
+            return '{} {}'.format(self.actor, self.get_verb_display(), self.post)
         else:
-            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.item)
+            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.post)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -153,23 +153,23 @@ class ItemCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def item_notification_handler(actor, recipient, verb, item, comment, **kwargs):
+def post_notification_handler(actor, recipient, verb, post, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    ItemNotify.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
-    item_notification_broadcast(actor, key, recipient=recipient.username)
+    PostNotify.objects.create(actor=actor, recipient=recipient, verb=verb, post=post, comment=comment)
+    post_notification_broadcast(actor, key, recipient=recipient.username)
 
 
-def item_community_notification_handler(actor, community, recipient, item, verb, comment, **kwargs):
+def post_community_notification_handler(actor, community, recipient, post, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        ItemCommunityNotify.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
-    item_notification_broadcast(actor, key)
+        PostCommunityNotify.objects.create(actor=actor, community=community, post=post, comment=comment, recipient=user, verb=verb)
+    post_notification_broadcast(actor, key)
 
 
-def item_notification_broadcast(actor, key, **kwargs):
+def post_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
     payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}

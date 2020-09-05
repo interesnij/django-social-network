@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^c/$', CommunityNotificationListView.as_view(), name='community_notify_list'),
     url(r'^user_all_read/$', user_all_read, name='user_all_read'),
     url(r'^community_all_read/$', community_all_read, name='community_all_read'),
-    url(r'^latest-notifications/$', get_latest_notifications, name='latest_notifications'),
+    url(r'^u_last_notify/$', UserLastNotify.as_view()),
+    url(r'^c_last_notify/$', CommunityLastNotify.as_view()),
 ]

@@ -162,7 +162,7 @@ def good_community_notification_handler(actor, community, recipient, good, verb,
     persons = community.get_staff_members()
     for user in persons:
         PhotoCommunityNotify.objects.create(actor=actor, community=community, good=good, comment=comment, recipient=user, verb=verb)
-    item_notification_broadcast(actor, key)
+    good_notification_broadcast(actor, key)
 
 
 def good_notification_broadcast(actor, key, **kwargs):

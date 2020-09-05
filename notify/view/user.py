@@ -8,7 +8,7 @@ from notify.model.user import UserNotify, UserCommunityNotify
 class UserNotificationListView(LoginRequiredMixin, ListView):
     model = UserNotify
     context_object_name = 'notification_list'
-    template_name = 'not_user/user_notify_list.html'
+    template_name = 'notify_user/user_notify_list.html'
 
     def get_queryset(self, **kwargs):
         notify = UserNotify.objects.filter(recipient=self.request.user)
@@ -18,7 +18,7 @@ class UserNotificationListView(LoginRequiredMixin, ListView):
 class CommunityNotificationListView(LoginRequiredMixin, ListView):
     model = UserCommunityNotify
     context_object_name = 'notification_list'
-    template_name = 'not_user/community_notify_list.html'
+    template_name = 'notify_user/community_notify_list.html'
 
     def get_queryset(self, **kwargs):
         notify = UserCommunityNotify.objects.filter(community__creator=self.request.user)
@@ -42,7 +42,18 @@ def community_all_read(request):
     return redirect('community_all_read')
 
 
-@login_required
-def get_latest_notifications(request):
-    notifications = request.user.user_notifications.get_most_recent()
-    return render(request, 'not_user/most_recent.html', {'notifications': notifications})
+class UserLastNotify(ListView):
+    template_name = "notify_user/u_most_recent.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        notifications = self.request.user.user_notifications.get_most_recent()
+        return notifications
+
+class CommunityLastNotify(ListView):
+    template_name = "notify_user/c_most_recent.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        notifications = self.request.user.user_notifications.get_most_recent()
+        return notifications

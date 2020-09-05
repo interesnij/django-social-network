@@ -168,7 +168,7 @@ def video_community_notification_handler(actor, community, recipient, video, ver
     persons = community.get_staff_members()
     for user in persons:
         VideoCommunityNotify.objects.create(actor=actor, community=community, video=video, comment=comment, recipient=user, verb=verb)
-    item_notification_broadcast(actor, key)
+    video_notification_broadcast(actor, key)
 
 
 def video_notification_broadcast(actor, key, **kwargs):
