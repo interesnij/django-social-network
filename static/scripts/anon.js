@@ -57,10 +57,6 @@ on('body', 'click', '#logg', function() {
   form_data = new FormData(document.querySelector("#login_form"));
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'POST', "/rest-auth/login/", true );
-  params = "";
-  link.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  link.setRequestHeader("Content-length", params.length);
-  link.setRequestHeader("Connection", "close");
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
