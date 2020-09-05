@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
-from notify.model.item import *
+from notify.model.post import *
 from common.model.votes import PostVotes, PostCommentVotes
 from common.utils import try_except
 
