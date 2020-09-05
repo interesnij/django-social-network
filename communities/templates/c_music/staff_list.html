@@ -3,7 +3,7 @@
 {% block title %}{{ community.name }} - {{ playlist.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container">
+<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ playlist.uuid }}">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
           <br>
@@ -24,11 +24,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">Основной плейлист ({{ playlist.count_tracks }})</h6>
-                    <p>
-                    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
-                      {{ community.name }}
-                    </a>
-                   </p>
+                    <p class="">
+                      <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+                        {{ community.name }}
+                      </a>
+                     </p>
                   </div>
                   <span class='c_music_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
                     <svg fill='currentColor' class='svg_default' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
@@ -41,6 +41,7 @@
                 </div>
               </div>
             </div>
+          </div>
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
@@ -56,7 +57,7 @@
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>
                   <h6 style="margin: 20px;text-align: center;">
-                    В основном плейлисте сообщества
+                    В сообществе
                     <a href="{% url 'community_detail' pk=community.pk %}" style="text-decoration:underline;" class="ajax">
                       {{ community.name }}
                     </a>
@@ -104,7 +105,6 @@
           {% endif %}
         </div>
     </div>
-</div>
 
 <script>
   {% if user|is_user_list:playlist.pk %}
