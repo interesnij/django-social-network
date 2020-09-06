@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import Http404
 import json, requests
+from io import StringIO
 
 
 class GetUserGender(View):
@@ -15,9 +16,11 @@ class GetUserGender(View):
 
             ru_url = "http://раса.рус/static/scripts/csv/rus2.csv"
             en_url = "http://раса.рус/static/scripts/csv/en2.csv"
+            ru_s=requests.get(ru_url).text
+            en_s=requests.get(en_url).text
 
-            dfru = pd.read_csv(ru_url)
-            dfen = pd.read_csv(en_url)
+            dfru = pd.read_csv(StringIO(ru_s))
+            dfen = pd.read_csv(StringIO(en_s))
 
             rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
             rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
