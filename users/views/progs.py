@@ -40,7 +40,7 @@ class GetUserGender(View):
             request.user.gender = "Man"
         if surname in rufemalenames:
             request.user.gender = "Fem"
-        elif surname in rufemalesurnames:
+        if surname in rufemalesurnames:
             request.user.gender = "Fem"
         elif name in enmalenames and surname in enmalesurnames:
             request.user.gender = "Man"
