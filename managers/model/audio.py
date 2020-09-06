@@ -17,7 +17,7 @@ class ModeratedAudio(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    music = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, related_name='moderated_audio', blank=True, verbose_name="Товар")
+    #music = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, related_name='moderated_audio', blank=True, verbose_name="Товар")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
@@ -138,7 +138,7 @@ class AudioModerationReport(models.Model):
 
 
 class ModerationPenaltyAudio(models.Model):
-    audio = models.ForeignKey("music.SoundcloudParsing", on_delete=models.CASCADE, related_name='audio_penalties', verbose_name="Оштрафованный трек")
+    #audio = models.ForeignKey("music.SoundcloudParsing", on_delete=models.CASCADE, related_name='audio_penalties', verbose_name="Оштрафованный трек")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_audio_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedAudio, on_delete=models.CASCADE, related_name='audio_moderated_object', verbose_name="Объект")
 

@@ -71,7 +71,7 @@ class SoundList(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     image = models.CharField(max_length=255, blank=True, null=True)
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -163,12 +163,12 @@ class SoundcloudParsing(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     list = models.ManyToManyField(SoundList, related_name='players', blank="True")
 
-    item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
-    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
-    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_music')
-    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_music')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_music')
+    #item = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
+    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
+    #photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
+    #good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_music')
+    #video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_music')
+    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_music')
 
     def __str__(self):
         return self.title
