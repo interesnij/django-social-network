@@ -11,7 +11,7 @@ class GetUserGender(View):
     def get(self,request,*args,**kwargs):
         import pandas as pd
 
-        ru_url = "http://раса.рус/static/scripts/csv/rus.csv"
+        ru_url = "http://раса.рус/static/scripts/csv/rus2.csv"
         en_url = "http://раса.рус/static/scripts/csv/en.csv"
         ru_s=requests.get(ru_url).text
         en_s=requests.get(en_url).text
