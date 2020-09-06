@@ -13,13 +13,11 @@ class GetUserGender(View):
         else:
             import pandas as pd
 
-            _dfru = requests.get(url='http://раса.рус/static/scripts/csv/rus2.csv')
-            _dfen = requests.get(url='http://раса.рус/static/scripts/csv/en2.csv')
-            dfru = _dfru.json()
-            dfen = _dfen.json()
+            ru_url = "http://раса.рус/static/scripts/csv/rus2.csv"
+            en_url = "http://раса.рус/static/scripts/csv/en2.csv"
 
-            #dfru = pd.read_csv(csv_rus, encoding = "utf_8")
-            #dfen = pd.read_csv(csv_en, encoding = "utf_8")
+            dfru = pd.read_csv(ru_url)
+            dfen = pd.read_csv(en_url)
 
             rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
             rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
