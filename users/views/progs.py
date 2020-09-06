@@ -45,7 +45,7 @@ class GetUserGender(View):
         else:
             request.user.gender = "Unc"
         request.user.save(update_fields=['gender'])
-        return HttpResponse()
+        return HttpResponse(request.user.gender)
 
 
 class UserBanCreate(View):
