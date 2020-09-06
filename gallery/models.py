@@ -25,7 +25,7 @@ class Album(models.Model):
         (ALBUM, 'Пользовательский альбом'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
@@ -37,7 +37,7 @@ class Album(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
 
     class Meta:
         indexes = (
