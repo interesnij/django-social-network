@@ -34,9 +34,13 @@ class GetUserGender(View):
         name = request.user.first_name
         surname = request.user.last_name
 
-        if name in rumalenames and surname in rumalesurnames:
+        if name in rumalenames:
             request.user.gender = "Man"
-        elif name in rufemalenames and surname in rufemalesurnames:
+        if surname in rumalesurnames:
+            request.user.gender = "Man"
+        if surname in rufemalenames:
+            request.user.gender = "Fem"
+        elif surname in rufemalesurnames:
             request.user.gender = "Fem"
         elif name in enmalenames and surname in enmalesurnames:
             request.user.gender = "Man"
