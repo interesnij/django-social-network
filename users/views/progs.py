@@ -12,8 +12,8 @@ class GetUserGender(View):
         else:
             import pandas as pd
 
-            csv_rus.read('http://раса.рус/static/scripts/csv/rus2.csv')
-            csv_en.read('http://раса.рус/static/scripts/csv/en2.csv')
+            csv_rus = pd.read('http://раса.рус/static/scripts/csv/rus2.csv')
+            csv_en = pd.read('http://раса.рус/static/scripts/csv/en2.csv')
 
             dfru = pd.read_csv(csv_rus, encoding = "utf_8")
             dfen = pd.read_csv(csv_en, encoding = "utf_8")
