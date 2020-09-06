@@ -9,46 +9,43 @@ from io import StringIO
 
 class GetUserGender(View):
     def get(self,request,*args,**kwargs):
-        if not request.is_ajax() and request.user.gender:
-            return HttpResponse()
+        import pandas as pd
+
+        ru_url = "http://раса.рус/static/scripts/csv/rus.csv"
+        en_url = "http://раса.рус/static/scripts/csv/en.csv"
+        ru_s=requests.get(ru_url).text
+        en_s=requests.get(en_url).text
+
+        dfru = pd.read_csv(StringIO(ru_s))
+        dfen = pd.read_csv(StringIO(en_s))
+
+        rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
+        rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
+
+        rufemalenames = set(dfru[dfru['Gender'] == 'female']['GivenName'])
+        rufemalesurnames = set(dfru[dfru['Gender'] == 'female']['Surname'])
+
+        enmalenames = set(dfen[dfen['Gender'] == 'male']['GivenName'])
+        enmalesurnames = set(dfen[dfen['Gender'] == 'male']['Surname'])
+
+        enfemalenames = set(dfen[dfen['Gender'] == 'female']['GivenName'])
+        enfemalesurnames = set(dfen[dfen['Gender'] == 'female']['Surname'])
+
+        name = request.user.first_name
+        surname = request.user.last_name
+
+        if name in rumalenames and surname in rumalesurnames:
+            request.user.gender = "Man"
+        elif name in rufemalenames and surname in rufemalesurnames:
+            request.user.gender = "Fem"
+        elif name in enmalenames and surname in enmalesurnames:
+            request.user.gender = "Man"
+        elif name in enfemalenames and surname in enfemalesurnames:
+            request.user.gender = "Fem"
         else:
-            import pandas as pd
-
-            ru_url = "http://раса.рус/static/scripts/csv/rus.csv"
-            en_url = "http://раса.рус/static/scripts/csv/en.csv"
-            ru_s=requests.get(ru_url).text
-            en_s=requests.get(en_url).text
-
-            dfru = pd.read_csv(StringIO(ru_s))
-            dfen = pd.read_csv(StringIO(en_s))
-
-            rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
-            rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
-
-            rufemalenames = set(dfru[dfru['Gender'] == 'female']['GivenName'])
-            rufemalesurnames = set(dfru[dfru['Gender'] == 'female']['Surname'])
-
-            enmalenames = set(dfen[dfen['Gender'] == 'male']['GivenName'])
-            enmalesurnames = set(dfen[dfen['Gender'] == 'male']['Surname'])
-
-            enfemalenames = set(dfen[dfen['Gender'] == 'female']['GivenName'])
-            enfemalesurnames = set(dfen[dfen['Gender'] == 'female']['Surname'])
-
-            name = request.user.first_name
-            surname = request.user.last_name
-
-            if name in rumalenames and surname in rumalesurnames:
-                request.user.gender = "Man"
-            elif name in rufemalenames and surname in rufemalesurnames:
-                request.user.gender = "Fem"
-            elif name in enmalenames and surname in enmalesurnames:
-                request.user.gender = "Man"
-            elif name in enfemalenames and surname in enfemalesurnames:
-                request.user.gender = "Fem"
-            else:
-                request.user.gender = "Unc"
-            request.user.save(update_fields=['gender'])
-            return HttpResponse()
+            request.user.gender = "Unc"
+        request.user.save(update_fields=['gender'])
+        return HttpResponse()
 
 
 class UserBanCreate(View):
