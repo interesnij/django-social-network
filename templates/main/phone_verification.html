@@ -146,6 +146,7 @@
                 var phone = document.getElementById('phone').value;
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
+                request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 request.onreadystatechange = function() {
                     if (request.readyState == 4 && request.status == 200) {
                         var div = document.getElementById('jsondata');
@@ -162,6 +163,7 @@
                 var code = document.getElementById('code').value;
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
+                request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 request.onreadystatechange = function() {
                     if (request.readyState == 4 && request.status == 200) {
                         var div = document.getElementById('jsondata2');
@@ -176,6 +178,7 @@
             });
             var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             gender.open('GET', "/users/progs/get_gender/", true);
+            gender.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             gender.onreadystatechange = function() {
                 if (gender.readyState == 4 && gender.status == 200) {
                     console.log("Пол сохранен!");
