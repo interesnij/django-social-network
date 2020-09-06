@@ -79,13 +79,7 @@
                       </div>
                   </div>
               </div>
-              </header>
-          </div>
-
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-        </div>
-        <div class="col-md-1"></div>
+          </header>
 
         <span class="main-container col-xs-12 col-md-12 text-hide-xs jambotron-fluid" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
             <div class="col-md-1"></div>
@@ -111,86 +105,83 @@
 
                 <div id='jsondata2' style="margin-top:50px"></div>
 
-
-            <script type="text/javascript">
-                function on(elSelector, eventName, selector, fn) {
-                    var element = document.querySelector(elSelector);
-                    element.addEventListener(eventName, function(event) {
-                        var possibleTargets = element.querySelectorAll(selector);
-                        var target = event.target;
-                        for (var i = 0, l = possibleTargets.length; i < l; i++) {
-                            var el = target;
-                            var p = possibleTargets[i];
-                            while (el && el !== element) {
-                                if (el === p) {
-                                    return fn.call(p, event);
-                                }
-                                el = el.parentNode;
-                            }
-                        }
-                    });
-                };
-                    function phone_check() {
-                        if (document.getElementById('phone').value.length > 9)
-                            document.getElementById("phone_send").removeAttribute('disabled');
-                        else
-                            document.getElementById("phone_send").setAttribute("disabled", "true");
-                    }
-
-                    function code_check() {
-                        if (document.getElementById('code').value.length === 4)
-                            document.getElementById("code_send").removeAttribute('disabled');
-                        else
-                            document.getElementById("code_send").setAttribute("disabled", "true");
-                    }
-
-                    document.getElementById("phone_send").addEventListener("click", (e) => {
-                        var phone = document.getElementById('phone').value;
-                        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                        request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
-                        request.onreadystatechange = function() {
-                            if (request.readyState == 4 && request.status == 200) {
-                                var div = document.getElementById('jsondata');
-                                div.innerHTML = request.responseText;
-                                document.getElementById("phone").setAttribute("disabled", "true");
-                                document.getElementById("phone_send").setAttribute("disabled", "true");
-                            }
-                        };
-                        request.send(null);
-                    });
-
-                    on('#ajax', 'click', '#code_send', function(e) {
-                        var phone = document.getElementById('phone').value;
-                        var code = document.getElementById('code').value;
-                        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                        request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
-                        request.onreadystatechange = function() {
-                            if (request.readyState == 4 && request.status == 200) {
-                                var div = document.getElementById('jsondata2');
-                                div.innerHTML = request.responseText;
-                                console.log(request.responseText);
-                                if (request.responseText.indexOf("ok") != -1) {
-                                    window.location.href = "{% url 'user' pk=request.user.pk %}";
-                                }
-                            }
-                        };
-                        request.send(null)
-                    });
-
-
-                    var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                    gender.open('GET', "/users/progs/get_gender/", true);
-                    gender.onreadystatechange = function() {
-                        if (gender.readyState == 4 && gender.status == 200) {
-                            console.log("Пол сохранен!");
-                        }
-                    };
-                    gender.send(null)
-                </script>
-
+              </div>
+              <div class="col-md-2"></div>
         </span>
-    </div>
-    <div class="col-md-2"></div>
-</body>
+  </div>
 
+    <script type="text/javascript">
+        function on(elSelector, eventName, selector, fn) {
+            var element = document.querySelector(elSelector);
+            element.addEventListener(eventName, function(event) {
+                var possibleTargets = element.querySelectorAll(selector);
+                var target = event.target;
+                for (var i = 0, l = possibleTargets.length; i < l; i++) {
+                    var el = target;
+                    var p = possibleTargets[i];
+                    while (el && el !== element) {
+                        if (el === p) {
+                            return fn.call(p, event);
+                        }
+                        el = el.parentNode;
+                    }
+                }
+            });
+        };
+            function phone_check() {
+                if (document.getElementById('phone').value.length > 9)
+                    document.getElementById("phone_send").removeAttribute('disabled');
+                else
+                    document.getElementById("phone_send").setAttribute("disabled", "true");
+            }
+
+            function code_check() {
+                if (document.getElementById('code').value.length === 4)
+                    document.getElementById("code_send").removeAttribute('disabled');
+                else
+                    document.getElementById("code_send").setAttribute("disabled", "true");
+            }
+
+            document.getElementById("phone_send").addEventListener("click", (e) => {
+                var phone = document.getElementById('phone').value;
+                var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) {
+                        var div = document.getElementById('jsondata');
+                        div.innerHTML = request.responseText;
+                        document.getElementById("phone").setAttribute("disabled", "true");
+                        document.getElementById("phone_send").setAttribute("disabled", "true");
+                    }
+                };
+                request.send(null);
+            });
+
+            on('#ajax', 'click', '#code_send', function(e) {
+                var phone = document.getElementById('phone').value;
+                var code = document.getElementById('code').value;
+                var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) {
+                        var div = document.getElementById('jsondata2');
+                        div.innerHTML = request.responseText;
+                        console.log(request.responseText);
+                        if (request.responseText.indexOf("ok") != -1) {
+                            window.location.href = "{% url 'user' pk=request.user.pk %}";
+                        }
+                    }
+                };
+                request.send(null)
+            });
+            var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            gender.open('GET', "/users/progs/get_gender/", true);
+            gender.onreadystatechange = function() {
+                if (gender.readyState == 4 && gender.status == 200) {
+                    console.log("Пол сохранен!");
+                }
+            };
+            gender.send(null)
+        </script>
+</body>
 </html>
