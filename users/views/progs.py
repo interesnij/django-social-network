@@ -3,6 +3,7 @@ from users.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import Http404
+import requests
 
 
 class GetUserGender(View):
@@ -12,8 +13,8 @@ class GetUserGender(View):
         else:
             import pandas as pd
 
-            csv_rus = pd.read('http://раса.рус/static/scripts/csv/rus2.csv')
-            csv_en = pd.read('http://раса.рус/static/scripts/csv/en2.csv')
+            csv_rus = requests.get(url='http://раса.рус/static/scripts/csv/rus2.csv')
+            csv_en = requests.get(url='http://раса.рус/static/scripts/csv/en2.csv')
 
             dfru = pd.read_csv(csv_rus, encoding = "utf_8")
             dfen = pd.read_csv(csv_en, encoding = "utf_8")
