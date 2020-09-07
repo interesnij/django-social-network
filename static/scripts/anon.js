@@ -45,8 +45,9 @@ on('body', 'click', '#register_ajax', function() {
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'POST', "/rest-auth/registration/", true );
   reg_link.onreadystatechange = function () {
-    location.reload()
-    };
+  if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
+    window.location.href = "/"
+    }};
   reg_link.send(form_data);
 })
 on('body', 'click', '#logg', function() {
