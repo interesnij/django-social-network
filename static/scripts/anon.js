@@ -46,9 +46,9 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.open( 'POST', "/rest-auth/registration/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
-    location.reload()
     }};
   reg_link.send(form_data);
+  location.reload()
 })
 on('body', 'click', '#logg', function() {
   if (!document.body.querySelector("#id_username").value){
