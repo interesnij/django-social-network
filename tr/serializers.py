@@ -9,6 +9,7 @@ from common.utils import get_first_location
 from users.model.settings import UserColorSettings
 from common.processing.user import create_user_models
 from datetime import date, datetime
+from django.utils import timezone
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -38,7 +39,7 @@ class RegisterSerializer(serializers.Serializer):
     def get_cleaned_data(self):
         birthday = self.validated_data.get('date_birtday', '')
         birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
-        if date.today() < birtday:
+        if timezone.now() < birtday:
             raise serializers.ValidationError("")
         return {
             'first_name': self.validated_data.get('first_name', ''),
