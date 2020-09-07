@@ -8,12 +8,14 @@ from users.models import User
 from common.utils import get_first_location
 from users.model.settings import UserColorSettings
 from common.processing.user import create_user_models
+from datetime import date
 
 
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
+    date_birtday = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -30,14 +32,16 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            raise serializers.ValidationError(
-                "The two password fields didn't match.")
+            raise serializers.ValidationError("Пароль 1 и пароль 2 не совпадают")
+        if date.today() < data['date_birtday']:
+            raise serializers.ValidationError("")
         return data
 
     def get_cleaned_data(self):
         return {
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
+            'date_birtday': self.validated_data.get('date_birtday', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
         }
