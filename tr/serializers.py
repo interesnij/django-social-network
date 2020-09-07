@@ -37,10 +37,6 @@ class RegisterSerializer(serializers.Serializer):
         return data
 
     def get_cleaned_data(self):
-        self.birthday = self.validated_data.get('date_birtday', '')
-        self.birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
-        if timezone.now() < self.birtday:
-            raise serializers.ValidationError("")
         return {
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
@@ -57,6 +53,12 @@ class RegisterSerializer(serializers.Serializer):
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
+
+        self.birthday = self.validated_data.get('date_birtday', '')
+        self.birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
+        if timezone.now() < self.birtday:
+            raise serializers.ValidationError("")
+        user.birthday = self.birtday
         user.save()
         get_first_location(request, user)
         create_user_models(user)
