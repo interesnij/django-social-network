@@ -33,15 +33,17 @@ class RegisterSerializer(serializers.Serializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError("Пароль 1 и пароль 2 не совпадают")
-        if date.today() < data['date_birtday']:
-            raise serializers.ValidationError("")
         return data
 
     def get_cleaned_data(self):
+        birthday = self.validated_data.get('date_birtday', '')
+        birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
+        if date.today() < birtday:
+            raise serializers.ValidationError("")
         return {
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
-            'date_birtday': self.validated_data.get('date_birtday', ''),
+            'birtday': birtday,
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
         }
