@@ -453,4 +453,4 @@ var dateInputMask = function dateInputMask(elm) {
   });
 };
 dateInputMask(input);
-}
+})
