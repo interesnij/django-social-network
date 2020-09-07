@@ -48,7 +48,7 @@ on('body', 'click', '#register_ajax', function() {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
     }};
   reg_link.send(form_data);
-  location.reload()
+  setTimeout(location.reload(), 1000);
 })
 on('body', 'click', '#logg', function() {
   if (!document.body.querySelector("#id_username").value){
