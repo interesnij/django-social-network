@@ -5,7 +5,7 @@
 
 <div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ playlist.uuid }}">
     <div class="row">
-        <div class="col-md-8 col-lg-8">
+        <div class="col-md-8">
           <br>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск музыки">
@@ -50,7 +50,6 @@
                         {% include 'generic/track.html' %}
                       {% endfor %}
                     </ul>
-
                 {% else %}
                 <div class="card centered centered">
                   <div class="card-body" style="margin-top: 10%;">
@@ -68,7 +67,7 @@
               </div>
           </div>
         </div>
-        <div class="col-md-4 col-lg-4">
+        <div class="col-md-4">
           <br>
           <div class="card mb-2">
               <div class="card-header">
