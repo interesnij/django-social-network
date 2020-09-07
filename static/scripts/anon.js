@@ -20,7 +20,10 @@ function clear_comment_dropdown(){
     img_blocks[i].innerHTML = "";
   }} catch { null }
 }
-
+var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+}
 on('body', 'click', '#register_ajax', function() {
   if (!document.body.querySelector("#id_first_name").value){
     document.body.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
@@ -419,7 +422,7 @@ loadScripts('/static/scripts/goods/user_get.js')
 loadScripts('/static/scripts/video/community_get.js')
 loadScripts('/static/scripts/video/user_get.js')
 
-
+ready = (callback) => {
 var input = document.querySelectorAll('.js-date')[0];
 
 var dateInputMask = function dateInputMask(elm) {
@@ -450,3 +453,4 @@ var dateInputMask = function dateInputMask(elm) {
   });
 };
 dateInputMask(input);
+}
