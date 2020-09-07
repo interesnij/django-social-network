@@ -62,16 +62,16 @@
               {% endif %}
             </h3>
             <p class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></p>
-            <div class="row">
+            <div class="row" style="padding:10px">
               <div class="col-md-6">
               <p>Дата рождения: </p>
               <p>Моб. телефон: </p>
               <p>Пол: </p>
               </div>
               <div class="col-md-6">
-              <p>{{ user.birthday }}</p>
-              <p>{{ user.phone }}</p>
-              <p>{{ user.gender }}</p>
+              <span>{{ user.birthday }}</span><br>
+              <span>{{ user.phone }}</span><br>
+              <span>{{ user.gender.get_verb_display }}</span><br>
               </div>
             </div>
         </div>
