@@ -53,6 +53,7 @@ class UserAdmin(admin.ModelAdmin):
         UserColorSettingsInline,
     ]
     search_fields = ('last_name','first_name')
+    list_display = ['user','phone', 'birtday']
 
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
