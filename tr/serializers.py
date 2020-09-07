@@ -37,14 +37,14 @@ class RegisterSerializer(serializers.Serializer):
         return data
 
     def get_cleaned_data(self):
-        birthday = self.validated_data.get('date_birtday', '')
-        birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
-        if timezone.now() < birtday:
+        self.birthday = self.validated_data.get('date_birtday', '')
+        self.birtday = datetime.strptime('Jun 1 2005', '%b %d %Y')
+        if timezone.now() < self.birtday:
             raise serializers.ValidationError("")
         return {
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
-            'birtday': birtday,
+            'birtday': self.birtday,
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
         }
