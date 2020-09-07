@@ -24,9 +24,9 @@
       <div class="col-lg-6 col-md-6">
         <label>Категория</label>
         <select class="form-control goods_category" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
-          {% for object in categories %}
           <option value="">Выберите категорию</option>
-          <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
+          {% for object in categories %}
+          <option data-pk="{{ object.pk }}" value="{{ object.order }}">{{ object.name }}</option>
           {% endfor %}
         </select>
         <div id="subcat"></div>
