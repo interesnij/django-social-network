@@ -207,7 +207,7 @@ class GoodCommunityCreate(TemplateView):
             new_good.community = self.community
             new_good = self.form.save()
             html = render(request,'good_base/u_new_good.html',{'object': new_good})
-            return HttpResponse()
+            return HttpResponse() 
         else:
             return HttpResponseBadRequest()
 
