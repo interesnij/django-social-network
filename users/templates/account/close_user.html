@@ -46,7 +46,18 @@
             {% else %}
               <i>Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
             {% endif %}
-            <br><br>
+            <div class="row" style="padding:10px">
+              <div class="col-md-6">
+              <span>Дата рождения: </span><br>
+              <span>Моб. телефон: </span><br>
+              <span>Пол: </span><br>
+              </div>
+              <div class="col-md-6">
+              <span>{{ user.birthday }}</span><br>
+              <span>{{ user.phone }}</span><br>
+              <span>{{ user.get_gender_display }}</span><br>
+              </div>
+            </div>
         </div>
 
         <div class="card mb-3 centered">
