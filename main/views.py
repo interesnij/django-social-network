@@ -196,4 +196,4 @@ class MainPhoneSend(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("main/", "phone_verification.html", request)
-		return super(UserInfoChange,self).get(request,*args,**kwargs)
+		return super(MainPhoneSend,self).get(request,*args,**kwargs)
