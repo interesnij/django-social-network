@@ -45,10 +45,9 @@ on('body', 'click', '#register_ajax', function() {
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'POST', "/rest-auth/registration/", true );
   reg_link.onreadystatechange = function () {
-  if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
-    }};
+    location.reload()
+    };
   reg_link.send(form_data);
-  setTimeout(location.reload(), 1000);
 })
 on('body', 'click', '#logg', function() {
   if (!document.body.querySelector("#id_username").value){
