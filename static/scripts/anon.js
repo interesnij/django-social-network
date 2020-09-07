@@ -46,7 +46,7 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.open( 'POST', "/rest-auth/registration/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
-    window.location.href = "/phone_send/"
+    window.location.href = "/users/progs/phone_send/"
     }};
   reg_link.send(form_data);
 })
@@ -66,7 +66,7 @@ on('body', 'click', '#logg', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    window.location.href = "/";
+    window.location.href = "/"
     }};
   link.send(form_data);
 });
