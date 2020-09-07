@@ -256,9 +256,6 @@ class UserProfileAnketa(models.Model):
     attitude_to_alcohol = models.CharField(max_length=50, blank=True, choices = ATTITUDE_TO_ALCOHOL, verbose_name="Отношение к алкоголю")
     inspiration = models.CharField(max_length=200, verbose_name="Что меня вдохновляет")
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         verbose_name = "Анкета"
         verbose_name_plural = "Анкеты"
