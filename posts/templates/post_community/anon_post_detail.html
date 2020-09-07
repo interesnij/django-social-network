@@ -1,7 +1,7 @@
 <div class="card mb-3" data-uuid="{{ object.uuid }}">
     {% include 'post_community/anon_card_header.html' %}
 
-    {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
+    {% if object.text %}<p class="">{{ object.text|linebreaks }}</p>{% endif %}
     {% include 'generic/attach/c_post_attach.html' %}
     {% if object.parent %}
       {% include 'post_community/repost.html' %}

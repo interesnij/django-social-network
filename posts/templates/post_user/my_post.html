@@ -3,7 +3,7 @@
 
   {% if object.text %}
     <div class="fullscreen pointer">
-      <p class="">{{ object.text }}</p>
+      <p class="">{{ object.text|linebreaks }}</p>
     </div>
   {% endif %}
 

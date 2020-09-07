@@ -1,7 +1,7 @@
 <div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
     {% include 'post_user/staff_card_header.html' %}
 
-    {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
+    {% if object.text %}<p class="">{{ object.text|linebreaks }}</p>{% endif %}
     {% include 'generic/attach/u_post_attach.html' %}
 
     {% if object.parent %}

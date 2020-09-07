@@ -20,7 +20,7 @@
             <small class="text-muted float-right">{{ reply.get_created }}</small>
         </h5>
 
-        <p>{{ reply.text|safe }}</p>
+        <p>{{ reply.text|linebreaks }}</p>
 
         {% include 'generic/attach/u_reply_attach.html' %}
 
