@@ -52,7 +52,7 @@ class RegisterSerializer(serializers.Serializer):
         user.phone = users_count + 156
 
         self.birthday = self.validated_data.get('date_birtday', '')
-        self.birtday = datetime.strptime(self.birthday, '%b %d %Y')
+        self.birtday = datetime.strptime(self.birthday, '%m/%d/%Y')
         if timezone.now() < self.birtday:
             raise serializers.ValidationError("")
         user.birthday = self.birtday
