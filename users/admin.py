@@ -57,7 +57,7 @@ class UserAdmin(admin.ModelAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
     search_fields = ('name',)
-    list_display = ['user','b_avatar', 's_avatar']
+    list_display = ['user','phone', 'birtday']
 
 admin.site.register(User, UserAdmin)
 
