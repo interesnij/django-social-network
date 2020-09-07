@@ -54,7 +54,7 @@ class RegisterSerializer(serializers.Serializer):
         self.birthday = self.validated_data.get('date_birtday', '')
         self.birtday = datetime.strptime(self.birthday, '%m/%d/%Y')
         if timezone.now() < self.birtday:
-            raise serializers.ValidationError("")
+            raise serializers.ValidationError("tttrrrrtttrrr")
         user.birthday = self.birtday
 
         self.cleaned_data = self.get_cleaned_data()
