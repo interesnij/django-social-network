@@ -8,7 +8,7 @@ from users.models import User
 from common.utils import get_first_location
 from users.model.settings import UserColorSettings
 from common.processing.user import create_user_models
-from datetime import date
+from datetime import date, datetime
 
 
 class RegisterSerializer(serializers.Serializer):
