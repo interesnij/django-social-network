@@ -93,7 +93,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
                         </div>
-                        <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
+                        <input type="number" id="phone" min="0" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
                         <hr class="my-0">
                     </div>
                     <div class="col-md-4" style="margin-top: 12px;">
