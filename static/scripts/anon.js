@@ -422,7 +422,7 @@ loadScripts('/static/scripts/goods/user_get.js')
 loadScripts('/static/scripts/video/community_get.js')
 loadScripts('/static/scripts/video/user_get.js')
 
-ready = (callback) => {
+ready(() => {
 var input = document.querySelectorAll('.js-date')[0];
 
 var dateInputMask = function dateInputMask(elm) {
