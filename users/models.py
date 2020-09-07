@@ -54,7 +54,7 @@ class User(AbstractUser):
     perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     birthday = models.DateField(default=timezone.now, blank=True, verbose_name='День рождения')
-    #USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
@@ -1006,7 +1006,6 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
@@ -1015,7 +1014,6 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, photo_album__isnull=False)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        #albums_query.add(~Q(~Q(type=Album.MAIN)|Q(photo_album__isnull=False)), Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
 
