@@ -53,12 +53,11 @@ class UserAdmin(admin.ModelAdmin):
         UserColorSettingsInline,
     ]
     search_fields = ('last_name','first_name')
-    list_display = ['phone', 'birtday']
+    list_display = ['phone']
 
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
     search_fields = ('name',)
-    list_display = ['user','phone', 'birtday']
 
 admin.site.register(User, UserAdmin)
 
