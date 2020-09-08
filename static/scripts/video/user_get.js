@@ -133,7 +133,7 @@ on('body', 'click', '.video_fullscreen_normal', function() {
   get_normal_screen()
 });
 
-on('#ajax', 'click', '.user_video_list_create_window', function() {
+on('#ajax', 'click', '.u_video_list_create_window', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)

@@ -15,6 +15,12 @@ on('#ajax', 'click', '.c_ucm_video_album_repost', function() {
   clear_attach_block();
 })
 
+on('#ajax', 'click', '.c_video_list_create_window', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/community/create_list_window/" + pk + "/", loader)
+});
+
 on('#video_loader', 'click', '.c_all_video_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');

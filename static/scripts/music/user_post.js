@@ -220,3 +220,32 @@ on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
     }
     ajax_link.send(form_data);
 });
+
+on('#ajax', 'click', '#u_create_music_list_btn', function() {
+  form = document.body.querySelector("#u_music_list_create");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/music/user_progs/create_list/" + pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.getElementById('ajax');
+        rtr.innerHTML = ajax.innerHTML;
+        window.scrollTo(0,0);
+        document.title = elem_.querySelector('title').innerHTML;
+
+        uuid = rtr.querySelector(".pk_saver").getAttribute("data-uuid");
+        window.history.pushState(null, "vfgffgfgf", '/users/detail/music_list/' + pk + '/' + uuid + '/');
+      }
+    }
+    ajax_link.send(form_data);
+});

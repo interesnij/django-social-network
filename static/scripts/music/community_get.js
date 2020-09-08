@@ -32,3 +32,8 @@ on('#ajax', 'click', '.c_soundcloud_set_list', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/community_progs/souncloud_list_window/" + pk + "/", loader)
 });
+on('#ajax', 'click', '.c_music_list_create_window', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/community_progs/create_list_window/" + pk + "/", loader)
+});
