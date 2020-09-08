@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 import uuid
 from django.conf import settings
-
+from users.helpers import upload_to_doc_directory
 
 
 class DocList(models.Model):
@@ -66,7 +66,7 @@ class Doc(models.Model):
         (OTHER, 'Другой документ'),
     )
     title = models.CharField(max_length=200, verbose_name="Название")
-    file = models.FileField(upload_to='uploads/%Y/%m/%d/', verbose_name="Документ")
+    file = models.FileField(upload_to=upload_to_doc_directory, verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     list = models.ManyToManyField(DocList, related_name='doc_list', blank="True")
     type = models.CharField(choices=TYPES, default='P', max_length=2)

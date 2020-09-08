@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forms.models import Blank
+from docs.models import Doc
 
 
 class BlankAdmin(admin.ModelAdmin):
