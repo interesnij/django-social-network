@@ -32,8 +32,12 @@ class DocList(models.Model):
     def is_not_empty(self):
         return self.doc_list.filter(list=self).values("pk").exists()
 
-    def playlist_too(self):
-        queryset = self.doc_list.all()
+    def get_my_docs(self):
+        queryset = self.doc_list.only("pk")
+        return queryset
+
+    def get_docs(self):
+        queryset = self.doc_list.filter(is_private=True)
         return queryset
 
     def playlist_30(self):

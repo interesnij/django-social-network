@@ -344,6 +344,20 @@ class Community(models.Model):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
 
+    def get_music_count(self):
+        from music.models import SoundList, SoundcloudParsing
+
+        list = SoundList.objects.get(community=self, type=SoundList.MAIN)
+        music_query = Q(list=list, is_deleted=False)
+        music_list = SoundcloudParsing.objects.filter(music_query).values("pk")
+        return music_list.count()
+
+    def get_music_list_id(self):
+        from music.models import SoundList
+
+        list = SoundList.objects.get(community=self, type=SoundList.MAIN)
+        return list.pk
+
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
 
@@ -355,18 +369,46 @@ class Community(models.Model):
     def community_music_playlist_exists(self):
         return self.community_playlist.filter(community_id=self.id, type="LI").exists()
 
-    def get_music_list_id(self):
-        from music.models import SoundList
-
-        list = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
-        return list.pk
-
     def get_audio_playlists(self):
         from music.models import SoundList
 
         playlists_query = Q(community_id=self.id, type=SoundList.LIST)
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
+
+    def get_docs(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(community=self, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query)
+        return docs_list
+
+    def get_docs_count(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(community=self, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query).valuse("pk")
+        return docs_list.count()
+
+    def get_last_docs(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(community=self, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query)
+        return docs_list[0:5]
+
+    def community_docs_list_exists(self):
+        return self.community_doclist.filter(community_id=self.id, type="LI").exists()
+
+    def get_docs_lists(self):
+        from docs.models import DocList
+
+        lists_query = Q(community_id=self.id, type=DocList.LIST)
+        lists = DocList.objects.filter(lists_query)
+        return lists
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum

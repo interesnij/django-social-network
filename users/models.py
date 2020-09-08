@@ -1166,6 +1166,48 @@ class User(AbstractUser):
             queryset = self.get_music()
             return queryset
 
+    def get_docs(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False, is_private=False)
+        docs_list = Doc.objects.filter(Doc_query)
+        return docs_list
+
+    def get_my_docs(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query)
+        return docs_list
+
+    def get_docs_count(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query).valuse("pk")
+        return docs_list.count()
+
+    def get_last_docs(self):
+        from docs.models import DocList, Doc
+
+        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        docs_query = Q(list=list, is_deleted=False)
+        docs_list = Doc.objects.filter(Doc_query)
+        return docs_list[0:5]
+
+    def community_docs_list_exists(self):
+        return self.community_doclist.filter(creator_id=self.id, community=None, type="LI").exists()
+
+    def get_docs_lists(self):
+        from docs.models import DocList
+
+        lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST)
+        lists = DocList.objects.filter(lists_query)
+        return lists
+
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)

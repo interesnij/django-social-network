@@ -121,6 +121,36 @@ class UserMusic(ListView):
         return music_list
 
 
+class UserDocs(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from docs.models import DocList
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.list = DocList.objects.get(creator_id=self.user.pk, community=None, type=DocList.MAIN)
+        if self.user.pk == request.user.pk:
+            self.doc_list = self.list.get_my_docs()
+        else:
+            self.doc_list = self.list.get_docs()
+
+        self.template_name = get_template_user_music(self.user, "user_docs/", "docs.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserDocs,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserDocs,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['list'] = self.list
+        return context
+
+    def get_queryset(self):
+        doc_list = self.doc_list
+        return doc_list
+
+
 class UserVideo(ListView):
     template_name = None
     paginate_by = 15
