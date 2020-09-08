@@ -146,6 +146,7 @@ class CommunityPlaylistCreate(View):
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
+            new_list.community = community
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
