@@ -224,8 +224,8 @@ on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
 on('#ajax', 'click', '#u_create_music_list_btn', function() {
   form = document.body.querySelector("#u_music_list_create");
   form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
