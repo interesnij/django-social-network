@@ -4,13 +4,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
 from posts.models import Post, PostComment
-from django.http import HttpResponse, HttpResponseBadRequest
-from posts.forms import CommentForm
-from django.views import View
 from common.check.community import check_can_get_lists
-from rest_framework.exceptions import ValidationError
-from django.shortcuts import render
-from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_permission_community_post
 from django.http import Http404
 

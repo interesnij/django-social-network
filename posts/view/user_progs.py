@@ -3,7 +3,7 @@ from django.shortcuts import render
 from posts.models import Post
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from posts.forms import PostForm
+from posts.forms import PostForm, CommentForm
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list

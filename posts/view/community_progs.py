@@ -2,14 +2,15 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render
 from posts.models import Post
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from communities.models import Community
-from posts.forms import PostForm
+from posts.forms import PostForm, CommentForm
 from common.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
 from common.check.community import check_can_get_lists
 from django.http import Http404
+
 
 
 class PostCommunityCreate(View):
