@@ -88,6 +88,8 @@ class CommunityDoclistCreate(View):
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
             new_list.community = community
+            if not new_list.order:
+                new_list.order = 0
             new_list.save()
             return render(request, 'community_doc_list/admin_list.html',{'list': new_list, 'community': community})
         else:

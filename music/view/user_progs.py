@@ -147,7 +147,9 @@ class UserPlaylistCreate(View):
         if request.is_ajax() and form_post.is_valid() and request.user == user:
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
+            if not new_list.order:
+                new_list.order = 0
             new_list.save()
-            return render(request, 'user_music_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render(request, 'user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
