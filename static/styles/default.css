@@ -1,3 +1,5 @@
+
+
 .centered{
 display: flex;
 align-items: center;
@@ -4758,6 +4760,11 @@ cursor: pointer;
   height: auto;
 }
 .stream_reply_comments{display:none;}
+.stream_reply_comments figure img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 .stream_reply_comments.replies_open{display:block;  }
 .stream-update { text-align: center; border-bottom: 1px solid #eeeeee; display: none; }
 
