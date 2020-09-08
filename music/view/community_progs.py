@@ -149,6 +149,6 @@ class CommunityPlaylistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'community_music_list/admin_list.html',{'playlist': new_list, 'community': community})
+            return render(request, 'c_music_list/admin_list.html',{'playlist': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
