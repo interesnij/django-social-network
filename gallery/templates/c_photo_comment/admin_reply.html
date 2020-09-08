@@ -18,7 +18,7 @@
           <small class="text-muted float-right">{{ reply.get_created }}</small>
         </h5>
 
-        {% if reply.text %}<p class="">{{ comment.text }}</p>{% endif %}
+        {{ comment.text|linebreaks }}
 
         {% include 'generic/attach/c_photo_reply.html' %}
 

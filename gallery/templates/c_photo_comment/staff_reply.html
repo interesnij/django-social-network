@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ reply.get_created }}</small>
         </h5>
-        <p>{{ reply.text }}</p>
+        {{ reply.text|linebreaks }}
 
         {% include 'generic/attach/c_photo_reply.html' %}
 

@@ -16,7 +16,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.get_created }}</small>
         </h5>
-        <p>{{ comment.text }}</p>
+        {{ comment.text }}
 
         {% include 'generic/attach/c_comment_attach.html' %}
 

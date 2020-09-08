@@ -17,7 +17,7 @@
           </a>
           <small class="text-muted float-right">{{ comment.get_created }}</small>
         </h5>
-        <p>{{ comment.text }}</p>
+        {{ comment.text|linebreaks }}
 
         <div class="row" data-pk="{{ comment.pk }}">
           {% for object in comment.good_comment_photo.all %}
