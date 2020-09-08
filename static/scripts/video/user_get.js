@@ -57,3 +57,98 @@ on('#video_loader', 'click', '.u_video_comments', function() {
   list_load(video_display.nextElementSibling, url);
   this.classList.toggle("comments_open");
 });
+
+
+function get_video_info(pk){
+  info_video = document.body.querySelector("#info_video");
+  my_playlist = document.body.querySelector("#my_playlist");
+  videos = my_playlist.querySelectorAll('.video_playlist_li');
+  video_id = video_player.getVideoId();
+  uuid = videos[video_id].getAttribute("data-video-uuid");
+  if (info_video.innerHTML == "" || info_video.getAttribute("data-uuid") != uuid){
+    list_load(info_video, "/video/user/info/" + pk + "/" + uuid + "/");
+    info_video.setAttribute("data-uuid", uuid);
+    console.log("Воспроизводится ролик № : " + video_id)
+  }
+}
+
+on('#ajax', 'click', '.u_video_list_detail', function() {
+  var uuid, pk, loader;
+  counter = this.getAttribute('video-counter');
+  parent = this.parentElement;
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  parent.parentElement.getAttribute("album-uuid") ? uuid = parent.parentElement.getAttribute("album-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  loader = document.getElementById("video_loader");
+  open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
+  video_saver = document.body.querySelector("#video_id_saver");
+  video_player_id = video_saver.getAttribute('data-video');
+  video_saver.setAttribute('data-video', video_player_id + "a");
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a", counter);
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    function onReady(){
+    console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
+    get_video_info(pk)
+    }
+  }, 500);
+});
+
+on('#ajax', 'click', '.u_video_detail', function() {
+  var uuid, pk, loader;
+  parent = this.parentElement;
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  uuid = this.getAttribute("data-uuid");
+  loader = document.getElementById("video_loader");
+  open_fullscreen("/video/user/detail/" + pk + "/" + uuid + "/", loader);
+  video_saver = document.body.querySelector("#video_id_saver");
+  video_player_id = video_saver.getAttribute('data-video');
+  video_saver.setAttribute('data-video', video_player_id + "a");
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a", 0);
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    function onReady(){
+    console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(0)}, 1000);
+    get_video_info(pk)
+    }
+  }, 500);
+});
+
+on('body', 'click', '.video_fullscreen_resize', function() {
+  video_window = document.querySelector(".video_fullscreen");
+  video_window.classList.add("video_fullscreen_resized", "draggable");
+  document.body.querySelector(".video_btn_big").style.display = "none";
+  document.body.querySelector(".video_btn_small").style.display = "block";
+  get_resize_screen();
+  dragElement(document.querySelector(".draggable"));
+
+});
+on('body', 'click', '.video_fullscreen_normal', function() {
+  video_window = document.querySelector(".video_fullscreen");
+  video_window.style.top = "0"; video_window.style.left = "auto";
+  video_window.classList.remove("video_fullscreen_resized", "draggable");
+  document.body.querySelector(".video_btn_small").style.display = "none";
+  document.body.querySelector(".video_btn_big").style.display = "block";
+  get_normal_screen()
+});
+
+on('#ajax', 'click', '.user_video_list_create_window', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
+});
+
+on('#ajax', 'click', '.user_video_list_create', function() {
+  pk_saver = document.body.querySelector(".pk_saver");
+  pk = pk_saver.getAttribute("data-pk");
+  uuid = pk_saver.getAttribute("album-uuid");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", loader)
+});
+
+on('body', 'click', '#video_holder', function() {
+ggg = this;
+img = this.previousElementSibling.querySelector("#id_image");
+get_image_priview(ggg, img)
+});

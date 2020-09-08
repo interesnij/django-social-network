@@ -23,6 +23,8 @@ class Post(models.Model):
     GOOD_REPOST = 'GR'
     MUSIC_REPOST = 'MR'
     MUSIC_LIST_REPOST = 'MLR'
+    DOC_REPOST = 'DR'
+    DOC_LIST_REPOST = 'DLR'
     VIDEO_REPOST = 'VR'
     VIDEO_LIST_REPOST = 'VLR'
     USER_REPOST = 'UR'
@@ -38,6 +40,8 @@ class Post(models.Model):
         (GOOD_REPOST, 'Репост товара'),
         (MUSIC_REPOST, 'Репост аудиозаписи'),
         (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
+        (DOC_REPOST, 'Репост документа'),
+        (DOC_LIST_REPOST, 'Репост списка документов'),
         (VIDEO_REPOST, 'Репост видеозаписи'),
         (VIDEO_LIST_REPOST, 'Репост списка видеозаписей'),
         (USER_REPOST, 'Репост пользователя'),

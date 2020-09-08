@@ -44,7 +44,7 @@ MY_APPS = [
     'posts',
     'follows',
     'invitations',
-    'moderation',
+    'docs',
     'main',
     'frends',
     'chat',

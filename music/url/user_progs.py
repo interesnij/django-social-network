@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', UserSoundcloudSetCreate.as_view()),
     url(r'^soundcloud_set/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSet.as_view()),
+    url(r'^create_list/(?P<pk>\d+)/$', UserPlaylistCreate.as_view()),
 
     url(r'^u_add_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackAdd.as_view())),
     url(r'^u_remove_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackRemove.as_view())),

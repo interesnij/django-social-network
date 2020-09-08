@@ -130,3 +130,24 @@ class UserCreatePlaylistWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("music_create/", "u_create_list.html", request)
         return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)
+
+
+class UserPlaylistCreate(View):
+    form_post = None
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPlaylistCreate,self).get_context_data(**kwargs)
+        context["form_post"] = DoclistForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post = PlaylistForm(request.POST)
+        user = User.objects.get(pk=self.kwargs["pk"])
+
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
+            new_list = form_post.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            return render(request, 'user_music_list/my_list.html',{'list': new_list, 'user': request.user})
+        else:
+            return HttpResponseBadRequest()
