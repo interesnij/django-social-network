@@ -53,31 +53,31 @@ class DocList(models.Model):
 
 
 class Doc(models.Model):
-	PRIVATE = 'P'
+    PRIVATE = 'P'
     STUDY = 'S'
     BOOK = 'B'
-	OTHER = 'O'
+    OTHER = 'O'
     TYPES = (
         (PRIVATE, 'Личный документ'),
         (STUDY, 'Учебный документ'),
         (BOOK, 'Книга'),
-		(OTHER, 'Другой документ'),
+        (OTHER, 'Другой документ'),
     )
-	title = models.CharField(max_length=200, verbose_name="Название")
-	file = models.FileField(upload_to='uploads/%Y/%m/%d/', verbose_name="Документ")
-	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	list = models.ManyToManyField(DocList, related_name='doc_list', blank="True")
-	type = models.CharField(choices=TYPES, default='P', max_length=2)
+    title = models.CharField(max_length=200, verbose_name="Название")
+    file = models.FileField(upload_to='uploads/%Y/%m/%d/', verbose_name="Документ")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    list = models.ManyToManyField(DocList, related_name='doc_list', blank="True")
+    type = models.CharField(choices=TYPES, default='P', max_length=2)
 
-	item = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
+    item = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_doc')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_doc')
     video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_doc')
     message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doc')
 
-	class Meta:
-		ordering = ["-created"]
-		verbose_name = "Документ"
-		verbose_name_plural = "Документы"
-		indexes = (BrinIndex(fields=['created']),)
+    class Meta:
+        ordering = ["-created"]
+        verbose_name = "Документ"
+        verbose_name_plural = "Документы"
+        indexes = (BrinIndex(fields=['created']),)
