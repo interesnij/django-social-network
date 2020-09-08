@@ -1,5 +1,5 @@
 from django.contrib import admin
-from docs.models import Doc
+from docs.models import DocList, Doc
 
 
 class BlankAdmin(admin.ModelAdmin):
@@ -7,6 +7,7 @@ class BlankAdmin(admin.ModelAdmin):
     list_filter = ['created']
     search_fields = ('title',)
     class Meta:
-        model = Blank
+        model = Doc
 
 admin.site.register(Blank, BlankAdmin)
+admin.site.register(DocList)
