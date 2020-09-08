@@ -136,7 +136,7 @@ class CommunityPlaylistCreate(View):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistCreate,self).get_context_data(**kwargs)
-        context["form_post"] = DoclistForm()
+        context["form_post"] = PlaylistForm()
         return context
 
     def post(self,request,*args,**kwargs):
