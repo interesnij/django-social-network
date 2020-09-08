@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 import uuid
 from django.conf import settings
-from users.helpers import upload_to_doc_directory
+from docs.helpers import upload_to_doc_directory
 
 
 class DocList(models.Model):
