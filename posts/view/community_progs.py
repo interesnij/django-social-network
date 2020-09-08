@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render
-from posts.models import Post
+from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from communities.models import Community

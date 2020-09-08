@@ -19,7 +19,7 @@
             </a>
             <small class="text-muted float-right">{{ comment.get_created }}</small>
         </h5>
-        <p>{{ comment.text|linebreaks }}</p>
+        <p>{{ comment.text }}</p>
 
         {% include 'generic/attach/u_comment_attach.html' %}
 
