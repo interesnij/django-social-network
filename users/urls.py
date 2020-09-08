@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from users.views.detail import *
-from users.views.lists import AllUsers, BlackListUsers
+from users.views.lists import *
 
 
 urlpatterns = [
