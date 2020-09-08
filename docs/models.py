@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from django.http import HttpResponse
+import uuid
+from django.conf import settings
+
 
 
 class DocList(models.Model):
