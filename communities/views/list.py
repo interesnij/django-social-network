@@ -118,30 +118,30 @@ class CommunityMusic(ListView):
         return music_list
 
 class CommunityDocs(ListView):
-    template_name = None
-    paginate_by = 15
+	template_name = None
+	paginate_by = 15
 
-    def get(self,request,*args,**kwargs):
-        from docs.models import DocList
+	def get(self,request,*args,**kwargs):
+		from docs.models import DocList
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = DocList.objects.get(community_id=self.community.pk, type=DocList.MAIN)
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.list = DocList.objects.get(community_id=self.community.pk, type=DocList.MAIN)
 		if self.user.pk == request.user.is_staff_of_community_with_name(self.community.name):
-            self.doc_list = self.list.get_my_docs()
-        else:
-            self.doc_list = self.list.get_docs()
-        self.template_name = get_template_community_music(self.community, "c_docs/", "list.html", request.user)
-        return super(CommunityDocs,self).get(request,*args,**kwargs)
+			self.doc_list = self.list.get_my_docs()
+		else:
+			self.doc_list = self.list.get_docs()
+		self.template_name = get_template_community_music(self.community, "c_docs/", "list.html", request.user)
+		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityDocs,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['list'] = self.list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityDocs,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['list'] = self.list
+		return context
 
-    def get_queryset(self):
-        doc_list = self.doc_list
-        return doc_list
+	def get_queryset(self):
+		doc_list = self.doc_list
+		return doc_list
 
 class CommunityDocsList(ListView):
 	template_name = None
