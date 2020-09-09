@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^create_list_window/(?P<pk>\d+)/$', CommunityCreateDoclistWindow.as_view()),
+    url(r'^create_doc_window/(?P<pk>\d+)/$', CommunityCreateDocWindow.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', CommunityDoclistCreate.as_view()),
+    url(r'^create_doc/(?P<pk>\d+)/$', CommunityDocCreate.as_view()),
 
     url(r'^c_add_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocAdd.as_view())),
     url(r'^c_remove_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocRemove.as_view())),
