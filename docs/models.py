@@ -89,5 +89,9 @@ class Doc(models.Model):
         verbose_name_plural = "Документы"
         indexes = (BrinIndex(fields=['created']),)
 
-    def get_lists_for_doc(self):  
+    def get_lists_for_doc(self):
         return self.list.all()
+
+    def get_mime_type(self):
+        filetype = magic.from_buffer(self.file.read())
+        return filetype
