@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^blacklist/(?P<pk>\d+)/$', BlackListUsers.as_view(), name='user_black_list'),
 
     url(r'^(?P<pk>\d+)/docs/$', UserDocs.as_view(), name='user_docs'),
-    url(r'^(?P<pk>\d+)/docs/(?P<uuid>[0-9a-f-]+)/$', UserDocsList.as_view(), name='user_docs_list'),
+    url(r'^(?P<pk>\d+)/doc_list/(?P<uuid>[0-9a-f-]+)/$', UserDocsList.as_view(), name='user_docs_list'),
 
 
 ]

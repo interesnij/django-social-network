@@ -40,7 +40,7 @@ class DocList(models.Model):
         queryset = self.doc_list.filter(is_private=True)
         return queryset
 
-    def playlist_30(self):
+    def list_30(self):
         queryset = self.doc_list.only("pk")[:30]
         return queryset
 

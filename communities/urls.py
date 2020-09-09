@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/video/$', CommunityVideo.as_view(), name='community_video'),
     url(r'^video_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoList.as_view(), name='community_video_list'),
     url(r'^(?P<pk>\d+)/docs/$', CommunityDocs.as_view(), name='community_docs'),
-    url(r'^(?P<pk>\d+)/docs/(?P<uuid>[0-9a-f-]+)/$', CommunityDocsList.as_view(), name='community_docs_list'),
+    url(r'^(?P<pk>\d+)/doc_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocsList.as_view(), name='community_docs_list'),
 
     url(r'^manage/', include('communities.url.manage')),
     url(r'^progs/', include('communities.url.progs')),

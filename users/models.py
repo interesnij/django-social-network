@@ -1198,13 +1198,20 @@ class User(AbstractUser):
         docs_list = Doc.objects.filter(Doc_query)
         return docs_list[0:5]
 
-    def community_docs_list_exists(self):
-        return self.community_doclist.filter(creator_id=self.id, community=None, type="LI").exists()
+    def user_docs_list_exists(self):
+        return self.user_doclist.filter(creator_id=self.id, community=None, type="LI").exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
         lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST)
+        lists = DocList.objects.filter(lists_query)
+        return lists
+
+    def get_all_docs_lists(self):
+        from docs.models import DocList
+
+        lists_query = Q(creator_id=self.id, community=None)
         lists = DocList.objects.filter(lists_query)
         return lists
 
