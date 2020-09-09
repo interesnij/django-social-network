@@ -93,5 +93,6 @@ class Doc(models.Model):
         return self.list.all()
 
     def get_mime_type(self):
+        import magic
         filetype = magic.from_buffer(self.file.read())
         return filetype
