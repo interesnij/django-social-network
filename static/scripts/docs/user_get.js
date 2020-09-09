@@ -13,7 +13,7 @@ on('#ajax', 'click', '.u_doc_create_window', function(e) {
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   doc_pk = parent.getAttribute("data-pk");
   parent.getAttribute('user-pk') ? pk = parent.getAttribute('user-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
