@@ -191,3 +191,41 @@ on('#ajax', 'click', '#u_create_doc_list_btn', function() {
     }
     ajax_link.send(form_data);
 });
+
+on('#ajax', 'click', '#u_create_doc_btn', function() {
+  form = document.querySelector("#u_doc_create");
+  form_data = new FormData(form);
+
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else if (!form.querySelector("#id_file").value){
+    form.querySelector("#id_file").style.border = "1px #FF0000 solid";
+    toast_error("Загрузите документ!")
+  }
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/docs/user_progs/create_doc/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    album = document.body.querySelector("#id_album");
+
+      elem_ = document.createElement('div');
+      elem_.innerHTML = link_.responseText;
+      elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
+      elem_.setAttribute("video-counter", "0");
+      elem_.style.cursor = "pointer";
+      container = document.body.querySelector("#user_video_container");
+      container.prepend(elem_);
+      try{container.querySelector(".video_none").style.display = "none"}catch{null};
+
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+    toast_info("Видеоролик создан!")
+  }};
+
+  link_.send(form_data);
+});
