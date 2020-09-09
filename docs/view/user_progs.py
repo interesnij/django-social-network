@@ -26,13 +26,12 @@ class UserDocAdd(View):
 
 class UserDocRemove(View):
     """
-    Удаляем документ из своего списка, если он там есть
+    Удаляем документ
     """
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk):
-            list.doc_list.remove(doc)
+            doc.remove()
             return HttpResponse()
         else:
             raise Http404

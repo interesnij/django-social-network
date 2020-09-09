@@ -43,7 +43,7 @@
                               <div class="media-body" style="line-height: 0.4;">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
                                   {{ object.file.size|filesizeformat }}
-                                    <span class='span_btn' style="float:right;margin-top: -25px" data-pk="{{ object.pk }}">
+                                    <span class='span_btn' style="float:right;margin-top: -25px;display: flex;" data-pk="{{ object.pk }}">
                                       <span class='dropdown' style="position: inherit;">
                                         <span class='btn_default pointer drop' title="Добавить в плейлист">
                                           <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
@@ -61,7 +61,7 @@
                                                 {% endif %}
                                               </span>
                                             {% endfor %}
-                                          <span class="dropdown-item u_create_doc_list_track_add" style="padding-left: 30px;">В новый список</span>
+                                          <span class="dropdown-item u_create_doc_list_doc_add" style="padding-left: 30px;">В новый список</span>
                                         </div>
                                       </span>
                                       <div class="dropdown" style="position: inherit;">
@@ -70,7 +70,7 @@
                                         </a>
                                           <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
                                               <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
+                                              <span class="dropdown-item u_doc_remove">Удалить</span>
                                           </div>
                                       </div>
                                     </span>
@@ -140,10 +140,4 @@
         </div>
     </div>
 </div>
-
-<script>
-  {% if user|is_user_list:playlist.pk %}
-    document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
-  {% endif %}
-</script>
 {% endblock %}

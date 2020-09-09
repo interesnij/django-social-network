@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^create_doc/(?P<pk>\d+)/$', UserDocCreate.as_view()),
 
     url(r'^u_add_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserDocAdd.as_view())),
-    url(r'^u_remove_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserDocRemove.as_view())),
+    url(r'^u_remove_doc/(?P<pk>\d+)/$', login_required(UserDocRemove.as_view())),
     url(r'^u_add_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserDocListAdd.as_view())),
     url(r'^u_remove_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserDocListRemove.as_view())),
 ]

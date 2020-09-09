@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^create_doc/(?P<pk>\d+)/$', CommunityDocCreate.as_view()),
 
     url(r'^c_add_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocAdd.as_view())),
-    url(r'^c_remove_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocRemove.as_view())),
+    url(r'^c_remove_doc/(?P<pk>\d+)/(?P<doc_pk>\d+)/$', login_required(CommunityDocRemove.as_view())),
     url(r'^c_add_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocListAdd.as_view())),
     url(r'^c_remove_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocListRemove.as_view())),
 ]

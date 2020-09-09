@@ -25,13 +25,13 @@ class CommunityDocAdd(View):
 
 class CommunityDocRemove(View):
     """
-    Удаляем документ из списка документов сообщества, если он там есть
+    Удаляем документ
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and doc.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
-            list.doc_list.remove(doc)
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+            doc.remove()
             return HttpResponse()
         else:
             raise Http404

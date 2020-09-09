@@ -211,20 +211,18 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    album = document.body.querySelector("#id_album");
-
-      elem_ = document.createElement('div');
-      elem_.innerHTML = link_.responseText;
-      elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
-      elem_.setAttribute("video-counter", "0");
-      elem_.style.cursor = "pointer";
-      container = document.body.querySelector("#user_video_container");
-      container.prepend(elem_);
-      try{container.querySelector(".video_none").style.display = "none"}catch{null};
-
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    list = document.body.querySelector("#id_list");
+    if (list.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      document.body.querySelector(".profile_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+      toast_info("Документ создан!")
+    } else{
+      toast_info("Документ создан!")
+    }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    toast_info("Видеоролик создан!")
   }};
 
   link_.send(form_data);

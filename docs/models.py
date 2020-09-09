@@ -37,11 +37,11 @@ class DocList(models.Model):
         return queryset
 
     def get_docs(self):
-        queryset = self.doc_list.filter(is_private=True)
+        queryset = self.doc_list.exclude(type=Doc.PRIVATE)
         return queryset
 
     def list_30(self):
-        queryset = self.doc_list.only("pk")[:30]
+        queryset = self.doc_list.exclude(type=Doc.PRIVATE)[:30]
         return queryset
 
     def count_docs(self):

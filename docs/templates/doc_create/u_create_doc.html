@@ -19,7 +19,7 @@
                     <label>Списки</label>
                     <select class="form-control" id="id_list" name="list" multiple style="height: 100%">
                         {% for object in request.user.get_all_docs_lists %}
-                        <option value="{{ object.uuid }}">{{ object.name }}</option>
+                        <option data-uuid="{{ object.uuid }}" value="{{ object.uuid }}">{{ object.name }}</option>
                         {% endfor %}
                     </select>
                   </div>
