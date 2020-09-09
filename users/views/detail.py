@@ -129,7 +129,10 @@ class UserDocs(ListView):
         from docs.models import DocList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = DocList.objects.get(creator_id=self.user.pk, community=None, type=DocList.MAIN)
+        try:
+            list = DocList.objects.get(creator_id=self.user.id, community=None, type=DocList.MAIN)
+        except:
+            list = DocList.objects.create(creator_id=self.user.id, community=None, type=DocList.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
             self.doc_list = self.list.get_my_docs()
         else:
