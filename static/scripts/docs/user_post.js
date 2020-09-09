@@ -227,7 +227,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     response.innerHTML = elem;
     list = document.body.querySelector("#id_list");
     span1 = response.querySelector('.span1')
-    if (span1.classList.contains('.' + uuid)){
+    if (span1.classList.contains(uuid)){
       document.body.querySelector(".profile_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
       toast_info("Документ создан!")
     } else{
