@@ -203,7 +203,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     form.querySelector("#id_file").style.border = "1px #FF0000 solid";
     toast_error("Загрузите документ!")
   }
-  lists = form_post.querySelector("#id_list");
+  lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
