@@ -95,7 +95,7 @@ on('#ajax', 'click', '#u_ucm_video_album_repost_btn', function() {
   }}
 });
 
-on('#ajax', 'click', '.user_video_create_window', function(e) {
+on('#ajax', 'click', '.u_video_create_window', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
