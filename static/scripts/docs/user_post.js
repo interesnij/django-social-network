@@ -196,20 +196,21 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
   form = document.querySelector("#u_doc_create");
   form_data = new FormData(form);
 
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else if (!form.querySelector("#id_file").value){
-    form.querySelector("#id_file").style.border = "1px #FF0000 solid";
-    toast_error("Загрузите документ!")
-  }
   lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-  if(!val){
+
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!")
+  } else if (!val){
     form.querySelector("#id_list").style.border = "1px #FF0000 solid";
     toast_error("Выберите список!")
+  }
+  else if (!form.querySelector("#id_file").value){
+    form.querySelector("#id_file").style.border = "1px #FF0000 solid";
+    toast_error("Загрузите документ!")
   }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
