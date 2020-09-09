@@ -16,6 +16,6 @@ from django.conf import settings
 from users.models import User
 from music.models import SoundList
 from video.models import VideoAlbum
-from docs.models import Doc
+from docs.models import Doc2
 
-Doc.objects.all().delete()
+Doc2.objects.all().delete()

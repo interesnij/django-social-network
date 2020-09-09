@@ -1167,29 +1167,29 @@ class User(AbstractUser):
             return queryset
 
     def get_my_docs(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
         try:
             list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
         except:
             list = DocList.objects.create(creator_id=self.id, community=None, type=DocList.MAIN, name="Основной список")
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query)
+        docs_list = Doc2.objects.filter(Doc_query)
         return docs_list
 
     def get_docs_count(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
 
         list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query).valuse("pk")
+        docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
         return docs_list.count()
 
     def get_last_docs(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
 
         list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query)
+        docs_list = Doc2.objects.filter(Doc_query)
         return docs_list[0:5]
 
     def user_docs_list_exists(self):

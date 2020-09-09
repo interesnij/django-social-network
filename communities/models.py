@@ -377,27 +377,27 @@ class Community(models.Model):
         return playlists
 
     def get_docs(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
 
         list = DocList.objects.get(community=self, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query)
+        docs_list = Doc2.objects.filter(Doc_query)
         return docs_list
 
     def get_docs_count(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
 
         list = DocList.objects.get(community=self, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query).valuse("pk")
+        docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
         return docs_list.count()
 
     def get_last_docs(self):
-        from docs.models import DocList, Doc
+        from docs.models import DocList, Doc2
 
         list = DocList.objects.get(community=self, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc.objects.filter(Doc_query)
+        docs_list = Doc2.objects.filter(Doc_query)
         return docs_list[0:5]
 
     def community_docs_list_exists(self):

@@ -58,7 +58,7 @@ class DocList(models.Model):
         ordering = ['order']
 
 
-class Doc(models.Model):
+class Doc2(models.Model):
     PRIVATE = 'P'
     STUDY = 'S'
     BOOK = 'B'

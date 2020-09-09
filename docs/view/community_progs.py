@@ -14,7 +14,7 @@ class CommunityDocAdd(View):
     Добавляем документ в список документов сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
@@ -28,7 +28,7 @@ class CommunityDocRemove(View):
     Удаляем документ
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             doc.remove()
@@ -41,7 +41,7 @@ class CommunityDocListAdd(View):
     Добавляем документ в любой список сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
@@ -55,7 +55,7 @@ class CommunityDocListRemove(View):
     Удаляем документ из любого списка сообщества, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
             list.doc_list.remove(doc)

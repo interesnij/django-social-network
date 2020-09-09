@@ -1,4 +1,4 @@
-from docs.models import DocList, Doc
+from docs.models import DocList, Doc2
 from django import forms
 from django.conf import settings
 
@@ -25,5 +25,5 @@ class DocForm(forms.ModelForm):
 		return file
 
 	class Meta:
-		model = Doc
+		model = Doc2
 		fields = ['title', 'file', 'type', 'list', ]
