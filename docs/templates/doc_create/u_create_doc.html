@@ -1,8 +1,4 @@
-<style>
-  #id_list{
-    height: 100%
-  }
-</style>
+
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
     <form id="u_doc_create">
       {% csrf_token %}
@@ -20,8 +16,12 @@
                     {{ form_post.type }}
                   </div>
                   <div class="form-group">
-                    <label>Список</label>
-                    {{ form_post.list }}
+                    <label>Списки</label>
+                    <select class="form-control" id="id_list" name="list" multiple style="height: 100%">
+                        {% for object in request.user.get_all_docs_lists %}
+                        <option value="{{ object.uuid }}">{{ object.name }}</option>
+                        {% endfor %}
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Файл</label>
