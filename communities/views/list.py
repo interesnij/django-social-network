@@ -126,9 +126,9 @@ class CommunityDocs(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
-			list = DocList.objects.get(community_id=self.community.id, community=None, type=DocList.MAIN)
+			self.list = DocList.objects.get(community_id=self.community.id, community=None, type=DocList.MAIN)
 		except:
-			list = DocList.objects.create(community_id=self.community.id, creator=self.community.creator, community=None, type=DocList.MAIN, name="Основной список")
+			self.list = DocList.objects.create(community_id=self.community.id, creator=self.community.creator, community=None, type=DocList.MAIN, name="Основной список")
 		if self.user.pk == request.user.is_staff_of_community_with_name(self.community.name):
 			self.doc_list = self.list.get_my_docs()
 		else:

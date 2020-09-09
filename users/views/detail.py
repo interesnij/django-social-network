@@ -130,9 +130,9 @@ class UserDocs(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            list = DocList.objects.get(creator_id=self.user.id, community=None, type=DocList.MAIN)
+            self.list = DocList.objects.get(creator_id=self.user.id, community=None, type=DocList.MAIN)
         except:
-            list = DocList.objects.create(creator_id=self.user.id, community=None, type=DocList.MAIN, name="Основной список")
+            self.list = DocList.objects.create(creator_id=self.user.id, community=None, type=DocList.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
             self.doc_list = self.list.get_my_docs()
         else:
