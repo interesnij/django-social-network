@@ -41,7 +41,7 @@
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body" style="line-height: 0.4;">
-                                  <h6 class="music_list_item pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
+                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
                                   {{ object.file.size|filesizeformat }}
                                     <span class='span_btn' style="float:right;margin-top: -25px" data-pk="{{ object.pk }}">
                                       <span class='dropdown' style="position: inherit;">
@@ -64,11 +64,11 @@
                                           <span class="dropdown-item u_create_music_list_track_add" style="padding-left: 30px;">В новый список</span>
                                         </div>
                                       </span>
-                                      <div class="dropdown">
-                                        <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+                                      <div class="dropdown" style="position: inherit;">
+                                        <a class="btn_default drop pointer">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                                         </a>
-                                          <div class="dropdown-menu dropdown-menu-right">
+                                          <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
                                               <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
                                               <span class="dropdown-item doc_claim">Пожаловаться</span>
                                           </div>
