@@ -81,7 +81,6 @@ class Community(models.Model):
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     class Meta:
         verbose_name = 'сообщество'
