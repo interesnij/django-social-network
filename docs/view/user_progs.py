@@ -3,7 +3,7 @@ from users.models import User
 from django.views import View
 from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
-from docs.forms import DoclistForm
+from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.http import Http404
@@ -100,5 +100,34 @@ class UserDoclistCreate(View):
                 new_list.order = 0
             new_list.save()
             return render(request, 'user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
+        else:
+            return HttpResponseBadRequest()
+
+
+class UserDocCreate(View):
+    form_post = None
+
+    def get_context_data(self,**kwargs):
+        context = super(UserDocCreate,self).get_context_data(**kwargs)
+        context["form_post"] = DocForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post = DocForm(request.POST, request.FILES)
+        user = User.objects.get(pk=self.kwargs["pk"])
+
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
+            list = DocList.objects.get(creator_id=user.pk, community=None, type=DocList.MAIN)
+            new_doc = form_post.save(commit=False)
+            new_doc.creator = request.user
+            lists = form_post.cleaned_data.get("list")
+            new_doc.save()
+            if not lists:
+                list.doc_list.add(new_doc)
+            else:
+                for _list in lists:
+                    _list.doc_list.add(new_doc)
+
+            return render(request, 'doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
