@@ -39,7 +39,7 @@
                       {% for object in object_list %}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
-                              <div class="media-body" style="line-height: 0.4;">
+                              <div class="media-body doc_media_body">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
                                   {{ object.file.size|filesizeformat }}
                               </div>

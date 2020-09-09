@@ -1,4 +1,6 @@
-
+.doc_media_body {
+  line-height: 0.8;
+}
 
 .centered{
 display: flex;

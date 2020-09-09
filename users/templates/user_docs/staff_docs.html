@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Документы {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
-{% load get_key %}
 {% block content %}
 
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
@@ -41,30 +40,11 @@
 
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
-                              <div class="media-body" style="line-height: 0.4;">
+                              <div class="media-body doc_media_body">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
                                   {{ object.file.size|filesizeformat }}
                                     <span class='span_btn' style="float:right;margin-top: -25px;display: flex;" data-pk="{{ object.pk }}">
-                                      <span class='dropdown' style="position: inherit;">
-                                        <span class='btn_default pointer drop' title="Добавить в плейлист">
-                                          <svg fill='currentColor' style="width:25px;height:25px;" class='svg_default' viewBox="0 0 24 24"><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
-                                            {% for list in request.user.get_all_docs_lists %}
-                                              <span data-uuid="{{ list.uuid }}">
-                                                {% if list|doc_in_list:object.pk %}
-                                                  <span class="dropdown-item u_remove_doc_in_list">
-                                                    <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                                                    {{ list.name }}
-                                                  </span>
-                                                {% else %}
-                                                  <span class="dropdown-item u_add_doc_in_list" style="padding-left: 30px;">{{ list.name }}</span>
-                                                {% endif %}
-                                              </span>
-                                            {% endfor %}
-                                          <span class="dropdown-item u_create_doc_list_doc_add" style="padding-left: 30px;">В новый список</span>
-                                        </div>
-                                      </span>
+                                      {% include 'user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
                                         <a class="btn_default drop pointer">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
