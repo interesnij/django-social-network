@@ -94,5 +94,5 @@ class Doc(models.Model):
 
     def get_mime_type(self):
         import magic
-        mime = magic.from_file(self.file, mime=True)
+        mime = magic.from_file(self.file.path, mime=True)
         return mime
