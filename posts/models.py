@@ -110,6 +110,10 @@ class Post(models.Model):
         return self.parent.item_music.all()
     def get_parent_attach_music_list(self):
         return self.parent.post_soundlist.all()
+    def get_parent_attach_docs(self):
+        return self.parent.item_doc.all()
+    def get_parent_attach_docs_list(self):
+        return self.parent.post_doclist.all()
 
     def get_attach_photos(self):
         return self.item_photo.all()
@@ -127,40 +131,38 @@ class Post(models.Model):
         return self.item_music.all()
     def get_attach_music_list(self):
         return self.post_soundlist.all()
+    def get_attach_docs(self):
+        return self.item_doc.all()
+    def get_attach_docs_list(self):
+        return self.post_doclist.all()
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
-
+    def get_photo_repost(self):
+        photo = self.parent.item_photo.all()[0]
+        return photo
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
         photo_album = self.parent.post_alnum.all()[0]
         return photo_album
+
+    def is_music_repost(self):
+        return try_except(self.status == Post.MUSIC_REPOST)
+    def is_music_list_repost(self):
+        return try_except(self.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
         playlist = self.parent.post_soundlist.all()[0]
         return playlist
+    def get_music_repost(self):
+        music = self.parent.item_music.all()[0]
+        return music
 
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
 
-    def is_music_repost(self):
-        return try_except(self.status == Post.MUSIC_REPOST)
-
-    def get_music_repost(self):
-        music = self.parent.item_music.all()[0]
-        return music
-    def get_photo_repost(self):
-        photo = self.parent.item_photo.all()[0]
-        return photo
-    def is_music_list_repost(self):
-        return try_except(self.status == Post.MUSIC_LIST_REPOST)
-    def get_music_list_repost(self):
-        music_list = self.parent.post_soundlist.all()[0]
-        return music_list
-
     def is_video_repost(self):
         return try_except(self.status == Post.VIDEO_REPOST)
-
     def is_video_list_repost(self):
         return try_except(self.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):

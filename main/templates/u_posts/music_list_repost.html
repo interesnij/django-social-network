@@ -1,3 +1,4 @@
+{% with playlist=object.get_playlist_repost %}
 
   <span style="padding: 5px;">
     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
@@ -8,27 +9,27 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ object.get_playlist_repost.creator.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
-            <a class="ajax" href="{% url 'community_music_list' pk=object.get_playlist_repost.community.pk uuid=object.get_playlist_repost.uuid %}">
-              {% if object.get_playlist_repost.image %}
-                <img src="{{ object.get_playlist_repost.image }}" style="width:120px;height:120px;" alt="image">
+            <a class="ajax" href="{% url 'community_music_list' pk=playlist.community.pk uuid=playlist.uuid %}">
+              {% if playlist.image %}
+                <img src="{{ playlist.image }}" style="width:120px;height:120px;" alt="image">
               {% else %}
                 <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
               {% endif %}
             </a>
           </figure>
           <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1">{{ object.get_playlist_repost.name }}</h6>
+            <h6 class="my-0 mt-1">{{ playlist.name }}</h6>
             <p class="">
-              Треков: {{ object.get_playlist_repost.count_tracks }}
+              Треков: {{ playlist.count_tracks }}
               <br>
-              <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.get_playlist_repost.community.pk %}">
-                {{ object.get_playlist_repost.creator.get_full_name }}
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=playlist.community.pk %}">
+                {{ oplaylist.creator.get_full_name }}
               </a>
             </p>
           </div>
-          {% if request.user.pk != object.get_playlist_repost.creator.pk %}
+          {% if request.user.pk != playlist.creator.pk %}
             <span class='c_music_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
               <svg fill='currentColor' class='svg_default' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
             </span>
@@ -41,8 +42,8 @@
     </div>
   <div class="card">
       <div class="card-body">
-            <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
-              {% for music in object.get_playlist_repost.playlist_30 %}
+            <ul data-pk="{{ playlist.pk }}" style="margin-bottom: 0">
+              {% for music in playlist.playlist_30 %}
                 {% include 'generic/attach/u_music.html' %}
               {% endfor %}
             </ul>
@@ -52,27 +53,27 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ object.get_playlist_repost.community.pk }}" data-uuid="{{ object.get_playlist_repost.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.community.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
-            <a class="ajax" href="{% url 'user_music_list' pk=object.get_playlist_repost.creator.pk uuid=object.get_playlist_repost.uuid %}">
-              {% if object.get_playlist_repost.image %}
-                <img src="{{ object.get_playlist_repost.image }}" style="width:120px;height:120px;" alt="image">
+            <a class="ajax" href="{% url 'user_music_list' pk=playlist.creator.pk uuid=playlist.uuid %}">
+              {% if playlist.image %}
+                <img src="{{ playlist.image }}" style="width:120px;height:120px;" alt="image">
               {% else %}
                 <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
               {% endif %}
             </a>
           </figure>
           <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1">{{ object.get_playlist_repost.name }}</h6>
+            <h6 class="my-0 mt-1">{{ playlist.name }}</h6>
             <p class="">
-              Треков: {{ object.get_playlist_repost.count_tracks }}
+              Треков: {{ playlist.count_tracks }}
               <br>
-              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.get_playlist_repost.creator.pk %}">
-                {{ object.get_playlist_repost.creator.name }}
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=playlist.creator.pk %}">
+                {{ playlist.creator.name }}
               </a>
             </p>
           </div>
-          {% if request.user.pk != object.get_playlist_repost.creator.pk %}
+          {% if request.user.pk != playlist.creator.pk %}
             <span class='c_music_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
               <svg fill='currentColor' class='svg_default' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
             </span>
@@ -85,8 +86,8 @@
     </div>
   <div class="card">
       <div class="card-body">
-            <ul data-pk="{{ object.get_playlist_repost.pk }}" style="margin-bottom: 0">
-              {% for music in object.get_playlist_repost.playlist_30 %}
+            <ul data-pk="{{ playlist.pk }}" style="margin-bottom: 0">
+              {% for music in playlist.playlist_30 %}
                 {% include 'generic/attach/u_music.html' %}
               {% endfor %}
             </ul>
