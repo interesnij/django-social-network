@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from doc.models import DocList, Doc
+from docs.models import DocList, Doc
 from users.models import User
 from chat.models import Message
 from django.shortcuts import render
