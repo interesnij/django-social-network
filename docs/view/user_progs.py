@@ -69,7 +69,7 @@ class UserCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("doc_create/", "u_create_list.html", request)
+        self.template_name = get_settings_template("doc_create/", "u_create_doc_list.html", request)
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 

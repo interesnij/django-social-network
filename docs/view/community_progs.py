@@ -68,7 +68,7 @@ class CommunityCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_create_list.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_create_doc_list.html", request=request)
         return super(CommunityCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 
