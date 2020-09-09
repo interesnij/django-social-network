@@ -37,7 +37,7 @@
                 {% if object_list %}
                     <ul id="user_docs_container" data-pk="{{ list.pk }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/docs/">
                       {% for object in object_list %}
-                      <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
+                      <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
