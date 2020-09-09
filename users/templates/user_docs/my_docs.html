@@ -37,12 +37,11 @@
                 {% if object_list %}
                     <ul id="user_docs_container" data-pk="{{ list.pk }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/docs/">
                       {% for object in object_list %}
-                      {{ object.get_mime_type }}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
-                                  {{ object.file.size|filesizeformat }}
+                                    <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
                                     <span class='span_btn' style="float:right;margin-top: -25px;display: flex;" data-pk="{{ object.pk }}">
                                       {% include 'user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
