@@ -1,4 +1,4 @@
-from music.view.repost import *
+from docs.view.repost import *
 from django.conf.urls import url
 
 urlpatterns = [
