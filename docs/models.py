@@ -74,6 +74,7 @@ class Doc(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     list = models.ManyToManyField(DocList, related_name='doc_list', blank="True")
     type = models.CharField(choices=TYPES, default='P', max_length=2)
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
