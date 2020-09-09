@@ -80,6 +80,11 @@ class UserCreateDocWindow(TemplateView):
         self.template_name = get_settings_template("doc_create/", "u_create_doc.html", request)
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
+    def get_context_data(self,**kwargs):
+        context = super(UserCreateDocWindow,self).get_context_data(**kwargs)
+        context["form_post"] = DocForm()
+        return context
+
 
 class UserDoclistCreate(View):
     form_post = None

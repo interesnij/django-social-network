@@ -79,6 +79,11 @@ class CommunityCreateDocWindow(TemplateView):
         self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_create_doc.html", request=request)
         return super(CommunityCreateDocWindow,self).get(request,*args,**kwargs)
 
+    def get_context_data(self,**kwargs):
+        context = super(CommunityCreateDocWindow,self).get_context_data(**kwargs)
+        context["form_post"] = DocForm()
+        return context
+
 
 class CommunityDoclistCreate(View):
     form_post = None
