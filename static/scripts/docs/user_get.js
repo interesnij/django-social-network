@@ -10,11 +10,6 @@ on('#ajax', 'click', '.u_doc_create_window', function(e) {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/user_progs/create_doc_window/" + pk + "/", loader);
-  var list = loader.querySelectorAll('select');
-  var count = list.length;
-  for(i=0; i<count; i++) {
-    list[i].classList.add("form-control")
-  }
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
@@ -22,7 +17,7 @@ on('#ajax', 'click', '.u_ucm_doc_repost', function() {
   doc_pk = parent.getAttribute("data-pk");
   parent.getAttribute('user-pk') ? pk = parent.getAttribute('user-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/docs/repost/u_ucm_doc_window/" + pk + "/" + track_pk + "/", loader);
+  open_fullscreen("/docs/repost/u_ucm_doc_window/" + pk + "/" + doc_pk + "/", loader);
   clear_attach_block();
 })
 on('#ajax', 'click', '.u_ucm_doc_list_repost', function() {
