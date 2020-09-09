@@ -37,6 +37,9 @@
                 {% if object_list %}
                     <ul id="user_docs_container" data-pk="{{ list.pk }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/docs/">
                       {% for object in object_list %}
+                        {% for list in object.get_lists_for_doc %}
+                          {{ list.uuid }}
+                        {% endfor %}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">

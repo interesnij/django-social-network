@@ -199,7 +199,9 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
   lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
   val = false;
-  for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+  for (var i = 0; i < selectedOptions.length; i++) {
+    if(selectedOptions[i].value) {val = true}
+  }
 
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
@@ -224,7 +226,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     list = document.body.querySelector("#id_list");
-    if (list.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+    if (response.querySelector('.' + uuid)){
       document.body.querySelector(".profile_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
       toast_info("Документ создан!")
     } else{
