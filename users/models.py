@@ -1168,16 +1168,20 @@ class User(AbstractUser):
 
     def get_docs(self):
         from docs.models import DocList, Doc
-
-        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        try:
+            list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        except:
+            list = DocList.objects.create(creator_id=self.id, community=None, type=DocList.MAIN, name="Основной список")
         docs_query = Q(list=list, is_deleted=False, is_private=False)
         docs_list = Doc.objects.filter(Doc_query)
         return docs_list
 
     def get_my_docs(self):
         from docs.models import DocList, Doc
-
-        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        try:
+            list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
+        except:
+            list = DocList.objects.create(creator_id=self.id, community=None, type=DocList.MAIN, name="Основной список")
         docs_query = Q(list=list, is_deleted=False)
         docs_list = Doc.objects.filter(Doc_query)
         return docs_list
