@@ -9,7 +9,7 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.community.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'community_music_list' pk=playlist.community.pk uuid=playlist.uuid %}">
               {% if playlist.image %}
@@ -53,14 +53,14 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ playlist.community.pk }}" data-uuid="{{ playlist.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'user_music_list' pk=playlist.creator.pk uuid=playlist.uuid %}">
               {% if playlist.image %}
                 <img src="{{ playlist.image }}" style="width:120px;height:120px;" alt="image">
               {% else %}
                 <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-              {% endif %} 
+              {% endif %}
             </a>
           </figure>
           <div class="media-body" style="margin-left: 10px;">

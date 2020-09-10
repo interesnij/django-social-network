@@ -7,7 +7,7 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.community.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'community_music_list' pk=playlist.community.pk uuid=playlist.uuid %}">
               {% if playlist.image %}
@@ -51,7 +51,7 @@
 
   <div class="card">
       <div class="card-body" style="padding: 8px;padding-bottom: 0;">
-        <div style="display:flex" data-pk="{{ playlist.community.pk }}" data-uuid="{{ playlist.uuid }}">
+        <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
           <figure>
             <a class="ajax" href="{% url 'user_music_list' pk=playlist.creator.pk uuid=playlist.uuid %}">
               {% if playlist.image %}
