@@ -1,0 +1,17 @@
+{% with list=object.get_doc_repost %}
+
+  <span style="padding: 5px;">
+    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось списком документов
+  </span>
+  
+  {% if object.parent.community %}
+
+    {% include 'generic/repost/c_doc_list_repost.html' %}
+
+  {% else %}
+
+    {% include 'generic/repost/u_doc_list_repost.html' %}
+
+  {% endif %}
+
+{% endwith %}
