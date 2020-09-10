@@ -17,9 +17,9 @@
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media">
-                <div class="media-body" style="line-height: 10px;">
+                <div class="media-body">
                     <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
-                    <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+                    <p class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</p>
                 </div>
             </div>
         </div>
