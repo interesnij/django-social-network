@@ -1,4 +1,4 @@
-{% with list=object.get_doc_repost %}
+{% with list=object.get_doc_list_repost %}
 
   <span style="padding: 5px;">
     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
