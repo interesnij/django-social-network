@@ -395,13 +395,13 @@ class Community(models.Model):
         return docs_list.count()
 
     def get_docs_lists(self):
-        return self.community_doclist.exlude(is_public=False)
+        return self.community_doclist.exclude(is_public=False)
 
     def get_last_docs(self):
         from docs.models import Doc2
 
         docs_query = Q(list__in=self.get_docs_lists())
-        docs_list = Doc2.objects.filter(docs_query).exlude(type=Doc2.PRIVATE)[0:5]
+        docs_list = Doc2.objects.filter(docs_query).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list
 
     def community_docs_list_exists(self):
