@@ -1107,7 +1107,7 @@ class User(AbstractUser):
     def get_video(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, type=VideoAlbum.MAIN)
+        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
