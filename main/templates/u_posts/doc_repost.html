@@ -1,5 +1,8 @@
 {% with object=object.get_doc_repost %}
-
+<span style="padding: 5px;">
+  <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+    {{ object.creator }}</a>&nbsp;{% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} документом
+</span>
   {% include 'generic/repost/u_doc_repost.html' %}
 
 {% endwith %}
