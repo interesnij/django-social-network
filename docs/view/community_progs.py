@@ -123,7 +123,7 @@ class CommunityDocCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community_with_name(community.name):
-            list = DocList.objects.get(community_id=community.pk, community=None, type=DocList.MAIN)
+            list = DocList.objects.get(community_id=community.pk, type=DocList.MAIN)
             new_doc = form_post.save(commit=False)
             new_doc.creator = community.creator
             lists = form_post.cleaned_data.get("list")
