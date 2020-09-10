@@ -39,7 +39,7 @@
                           <a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a>
                         </h6>
                           <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-                          <span class='span_btn' doc-pk="{{ doc.pk }}" data-pk="{{ doc.parent.community.pk }}">
+                          <span class='span_btn' doc-pk="{{ doc.pk }}" data-pk="{{ object.parent.community.pk }}">
                             {% include 'user_docs/add_dropdown.html' %}
                             <div class="dropdown" style="position: inherit;">
                               <a class="btn_default drop pointer">
