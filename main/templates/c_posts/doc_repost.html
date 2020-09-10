@@ -2,6 +2,7 @@
 <span style="padding: 5px;">
   Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось документом
 </span>
+<br>
   {% include 'generic/repost/c_doc_repost.html' %}
 
 {% endwith %}
