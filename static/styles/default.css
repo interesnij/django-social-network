@@ -1,7 +1,9 @@
 .doc_media_body {
   line-height: 0.8;
 }
-
+.doc_media_body .small {
+  display: flex;
+}
 .centered{
 display: flex;
 align-items: center;
