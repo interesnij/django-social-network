@@ -12,7 +12,7 @@ from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.post_attacher import get_post_attach
-from common.processing.post import get_post_processing
+from common.processing.post import get_post_processing, get_post_message_processing
 
 
 class UUCMGoodWindow(TemplateView):
@@ -176,7 +176,7 @@ class UMGoodRepost(View):
                 user = User.objects.get(pk=user_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_processing(new_post)
+                get_post_message_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост товара со стены пользователя")
                 new_post.post_message.add(message)
             return HttpResponse()
@@ -203,7 +203,7 @@ class CMGoodRepost(View):
                 user = User.objects.get(pk=user_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_processing(new_post)
+                get_post_message_processing(new_post)
                 message = Message.send_message(sender=request.user, recipient=user, message="Репост товара со стены сообщества")
                 new_post.post_message.add(message)
             return HttpResponse()

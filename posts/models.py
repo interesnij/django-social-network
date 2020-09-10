@@ -15,6 +15,7 @@ from common.utils import try_except
 class Post(models.Model):
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
+    STATUS_MESSAGE_PUBLISHED = 'MP'
     STATUS_PUBLISHED = 'P'
     STATUS_ARHIVED = 'A'
 
@@ -33,6 +34,7 @@ class Post(models.Model):
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PROCESSING, 'Обработка'),
         (STATUS_PUBLISHED, 'Опубликована'),
+        (STATUS_MESSAGE_PUBLISHED, 'РЕпост в сообщения'),
         (STATUS_ARHIVED, 'Архивирована'),
 
         (PHOTO_REPOST, 'Репост фотографии'),
