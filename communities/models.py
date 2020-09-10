@@ -391,7 +391,7 @@ class Community(models.Model):
 
         lists_query = Q(community_id=self.id)
         lists = DocList.objects.filter(lists_query)
-        return lists
+        return lists 
 
     def get_docs_count(self):
         from docs.models import DocList, Doc2

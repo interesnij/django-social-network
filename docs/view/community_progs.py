@@ -104,7 +104,7 @@ class CommunityDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'community_doc_list/admin_list.html',{'list': new_list, 'community': community})
+            return render(request, 'c_docs_list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
