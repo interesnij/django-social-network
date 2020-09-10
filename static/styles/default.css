@@ -4,6 +4,11 @@
 .doc_media_body .small {
   display: flex;
 }
+.doc_media_body .span_btn {
+  float: right;
+  margin-top: -30px;
+  display: flex;
+}
 .centered{
 display: flex;
 align-items: center;
