@@ -392,13 +392,15 @@ class Community(models.Model):
         docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
         return docs_list.count()
 
-    def get_last_docs(self):
-        from docs.models import DocList, Doc2
+    def get_docs_lists(self):
+        return self.community_doclist.exlude(is_public=False)
 
-        list = DocList.objects.get(community=self, type=DocList.MAIN)
-        docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc2.objects.filter(Doc_query)
-        return docs_list[0:5]
+    def get_last_docs(self):
+        from docs.models import Doc2
+
+        docs_query = Q(list__in=self.get_docs_lists())
+        docs_list = Doc2.objects.filter(docs_query).exlude(type=Doc2.PRIVATE)[0:5]
+        return docs_list
 
     def community_docs_list_exists(self):
         return self.community_doclist.filter(community_id=self.id, type="LI").exists()
