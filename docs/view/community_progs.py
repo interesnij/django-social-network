@@ -82,6 +82,7 @@ class CommunityCreateDocWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityCreateDocWindow,self).get_context_data(**kwargs)
         context["form_post"] = DocForm()
+        context["community"] = self.community
         return context
 
 
