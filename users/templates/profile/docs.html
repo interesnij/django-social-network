@@ -1,0 +1,29 @@
+
+{% if user.get_last_docs %}
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'user_docs' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Документы </h6>
+            </div>
+            {{ user.count_docs }}
+        </div>
+      </a>
+    </div>
+
+    {% for object in user.get_last_docs %}
+
+    <div class="card border-top">
+        <div class="card-body" style="padding:7px;">
+            <div class="media">
+                <div class="media-body">
+                    <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
+                    <p class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
