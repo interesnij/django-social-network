@@ -173,6 +173,7 @@ class CommunitySectionsOpen(models.Model):
     good = models.BooleanField(default=True, verbose_name="Товары открыты")
     video = models.BooleanField(default=True, verbose_name="Видеоролики открыты")
     music = models.BooleanField(default=True, verbose_name="Аудиозаписи открыты")
+    doc = models.BooleanField(default=True, verbose_name="Документы открыты")
     link = models.BooleanField(default=True, verbose_name="Ссылки открыты")
     article = models.BooleanField(default=True, verbose_name="Статьи открыты")
     contacts = models.BooleanField(default=True, verbose_name="Контакты открыты")

@@ -75,4 +75,4 @@ class CommunityPrivateMusicForm(forms.ModelForm):
 class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:
 		model = CommunitySectionsOpen
-		fields = ['photo', 'good', 'video', 'music', 'link', 'article', 'contacts', 'discussion', 'members',]
+		fields = ['photo', 'good', 'video', 'doc', 'music', 'link', 'article', 'contacts', 'discussion', 'members',]

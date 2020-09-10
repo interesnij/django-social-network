@@ -93,6 +93,9 @@
             {% if community.is_video_open %}
               {% include 'detail_sections/video.html' %}
             {% endif %}
+            {% if community.is_doc_open %}
+              {% include 'detail_sections/admin_docs.html' %}
+            {% endif %}
         </div>
 
     </div>

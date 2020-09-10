@@ -37,6 +37,11 @@
                           <label style="margin-right:12px;bottom: 5px;" for="id_music" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                          Документы открыты
+                          <input type="checkbox" {% if sections.doc %} checked {% endif %} name="doc" id="id_doc" class="switch switch-sm">
+                          <label style="margin-right:12px;bottom: 5px;" for="id_doc" class="bg_success mb-2 border float-right"></label>
+                      </p>
+                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Ссылки открыты
                           <input type="checkbox" {% if sections.link %} checked {% endif %} name="link" id="id_link" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_link" class="bg_success mb-2 border float-right"></label>

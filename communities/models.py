@@ -105,6 +105,8 @@ class Community(models.Model):
         return try_except(self.community_sections_open.video)
     def is_music_open(self):
         return try_except(self.community_sections_open.music)
+    def is_doc_open(self):
+        return try_except(self.community_sections_open.doc)
     def is_link_open(self):
         return try_except(self.community_sections_open.link)
     def is_article_open(self):

@@ -132,12 +132,14 @@
             {% if community.is_music_open %}
               {% include 'detail_sections/admin_music.html' %}
             {% endif %}
-
             {% if community.is_photo_open %}
               {% include 'detail_sections/admin_photo.html' %}
             {% endif %}
             {% if community.is_video_open %}
               {% include 'detail_sections/admin_video.html' %}
+            {% endif %}
+            {% if community.is_doc_open %}
+              {% include 'detail_sections/admin_docs.html' %}
             {% endif %}
         </div>
 
