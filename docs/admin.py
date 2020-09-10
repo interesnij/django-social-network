@@ -11,8 +11,7 @@ class DocAdmin(admin.ModelAdmin):
 
 class DocListAdmin(admin.ModelAdmin):
     list_display = ['name','creator','community']
-    list_filter = ['created']
-    search_fields = ('title',)
+    search_fields = ('name',)
     class Meta:
         model = DocList
 
