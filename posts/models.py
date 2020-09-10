@@ -161,6 +161,17 @@ class Post(models.Model):
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
 
+    def is_doc_repost(self):
+        return try_except(self.status == Post.DOC_REPOST)
+    def is_doc_list_repost(self):
+        return try_except(self.status == Post.DOC_LIST_REPOST)
+    def get_doc_list_repost(self):
+        list = self.parent.post_doclist.all()[0]
+        return list
+    def get_doc_repost(self):
+        doc = self.parent.item_doc.all()[0]
+        return doc
+
     def is_video_repost(self):
         return try_except(self.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
@@ -190,6 +201,10 @@ class Post(models.Model):
             return "post_community/video_repost.html"
         elif parent.is_video_list_repost():
             return "post_community/video_list_repost.html"
+        elif parent.is_doc_repost():
+            return "post_community/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "post_community/doc_list_repost.html"
         elif parent.is_user_repost():
             return "post_community/user_repost.html"
         elif parent.is_community_repost():
@@ -213,6 +228,10 @@ class Post(models.Model):
             return "post_user/video_repost.html"
         elif parent.is_video_list_repost():
             return "post_user/video_list_repost.html"
+        elif parent.is_doc_repost():
+            return "post_user/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "post_user/doc_list_repost.html"
         elif parent.is_user_repost():
             return "post_user/user_repost.html"
         elif parent.is_community_repost():
@@ -236,6 +255,10 @@ class Post(models.Model):
             return "u_posts/video_repost.html"
         elif parent.is_video_list_repost():
             return "u_posts/video_list_repost.html"
+        elif parent.is_doc_repost():
+            return "u_posts/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "u_posts/doc_list_repost.html"
         elif parent.is_user_repost():
             return "u_posts/user_repost.html"
         elif parent.is_community_repost():
@@ -259,6 +282,10 @@ class Post(models.Model):
             return "c_posts/video_repost.html"
         elif parent.is_video_list_repost():
             return "c_posts/video_list_repost.html"
+        elif parent.is_doc_repost():
+            return "c_posts/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "c_posts/doc_list_repost.html"
         elif parent.is_user_repost():
             return "c_posts/user_repost.html"
         elif parent.is_community_repost():
