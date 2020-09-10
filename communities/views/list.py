@@ -129,7 +129,7 @@ class CommunityDocs(ListView):
 			self.list = DocList.objects.get(community_id=self.community.id, community=None, type=DocList.MAIN)
 		except:
 			self.list = DocList.objects.create(community_id=self.community.id, creator=self.community.creator, community=None, type=DocList.MAIN, name="Основной список")
-		if self.user.pk == request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_staff_of_community_with_name(self.community.name):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
@@ -155,7 +155,7 @@ class CommunityDocsList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
-		if self.user.pk == request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_staff_of_community_with_name(self.community.name):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
