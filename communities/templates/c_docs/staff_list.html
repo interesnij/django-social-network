@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Мои документы - {{ list.name }} {% endblock %}
+{% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
           <br>
@@ -15,21 +15,21 @@
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
                 <div style="display:flex">
-                  {% if user.get_avatar %}
-                    <img src="{{ user.get_avatar }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
+                  {% if community.get_avatar %}
+                    <img src="{{ community.get_avatar }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
                   {% else %}
                     <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_docs }})</h6>
+                    <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
                     <p class="">
-                      <a href="{% url 'user_docs' pk=list.creator.pk %}" class="ajax" style="text-decoration:underline;">
-                        Мои документы {{ user.get_full_name_genitive }}
+                      <a href="{% url 'community_detail' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
+                        {{ community.name }}
                       </a>
                     </p>
                   </div>
                   {% if list.is_not_empty %}
-                    <span title="Поделиться" class="u_ucm_doc_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
+                    <span title="Поделиться" class="c_ucm_doc_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
                       <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                     </span>
                   {% endif %}
@@ -38,16 +38,14 @@
             </div>
           <div class="card mb-2">
               <div class="card-body">
-                    <ul id="user_docs_container" data-pk="{{ list.pk }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/docs/">
-                    {% if object_list %}
+                    <ul id="user_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate" data-link="/communities/{{ community.pk }}/docs/">
+                      {% if object_list %}
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
-                                  <h6 class="pointer" style="width: 84%;overflow: hidden;">
-                                    <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
-                                  </h6>
-                                    <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
+                                  <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
                                     <span class='span_btn' data-pk="{{ object.pk }}">
                                       {% include 'user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
@@ -55,9 +53,8 @@
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                                         </a>
                                           <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                                              <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item u_doc_edit">Изменить</span>
-                                              <span class="dropdown-item u_doc_remove">Удалить</span>
+                                              <span class="dropdown-item c_ucm_doc_repost">Поделиться</span>
+                                              <span class="dropdown-item doc_delete_window">♦ Удалить</span>
                                           </div>
                                       </div>
                                     </span>
@@ -65,7 +62,6 @@
                           </div>
                       </li>
                       {% endfor %}
-
                       {% else %}
                       <div class="card centered">
                         <div class="card-body" style="margin-top: 10%;">
@@ -80,29 +76,7 @@
         </div>
         <div class="col-12 col-md-4">
           <br>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="pointer u_doc_create_window">Добавить Документ</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="u_doc_list_create_window pointer">Создать новый список</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          {% if user.user_docs_list_exists %}
+          {% if community.community_docs_list_exists %}
           <div class="card">
             <div class="card-header">
               <div class="media">
@@ -115,8 +89,8 @@
             </div>
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                {% for object in user.get_docs_lists %}
-                  <a class="ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">
+                {% for object in community.get_docs_lists %}
+                  <a class="ajax" href="{% url 'community_docs_list' pk=community.pk uuid=object.uuid %}">
                     {{ object.name }}
                   </a>
                 {% endfor %}

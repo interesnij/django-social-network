@@ -22,7 +22,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_docs }})</h6>
-                    <p class="">Мои документы</p>
+                    <p class="">
+                      <a href="{% url 'user_docs' pk=list.creator.pk %}" class="ajax" style="text-decoration:underline;">
+                        Документы {{ user.get_full_name_genitive }}
+                      </a>
+                    </p>
                   </div>
                   {% if list.is_not_empty %}
                     <span title="Поделиться" class="u_ucm_doc_list_repost btn_default pointer" style="margin-top: 14px;width:25px">

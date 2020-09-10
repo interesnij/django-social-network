@@ -22,7 +22,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
-                    <p class="">Мои документы</p>
+                    <p class="">Документы {{ user.get_full_name_genitive }}</p>
                   </div>
                   {% if list.is_not_empty %}
                     <span title="Поделиться" class="u_ucm_doc_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
