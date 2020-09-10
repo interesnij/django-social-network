@@ -1,0 +1,42 @@
+
+{% if user.get_last_docs %}
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'user_docs' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Документы </h6>
+            </div>
+            {{ user.count_docs }}
+        </div>
+      </a>
+    </div>
+
+    {% for object in user.get_last_docs %}
+
+    <div class="card border-top">
+        <div class="card-body" style="padding:7px;">
+            <div class="media">
+                <div class="media-body" style="line-height: 10px;">
+                    <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
+                    <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'user_docs' pk=user.pk %}" class="ajax">
+                <div class="media-body">
+                    <h4 class="content-color-primary mb-0">Добавьте документы</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

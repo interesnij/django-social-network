@@ -1187,9 +1187,7 @@ class User(AbstractUser):
     def get_last_docs(self):
         from docs.models import DocList, Doc2
 
-        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
-        docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc2.objects.filter(docs_query)
+        docs_list = Doc2.objects.filter(creator_id=self.pk).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list[0:5]
 
     def user_docs_list_exists(self):
