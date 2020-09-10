@@ -228,7 +228,9 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
     list = document.body.querySelector("#id_list");
     span1 = response.querySelector('.span1')
     if (span1.classList.contains(uuid)){
-      document.body.querySelector(".community_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+      container = document.body.querySelector(".community_block_paginate");
+      container.insertAdjacentHTML('afterBegin', response.innerHTML);
+      container.querySelector(".doc_empty") ? container.querySelector(".doc_empty").style.display = "none" : null)
       toast_info("Документ создан!")
     } else{
       toast_info("Документ создан!")
