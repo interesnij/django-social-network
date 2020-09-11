@@ -1,7 +1,7 @@
 {% load get_key %}
 <!-- шаблон трека сообщества -->
 
-<div class="music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;">
+<div class="music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;position: relative;">
     <div class="media" music-counter="{{ forloop.counter0 }}">
         <figure>
           <a class="music_list_post music_thumb pointer">
