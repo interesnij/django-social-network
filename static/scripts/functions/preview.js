@@ -77,7 +77,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $input = document.createElement("span");
   $img = document.createElement("img");
   $figure = document.createElement("figure");
-  $figure.classList.add("music_list_item", "pointer");
+  $figure.classList.add("music_list_post", "pointer");
   $media = document.createElement("span");
 
   media_body = _this.querySelector(".media-body");
@@ -97,7 +97,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $media.innerHTML = media_body.innerHTML;
   $media.style.marginLeft = "10px";
   h6 = $media.querySelector("h6");
-  h6.classList.add("music_list_item", "pointer");
+  h6.classList.add("music_list_post", "pointer");
 
   $div.append(music_preview_delete());
   $div.append($input);
