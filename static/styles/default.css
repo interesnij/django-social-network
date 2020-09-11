@@ -1,5 +1,6 @@
 .attach_panel a {
-  margin: -7px
+  margin-left: -5px;
+  margin-right: -5px;
 }
 
 .music_load_several {

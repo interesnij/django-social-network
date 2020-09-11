@@ -414,6 +414,31 @@ on('#ajax', 'click', '.music_load_several', function() {
   }
   this.classList.add("active_svg");
 });
+on('#ajax', 'click', '.music_attach_playlist', function() {
+  _this = this;
+  if (document.body.querySelector(".current_file_dropdown")){
+    toast_error("Плейлисты прикрепляются только к постам")
+  } else if (document.body.querySelector(".attach_block")) {
+    attach_block = document.body.querySelector(".attach_block");
+    if (attach_block.classList.contains("files_0")){
+    pk = _this.parentElement.parentElement.getAttribute("data-pk"
+    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_.open( 'POST', "/music/get/playlist_preview/" + pk + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+      attach_block.nextElementSibling.querySelector(".attach_panel").style.display = "none";
+      elem = link_.responseText;
+      response = document.createElement("span");
+      response.innerHTML = elem;
+      attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
+
+    }};
+
+    link_.send(form_data);
+  } else {toast_error("Прикрепите или плейлист, или что-то еще")}
+  }
+});
 
 on('#ajax', 'click', '.good_load_one', function() {
   _this = this;
