@@ -36,6 +36,12 @@ on('#ajax', 'click', '.u_article_detail', function() {
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.create_ajax', function() {
+  link = this.getAttribute("data-href");
+  loader = document.getElementById("create_loader");
+  open_fullscreen(link, loader)
+});
+
 on('body', 'click', '#u_multi_comments_photos', function(event) {
   this.previousElementSibling.click();
 })
