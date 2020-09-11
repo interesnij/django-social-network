@@ -1,6 +1,6 @@
 .music_load_several {
-  right: 10px;
-  top: 14px;
+  right: 10px !important;
+  top: 14px !important;
 }
 
 .doc_media_body {
