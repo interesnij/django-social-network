@@ -55,7 +55,7 @@ class MusicPlaylistPreview(TemplateView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		self.playlist = SoundList.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("music/playlist_preview.html", request)
 		return super(TemplateView,self).get(request,*args,**kwargs)
 
