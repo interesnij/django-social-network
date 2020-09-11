@@ -432,13 +432,19 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
       response = document.createElement("span");
       response.innerHTML = elem;
       attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-
+      document.querySelector(".create_fullscreen").style.display = "none";
+      document.getElementById("create_loader").innerHTML="";
     }};
 
     link_.send();
   } else {toast_error("Прикрепите или плейлист, или что-то еще")}
   }
 });
+on('#ajax', 'click', '.music_attach_playlist_remove', function() {
+  block = this.parentElement.parentElement.parentElement;
+  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.remove();
+})
 
 on('#ajax', 'click', '.good_load_one', function() {
   _this = this;
