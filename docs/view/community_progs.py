@@ -126,6 +126,7 @@ class CommunityDocCreate(View):
             list = DocList.objects.get(community_id=community.pk, type=DocList.MAIN)
             new_doc = form_post.save(commit=False)
             new_doc.creator = community.creator
+            new_doc.is_community = True
             lists = form_post.cleaned_data.get("list")
             new_doc.save()
             if not lists:

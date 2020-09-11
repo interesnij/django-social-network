@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load liked_user %}
 {% block title %}{{ album.title }} : Мои видеоролики{% endblock %}
 {% block content %}
 
@@ -37,7 +36,7 @@
                         {% endif %}
                         <div class="card-body">
                           <h5 class="text-truncate w-100">{{ object.title }}</h5>
-                          <span class="small">{{ object.get_created }} | {{ object.all_visits_count }}&nbsp;{{ object.all_visits_count|rupluralize:"просмотр,просмотра,просмотров" }}</span>
+                          <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
                         </div>
                     </div>
                       {% empty %}
