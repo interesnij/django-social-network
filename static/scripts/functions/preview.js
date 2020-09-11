@@ -77,7 +77,6 @@ function create_preview_music(div_class, img_src, pk, counter){
   $input = document.createElement("span");
   $img = document.createElement("img");
   $figure = document.createElement("figure");
-  $figure.classList.add("music_list_post", "pointer");
   $media = document.createElement("span");
 
   media_body = _this.querySelector(".media-body");
