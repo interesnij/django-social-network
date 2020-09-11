@@ -4,7 +4,7 @@
 <div class="col-lg-8" class="music-load row" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music/">
   {% if object_list %}
 {% for object in object_list %}
-  <div class="pag {% if forloop.last %}last{% endif %}" style="display: flex;position:relative">
+  <div class="pag {% if forloop.last %}last{% endif %}" style="display: flex;position:relative;padding: .75rem 15px;">
     <div class="music_load_one pointer" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}" style="display:flex">
         <figure style="cursor:pointer">
           {% if object.artwork_url %}
