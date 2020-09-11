@@ -443,6 +443,7 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
 on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.nextElementSibling.remove();
   block.remove();
 })
 
