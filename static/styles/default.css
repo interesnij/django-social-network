@@ -1877,7 +1877,6 @@ body.dragging * {
 .main-header .border-left,
 .main-header .border-right,
 .main-header .border,
-.main-header .list-group-item,
 .main-header .table th,
 .main-header .table td {
   border-color: rgba(255, 255, 255, 0.1) !important;
