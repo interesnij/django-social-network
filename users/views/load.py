@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from common.template.user import get_settings_template 
+from common.template.user import get_settings_template
 
 
 class UserLoadPhoto(ListView):
@@ -45,7 +45,7 @@ class UserLoadMusicList(ListView):
 		return super(UserLoadMusicList,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		musics_list = self.playlist.playlist_too()('-created_at')
+		musics_list = self.playlist.playlist_too().order_by('-created_at')
 		return musics_list
 
 class UserLoadArticle(ListView):
