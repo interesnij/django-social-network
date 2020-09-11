@@ -1869,7 +1869,6 @@ body.dragging * {
 .border-left,
 .border-right,
 .border,
-.list-group-item,
 .table th,
 
 .main-header .border-top,
@@ -1891,7 +1890,6 @@ body.dragging * {
 .sidebar .border-left,
 .sidebar .border-right,
 .sidebar .border,
-.sidebar .list-group-item,
 .sidebar .table th,
 .sidebar .table td {
   border-color: rgba(255, 255, 255, 0.1) !important;
