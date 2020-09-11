@@ -50,7 +50,7 @@ function photo_comment_attach(_this, dropdown) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (img_block.querySelector(".select_photo1")){
         div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
@@ -121,7 +121,7 @@ function music_comment_attach(_this, dropdown){
     _this.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
     if (img_block.querySelector(".select_music1")){
         div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
       }
@@ -145,7 +145,7 @@ function good_comment_attach(_this, dropdown){
     return
   };
 
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   title = _this.querySelector(".good_title").innerHTML;
 
     if (img_block.querySelector(".select_good1")){
@@ -176,7 +176,7 @@ function article_comment_attach(_this, dropdown){
     return
   };
 
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
 
     if (img_block.querySelector(".select_article1")){
         div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, _this.parentElement.querySelector(".article_title").innerHTML)

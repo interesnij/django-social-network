@@ -47,7 +47,7 @@ function photo_post_attach(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk);}
@@ -116,7 +116,7 @@ function video_post_attach(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
     if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)}
     else if (!block.querySelector(".select_video2")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)}
@@ -143,7 +143,7 @@ function music_post_attach(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   pk = _this.getAttribute('data-pk');
     if (!block.querySelector(".music_input")){
       _this.querySelector("img") ? img = _this.querySelector("img").getAttribute('data-src') : img = "/static/images/no_track_img.jpg";
@@ -175,7 +175,7 @@ function good_post_attach(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   title = _this.querySelector(".good_title").innerHTML;
 
     if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
@@ -203,7 +203,7 @@ function article_post_attach(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-  _this.classList.add("attach_toggle");
+  _this.parentElement.classList.add("attach_toggle");
   title = _this.parentElement.querySelector(".article_title").innerHTML;
 
     if (!block.querySelector(".article_input")){div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
