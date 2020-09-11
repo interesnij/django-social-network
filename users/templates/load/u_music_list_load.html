@@ -9,9 +9,9 @@
 
 <div class="col-lg-8" class="music-load profile_block_paginate" data-pk="{{ playlist.pk }}" data-link="/users/{{ user.pk }}/music/">
   {% if object_list %}
-  <div class="media success-gradient">
+  <div class="media success-gradient" style="padding:15px">
       <div class="media-body">
-          <p class="text-white mb-0">{{ playlist.count_tracks }}</p>
+          <p class="text-white mb-0">Треков: {{ playlist.count_tracks }}</p>
           <h4 class="mb">Прикрепить плейлист {{ playlist.name }}</h4>
       </div>
       <div class="icon-circle icon-50 bg-light-white">
