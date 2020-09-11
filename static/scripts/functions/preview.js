@@ -90,7 +90,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
 
   $img.src = img_src;
-  $img.style.width = "50px";
+  $img.style.width = "30px";
   $figure.append($img);
 
   $media.innerHTML = media_body.innerHTML;
