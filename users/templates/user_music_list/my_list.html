@@ -54,23 +54,12 @@
         </div>
         <div class="col-12 col-md-4">
           <br>
-          <div class="card mb-2">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="{% url 'all_music' %}" class="ajax">Каталог музыки</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
           <div class="card mb-3">
               <div class="card-header">
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="#" class="">Изменить/удалить список</a>
+                        <a href="#" class="">Изменить список</a>
                       </h5>
                     </div>
                 </div>
@@ -122,17 +111,9 @@
           </div>
           {% if user.user_music_playlist_exists %}
           <div class="card">
-            <div class="card-header">
-              <div class="media">
-                  <div class="media-body">
-                    <h5 class="mt-1">
-                      <p>плейлисты</p>
-                    </h5>
-                  </div>
-              </div>
-            </div>
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
+                <h6 style="margin-bottom:15px">Плейлисты</h6>
                 {% for object in user.get_audio_playlists %}
                   <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
                     {{ object.name }}
