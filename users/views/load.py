@@ -45,9 +45,9 @@ class UserLoadMusicList(ListView):
 		return super(UserLoadMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-        context = super(UserLoadMusicList,self).get_context_data(**kwargs)
-        context["playlist"] = self.playlist
-        return context
+		context = super(UserLoadMusicList,self).get_context_data(**kwargs)
+		context["playlist"] = self.playlist
+		return context
 
 	def get_queryset(self):
 		musics_list = self.playlist.playlist_too().order_by('-created_at')
