@@ -44,6 +44,11 @@ class UserLoadMusicList(ListView):
 		self.template_name = get_settings_template("load/u_music_list_load.html", request)
 		return super(UserLoadMusicList,self).get(request,*args,**kwargs)
 
+	def get_context_data(self,**kwargs):
+        context = super(UserLoadMusicList,self).get_context_data(**kwargs)
+        context["playlist"] = self.playlist
+        return context
+
 	def get_queryset(self):
 		musics_list = self.playlist.playlist_too().order_by('-created_at')
 		return musics_list
