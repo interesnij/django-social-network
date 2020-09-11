@@ -76,6 +76,7 @@ class Doc2(models.Model):
     type = models.CharField(choices=TYPES, default='P', max_length=2)
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
+    is_community = models.BooleanField(default=False, verbose_name="Пренадлежит к сообществу")
 
     item = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
     item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
