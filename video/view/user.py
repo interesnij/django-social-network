@@ -98,7 +98,7 @@ class UserCreateVideoAttachWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("user_create/", "create_video_attach.html", request)
+        self.template_name = get_settings_template("user_create/create_video_attach.html", request)
 
         return super(UserCreateVideoAttachWindow,self).get(request,*args,**kwargs)
 
@@ -112,7 +112,7 @@ class UserCreateListWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("user_create/", "create_list.html", request)
+        self.template_name = get_settings_template("user_create/create_list.html", request)
         return super(UserCreateListWindow,self).get(request,*args,**kwargs)
 
 
@@ -122,7 +122,7 @@ class UserCreateVideoListWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("user_create/", "create_list_video.html", request)
+        self.template_name = get_settings_template("user_create/create_list_video.html", request)
         return super(UserCreateVideoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

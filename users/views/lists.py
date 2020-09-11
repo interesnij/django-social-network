@@ -15,7 +15,7 @@ class UserVisitCommunities(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("user_community/", "visits.html", request)
+		self.template_name = get_settings_template("user_community/visits.html", request)
 		return super(UserVisitCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -28,7 +28,7 @@ class BlackListUsers(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("u_list/", "blacklist.html", request)
+		self.template_name = get_settings_template("u_list/blacklist.html", request)
 		return super(BlackListUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

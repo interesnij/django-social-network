@@ -1,6 +1,6 @@
 <div class="card mb-4">
   <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">Прикрепление аудиозаписей</h5>
+    <h5 class="content-color-primary mb-0">Прикрепление аудиозаписей - {{ playlist.name }}</h5>
   </div>
   <div class="card-body border-bottom">
 
@@ -47,8 +47,11 @@
   <div class="card">
       <div class="nav flex-column nav-pills faqnav">
         <h6 style="margin-bottom:15px">Плейлисты</h6>
+        <a class="create_ajax pointer" data-href="/users/u_music_load/">
+          Основной плейлист
+        </a>
         {% for object in user.get_audio_playlists %}
-          <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
+          <a class="create_ajax pointer" data-href="/users/u_music_list_load/{{ object.uuid }}/">
             {{ object.name }}
           </a>
         {% endfor %}

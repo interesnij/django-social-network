@@ -53,7 +53,7 @@ def get_template_user(user, folder, template, request_user):
             template_name = folder + "anon_" + template
     return template_name
 
-def get_settings_template(folder, template, request):
+def get_settings_template(template, request):
     if request.user.is_authenticated:
         if request.user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -62,7 +62,7 @@ def get_settings_template(folder, template, request):
         elif request.user.is_blocked():
             template_name = "generic/u_template/you_global_block.html"
         else:
-            template_name = folder + template
+            template_name = template
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
     elif request.user.is_anonymous:
