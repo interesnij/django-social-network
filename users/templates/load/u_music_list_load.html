@@ -6,7 +6,7 @@
 
 <div class="row">
 
-<div class="col-lg-8" class="music-load row" class="profile_block_paginate" data-link="/users/{{ user.pk }}/music/">
+<div class="col-lg-8" class="music-load profile_block_paginate" data-pk="{{ playlist.pk }}" data-link="/users/{{ user.pk }}/music/">
   {% if object_list %}
 {% for object in object_list %}
   <div class="list-group-item pag {% if forloop.last %}last{% endif %}">
