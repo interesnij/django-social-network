@@ -423,7 +423,7 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
     if (attach_block.classList.contains("files_0")){
     pk = _this.parentElement.parentElement.getAttribute("data-pk");
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_.open( 'POST', "/music/get/playlist_preview/" + pk + "/", true );
+    link_.open( 'GET', "/music/get/playlist_preview/" + pk + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
@@ -435,7 +435,7 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
 
     }};
 
-    link_.send(form_data);
+    link_.send();
   } else {toast_error("Прикрепите или плейлист, или что-то еще")}
   }
 });
