@@ -96,7 +96,7 @@ function create_preview_music(div_class, img_src, pk, counter){
   $media.innerHTML = media_body.innerHTML;
   $media.style.marginLeft = "10px";
   h6 = $media.querySelector("h6");
-  h6.classList.add("music_list_post", "pointer", "music_title");
+  h6.classList.add("music_list_item", "pointer", "music_title");
 
   $div.append(music_preview_delete());
   $div.append($input);
