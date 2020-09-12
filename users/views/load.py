@@ -26,7 +26,7 @@ class UserLoadPhotoAlbum(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos().order_by('-created_at')
+		photo_list = self.album.get_photos().order_by('-created')
 		return photo_list
 
 class UserLoadPhotoComment(ListView):
