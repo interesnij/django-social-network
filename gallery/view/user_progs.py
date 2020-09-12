@@ -13,6 +13,7 @@ from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_permission_user_photo
 from django.http import Http404
+from common.template.user import get_settings_template
 
 
 class UserAddAvatar(View):
