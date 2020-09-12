@@ -473,6 +473,11 @@ on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block.nextElementSibling.remove();
   block.remove();
 })
+on('#ajax', 'click', '.photo_attach_album_remove', function() {
+  block = this.parentElement.parentElement;
+  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.remove();
+})
 
 on('#ajax', 'click', '.good_load_one', function() {
   _this = this;
