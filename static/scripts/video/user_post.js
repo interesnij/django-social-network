@@ -296,7 +296,7 @@ function post_and_load_object_page(form, url_post, url_1, url_2){
 on('#ajax', 'click', '#u_create_video_list_btn', function() {
   form = document.body.querySelector("#u_video_list_create");
   if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title"").style.border = "1px #FF0000 solid";
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
   post_and_load_object_page(form, "/video/user_progs/create_list/", "/users/", "/video_list/")
