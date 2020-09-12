@@ -40,7 +40,6 @@ on('#ajax', 'click', '.create_ajax', function() {
   link = this.getAttribute("data-href");
     loader = document.getElementById("create_loader");
     open_fullscreen(link, loader)
-}
 });
 
 on('body', 'click', '#u_multi_comments_photos', function(event) {
