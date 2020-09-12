@@ -25,7 +25,13 @@ class PostCommunityCreate(View):
         elif request.is_ajax() and form_post.is_valid() and check_can_get_lists(request.user,community):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
+            if request.POST.get('text') or request.POST.get('photo') or \
+                request.POST.get('video') or request.POST.get('music') or \
+                request.POST.get('good') or request.POST.get('article') or \
+                request.POST.get('playlist') or request.POST.get('video_list') or \
+                request.POST.get('photo_list') or request.POST.get('doc_list') or \
+                request.POST.get('doc') or request.POST.get('user') or \
+                request.POST.get('community'):
                 new_post = post.create_post(creator=request.user, text=post.text, parent=None, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)

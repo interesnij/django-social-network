@@ -34,7 +34,7 @@ class Post(models.Model):
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PROCESSING, 'Обработка'),
         (STATUS_PUBLISHED, 'Опубликована'),
-        (STATUS_MESSAGE_PUBLISHED, 'РЕпост в сообщения'),
+        (STATUS_MESSAGE_PUBLISHED, 'Репост в сообщения'),
         (STATUS_ARHIVED, 'Архивирована'),
 
         (PHOTO_REPOST, 'Репост фотографии'),
