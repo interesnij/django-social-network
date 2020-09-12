@@ -82,6 +82,8 @@ class Community(models.Model):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
 
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
+
     class Meta:
         verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
@@ -391,7 +393,7 @@ class Community(models.Model):
 
         lists_query = Q(community_id=self.id)
         lists = DocList.objects.filter(lists_query)
-        return lists 
+        return lists
 
     def get_docs_count(self):
         from docs.models import DocList, Doc2
