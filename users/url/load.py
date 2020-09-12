@@ -7,8 +7,8 @@ urlpatterns = [
     url(r'^u_img_load/$', login_required(UserLoadPhoto.as_view())),
     url(r'^u_img_comment_load/$', login_required(UserLoadPhotoComment.as_view())),
     url(r'^u_video_load/$', login_required(UserLoadVideo.as_view())),
-    url(r'^u_music_load/$', login_required(UserLoadMusic.as_view())),
-    url(r'^u_music_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadMusicList.as_view())),
+    url(r'^u_music_load/$', login_required(UserLoadMusic.as_view()), name="u_music_load"),
+    url(r'^u_music_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadMusicList.as_view()), name="u_music_list_load"),
     url(r'^u_article_load/$', login_required(UserLoadArticle.as_view())),
     url(r'^u_good_load/$', login_required(UserLoadGood.as_view())),
 
