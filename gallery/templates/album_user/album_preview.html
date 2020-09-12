@@ -8,7 +8,7 @@
                           </span>
                             <div class="media">
                                 <div class="media-body">
-                                    <h4 class="mb-0">{{ album.title }}</h4>
+                                    <h4 class="mb-0">{{ album.title }} ({{ album.count_photo }})</h4>
                                 </div>
                             </div>
                         </div>
@@ -23,12 +23,5 @@
                                 </figure>
                                 <h5 class="mt-2 content-color-primary text-center">{{ album.creator.get_full_name }}</h5>
                             </a>
-                        </div>
-                        <div class="card-footer border-top">
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5 class="mb-0">Фотографий: {{ album.count_photo }}</h5>
-                                </div>
-                            </div>
                         </div>
                     </div>
