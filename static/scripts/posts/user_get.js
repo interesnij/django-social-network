@@ -37,14 +37,9 @@ on('#ajax', 'click', '.u_article_detail', function() {
 });
 
 on('#ajax', 'click', '.create_ajax', function() {
-  _this = this;
-  link = _this.getAttribute("data-href");
-  current_link = _this.parentElement.getAttribute("data-href");
-  if (link != current_link){
+  link = this.getAttribute("data-href");
     loader = document.getElementById("create_loader");
     open_fullscreen(link, loader)
-  } else {
-  toast_info("Плейлист уже открыт")
 }
 });
 

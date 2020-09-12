@@ -64,13 +64,13 @@
 <div class="col-md-4">
   {% if user.user_music_playlist_exists %}
   <div class="card">
-      <div class="nav flex-column nav-pills faqnav" data-link="{% url 'u_music_list_load' uuid=playlist.uuid %}">
+      <div class="nav flex-column nav-pills faqnav">
         <h6 style="margin-bottom:15px">Плейлисты</h6>
         <a class="create_ajax pointer" data-href="{% url 'u_music_load' %}">
           Основной плейлист
         </a>
         {% for object in user.get_audio_playlists %}
-          <a class="create_ajax pointer" data-href="{% url 'u_music_list_load' uuid=object.uuid %}">
+          <a class="create_ajax pointer" {% if object.pk !=playlist.pk %}data-href="{% url 'u_music_list_load' uuid=object.uuid %}"{% endif %}>
             {{ object.name }}
           </a>
         {% endfor %}
