@@ -38,7 +38,8 @@ on('#ajax', 'click', '.u_article_detail', function() {
 
 on('#ajax', 'click', '.create_ajax', function() {
   link = this.getAttribute("data-href");
-  if (link != window.location.pathname){
+  current_link = this.parentElement.getAttribute("data-href");
+  if (link != current_link){
     loader = document.getElementById("create_loader");
     open_fullscreen(link, loader)
   } else {
