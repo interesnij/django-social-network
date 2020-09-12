@@ -33,7 +33,7 @@ class UserLoadMusic(ListView):
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
 		self.playlist = SoundList.objects.get(creator_id=request.user.pk, type=SoundList.MAIN, community=None)
-		self.template_name = get_settings_template("load/u_music_list_load.html", request)
+		self.template_name = get_settings_template("load/u_music_load.html", request)
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

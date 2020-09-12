@@ -65,6 +65,7 @@
   <div class="card">
       <div class="nav flex-column nav-pills faqnav">
         <h6 style="margin-bottom:15px">Плейлисты</h6>
+        <a>Основной плейлист</a>
         {% for object in user.get_audio_playlists %}
           <a class="create_ajax pointer" data-href="/users/load/u_music_list_load/{{ object.uuid }}/">
             {{ object.name }}
