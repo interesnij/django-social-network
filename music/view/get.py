@@ -39,14 +39,11 @@ class ListMusicGet(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(pk=self.kwargs["pk"])
-        self.list_ = SoundcloudParsing.objects.filter(list=self.list)
-        self.list_ = self.list_[0:100]
-        self.result = reversed(list(self.list_))
         return super(ListMusicGet,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(ListMusicGet,self).get_context_data(**kwargs)
-        context["list"] = self.result
+        context["list"] = self.list.playlist_too().order_by('-created_at')[0:50]
         return context
 
 
