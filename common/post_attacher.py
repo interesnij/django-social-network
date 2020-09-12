@@ -4,7 +4,7 @@ from music.models import SoundcloudParsing, SoundList
 from gallery.models import Photo, Album
 from goods.models import Good
 from article.models import Article
-from docs.models import Docm DocList
+from docs.models import Docm, DocList
 from users.models import User
 from communities.models import Community
 
