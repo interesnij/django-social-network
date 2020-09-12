@@ -7,8 +7,11 @@
   #add_multi_comments_photos:hover {cursor: pointer}
 </style>
 
-
-<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографий</h4>
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">Прикрепление фотографий</h5>
+  </div>
+  <div class="card-body border-bottom">
 <form id="add_photos" method="post">
     {% csrf_token %}
       <input type="file" id="u_photo_post_attach" class="upload_for_post" name="file" style="display:none" multiple="multiple">
@@ -47,3 +50,5 @@
   <h6 style="text-align: center;margin: 20px;"> У Вас нет фотографий ...</h6>
 </div>
 {% endif %}
+</div>
+</div>
