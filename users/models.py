@@ -1180,12 +1180,10 @@ class User(AbstractUser):
         return docs_list
 
     def get_docs_count(self):
-        from docs.models import DocList, Doc2
+        from docs.models import Doc2
 
-        list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
-        docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
-        return docs_list.count()
+        docs_list = Doc2.objects.filter(creator_id=self.pk).values("pk").count()
+        return docs_list
 
     def get_last_docs(self):
         from docs.models import DocList, Doc2
