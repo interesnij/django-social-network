@@ -18,7 +18,7 @@
   height: auto;
 }
 </style>
-    <form action="" id="create_video_list_form">
+    <form action="" id="create_video_form">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
@@ -96,7 +96,7 @@
 
             <div class="card-footer">
               <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-              <button type="button" class="btn btn-success float-right" id="create_video_in_list_btn">Создать</button>
+              <button type="button" class="btn btn-success float-right" id="create_video_in_btn">Создать</button>
             </div>
         </div>
     </form>
