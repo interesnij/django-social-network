@@ -77,7 +77,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   counter = this.getAttribute('video-counter');
   parent = this.parentElement;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  parent.parentElement.getAttribute("album-uuid") ? uuid = parent.parentElement.getAttribute("album-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  parent.parentElement.getAttribute("data-uuid") ? uuid = parent.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");

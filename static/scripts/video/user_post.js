@@ -261,7 +261,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
+    elem = link_.responseText; 
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
