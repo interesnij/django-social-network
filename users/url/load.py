@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    url(r'^u_img_load/$', login_required(UserLoadPhoto.as_view())),
-    url(r'^u_album_img_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadPhotoAlbum.as_view()), name="u_music_list_load"),
+    url(r'^u_img_load/$', login_required(UserLoadPhoto.as_view()), name="u_photo_load"),
+    url(r'^u_album_img_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadPhotoAlbum.as_view()), name="u_photo_list_load"),
 
     url(r'^u_img_comment_load/$', login_required(UserLoadPhotoComment.as_view())),
     url(r'^u_video_load/$', login_required(UserLoadVideo.as_view())),
