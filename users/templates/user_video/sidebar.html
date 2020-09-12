@@ -1,0 +1,21 @@
+<br>
+<div class="card">
+  <div class="card-header">
+    <div class="media">
+        <div class="media-body">
+          <h5 class="mt-1">
+            <p>Списки</p>
+          </h5>
+        </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="nav flex-column nav-pills faqnav">
+      {% for object in user.get_my_video_albums %}
+        <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+          {{ object.title }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

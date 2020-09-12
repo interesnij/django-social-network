@@ -168,7 +168,7 @@ class UserVideo(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.user, "user_video_list/", "list.html", request.user)
+        self.template_name = get_template_user_video(self.user, "user_video/", "list.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
