@@ -126,12 +126,8 @@ class UserDocCreate(View):
             new_doc.creator = request.user
             lists = form_post.cleaned_data.get("list")
             new_doc.save()
-            if not lists:
-                list.doc_list.add(new_doc)
-            else:
-                for _list in lists:
-                    _list.doc_list.add(new_doc)
-
+            for _list in lists:
+                _list.doc_list.add(new_doc)
             return render(request, 'doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()

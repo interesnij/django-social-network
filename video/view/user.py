@@ -116,18 +116,16 @@ class UserCreateListWindow(TemplateView):
         return super(UserCreateListWindow,self).get(request,*args,**kwargs)
 
 
-class UserCreateVideoListWindow(TemplateView):
+class UserCreateVideoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("user_create/create_list_video.html", request)
-        return super(UserCreateVideoListWindow,self).get(request,*args,**kwargs)
+        self.template_name = get_settings_template("user_create/create_video.html", request)
+        return super(UserCreateVideoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserCreateVideoListWindow,self).get_context_data(**kwargs)
+        context = super(UserCreateVideoWindow,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['album'] = self.album
-        context['form_post'] = VideoForm({'album': self.album})
+        context['form_post'] = VideoForm()
         return context
