@@ -1160,7 +1160,7 @@ class User(AbstractUser):
         except:
             genre_music = None
         if list:
-            return list.playlist_too()
+            return list.playlist_too().order_by('-created_at')
         elif tag_music:
             return tag_music.playlist_too()
         elif genre_music:
