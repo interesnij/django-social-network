@@ -162,8 +162,7 @@ ul{
 .u_photo_detail,
 .c_album_photo_detail,
 .c_photo_detail,
-.photo_load_one,
-.cover_block  {
+.photo_load_one{
   cursor:pointer;
 }
 
