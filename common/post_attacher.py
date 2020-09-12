@@ -4,7 +4,7 @@ from music.models import SoundcloudParsing, SoundList
 from gallery.models import Photo, Album
 from goods.models import Good
 from article.models import Article
-from docs.models import Doc, DocList
+from docs.models import Doc2, DocList
 from users.models import User
 from communities.models import Community
 
@@ -46,7 +46,7 @@ def article_attach(value, post):
 
 def doc_attach(value, doc):
     try:
-        _select_doc = Doc.objects.get(pk=value)
+        _select_doc = Doc2.objects.get(pk=value)
         _select_doc.item.add(doc)
     except:
         raise ValidationError('Документ не найден')
