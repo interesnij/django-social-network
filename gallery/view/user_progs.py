@@ -352,3 +352,18 @@ class UserRemoveAvatarPhoto(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class UserAlbumPreview(TemplateView):
+	template_name = 'load/u_music_load.html'
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.album = Album.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("album_user/album_preview.html", request)
+		return super(UserAlbumPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserAlbumPreview,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context

@@ -1,0 +1,28 @@
+<div class="card mb-4">
+                        <div class="card-header">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h4 class="mb-0">{{ album.title }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="{% url 'user_album' pk=album.creator.pk uuid=album.uuid %}" class="ajax">
+                                <figure class="avatar avatar-120 mx-auto">
+                                  {% if album.get_cover_photo %}
+                                    <img class="lazyload" data-src="{{ album.get_cover_photo.file.url }}" />
+                                  {% else %}
+                                    <img class="lazyload" data-src="/static/images/no_img/album.jpg" />
+                                  {% endif %}
+                                </figure>
+                                <h5 class="mt-2 content-color-primary text-center">{{ album.creator.get_full_name }}</h5>
+                            </a>
+                        </div>
+                        <div class="card-footer border-top">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="mb-0">Фотографий: {{ album.count_photo }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
