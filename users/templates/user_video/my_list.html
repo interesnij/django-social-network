@@ -27,6 +27,7 @@
 
                 <div class="video_playlist" id="movies_container">
                   <div class="row profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
+                    {% if object_list %}
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_list_detail pag {% if forloop.last %}last{% endif %}" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
                         {% if object.image %}
@@ -39,23 +40,25 @@
                           <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
                         </div>
                     </div>
-                      {% empty %}
+                      {% endfor %}
+                      {% else %}
                       <div class="card video_none centered">
                         <div class="card-body" style="margin-top: 10%;">
                         <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'>
                           <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                         </div>
-                        <h6 style="margin: 20px;text-align: center;">У списке пока нет видео. <a href="" style="text-decoration:underline;" class="ajax">Перейдите в видео каталог</a> и выбирайте из сотен тысяч роликов</h6>
+                        <h6 style="margin: 20px;text-align: center;">В списке пока нет видео. <a href="" style="text-decoration:underline;" class="ajax">Перейдите в видео каталог</a> и выбирайте из сотен тысяч роликов</h6>
                       </div>
-                      {% endfor %}
+                      {% endif %}
+
                   </div>
                 </div>
               </div>
           </div>
         </div>
         <div class="col-12 col-mb-3 col-lg-3">
-          {% include 'user_video_list/my_sidebar.html' %}
+          {% include 'user_video/my_sidebar.html' %}
         </div>
     </div>
 </div>

@@ -225,7 +225,6 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    list = document.body.querySelector("#id_list");
     span1 = response.querySelector('.span1')
     if (span1.classList.contains(uuid)){
       container = document.body.querySelector(".profile_block_paginate");

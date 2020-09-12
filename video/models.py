@@ -195,6 +195,9 @@ class Video(models.Model):
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
         return VideoComment.objects.filter(comments_query)
 
+    def get_albums_for_video(self):
+        return self.album.all()
+
 
 class VideoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")

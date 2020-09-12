@@ -229,8 +229,14 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_comment_dislikes")
 });
 
-on('#ajax', 'click', '#create_video_in_list_btn', function() {
-  form = document.querySelector("#create_video_list_form");
+on('#ajax', 'click', '#u_create_video_btn', function() {
+  lists = form.querySelector("#id_list");
+  selectedOptions = lists.selectedOptions;
+  val = false;
+  for (var i = 0; i < selectedOptions.length; i++) {
+    if(selectedOptions[i].value) {val = true}
+  }
+  form = document.querySelector("#create_video_form");
   form_data = new FormData(form);
 
   if (!form.querySelector("#id_title").value){
@@ -242,29 +248,33 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
   } else if (!form.querySelector("#id_image").value){
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
+  } else if (!val){
+    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
+    toast_error("Выберите альбом!")
   }
+
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("album-uuid");
+  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/user_progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    album = document.body.querySelector("#id_album");
-
-      elem_ = document.createElement('div');
-      elem_.innerHTML = link_.responseText;
-      elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
-      elem_.setAttribute("video-counter", "0");
-      elem_.style.cursor = "pointer";
-      container = document.body.querySelector("#user_video_container");
-      container.prepend(elem_);
-      try{container.querySelector(".video_none").style.display = "none"}catch{null};
-
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    span1 = response.querySelector('.span1')
+    if (span1.classList.contains(uuid)){
+      container = document.body.querySelector(".profile_block_paginate");
+      container.insertAdjacentHTML('afterBegin', response.innerHTML);
+      container.querySelector(".video_none") ? container.querySelector(".video_none").style.display = "none" : null;
+      toast_info("Видео создано!")
+    } else{
+      toast_info("Видео создано!")
+    }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    toast_info("Видеоролик создан!")
   }};
 
   link_.send(form_data);
