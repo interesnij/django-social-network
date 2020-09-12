@@ -209,7 +209,7 @@ class CommunityVideo(ListView):
 		from video.models import VideoAlbum
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.user, "c_video/", "list.html", request.user)
+		self.template_name = get_template_community_video(self.community, "c_video/", "list.html", request.user)
 
 		self.album = VideoAlbum.objects.get(community_id=self.community.pk, type=VideoAlbum.MAIN)
 		if request.user.is_staff_of_community_with_name(self.community.name):
@@ -243,7 +243,7 @@ class CommunityVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 
-		self.template_name = get_template_community_video(self.user, "c_video_list/", "list.html", request.user)
+		self.template_name = get_template_community_video(self.community, "c_video_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
