@@ -250,8 +250,9 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     toast_error("Фотография на обложку обязательна!")
   } else if (!val){
     form.querySelector("#id_album").style.border = "1px #FF0000 solid";
-    toast_error("Выберите альбом!")
-  }
+    toast_error("Выберите альбом!");
+    return
+  };
 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
@@ -261,7 +262,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText; 
+    elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
