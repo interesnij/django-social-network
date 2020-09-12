@@ -421,7 +421,7 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
   } else if (document.body.querySelector(".attach_block")) {
     attach_block = document.body.querySelector(".attach_block");
     if (attach_block.classList.contains("files_0")){
-    pk = _this.parentElement.parentElement.getAttribute("data-pk");
+    pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_.open( 'GET', "/music/get/playlist_preview/" + pk + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
