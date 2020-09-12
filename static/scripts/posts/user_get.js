@@ -38,11 +38,11 @@ on('#ajax', 'click', '.u_article_detail', function() {
 
 on('#ajax', 'click', '.create_ajax', function() {
   link = this.getAttribute("data-href");
-  if (link == window.location.pathname){
-    toast_info("Плейлист уже открыт")
+  if (link != window.location.pathname){
+    loader = document.getElementById("create_loader");
+    open_fullscreen(link, loader)
   } else {
-  loader = document.getElementById("create_loader");
-  open_fullscreen(link, loader)
+  toast_info("Плейлист уже открыт")
 }
 });
 
