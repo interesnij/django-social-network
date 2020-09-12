@@ -82,7 +82,7 @@ class Community(models.Model):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
 
     class Meta:
         verbose_name = 'сообщество'
