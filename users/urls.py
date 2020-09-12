@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/doc_list/(?P<uuid>[0-9a-f-]+)/$', UserDocsList.as_view(), name='user_docs_list'),
 
     url(r'^(?P<pk>\d+)/music/$', UserMusic.as_view(), name='user_music'),
-    url(r'^music_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserMusicList.as_view(), name='user_music_list'),
+    url(r'^(?P<pk>\d+)/music_list/(?P<uuid>[0-9a-f-]+)/$', UserMusicList.as_view(), name='user_music_list'),
 
     url(r'^(?P<pk>\d+)/video/$', UserVideo.as_view(), name='user_video'),
     url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', UserVideoList.as_view(), name='user_video_list'),
