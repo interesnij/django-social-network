@@ -36,15 +36,15 @@
               <div class="card-body">
                     <ul id="user_docs_container" data-pk="{{ list.pk }}" class="profile_block_paginate" data-link="/users/{{ user.pk }}/docs/">
                     {% if object_list %}
-                      {% for object in object_list %}
+                      {% for doc in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;">
-                                    <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
+                                    <a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a>
                                   </h6>
-                                    <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
-                                    <span class='span_btn' data-pk="{{ object.pk }}">
+                                    <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
+                                    <span class='span_btn' data-pk="{{ doc.pk }}">
                                       {% include 'user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
                                         <a class="btn_default drop pointer">
@@ -63,7 +63,7 @@
                       {% endfor %}
 
                       {% else %}
-                      <div class="card centered doc_empty"> 
+                      <div class="card centered doc_empty">
                         <div class="card-body" style="margin-top: 10%;">
                         <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                         </div>

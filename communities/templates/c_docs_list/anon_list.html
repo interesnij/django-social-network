@@ -40,12 +40,12 @@
               <div class="card-body">
                     <ul id="user_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate" data-link="/communities/{{ community.pk }}/docs/">
                       {% if object_list %}
-                      {% for object in object_list %}
+                      {% for doc in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
-                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
-                                  <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
+                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
                               </div>
                           </div>
                       </li>
