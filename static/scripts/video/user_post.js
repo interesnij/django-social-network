@@ -232,7 +232,7 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = document.querySelector("#u_create_video_form");
   form_data = new FormData(form);
-  lists = form.querySelector("#id_list");
+  lists = form.querySelector("#id_album");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
@@ -249,7 +249,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
   } else if (!val){
-    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
+    form.querySelector("#id_album").style.border = "1px #FF0000 solid";
     toast_error("Выберите альбом!")
   }
 
