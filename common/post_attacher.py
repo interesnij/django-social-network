@@ -44,54 +44,40 @@ def article_attach(value, post):
     except:
         raise ValidationError('Статья не найдена')
 
-def doc_attach(value, doc):
+def doc_attach(value, post):
     try:
         _select_doc = Doc2.objects.get(pk=value)
-        _select_doc.item.add(doc)
+        _select_doc.item.add(post)
     except:
         raise ValidationError('Документ не найден')
 
-def playlist_attach(value, playlist):
+def playlist_attach(value, post):
     try:
         _select_playlist = SoundList.objects.get(pk=value)
-        _select_playlist.post.add(playlist)
+        _select_playlist.post.add(post)
     except:
         raise ValidationError('Плейлист не найден')
 
-def doclist_attach(value, doc_list):
+def doclist_attach(value, post):
     try:
         _select_doc_list = DocList.objects.get(pk=value)
-        _select_doc_list.post.add(doc_list)
+        _select_doc_list.post.add(post)
     except:
         raise ValidationError('Плейлист не найден')
 
-def photolist_attach(value, photo_list):
+def photolist_attach(value, post):
     try:
         _select_photo_list = Album.objects.get(pk=value)
-        _select_photo_list.post.add(photo_list)
+        _select_photo_list.post.add(post)
     except:
         raise ValidationError('Фотоальбом не найден')
 
-def videolist_attach(value, video_list):
+def videolist_attach(value, post):
     try:
         _select_video_list = VideoAlbum.objects.get(pk=value)
-        _select_video_list.post.add(video_list)
+        _select_video_list.post.add(post)
     except:
         raise ValidationError('Видеоальбом не найден')
-
-def user_attach(value, user):
-    try:
-        _select_user = User.objects.get(pk=value)
-        _select_user.post.add(user)
-    except:
-        raise ValidationError('Пользователь не найден')
-
-def community_attach(value, community):
-    try:
-        _select_community = Community.objects.get(pk=value)
-        _select_community.post.add(community)
-    except:
-        raise ValidationError('Сообщество не найдено')
 
 
 def get_post_attach(request, post):

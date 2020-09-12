@@ -98,11 +98,11 @@ class Post(models.Model):
 
     def get_parent_attach_photos(self):
         return self.parent.item_photo.all()
-    def get_parent_attach_photos_list(self):
+    def get_parent_attach_photo_list(self):
         return self.parent.post_album.all()
     def get_parent_attach_videos(self):
         return self.parent.item_video.all()
-    def get_parent_attach_videos_list(self):
+    def get_parent_attach_video_list(self):
         return self.parent.post_video_album.all()
     def get_parent_attach_goods(self):
         return self.parent.item_good.all()
@@ -114,16 +114,16 @@ class Post(models.Model):
         return self.parent.post_soundlist.all()
     def get_parent_attach_docs(self):
         return self.parent.item_doc.all()
-    def get_parent_attach_docs_list(self):
+    def get_parent_attach_doc_list(self):
         return self.parent.post_doclist.all()
 
     def get_attach_photos(self):
         return self.item_photo.all()
-    def get_attach_photos_list(self):
+    def get_attach_photo_list(self):
         return self.post_album.all()
     def get_attach_videos(self):
         return self.item_video.all()
-    def get_attach_videos_list(self):
+    def get_attach_video_list(self):
         return self.post_video_album.all()
     def get_attach_goods(self):
         return self.item_good.all()
@@ -135,7 +135,7 @@ class Post(models.Model):
         return self.post_soundlist.all()
     def get_attach_docs(self):
         return self.item_doc.all()
-    def get_attach_docs_list(self):
+    def get_attach_doc_list(self):
         return self.post_doclist.all()
 
     def is_photo_repost(self):
