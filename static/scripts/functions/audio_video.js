@@ -480,13 +480,13 @@ function music_onReady(){console.log("Аудио плеер готов");}
       var track_id = this.parentElement.parentElement.getAttribute('music-counter');
       id = 0;
       parents = this.parentElement.parentElement.parentElement.parentElement;
-      var list= parents.getElementsByTagName("li");
+      tag = parents.getAttribute('data-tag')
+      list= parents.getElementsByTagName(tag);
       for (var i=0; i!= list.length; ++i) {
         if (list[i]==this.parentElement.parentElement.parentElement) {
           id = i;
         };
       }
-
       list_pk = parents.getAttribute('data-pk');
       console.log(list_pk);
       if (!document.body.classList.contains("list_" + list_pk) && list_pk){

@@ -27,7 +27,7 @@
       </div>
     </div>
 {% for object in object_list %}
-  <div class="list-group-item pag {% if forloop.last %}last{% endif %}">
+  <div data-tag="div" class="list-group-item pag {% if forloop.last %}last{% endif %}">
     <div style="display:flex" data-pk="{{ object.pk }}" music-counter="{{ forloop.counter0 }}">
         <figure>
           <a class="pointer music_list_item">
