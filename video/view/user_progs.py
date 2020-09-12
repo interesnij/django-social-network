@@ -241,13 +241,12 @@ class UserVideoAttachCreate(View):
             return HttpResponseBadRequest()
 
 
-class UserVideoInListCreate(View):
+class UserVideoCreate(View):
     form_post = None
 
     def get_context_data(self,**kwargs):
-        context = super(UserVideoInListCreate,self).get_context_data(**kwargs)
+        context = super(UserVideoCreate,self).get_context_data(**kwargs)
         context["form_post"] = VideoForm()
-        context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
