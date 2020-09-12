@@ -19,7 +19,34 @@
           <h4>загрузить и прикрепить (до 10)</h4>
       </div>
 </form>
-<br><br>
+<br>
+
+<div class="row" style="margin-left: 0;margin-right: 0;">
+    {% for object in request.user.get_albums %}
+    <div class="col-md-6 col-lg-4 cover_block">
+        <div class="card rounded-0 border-0 mb-3">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
+                        <h6 class="mb-0">{{ object.title }}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+              <a data-href="{% url 'u_music_list_load' uuid=object.uuid %}" class="pointer create_ajax">
+                  {% if object.get_cover_photo %}
+                    <img class="lazyload image_fit_200" data-src="{{ object.get_cover_photo.file.url }}" />
+                  {% else %}
+                    <img class="lazyload image_fit_200" data-src="/static/images/no_img/album.jpg" />
+                  {% endif %}
+                <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
+              </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="list_block_paginate" id="img_load_container" data-link="users/load/img_load/">
 {% for object in object_list %}
