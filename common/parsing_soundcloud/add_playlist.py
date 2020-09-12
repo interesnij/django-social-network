@@ -14,7 +14,7 @@ def add_playlist(url, request_user, list):
     if data:
         try:
             playlist_url = data['artwork_url']
-            img_response = requests.get(url=playlist_url.replace("large.jpg", "crop.jpg"))
+            img_response = requests.get(url=playlist_url)
             list.image = img_response.replace("large.jpg", "crop.jpg")
             list.save(update_fields=["image"])
         except:
