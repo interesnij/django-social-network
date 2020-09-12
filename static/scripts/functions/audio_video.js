@@ -477,24 +477,16 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
     }
     on('#ajax', 'click', '.music_list_item', function() {
-      var track_id = this.parentElement.parentElement.getAttribute('music-counter');
-      id = 0;
+      track_id = this.parentElement.parentElement.getAttribute('music-counter');
       parents = this.parentElement.parentElement.parentElement.parentElement;
-      tag = parents.getAttribute('data-tag')
-      list= parents.getElementsByTagName(tag);
-      for (var i=0; i!= list.length; ++i) {
-        if (list[i]==this.parentElement.parentElement.parentElement) {
-          id = i;
-        };
-      }
       list_pk = parents.getAttribute('data-pk');
       console.log(list_pk);
       if (!document.body.classList.contains("list_" + list_pk) && list_pk){
-        save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", id)
+        save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", track_id)
       }else{
         music_player.loadPlaylist(0);
         if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-        setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, id)}, 50);
+        setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
       }
       }
     });
