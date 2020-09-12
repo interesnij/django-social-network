@@ -1182,7 +1182,7 @@ class User(AbstractUser):
     def get_docs_count(self):
         from docs.models import Doc2
 
-        docs_list = Doc2.objects.filter(creator_id=self.pk).values("pk").count()
+        docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False).values("pk").count()
         return docs_list
 
     def get_last_docs(self):
