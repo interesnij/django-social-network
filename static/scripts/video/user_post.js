@@ -230,14 +230,14 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 });
 
 on('#ajax', 'click', '#u_create_video_btn', function() {
+  form = document.querySelector("#u_create_video_form");
+  form_data = new FormData(form);
   lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
     if(selectedOptions[i].value) {val = true}
   }
-  form = document.querySelector("#create_video_form");
-  form_data = new FormData(form);
 
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
