@@ -181,6 +181,9 @@ on('#ajax', 'click', '#u_good_add_attach', function() {
 });
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
+  form_post = document.body.querySelector("#add_good_user_form");
+  form_data = new FormData(form_post);
+  
   lists = form.querySelector("#id_album");
   selectedOptions = lists.selectedOptions;
   val = false;
@@ -205,8 +208,6 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     return
   }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_post = document.body.querySelector("#add_good_user_form");
-  form_data = new FormData(form_post);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/user_progs/add/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
