@@ -240,7 +240,7 @@ class Good(models.Model):
 			return str(count) + " просмотров"
 
 	def get_albums_for_good(self):
-        return self.album.all()
+		return self.album.all()
 
 
 
