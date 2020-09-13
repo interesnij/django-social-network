@@ -163,36 +163,43 @@ class UserHideGood(View):
         else:
             raise Http404
 
-class GoodUserCreate(TemplateView):
+class GoodUserCreateWindow(TemplateView):
     template_name = "u_good/add.html"
     form = None
 
     def get(self,request,*args,**kwargs):
-        self.form = GoodForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        return super(GoodUserCreate,self).get(request,*args,**kwargs)
+        return super(GoodUserCreateWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodUserCreateWindow,self).get_context_data(**kwargs)
+        context["form"] = GoodForm()
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        return context
+
+class GoodUserCreate(View):
+    form_post = None
 
     def get_context_data(self,**kwargs):
         context = super(GoodUserCreate,self).get_context_data(**kwargs)
-        context["form"] = self.form
-        context["sub_categories"] = GoodSubCategory.objects.only("id")
-        context["categories"] = GoodCategory.objects.only("id")
-        context["user"] = self.user
+        context["form_post"] = DocForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = GoodForm(request.POST,request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid():
-            albums = self.form.cleaned_data.get("album")
-            new_good = self.form.save(commit=False)
-            new_good.creator = self.user
-            new_good = self.form.save()
-            for _album in albums:
-                _album.good_album.add(new_good)
+        form_post = GoodForm(request.POST, request.FILES)
+        user = User.objects.get(pk=self.kwargs["pk"])
+
+        if request.is_ajax() and form_post.is_valid() and request.user == user:
+            new_good = form_post.save(commit=False)
+            new_good.creator = request.user
+            lists = form_post.cleaned_data.get("album")
+            new_good.save()
+            for _list in lists:
+                _list.good_album.add(new_good)
             return render(request, 'good_base/u_new_good.html',{'object': new_good})
         else:
-            return HttpResponseBadRequest("")
+            return HttpResponseBadRequest()
 
 
 class GoodUserCreateAttach(TemplateView):

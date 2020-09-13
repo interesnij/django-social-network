@@ -172,7 +172,7 @@ on('#ajax', 'click', '#good_image5', function() {
 on('#ajax', 'click', '.u_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user_progs/add/' + pk + '/', loader)
+  open_fullscreen('/goods/user_progs/add_window/' + pk + '/', loader)
 });
 on('#ajax', 'click', '#u_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
