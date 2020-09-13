@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import TemplateView
 from django.views.generic import ListView
-from goods.models import Good
+from goods.models import Good, GoodAlbum
 from users.models import User
 from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
@@ -16,6 +16,14 @@ class UserGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.album = GoodAlbum.objects.get(creator_id=self.user.pk, community=None, type=GoodAlbum.MAIN)
+        except:
+            self.album = GoodAlbum.objects.create(creator_id=self.user.pk, community=None, type=GoodAlbum.MAIN)
+        if self.user.pk == request.user.pk:
+            self.good_list = self.album.get_staff_goods()
+        else:
+            self.good_list = self.album.get_goods()
 
         self.template_name = get_permission_user_good(self.user, "u_good/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -25,13 +33,11 @@ class UserGoods(ListView):
     def get_context_data(self,**kwargs):
         context = super(UserGoods,self).get_context_data(**kwargs)
         context["user"] = self.user
+        context["album"] = self.album
         return context
 
     def get_queryset(self):
-        if self.user.pk == self.request.user.pk:
-            goods_list = self.user.get_my_goods().order_by('-created')
-        else:
-            goods_list = self.user.get_goods().order_by('-created')
+        goods_list = self.good_list().order_by('-created')
         return goods_list
 
 

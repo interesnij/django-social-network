@@ -258,7 +258,6 @@ class CommunityVideoInListCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            album = VideoAlbum.objects.get(creator_id=request.pk, community=community, type=VideoAlbum.MAIN)
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")

@@ -2,12 +2,13 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import TemplateView
 from django.views.generic import ListView
-from goods.models import Good
+from goods.models import Good, GoodAlbum
 from communities.models import Community
 from common.check.community import check_can_get_lists
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 from common.template.good import get_template_community_good, get_permission_community_good
+
 
 class CommunityGoods(ListView):
     template_name = None
@@ -15,6 +16,14 @@ class CommunityGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.album = GoodAlbum.objects.get(community=self.community, type=GoodAlbum.MAIN)
+        except:
+            self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN)
+        if self.request.user.is_staff_of_community_with_name(self.community.name):
+            self.good_list = self.album.get_staff_goods()
+        else:
+            self.good_list = self.album.get_goods()
         self.template_name = get_template_community_good(self.community, "c_good/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -26,10 +35,7 @@ class CommunityGoods(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff_of_community_with_name(self.community.name):
-            goods_list = self.community.get_admin_goods().order_by('-created')
-        else:
-            goods_list = self.community.get_goods().order_by('-created')
+        goods_list = self.good_list
         return goods_list
 
 

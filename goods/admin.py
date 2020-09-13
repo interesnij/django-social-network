@@ -1,5 +1,5 @@
 from django.contrib import admin
-from goods.models import Good, GoodSubCategory, GoodCategory
+from goods.models import Good, GoodAlbum, GoodSubCategory, GoodCategory
 
 
 class GoodCategoryAdmin(admin.ModelAdmin):
@@ -15,6 +15,11 @@ class GoodSubCategoryAdmin(admin.ModelAdmin):
     class Meta:
             model = GoodSubCategory
 
+class GoodAlbumAdmin(admin.ModelAdmin):
+    list_display = ['title', 'order',]
+    search_fields = ['name']
+    class Meta:
+            model = GoodAlbum
 
 class GoodAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'description', 'sub_category']

@@ -203,11 +203,13 @@ class GoodCommunityCreate(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
+            albums = form_post.cleaned_data.get("album")
             new_good.creator = request.user
             new_good.community = self.community
             new_good = self.form.save()
-            html = render(request,'good_base/u_new_good.html',{'object': new_good})
-            return HttpResponse() 
+            for _album in albums:
+                _album.good_album.add(new_good)
+            return render(request,'good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
 

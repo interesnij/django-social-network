@@ -40,6 +40,58 @@ class GoodSubCategory(models.Model):
 		verbose_name = "Подкатегория товаров"
 		verbose_name_plural = "Подкатегории товаров"
 
+
+class GoodAlbum(models.Model):
+    MAIN = 'MA'
+    ALBUM = 'AL'
+    TYPE = (
+        (MAIN, 'Основной альбом'),
+        (ALBUM, 'Пользовательский альбом'),
+    )
+
+    community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    title = models.CharField(max_length=250, verbose_name="Название")
+    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
+    type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    order = models.PositiveIntegerField(default=0)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_album_creator', verbose_name="Создатель")
+    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_good_album')
+
+    class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
+        verbose_name = 'Подборка товаров'
+        verbose_name_plural = 'Подборки товаров'
+
+    def is_main_album(self):
+        return self.type == self.MAIN
+    def is_user_album(self):
+        return self.type == self.ALBUM
+
+    def __str__(self):
+        return self.title
+
+    def get_6_photos(self):
+        return self.photo_album.filter(is_deleted=False)[:5]
+
+    def count_goods(self):
+        try:
+            return self.good_album.filter(is_deleted=False).values("pk").count()
+        except:
+            return 0
+
+    def get_goods(self):
+        return self.good_album.filter(is_deleted=False, status=Good.STATUS_PUBLISHED)
+
+    def get_staff_goods(self):
+        return self.good_album.filter(is_deleted=False)
+
+
 class Good(models.Model):
 	STATUS_DRAFT = 'D'
 	STATUS_SOLD = 'S'
@@ -52,18 +104,17 @@ class Good(models.Model):
 		(STATUS_PROCESSING, 'Обработка'),
 		)
 
-	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
-	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	id = models.BigAutoField(primary_key=True)
+	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True, verbose_name="Подборка")
 
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to="goods/%Y/%m/%d")
 	image2 = ProcessedImageField(verbose_name='изображение 2', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(512, 512)],upload_to="goods/%Y/%m/%d")
@@ -87,8 +138,10 @@ class Good(models.Model):
 		return naturaltime(self.created)
 
 	@classmethod
-	def create_good(cls, image, title, sub_category, creator, description, community, price, comments_enabled, votes_on, status):
-		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
+	def create_good(cls, image, title, sub_category, creator, description, \
+					community, price, comments_enabled, votes_on, status):
+		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, \
+								community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
 		channel_layer = get_channel_layer()
 		payload = {
 			"type": "receive",
@@ -185,6 +238,9 @@ class Good(models.Model):
 			return str(count) + " просмотра"
 		else:
 			return str(count) + " просмотров"
+
+	def get_albums_for_good(self):
+        return self.album.all()
 
 
 
