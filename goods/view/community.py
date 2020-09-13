@@ -26,6 +26,7 @@ class CommunityGood(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityGood,self).get_context_data(**kwargs)
         context["object"] = self.good
+        context["album"] = self.album
         context["community"] = self.album.community
         context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
