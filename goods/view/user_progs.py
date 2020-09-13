@@ -256,7 +256,7 @@ class GoodAlbumUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = GoodAlbumForm(request.POST)
-        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.user.pk:
+        if request.is_ajax() and self.form.is_valid():
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=None)
             return render(request, 'user_goods_list/my_list.html',{'album': new_album})
