@@ -67,7 +67,7 @@
         <h6 style="margin-bottom:15px">Видеоальбомы</h6>
         <a class="create_ajax pointer" data-href="{% url 'u_video_load' %}">Основной видеоальбом</a>
         {% for object in request.user.get_my_video_albums %}
-          <a {% if object.pk != playlist.pk %}class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}"{% endif %}>
+          <a {% if object.pk != album.pk %}class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}"{% endif %}>
             {{ object.title }}
           </a>
         {% endfor %}
