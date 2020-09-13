@@ -8,6 +8,7 @@ from common.template.post import get_template_community_post, get_permission_com
 from common.template.music import get_template_community_music
 from common.template.video import get_template_community_video
 from common.template.good import get_template_community_good
+from common.template.doc import get_template_community_doc
 from django.http import Http404
 from common.get_template import get_default_template
 
