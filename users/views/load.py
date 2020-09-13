@@ -37,6 +37,7 @@ class UserLoadPhotoComment(ListView):
 		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
+
 class UserLoadVideo(ListView):
 	template_name = 'load/u_video_load.html'
 	paginate_by = 15
@@ -44,6 +45,26 @@ class UserLoadVideo(ListView):
 	def get_queryset(self):
 		videos_list = self.request.user.get_video().order_by('-created')
 		return videos_list
+
+class UserLoadVideoAlbum(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
+		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("load/u_video_list_load.html", request)
+		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadVideoAlbum,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
+	def get_queryset(self):
+		video_list = self.album.get_queryset().order_by('-created')
+		return video_list
+
 
 class UserLoadMusic(ListView):
 	template_name = 'load/u_music_load.html'
