@@ -5,7 +5,6 @@
 <div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
     <div class="row">
         <div class="col-12 col-md-9 col-lg-9">
-          <br>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -62,27 +61,23 @@
           </div>
         </div>
         <div class="col-12 col-mb-3 col-lg-3">
-          <br>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
+          <div class="card border-top mb-3 mt-3">
+              <div class="card-body">
+                <a href="{% url 'user' pk=user.pk %}" class="ajax">
+                  <div class="media">
+                      <figure style="width:50px;">
+                        {% if user.get_avatar %}
+                          <img src="{{ user.get_avatar }}" style="border-radius:50px" alt="image">
+                        {% else %}
+                          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                        {% endif %}
+                      </figure>
                     <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="#" class="user_video_list_create" data-pk="{{ album.pk }}" data-uuid="{{ user.uuid }}">Добавить видео</a>
-                      </h5>
+                        <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
+                        <p class="small">Видеозаписи</p>
                     </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="#" class="user_video_list_create_window" data-pk="{{ user.pk }}">Создать список</a>
-                      </h5>
-                    </div>
-                </div>
+                  </div>
+                </a>
               </div>
           </div>
           <div class="card mb-3">

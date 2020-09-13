@@ -5,7 +5,6 @@
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
     <div class="row">
         <div class="col-12 col-md-9 col-lg-9">
-          <br>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -24,7 +23,6 @@
                 </div>
               </div>
               <div class="card-body">
-
                 <div class="video_playlist" id="movies_container">
                   <div class="row profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
@@ -61,6 +59,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}
