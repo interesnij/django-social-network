@@ -70,8 +70,8 @@ function paginate(link, block_id){
 }
 
 function create_pagination(block){
-list = ["#user_tracks_container", "#user_tracks_list_container", "#user_video_container",]
-list.split(',')
+list = ["#user_tracks_container", "#user_tracks_list_container", "#user_video_container",];
+list.split(',');
 for (i in list){
 	if(block.querySelector(i)){scrolled(window.location.href,i,target=0)}
 }
