@@ -30,4 +30,5 @@ class GoodAdmin(admin.ModelAdmin):
 
 admin.site.register(GoodCategory, GoodCategoryAdmin)
 admin.site.register(GoodSubCategory, GoodSubCategoryAdmin)
+admin.site.register(GoodAlbum, GoodAlbumAdmin)
 admin.site.register(Good, GoodAdmin)
