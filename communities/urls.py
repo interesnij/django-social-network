@@ -18,10 +18,15 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/music/$', CommunityMusic.as_view(), name='community_music'),
     url(r'^(?P<pk>\d+)/music_list/(?P<uuid>[0-9a-f-]+)/$', CommunityMusicList.as_view(), name='community_music_list'),
+
     url(r'^(?P<pk>\d+)/video/$', CommunityVideo.as_view(), name='community_video'),
     url(r'^video_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoList.as_view(), name='community_video_list'),
+
     url(r'^(?P<pk>\d+)/docs/$', CommunityDocs.as_view(), name='community_docs'),
     url(r'^(?P<pk>\d+)/doc_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocsList.as_view(), name='community_docs_list'),
+
+    url(r'^(?P<pk>\d+)/goods/$', CommunityGoods.as_view(), name='community_goods'),
+    url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodsList.as_view(), name='community_goods_list'),
 
     url(r'^manage/', include('communities.url.manage')),
     url(r'^progs/', include('communities.url.progs')),

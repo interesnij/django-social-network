@@ -37,8 +37,8 @@
       <div class="col-lg-6 col-md-6">
         <div class="form-group">
           <label>Список</label>
-          <select name="album" multiple="" id="id_album">
-            {% for object in user.get_all_good_albums %} 
+          <select name="album" multiple="" id="id_album" style="height:100%">
+            {% for object in user.get_all_good_albums %}
               <option value="{{ object.pk }}">{{ object.title }}</option>
             {% endfor %}
           </select>

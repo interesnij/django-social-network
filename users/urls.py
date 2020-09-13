@@ -26,4 +26,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/video/$', UserVideo.as_view(), name='user_video'),
     url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', UserVideoList.as_view(), name='user_video_list'),
+
+    url(r'^(?P<pk>\d+)/goods/$', UserGoods.as_view(), name='user_goods'),
+    url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodsList.as_view(), name='user_goods_list'),
 ]

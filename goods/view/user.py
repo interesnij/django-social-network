@@ -10,37 +10,6 @@ from stst.models import GoodNumbers
 from common.template.good import get_template_user_good, get_permission_user_good
 
 
-class UserGoods(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.album = GoodAlbum.objects.get(creator_id=self.user.pk, community=None, type=GoodAlbum.MAIN)
-        except:
-            self.album = GoodAlbum.objects.create(creator_id=self.user.pk, community=None, type=GoodAlbum.MAIN)
-        if self.user.pk == request.user.pk:
-            self.good_list = self.album.get_staff_goods().order_by('-created')
-        else:
-            self.good_list = self.album.get_goods().order_by('-created')
-
-        self.template_name = get_permission_user_good(self.user, "u_good/", "goods.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(UserGoods,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserGoods,self).get_context_data(**kwargs)
-        context["user"] = self.user
-        context["album"] = self.album
-        return context
-
-    def get_queryset(self):
-        goods_list = self.good_list
-        return goods_list
-
-
 class UserGood(TemplateView):
     template_name = None
 

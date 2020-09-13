@@ -10,35 +10,6 @@ from stst.models import GoodNumbers
 from common.template.good import get_template_community_good, get_permission_community_good
 
 
-class CommunityGoods(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.album = GoodAlbum.objects.get(community=self.community, type=GoodAlbum.MAIN)
-        except:
-            self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN)
-        if self.request.user.is_staff_of_community_with_name(self.community.name):
-            self.good_list = self.album.get_staff_goods().order_by('-created')
-        else:
-            self.good_list = self.album.get_goods().order_by('-created')
-        self.template_name = get_template_community_good(self.community, "c_good/", "goods.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(CommunityGoods,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityGoods,self).get_context_data(**kwargs)
-        context["community"] = self.community
-        return context
-
-    def get_queryset(self):
-        goods_list = self.good_list
-        return goods_list
-
-
 class CommunityGood(TemplateView):
     template_name = None
 

@@ -175,6 +175,69 @@ class CommunityDocsList(ListView):
 		doc_list = self.doc_list
 		return doc_list
 
+
+class UserGoods(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from goods.models import GoodAlbum
+
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.album = GoodAlbum.objects.get(community=self.community, type=GoodAlbum.MAIN)
+        except:
+            self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN, name="Основной список")
+        if request.user.is_staff_of_community_with_name(self.community.name):
+            self.goods_list = self.album.get_staff_goods()
+        else:
+            self.goods_list = self.album.get_goods()
+
+        self.template_name = get_template_user_music(self.user, "c_goods/", "goods.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserGoods,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserGoods,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['album'] = self.album
+        return context
+
+    def get_queryset(self):
+        goods_list = self.goods_list
+        return goods_list
+
+class CommunityGoodsList(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from goods.models import GoodAlbum
+
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		if self.user == request.user:
+			self.goods_list = self.album.get_staff_goods()
+		else:
+			self.goods_list = self.album.get_goods()
+
+		self.template_name = get_template_community_video(self.community, "c_goods_list/", "list.html", request.user)
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityGoodsList,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['album'] = self.album
+		return context
+
+	def get_queryset(self):
+		goods_list = self.goods_list
+		return goods_list
+
+
 class CommunityMusicList(ListView):
 	template_name = None
 	paginate_by = 15
