@@ -73,7 +73,7 @@ function create_pagination(block){
 list = "#user_tracks_container, #user_tracks_list_container, #user_video_container";
 split_list = list.split(',');
 for (i in split_list){
-	if(block.querySelector(i)){scrolled(window.location.href,i,target=0)}
+	if(block.querySelector(i)){scrolled(window.location.href,i,target="0")}
 }
 }
 
