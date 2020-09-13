@@ -270,6 +270,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     is_full_attach();
     }
     else {
+      uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
       span1 = new_good.querySelector('.span1')
       if (span1.classList.contains(uuid)){
         container = document.body.querySelector(".profile_block_paginate");
