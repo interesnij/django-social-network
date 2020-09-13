@@ -21,5 +21,5 @@ urlpatterns=[
     url(r'^add/(?P<pk>\d+)/$', GoodUserCreate.as_view()),
 	url(r'^add_attach/(?P<pk>\d+)/$', GoodUserCreateAttach.as_view()),
 
-    url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumUserCreate.as_view()),
+    url(r'^create_list/(?P<pk>\d+)/$', GoodAlbumUserCreate.as_view()),
 ]
