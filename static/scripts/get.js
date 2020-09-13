@@ -77,10 +77,10 @@ on('body', 'click', '.prev_item', function(event) {
 
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
-  url = this.getAttribute('href');
   open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 on('body', 'click', '.prev_good', function(event) {
+  event.preventDefault();
   open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 
