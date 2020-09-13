@@ -138,7 +138,7 @@ class UserDocs(ListView):
         else:
             self.doc_list = self.list.get_docs()
 
-        self.template_name = get_template_user_music(self.user, "user_docs/", "docs.html", request.user)
+        self.template_name = get_template_user_doc(self.user, "user_docs/", "docs.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserDocs,self).get(request,*args,**kwargs)
@@ -171,7 +171,7 @@ class UserGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_user_music(self.user, "user_goods/", "goods.html", request.user)
+        self.template_name = get_template_user_good(self.user, "user_goods/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGoods,self).get(request,*args,**kwargs)

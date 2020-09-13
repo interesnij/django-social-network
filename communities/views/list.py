@@ -7,6 +7,7 @@ from common.check.community import check_can_get_lists
 from common.template.post import get_template_community_post, get_permission_community_post
 from common.template.music import get_template_community_music
 from common.template.video import get_template_community_video
+from common.template.good import get_template_community_good
 from django.http import Http404
 from common.get_template import get_default_template
 
@@ -133,7 +134,7 @@ class CommunityDocs(ListView):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
-		self.template_name = get_template_community_music(self.community, "c_docs/", "list.html", request.user)
+		self.template_name = get_template_community_doc(self.community, "c_docs/", "list.html", request.user)
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -160,7 +161,7 @@ class CommunityDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 
-		self.template_name = get_template_community_music(self.community, "c_docs_list/", "list.html", request.user)
+		self.template_name = get_template_community_doc(self.community, "c_docs_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
@@ -193,7 +194,7 @@ class CommunityGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_user_music(self.user, "c_goods/", "goods.html", request.user)
+        self.template_name = get_template_community_good(self.user, "c_goods/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGoods,self).get(request,*args,**kwargs)
@@ -222,7 +223,7 @@ class CommunityGoodsList(ListView):
 		else:
 			self.goods_list = self.album.get_goods()
 
-		self.template_name = get_template_community_video(self.community, "c_goods_list/", "list.html", request.user)
+		self.template_name = get_template_community_good(self.community, "c_goods_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)

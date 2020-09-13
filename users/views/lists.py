@@ -7,6 +7,8 @@ from common.template.post import get_permission_user_post
 from common.template.video import get_template_user_video
 from common.template.music import get_template_user_music
 from common.template.user import get_settings_template
+from common.template.good import get_template_user_good
+from common.template.doc import get_template_user_doc
 from django.http import Http404
 
 
@@ -80,7 +82,7 @@ class UserGoodsList(ListView):
 		else:
 			self.goods_list = self.album.get_goods()
 
-		self.template_name = get_template_user_video(self.user, "user_goods_list/", "list.html", request.user)
+		self.template_name = get_template_user_good(self.user, "user_goods_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
@@ -136,7 +138,7 @@ class UserDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 
-		self.template_name = get_template_user_music(self.user, "user_docs_list/", "list.html", request.user)
+		self.template_name = get_template_user_doc(self.user, "user_docs_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserDocsList,self).get(request,*args,**kwargs)
