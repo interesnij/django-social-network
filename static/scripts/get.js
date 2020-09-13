@@ -78,35 +78,10 @@ on('body', 'click', '.prev_item', function(event) {
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
   url = this.getAttribute('href');
-  console.log(url)
-  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  ajax_link.open( 'GET', url, true );
-  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        rtr = document.getElementById('good_loader');
-        rtr.innerHTML = elem_.innerHTML;
-      }
-    }
-    ajax_link.send();
+  open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 on('body', 'click', '.prev_good', function(event) {
-  event.preventDefault();
-  url = this.getAttribute('href');
-  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  ajax_link.open( 'GET', url, true );
-  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        rtr = document.getElementById('good_loader');
-        rtr.innerHTML = elem_.innerHTML;
-      }
-    }
-    ajax_link.send();
+  open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 
 on('body', 'click', '.next_photo', function(event) {
