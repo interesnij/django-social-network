@@ -78,6 +78,7 @@ on('body', 'click', '.prev_item', function(event) {
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
   url = this.getAttribute('href');
+  console.log(url)
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   ajax_link.open( 'GET', url, true );
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
