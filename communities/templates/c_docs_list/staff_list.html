@@ -38,7 +38,7 @@
             </div>
           <div class="card mb-2">
               <div class="card-body">
-                    <ul id="user_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate" data-link="/communities/{{ community.pk }}/docs/">
+                    <ul id="community_list_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate" data-link="/communities/{{ community.pk }}/docs/">
                       {% if object_list %}
                       {% for doc in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">

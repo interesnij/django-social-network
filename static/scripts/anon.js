@@ -252,50 +252,39 @@ function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
 
 	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#user_tracks_container')){
-      scrolled(
-        block.querySelector('#user_tracks_container').getAttribute("data-link"),
-        '#user_tracks_container',
-        target=0)
-      }
-		else if(block.querySelector('#user_tracks_list_container')){scrolled(block.querySelector('#user_tracks_list_container').getAttribute("data-link"), '#user_tracks_list_container', target=0)}
-		else if(block.querySelector('#user_video_container')){scrolled(block.querySelector('#user_video_container').getAttribute("data-link"), '#user_video_container', target=0)}
-		else if(block.querySelector('#friends_container')){scrolled(block.querySelector('#friends_container').getAttribute("data-link"), '#friends_container', target=0)}
-		else if(block.querySelector('#follows_container')){scrolled(block.querySelector('#follows_container').getAttribute("data-link"), '#follows_container', target=0)}
-		else if(block.querySelector('#followings_container')){scrolled(block.querySelector('#followings_container').getAttribute("data-link"), '#followings_container', target=0)}
-		else if(block.querySelector('#online_friends_container')){scrolled(block.querySelector('#online_friends_container').getAttribute("data-link"), '#online_friends_container', target=0)}
-		else if(block.querySelector('#possible_friends_container')){scrolled(block.querySelector('#possible_friends_container').getAttribute("data-link"), '#possible_friends_container', target=0)}
-		else if(block.querySelector('#common_friends_container')){scrolled(block.querySelector('#common_friends_container').getAttribute("data-link"), '#common_friends_container', target=0)}
-		else if(block.querySelector('#user_goods_container')){scrolled(block.querySelector('#user_goods_container').getAttribute("data-link"), '#user_goods_container', target=0)}
-		else if(block.querySelector('#communities_container')){scrolled(block.querySelector('#communities_container').getAttribute("data-link"), '#communities_container', target=0)}
-		else if(block.querySelector('#staff_communities_container')){scrolled(block.querySelector('#staff_communities_container').getAttribute("data-link"), '#staff_communities_container', target=0)}
-		else if(block.querySelector('#user_blacklist_container')){scrolled(block.querySelector('#user_blacklist_container').getAttribute("data-link"), '#user_blacklist_container', target=0)}
+		if(block.querySelector('#user_tracks_container')){scrolled(window.location.href,'#user_tracks_container',target=0)}
+		else if(block.querySelector('#user_tracks_list_container')){scrolled(window.location.href, '#user_tracks_list_container', target=0)}
+		else if(block.querySelector('#user_video_container')){scrolled(window.location.href, '#user_video_container', target=0)}
+		else if(block.querySelector('#friends_container')){scrolled(window.location.href, '#friends_container', target=0)}
+		else if(block.querySelector('#follows_container')){scrolled(window.location.href, '#follows_container', target=0)}
+		else if(block.querySelector('#online_friends_container')){scrolled(window.location.href, '#online_friends_container', target=0)}
+		else if(block.querySelector('#common_friends_container')){scrolled(window.location.href, '#common_friends_container', target=0)}
+		else if(block.querySelector('#user_goods_container')){scrolled(window.location.href, '#user_goods_container', target=0)}
+		else if(block.querySelector('#communities_container')){scrolled(window.location.href, '#communities_container', target=0)}
+		else if(block.querySelector('#staff_communities_container')){scrolled(window.location.href, '#staff_communities_container', target=0)}
+    else if(block.querySelector('#user_docs_container')){scrolled(window.location.href, '#user_docs_container', target=0)}
+    else if(block.querySelector('#user_list_docs_container')){scrolled(window.location.href, '#user_list_docs_container', target=0)}
+
 	}
 	else if(block.querySelector('.community_block_paginate')){
-		if(block.querySelector('#community_members_container')){scrolled(block.querySelector('#community_members_container').getAttribute("data-link"), '#community_members_container', target=0)}
-		else if(block.querySelector('#community_friends_container')){scrolled(block.querySelector('#community_friends_container').getAttribute("data-link"), '#community_friends_container', target=0)}
-		else if(block.querySelector('#community_goods_container')){scrolled(block.querySelector('#community_goods_container').getAttribute("data-link"), '#community_goods_container', target=0)}
-		else if(block.querySelector('#community_draft_post_container')){scrolled(block.querySelector('#community_draft_post_container').getAttribute("data-link"), '#community_draft_post_container', target=0)}
-		else if(block.querySelector('#community_user_draft_post_container')){scrolled(block.querySelector('#community_user_draft_post_container').getAttribute("data-link"), '#community_user_draft_post_container', target=0)}
-	}
+		if(block.querySelector('#community_members_container')){scrolled(window.location.href, '#community_members_container', target=0)}
+		else if(block.querySelector('#community_goods_container')){scrolled(window.location.href, '#community_goods_container', target=0)}
+    else if(block.querySelector('#community_docs_container')){scrolled(window.location.href, '#community_docs_container', target=0)}
+    else if(block.querySelector('#community_list_docs_container')){scrolled(window.location.href, '#community_list_docs_container', target=0)}
+
+  }
 	else if(block.querySelector('.music_block_paginate')){
-		if(block.querySelector('#genre_container')){scrolled(block.querySelector('#genre_container').getAttribute("data-link"), '#genre_container', target=0)}
-		else if(block.querySelector('#music_tags_container')){scrolled(block.querySelector('#music_tags_container').getAttribute("data-link"), '#music_tags_container', target=0)}
-		else if(block.querySelector('#tag_container')){scrolled(block.querySelector('#tag_container').getAttribute("data-link"), '#tag_container', target=0)}
+		if(block.querySelector('#genre_container')){scrolled(window.location.href, '#genre_container', target=0)}
+		else if(block.querySelector('#music_tags_container')){scrolled(window.location.href, '#music_tags_container', target=0)}
+		else if(block.querySelector('#tag_container')){scrolled(window.location.href, '#tag_container', target=0)}
 	}
 	else if(block.querySelector('.list_block_paginate')){
-		if(block.querySelector('#all_communities_container')){scrolled(block.querySelector('#all_communities_container').getAttribute("data-link"), '#all_communities_container', target=0)}
-		else if(block.querySelector('#all_users_container')){scrolled(block.querySelector('#all_users_container').getAttribute("data-link"), '#all_users_container'), target=0}
-		else if(block.querySelector('#quan_container')){scrolled(block.querySelector('#quan_container').getAttribute("data-link"), '#quan_container'), target=0}
-		else if(block.querySelector('#cat_communities_container')){scrolled(block.querySelector('#cat_communities_container').getAttribute("data-link"), '#cat_communities_container', target=0)}
-		else if(block.querySelector('#articles_load_container')){scrolled(block.querySelector('#articles_load_container').getAttribute("data-link"), '#articles_load_container', target=0)}
-		else if(block.querySelector('#music_load_container')){scrolled(block.querySelector('#music_load_container').getAttribute("data-link"), '#music_load_container', target=0)}
-		else if(block.querySelector('#img_load_container')){scrolled(block.querySelector('#img_load_container').getAttribute("data-link"), '#img_load_container', target=0)}
-		else if(block.querySelector('#video_load_container')){scrolled(block.querySelector('#video_load_container').getAttribute("data-link"), '#video_load_container', target=0)}
-		else if(block.querySelector('#goods_load_container')){scrolled(block.querySelector('#goods_load_container').getAttribute("data-link"), '#goods_load_container', target=0)}
+		if(block.querySelector('#all_communities_container')){scrolled(window.location.href, '#all_communities_container', target=0)}
+		else if(block.querySelector('#all_users_container')){scrolled(window.location.href, '#all_users_container'), target=0}
+		else if(block.querySelector('#quan_container')){scrolled(window.location.href, '#quan_container'), target=0}
+		else if(block.querySelector('#cat_communities_container')){scrolled(window.location.href, '#cat_communities_container', target=0)}
 	}
 }
-
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
