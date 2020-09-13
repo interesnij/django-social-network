@@ -181,6 +181,12 @@ on('#ajax', 'click', '#u_good_add_attach', function() {
 });
 
 on('#ajax', 'click', '#add_good_user_btn', function() {
+  lists = form.querySelector("#id_album");
+  selectedOptions = lists.selectedOptions;
+  val = false;
+  for (var i = 0; i < selectedOptions.length; i++) {
+    if(selectedOptions[i].value) {val = true}
+  }
   if (!document.body.querySelector("#id_title").value){
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
@@ -193,7 +199,10 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
   } else if (!document.body.querySelector("#id_image").value){
     document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
     toast_error("Фотография на обложку обязательна!")
-  }
+  } else if (!val){
+    form.querySelector("#id_album").style.border = "1px #FF0000 solid";
+    toast_error("Выберите альбом!");
+    return
 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_post = document.body.querySelector("#add_good_user_form");
