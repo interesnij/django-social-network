@@ -1028,9 +1028,9 @@ class User(AbstractUser):
         return albums
 
     def my_user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None, type="AL").exists()
+        return self.video_user_creator.filter(creator_id=self.id, community=None).exists()
     def user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True, type="AL").exists()
+        return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True).exists()
     def user_music_playlist_exists(self):
         return self.user_playlist.filter(creator_id=self.id, community=None, type="LI").exists()
 
