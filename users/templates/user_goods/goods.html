@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="card-body">
-            <div class="row profile_block_paginate" id="user_goods_container" data-link="/goods/user/goods/{{ user.uuid }}/">
+            <div class="row profile_block_paginate" id="user_goods_container" data-link="/users/{{ user.pk }}/goods/{{ album.uuid }}/">
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-4">
@@ -61,7 +61,7 @@
         </div>
         <div class="col-12 col-md-4">
           <br>
-          {% if user.user_good_album_exists %}
+          {% if user.is_good_album_exists %}
           <div class="card">
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">

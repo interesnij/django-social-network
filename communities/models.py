@@ -295,6 +295,15 @@ class Community(models.Model):
         album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
         return album.uuid
 
+    def is_good_album_exists(self):
+        return self.good_album_community.filter(community_id=self.id, type="AL").exists()
+    def get_all_good_albums(self):
+        from goods.models import GoodAlbum
+
+        albums_query = Q(community_id=self.id, is_deleted=False)
+        albums = GoodAlbum.objects.filter(albums_query)
+        return albums
+
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
 

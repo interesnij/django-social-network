@@ -1029,12 +1029,12 @@ class User(AbstractUser):
 
     def my_user_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community=None).exists()
-    def user_video_album_exists(self):
+    def is_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True).exists()
-    def user_music_playlist_exists(self):
+    def is_music_playlist_exists(self):
         return self.user_playlist.filter(creator_id=self.id, community=None, type="LI").exists()
-    def user_good_album_exists(self):
-        return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL").exists() 
+    def is_good_album_exists(self):
+        return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL").exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
