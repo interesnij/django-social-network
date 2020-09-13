@@ -203,7 +203,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     form.querySelector("#id_album").style.border = "1px #FF0000 solid";
     toast_error("Выберите альбом!");
     return
-
+  }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_post = document.body.querySelector("#add_good_user_form");
   form_data = new FormData(form_post);
