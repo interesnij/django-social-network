@@ -187,7 +187,7 @@ class CommunityGoods(ListView):
         try:
             self.album = GoodAlbum.objects.get(community=self.community, type=GoodAlbum.MAIN)
         except:
-            self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN, name="Основной список")
+            self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN, title="Основной список")
         if request.user.is_staff_of_community_with_name(self.community.name):
             self.goods_list = self.album.get_staff_goods()
         else:
