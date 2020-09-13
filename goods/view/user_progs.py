@@ -246,7 +246,7 @@ class GoodAlbumUserCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+        return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(GoodAlbumUserCreate,self).get_context_data(**kwargs)
