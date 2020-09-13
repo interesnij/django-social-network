@@ -184,22 +184,13 @@ class GoodUserCreate(TemplateView):
         self.form = GoodForm(request.POST,request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
-            good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
-            new_good = good.create_good(
-                title=good.title,
-                image=good.image,
-                sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
-                creator=self.user,
-                description=good.description,
-                price=good.price,
-                comments_enabled=good.comments_enabled,
-                votes_on=good.votes_on,
-                status="PG")
-            get_good_processing(new_good)
+            new_good = self.form.save(commit=False)
+            new_good.creator = self.user
+            new_good = self.form.save()
             for _album in albums:
                 _album.good_album.add(new_good)
-            return render(request, 'good_base/u_new_good.html',{'object': good})
+            return render(request, 'good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
 
