@@ -19,5 +19,7 @@ urlpatterns=[
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityAbortDelete.as_view())),
 
     url(r'^add/(?P<pk>\d+)/$', GoodCommunityCreate.as_view()),
-	url(r'^add_attach/(?P<pk>\d+)/$', GoodCommunityCreateAttach.as_view())
+	url(r'^add_attach/(?P<pk>\d+)/$', GoodCommunityCreateAttach.as_view()),
+
+    url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumCommunityCreate.as_view()),
 ]

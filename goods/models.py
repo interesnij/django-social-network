@@ -52,7 +52,6 @@ class GoodAlbum(models.Model):
     community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
-    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)

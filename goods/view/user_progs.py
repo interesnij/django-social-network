@@ -2,13 +2,13 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory
+from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory, GoodAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
 from django.shortcuts import render
 from users.models import User
-from goods.forms import CommentForm, GoodForm
+from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from rest_framework.exceptions import PermissionDenied
 from common.processing.good import get_good_processing, get_good_offer_processing
 from django.http import Http404
@@ -234,3 +234,32 @@ class GoodUserCreateAttach(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
+
+
+class GoodAlbumUserCreate(TemplateView):
+    """
+    создание списка товаров пользователя
+    """
+    template_name="good_base/u_add_album.html"
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.form = GoodAlbumForm()
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(GoodAlbumUserCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["user"] = self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodAlbumForm(request.POST)
+        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.user.pk:
+            album = self.form.save(commit=False)
+            new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=None)
+            return render(request, 'user_goods_list/my_list.html',{'album': new_album})
+        else:
+            return HttpResponseBadRequest()
+        return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)

@@ -2,13 +2,13 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from goods.models import Good, GoodComment
+from goods.models import Good, GoodComment, GoodAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.community import check_can_get_lists
 from django.shortcuts import render
 from django.views.generic import ListView
-from goods.forms import CommentForm, GoodForm
+from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
 from django.http import Http404
@@ -244,3 +244,33 @@ class GoodCommunityCreateAttach(TemplateView):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class GoodAlbumCommunityCreate(TemplateView):
+    """
+    создание списка товаров сообщества
+    """
+    template_name="good_base/c_add_album.html"
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.form = GoodAlbumForm()
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(GoodAlbumCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["community"] = self.community
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodAlbumForm(request.POST)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+            album = self.form.save(commit=False)
+            new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=self.community)
+            return render(request, 'c_goods_list/admin_list.html',{'album': new_album, 'community': self.community})
+        else:
+            return HttpResponseBadRequest()
+        return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)

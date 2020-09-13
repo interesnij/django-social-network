@@ -1,4 +1,4 @@
-from goods.models import Good, GoodComment
+from goods.models import Good, GoodComment, GoodAlbum
 from django import forms
 
 
@@ -14,3 +14,8 @@ class CommentForm(forms.ModelForm):
 	class Meta:
 		model = GoodComment
 		fields = ['text']
+
+class GoodAlbumForm(forms.ModelForm):
+	class Meta:
+		model = GoodAlbum
+		fields = ['title', 'order', ]
