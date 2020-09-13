@@ -167,7 +167,7 @@ class UserGoods(ListView):
         except:
             self.album = GoodAlbum.objects.create(creator_id=self.user.id, community=None, type=GoodAlbum.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
-            self.goods_list = self.album.get_my_goods()
+            self.goods_list = self.album.get_staff_goods()
         else:
             self.goods_list = self.album.get_goods()
 
