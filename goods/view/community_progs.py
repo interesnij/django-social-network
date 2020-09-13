@@ -200,12 +200,10 @@ class GoodCommunityCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
             albums = form_post.cleaned_data.get("album")
             new_good.creator = request.user
-            new_good.community = self.community
             new_good = self.form.save()
             for _album in albums:
                 _album.good_album.add(new_good)
@@ -235,7 +233,6 @@ class GoodCommunityCreateAttach(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
             new_good.creator = request.user

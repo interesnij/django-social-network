@@ -192,7 +192,6 @@ class GoodUserCreate(TemplateView):
                 sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
                 creator=self.user,
                 description=good.description,
-                community=None,
                 price=good.price,
                 comments_enabled=good.comments_enabled,
                 votes_on=good.votes_on,

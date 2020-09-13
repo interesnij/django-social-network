@@ -138,9 +138,9 @@ class Good(models.Model):
 
 	@classmethod
 	def create_good(cls, image, title, sub_category, creator, description, \
-					community, price, comments_enabled, votes_on, status):
+					price, comments_enabled, votes_on, status):
 		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, \
-								community=community, status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
+								status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
 		channel_layer = get_channel_layer()
 		payload = {
 			"type": "receive",
