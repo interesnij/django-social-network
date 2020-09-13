@@ -21,9 +21,9 @@ class CommunityGoods(ListView):
         except:
             self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN)
         if self.request.user.is_staff_of_community_with_name(self.community.name):
-            self.good_list = self.album.get_staff_goods()
+            self.good_list = self.album.get_staff_goods().order_by('-created')
         else:
-            self.good_list = self.album.get_goods()
+            self.good_list = self.album.get_goods().order_by('-created')
         self.template_name = get_template_community_good(self.community, "c_good/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

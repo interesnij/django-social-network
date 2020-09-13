@@ -21,9 +21,9 @@ class UserGoods(ListView):
         except:
             self.album = GoodAlbum.objects.create(creator_id=self.user.pk, community=None, type=GoodAlbum.MAIN)
         if self.user.pk == request.user.pk:
-            self.good_list = self.album.get_staff_goods()
+            self.good_list = self.album.get_staff_goods().order_by('-created')
         else:
-            self.good_list = self.album.get_goods()
+            self.good_list = self.album.get_goods().order_by('-created')
 
         self.template_name = get_permission_user_good(self.user, "u_good/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -37,7 +37,7 @@ class UserGoods(ListView):
         return context
 
     def get_queryset(self):
-        goods_list = self.good_list().order_by('-created')
+        goods_list = self.good_list
         return goods_list
 
 
