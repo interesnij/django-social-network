@@ -69,7 +69,7 @@
     <div class="col-12 col-md-4">
       <div class="card border-top">
           <div class="card-body" style="padding:7px;">
-            <a href="{% url 'user' pk=object.pk %}" class="ajax">
+            <a href="{% url 'user' pk=user.pk %}" class="ajax">
               <div class="media">
                   <figure style="width:30px;">
                     {% if user.get_avatar %}
@@ -79,10 +79,8 @@
                     {% endif %}
                   </figure>
                 <div class="media-body">
-                  <a href="{% url 'user' pk=user.pk %}" class="ajax">
                     <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
                     <p class="small">Сообщества</p>
-                  </a>
                 </div>
               </div>
             </a>
