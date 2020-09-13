@@ -64,7 +64,7 @@
         <a>Основной видеоальбом</a>
         {% for object in request.user.get_my_video_albums %}
           <a class="create_ajax pointer" data-href="/users/load/u_video_list_load/{{ object.uuid }}/">
-            {{ object.name }}
+            {{ object.title }}
           </a>
         {% endfor %}
       </div>
