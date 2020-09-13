@@ -74,7 +74,7 @@ function create_pagination(block){
 
 	if(block.querySelector('.profile_block_paginate')){
 		if(block.querySelector('#user_tracks_container')){
-			scrolled(block.querySelector('#user_tracks_container').getAttribute("data-link"),
+			scrolled(window.location.href,
 							 '#user_tracks_container',
 							 target=0)
 			}
@@ -152,7 +152,7 @@ function if_list(block){
     photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#photo_load"), link);
 		scrolled(link, '#photo_load', target=0)
-  }else if(block.querySelector('#c_photo_load')){ 
+  }else if(block.querySelector('#c_photo_load')){
     photo_load = block.querySelector('#c_photo_load');link = photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_photo_load"), link);
 		scrolled(link, '#c_photo_load', target=0)

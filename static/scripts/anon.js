@@ -252,7 +252,12 @@ function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
 
 	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#user_tracks_container')){scrolled(block.querySelector('#user_tracks_container').getAttribute("data-link"), '#user_tracks_container', target=0)}
+		if(block.querySelector('#user_tracks_container')){
+      scrolled(
+        block.querySelector('#user_tracks_container').getAttribute("data-link"),
+        '#user_tracks_container',
+        target=0)
+      }
 		else if(block.querySelector('#user_tracks_list_container')){scrolled(block.querySelector('#user_tracks_list_container').getAttribute("data-link"), '#user_tracks_list_container', target=0)}
 		else if(block.querySelector('#user_video_container')){scrolled(block.querySelector('#user_video_container').getAttribute("data-link"), '#user_video_container', target=0)}
 		else if(block.querySelector('#friends_container')){scrolled(block.querySelector('#friends_container').getAttribute("data-link"), '#friends_container', target=0)}
