@@ -185,7 +185,7 @@ class GoodUserCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             good = self.form.save(commit=False)
-            albums = request.POST.get("album")   
+            albums = request.POST.getlist("album")   
             new_good = good.create_good(
                 title=good.title,
                 image=good.image,
