@@ -320,3 +320,14 @@ on('#ajax', 'click', '#u_ucm_good_repost_btn', function() {
     document.getElementById("votes_loader").innerHTML="";
   }}
 });
+
+on('#ajax', 'click', '#u_create_good_list_btn', function() {
+  this.disabled = true;
+  form = document.body.querySelector("#u_good_list_create");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/goods/user_progs/create_list/", "/users/", "/goods_list/")
+});

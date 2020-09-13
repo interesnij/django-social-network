@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load liked_user %}
-{% block title %}Мои товары{% endblock %}
+{% block title %}Мои товары - {{ album.title }}{% endblock %}
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
@@ -17,7 +17,7 @@
             <div class="card-header">
               <div class="media">
                 <div class="media-body">
-                    <h5 class="mt-1">Мои товары
+                    <h5 class="mt-1">Мои товары - {{ album.title }}
                       <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
                     </h5>
                 </div>
