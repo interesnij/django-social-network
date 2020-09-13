@@ -274,7 +274,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
       span1 = new_good.querySelector('.span1')
       if (span1.classList.contains(uuid)){
         container = document.body.querySelector(".profile_block_paginate");
-        container.insertAdjacentHTML('afterBegin', response.innerHTML);
+        container.insertAdjacentHTML('afterBegin', new_good.innerHTML);
         container.querySelector(".goods_empty") ? container.querySelector(".goods_empty").style.display = "none" : null;
         toast_info("Товар создан!")
       } else{
