@@ -229,19 +229,6 @@ class Community(models.Model):
         posts = Post.objects.filter(posts_query)
         return posts
 
-    def get_goods(self):
-        from goods.models import Good
-
-        goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
-        goods = Good.objects.filter(goods_query)
-        return goods
-    def get_admin_goods(self):
-        from goods.models import Good
-
-        goods_query = Q(community_id=self.pk, is_deleted=False)
-        goods = Good.objects.filter(goods_query)
-        return goods
-
     def get_photos(self):
         from gallery.models import Album
 
