@@ -14,11 +14,11 @@ class CommunityGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(uuid=self.kwargs["uuid"])
+        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.good = Good.objects.get(pk=self.kwargs["pk"])
-        self.goods = self.user.get_goods()
+        self.goods = self.album.get_goods()
 
-        self.template_name = get_template_community_good(self.community, "c_good/", "good.html", request.user)
+        self.template_name = get_template_community_good(self.album.community, "c_good/", "good.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGood,self).get(request,*args,**kwargs)
@@ -26,7 +26,7 @@ class CommunityGood(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityGood,self).get_context_data(**kwargs)
         context["object"] = self.good
-        context["user"] = self.user
+        context["community"] = self.album.community
         context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return context

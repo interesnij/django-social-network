@@ -23,9 +23,9 @@ on('#ajax', 'click', '.c_ucm_good_repost', function() {
   open_fullscreen("/goods/repost/c_ucm_good_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '.с_good_detail', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  uuid = this.getAttribute('good-uuid');
+on('#ajax', 'click', '.c_good_detail', function() {
+  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
+  pk = this.getAttribute('good-pk');
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
   setTimeout(function() {good_gallery(loader)}, 1000)

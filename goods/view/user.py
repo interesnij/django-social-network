@@ -14,9 +14,10 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
-        self.goods = self.user.get_goods()
+        self.good = Good.objects.get(pk=self.kwargs["pk"])
+        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.goods = self.album.get_goods()
+        self.user = self.album.creator
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():

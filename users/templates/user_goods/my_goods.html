@@ -28,7 +28,7 @@
               {% if object_list %}
               {% for object in object_list %}
               <div class="col-md-4 mb-3">
-                      <div class="border u_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-uuid="{{ object.uuid }}">
+                      <div class="border u_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}">
                           <div class="row align-items-center no-gutters">
                               <div class="col">
                                       <div class="text-center">
