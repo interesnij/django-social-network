@@ -203,7 +203,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
     toast_error("Фотография на обложку обязательна!")
   } else if (!val){
-    form.querySelector("#id_album").style.border = "1px #FF0000 solid";
+    form_post.querySelector("#id_album").style.border = "1px #FF0000 solid";
     toast_error("Выберите альбом!");
     return
   }
