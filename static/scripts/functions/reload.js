@@ -74,7 +74,7 @@ list = ["#user_tracks_container", "#user_tracks_list_container", "#user_video_co
 for (i in list){
 	if(block.querySelector(i)){scrolled(window.location.href,i,target=0)}
 }
-)
+}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
