@@ -17,7 +17,7 @@
             <div class="card-header">
               <div class="media">
                 <div class="media-body">
-                    <h5 class="mt-1">Мои товары - {{ album.title }} - {{ album.title }}
+                    <h5 class="mt-1">Мои товары - {{ album.title }}
                       <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ album.count_goods }}</small>
                     </h5>
                 </div>
@@ -61,6 +61,28 @@
         </div>
         <div class="col-12 col-md-4">
           <br>
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a class="pointer u_good_add">Добавить товар</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a class="u_goods_list_create_window pointer">Создать список</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
           {% if user.user_good_album_exists %}
           <div class="card">
             <div class="card-body">

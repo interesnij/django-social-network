@@ -169,7 +169,7 @@ on('#ajax', 'click', '#good_image5', function() {
   img = this.previousElementSibling.querySelector("#id_image5")
   get_image_priview(this, img);
 });
-on('#ajax', 'click', '#u_good_add', function() {
+on('#ajax', 'click', '.u_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen('/goods/user_progs/add/' + pk + '/', loader)
