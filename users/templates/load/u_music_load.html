@@ -70,7 +70,7 @@
         <a>Основной плейлист</a>
         {% for object in user.get_audio_playlists %}
           <a class="create_ajax pointer" data-href="/users/load/u_music_list_load/{{ object.uuid }}/">
-            {{ object.name }}
+            {{ object.title }}
           </a>
         {% endfor %}
       </div>
