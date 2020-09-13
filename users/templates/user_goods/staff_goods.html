@@ -27,7 +27,7 @@
             <div class="row profile_block_paginate" id="user_goods_container" data-link="/users/{{ user.pk }}/goods/{{ album.uuid }}/">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-4">
+              <div class="col-md-6 mb-3">
                       <div class="border u_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}">
                           <div class="row align-items-center no-gutters">
                               <div class="col">
