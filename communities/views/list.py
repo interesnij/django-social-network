@@ -176,7 +176,7 @@ class CommunityDocsList(ListView):
 		return doc_list
 
 
-class UserGoods(ListView):
+class CommunityGoods(ListView):
     template_name = None
     paginate_by = 15
 
@@ -196,10 +196,10 @@ class UserGoods(ListView):
         self.template_name = get_template_user_music(self.user, "c_goods/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
-        return super(UserGoods,self).get(request,*args,**kwargs)
+        return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserGoods,self).get_context_data(**kwargs)
+        context = super(CommunityGoods,self).get_context_data(**kwargs)
         context['community'] = self.community
         context['album'] = self.album
         return context
