@@ -163,44 +163,45 @@ class UserHideGood(View):
         else:
             raise Http404
 
-class GoodUserCreateWindow(TemplateView):
+class GoodUserCreate(TemplateView):
     template_name = "u_good/add.html"
     form = None
 
     def get(self,request,*args,**kwargs):
+        self.form = GoodForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        return super(GoodUserCreateWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(GoodUserCreateWindow,self).get_context_data(**kwargs)
-        context["form"] = GoodForm()
-        context["sub_categories"] = GoodSubCategory.objects.only("id")
-        context["categories"] = GoodCategory.objects.only("id")
-        return context
-
-class GoodUserCreate(View):
-    form_post = None
+        return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(GoodUserCreate,self).get_context_data(**kwargs)
-        context["form_post"] = DocForm()
+        context["form"] = self.form
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = GoodForm(request.POST, request.FILES)
-        user = User.objects.get(pk=self.kwargs["pk"])
-
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
-            new_good = form_post.save(commit=False)
-            new_good.creator = request.user
-            lists = form_post.cleaned_data.get("album")
-            new_good.save()
-            for _list in lists:
-                _list.good_album.add(new_good)
-            return render(request, 'good_base/u_new_good.html',{'object': new_good})
+        self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid():
+            good = self.form.save(commit=False)
+            albums = self.form.cleaned_data.get("album")
+            new_good = good.create_good(
+                title=good.title,
+                image=good.image,
+                sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
+                creator=self.user,
+                description=good.description,
+                price=good.price,
+                comments_enabled=good.comments_enabled,
+                votes_on=good.votes_on,
+                status="PG")
+            get_good_processing(new_good)
+            for _album in albums:
+                _album.good_album.add(new_good)
+            return render(request, 'good_base/u_new_good.html',{'object': good})
         else:
-            return HttpResponseBadRequest()
-
+            return HttpResponseBadRequest("")
 
 class GoodUserCreateAttach(TemplateView):
     template_name = "u_good/add_attach.html"
