@@ -10,6 +10,8 @@ from rest_framework.exceptions import PermissionDenied
 from common.template.post import get_template_user_post
 from common.template.music import get_template_user_music
 from common.template.video import get_template_user_video
+from common.template.good import get_template_user_good
+from common.template.doc import get_template_user_doc
 from common.template.user import get_template_user
 
 
