@@ -35,7 +35,14 @@
       </div>
 
       <div class="col-lg-6 col-md-6">
-        <br>
+        <div class="form-group">
+          <label>Список</label>
+          <select name="album" multiple="" id="id_album">
+            {% for object in user.get_all_good_albums %} 
+              <option value="{{ object.pk }}">{{ object.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
         <div class="hide_image">{{ form.image }}</div>
         <div id="good_image" class="border">
             <h4>обложка</h4>

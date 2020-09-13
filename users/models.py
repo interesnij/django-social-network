@@ -1075,6 +1075,13 @@ class User(AbstractUser):
         goods = Good.objects.filter(goods_query)
         return goods
 
+    def get_all_good_albums(self):
+        from goods.models import GoodAlbum
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums = GoodAlbum.objects.filter(albums_query)
+        return albums
+
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 
