@@ -183,8 +183,8 @@ on('#ajax', 'click', '#u_good_add_attach', function() {
 on('#ajax', 'click', '#add_good_user_btn', function() {
   form_post = document.body.querySelector("#add_good_user_form");
   form_data = new FormData(form_post);
-  
-  lists = form.querySelector("#id_album");
+
+  lists = form_post.querySelector("#id_album");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
