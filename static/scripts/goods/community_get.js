@@ -10,6 +10,11 @@ on('#ajax', 'click', '.c_all_good_dislikes', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_community_dislike/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.c_goods_list_create_window', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/goods/community_progs/add_album/" + pk + "/", loader)
+});
 on('#ajax', 'click', '.c_ucm_good_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
