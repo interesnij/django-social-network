@@ -25,7 +25,7 @@
     {% if object.image %}
       <img class="lazyload image_fit_200 video_load_one"
            style="cursor:pointer"
-           video-counter="{{ forloop.counter0 }}"
+           video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
            data-pk="{{ object.pk }}"
            data-src="{{ object.image.url }}" alt="img">
     {% else %}
