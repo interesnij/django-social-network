@@ -118,7 +118,7 @@ class UserLoadGood(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, creator=request.user)
 		self.template_name = get_settings_template("load/u_good_list_load.html", request)
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
