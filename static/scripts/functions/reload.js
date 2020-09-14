@@ -83,6 +83,8 @@ function create_pagination(block){
 		else if(block.querySelector('#possible_friends_container')){scrolled(window.location.href, '#possible_friends_container', target=0)}
 		else if(block.querySelector('#common_friends_container')){scrolled(window.location.href, '#common_friends_container', target=0)}
 		else if(block.querySelector('#user_goods_container')){scrolled(window.location.href, '#user_goods_container', target=0)}
+		else if(block.querySelector('#user_list_goods_container')){scrolled(window.location.href, '#user_list_goods_container', target=0)}
+
 		else if(block.querySelector('#communities_container')){scrolled(window.location.href, '#communities_container', target=0)}
 		else if(block.querySelector('#staff_communities_container')){scrolled(window.location.href, '#staff_communities_container', target=0)}
 		else if(block.querySelector('#user_blacklist_container')){scrolled(window.location.href, '#user_blacklist_container', target=0)}
@@ -103,8 +105,12 @@ function create_pagination(block){
 		if(block.querySelector('#community_members_container')){scrolled(window.location.href, '#community_members_container', target=0)}
 		else if(block.querySelector('#community_friends_container')){scrolled(window.location.href, '#community_friends_container', target=0)}
 		else if(block.querySelector('#community_goods_container')){scrolled(window.location.href, '#community_goods_container', target=0)}
+		else if(block.querySelector('#community_list_goods_container')){scrolled(window.location.href, '#community_list_goods_container', target=0)}		else if(block.querySelector('#community_draft_post_container')){scrolled(window.location.href, '#community_draft_post_container', target=0)}
 		else if(block.querySelector('#community_draft_post_container')){scrolled(window.location.href, '#community_draft_post_container', target=0)}
 		else if(block.querySelector('#community_user_draft_post_container')){scrolled(window.location.href, '#community_user_draft_post_container', target=0)}
+		else if(block.querySelector('#community_tracks_list_container')){scrolled(window.location.href, '#community_tracks_list_container', target=0)}
+		else if(block.querySelector('#community_tracks_container')){scrolled(window.location.href, '#community_tracks_container', target=0)}
+
 	}
 	else if(block.querySelector('.staff_community_block_paginate')){
 		if(block.querySelector('#community_admins_container')){scrolled(window.location.href, '#community_admins_container', target=0)}
@@ -131,6 +137,16 @@ function create_pagination(block){
 		else if(block.querySelector('#video_load_container')){scrolled(window.location.href, '#video_load_container', target=0)}
 		else if(block.querySelector('#goods_load_container')){scrolled(window.location.href, '#goods_load_container', target=0)}
 	}
+	else if(block.querySelector('.moderation_block_paginate')){
+		if(block.querySelector('#moderation_community_container')){scrolled(window.location.href, '#moderation_community_container', target=0)}
+		else if(block.querySelector('#moderation_post_comment_container')){scrolled(window.location.href, '#moderation_post_comment_container'), target=0}
+		else if(block.querySelector('#moderation_post_container')){scrolled(window.location.href, '#moderation_post_container'), target=0}
+		else if(block.querySelector('#moderation_users_container')){scrolled(window.location.href, '#moderation_users_container', target=0)}
+		else if(block.querySelector('#penalty_community_container')){scrolled(window.location.href, '#penalty_community_container', target=0)}
+		else if(block.querySelector('#penalty_post_comment_container')){scrolled(window.location.href, '#penalty_post_comment_container', target=0)}
+		else if(block.querySelector('#penalty_post_container')){scrolled(window.location.href, '#penalty_post_container', target=0)}
+		else if(block.querySelector('#penalty_users_container')){scrolled(window.location.href, '#penalty_users_container', target=0)}
+	} 
 }
 
 function if_list(block){

@@ -24,7 +24,7 @@
 
               {% if object_list %}
 
-              <div id="moderation_post_comment_container" data-link="/managers/moderation_list/post_comment/{{ user.pk }}/">
+              <div class="moderation_block_paginate" id="moderation_post_comment_container">
                   {% for object in object_list %}
                   <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" data-pk="{{ object.comment.pk }}">
                       <div class="media">
