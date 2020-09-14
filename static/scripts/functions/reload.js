@@ -77,6 +77,8 @@ function create_load_pagination(block){
 	else if(block.querySelector('.articles_load_container')){_block = block.querySelector('.articles_load_container');scrolled(_block.getAttribute("data-link"), '.articles_load_container', target=0)}
 	else if(block.querySelector('.goods_load_container')){_block = block.querySelector('.goods_load_container');scrolled(_block.getAttribute("data-link"), '.goods_load_container', target=0)}
 	else if(block.querySelector('.music_load_container')){_block = block.querySelector('.music_load_container');scrolled(_block.getAttribute("data-link"), '.music_load_container', target=0)}
+	else if(block.querySelector('.music_list_load_container')){_block = block.querySelector('.music_list_load_container');scrolled(_block.getAttribute("data-link"), '.music_list_load_container', target=0)}
+
 	else if(block.querySelector('.video_load_container')){_block = block.querySelector('.video_load_container');scrolled(_block.getAttribute("data-link"), '.video_load_container', target=0)}
 }
 
