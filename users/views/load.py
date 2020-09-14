@@ -128,7 +128,7 @@ class UserLoadGood(ListView):
 		return context
 
 	def get_queryset(self):
-		goods_list = self.request.user.get_goods()
+		goods_list = self.album.get_goods()
 		return goods_list
 
 
