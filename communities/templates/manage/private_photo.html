@@ -4,7 +4,7 @@
 
 <div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
-        <div class="col-md-9 order-1">
+        <div class="col-md-8 order-1">
             <form id="community_private_photo_form" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
@@ -31,7 +31,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3 order-2 left_menu">
+        <div class="col-md-4 order-2 left_menu">
             {% include 'manage/menu.html' %}
         </div>
     </div>
