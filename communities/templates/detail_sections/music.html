@@ -14,7 +14,7 @@
     {% for object in community.get_last_music %}
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">
-            <div class="media" music-counter="{{ forloop.counter0 }}">
+            <div class="media" music-counter="{{ forloop.counter }}">
                 <figure style="cursor:pointer">
                   <a class="music_list_item">
                     {% if object.artwork_url %}

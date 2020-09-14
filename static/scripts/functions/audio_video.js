@@ -477,7 +477,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       }
     }
     on('#ajax', 'click', '.music_list_item', function() {
-      track_id = this.parentElement.parentElement.getAttribute('music-counter');
+      track_id = this.parentElement.parentElement.getAttribute('music-counter') - 1;
       parents = this.parentElement.parentElement.parentElement.parentElement;
       list_pk = parents.getAttribute('data-pk');
       console.log(list_pk);
