@@ -168,8 +168,9 @@ class CommunityLoadGood(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(creator_id=request.user.pk, type=GoodAlbum.MAIN, community=None)
-		self.template_name = get_settings_template("load/u_music_load.html", request)
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, community=self.community)
+		self.template_name = get_settings_template("load/c_good_load.html", request)
 		return super(CommunityLoadGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

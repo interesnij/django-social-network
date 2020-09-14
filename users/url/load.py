@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^c_video_load/$', login_required(CommunityLoadVideo.as_view())),
     url(r'^c_music_load/$', login_required(CommunityLoadMusic.as_view())),
     url(r'^c_article_load/$', login_required(CommunityLoadArticle.as_view())),
-    url(r'^c_good_load/$', login_required(CommunityLoadGood.as_view())),
+    url(r'^c_good_load/(?P<pk>\d+)/$', login_required(CommunityLoadGood.as_view())),
 ]

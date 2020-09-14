@@ -199,10 +199,6 @@ ul{
   position: relative;
 }
 
-.attach_block {
-  padding-bottom: 10px;
-}
-
 .toasts {
     width: auto;
     position: fixed;
