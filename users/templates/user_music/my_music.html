@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Моя музыка - {{ playlist.name }} {% endblock %}
 {% load get_key %}
+{% get_pages %}
 {% block content %}
 
 <div class="container main-container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
@@ -38,7 +39,7 @@
                     <ul id="user_tracks_container" data-pk="{{ playlist.pk }}" class="profile_block_paginate">
                       {% for object in object_list %}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
-                          <div class="media" music-counter="{{ forloop.counter0|add:1 }}" style="align-items: unset;position: relative;">
+                          <div class="media" music-counter="{{ forloop.counter0|add:pages.current_start_index }}" style="align-items: unset;position: relative;">
                               <figure>
                                 <a class="pointer music_list_item">
                                   {% if object.artwork_url %}
