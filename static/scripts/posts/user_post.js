@@ -322,8 +322,10 @@ function onSelect(e) {
 }
 on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
-  if (form_data.files.length > 0) { 
+  form = document.body.querySelector("#add_comment_photos");
+  form_data = new FormData(form);
+  input = form.querySelector("#u_photo_post_comment_attach")
+  if (input.files.length > 0) {
       alert("Only 5 files accepted.");
       return;
   }
