@@ -37,6 +37,25 @@ class UserLoadPhotoComment(ListView):
 		photos_list = self.request.user.get_photos().order_by('-created')
 		return photos_list
 
+class UserLoadPhotoAlbumComment(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from gallery.models import Album
+		self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("load/u_photo_list_comments_load.html", request)
+		return super(UserLoadPhotoAlbumComment,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadPhotoAlbumComment,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
+	def get_queryset(self):
+		photo_list = self.album.get_photos().order_by('-created')
+		return photo_list
+
 
 class UserLoadVideo(ListView):
 	template_name = 'load/u_video_load.html'
