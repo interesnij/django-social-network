@@ -357,7 +357,7 @@ function open_load_fullscreen(link, block) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
     block.innerHTML = elem;
-    create_load_pagination(document.getElementById("block"))
+    create_load_pagination(document.getElementById("create_loader"))
   }};
   link_.send();
 }
