@@ -338,7 +338,8 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_comment_attach(response.querySelectorAll(".u_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
+    photo_list = response.querySelectorAll(".u_photo_detail");
+    photo_comment_attach(photo_list, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
