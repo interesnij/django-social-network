@@ -1064,7 +1064,7 @@ class User(AbstractUser):
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
 
-    def get_my_good_albums(self):
+    def get_good_albums(self):
         from goods.models import GoodAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.AL)
