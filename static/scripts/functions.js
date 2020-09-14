@@ -347,7 +347,20 @@ function open_fullscreen(url, block) {
   }};
   link.send();
 }
-
+function open_load_fullscreen(link, block) {
+  var link_, elem;
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', link, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    block.parentElement.style.display = "block";
+    block.innerHTML = elem;
+    create_load_pagination(document.getElementById("block"))
+  }};
+  link_.send();
+}
 function send_like(item, link){
   like = item.querySelector(".like");
   dislike = item.querySelector(".dislike");
