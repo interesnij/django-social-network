@@ -38,7 +38,7 @@
                     <ul id="user_tracks_container" data-pk="{{ playlist.pk }}" class="profile_block_paginate">
                       {% for object in object_list %}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
-                          <div class="media" music-counter="{{ forloop.counter0|add:object_list.start_index }}" style="align-items: unset;position: relative;">
+                          <div class="media" music-counter="{{ 0|add:1 }}" style="align-items: unset;position: relative;">
                               <figure>
                                 <a class="pointer music_list_item">
                                   {% if object.artwork_url %}
