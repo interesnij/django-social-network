@@ -325,8 +325,8 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
   form = document.body.querySelector("#add_comment_photos");
   form_data = new FormData(form);
   input = form.querySelector("#u_photo_post_comment_attach")
-  if (input.files.length > 0) {
-      alert("Only 5 files accepted.");
+  if (input.files.length > 2) {
+      toast_error("Не больше 2 фотографий");
       return;
   }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
