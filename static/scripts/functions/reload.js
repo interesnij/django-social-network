@@ -146,7 +146,7 @@ function create_pagination(block){
 		else if(block.querySelector('#penalty_post_comment_container')){scrolled(window.location.href, '#penalty_post_comment_container', target=0)}
 		else if(block.querySelector('#penalty_post_container')){scrolled(window.location.href, '#penalty_post_container', target=0)}
 		else if(block.querySelector('#penalty_users_container')){scrolled(window.location.href, '#penalty_users_container', target=0)}
-	} 
+	}
 }
 
 function if_list(block){
