@@ -68,10 +68,18 @@ function paginate(link, block_id){
 		link_3.send();
 	}
 }
+function create_load_pagination(block){
+	// подключаем подгрузкку списков в подгружаемых окнах.
+	if(block.querySelector('#img_load_container')){_block = block.querySelector('#img_load_container');scrolled(_block.getAttribute("data-link"), '#articles_load_container', target=0)}
+	else if(block.querySelector('#articles_load_container')){_block = block.querySelector('#articles_load_container');scrolled(_block.getAttribute("data-link"), '#articles_load_container', target=0)}
+	else if(block.querySelector('#goods_load_container')){_block = block.querySelector('#goods_load_container');scrolled(_block.getAttribute("data-link"), '#goods_load_container', target=0)}
+	else if(block.querySelector('#music_load_container')){_block = block.querySelector('#music_load_container');scrolled(_block.getAttribute("data-link"), '#music_load_container', target=0)}
+	else if(block.querySelector('#video_load_container')){_block = block.querySelector('#video_load_container');scrolled(_block.getAttribute("data-link"), '#video_load_container', target=0)}
+}
+
 
 function create_pagination(block){
 	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
-
 	if(block.querySelector('.profile_block_paginate')){
 		if(block.querySelector('#user_tracks_container')){scrolled(window.location.href,'#user_tracks_container',target=0)}
 		else if(block.querySelector('#user_tracks_list_container')){scrolled(window.location.href, '#user_tracks_list_container', target=0)}
@@ -131,11 +139,6 @@ function create_pagination(block){
 		else if(block.querySelector('#all_users_container')){scrolled(window.location.href, '#all_users_container'), target=0}
 		else if(block.querySelector('#quan_container')){scrolled(window.location.href, '#quan_container'), target=0}
 		else if(block.querySelector('#cat_communities_container')){scrolled(window.location.href, '#cat_communities_container', target=0)}
-		else if(block.querySelector('#articles_load_container')){scrolled(window.location.href, '#articles_load_container', target=0)}
-		else if(block.querySelector('#music_load_container')){scrolled(window.location.href, '#music_load_container', target=0)}
-		else if(block.querySelector('#img_load_container')){scrolled(window.location.href, '#img_load_container', target=0)}
-		else if(block.querySelector('#video_load_container')){scrolled(window.location.href, '#video_load_container', target=0)}
-		else if(block.querySelector('#goods_load_container')){scrolled(window.location.href, '#goods_load_container', target=0)}
 	}
 	else if(block.querySelector('.moderation_block_paginate')){
 		if(block.querySelector('#moderation_community_container')){scrolled(window.location.href, '#moderation_community_container', target=0)}

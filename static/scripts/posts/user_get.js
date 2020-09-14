@@ -99,25 +99,29 @@ on('#ajax', 'click', '.u_comment_video', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/u_video_load/', loader)
+  open_fullscreen('/users/load/u_video_load/', loader);
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_comment_music', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_music_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_comment_good', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_good_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_comment_article', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_article_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 
 on('#ajax', 'click', '.u_select_photo', function() {
@@ -125,30 +129,35 @@ on('#ajax', 'click', '.u_select_photo', function() {
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_img_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_select_video', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_video_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_select_music', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_music_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_select_good', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_good_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 on('#ajax', 'click', '.u_select_article', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_article_load/', loader)
+  create_load_pagination(document.getElementById("create_loader"))
 });
 
 on('#ajax', 'click', '.delete_thumb', function(e) {
