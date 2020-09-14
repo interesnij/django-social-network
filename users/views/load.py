@@ -116,6 +116,17 @@ class UserLoadGood(ListView):
 	template_name = 'load/u_good_load.html'
 	paginate_by = 15
 
+	def get(self,request,*args,**kwargs):
+		from goods.models import GoodAlbum
+		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("load/u_good_list_load.html", request)
+		return super(UserLoadGood,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadGood,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
 	def get_queryset(self):
 		goods_list = self.request.user.get_goods()
 		return goods_list
