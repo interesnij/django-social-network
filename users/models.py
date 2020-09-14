@@ -1067,7 +1067,7 @@ class User(AbstractUser):
     def get_good_albums(self):
         from goods.models import GoodAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.AL)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.ALBUM)
         albums = GoodAlbum.objects.filter(albums_query)
         return albums
 
