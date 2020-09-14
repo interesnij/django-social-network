@@ -127,7 +127,7 @@ on('#ajax', 'click', '.tag_item', function() {
   });
 
 on('#ajax', 'click', '.genre_item', function() {
-  var track_id = this.parentElement.parentElement.getAttribute('music-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('music-counter') - 1;
   var genre_pk = document.querySelector(".genre_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("genre_" + genre_pk)){
     save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk + "/", track_id)

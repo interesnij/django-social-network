@@ -74,7 +74,7 @@ function get_video_info(pk){
 
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
-  counter = this.getAttribute('video-counter');
+  counter = this.getAttribute('video-counter') - 1;
   parent = this.parentElement;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   parent.parentElement.getAttribute("data-uuid") ? uuid = parent.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
