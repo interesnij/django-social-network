@@ -5,7 +5,7 @@
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -60,7 +60,7 @@
             </div>
         </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-md-4">
           <div class="card mb-3 mt-3">
               <div class="card-body">
                   <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
