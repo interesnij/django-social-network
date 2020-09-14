@@ -129,7 +129,7 @@ on('#ajax', 'click', '.u_select_photo', function() {
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/u_img_load/', loader)
-  create_load_pagination(document.getElementById("ajax"))
+  create_load_pagination(document.getElementById("ajax")) 
 });
 on('#ajax', 'click', '.u_select_video', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
