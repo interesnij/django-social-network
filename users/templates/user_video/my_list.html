@@ -27,7 +27,7 @@
                   <div class="row profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                      <div class="col-md-6 u_video_list_detail pag {% if forloop.last %}last{% endif %}" style="cursor:pointer" video-counter="{{ forloop.counter0 }}">
+                      <div class="col-md-6 u_video_list_detail pag {% if forloop.last %}last{% endif %}" style="cursor:pointer" video-counter="{{ forloop.counter0|add:page_obj.start_index }}">
                         {% if object.image %}
                           <img class="image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
                         {% else %}
