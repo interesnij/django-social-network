@@ -71,7 +71,7 @@ def get_timeline_photos_for_possible_users(user):
 
 
 def get_timeline_goods_for_user(user):
-    own_goods_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status=Good.STATUS_PUBLISHED)
+    own_goods_query = Q(creator_id=user.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
     own_goods_queryset = user.good_creator.only('created').filter(own_goods_query)
 
     community_goods_query = Q(community__memberships__user__id=user.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
@@ -92,7 +92,7 @@ def get_timeline_goods_for_user(user):
 
 def get_timeline_goods_for_possible_users(user):
     possible_users = user.get_possible_friends_ids()
-    goods_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, status=Good.STATUS_PUBLISHED)
+    goods_query = Q(creator_id__in=possible_users, is_deleted=False, status=Good.STATUS_PUBLISHED)
     goods_queryset = Good.objects.only('created').filter(goods_query)
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Good.STATUS_PUBLISHED)
     community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)

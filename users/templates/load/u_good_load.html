@@ -7,7 +7,15 @@
   #u_good_add_attach:hover {cursor: pointer}
 </style>
 
-<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление товаров</h4>
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">Прикрепление товаров - {{ album.name }}</h5>
+  </div>
+  <div class="card-body border-bottom">
+
+<div class="row">
+  <div class="col-lg-8">
+
 <h4 id="u_good_add_attach" class="mb-3 border centered">Создать и прикрепить</h4>
 
 {% if object_list %}
@@ -48,3 +56,24 @@
     <h6 style="text-align: center;margin: 20px;"> У Вас нет товаров ...</h6>
   </div>
 {% endif %}
+</div>
+<div class="col-md-4">
+  {% if user.is_good_album_exists %}
+  <div class="card">
+      <div class="nav flex-column nav-pills faqnav">
+        <h6 style="margin-bottom:15px">Плейлисты</h6>
+        <a class="create_ajax pointer">
+          Основной альбом
+        </a>
+        {% for object in user.get_good_albums %}
+          <a class="create_ajax pointer" data-href="{% url 'u_good_list_load' uuid=object.uuid %}">
+            {{ object.title }}
+          </a>
+        {% endfor %}
+      </div>
+  </div>
+  {% endif %}
+</div>
+</div>
+</div>
+</div>
