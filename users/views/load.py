@@ -119,7 +119,7 @@ class UserLoadGood(ListView):
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
 		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, creator=request.user, community=None)
-		self.template_name = get_settings_template("load/u_good_list_load.html", request)
+		self.template_name = get_settings_template("load/u_good_load.html", request)
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
