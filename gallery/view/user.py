@@ -148,6 +148,7 @@ class UserWallPhoto(TemplateView):
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["album"] = self.album
+        context["user"] = self.user
         return context
 
 
