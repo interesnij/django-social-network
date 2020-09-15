@@ -14,7 +14,7 @@
     <div class="card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
         <div class="card-body py-0">
             <div class="row">
-                <div class="col-md-8"> 
+                <div class="col-md-8">
                   {% include 'good_base/gallery.html' %}
                 </div>
 
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="border-top py-2" data-uuid="{{ object.uuid }}">
+            <div class="border-top py-2">
                 <div class="row">
                     <div class="col interaction" id="interaction">
                       <span {% if not object.votes_on %}style="display:none"{% endif %} class="like u_good_like {% if object.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
