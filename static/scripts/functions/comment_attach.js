@@ -138,6 +138,7 @@ function good_comment_attach(_this, dropdown){
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
   pk = _this.getAttribute('good-pk');
+  uuid = _this.getAttribute('data-uuid');
 
   if (img_block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
     _this.setAttribute("tooltip", "Товар уже выбран");
@@ -149,13 +150,13 @@ function good_comment_attach(_this, dropdown){
   title = _this.querySelector(".good_title").innerHTML;
 
     if (img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)
+      div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)
     }
     else if (img_block.querySelector(".select_good2") && !img_block.querySelector(".select_good1")){
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)
     }
     else {
-      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)
+      div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)
     }
 
   img_block.append(div);
