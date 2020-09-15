@@ -438,9 +438,9 @@ on('#ajax', 'click', '.music_load_several', function() {
 on('#ajax', 'click', '.music_attach_playlist', function() {
   attach_list_for_post(this, "/music/get/playlist_preview/")
 });
-on('#ajax', 'click', '.photo_attach_album', function() {  
+on('#ajax', 'click', '.photo_attach_album', function() {
   attach_list_for_post(this, "/gallery/user_progs/get_album_preview/")
-});
+}); 
 on('#ajax', 'click', '.attach_video_album', function() {
   attach_list_for_post(this, "/video/user_progs/get_album_preview/")
 });
