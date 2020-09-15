@@ -434,57 +434,19 @@ on('#ajax', 'click', '.music_load_several', function() {
   }
   this.classList.add("active_svg");
 });
-on('#ajax', 'click', '.music_attach_playlist', function() {
-  _this = this;
-  if (document.body.querySelector(".current_file_dropdown")){
-    toast_error("Плейлисты прикрепляются только к постам")
-  } else if (document.body.querySelector(".attach_block")) {
-    attach_block = document.body.querySelector(".attach_block");
-    if (attach_block.classList.contains("files_0")){
-    pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_.open( 'GET', "/music/get/playlist_preview/" + pk + "/", true );
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link_.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      attach_block.nextElementSibling.querySelector(".attach_panel").style.display = "none";
-      elem = link_.responseText;
-      response = document.createElement("span");
-      response.innerHTML = elem;
-      attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
-    }};
 
-    link_.send();
-  } else {toast_error("Можно прикреплять или плейлист, или что-то еще")}
-  }
+on('#ajax', 'click', '.music_attach_playlist', function() {
+  attach_list_for_post("/music/get/playlist_preview/")
 });
 on('#ajax', 'click', '.photo_attach_album', function() {
-  _this = this;
-  if (document.body.querySelector(".current_file_dropdown")){
-    toast_error("Фотоальбомы прикрепляются только к постам")
-  } else if (document.body.querySelector(".attach_block")) {
-    attach_block = document.body.querySelector(".attach_block");
-    if (attach_block.classList.contains("files_0")){
-    pk = _this.getAttribute("data-pk");
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_.open( 'GET', "/gallery/user_progs/gwt_album_preview/" + pk + "/", true );
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link_.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      attach_block.nextElementSibling.querySelector(".attach_panel").style.display = "none";
-      elem = link_.responseText;
-      response = document.createElement("span");
-      response.innerHTML = elem;
-      attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
-    }};
+  attach_list_for_post("/gallery/user_progs/get_album_preview/")
+});
+on('#ajax', 'click', '.attach_video_album', function() {
+  attach_list_for_post("/video/user_progs/get_album_preview/")
+});
 
-    link_.send();
-  } else {toast_error("Можно прикреплять или фотоальбом, или что-то еще")}
-  }
+on('#ajax', 'click', '.attach_good_album', function() {
+  attach_list_for_post("/goods/user_progs/get_album_preview/")
 });
 
 on('#ajax', 'click', '.music_attach_playlist_remove', function() {

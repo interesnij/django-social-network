@@ -19,6 +19,7 @@
 <h4 id="u_good_add_attach" class="mb-3 border centered">Создать и прикрепить</h4>
 
 {% if object_list %}
+<h4 class="attach_good_album mb-3 border centered">Прикрепить альбом</h4>
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="goods_load_container" data-link="/users/load/u_good_load/">
 {% for object in object_list %}
 <div class="col-md-6 mb-3 pag {% if forloop.last %}last{% endif %}">

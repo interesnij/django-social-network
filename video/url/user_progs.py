@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^reply-comment/$', VideoReplyUserCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentUserDelete.as_view()),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', VideoCommentUserAbortDelete.as_view()),
+
+    url(r'^get_album_preview/(?P<pk>\d+)/$', UserVideoAlbumPreview.as_view()),
 ]

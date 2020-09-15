@@ -1,3 +1,30 @@
+function attach_list_for_post(url){
+  _this = this;
+  if (document.body.querySelector(".current_file_dropdown")){
+    toast_error("Элемент прикрепляется только к постам")
+  } else if (document.body.querySelector(".attach_block")) {
+    attach_block = document.body.querySelector(".attach_block");
+    if (attach_block.classList.contains("files_0")){
+    pk = _this.getAttribute("data-pk");
+    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_.open( 'GET', url + pk + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+      attach_block.nextElementSibling.querySelector(".attach_panel").style.display = "none";
+      elem = link_.responseText;
+      response = document.createElement("span");
+      response.innerHTML = elem;
+      attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
+      document.querySelector(".create_fullscreen").style.display = "none";
+      document.getElementById("create_loader").innerHTML="";
+    }};
+
+    link_.send();
+  } else {toast_error("Элемент не влезает, очистите панель прикрепленеия")}
+  }
+}
+
 function post_and_load_object_page(form, url_post, url_1, url_2){
   form_data = new FormData(form);
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

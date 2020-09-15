@@ -28,5 +28,5 @@ urlpatterns=[
 	url(r'^add_album/(?P<pk>\d+)/$', AlbumUserCreate.as_view(), name="album_add_user"),
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
 
-    url(r'^gwt_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()), 
+    url(r'^get_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()),  
 ]

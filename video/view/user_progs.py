@@ -263,3 +263,18 @@ class UserVideoCreate(View):
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
+
+
+class UserVideoAlbumPreview(TemplateView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("user_video/album_preview.html", request)
+		return super(UserVideoAlbumPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserVideoAlbumPreview,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
