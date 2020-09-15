@@ -13,7 +13,7 @@
   </div>
   {% endfor %}
   {% for good in object.get_attach_goods %}
-  <div class="card mb-4 has-background-img u_good_detail good pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_album_uuid }}">
+  <div class="card has-background-img u_good_detail good pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_album_uuid }}">
     <figure class="background-img shadow-dark">
       {% if good.image %}
       <img class="image_fit lazyload opacity-100" data-src="{{ good.image.url }}" alt="img">
@@ -28,7 +28,7 @@
       <div class="media">
         <div class="media-body">
           <h4 class="text-white mb-0">{{ good.title }}</h4>
-          <p class="text-white mb-0">2{{ good.sub_category }}</p>
+          <p class="mb-0" style="color: rgba(255, 255, 255, 0.7) !important;">{{ good.sub_category }}</p>
         </div>
       </div>
     </div>
