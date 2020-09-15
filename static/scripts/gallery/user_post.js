@@ -275,7 +275,7 @@ on('body', 'click', '#user_avatar_btn', function(event) {
 })
 on('#ajax', 'change', '#user_avatar_upload', function() {
   parent = this.parentElement;
-  post_with_pk_and_reload(parent, "/gallery/user_progs/add_avatar/") 
+  post_with_pk_and_reload(parent, "/gallery/user_progs/add_avatar/")
 })
 
 on('#ajax', 'change', '#u_photo_comment_attach', function() {
