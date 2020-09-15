@@ -21,7 +21,7 @@
             <h6 class="my-0 mt-1">{{ playlist.name }}</h6>
             <p class="">Треков: {{ playlist.count_tracks }}</p>
           </div>
-          <div class="icon-circle icon-50 bg-light-white music_attach_playlist pointer">
+          <div class="icon-circle icon-50 bg-light-white music_attach_playlist pointer" data-pk="{{ playlist.pk }}">
             <svg fill='currentColor'class="svg_default" viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
           </div>
         </div>
