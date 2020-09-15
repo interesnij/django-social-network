@@ -22,7 +22,7 @@ class UserGalleryView(TemplateView):
         self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
         if self.user.pk == request.user.pk:
             self.albums_list = self.user.get_my_albums().order_by('-created')
-        else:
+        else: 
             self.albums_list = self.album.get_albums().order_by('-created')
 
         self.template_name = get_template_user_photo(self.user, "gallery_user/", "gallery.html", request.user)

@@ -66,8 +66,8 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 })
 
 
-on('#ajax', 'click', '#add_album', function() {
-  form = document.body.querySelector("#form_album_add");
+on('#ajax', 'click', '#u_create_album_btn', function() {
+  form = document.body.querySelector("#u_create_album_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
