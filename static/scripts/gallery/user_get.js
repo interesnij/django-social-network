@@ -93,7 +93,7 @@ on('#ajax', 'click', '#u_create_album_btn', function() {
         album_photo_load =  rtr.querySelector("#album_photo_load");
         list_load(album_photo_load, album_photo_load.getAttribute("data-link"));
       }
-    }
+    } 
     ajax_link.send(form_data);
 });
 

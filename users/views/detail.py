@@ -12,6 +12,7 @@ from common.template.music import get_template_user_music
 from common.template.video import get_template_user_video
 from common.template.good import get_template_user_good
 from common.template.doc import get_template_user_doc
+from common.template.photo import get_template_user_photo
 from common.template.user import get_template_user
 
 
@@ -38,6 +39,54 @@ class UserPostView(TemplateView):
         context["next"] = self.next
         context["prev"] = self.prev
         return context
+
+class UserGallery(TemplateView):
+    """
+    галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
+    """
+    template_name = None
+    def get(self,request,*args,**kwargs):
+        from gallery.models import Album
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
+        if self.user.pk == request.user.pk:
+            self.albums_list = self.user.get_my_albums().order_by('-created')
+        else:
+            self.albums_list = self.album.get_albums().order_by('-created')
+
+        self.template_name = get_template_user_photo(self.user, "user_gallery/", "gallery.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserGallery,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserGallery,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['albums_list'] = self.albums_list
+        context['album'] = self.album
+        return context
+
+class UserAlbumView(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from gallery.models import Album
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+
+        self.template_name = get_template_user_photo(self.user, "user_album/", "album.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserAlbumView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserAlbumView,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['album'] = self.album
+        return context
+
 
 class UserCommunities(ListView):
     template_name = None

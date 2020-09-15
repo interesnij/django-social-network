@@ -12,50 +12,6 @@ from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
 
 
-class UserGalleryView(TemplateView):
-    """
-    галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
-    """
-    template_name = None
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
-        if self.user.pk == request.user.pk:
-            self.albums_list = self.user.get_my_albums().order_by('-created')
-        else: 
-            self.albums_list = self.album.get_albums().order_by('-created')
-
-        self.template_name = get_template_user_photo(self.user, "gallery_user/", "gallery.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(UserGalleryView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserGalleryView,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['albums_list'] = self.albums_list
-        context['album'] = self.album
-        return context
-
-class UserAlbumView(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_template_user_photo(self.user, "album_user/", "album.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(UserAlbumView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserAlbumView,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['album'] = self.album
-        return context
-
-
 class UserPhotosList(ListView):
     template_name = None
     paginate_by = 15

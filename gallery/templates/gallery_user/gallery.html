@@ -16,7 +16,7 @@
   {% include 'gallery_user/albums.html' %}
 </div>
 {% else %}
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">У {{ user.get_full_name_genitive }} нет альбомов</h5>

@@ -2,7 +2,7 @@
 {% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" album-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
 {% if albums_list %}
 <div class="container-fluid mt-3">
     <div class="row">

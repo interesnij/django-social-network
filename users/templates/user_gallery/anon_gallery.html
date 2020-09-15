@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_anon.html" %}
 {% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="container mt-4">
-  {% include 'gallery_user/albums.html' %}
+  {% include 'user_gallery/albums.html' %}
 </div>
 {% else %}
 <div class="container-fluid mt-3">
@@ -26,21 +26,21 @@
 </div>
 {% endif %}
 
-  <div class="container-fluid mt-3">
-      <div class="row">
-          <div class="col-12">
-              <h5 class="mt-1">Фотографии
-                  <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-                    {{ user.get_full_name_genitive }}
-                  </a>
-              </h5>
-              Фото: {{ album.count_photo }}
-          </div>
-      </div>
-  </div>
+<div class="container-fluid" style="margin-top:30px">
+    <div class="row">
+        <div class="col-12">
+            <h5 class="mt-1">Фотографии
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                  {{ user.get_full_name_genitive }}
+                </a>
+            </h5>
+            Фото: {{ album.count_photo }}
+        </div>
+    </div>
+</div>
 
-  <div class="container mt-4">
-        <div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}/"></div>
-  </div>
+<div class="container mt-4 main-container">
+      <div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}/"></div>
+</div>
 </div>
 {% endblock %}
