@@ -75,8 +75,8 @@ class GoodAlbum(models.Model):
     def __str__(self):
         return self.title
 
-    def get_6_photos(self):
-        return self.photo_album.filter(is_deleted=False)[:5]
+    def get_2_goods(self):
+        return self.good_album.filter(is_deleted=False)[:2]
 
     def count_goods(self):
         try:
@@ -240,6 +240,9 @@ class Good(models.Model):
 
 	def get_albums_for_good(self):
 		return self.album.all()
+
+	def get_album_uuid(self):
+		return self.album.all()[0].uuid
 
 
 
