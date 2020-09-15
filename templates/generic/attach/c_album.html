@@ -27,7 +27,7 @@
   </div>
 <div class="row" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-    <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ album.community.pk }}">
+    <div class="u_AL_photo col-md-6 col-lg-4" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}">
       <div class="card rounded-0 border-0 mb-3 pointer">
         {% if photo.file %}
           <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">

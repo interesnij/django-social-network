@@ -43,10 +43,10 @@ on('#ajax', 'click', '.u_AL_photo', function() {
 });
 
 on('#ajax', 'click', '.u_WA_photo', function() {
-  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute('photo-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  photo_pk = this.getAttribute('photo_-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/wall_photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user/wall_photo/" + pk + "/" + photo_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_photos_add', function() {

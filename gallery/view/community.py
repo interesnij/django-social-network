@@ -192,8 +192,7 @@ class CommunityWallPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.album = Album.objects.get(community=self.community, type=Album.WALL)
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.community, self.photo, "c_photo/wall_photo/", "photo.html", request.user)

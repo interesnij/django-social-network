@@ -128,11 +128,11 @@ class UserWallPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo_detail(self.album.creator, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
+            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):

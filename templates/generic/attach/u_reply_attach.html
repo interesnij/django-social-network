@@ -1,9 +1,7 @@
 <!-- прикрепленные элементы к ответам на комментарии к записям пользователей -->
 <div class="row" data-pk="{{ reply.pk }}">
-  {% for object in reply.comment_photo.all %}
-  <div class="col-md-6">
-      <img photo-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}" class="u_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
-  </div>
+  {% for photo in reply.comment_photo.all %}
+    {% include 'generic/attach/u_photo.html' %}
   {% endfor %}
   {% for object in reply.comment_video.all %}
   <div class="col-md-6">
