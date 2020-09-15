@@ -1015,9 +1015,9 @@ class User(AbstractUser):
     def get_my_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, photo_album__isnull=False)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(creator_id=self.id, is_deleted=False, community=None, photo_album__isnull=False).exclude(type=Album.MAIN)
+        albums = Album.objects.filter(albums_query)
         return albums
 
     def get_video_albums(self):
