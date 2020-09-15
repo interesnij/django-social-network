@@ -73,10 +73,9 @@ on('#ajax', 'click', '#u_create_album_btn', function() {
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   post_and_load_object_page(form, "/gallery/user_progs/add_album/", "/users/", "/album/");
 });
- 
+
 on('#ajax', 'click', '.u_all_photo_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");

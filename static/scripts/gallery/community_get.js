@@ -66,35 +66,14 @@ on('#ajax', 'click', '.c_photo_edit', function() {
 })
 
 
-on('#ajax', 'click', '#c_add_album', function() {
-  form = document.body.querySelector("#form_album_add");
+on('#ajax', 'click', '#c_create_album_btn', function() {
+  form = document.body.querySelector("#c_create_album_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/gallery/community_progs/add_album/" + pk + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector("#reload_block");
-        rtr = document.getElementById('ajax');
-        rtr.innerHTML = ajax.innerHTML;
-        uuid = rtr.querySelector(".pk_saver").getAttribute("album-uuid");
-        window.scrollTo(0,0);
-        document.title = elem_.querySelector('title').innerHTML;
-        window.history.pushState(null, "vfgffgfgf", '/gallery/community/album/' + pk + '/' + uuid + '/');
-        toast_info("Альбом изображений создан!");
-        album_photo_load =  rtr.querySelector("#c_album_photo_load");
-        list_load(album_photo_load, album_photo_load.getAttribute("data-link"));
-      }
-    }
-    ajax_link.send(form_data);
+  post_and_load_object_page(form, "/gallery/community_progs/add_album/", "/communities/", "/album/");
 });
 
 on('#ajax', 'click', '.c_all_photo_likes', function() {
