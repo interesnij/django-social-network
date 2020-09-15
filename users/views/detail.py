@@ -67,7 +67,7 @@ class UserGallery(TemplateView):
         context['album'] = self.album
         return context
 
-class UserAlbumView(TemplateView):
+class UserAlbum(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -79,10 +79,10 @@ class UserAlbumView(TemplateView):
         self.template_name = get_template_user_photo(self.user, "user_album/", "album.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
-        return super(UserAlbumView,self).get(request,*args,**kwargs)
+        return super(UserAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserAlbumView,self).get_context_data(**kwargs)
+        context = super(UserAlbum,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['album'] = self.album
         return context
