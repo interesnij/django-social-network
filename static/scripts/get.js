@@ -20,10 +20,7 @@ function close_fullscreen() {
   } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
     document.body.querySelector(".votes_fullscreen").style.display = "none";
     document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.querySelector(".create_fullscreen").style.display == "block") {
-    document.body.querySelector(".create_fullscreen").style.display = "none";
-    document.body.querySelector(".create_fullscreen").querySelector(".loader_0").innerHTML=""
-  }
+  } 
 }
 
 on('body', 'click', '.clean_panel', function(event) {
