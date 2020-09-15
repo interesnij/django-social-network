@@ -69,7 +69,7 @@ function paginate(link, block_id){
 	}
 }
 function create_load_pagination(block){
-	// подключаем подгрузкку списков в подгружаемых окнах.
+	// подключаем пагинцию списков в подгружаемых окнах.
 	if(block.querySelector('.img_load_container')){
 		_block = block.querySelector('.img_load_container');
 		scrolled(_block.getAttribute("data-link"), '.img_load_container', target=0)
