@@ -58,8 +58,19 @@ class UserLoadPhotoAlbumComment(ListView):
 
 
 class UserLoadVideo(ListView):
-	template_name = 'load/u_video_load.html'
+	template_name = None
 	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
+		self.album = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community=None)
+		self.template_name = get_settings_template("load/u_video_load.html", request)
+		return super(UserLoadVideo,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadVideo,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
 
 	def get_queryset(self):
 		videos_list = self.request.user.get_video().order_by('-created')
@@ -86,7 +97,7 @@ class UserLoadVideoAlbum(ListView):
 
 
 class UserLoadMusic(ListView):
-	template_name = 'load/u_music_load.html'
+	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
@@ -150,6 +161,25 @@ class UserLoadGood(ListView):
 		goods_list = self.album.get_goods()
 		return goods_list
 
+class UserLoadGoodList(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from goods.models import GoodAlbum
+		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("load/u_good_list_load.html", request)
+		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadGoodList,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
+	def get_queryset(self):
+		good_list = self.album.get_goods().order_by('-created')
+		return good_list
+
 
 class CommunityLoadPhoto(ListView):
 	template_name = 'load/c_photo_load.html'
@@ -211,22 +241,3 @@ class CommunityLoadGood(ListView):
 	def get_queryset(self):
 		goods_list = self.album.get_goods()
 		return goods_list
-
-class UserLoadGoodList(ListView):
-	template_name = None
-	paginate_by = 15
-
-	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("load/u_good_list_load.html", request)
-		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserLoadGoodList,self).get_context_data(**kwargs)
-		context["album"] = self.album
-		return context
-
-	def get_queryset(self):
-		photo_list = self.album.get_goods().order_by('-created')
-		return photo_list
