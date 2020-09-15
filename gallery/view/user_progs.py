@@ -85,7 +85,7 @@ class PhotoAttachUserCreate(View):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render(request, 'gallery_user/my_list.html',{'object_list': photos, 'user': request.user})
+            return render(request, 'user_gallery/my_list.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
@@ -94,7 +94,7 @@ class AlbumUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
-    template_name = "album_user/add_album.html"
+    template_name = "user_album/add_album.html"
     form=None
 
     def get(self,request,*args,**kwargs):
@@ -116,7 +116,7 @@ class AlbumUserCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
-            return render(request, 'album_user/my_album.html',{'album': new_album, 'user': self.user})
+            return render(request, 'user_album/my_album.html',{'album': new_album, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
@@ -361,7 +361,7 @@ class UserAlbumPreview(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.album = Album.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("album_user/album_preview.html", request)
+		self.template_name = get_settings_template("user_album/album_preview.html", request)
 		return super(UserAlbumPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

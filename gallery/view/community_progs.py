@@ -66,7 +66,7 @@ class PhotoAttachCommunityCreate(View):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render(request, 'gallery_community/list.html',{'object_list': photos, 'community': community})
+            return render(request, 'community_gallery/list.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
@@ -74,7 +74,7 @@ class AlbumCommunityCreate(TemplateView):
     """
     создание альбома пользователя
     """
-    template_name="album_community/add_album.html"
+    template_name="community_album/add_album.html"
     form=None
 
     def get(self,request,*args,**kwargs):
@@ -96,7 +96,7 @@ class AlbumCommunityCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
-            return render(request, 'album_community/admin_album.html',{'album': new_album, 'community': self.community})
+            return render(request, 'community_album/admin_album.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
