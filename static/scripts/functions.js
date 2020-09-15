@@ -159,7 +159,6 @@ function send_change(span, _link, new_class, html){
   parent = span.parentElement;
   item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk")
-  uuid = item.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', _link + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
