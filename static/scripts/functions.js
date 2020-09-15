@@ -343,7 +343,7 @@ function open_fullscreen(url, block) {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link.responseText;
     block.parentElement.style.display = "block";
-    block.innerHTML = elem
+    block.innerHTML = elem;
   }};
   link.send();
 }
@@ -356,8 +356,9 @@ function open_load_fullscreen(link, block) {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
+    block.innerHTML = "";
     block.innerHTML = elem;
-    create_load_pagination(document.getElementById('create_loader'))  
+    create_load_pagination(document.getElementById('create_loader'))
   }};
   link_.send();
 }

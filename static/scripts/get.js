@@ -1,13 +1,13 @@
-on('body', 'click', '.clean_panel', function(event) {
+function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
     document.body.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_fullscreen").innerHTML=""
+    document.querySelector("#create_fullscreen").innerHTML=""
   } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
     document.body.querySelector(".photo_fullscreen").style.display = "none";
-    document.getElementById("photo_loader").innerHTML=""
+    document.querySelector("#photo_loader").innerHTML=""
   } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
     document.body.querySelector(".article_fullscreen").style.display = "none";
-    document.getElementById("article_loader").innerHTML=""
+    document.querySelector("#article_loader").innerHTML=""
   } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
     document.body.querySelector(".item_fullscreen").style.display = "none";
     document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
@@ -24,6 +24,10 @@ on('body', 'click', '.clean_panel', function(event) {
     document.body.querySelector(".create_fullscreen").style.display = "none";
     document.body.querySelector(".create_fullscreen").querySelector(".loader_0").innerHTML=""
   }
+}
+
+on('body', 'click', '.clean_panel', function(event) {
+  close_fullscreen()
 })
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
