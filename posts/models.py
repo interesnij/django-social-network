@@ -120,11 +120,11 @@ class Post(models.Model):
     def get_attach_photos(self):
         return self.item_photo.all()
     def get_attach_photo_list(self):
-        return self.post_album.all()
+        return self.post_album.all()[0]
     def get_attach_videos(self):
         return self.item_video.all()
     def get_attach_video_list(self):
-        return self.post_video_album.all()
+        return self.post_video_album.all()[0]
     def get_attach_goods(self):
         return self.item_good.all()
     def get_attach_articles(self):
@@ -132,11 +132,11 @@ class Post(models.Model):
     def get_attach_tracks(self):
         return self.item_music.all()
     def get_attach_music_list(self):
-        return self.post_soundlist.all()
+        return self.post_soundlist.all()[0]
     def get_attach_docs(self):
         return self.item_doc.all()
     def get_attach_doc_list(self):
-        return self.post_doclist.all()
+        return self.post_doclist.all()[0]
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
