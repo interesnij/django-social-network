@@ -5,7 +5,6 @@ from users.models import User
 from video.models import Video, VideoComment, VideoAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
@@ -13,6 +12,7 @@ from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 from common.template.video import get_permission_user_video
 from django.http import Http404
+from common.template.user import get_settings_template
 
 
 class VideoUserCommentList(ListView):

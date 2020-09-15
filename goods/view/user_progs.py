@@ -12,6 +12,7 @@ from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from rest_framework.exceptions import PermissionDenied
 from common.processing.good import get_good_processing, get_good_offer_processing
 from django.http import Http404
+from common.template.user import get_settings_template
 
 
 class GoodCommentUserCreate(View):
@@ -261,3 +262,18 @@ class GoodAlbumUserCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
+
+
+class UserGoodAlbumPreview(TemplateView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.album = GoodAlbum.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("user_good/album_preview.html", request)
+		return super(UserGoodAlbumPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserGoodAlbumPreview,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context

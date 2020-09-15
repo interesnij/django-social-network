@@ -22,4 +22,6 @@ urlpatterns=[
 	url(r'^add_attach/(?P<pk>\d+)/$', GoodUserCreateAttach.as_view()),
 
     url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumUserCreate.as_view()),
+
+    url(r'^get_album_preview/(?P<pk>\d+)/$', UserGoodAlbumPreview.as_view()), 
 ]
