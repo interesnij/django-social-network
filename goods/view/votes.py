@@ -13,7 +13,7 @@ from django.http import Http404
 
 class GoodUserLikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if not good.votes_on or not request.is_ajax():
             raise Http404
@@ -88,7 +88,7 @@ class GoodCommentUserLikeCreate(View):
 
 class GoodUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if not good.votes_on or not request.is_ajax():
             raise Http404
@@ -162,7 +162,7 @@ class GoodCommentUserDislikeCreate(View):
 
 class GoodCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not good.votes_on or not request.is_ajax():
             raise Http404
@@ -196,7 +196,7 @@ class GoodCommunityLikeCreate(View):
 
 class GoodCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not good.votes_on or not request.is_ajax():
             raise Http404

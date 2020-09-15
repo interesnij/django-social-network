@@ -19,7 +19,7 @@ class GoodCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        good = Good.objects.get(uuid=request.POST.get('uuid'))
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not request.is_ajax() and not self.good.comments_enabled:
             raise Http404
         if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
@@ -101,7 +101,7 @@ class GoodCommentCommunityAbortDelete(View):
 
 class CommunityOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
@@ -111,7 +111,7 @@ class CommunityOpenCommentGood(View):
 
 class CommunityCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
@@ -121,7 +121,7 @@ class CommunityCloseCommentGood(View):
 
 class CommunityOffVotesGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.votes_on = False
             good.save(update_fields=['votes_on'])
@@ -131,7 +131,7 @@ class CommunityOffVotesGood(View):
 
 class CommunityOnVotesGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.votes_on = True
             good.save(update_fields=['votes_on'])
@@ -142,7 +142,7 @@ class CommunityOnVotesGood(View):
 
 class CommunityHideGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
@@ -150,7 +150,7 @@ class CommunityHideGood(View):
 
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_hide = False
             good.save(update_fields=['is_hide'])
@@ -160,7 +160,7 @@ class CommunityUnHideGood(View):
 
 class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_delete = True
             good.save(update_fields=['is_delete'])
@@ -170,7 +170,7 @@ class CommunityGoodDelete(View):
 
 class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
             good.is_delete = False
             good.save(update_fields=['is_delete'])

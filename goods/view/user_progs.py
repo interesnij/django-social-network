@@ -20,7 +20,7 @@ class GoodCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))
-        good = Good.objects.get(uuid=request.POST.get('uuid'))
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not request.is_ajax() and not self.good.comments_enabled:
             raise Http404
 
@@ -86,7 +86,7 @@ class GoodCommentUserAbortDelete(View):
 
 class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.is_deleted = True
             good.save(update_fields=['is_deleted'])
@@ -96,7 +96,7 @@ class UserGoodDelete(View):
 
 class UserGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.is_deleted = False
             good.save(update_fields=['is_deleted'])
@@ -106,7 +106,7 @@ class UserGoodAbortDelete(View):
 
 class UserOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
@@ -116,7 +116,7 @@ class UserOpenCommentGood(View):
 
 class UserCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
@@ -126,7 +126,7 @@ class UserCloseCommentGood(View):
 
 class UserOffVotesGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.votes_on = False
             good.save(update_fields=['votes_on'])
@@ -136,7 +136,7 @@ class UserOffVotesGood(View):
 
 class UserOnVotesGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.votes_on = True
             good.save(update_fields=['votes_on'])
@@ -146,7 +146,7 @@ class UserOnVotesGood(View):
 
 class UserUnHideGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(uupk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.status = Good.STATUS_PUBLISHED
             good.save(update_fields=['status'])
@@ -156,7 +156,7 @@ class UserUnHideGood(View):
 
 class UserHideGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.status = Good.STATUS_DRAFT
             good.save(update_fields=['status'])

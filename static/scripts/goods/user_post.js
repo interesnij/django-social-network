@@ -120,15 +120,15 @@ on('#ajax', 'click', '.user_good_abort_remove', function() {
 on('#ajax', 'click', '.u_good_like', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
-  uuid = block.getAttribute("data-uuid");
-  send_like(block, "/goods/votes/user_like/" + uuid + "/" + pk + "/");
+  good_pk = block.getAttribute("good-pk");
+  send_like(block, "/goods/votes/user_like/" + good_pk + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_good_likes");
 });
 on('#ajax', 'click', '.u_good_dislike', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
-  uuid = block.getAttribute("data-uuid");
-  send_dislike(block, "/goods/votes/user_dislike/" + uuid + "/" + pk + "/");
+  good_pk = block.getAttribute("good-pk");
+  send_dislike(block, "/goods/votes/user_dislike/" + good_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_dislikes");
 });
 on('#ajax', 'click', '.u_good_like2', function() {
@@ -291,13 +291,13 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
 on('#ajax', 'click', '#u_ucm_good_repost_btn', function() {
   form_post = document.body.querySelector("#u_uсm_good_repost_form");
   form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid");
+  good_pk = block.getAttribute("good-pk");
   pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
   if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/goods/repost/u_u_good_repost/" + pk + "/" + uuid + "/", true );
+    link_.open( 'POST', "/goods/repost/u_u_good_repost/" + pk + "/" + good_pk + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
     toast_info("Репост товара на стену сделан")

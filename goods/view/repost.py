@@ -23,7 +23,7 @@ class UUCMGoodWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         if request.user.is_authenticated:
-            self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+            self.good = Good.objects.get(pk=self.kwargs["good_pk"])
             self.user = User.objects.get(pk=self.kwargs["pk"])
             if self.user != request.user:
                 check_user_can_get_list(request.user, self.user)
@@ -44,7 +44,7 @@ class CUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated and request.is_ajax():
             check_can_get_lists(request.user, self.community)
@@ -65,7 +65,7 @@ class UUGoodRepost(View):
     создание репоста товара пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -86,7 +86,7 @@ class CUGoodRepost(View):
     создание репоста товара сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -107,7 +107,7 @@ class UCGoodRepost(View):
     создание репоста товара пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -134,7 +134,7 @@ class CCGoodRepost(View):
     создание репоста товара сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         form_post = PostForm(request.POST)
@@ -160,7 +160,7 @@ class UMGoodRepost(View):
     создание репоста товара пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -188,7 +188,7 @@ class CMGoodRepost(View):
     создание репоста товара сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)

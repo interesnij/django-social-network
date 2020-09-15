@@ -38,7 +38,7 @@ class GoodCommunityCommentList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+        self.good = Good.objects.get(pk=self.kwargs["data_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404

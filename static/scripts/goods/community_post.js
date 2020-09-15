@@ -221,13 +221,13 @@ on('#ajax', 'click', '#add_good_community_btn', function() {
 on('#ajax', 'click', '#с_ucm_good_repost_btn', function() {
   form_post = document.body.querySelector("#с_uсm_good_repost_form");
   form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid");
+  good_pk = container.getAttribute('good-pk');
   pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
   if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/goods/repost/с_u_good_repost/" + pk + "/" + uuid + "/", true );
+    link_.open( 'POST', "/goods/repost/с_u_good_repost/" + pk + "/" + good_pk + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link_.send(form_data);
     toast_info("Репост товара на стену сделан")
@@ -252,7 +252,7 @@ on('#ajax', 'click', '#с_ucm_good_repost_btn', function() {
     val = false;
     for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
     if(val){
-      link_.open( 'POST', "/goods/repost/с_m_good_repost/" + pk + "/" + uuid + "/", true );
+      link_.open( 'POST', "/goods/repost/с_m_good_repost/" + pk + "/" + good_pk + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
       toast_info("Репост товара в сообщения сделан")
