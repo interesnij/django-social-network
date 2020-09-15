@@ -22,7 +22,7 @@ class CommunityPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "gallery_community/", "list.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_gallery/", "list.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -46,7 +46,7 @@ class CommunityAlbumPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "album_community/", "list.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_album/", "list.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
