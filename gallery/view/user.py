@@ -130,6 +130,7 @@ class UserWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
@@ -146,7 +147,7 @@ class UserWallPhoto(TemplateView):
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["album"] = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
+        context["album"] = self.album
         return context
 
 
