@@ -28,6 +28,9 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/goods/$', CommunityGoods.as_view(), name='community_goods'),
     url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodsList.as_view(), name='community_goods_list'),
 
+    url(r'^(?P<pk>\d+)/gallery/$', CommunityGallery.as_view(), name='community_gallery'),
+    url(r'^(?P<pk>\d+)/album/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbum.as_view(), name='community_album'),
+
     url(r'^manage/', include('communities.url.manage')),
     url(r'^progs/', include('communities.url.progs')),
     url(r'^stat/', include('communities.url.stat')),

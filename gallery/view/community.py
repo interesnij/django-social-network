@@ -9,51 +9,10 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
-from common.template.photo import get_template_community_photo, get_permission_community_photo , get_permission_community_photo_detail
+from common.template.photo import get_template_community_photo, get_permission_community_photo, get_permission_community_photo_detail
 from common.check.community import check_can_get_lists
 from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
-
-
-class CommunityGalleryView(TemplateView):
-    """
-    галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
-    """
-    template_name = None
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
-        self.albums_list = self.community.get_albums().order_by('-created')
-
-        self.template_name = get_template_community_photo(self.community, "gallery_community/", "gallery.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(CommunityGalleryView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityGalleryView,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['albums_list'] = self.albums_list
-        context['album'] = self.album
-        return context
-
-class CommunityAlbumView(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.community, "album_community/", "album.html", request.user)
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(CommunityAlbumView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityAlbumView,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['album'] = self.album
-        return context
 
 
 class CommunityPhotosList(ListView):

@@ -17,7 +17,7 @@
       </div>
   </div>
   <div class="container mt-4">
-    {% include 'gallery_community/albums.html' %}
+    {% include 'c_gallery/albums.html' %}
   </div>
 {% else %}
   <div class="container-fluid mt-3">
@@ -44,7 +44,7 @@
             </h5>
             Фото: {{ album.count_photo }}
         </div>
-        {% if community.is_photo_upload_member or community.is_photo_upload_nomember %}
+        {% if community.is_photo_upload_nomember %}
         <div class="col-12 col-md-4">
           <form id="c_add_photos" method="post">
               {% csrf_token %}

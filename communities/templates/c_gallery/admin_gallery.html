@@ -13,11 +13,15 @@
               </a> - альбомы
             </h5>
           </div>
-          <div class="col-12 col-md-4"></div>
+          <div class="col-12 col-md-4">
+            <button class="c_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+              Добавить альбом
+            </button>
+          </div>
       </div>
   </div>
   <div class="container mt-4">
-    {% include 'gallery_community/albums.html' %}
+    {% include 'c_gallery/admin_albums.html' %}
   </div>
 {% else %}
   <div class="container-fluid mt-3">
@@ -29,7 +33,11 @@
                 </a>
                 - Альбомов нет</h5>
           </div>
-          <div class="col-12 col-md-4"></div>
+          <div class="col-12 col-md-4">
+            <button class="c_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+              Добавить альбом
+            </button>
+          </div>
       </div>
   </div>
 {% endif %}
