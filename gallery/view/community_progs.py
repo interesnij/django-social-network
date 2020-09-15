@@ -96,7 +96,7 @@ class AlbumCommunityCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
-            return render(request, 'community_album/admin_album.html',{'album': new_album, 'community': self.community})
+            return render(request, 'community_album/new_album.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)

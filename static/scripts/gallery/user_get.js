@@ -75,8 +75,6 @@ on('#ajax', 'click', '#u_create_album_btn', function() {
   } else { null }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   post_and_load_object_page(form, "/gallery/user_progs/add_album/", "/users/", "/album/");
-  reload = document.body.querySelector("#album_photo_load")
-  list_load(reload, reload.getAttribute("data-link"));
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {

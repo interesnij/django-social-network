@@ -116,7 +116,7 @@ class AlbumUserCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
-            return render(request, 'user_album/my_album.html',{'album': new_album, 'user': self.user})
+            return render(request, 'user_album/new_album.html',{'album': new_album, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
