@@ -107,10 +107,11 @@ function create_preview_music(div_class, img_src, pk, counter){
   return $div
 }
 
-function create_preview_good(div_class, img_src, pk, title){
+function create_preview_good(div_class, img_src, pk, uuid, title){
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "u_good_detail", "good", div_class);
   $div.setAttribute('good-pk', pk);
+  $div.setAttribute('data-uuid', uuid);
   $div.style.cursor = "pointer";
 
   $input = document.createElement("span");

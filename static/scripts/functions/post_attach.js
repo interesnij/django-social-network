@@ -170,6 +170,7 @@ function music_post_attach(_this, block) {
 function good_post_attach(_this, block) {
   is_full_attach();
   pk = _this.getAttribute('good-pk');
+  uuid = _this.getAttribute('good-uuid');
   if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
     _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
     _this.parentElement.setAttribute("flow", "up");
@@ -178,16 +179,17 @@ function good_post_attach(_this, block) {
   _this.parentElement.classList.add("attach_toggle");
   title = _this.querySelector(".good_title").innerHTML;
 
-    if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", _this.querySelector("img").getAttribute('data-src'), pk, title)}
-    else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", _this.querySelector("img").getAttribute('data-src'), pk, title)}
+
+    if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
+    else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
   block.append(div);
   block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
 
