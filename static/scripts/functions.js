@@ -1,5 +1,4 @@
-function attach_list_for_post(url){
-  _this = this;
+function attach_list_for_post(_this, url){
   if (document.body.querySelector(".current_file_dropdown")){
     toast_error("Элемент прикрепляется только к постам")
   } else if (document.body.querySelector(".attach_block")) {
