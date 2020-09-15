@@ -36,8 +36,8 @@ on('#ajax', 'click', '.u_AV_photo', function() {
 });
 
 on('#ajax', 'click', '.u_AL_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  uuid = this.getAttribute('data-uuid');
+  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
+  pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/album_photo/" + pk + "/" + uuid + "/", loader)
 });
