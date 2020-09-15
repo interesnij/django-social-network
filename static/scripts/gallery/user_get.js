@@ -36,10 +36,10 @@ on('#ajax', 'click', '.u_AV_photo', function() {
 });
 
 on('#ajax', 'click', '.u_AL_photo', function() {
-  document.body.querySelector(".pk_saver") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-pk') : uuid = this.getAttribute('data-pk');
-  photo_uuid = this.getAttribute('photo-uuid');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  uuid = this.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/album_photo/" + uuid + "/" + photo_uuid + "/", loader)
+  open_fullscreen("/gallery/user/album_photo/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_WA_photo', function() {

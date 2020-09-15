@@ -157,11 +157,10 @@ class CommunityAlbumPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community=self.community, type=Album.ALBUM)
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_photo/album_photo/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.album.community, "c_photo/album_photo/", "photo.html", request.user)
         else:
             raise Http404
         if request.user.is_administrator_of_community_with_name(self.album.community.name):
