@@ -146,7 +146,7 @@ class UserWallPhoto(TemplateView):
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["album"] = self.album
+        context["album"] = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         return context
 
 
