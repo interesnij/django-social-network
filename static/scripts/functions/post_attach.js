@@ -111,13 +111,13 @@ function photo_post_upload_attach(photo_list, block, block_divs_length){
 function video_post_attach(_this, block) {
   is_full_attach();
   counter = _this.getAttribute('video-counter');
-  if (block.querySelector( '[video-counter=' + '"' + counter + '"' + ']' )){
+  pk = _this.getAttribute('data-pk');
+  if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
   _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('data-pk');
     if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)}
     else if (!block.querySelector(".select_video2")){div = create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)}
     else if (!block.querySelector(".select_video3")){div = create_preview_video("select_video3", _this.getAttribute('data-src'), pk, counter)}
@@ -170,7 +170,7 @@ function music_post_attach(_this, block) {
 function good_post_attach(_this, block) {
   is_full_attach();
   pk = _this.getAttribute('good-pk');
-  uuid = _this.getAttribute('data-uuid'); 
+  uuid = _this.getAttribute('data-uuid');
   if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
     _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
     _this.parentElement.setAttribute("flow", "up");

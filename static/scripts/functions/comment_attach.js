@@ -89,13 +89,12 @@ function video_comment_attach(_this, dropdown){
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling;
   counter = _this.getAttribute('video-counter');
-  if (img_block.querySelector( '[video-counter=' + '"' + counter + '"' + ']' )){
+  pk = _this.getAttribute('data-pk');
+  if (img_block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
-
-  pk = _this.getAttribute('data-pk');
 
     if (img_block.querySelector(".select_video1")){
         create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
