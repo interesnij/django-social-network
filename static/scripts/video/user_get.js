@@ -97,6 +97,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
 on('#ajax', 'click', '.u_video_detail', function() {
   var uuid, pk, loader;
   parent = this.parentElement;
+  counter = this.getAttribute('video-counter') - 1;
   document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
@@ -105,7 +106,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");
   setTimeout(function() {
-    load_video_playlist(video_player_id + "a", 0);
+    load_video_playlist(video_player_id + "a", counter);
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
