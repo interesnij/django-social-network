@@ -1,7 +1,7 @@
  <!-- прикрепленные элементы к записям пользователей -->
 
-<div class="attach_container">
-  
+<div class="attach_container"> 
+
   {% for photo in object.get_attach_photos %}
     {% include 'generic/attach/u_photo.html' %}
   {% endfor %}
