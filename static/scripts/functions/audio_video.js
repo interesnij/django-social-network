@@ -548,7 +548,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
             if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
               list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
               info_video.setAttribute("data-uuid", uuid);
-              console.log("Воспроизводится ролик № : " + video_id)
+              console.log("Воспроизводится ролик № : " + video_pk)
             }
             }
           }, 500);
