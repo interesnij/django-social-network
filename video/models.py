@@ -197,9 +197,8 @@ class Video(models.Model):
 
     def get_albums_for_video(self):
         return self.album.all()
-
-	def get_album_uuid(self):
-		return self.album.all()[0].uuid
+    def get_album_uuid(self):
+        return self.album.all()[0].uuid
 
 
 class VideoComment(models.Model):
