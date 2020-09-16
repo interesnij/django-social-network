@@ -132,7 +132,7 @@ class UserWallPhoto(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         self.photos = self.album.get_photos()
-        if request.is_ajax():
+        if request.is_ajax(): 
             self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
         else:
             raise Http404

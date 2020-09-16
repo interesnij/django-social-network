@@ -1,6 +1,6 @@
 {% if user.get_last_video %}
 
-<div class="card mb-3" style="">
+<div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
         <div class="media">
@@ -15,7 +15,7 @@
         <div class="row no-gutters" album-uuid="{{ user.get_generic_video_list_uuid }}">
           {% for object in user.get_last_video %}
           <div style="position:relative">
-            <img class="lazyload image_fit_small" data-src="{{ object.image.url }}" alt="">
+            <img class="lazyload image_fit_200" data-src="{{ object.image.url }}" alt="">
             <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter }}"></div>
             <p>{{ object.title }}</p>
           </div>

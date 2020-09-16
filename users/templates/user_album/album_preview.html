@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3" style="flex-basis: 100%;">
   <div class="card-body" style="padding: 8px;padding-bottom: 0;">
     <div style="display:flex" data-pk="{{ album.creator.pk }}" data-uuid="{{ album.uuid }}">
       <figure>
@@ -8,19 +8,22 @@
           </svg>
         </a>
       </figure>
-      <div class="media-body">
+      <div class="media-body" style="margin-left:10px">
         <h6 class="my-0 mt-1">{{ album.title }}</h6>
         <p class="">
-          Всего: {{ album.count_photos }}
+          Всего: {{ album.count_photo }}
           <br>
           Фотоальбом
+          <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=album.creator.pk %}">
+            {{ album.creator.get_full_name_genitive }}
+          </a>
         </p>
       </div>
     </div>
   </div>
 <div class="row" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-    <div class="u_AL_photo col-md-6 col-lg-4" photo-uuid="{{ photo.uuid }}" data-pk="{{ album.creator.pk }}">
+    <div class="u_AL_photo col-md-6 col-lg-4" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid.pk }}">
       <div class="card rounded-0 border-0 mb-3 pointer">
         {% if photo.file %}
           <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
