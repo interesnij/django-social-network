@@ -94,7 +94,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   }, 500);
 });
 
-on('#ajax', 'click', '.c_post_video', function() {
+on('#ajax', 'click', '.u_post_video', function() {
   var uuid, pk, loader;
   parent = this.parentElement;
   counter = this.getAttribute('video-counter') - 1;
