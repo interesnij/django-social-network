@@ -1,0 +1,18 @@
+{% with album=object.get_photo_album_repost %}
+
+  <span style="padding: 5px;">
+    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
+    {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} фотоальбомом
+  </span>
+
+  {% if object.parent.community %}
+
+    {% include 'generic/repost/c_photo_album_repost.html' %}
+
+  {% else %}
+
+    {% include 'generic/repost/u_photo_album_repost.html' %}
+
+  {% endif %}
+
+{% endwith %}

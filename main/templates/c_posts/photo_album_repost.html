@@ -1,0 +1,16 @@
+{% with album=object.get_photo_album_repost %}
+
+  <span style="padding: 5px;">
+    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось фотоальбомом
+  </span>
+  {% if object.parent.community %}
+
+    {% include 'generic/repost/c_photo_album_repost.html' %}
+
+  {% else %}
+
+    {% include 'generic/repost/u_photo_album_repost.html' %}
+
+  {% endif %}
+
+{% endwith %}
