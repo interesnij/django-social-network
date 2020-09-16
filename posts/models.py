@@ -146,7 +146,7 @@ class Post(models.Model):
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.parent.post_alnum.all()[0]
+        photo_album = self.parent.post_album.all()[0]
         return photo_album
 
     def is_music_repost(self):
