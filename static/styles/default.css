@@ -1,3 +1,8 @@
+#news_post_list .media,
+#news_post_list .card-body {
+  border-left: 0 !important;
+}
+
 .attach_panel a {
   margin-left: -5px;
   margin-right: -5px;
