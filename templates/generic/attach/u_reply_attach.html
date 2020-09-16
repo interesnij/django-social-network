@@ -5,7 +5,7 @@
   {% endfor %}
   {% for object in reply.comment_video.all %}
   <div class="col-md-6">
-      <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
+      <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
       <div class="video_icon_play_v2 u_play_comment_video" data-pk="{{ object.creator.pk }}" comment-pk="{{ reply.pk }}" video-counter="{{ forloop.counter }}"></div>
   </div>
   {% endfor %}
