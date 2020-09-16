@@ -43,8 +43,8 @@ on('#ajax', 'click', '#u_ucm_photo_repost_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".votes_fullscreen").style.display = "none";
-    document.getElementById("votes_loader").innerHTML="";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
   }}
 });
 
@@ -91,8 +91,8 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".votes_fullscreen").style.display = "none";
-    document.getElementById("votes_loader").innerHTML="";
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
   }}
 });
 

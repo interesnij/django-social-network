@@ -270,7 +270,7 @@ class UUPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
@@ -290,7 +290,7 @@ class CUPhotoAlbumRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
@@ -315,7 +315,7 @@ class UCPhotoAlbumRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
@@ -341,7 +341,7 @@ class CCPhotoAlbumRepost(View):
             communities = request.POST.getlist("staff_communities")
             if not communities:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
@@ -368,7 +368,7 @@ class UMPhotoAlbumRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
@@ -395,7 +395,7 @@ class CMPhotoAlbumRepost(View):
             connections = request.POST.getlist("user_connections")
             if not connections:
                 return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
+            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
             album.post_album.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)

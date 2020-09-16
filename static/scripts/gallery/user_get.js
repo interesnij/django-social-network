@@ -11,7 +11,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   pk = parent.getAttribute("user-pk");
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
-  clear_attach_block();
+  clear_attach_block(); 
 })
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement;
