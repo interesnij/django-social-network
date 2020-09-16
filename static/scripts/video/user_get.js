@@ -100,7 +100,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/detail/" + pk + "/" + uuid + "/", loader);
+  open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");
