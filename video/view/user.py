@@ -40,6 +40,8 @@ class UserPostVideoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from posts.models import Post
+        
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.video_list = self.post.get_attach_videos()
