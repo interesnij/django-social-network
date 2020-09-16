@@ -164,7 +164,6 @@ on('#ajax', 'click', '.u_remove_track_in_list', function() {
 })
 
 on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
-  this.disabled = true;
   form = document.body.querySelector("#u_soundcloud_set_create_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
@@ -174,6 +173,7 @@ on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
   }
+  this.disabled = true;
   post_and_load_object_page(form, "/music/user_progs/create_soundcloud_set/", "/users/", "/music_list/")
 });
 
