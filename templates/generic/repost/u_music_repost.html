@@ -1,7 +1,7 @@
 {% load get_key %}
 
 <div class="col-md-12 music" data-path="{{ track.uri }}" data-duration="{{ track.duration }}" style="flex-basis: 100%;">
-    <div class="media" music-counter="{{ forloop.counter0 }}">
+    <div class="media border-left" music-counter="{{ forloop.counter0 }}">
         <figure>
           <a class="music_list_post music_thumb pointer">
             {% if track.artwork_url %}

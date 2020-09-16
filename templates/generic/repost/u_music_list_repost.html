@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-body" style="padding: 8px;padding-bottom: 0;">
+    <div class="card-body border-left" style="padding: 8px;padding-bottom: 0;">
       <div style="display:flex" data-pk="{{ playlist.creator.pk }}" data-uuid="{{ playlist.uuid }}">
         <figure>
           <a class="ajax" href="{% url 'user_music_list' pk=playlist.creator.pk uuid=playlist.uuid %}">
@@ -32,7 +32,7 @@
     </div>
   </div>
 <div class="card">
-    <div class="card-body" style="padding-left: 7px;padding-right: 7px;">
+    <div class="card-body border-left" style="padding-left: 7px;padding-right: 7px;">
           <ul data-pk="{{ playlist.pk }}" style="margin-bottom: 0">
             {% for music in playlist.playlist_30 %}
               {% include 'generic/attach/u_music.html' %}

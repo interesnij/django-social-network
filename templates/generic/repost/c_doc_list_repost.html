@@ -1,5 +1,5 @@
 <div class="card border-left">
-    <div class="card-body" style="padding: 8px;padding-bottom: 0;">
+    <div class="card-body border-left" style="padding: 8px;padding-bottom: 0;">
       <div style="display:flex" data-pk="{{ list.community.pk }}" data-uuid="{{ list.uuid }}">
         <figure>
           <a class="ajax" href="{% url 'community_docs_list' pk=list.community.pk uuid=list.uuid %}">
@@ -29,7 +29,7 @@
     </div>
   </div>
 <div class="card border-left">
-    <div class="card-body" style="padding-top: 0; padding-left: 8px;">
+    <div class="card-body border-left" style="padding-top: 0; padding-left: 8px;">
           <ul data-pk="{{ list.pk }}" style="margin-bottom: 0">
             {% for doc in list.list_30 %}
             <li class="border" style="padding-bottom:10px;">
