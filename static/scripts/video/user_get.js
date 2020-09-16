@@ -116,8 +116,7 @@ on('#ajax', 'click', '.u_post_video', function() {
   }, 500);
 });
 
-function play_video_list(url){
-  counter = this.getAttribute('video-counter') - 1;
+function play_video_list(url, counter){
   loader = document.getElementById("video_loader");
   open_fullscreen(url, loader);
   video_saver = document.body.querySelector("#video_id_saver");
@@ -137,7 +136,8 @@ function play_video_list(url){
 on('#ajax', 'click', '.u_play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
   pk = this.getAttribute("data-pk");
-  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/")
+  counter = this.getAttribute('video-counter') - 1;
+  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", counter)
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
