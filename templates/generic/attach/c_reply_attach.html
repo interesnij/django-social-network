@@ -13,7 +13,7 @@
   </div>
   {% endfor %}
   {% for good in reply.comment_good.all %}
-    {% include 'generic/attach/c_good.html' %}
+    {% include 'generic/items/c_good.html' %}
   {% endfor %}
   {% for object in comment.attached_comment.all %}
   <div class="col-md-6" data-uuid="{{ object.uuid }}">
@@ -33,6 +33,6 @@
   </div>
   {% endfor %}
   {% for music in reply.comment_music.all %}
-    {% include 'generic/attach/c_music.html' %}
+    {% include 'generic/items/c_music.html' %}
   {% endfor %}
 </div>

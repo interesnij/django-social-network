@@ -3,18 +3,17 @@
 <div class="attach_container">
 
   {% for photo in object.get_attach_photos %}
-    {% include 'generic/attach/u_photo.html' %}
+    {% include 'generic/items/u_photo.html' %}
   {% endfor %}
   {% for album in object.get_attach_photo_list %}
-    {% include 'generic/attach/u_album.html' %}
+    {% include 'generic/items/u_album.html' %}
   {% endfor %}
-
 
   {% for video in object.get_attach_videos %}
-    {% include 'generic/attach/u_video.html' %}
+    {% include 'generic/items/u_video.html' %}
   {% endfor %}
   {% for good in object.get_attach_goods %}
-    {% include 'generic/attach/u_good.html' %}
+    {% include 'generic/items/u_good.html' %}
   {% endfor %}
   {% for item in object.get_attach_articles %}
   <div class="article" data-uuid="{{ item.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -34,6 +33,6 @@
   </div>
   {% endfor %}
   {% for music in object.get_attach_tracks %}
-    {% include 'generic/attach/u_music.html' %}
+    {% include 'generic/items/u_music.html' %}
   {% endfor %}
 </div>

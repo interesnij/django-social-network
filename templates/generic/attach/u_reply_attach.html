@@ -1,7 +1,7 @@
 <!-- прикрепленные элементы к ответам на комментарии к записям пользователей -->
 <div class="row" data-pk="{{ reply.pk }}">
   {% for photo in reply.comment_photo.all %}
-    {% include 'generic/attach/u_photo.html' %}
+    {% include 'generic/items/u_photo.html' %}
   {% endfor %}
   {% for object in reply.comment_video.all %}
   <div class="col-md-6">
@@ -10,7 +10,7 @@
   </div>
   {% endfor %}
   {% for good in reply.comment_good.all %}
-    {% include 'generic/attach/u_good.html' %}
+    {% include 'generic/items/u_good.html' %}
   {% endfor %}
   {% for object in comment.attached_comment.all %}
   <div class="col-md-6" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
@@ -30,6 +30,6 @@
   </div>
   {% endfor %}
   {% for object in reply.comment_music.all %}
-    {% include 'generic/attach/u_music.html' %}
+    {% include 'generic/items/u_music.html' %}
   {% endfor %}
 </div>

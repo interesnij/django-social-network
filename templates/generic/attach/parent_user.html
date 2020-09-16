@@ -21,7 +21,7 @@
 </div>
 {% endfor %}
 {% for good in object.get_parent_attach_goods %}
-  {% include 'generic/attach/u_good.html' %}
+  {% include 'generic/items/u_good.html' %}
 {% endfor %}
 {% for item in object.get_parent_attach_articles %}
 <div class="article" data-uuid="{{ item.uuid }}">
@@ -41,6 +41,6 @@
 </div>
 {% endfor %}
 {% for music in object.get_parent_attach_tracks %}
-  {% include 'generic/attach/u_music.html' %}
+  {% include 'generic/items/u_music.html' %}
 {% endfor %}
 </div>

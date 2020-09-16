@@ -13,7 +13,7 @@
   </div>
   {% endfor %}
   {% for good in comment.comment_good.all %}
-    {% include 'generic/attach/c_good.html' %}
+    {% include 'generic/items/c_good.html' %}
   {% endfor %}
   {% for object in comment.attached_comment.all %}
   <div class="col-md-6" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
