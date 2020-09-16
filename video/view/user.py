@@ -61,7 +61,7 @@ class UserPostCommentVideoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from posts.models import PostComment 
+        from posts.models import PostComment
 
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -85,8 +85,8 @@ class UserVideoInfo(TemplateView):
     def get(self,request,*args,**kwargs):
         from stst.models import VideoNumbers
 
+        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)

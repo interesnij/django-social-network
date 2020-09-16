@@ -58,86 +58,26 @@ on('#video_loader', 'click', '.u_video_comments', function() {
   this.classList.toggle("comments_open");
 });
 
-
-function get_video_info(pk){
-  info_video = document.body.querySelector("#info_video");
-  my_playlist = document.body.querySelector("#my_playlist");
-  videos = my_playlist.querySelectorAll('.video_playlist_li');
-  video_id = video_player.getVideoId();
-  uuid = videos[video_id].getAttribute("data-video-uuid");
-  if (info_video.innerHTML == "" || info_video.getAttribute("data-uuid") != uuid){
-    list_load(info_video, "/video/user/info/" + pk + "/" + uuid + "/");
-    info_video.setAttribute("data-uuid", uuid);
-    console.log("Воспроизводится ролик № : " + video_id)
-  }
-}
-
 on('#ajax', 'click', '.u_video_list_detail', function() {
-  var uuid, pk, loader;
-  counter = this.getAttribute('video-counter') - 1;
-  parent = this.parentElement;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  parent.parentElement.getAttribute("data-uuid") ? uuid = parent.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
-  loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
-  setTimeout(function() {
-    load_video_playlist(video_player_id + "a", counter);
-    video_player.addListener(FWDUVPlayer.READY, onReady);
-    function onReady(){
-    console.log("video player ready");
-    setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    get_video_info(pk)
-    }
-  }, 500);
+  this.parentElement.parentElement.getAttribute("data-uuid") ? uuid = this.parentElement.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
+  play_video_list("/video/user/list/" + pk + "/" + uuid + "/", counter)
 });
 
 on('#ajax', 'click', '.u_post_video', function() {
-  var uuid, pk, loader;
-  parent = this.parentElement;
-  counter = this.getAttribute('video-counter') - 1;
   document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
-  loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/list_post/" + pk + "/" + uuid + "/", loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
-  setTimeout(function() {
-    load_video_playlist(video_player_id + "a", counter);
-    video_player.addListener(FWDUVPlayer.READY, onReady);
-    function onReady(){
-    console.log("video player ready");
-    setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    get_video_info(pk)
-    }
-  }, 500);
+  play_video_list("/video/user/list_post/" + pk + "/" + uuid + "/", counter)
 });
-
-function play_video_list(url, counter){
-  loader = document.getElementById("video_loader");
-  open_fullscreen(url, loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
-  setTimeout(function() {
-    load_video_playlist(video_player_id + "a", counter);
-    video_player.addListener(FWDUVPlayer.READY, onReady);
-    function onReady(){
-    console.log("video player ready");
-    setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    //get_video_info(pk)
-    }
-  }, 500);
-}
 
 on('#ajax', 'click', '.u_play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
   pk = this.getAttribute("data-pk");
+  video_pk = this.getAttribute("video-pk");
+
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", counter)
+  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", counter);
+  get_video_info(pk, video_pk)
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
