@@ -1,4 +1,4 @@
-<div class="card has-background-img u_good_detail good pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_album_uuid }}">
+<div class="card has-background-img u_good_detail good pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_album_uuid }}" style="flex-basis: 100%;">
   <figure class="background-img shadow-dark">
     {% if good.image %}
     <img class="image_fit lazyload opacity-100" data-src="{{ good.image.url }}" alt="img">
