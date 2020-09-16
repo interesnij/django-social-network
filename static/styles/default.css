@@ -1,5 +1,6 @@
 #news_post_list .media,
-#news_post_list .card-body {
+#news_post_list .card-body,
+#news_post_list .row {
   border-left: 0 !important;
 }
 
