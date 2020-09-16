@@ -121,7 +121,7 @@ on('#ajax', 'click', '.u_play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
   pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/list_post_comment/" + pk + "/" + uuid + "/", loader);
+  open_fullscreen("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");
