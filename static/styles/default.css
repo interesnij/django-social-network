@@ -177,7 +177,7 @@ ul{
   padding: 5px;
 }
 
-.photo, .video, .good, .article {
+.photo, .video, .article {
   margin-bottom: 10px;
   flex-grow: 1;
   max-width: 100%;
