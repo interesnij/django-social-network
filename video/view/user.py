@@ -36,6 +36,26 @@ class UserVideoList(ListView):
         return video_list
 
 
+class UserPostVideoList(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.video_list = self.post.get_attach_videos()
+
+        self.template_name = get_template_user_video(self.user, "u_album_list/", "list.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserVideoList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['object_list'] = self.video_list
+        return context
+
+
 class UserVideoInfo(TemplateView):
     template_name = None
 

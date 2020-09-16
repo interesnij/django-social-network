@@ -94,14 +94,14 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   }, 500);
 });
 
-on('#ajax', 'click', '.u_video_detail', function() {
+on('#ajax', 'click', '.c_post_video', function() {
   var uuid, pk, loader;
   parent = this.parentElement;
   counter = this.getAttribute('video-counter') - 1;
   document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
+  open_fullscreen("/video/user/list_post/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");
