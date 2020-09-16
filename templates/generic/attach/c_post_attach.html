@@ -10,10 +10,7 @@
     {% include 'generic/attach/c_album.html' %}
   {% endfor %}
   {% for video in object.get_attach_videos %}
-  <div class="video">
-      <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
-      <div class="video_icon_play_v2 c_video_detail" data-pk="{{ object.community.pk }}" data-uuid="{{ video.uuid }}" video-counter="{{ forloop.counter0 }}"></div>
-  </div>
+    {% include 'generic/attach/c_video.html' %}
   {% endfor %}
   {% for good in object.get_attach_goods %}
     {% include 'generic/attach/c_good.html' %}

@@ -198,6 +198,9 @@ class Video(models.Model):
     def get_albums_for_video(self):
         return self.album.all()
 
+	def get_album_uuid(self):
+		return self.album.all()[0].uuid
+
 
 class VideoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")

@@ -97,8 +97,8 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
 on('#ajax', 'click', '.u_video_detail', function() {
   var uuid, pk, loader;
   parent = this.parentElement;
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  uuid = this.getAttribute("data-uuid");
+  document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
+  pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/detail/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");

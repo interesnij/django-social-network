@@ -1,6 +1,6 @@
  <!-- прикрепленные элементы к записям пользователей -->
 
-<div class="attach_container"> 
+<div class="attach_container">
 
   {% for photo in object.get_attach_photos %}
     {% include 'generic/attach/u_photo.html' %}
@@ -11,10 +11,7 @@
 
 
   {% for video in object.get_attach_videos %}
-  <div class="video">
-      <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
-      <div class="video_icon_play_v2 u_video_detail" data-pk="{{ object.creator.pk }}" data-uuid="{{ object.uuid }}" video-counter="{{ forloop.counter0 }}"></div>
-  </div>
+    {% include 'generic/attach/u_video.html' %}
   {% endfor %}
   {% for good in object.get_attach_goods %}
     {% include 'generic/attach/u_good.html' %}
