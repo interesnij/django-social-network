@@ -57,6 +57,27 @@ class UserPostVideoList(TemplateView):
         context['object_list'] = self.video_list
         return context
 
+class UserPostCommentVideoList(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from posts.models import PostComment 
+
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.video_list = self.comment.get_attach_videos()
+
+        self.template_name = get_template_user_video(self.user, "u_album_list/", "list.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(UserPostCommentVideoList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPostCommentVideoList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['object_list'] = self.video_list
+        return context
+
 
 class UserVideoInfo(TemplateView):
     template_name = None

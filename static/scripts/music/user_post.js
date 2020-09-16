@@ -168,10 +168,10 @@ on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
+    toast_error("Название - обязательное поле!"); return
   } else if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!");
+    toast_error("Ссылка - обязательное поле!"); return
   } else {this.disabled = true;}
   post_and_load_object_page(form, "/music/user_progs/create_soundcloud_set/", "/users/", "/music_list/")
 });

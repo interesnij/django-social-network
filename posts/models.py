@@ -530,3 +530,16 @@ class PostComment(models.Model):
             return str(count) + " ответа"
         else:
             return str(count) + " ответов"
+
+    def get_attach_photos(self):
+        return self.comment_photo.all()
+    def get_attach_videos(self):
+        return self.comment_video.all()
+    def get_attach_goods(self):
+        return self.comment_good.all()
+    def get_attach_articles(self):
+        return self.attached_comment.all()
+    def get_attach_tracks(self):
+        return self.comment_music.all()
+    def get_attach_docs(self):
+        return self.comment_doc.all()

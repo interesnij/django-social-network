@@ -116,6 +116,26 @@ on('#ajax', 'click', '.u_post_video', function() {
   }, 500);
 });
 
+on('#ajax', 'click', '.u_comment_video', function() {
+  counter = this.getAttribute('video-counter') - 1;
+  comment_pk = this.getAttribute("comment-pk");
+  pk = this.getAttribute("data-pk");
+  loader = document.getElementById("video_loader");
+  open_fullscreen("/video/user/list_post_comment/" + pk + "/" + uuid + "/", loader);
+  video_saver = document.body.querySelector("#video_id_saver");
+  video_player_id = video_saver.getAttribute('data-video');
+  video_saver.setAttribute('data-video', video_player_id + "a");
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a", counter);
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    function onReady(){
+    console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
+    get_video_info(pk)
+    }
+  }, 500);
+});
+
 on('body', 'click', '.video_fullscreen_resize', function() {
   video_window = document.querySelector(".video_fullscreen");
   video_window.classList.add("video_fullscreen_resized", "draggable");
