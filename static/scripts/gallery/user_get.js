@@ -14,7 +14,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
-  parents = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  parents = this.parentElement;
   parents.getAttribute('data-pk') ? pk = this.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parents.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
   loader = document.getElementById("votes_loader");
