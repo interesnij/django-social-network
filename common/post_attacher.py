@@ -82,17 +82,13 @@ def videolist_attach(value, post):
 
 def get_post_attach(request, post):
     if request.POST.get('playlist'):
-        playlist_attach(request.POST.get('playlist'), playlist)
+        playlist_attach(request.POST.get('playlist'), post)
     elif request.POST.get('doc_list'):
-        doclist_attach(request.POST.get('doc_list'), doc_list)
+        doclist_attach(request.POST.get('doc_list'), post)
     elif request.POST.get('photo_list'):
-        photolist_attach(request.POST.get('photo_list'), photo_list)
+        photolist_attach(request.POST.get('photo_list'), post)
     elif request.POST.get('video_list'):
-        videolist_attach(request.POST.get('video_list'), video_list)
-    elif request.POST.get('user'):
-        user_attach(request.POST.get('user'), user)
-    elif request.POST.get('community'):
-        community_attach(request.POST.get('community'), community)
+        videolist_attach(request.POST.get('video_list'), post)
     else:
         if request.POST.get('photo'):
             if request.POST.get('select_photo1'):
