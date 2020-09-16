@@ -63,24 +63,3 @@ on('#video_loader', 'click', '.c_video_comments', function() {
   list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });
-
-on('#ajax', 'click', '.c_video_detail', function() {
-  var uuid, pk, loader;
-  parent = this.parentElement;
-  document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute("data-pk");
-  loader = document.getElementById("video_loader");
-  open_fullscreen("/video/community/detail/" + pk + "/" + uuid + "/", loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
-  setTimeout(function() {
-    load_video_playlist(video_player_id + "a", 0);
-    video_player.addListener(FWDUVPlayer.READY, onReady);
-    function onReady(){
-    console.log("video player ready");
-    setTimeout(function() {video_player.playVideo(0)}, 1000);
-    get_video_info(pk)
-    }
-  }, 500);
-});
