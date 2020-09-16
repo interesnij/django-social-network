@@ -531,7 +531,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
         playlist_link.send( null );
         };
 
-        function play_video_list(url, counter){
+        function play_video_list(url, counter, pk, video_pk){
           loader = document.getElementById("video_loader");
           open_fullscreen(url, loader);
           video_saver = document.body.querySelector("#video_id_saver");
@@ -543,15 +543,13 @@ function music_onReady(){console.log("Аудио плеер готов");}
             function onReady(){
             console.log("video player ready");
             setTimeout(function() {video_player.playVideo(counter)}, 1000);
+
+            info_video = document.body.querySelector("#info_video");
+            if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
+              list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
+              info_video.setAttribute("data-uuid", uuid);
+              console.log("Воспроизводится ролик № : " + video_id)
+            }
             }
           }, 500);
-        }
-
-        function get_video_info(pk, video_pk){
-          info_video = document.body.querySelector("#info_video");
-          if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
-            list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
-            info_video.setAttribute("data-uuid", uuid);
-            console.log("Воспроизводится ролик № : " + video_id)
-          }
         }
