@@ -60,6 +60,7 @@ on('#video_loader', 'click', '.u_video_comments', function() {
 
 on('#ajax', 'click', '.u_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
+  counter = this.getAttribute('video-counter') - 1;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   this.parentElement.parentElement.getAttribute("data-uuid") ? uuid = this.parentElement.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   play_video_list("/video/user/list/" + pk + "/" + uuid + "/", counter, pk, video_pk)
@@ -69,6 +70,7 @@ on('#ajax', 'click', '.u_post_video', function() {
   document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
   video_pk = this.getAttribute("video-pk");
+  counter = this.getAttribute('video-counter') - 1;
   play_video_list("/video/user/list_post/" + pk + "/" + uuid + "/", counter, pk, video_pk)
 });
 
