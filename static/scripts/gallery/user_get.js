@@ -14,9 +14,9 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
-  parents = this.parentElement;
-  parents.getAttribute('data-pk') ? pk = this.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  parents.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
+  parent = this.parentElement;
+  parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/repost/u_ucm_photo_album_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
