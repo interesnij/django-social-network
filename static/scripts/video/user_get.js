@@ -116,12 +116,10 @@ on('#ajax', 'click', '.u_post_video', function() {
   }, 500);
 });
 
-on('#ajax', 'click', '.u_play_comment_video', function() {
+function play_video_list(url){
   counter = this.getAttribute('video-counter') - 1;
-  comment_pk = this.getAttribute("comment-pk");
-  pk = this.getAttribute("data-pk");
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", loader);
+  open_fullscreen(url, loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");
@@ -131,9 +129,15 @@ on('#ajax', 'click', '.u_play_comment_video', function() {
     function onReady(){
     console.log("video player ready");
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
-    get_video_info(pk)
+    //get_video_info(pk)
     }
   }, 500);
+}
+
+on('#ajax', 'click', '.u_play_comment_video', function() {
+  comment_pk = this.getAttribute("comment-pk");
+  pk = this.getAttribute("data-pk");
+  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/")
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
