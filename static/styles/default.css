@@ -183,6 +183,8 @@ ul{
   max-width: 100%;
   flex-basis: 20%;
   position: relative;
+  margin-left:7px;
+  margin-right:7px;
 }
 .photo_3, .video_3, .good_3, .article_3 {
   margin-bottom: 10px;
