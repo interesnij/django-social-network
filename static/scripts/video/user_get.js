@@ -116,7 +116,7 @@ on('#ajax', 'click', '.u_post_video', function() {
   }, 500);
 });
 
-on('#ajax', 'click', '.u_comment_video', function() {
+on('#ajax', 'click', '.u_play_comment_video', function() {
   counter = this.getAttribute('video-counter') - 1;
   comment_pk = this.getAttribute("comment-pk");
   pk = this.getAttribute("data-pk");
