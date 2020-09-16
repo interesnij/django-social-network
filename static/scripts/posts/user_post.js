@@ -440,7 +440,7 @@ on('#ajax', 'click', '.music_attach_playlist', function() {
 });
 on('#ajax', 'click', '.photo_attach_album', function() {
   attach_list_for_post(this, "/gallery/user_progs/get_album_preview/")
-}); 
+});
 on('#ajax', 'click', '.attach_video_album', function() {
   attach_list_for_post(this, "/video/user_progs/get_album_preview/")
 });
@@ -456,7 +456,7 @@ on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block.remove();
 })
 on('#ajax', 'click', '.photo_attach_album_remove', function() {
-  block = this.parentElement.parentElement;
+  block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
 })
