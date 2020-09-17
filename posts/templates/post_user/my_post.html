@@ -5,7 +5,9 @@
     {{ object.text|linebreaks }}
   </div>
 
+  <span class="post_attach_panel">
     {% include object.get_u_attach_items %}
+  </span>
 
     {% if object.parent %}
       {% include 'post_user/repost.html' %}

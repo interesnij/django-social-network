@@ -1,6 +1,6 @@
-#news_post_list .media,
-#news_post_list .card-body,
-#news_post_list .row {
+.post_attach_panel .media,
+.post_attach_panel .card-body,
+.post_attach_panel .row {
   border-left: 0 !important;
 }
 

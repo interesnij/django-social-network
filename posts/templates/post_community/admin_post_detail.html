@@ -4,7 +4,9 @@
 
     {{ object.text|linebreaks }}
 
-    {% include 'generic/attach/c_post_attach.html' %}
+    <span class="post_attach_panel">
+      {% include object.get_c_attach_items %}
+    </span>
 
     {% if object.parent %}
     <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">

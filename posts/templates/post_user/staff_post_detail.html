@@ -1,8 +1,11 @@
 <div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
     {% include 'post_user/staff_card_header.html' %}
 
-    {% if object.text %}<p class="">{{ object.text|linebreaks }}</p>{% endif %}
-    {% include 'generic/attach/u_post_attach.html' %}
+    {{ object.text|linebreaks }}
+
+    <span class="post_attach_panel">
+      {% include object.get_u_attach_items %}
+    </span>
 
     {% if object.parent %}
       {% include 'post_user/repost.html' %}
