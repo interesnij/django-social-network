@@ -29,7 +29,7 @@
         </span>
     </div>
   </div>
-<div class="row border-left" style="margin-left: 0;margin-right: 0;">
+<div class="row border-left" style="margin-left: 0;margin-right: 0;" data-uuid="{{ album.uuid }}">
   {% for object in album.get_2_goods %}
     {% include 'user_goods/good.html' %}
   {% endfor %}
