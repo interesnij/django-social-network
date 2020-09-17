@@ -238,6 +238,10 @@ class Good(models.Model):
 		else:
 			return str(count) + " просмотров"
 
+	def visits_count(self):
+		from stst.models import GoodNumbers
+		return GoodNumbers.objects.filter(good=self.pk).values('pk').count()
+
 	def get_albums_for_good(self):
 		return self.album.all()
 
