@@ -150,15 +150,15 @@ class Post(models.Model):
         return self.post_doclist.filter(pk=self.pk).exists()
 
     def get_attach_items(self):
-        if self.is_photo_list_attached(self):
+        if self.is_photo_list_attached():
             return "attach/photo_list_attach.html"
-        elif self.is_playlist_attached(self):
+        elif self.is_playlist_attached():
             return "attach/playlist_attach.html"
-        elif self.is_video_list_attached(self):
+        elif self.is_video_list_attached():
             return "attach/video_list_attach.html"
-        elif self.is_good_list_attached(self):
+        elif self.is_good_list_attached():
             return "attach/good_list_attach.html"
-        elif self.is_doc_list_attached(self):
+        elif self.is_doc_list_attached():
             return "attach/doc_list_attach.html"
         else:
             return "attach/u_post_attach.html"
