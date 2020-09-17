@@ -271,7 +271,7 @@ class UUVideoAlbumRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
@@ -291,7 +291,7 @@ class CUVideoAlbumRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
@@ -316,7 +316,7 @@ class UCVideoAlbumRepost(View):
             if not communities:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community_with_name(community.name):
@@ -342,7 +342,7 @@ class CCVideoAlbumRepost(View):
             if not communities:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
@@ -369,7 +369,7 @@ class UMVideoAlbumRepost(View):
             if not connections:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
@@ -396,7 +396,7 @@ class CMVideoAlbumRepost(View):
             if not connections:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.VIDEO_LIST_REPOST)
-            album.post_video_album.add(parent)
+            album.post.add(parent)
             for user_id in connections:
                 user = User.objects.get(pk=user_id)
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
