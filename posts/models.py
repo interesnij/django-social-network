@@ -141,8 +141,6 @@ class Post(models.Model):
     def is_photo_list_attached(self):
         if self.post_album:
             return True
-        else:
-            return False
     def is_playlist_attached(self):
         return self.post_soundlist.filter(pk=self.pk).exists()
     def is_video_list_attached(self):
