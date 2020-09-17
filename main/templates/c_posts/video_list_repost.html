@@ -1,0 +1,17 @@
+{% with album=object.get_video_album_repost %}
+
+<span style="padding: 5px;">
+  Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось видеоальбомом
+</span>
+
+  {% if object.parent.community %}
+
+    {% include 'generic/items/c_video_list.html' %}
+
+  {% else %}
+
+    {% include 'generic/items/u_video_list.html' %}
+
+  {% endif %}
+
+{% endwith %}
