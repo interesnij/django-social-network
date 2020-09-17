@@ -139,7 +139,29 @@ class Post(models.Model):
         return self.post_doclist.all()
 
     def is_photo_list_attached(self):
-        return self.item_photo.filter(pk=self.pk).exists() 
+        return self.item_photo.filter(pk=self.pk).exists()
+    def is_playlist_attached(self):
+        return self.post_soundlist.filter(pk=self.pk).exists()
+    def is_video_list_attached(self):
+        return self.post_video_album.filter(pk=self.pk).exists()
+    def is_good_list_attached(self):
+        return self.post_good_album.filter(pk=self.pk).exists()
+    def is_doc_list_attached(self):
+        return self.post_doclist.filter(pk=self.pk).exists()
+
+    def get_attach_items(self):
+        if self.is_photo_list_attached(self):
+            return "attach/photo_list_attach.html"
+        elif self.is_playlist_attached(self):
+            return "attach/playlist_attach.html"
+        elif self.is_video_list_attached(self):
+            return "attach/video_list_attach.html"
+        elif self.is_good_list_attached(self):
+            return "attach/good_list_attach.html"
+        elif self.is_doc_list_attached(self):
+            return "attach/doc_list_attach.html"
+        else:
+            return "attach/u_post_attach.html"
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
