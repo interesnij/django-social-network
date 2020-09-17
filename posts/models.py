@@ -127,6 +127,8 @@ class Post(models.Model):
         return self.post_video_album.all()
     def get_attach_goods(self):
         return self.item_good.all()
+    def get_attach_good_list(self):
+        return self.post_good_album.all()
     def get_attach_articles(self):
         return self.attached_item.all()
     def get_attach_tracks(self):
