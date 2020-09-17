@@ -278,7 +278,7 @@ class Post(models.Model):
         elif parent.is_good_repost():
             return "post_user/good_repost.html"
         elif parent.is_good_list_repost():
-            return "post_community/good_list_repost.html"
+            return "post_user/good_list_repost.html"
         elif parent.is_music_repost():
             return "post_user/music_repost.html"
         elif parent.is_music_list_repost():
