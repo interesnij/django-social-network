@@ -50,13 +50,11 @@
       </div>
   </div>
 
-{% if object.text %}
   <div class="fullscreen pointer">
-    <p class="">{{ object.text|linebreaks }}</p>
+    {{ object.text|linebreaks }}
   </div>
-{% endif %}
 
-  {% include 'generic/attach/u_post_attach.html' %}
+  {% include object.get_u_attach_items %}
 
   {% include 'post_user/info.html' %}
 

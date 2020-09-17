@@ -48,13 +48,12 @@
           </div>
       </div>
   </div>
-  {% if object.text %}
-    <div class="c_fullscreen pointer">
-      <p class="">{{ object.text|linebreaks }}</p>
-    </div>
-  {% endif %}
 
-  {% include 'generic/attach/c_post_attach.html' %}
+    <div class="c_fullscreen pointer">
+      {{ object.text|linebreaks }}
+    </div>
+
+  {% include object.get_c_attach_items %}
 
   {% include 'post_community/info.html' %}
 
