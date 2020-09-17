@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^votes/', include('video.url.votes')),
 	url(r'^window/', include('video.url.window')),
 
-    #url(r'^repost/', include('video.url.repost')),
+    url(r'^repost/', include('video.url.repost')),
 ]
