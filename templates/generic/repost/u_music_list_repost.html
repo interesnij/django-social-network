@@ -15,7 +15,7 @@
           <p class="">
             Плейлист
             <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=album.creator.pk %}">
-              {{ album.playlist.get_full_name_genitive }}
+              {{ playlist.creator.get_full_name_genitive }}
             </a>
             <br>
             Треков: {{ playlist.count_tracks }}
