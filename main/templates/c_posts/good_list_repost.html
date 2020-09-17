@@ -1,0 +1,17 @@
+{% with album=object.is_good_list_repost %}
+
+  <span style="padding: 5px;">
+    Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось списком товаров
+  </span>
+
+  {% if object.parent.community %}
+
+    {% include 'generic/items/c_good_list.html' %}
+
+  {% else %}
+
+    {% include 'generic/items/u_good_list.html' %}
+
+  {% endif %}
+
+{% endwith %}
