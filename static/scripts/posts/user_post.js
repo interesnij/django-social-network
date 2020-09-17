@@ -460,6 +460,11 @@ on('#ajax', 'click', '.video_attach_album_remove', function() {
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
 })
+on('#ajax', 'click', '.good_attach_album_remove', function() {
+  block = this.parentElement.parentElement.parentElement;
+  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.remove();
+})
 on('#ajax', 'click', '.photo_attach_album_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
