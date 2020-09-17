@@ -17,10 +17,10 @@
           </div>
 
           {% if object_list %}
-            <span class="post_stream stream news_block_paginate" id="news_post_list">
+            <span class="post_stream stream news_block_paginate post_attach_panel" id="news_post_list">
               {% for object in object_list %}
 
-                {% if object.parent %} 
+                {% if object.parent %}
                   {% if object.parent.community %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
                       {% include object.get_c_news_parent %}
