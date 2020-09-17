@@ -5,9 +5,15 @@
     {{ object.text|linebreaks }}
 
     {% include 'generic/attach/c_post_attach.html' %}
-    
+
     {% if object.parent %}
-      {% include 'post_community/repost.html' %}
+    <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+      {% if object.parent.community %}
+        {% include object.get_c_post_parent %}
+      {% else %}
+        {% include object.get_u_post_parent %}
+      {% endif %}
+    </span>
     {% endif %}
 
     {% include 'post_community/info.html' %}
