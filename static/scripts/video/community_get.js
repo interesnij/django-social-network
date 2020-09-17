@@ -6,7 +6,7 @@ on('#ajax', 'click', '.c_ucm_video_repost', function() {
   open_fullscreen("/video/repost/c_ucm_video_window/" + pk + "/" + track_pk + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '.c_ucm_video_album_repost', function() {
+on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   parent = this.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
