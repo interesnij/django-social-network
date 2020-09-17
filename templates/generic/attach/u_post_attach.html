@@ -6,7 +6,7 @@
     {% for album in object.get_attach_photo_list %}
       {% include 'generic/items/u_album.html' %}
     {% endfor %}
-  {% else %}
+  {% endif %}
 
   {% for photo in object.get_attach_photos %}
     {% include 'generic/items/u_photo.html' %}
