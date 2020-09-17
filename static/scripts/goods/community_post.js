@@ -265,6 +265,53 @@ on('#ajax', 'click', '#с_ucm_good_repost_btn', function() {
     document.getElementById("votes_loader").innerHTML="";
   }}
 });
+on('#ajax', 'click', '#c_ucm_good_list_repost_btn', function() {
+  form_post = document.body.querySelector("#c_uсm_good_list_repost_form");
+  form_data = new FormData(form_post);
+  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+
+  if (form_post.querySelector('#repost_radio_wall').checked) {
+    link_.open( 'POST', "/goods/repost/c_u_good_list_repost/" + pk + "/" + uuid + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.send(form_data);
+    toast_info("Репост списка товаров на стену сделан")
+  }
+
+  else if(form_post.querySelector('#repost_radio_community').checked){
+    staff_communities = form_post.querySelector("#id_staff_communities");
+    selectedOptions = staff_communities.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/goods/repost/c_c_good_list_repost/" + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост списка товаров в сообщества сделан")
+    }else{toast_error("Выберите сообщества для репоста")}
+  }
+
+  else if(form_post.querySelector('#repost_radio_message').checked){
+    user_connections = form_post.querySelector("#id_user_connections");
+    selectedOptions = user_connections.selectedOptions;
+    val = false;
+    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
+    if(val){
+      link_.open( 'POST', "/goods/repost/c_m_good_list_repost/" + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info("Репост списка товаров в сообщения сделан")
+    }else{toast_error("Выберите пользователя для репоста")}
+  };
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
+  }}
+});
 
 on('#ajax', 'click', '#c_create_good_list_btn', function() {
   this.disabled = true;
