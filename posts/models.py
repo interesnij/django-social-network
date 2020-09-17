@@ -138,6 +138,9 @@ class Post(models.Model):
     def get_attach_doc_list(self):
         return self.post_doclist.all()
 
+    def is_photo_list_attached(self):
+        if self.item_photo.filter(pk=sala.pk).exists()
+
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
