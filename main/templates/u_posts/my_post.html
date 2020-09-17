@@ -54,7 +54,9 @@
     {{ object.text|linebreaks }}
   </div>
 
-  {% include object.get_u_attach_items %}
+  <span class="post_attach_panel">
+    {% include object.get_u_attach_items %}
+  <span>
 
   {% include 'post_user/info.html' %}
 

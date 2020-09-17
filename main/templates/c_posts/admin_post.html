@@ -52,8 +52,9 @@
     <div class="c_fullscreen pointer">
       {{ object.text|linebreaks }}
     </div>
-
-  {% include object.get_c_attach_items %}
+    <span class="post_attach_panel">
+      {% include object.get_c_attach_items %}
+    <span>
 
   {% include 'post_community/info.html' %}
 
