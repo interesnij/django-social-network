@@ -4,7 +4,7 @@
 
   {{ object.text|linebreaks }}
 
-  {% include object.get_attach_items %}
+  {% include object.get_u_attach_items %}
 
   {% if object.parent %}
     {% include 'post_user/repost.html' %}

@@ -149,19 +149,33 @@ class Post(models.Model):
     def is_doc_list_attached(self):
         return self.post_doclist.filter(pk=self.pk).exists()
 
-    def get_attach_items(self):
+    def get_u_attach_items(self):
         if self.is_photo_list_attached():
-            return "attach/photo_list_attach.html"
+            return "generic/attach/u_photo_list_attach.html"
         elif self.is_playlist_attached():
-            return "attach/playlist_attach.html"
+            return "generic/attach/u_playlist_attach.html"
         elif self.is_video_list_attached():
-            return "attach/video_list_attach.html"
+            return "generic/attach/u_video_list_attach.html"
         elif self.is_good_list_attached():
-            return "attach/good_list_attach.html"
+            return "generic/attach/u_good_list_attach.html"
         elif self.is_doc_list_attached():
-            return "attach/doc_list_attach.html"
+            return "generic/attach/u_doc_list_attach.html"
         else:
-            return "attach/u_post_attach.html"
+            return "generic/attach/u_post_attach.html"
+
+    def get_c_attach_items(self):
+        if self.is_photo_list_attached():
+            return "generic/attach/c_photo_list_attach.html"
+        elif self.is_playlist_attached():
+            return "generic/attach/c_playlist_attach.html"
+        elif self.is_video_list_attached():
+            return "generic/attach/c_video_list_attach.html"
+        elif self.is_good_list_attached():
+            return "generic/attach/c_good_list_attach.html"
+        elif self.is_doc_list_attached():
+            return "generic/attach/c_doc_list_attach.html"
+        else:
+            return "generic/attach/c_post_attach.html"
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
