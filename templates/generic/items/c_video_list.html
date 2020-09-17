@@ -16,7 +16,7 @@
             {{ album.community.name }}
           </a>
           <br>
-          Всего: {{ album.count_video }}
+          Видеороликов: {{ album.count_video }}
         </p>
       </div>
 
@@ -28,11 +28,11 @@
       </span>
     </div>
   </div>
-<div class="row" style="margin-left: 0;margin-right: 0;">
+<div class="row" style="margin-left: 0;margin-right: 0;" data-uuid="{{ album.uuid }}">
   {% for video in album.get_9_videos %}
   <div class="col-md-4">
       <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
-      <div class="video_icon_play_v2 c_video_list_detail" data-pk="{{ video.creator.pk }}" video-pk="{{ video.pk }}" data-uuid="{{ object.uuid }}" video-counter="{{ forloop.counter }}"></div>
+      <div class="video_icon_play_v2 c_video_list_detail" data-pk="{{ video.creator.pk }}" video-pk="{{ video.pk }}" video-counter="{{ forloop.counter }}"></div>
   </div>
   {% endfor %}
 </div>

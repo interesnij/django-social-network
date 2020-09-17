@@ -20,7 +20,7 @@
             {{ album.creator.get_full_name_genitive }}
           </a>
           <br>
-          Всего: {{ album.count_photo }}
+          Фотографий: {{ album.count_photo }}
         </p>
       </div>
       {% if album.creator.pk == request.user %}

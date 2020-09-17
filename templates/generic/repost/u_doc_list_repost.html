@@ -11,7 +11,7 @@
         <div class="media-body" style="margin-left: 10px;">
           <h6 class="my-0 mt-1">{{ list.name }}</h6>
           <p class="">
-            Всего: {{ list.count_docs }}
+            Документов: {{ list.count_docs }}
             <br>
             <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=list.creator.pk %}">
               {{ list.creator.get_full_name }}

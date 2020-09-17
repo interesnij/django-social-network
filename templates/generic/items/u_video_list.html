@@ -16,7 +16,7 @@
             {{ album.creator.get_full_name_genitive }}
           </a>
           <br>
-          Всего: {{ album.count_video }}
+          Видеороликов: {{ album.count_video }}
         </p>
       </div>
       {% if album.creator.pk == request.user %}

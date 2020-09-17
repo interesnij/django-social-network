@@ -11,7 +11,7 @@
         <div class="media-body">
           <h6 class="my-0 mt-1">{{ list.name }}</h6>
           <p class="">
-            Всего: {{ list.count_docs }}
+            Документов: {{ list.count_docs }}
             <br>
             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=list.community.pk %}">
               {{ list.community.name }}
