@@ -141,13 +141,13 @@ class Post(models.Model):
     def is_photo_list_attached(self):
         return self.post_album.filter(post__pk=self.pk).exists()
     def is_playlist_attached(self):
-        return self.post_soundlist.filter(pk=self.pk).exists()
+        return self.post_soundlist.filter(post__pk=self.pk).exists()
     def is_video_list_attached(self):
-        return self.post_video_album.filter(pk=self.pk).exists()
+        return self.post_video_album.filter(post__pk=self.pk).exists()
     def is_good_list_attached(self):
-        return self.post_good_album.filter(pk=self.pk).exists()
+        return self.post_good_album.filter(post__pk=self.pk).exists()
     def is_doc_list_attached(self):
-        return self.post_doclist.filter(pk=self.pk).exists()
+        return self.post_doclist.filter(post__pk=self.pk).exists()
 
     def get_u_attach_items(self):
         if self.is_photo_list_attached():
