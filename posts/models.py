@@ -120,7 +120,7 @@ class Post(models.Model):
     def get_attach_photos(self):
         return self.item_photo.all()
     def get_attach_photo_list(self):
-        return self.post_album.all()
+        return self.post_album.all()[0]
     def get_attach_videos(self):
         return self.item_video.all()
     def get_attach_video_list(self):
