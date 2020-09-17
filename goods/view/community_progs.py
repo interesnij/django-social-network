@@ -253,7 +253,7 @@ class GoodAlbumCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+        return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(GoodAlbumCommunityCreate,self).get_context_data(**kwargs)
