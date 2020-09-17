@@ -1,4 +1,4 @@
-{% with album=object.is_good_list_repost %}
+{% with album=object.get_good_list_repost %} 
 
   <span style="padding: 5px;">
     Сообщество&nbsp;<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось списком товаров
