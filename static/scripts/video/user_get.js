@@ -67,7 +67,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
 });
 
 on('#ajax', 'click', '.u_post_video', function() {
-  document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
+  uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute("data-pk");
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
