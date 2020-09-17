@@ -1,4 +1,4 @@
-{% with album=object.get_video_album_repost %}
+{% with album=object.get_video_list_repost %}
 
   <span style="padding: 5px;">
     <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
