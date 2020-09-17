@@ -2,7 +2,7 @@ from rest_framework.exceptions import ValidationError
 from video.models import Video, VideoAlbum
 from music.models import SoundcloudParsing, SoundList
 from gallery.models import Photo, Album
-from goods.models import Good
+from goods.models import Good, GoodAlbum
 from article.models import Article
 from docs.models import Doc2, DocList
 from users.models import User
@@ -79,6 +79,13 @@ def videolist_attach(value, post):
     except:
         raise ValidationError('Видеоальбом не найден')
 
+def goodlist_attach(value, post):
+    try:
+        _select_good_list = GoodAlbum.objects.get(pk=value)
+        _select_good_list.post.add(post)
+    except:
+        raise ValidationError('Видеоальбом не найден')
+
 
 def get_post_attach(request, post):
     if request.POST.get('playlist'):
@@ -89,6 +96,8 @@ def get_post_attach(request, post):
         photolist_attach(request.POST.get('photo_list'), post)
     elif request.POST.get('video_list'):
         videolist_attach(request.POST.get('video_list'), post)
+    elif request.POST.get('good_list'):
+        goodlist_attach(request.POST.get('good_list'), post)
     else:
         if request.POST.get('photo'):
             if request.POST.get('select_photo1'):
