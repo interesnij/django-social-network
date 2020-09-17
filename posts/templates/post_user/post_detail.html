@@ -6,9 +6,9 @@
     {% include 'post_user/repost_detail.html' %}
     {% endif %}
 
-    {% if object.text|linebreaks %}<p class="">{{ object.text|linebreaks }}</p>{% endif %}
+    {{ object.text|linebreaks }}
 
-    {% include 'generic/attach/u_post_attach.html' %}
+    {% include object.get_attach_items %}
 
     {% include 'post_user/info.html' %}
 </div>

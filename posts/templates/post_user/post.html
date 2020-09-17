@@ -6,7 +6,9 @@
         <p class="">{{ object.text|linebreaks }}</p>
       </div>
     {% endif %}
-    {% include 'generic/attach/u_post_attach.html' %}
+
+    {% include object.get_attach_items %}
+    
     {% if object.parent %}
       {% include 'post_user/repost.html' %}
     {% endif %}
