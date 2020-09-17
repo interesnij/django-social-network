@@ -1,5 +1,5 @@
 <div class="card mb-3" style="flex-basis: 100%;">
-  <input type="hidden" name="video_list" value="{{ album.pk }}"> 
+  <input type="hidden" name="video_list" value="{{ album.pk }}">
   <div class="card-body" style="padding: 8px;padding-bottom: 0;">
     <div style="display:flex">
       <figure>
@@ -28,8 +28,11 @@
     </div>
   </div>
 <div class="row" style="margin-left: 0;margin-right: 0;">
-  {% for photo in album.get_2_videos %}
-    {% include 'user_video/video.html' %}
+  {% for video in album.get_2_videos %}
+  <div class="video">
+      <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
+      <div class="video_icon_play_v2 u_post_video" data-pk="{{ video.creator.pk }}" video-pk="{{ video.pk }}" data-uuid="{{ object.uuid }}" video-counter="{{ forloop.counter }}"></div>
+  </div>
   {% endfor %}
 </div>
 </div>
