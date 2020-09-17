@@ -139,7 +139,7 @@ class Post(models.Model):
         return self.post_doclist.all()
 
     def is_photo_list_attached(self):
-        return self.post_album.filter(pk=self.pk).exists()
+        return self.post_album.filter(post_pk=self.pk).exists()
     def is_playlist_attached(self):
         return self.post_soundlist.filter(pk=self.pk).exists()
     def is_video_list_attached(self):
