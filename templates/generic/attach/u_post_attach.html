@@ -12,6 +12,10 @@
   {% for video in object.get_attach_videos %}
     {% include 'generic/items/u_video.html' %}
   {% endfor %}
+  {% for video in object.get_attach_video_list %}
+    {% include 'generic/items/u_video_list.html' %}
+  {% endfor %}
+
   {% for good in object.get_attach_goods %}
     {% include 'generic/items/u_good.html' %}
   {% endfor %}
