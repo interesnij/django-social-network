@@ -2,7 +2,9 @@
     {% include 'post_community/anon_card_header.html' %}
 
     {{ object.text|linebreaks }}
+
     {% include object.get_c_attach_items %}
+    
     {% if object.parent %}
       {% include 'post_community/repost.html' %}
     {% endif %}
