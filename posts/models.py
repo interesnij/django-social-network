@@ -22,6 +22,7 @@ class Post(models.Model):
     PHOTO_REPOST = 'C'
     PHOTO_ALBUM_REPOST = 'PAR'
     GOOD_REPOST = 'GR'
+    GOOD_LIST_REPOST = 'GLR'
     MUSIC_REPOST = 'MR'
     MUSIC_LIST_REPOST = 'MLR'
     DOC_REPOST = 'DR'
@@ -40,6 +41,7 @@ class Post(models.Model):
         (PHOTO_REPOST, 'Репост фотографии'),
         (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
         (GOOD_REPOST, 'Репост товара'),
+        (GOOD_LIST_REPOST, 'Репост списка товаров'),
         (MUSIC_REPOST, 'Репост аудиозаписи'),
         (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
         (DOC_REPOST, 'Репост документа'),
@@ -106,6 +108,8 @@ class Post(models.Model):
         return self.parent.post_video_album.all()
     def get_parent_attach_goods(self):
         return self.parent.item_good.all()
+    def get_parent_attach_good_list(self):
+        return self.parent.post_good_album.all()
     def get_parent_attach_articles(self):
         return self.parent.attached_item.all()
     def get_parent_attach_tracks(self):
@@ -203,6 +207,14 @@ class Post(models.Model):
 
     def is_good_repost(self):
         return try_except(self.status == Post.GOOD_REPOST)
+    def is_good_list_repost(self):
+        return try_except(self.status == Post.GOOD_LIST_REPOST)
+    def get_good_repost(self):
+        good = self.parent.item_good.all()[0]
+        return good
+    def get_good_list_repost(self):
+        good_list = self.parent.post_good_album.all()[0]
+        return good_list
 
     def is_doc_repost(self):
         return try_except(self.status == Post.DOC_REPOST)
@@ -236,6 +248,8 @@ class Post(models.Model):
             return "post_community/photo_album_repost.html"
         elif parent.is_good_repost():
             return "post_community/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "post_community/good_list_repost.html"
         elif parent.is_music_repost():
             return "post_community/music_repost.html"
         elif parent.is_music_list_repost():
@@ -263,6 +277,8 @@ class Post(models.Model):
             return "post_user/photo_album_repost.html"
         elif parent.is_good_repost():
             return "post_user/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "post_community/good_list_repost.html"
         elif parent.is_music_repost():
             return "post_user/music_repost.html"
         elif parent.is_music_list_repost():
@@ -290,6 +306,8 @@ class Post(models.Model):
             return "u_posts/photo_album_repost.html"
         elif parent.is_good_repost():
             return "u_posts/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "u_posts/good_list_repost.html"
         elif parent.is_music_repost():
             return "u_posts/music_repost.html"
         elif parent.is_music_list_repost():
@@ -317,6 +335,8 @@ class Post(models.Model):
             return "c_posts/photo_album_repost.html"
         elif parent.is_good_repost():
             return "c_posts/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "c_posts/good_list_repost.html"
         elif parent.is_music_repost():
             return "c_posts/music_repost.html"
         elif parent.is_music_list_repost():

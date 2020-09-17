@@ -1,5 +1,5 @@
 <div class="card mb-3" style="flex-basis: 100%;">
-  <div class="card-body" style="padding: 8px;padding-bottom: 0;">
+  <div class="card-body border-left" style="padding: 8px;padding-bottom: 0;">
     <div style="display:flex">
       <figure>
         <a class="ajax" href="{% url 'community_video_list' pk=album.community.pk uuid=album.uuid %}">
@@ -28,7 +28,7 @@
       </span>
     </div>
   </div>
-<div class="row" style="margin-left: 0;margin-right: 0;" data-uuid="{{ album.uuid }}">
+<div class="row border-left" style="margin-left: 0;margin-right: 0;" data-uuid="{{ album.uuid }}">
   {% for video in album.get_9_videos %}
   <div class="col-md-4">
       <img class="image_fit lazyload" data-src="{{ video.image.url }}" alt="img">
