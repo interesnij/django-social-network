@@ -12,9 +12,9 @@
       <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
         {% if object.parent.community %}
           {% include object.get_c_post_parent %}
-          {% include object.get_c_attach_items %}
+          {% include object.parent.get_c_attach_items %}
         {% else %}
-          {% include object.parent.get_u_post_parent %}
+          {% include object.get_u_post_parent %}
           {% include object.parent.get_u_attach_items %}
         {% endif %}
       </span>
