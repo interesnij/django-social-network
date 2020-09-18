@@ -1,3 +1,11 @@
+{% include 'u_posts/card_header.html' %}
+
+{% if object.parent.text %}
+  <div class="fullscreen pointer">
+    {{ object.parent.text|linebreaks }}
+  </div>
+{% endif %}
+
 {% for list in object.parent.get_attach_doc_list %}
   {% include 'generic/items/u_doc_list.html' %}
 {% endfor %}

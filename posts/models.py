@@ -255,7 +255,7 @@ class Post(models.Model):
         elif parent.is_good_repost():
             return "post_community/good_repost.html"
         elif parent.is_good_list_repost():
-            return "post_community/good_list_repost.html" 
+            return "post_community/good_list_repost.html"
         elif parent.is_good_list_attached():
             return "generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
@@ -288,7 +288,7 @@ class Post(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.parent
+        parent = self.parent 
         if parent.is_photo_repost():
             return "post_user/photo_repost.html"
         elif parent.is_photo_album_repost():
