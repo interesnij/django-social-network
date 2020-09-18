@@ -131,7 +131,7 @@ function create_preview_doc(div_class, pk){
 
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
 
-  $span.innerHTML = '<svg fill="currentColor" style="width:30px;heigth:30px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
+  $span.innerHTML = '<svg fill="currentColor" style="width:35px;heigth:35px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
   $figure.append($span);
 
   $media.innerHTML = media_body.innerHTML;
@@ -139,6 +139,7 @@ function create_preview_doc(div_class, pk){
   $media.style.marginRight = "40px";
   $media.style.overflow = "hidden";
   h6 = $media.querySelector("h6");
+  h6.style.paddingTop = "5px";
 
   $div.append(doc_preview_delete());
   $div.append($input);
