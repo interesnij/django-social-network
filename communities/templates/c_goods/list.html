@@ -28,24 +28,7 @@
             <div class="row community_block_paginate" id="community_goods_container">
               {% if object_list %}
               {% for object in object_list %}
-              <div class="col-md-6 mb-3">
-                      <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}">
-                          <div class="row align-items-center no-gutters">
-                              <div class="col">
-                                      <div class="text-center">
-                                        {% if object.image %}
-                                          <img class="image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
-                                        {% else %}
-                                          <img class="lazyload image_fit_200" data-src="/static/images/no_img/album.jpg" />
-                                        {% endif %}
-                                      </div>
-                              </div>
-                          </div>
-                          <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
-                          <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
-                      </div>
-              </div>
-
+                {% include 'с_goods/good.html' %}
               {% endfor %}
 
               {% else %}
