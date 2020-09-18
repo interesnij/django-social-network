@@ -581,7 +581,8 @@ html {
 .video_preview_delete,
 .music_preview_delete,
 .good_preview_delete,
-.article_preview_delete{
+.article_preview_delete,
+.doc_preview_delete{
   position: absolute;
   right: 20px;
   padding: 6px;
@@ -595,6 +596,7 @@ html {
 }
 .photo_preview_delete svg,
 .video_preview_delete svg,
+.doc_preview_delete svg,
 .music_preview_delete svg,
 .good_preview_delete svg,
 .article_preview_delete svg{
