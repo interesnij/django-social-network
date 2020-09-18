@@ -248,7 +248,7 @@ class Post(models.Model):
         parent = self.parent
         if parent.is_photo_repost():
             return "post_community/photo_repost.html"
-        elif parent.is_photo_album_repost():
+        elif parent.is_photo_album_repost(): 
             return "post_community/photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "generic/attach/c_photo_list_attach.html"
