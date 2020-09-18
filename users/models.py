@@ -1194,7 +1194,7 @@ class User(AbstractUser):
         docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list[0:5]
 
-    def user_docs_list_exists(self):
+    def is_doc_list_exists(self):
         return self.user_doclist.filter(creator_id=self.id, community=None, type="LI").exists()
 
     def get_docs_lists(self):

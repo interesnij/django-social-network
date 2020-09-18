@@ -134,6 +134,46 @@ class UserLoadMusicList(ListView):
 		musics_list = self.playlist.playlist_too().order_by('-created_at')
 		return musics_list
 
+
+class UserLoadDoc(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from docs.models import DocList
+		self.list = DocList.objects.get(creator_id=request.user.pk, type=DocList.MAIN, community=None)
+		self.template_name = get_settings_template("load/u_doc_load.html", request)
+		return super(UserLoadDoc,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadDoc,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context
+
+	def get_queryset(self):
+		doc_list = self.list.get_docs().order_by('-created_at')
+		return doc_list
+
+class UserLoadDocList(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		from docs.models import DocList
+		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("load/u_doc_list_load.html", request)
+		return super(UserLoadDocList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadDocList,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context
+
+	def get_queryset(self):
+		doc_list = self.list.get_docs().order_by('-created_at')
+		return doc_list
+
+
 class UserLoadArticle(ListView):
 	template_name = 'load/u_article_load.html'
 	paginate_by = 15

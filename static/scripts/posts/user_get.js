@@ -107,6 +107,12 @@ on('#ajax', 'click', '.u_comment_music', function() {
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_music_load/', loader)
 });
+on('#ajax', 'click', '.u_comment_doc', function() {
+  this.classList.add("current_file_dropdown");
+  clear_attach_block();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_doc_load/', loader)
+});
 on('#ajax', 'click', '.u_comment_good', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
@@ -137,6 +143,12 @@ on('#ajax', 'click', '.u_select_music', function() {
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_music_load/', loader)
+});
+on('#ajax', 'click', '.u_select_doc', function() {
+  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_doc_load/', loader)
 });
 on('#ajax', 'click', '.u_select_good', function() {
   this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");

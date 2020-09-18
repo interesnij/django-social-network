@@ -132,7 +132,7 @@
             </div>
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                {% for object in user.get_docs_lists %}
+                {% for object in user.is_doc_list_exists %}
                   <a class="ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">
                     {{ object.name }}
                   </a>
