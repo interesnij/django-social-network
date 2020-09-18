@@ -13,13 +13,13 @@
       <span class="post_attach_panel">
         {% include object.get_c_attach_items %}
       </span>
-      
+
     {% if object.parent %}
     <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
       {% if object.parent.community %}
-        {% include object.get_c_post_parent %}
+        {% include object.get_c_post_parent_items %}
       {% else %}
-        {% include object.get_u_post_parent %}
+        {% include object.get_u_post_parent_items %}
       {% endif %}
     </span>
     {% endif %}
