@@ -151,7 +151,7 @@ class UserLoadDoc(ListView):
 		return context
 
 	def get_queryset(self):
-		doc_list = self.list.get_docs().order_by('-created_at')
+		doc_list = self.list.get_docs().order_by('-created')
 		return doc_list
 
 class UserLoadDocList(ListView):
@@ -170,7 +170,7 @@ class UserLoadDocList(ListView):
 		return context
 
 	def get_queryset(self):
-		doc_list = self.list.get_docs().order_by('-created_at')
+		doc_list = self.list.get_docs().order_by('-created')
 		return doc_list
 
 
