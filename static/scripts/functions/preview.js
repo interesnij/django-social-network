@@ -22,6 +22,14 @@ function music_preview_delete(){
   $span.setAttribute("flow", "up");
   return $span
 }
+function doc_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("doc_preview_delete");
+  $span.innerHTML = '<svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
 function good_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("good_preview_delete");
@@ -107,7 +115,37 @@ function create_preview_music(div_class, img_src, pk, counter){
   $div.append($media);
   return $div
 }
+function create_preview_doc(div_class, pk){
+  $div = document.createElement("div");
+  $input = document.createElement("span");
+  $span = document.createElement("span");
+  $figure = document.createElement("figure");
+  $media = document.createElement("span");
 
+  media_body = _this.querySelector(".media-body");
+
+  $div.classList.add("col-md-12", "doc", div_class);
+  $div.style.display = "flex";
+  $div.style.margin = "5px";
+  $div.style.flexBasis = "100%";
+
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+
+  $span.innerHTML = '<svg fill="currentColor" style="width:30px;heigth:30px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
+  $figure.append($span);
+
+  $media.innerHTML = media_body.innerHTML;
+  $media.style.marginLeft = "10px";
+  $media.style.marginRight = "40px";
+  $media.style.overflow = "hidden";
+  h6 = $media.querySelector("h6");
+
+  $div.append(doc_preview_delete());
+  $div.append($input);
+  $div.append($figure);
+  $div.append($media);
+  return $div
+}
 function create_preview_good(div_class, img_src, pk, uuid, title){
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "u_good_detail", "good", div_class);

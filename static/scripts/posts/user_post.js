@@ -434,6 +434,15 @@ on('#ajax', 'click', '.music_load_several', function() {
   }
   this.classList.add("active_svg");
 });
+on('#ajax', 'click', '.doc_load_several', function() {
+  _this = this.previousElementSibling;
+  if (document.body.querySelector(".current_file_dropdown")){
+    doc_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+  } else if (document.body.querySelector(".attach_block")){
+    doc_post_attach(_this, document.body.querySelector(".attach_block"))
+  } 
+  this.classList.add("active_svg");
+});
 
 on('#ajax', 'click', '.music_attach_playlist', function() {
   attach_list_for_post(this, "/music/get/playlist_preview/")

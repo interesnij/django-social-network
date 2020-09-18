@@ -167,6 +167,37 @@ function music_post_attach(_this, block) {
   is_full_attach();
 }
 
+function doc_post_attach(_this, block) {
+  is_full_attach();
+  pk = _this.getAttribute('data-pk');
+  if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
+    _this.parentElement.setAttribute("tooltip", "Документ уже выбран");
+    _this.parentElement.setAttribute("flow", "up");
+    return
+  };
+  _this.parentElement.classList.add("attach_toggle");
+  pk = _this.getAttribute('data-pk');
+    if (!block.querySelector(".doc_input")){
+      div = create_preview_doc("select_doc1", pk);
+      $doc_input = document.createElement("span");
+      $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">';
+      block.append($doc_input)
+    }
+    else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", pk)}
+    else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", pk)}
+    else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", pk)}
+    else if (!block.querySelector(".select_doc5")){div = create_preview_doc("select_doc5", pk)}
+    else if (!block.querySelector(".select_doc6")){div = create_preview_doc("select_doc6", pk)}
+    else if (!block.querySelector(".select_doc7")){div = create_preview_doc("select_doc7", pk)}
+    else if (!block.querySelector(".select_doc8")){div = create_preview_doc("select_doc8", pk)}
+    else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", pk)}
+    else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", pk)}
+  block.append(div);
+
+  add_file_attach()
+  is_full_attach();
+}
+
 function good_post_attach(_this, block) {
   is_full_attach();
   pk = _this.getAttribute('good-pk');

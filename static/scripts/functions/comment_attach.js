@@ -133,6 +133,30 @@ function music_comment_attach(_this, dropdown){
 
   is_full_dropdown();
 }
+function doc_comment_attach(_this, dropdown){
+  is_full_dropdown(dropdown);
+
+  pk = _this.getAttribute('data-pk');
+  img_block = dropdown.parentElement.previousElementSibling;
+
+  if (img_block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
+    _this.setAttribute("tooltip", "Документ уже выбран");
+    _this.setAttribute("flow", "up");
+    return
+  };
+  _this.parentElement.classList.add("attach_toggle");
+    if (img_block.querySelector(".select_doc1")){
+        div = create_preview_doc("select_doc2", _this.getAttribute('data-pk'))
+      }
+    else if (img_block.querySelector(".select_doc2") || !img_block.querySelector(".select_doc1")){
+        div = create_preview_doc("select_doc1", _this.getAttribute('data-pk'))
+      }
+    add_file_dropdown();
+    img_block.append(div)
+    img_block.querySelector(".doc_input") ? null : ($doc_input = document.createElement("span"), $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">', img_block.append($doc_input));
+
+  is_full_dropdown();
+}
 function good_comment_attach(_this, dropdown){
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
