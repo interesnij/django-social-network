@@ -34,7 +34,7 @@ on('#ajax', 'click', '.c_ucm_good_list_repost', function() {
 })
 
 on('#ajax', 'click', '.c_good_detail', function() {
-  this.parentElement.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
+  this.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
   good_pk = container.getAttribute('good-pk');
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/community/good/' + pk + '/' + good_pk + '/', loader);

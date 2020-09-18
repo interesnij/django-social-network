@@ -371,22 +371,32 @@ class Post(models.Model):
             return "c_posts/photo_repost.html"
         elif parent.is_photo_album_repost():
             return "c_posts/photo_album_repost.html"
+        if parent.is_photo_list_attached():
+            return "generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
             return "c_posts/good_repost.html"
         elif parent.is_good_list_repost():
             return "c_posts/good_list_repost.html"
+        elif parent.is_good_list_attached():
+            return "generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
             return "c_posts/music_repost.html"
         elif parent.is_music_list_repost():
             return "c_posts/music_list_repost.html"
+        elif parent.is_playlist_attached():
+            return "generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
             return "c_posts/video_repost.html"
         elif parent.is_video_list_repost():
             return "c_posts/video_list_repost.html"
+        elif parent.is_video_list_attached():
+            return "generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
             return "c_posts/doc_repost.html"
         elif parent.is_doc_list_repost():
             return "c_posts/doc_list_repost.html"
+        elif parent.is_doc_list_attached():
+            return "generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
             return "c_posts/user_repost.html"
         elif parent.is_community_repost():

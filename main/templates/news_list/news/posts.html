@@ -28,7 +28,7 @@
                     </div>
                   {% else %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
-                      {% include object.get_u_news_parent %}
+                      {% include object.get_u_news_parent %} 
                       {% include 'post_user/info.html' %}
                     </div>
                   {% endif %}
