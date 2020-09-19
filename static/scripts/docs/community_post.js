@@ -213,7 +213,7 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
   else if (!form.querySelector("#id_file").value){
     form.querySelector("#id_file").style.border = "1px #FF0000 solid";
     toast_error("Загрузите документ!")
-  }
+  } else { this.disabled = true }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
