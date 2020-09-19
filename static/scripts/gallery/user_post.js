@@ -208,40 +208,6 @@ on('#ajax', 'click', '.u_photo_description', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_album_remove', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute('data-pk');
-  uuid = block.getAttribute('data-uuid');
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/delete_album/" + pk + "/" + uuid + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    block.querySelector(".card").style.display = "none";
-    $block = document.createElement("div");
-    $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
-    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 u_album_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/album.jpg" /></a></div>'
-    block.append($block);
-  }}
-  link_.send();
-});
-on('#ajax', 'click', '.u_album_abort_remove', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute('data-pk');
-  uuid = block.getAttribute('data-uuid');
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/abort_delete_album/" + pk + "/" + uuid + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    block.querySelector(".delete_card").remove();
-    block.querySelector(".card").style.display = "block";
-  }}
-  link_.send();
-});
-
 on('#ajax', 'click', '.u_photo_off_votes', function() {
   send_photo_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

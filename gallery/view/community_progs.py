@@ -356,7 +356,7 @@ class AlbumCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.community.get_manage_template(folder="c_album/", template="edit_album.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="c_album/", template="edit_album.html", request=request)
         return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

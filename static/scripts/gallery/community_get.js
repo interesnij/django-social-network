@@ -71,6 +71,40 @@ on('#ajax', 'click', '.c_album_edit', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/community_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.c_album_remove', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/gallery/community_progs/delete_album/" + pk + "/" + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    block.querySelector(".card").style.display = "none";
+    $block = document.createElement("div");
+    $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
+    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 c_album_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/album.jpg" /></a></div>'
+    block.append($block);
+  }}
+  link_.send();
+});
+on('#ajax', 'click', '.c_album_abort_remove', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/gallery/community_progs/abort_delete_album/" + pk + "/" + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    block.querySelector(".delete_card").remove();
+    block.querySelector(".card").style.display = "block";
+  }}
+  link_.send();
+});
+
 
 on('#ajax', 'click', '.c_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
