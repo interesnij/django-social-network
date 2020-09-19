@@ -125,6 +125,7 @@ function create_preview_doc(div_class, pk){
   media_body = _this.querySelector(".media-body");
 
   $div.classList.add("col-md-12", "doc", div_class);
+  $div.setAttribute("data-pk", pk);
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
