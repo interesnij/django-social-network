@@ -239,7 +239,6 @@ on('#ajax', 'click', '#u_edit_playlist_btn', function() {
 });
 
 on('#ajax', 'click', '.u_music_list_delete', function() {
-  _this = this;
   saver = document.querySelector(".pk_saver");
   pk = saver.getAttribute("data-pk");
   uuid = saver.getAttribute("data-uuid");
@@ -249,29 +248,7 @@ on('#ajax', 'click', '.u_music_list_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        _this.innerHTML = "восстановить";
-        _this.classList.add("u_music_list_abort_delete");
-        _this.classList.remove("u_music_list_delete");
-        toast_success("Плейлист удален")
-      }
-    }
-    ajax_link.send();
-});
-on('#ajax', 'click', '.u_music_list_abort_delete', function() {
-  _this = this;
-  saver = document.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/music/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        _this.innerHTML = "удалить";
-        _this.classList.add("u_music_list_delete");
-        _this.classList.remove("u_music_list_abort_delete");
-        toast_success("Плейлист восстановлен")
+        this_page_reload("/users/" + pk + "/music_list/" + uuid)
       }
     }
     ajax_link.send();
