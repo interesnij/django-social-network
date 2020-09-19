@@ -59,9 +59,11 @@ on('#ajax', 'click', '.u_albums_add', function() {
   open_fullscreen("/gallery/user_progs/add_album/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_albums_edit', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  parent = this.parentElement;
+  pk = parent.getAttribute('data-pk');
+  uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user_progs/edit_album/" + pk + "/", loader)
+  open_fullscreen("/gallery/user_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_photo_edit', function() {
