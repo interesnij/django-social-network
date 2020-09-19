@@ -4,6 +4,7 @@
 {% block content %}
 
 <div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ playlist.uuid }}">
+  {% if not playlist.is_deleted %}
     <div class="row">
         <div class="col-md-8 mt-3">
           <div class="input-group mb-3">
@@ -21,15 +22,12 @@
                     <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
+                    <h6 class="my-0 mt-1"><span class="playlist_name">{{ playlist.name }}</span> ({{ playlist.count_tracks }})</h6>
                     <p class="">
-                      <p class="">
-                        <span class="c_music_list_edit pointer">Изменить<span>
-                          &nbsp;&nbsp;
-                        <span>
-                          <span class="c_music_list_delete pointer">Удалить<span>
-                        </span>
-                      </p>
+                      <span class="c_music_list_edit_window pointer">изменить</span>
+                        &nbsp;
+                      <span class="c_music_list_delete pointer">удалить</span>
+                    </p>
                   </div>
                   <span title="Поделиться" class="c_ucm_music_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
                     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -61,11 +59,19 @@
           {% include 'c_music/admin_sidebar.html' %}
         </div>
     </div>
+    <script>
+      {% if user|is_user_list:playlist.pk %}
+        document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
+      {% endif %}
+    </script>
+    {% else %}
+    <div class="card centered" style="">
+      <div class="card-body" style="margin-top: 10%;">
+      <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+      </div>
+      <h6 style="margin: 20px;text-align: center;">Плейлист удален. Вы можете <span style="text-decoration:underline;" class="pointer c_music_list_recover">восстановить</span> его</h6>
+    </div>
+    {% endif %}
 </div>
 
-<script>
-  {% if user|is_user_list:playlist.pk %}
-    document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
-  {% endif %}
-</script>
 {% endblock %}
