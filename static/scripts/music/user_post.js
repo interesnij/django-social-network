@@ -212,7 +212,7 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
   post_and_load_object_page(form, "/music/user_progs/create_list/", "/users/", "/music_list/")
 });
 
-on('#ajax', 'click', '.u_edit_playlist_btn', function() {
+on('#ajax', 'click', '#u_edit_playlist_btn', function() {
   form = document.body.querySelector("#u_soundcloud_set_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
