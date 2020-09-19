@@ -141,7 +141,7 @@ class UserEditPlaylistWindow(TemplateView):
         return super(UserEditPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserPlaylistCreate,self).get_context_data(**kwargs)
+        context = super(UserEditPlaylistWindow,self).get_context_data(**kwargs)
         context["playlist"] = self.playlist
         return context
 
