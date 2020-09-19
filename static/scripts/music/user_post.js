@@ -212,26 +212,27 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
   post_and_load_object_page(form, "/music/user_progs/create_list/", "/users/", "/music_list/")
 });
 
-on('#ajax', 'click', '#u_edit_music_list_btn', function() {
-  this.disabled = true;
+on('#ajax', 'click', '.u_edit_playlist_btn', function() {
   form = document.body.querySelector("#u_soundcloud_set_form");
   form_data = new FormData(form);
-  if (!form.querySelector("#id_permalink").value){
-    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!");
-  }
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
   saver = document.body.querySelector(".pk_saver");
   pk = saver.getAttribute("data-pk");
   uuid = saver.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'POST', "/music/user_progs/edit_list_window/" + pk + "/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
+        name = form.querySelector('#id_name').value;
+        document.body.querySelector(".playlist_name").innerHTML = name;
         document.querySelector(".create_fullscreen").style.display = "none";
         document.getElementById("create_loader").innerHTML="";
-        this_page_reload(document.location.href);
+        toast_success("Плейлист изменен")
       }
     }
     ajax_link.send(form_data);
