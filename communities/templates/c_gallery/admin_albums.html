@@ -15,7 +15,7 @@
                           <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                          <a href="{% url 'photo_album_edit_community' pk=community.pk uuid=object.uuid %}" class="dropdown-item ajax">Изменить</a>
+                          <span class="dropdown-item pointer c_albums_edit">Изменить</span>                          
                           <span class="dropdown-item pointer c_albums_remove">Удалить</span>
                         </div>
                     </div>

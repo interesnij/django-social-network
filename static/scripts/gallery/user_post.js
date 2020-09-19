@@ -1,5 +1,37 @@
 // скрипты галереи для пользователя
 
+on('#ajax', 'click', '#u_create_album_btn', function() {
+  form = document.body.querySelector("#u_create_album_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/gallery/user_progs/add_album/", "/users/", "/album/");
+});
+
+on('#ajax', 'click', '#u_edit_album_btn', function() {
+  form = document.body.querySelector("#u_edit_album_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/gallery/user_progs/edit_album/", "/users/", "/album/");
+});
+
+on('#ajax', 'click', '.u_all_photo_likes', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
+});
+on('#ajax', 'click', '.u_all_photo_dislikes', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader)
+});
+
+
 on('#ajax', 'click', '#u_ucm_photo_repost_btn', function() {
   form_post = document.body.querySelector("#u_uсm_photo_repost_form");
   form_data = new FormData(form_post);

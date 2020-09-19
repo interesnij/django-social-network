@@ -55,26 +55,19 @@ on('#ajax', 'click', '.c_photos_add', function() {
 })
 
 on('#ajax', 'click', '.c_albums_add', function() {
-  container = this.parentElement;
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/community_progs/add_album/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.c_albums_edit', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/gallery/community_progs/edit_album/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
 })
-
-
-on('#ajax', 'click', '#c_create_album_btn', function() {
-  form = document.body.querySelector("#c_create_album_form");
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { null }
-  post_and_load_object_page(form, "/gallery/community_progs/add_album/", "/communities/", "/album/");
-});
 
 on('#ajax', 'click', '.c_all_photo_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
