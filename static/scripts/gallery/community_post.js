@@ -29,11 +29,14 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     title = form.querySelector('#id_title').value;
     album_title = document.body.querySelector(".album_title_active");
-    album_title.innerHTML = "title";
+    album_title.innerHTML = title;
     album_title.classList.remove("album_title_active");
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
   }}
   link_.send(form_data);
 });
+
 
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
   form_post = document.body.querySelector("#c_uсm_photo_repost_form");
