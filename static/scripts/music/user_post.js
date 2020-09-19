@@ -219,9 +219,9 @@ on('#ajax', 'click', '.u_edit_playlist_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  saver = document.body.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
+
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/music/user_progs/edit_list_window/" + pk + "/" + uuid + "/", true );
