@@ -237,7 +237,7 @@ on('#ajax', 'click', '.u_album_abort_remove', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     block.querySelector(".delete_card").remove();
-    block.querySelector(".card").style.display = "unset";
+    block.querySelector(".card").style.display = "block";
   }}
   link_.send();
 });
