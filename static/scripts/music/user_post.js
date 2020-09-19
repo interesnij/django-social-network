@@ -224,7 +224,7 @@ on('#ajax', 'click', '#u_edit_playlist_btn', function() {
   uuid = form.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/user_progs/edit_list/" + pk + "/" + uuid + "/", true ); 
+    ajax_link.open( 'POST', "/music/user_progs/edit_list/" + pk + "/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -236,4 +236,41 @@ on('#ajax', 'click', '#u_edit_playlist_btn', function() {
       }
     }
     ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.u_music_list_delete', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/music/user_progs/delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this.innerHTML = "Восстановить"ж
+        this.classList.add("u_music_list_abort_delete");
+        this.classList.remove("u_music_list_delete");
+        toast_success("Плейлист удален")
+      }
+    }
+    ajax_link.send();
+});
+on('#ajax', 'click', '.u_music_list_abort_delete', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/music/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this.innerHTML = "Восстановить"ж
+        this.classList.add("u_music_list_delete");
+        this.classList.remove("u_music_list_abort_delete");
+        toast_success("Плейлист восстановлен")
+      }
+    }
+    ajax_link.send();
 });
