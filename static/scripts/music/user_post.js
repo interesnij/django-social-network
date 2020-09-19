@@ -248,7 +248,7 @@ on('#ajax', 'click', '.u_music_list_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this.innerHTML = "Восстановить"ж
+        this.innerHTML = "Восстановить";
         this.classList.add("u_music_list_abort_delete");
         this.classList.remove("u_music_list_delete");
         toast_success("Плейлист удален")
@@ -266,7 +266,7 @@ on('#ajax', 'click', '.u_music_list_abort_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this.innerHTML = "Восстановить"ж
+        this.innerHTML = "Восстановить";
         this.classList.add("u_music_list_delete");
         this.classList.remove("u_music_list_abort_delete");
         toast_success("Плейлист восстановлен")
