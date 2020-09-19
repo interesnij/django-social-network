@@ -213,7 +213,7 @@ on('#ajax', 'click', '.u_album_remove', function() {
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/delete_album/" + зл + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/delete_album/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

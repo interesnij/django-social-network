@@ -73,7 +73,7 @@ on('#ajax', 'click', '.u_album_edit', function() {
   list = document.body.querySelectorAll('.cover_block');
   for (var i = 0; i < list.length; i++) {
     list[i].classList.remove("album_active")
-  }
+  } 
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   block.classList.add("album_active");
   pk = block.getAttribute('data-pk');
