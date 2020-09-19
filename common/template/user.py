@@ -68,3 +68,14 @@ def get_settings_template(template, request):
     elif request.user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
     return template_name
+
+
+def get_default_template(folder, template, request):
+    if request.user.is_authenticated:
+        template_name = folder + template
+    elif request.user.is_anonymous:
+        template_name = folder + "anon_" + template
+
+    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        template_name = "mob_" + template_name
+    return template_name

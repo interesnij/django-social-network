@@ -4,7 +4,7 @@ from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from posts.forms import PostForm, CommentForm
-from common.post_attacher import get_post_attach
+from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from django.http import Http404
@@ -77,7 +77,7 @@ class PostCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
@@ -102,7 +102,7 @@ class PostReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, post=None, text=comment.text)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:

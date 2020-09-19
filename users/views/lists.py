@@ -206,7 +206,7 @@ class AllUsers(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.get_template import get_default_template
+		from common.template.user import get_default_template
 
 		self.template_name = get_default_template(folder="u_list/", template="all_users.html", request=request)
 		return super(AllUsers,self).get(request,*args,**kwargs)

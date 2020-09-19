@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from communities.models import Community
 from posts.forms import PostForm, CommentForm
-from common.post_attacher import get_post_attach
+from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
 from common.check.community import check_can_get_lists
 from django.http import Http404
@@ -78,7 +78,7 @@ class PostCommunityCommentCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
@@ -102,7 +102,7 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text, post=None)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:

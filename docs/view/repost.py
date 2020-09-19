@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.post_attacher import get_post_attach
+from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 
 

@@ -51,7 +51,7 @@ class VideoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != video_comment.creator.pk:
@@ -75,7 +75,7 @@ class VideoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.comment_attacher import get_comment_attach
+                from common.attach.comment_attacher import get_comment_attach
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != parent.commenter.pk:
