@@ -153,3 +153,56 @@ class CommunityPlaylistCreate(View):
             return render(request, 'c_music_list/admin_list.html',{'playlist': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
+
+
+class CommunityPlaylistEdit(TemplateView):
+    """
+    изменение плейлиста пользователя
+    """
+    template_name = None
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("music_create/c_edit_list.html", request)
+        return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityPlaylistEdit,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = PlaylistForm(request.POST,instance=self.list)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
+
+class CommunityPlaylistDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == SoundList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityPlaylistAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user:
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
