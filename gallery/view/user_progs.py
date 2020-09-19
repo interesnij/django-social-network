@@ -395,7 +395,7 @@ class AlbumUserDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and album.type == Album.AL:
+        if request.is_ajax() and user == request.user and album.type == Album.ALBUM:
             album.is_deleted = True
             album.save(update_fields=['is_deleted'])
             return HttpResponse()
