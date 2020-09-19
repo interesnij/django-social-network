@@ -391,7 +391,7 @@ class AlbumCommunityDelete(View):
         else:
             raise Http404
 
-class AlbumCommunityCommunityDelete(View):
+class AlbumCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         album = Album.objects.get(uuid=self.kwargs["uuid"])
