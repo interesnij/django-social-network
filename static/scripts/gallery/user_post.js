@@ -35,21 +35,10 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
     album.classList.remove("album_active");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
+    toast_success("Альбом изменен")
   }}
   link_.send(form_data);
 });
-
-on('#ajax', 'click', '.u_all_photo_likes', function() {
-  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
-});
-on('#ajax', 'click', '.u_all_photo_dislikes', function() {
-  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader)
-});
-
 
 on('#ajax', 'click', '#u_ucm_photo_repost_btn', function() {
   form_post = document.body.querySelector("#u_uсm_photo_repost_form");
@@ -215,6 +204,37 @@ on('#ajax', 'click', '.u_photo_description', function() {
     form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span class="u_photo_edit pointer">Редактировать</span>';
     form.style.display = "none";
     form.querySelector('#id_description').value = new_post.innerHTML;
+  }}
+  link_.send(form_data);
+});
+
+on('#ajax', 'click', '.u_album_remove', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user_progs/delete_album/" + зл + "/" + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    block.querySelector(".card").style.display = "none";
+    block.append = '<div class="card delete_card rounded-0 border-0 mb-3"><div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 u_albums_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/album.jpg" /></a></div></div>'
+  }}
+  link_.send(form_data);
+});
+on('#ajax', 'click', '.u_album_abort_remove', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user_progs/delete_album/" + pk + "/" + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    block.querySelector(".delete_card").remove();
+    block.querySelector(".card").style.display = "unset";
   }}
   link_.send(form_data);
 });

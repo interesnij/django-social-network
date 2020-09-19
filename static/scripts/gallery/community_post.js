@@ -36,6 +36,7 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
     album.classList.remove("album_active");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
+    toast_success("Альбом изменен")
   }}
   link_.send(form_data);
 });

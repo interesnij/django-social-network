@@ -5,6 +5,17 @@ on('#ajax', 'click', '.u_photo_detail', function() {
   open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.u_all_photo_likes', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
+});
+on('#ajax', 'click', '.u_all_photo_dislikes', function() {
+  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
@@ -53,21 +64,20 @@ on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
 })
 
-on('#ajax', 'click', '.u_albums_add', function() {
+on('#ajax', 'click', '.u_album_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/user_progs/add_album/" + pk + "/", loader)
 });
-on('#ajax', 'click', '.u_albums_edit', function() {
+on('#ajax', 'click', '.u_album_edit', function() {
   list = document.body.querySelectorAll('.cover_block');
   for (var i = 0; i < list.length; i++) {
     list[i].classList.remove("album_active")
   }
-  parent = this.parentElement;
-  block = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
-  block.classList.add("album_active"); 
-  pk = parent.getAttribute('data-pk');
-  uuid = parent.getAttribute('data-uuid');
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  block.classList.add("album_active");
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/user_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });

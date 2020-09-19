@@ -54,15 +54,20 @@ on('#ajax', 'click', '.c_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
 })
 
-on('#ajax', 'click', '.c_albums_add', function() {
+on('#ajax', 'click', '.c_album_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/community_progs/add_album/" + pk + "/", loader)
 });
-on('#ajax', 'click', '.c_albums_edit', function() {
-  parent = this.parentElement;
-  pk = parent.getAttribute('data-pk');
-  uuid = parent.getAttribute('data-uuid');
+on('#ajax', 'click', '.c_album_edit', function() {
+  list = document.body.querySelectorAll('.cover_block');
+  for (var i = 0; i < list.length; i++) {
+    list[i].classList.remove("album_active")
+  }
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  block.classList.add("album_active");
+  pk = block.getAttribute('data-pk');
+  uuid = block.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/community_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });

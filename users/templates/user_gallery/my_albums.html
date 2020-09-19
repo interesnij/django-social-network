@@ -1,7 +1,7 @@
 
 <div class="row" style="margin-left: 0;margin-right: 0;">
     {% for object in albums_list %}
-    <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
+    <div class="col-md-6 col-lg-4 cover_block" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}">
 
         <div class="card rounded-0 border-0 mb-3">
             <div class="card-header">
@@ -14,9 +14,9 @@
                         <a style="cursor:pointer;width:20px;display:inline-block">
                           <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}">
-                            <span class="dropdown-item pointer u_albums_edit">Изменить</span>
-                            <span class="dropdown-item pointer u_albums_remove">Удалить</span>
+                        <div class="dropdown-menu dropdown-menu-right"> 
+                            <span class="dropdown-item pointer u_album_edit">Изменить</span>
+                            <span class="dropdown-item pointer u_album_remove">Удалить</span>
                         </div>
                     </div>
                     {% endif %}
