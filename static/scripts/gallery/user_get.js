@@ -61,12 +61,11 @@ on('#ajax', 'click', '.u_albums_add', function() {
 on('#ajax', 'click', '.u_albums_edit', function() {
   list = document.body.querySelectorAll('.cover_block');
   for (var i = 0; i < list.length; i++) {
-    h6 = list[i].querySelector('h6');
-    h6.classList.remove("album_title_active")
+    list[i].classList.remove("album_active")
   }
   parent = this.parentElement;
-  title = parent.parentElement.previousElementSibling.querySelector("h6");
-  title.classList.add("album_title_active");
+  block = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
+  block.classList.add("album_active"); 
   pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");

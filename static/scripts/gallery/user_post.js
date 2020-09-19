@@ -27,9 +27,12 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     title = form.querySelector('#id_title').value;
-    album_title = document.body.querySelector(".album_title_active");
-    album_title.innerHTML = title;
-    album_title.classList.remove("album_title_active");
+    description = form.querySelector('#id_description').value;
+
+    album = document.body.querySelector(".album_active");
+    album.querySelector("h6").innerHTML = title;
+    album.querySelector(".albom_description").innerHTML = description;
+    album.classList.remove("album_active");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
   }}
