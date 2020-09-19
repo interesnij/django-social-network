@@ -375,7 +375,7 @@ class AlbumCommunityEdit(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             self.form.save()
-            return render(request, 'c_album/admin_album.html',{'album': self.album, 'community': self.community})
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
         return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)

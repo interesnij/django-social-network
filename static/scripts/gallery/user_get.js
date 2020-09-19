@@ -60,6 +60,8 @@ on('#ajax', 'click', '.u_albums_add', function() {
 });
 on('#ajax', 'click', '.u_albums_edit', function() {
   parent = this.parentElement;
+  title = parent.parentElement.previousElementSibling.querySelector("h6");
+  title.classList.add("album_title_active"); 
   pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");

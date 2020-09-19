@@ -11,14 +11,28 @@ on('#ajax', 'click', '#c_create_album_btn', function() {
   post_and_load_object_page(form, "/gallery/community_progs/add_album/", "/communities/", "/album/");
 });
 
-on('#ajax', 'click', '#c_edit_album_btn', function() {
+on('#ajax', 'click', '.c_edit_album_btn', function() {
   form = document.body.querySelector("#c_edit_album_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  edit_and_load_object_page(form, "/gallery/community_progs/edit_album/", "/communities/", "/album/");
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid")
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/community_progs/edit_album/" + pk + "/" + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    title = form.querySelector('#id_title').value;
+    album_title = document.body.querySelector(".album_title_active");
+    album_title.innerHTML = "title";
+    album_title.classList.remove("album_title_active");
+  }}
+  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {

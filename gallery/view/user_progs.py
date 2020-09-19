@@ -386,7 +386,7 @@ class AlbumUserEdit(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             self.form.save()
-            return render(request, 'user_album/my_album.html',{'album': self.album, 'user': self.user})
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
         return super(AlbumUserEdit,self).get(request,*args,**kwargs)
