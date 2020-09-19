@@ -213,7 +213,7 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
 });
 
 on('#ajax', 'click', '#u_edit_playlist_btn', function() {
-  form = document.body.querySelector("#u_soundcloud_set_form");
+  form = document.body.querySelector("#u_edit_playlist_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
