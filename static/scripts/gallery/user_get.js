@@ -59,9 +59,14 @@ on('#ajax', 'click', '.u_albums_add', function() {
   open_fullscreen("/gallery/user_progs/add_album/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_albums_edit', function() {
+  list = container.querySelectorAll('.cover_block');
+  for (var i = 0; i < list.length; i++) {
+    h6 = list[i].querySelector('h6');
+    h6.classList.remove("album_title_active")
+  }
   parent = this.parentElement;
   title = parent.parentElement.previousElementSibling.querySelector("h6");
-  title.classList.add("album_title_active"); 
+  title.classList.add("album_title_active");
   pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");

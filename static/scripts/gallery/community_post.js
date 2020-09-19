@@ -11,7 +11,7 @@ on('#ajax', 'click', '#c_create_album_btn', function() {
   post_and_load_object_page(form, "/gallery/community_progs/add_album/", "/communities/", "/album/");
 });
 
-on('#ajax', 'click', '.c_edit_album_btn', function() {
+on('#ajax', 'click', '#c_edit_album_btn', function() {
   form = document.body.querySelector("#c_edit_album_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
