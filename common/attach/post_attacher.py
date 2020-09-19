@@ -211,22 +211,22 @@ def get_post_attach(request, post):
 
         if request.POST.get('doc'):
             if request.POST.get('select_doc1'):
-                doc_attach(request.POST.get('select_doc1'), doc)
+                doc_attach(request.POST.get('select_doc1'), post)
             if request.POST.get('select_doc2'):
-                doc_attach(request.POST.get('select_doc2'), doc)
+                doc_attach(request.POST.get('select_doc2'), post)
             if request.POST.get('select_doc3'):
-                doc_attach(request.POST.get('select_doc3'), doc)
+                doc_attach(request.POST.get('select_doc3'), post)
             if request.POST.get('select_doc4'):
-                doc_attach(request.POST.get('select_doc4'), doc)
+                doc_attach(request.POST.get('select_doc4'), post)
             if request.POST.get('select_doc5'):
-                doc_attach(request.POST.get('select_doc5'), doc)
+                doc_attach(request.POST.get('select_doc5'), post)
             if request.POST.get('select_doc6'):
-                doc_attach(request.POST.get('select_doc6'), docdoc)
+                doc_attach(request.POST.get('select_doc6'), post)
             if request.POST.get('select_doc7'):
-                doc_attach(request.POST.get('select_doc7'), doc)
+                doc_attach(request.POST.get('select_doc7'), post)
             if request.POST.get('select_doc8'):
-                doc_attach(request.POST.get('select_doc8'), doc)
+                doc_attach(request.POST.get('select_doc8'), post)
             if request.POST.get('select_doc9'):
-                doc_attach(request.POST.get('select_doc9'), doc)
+                doc_attach(request.POST.get('select_doc9'), post)
             if request.POST.get('select_doc10'):
-                doc_attach(request.POST.get('select_doc10'), doc)
+                doc_attach(request.POST.get('select_doc10'), post)
