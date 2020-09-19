@@ -1028,13 +1028,13 @@ class User(AbstractUser):
         return albums
 
     def my_user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None).exists()
+        return self.video_user_creator.filter(creator_id=self.id, community=None, is_deleted=False).exists()
     def is_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True).exists()
+        return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True, is_deleted=False).exists()
     def is_music_playlist_exists(self):
-        return self.user_playlist.filter(creator_id=self.id, community=None, type="LI").exists()
+        return self.user_playlist.filter(creator_id=self.id, community=None, type="LI", is_deleted=False).exists()
     def is_good_album_exists(self):
-        return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL").exists()
+        return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL", is_deleted=False).exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
@@ -1053,14 +1053,14 @@ class User(AbstractUser):
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community=None, type=SoundList.LIST)
+        playlists_query = Q(creator_id=self.id, community=None, type=SoundList.LIST, is_deleted=False)
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
 
     def get_all_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community=None)
+        playlists_query = Q(creator_id=self.id, community=None, is_deleted=False)
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
 
@@ -1191,23 +1191,23 @@ class User(AbstractUser):
     def get_last_docs(self):
         from docs.models import DocList, Doc2
 
-        docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False).exclude(type=Doc2.PRIVATE)[0:5]
+        docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list[0:5]
 
     def is_doc_list_exists(self):
-        return self.user_doclist.filter(creator_id=self.id, community=None, type="LI").exists()
+        return self.user_doclist.filter(creator_id=self.id, community=None, type="LI", is_deleted=False).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST)
+        lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST, is_deleted=False)
         lists = DocList.objects.filter(lists_query)
         return lists
 
     def get_all_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community=None)
+        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
         lists = DocList.objects.filter(lists_query)
         return lists
 

@@ -367,12 +367,12 @@ class Community(models.Model):
         return music_list[0:5]
 
     def community_music_playlist_exists(self):
-        return self.community_playlist.filter(community_id=self.id, type="LI").exists()
+        return self.community_playlist.filter(community_id=self.id, type="LI", is_deleted=False).exists()
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(community_id=self.id, type=SoundList.LIST)
+        playlists_query = Q(community_id=self.id, type=SoundList.LIST, is_deleted=False)
         playlists = SoundList.objects.filter(playlists_query)
         return playlists
 
@@ -387,7 +387,7 @@ class Community(models.Model):
     def get_all_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(community_id=self.id)
+        lists_query = Q(community_id=self.id, is_deleted=False)
         lists = DocList.objects.filter(lists_query)
         return lists
 
@@ -400,22 +400,22 @@ class Community(models.Model):
         return docs_list.count()
 
     def get_docs_lists(self):
-        return self.community_doclist.exclude(is_public=False)
+        return self.community_doclist.filter(is_deleted=False).exclude(is_public=False)
 
     def get_last_docs(self):
         from docs.models import Doc2
 
         docs_query = Q(list__in=self.get_docs_lists())
-        docs_list = Doc2.objects.filter(docs_query).exclude(type=Doc2.PRIVATE)[0:5]
+        docs_list = Doc2.objects.filter(docs_query, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list
 
     def community_docs_list_exists(self):
-        return self.community_doclist.filter(community_id=self.id, type="LI").exists()
+        return self.community_doclist.filter(community_id=self.id, type="LI", is_deleted=False).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(community_id=self.id, type=DocList.LIST)
+        lists_query = Q(community_id=self.id, type=DocList.LIST, is_deleted=False)
         lists = DocList.objects.filter(lists_query)
         return lists
 

@@ -276,3 +276,20 @@ on('#ajax', 'click', '.u_music_list_abort_delete', function() {
     }
     ajax_link.send();
 });
+
+on('#ajax', 'click', '.u_music_list_recover', function() {
+  _this = this;
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/music/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/users/" + pk + "/music_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});
