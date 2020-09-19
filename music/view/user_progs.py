@@ -131,6 +131,20 @@ class UserCreatePlaylistWindow(TemplateView):
         self.template_name = get_settings_template("music_create/u_create_list.html", request)
         return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
+class UserEditPlaylistWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_settings_template("music_create/u_edit_list.html", request)
+        return super(UserEditPlaylistWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPlaylistCreate,self).get_context_data(**kwargs)
+        context["playlist"] = self.playlist
+        return context
+
 
 class UserPlaylistCreate(View):
     form_post = None

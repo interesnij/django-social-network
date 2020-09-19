@@ -131,6 +131,22 @@ class CommunityCreatePlaylistWindow(TemplateView):
         self.template_name = self.community.get_manage_template(folder="music_create/", template="c_create_list.html", request=request)
         return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
+class CommunityEditPlaylistWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_settings_template("music_create/u_edit_list.html", request)
+        return super(CommunityEditPlaylistWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityEditPlaylistWindow,self).get_context_data(**kwargs)
+        context["playlist"] = self.playlist
+        context["community"] = self.community
+        return context
+
+
 class CommunityPlaylistCreate(View):
     form_post = None
 
