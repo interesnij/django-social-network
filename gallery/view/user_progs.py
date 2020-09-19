@@ -394,8 +394,7 @@ class AlbumUserEdit(TemplateView):
 class AlbumUserDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        album = Album.objects.get(creator=user, community=None, type=Album.AVATAR)
+        album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user and album.type == Album.AL:
             album.is_deleted = True
             album.save(update_fields=['is_deleted'])
@@ -406,8 +405,7 @@ class AlbumUserDelete(View):
 class AlbumUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        album = Album.objects.get(creator=user, community=None, type=Album.AVATAR)
+        album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             album.is_deleted = False
             album.save(update_fields=['is_deleted'])
