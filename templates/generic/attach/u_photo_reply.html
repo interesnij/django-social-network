@@ -15,4 +15,7 @@
   {% for music in reply.gallery_comment_music.all %}
     {% include 'generic/items/u_music.html' %}
   {% endfor %}
+  {% for doc in reply.get_attach_docs %}
+    {% include 'generic/items/u_doc.html' %}
+  {% endfor %}
 </div>

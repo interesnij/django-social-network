@@ -35,4 +35,7 @@
   {% for music in comment.comment_music.all %}
     {% include 'generic/items/u_music.html' %}
   {% endfor %}
+  {% for doc in comment.get_attach_docs %}
+    {% include 'generic/items/u_doc.html' %}
+  {% endfor %}
 </div>

@@ -35,4 +35,7 @@
   {% for music in object.get_attach_tracks %}
     {% include 'generic/items/c_music.html' %}
   {% endfor %}
+  {% for doc in object.get_attach_docs %}
+    {% include 'generic/items/c_doc.html' %}
+  {% endfor %}
 </div>

@@ -204,6 +204,14 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
 
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
+on('#ajax', 'click', '.doc_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  parent.remove();
+  block.querySelector(".doc") ? null : block.querySelector(".doc_input").parentElement.remove();
+
+  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
+});
 on('#ajax', 'click', '.video_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
