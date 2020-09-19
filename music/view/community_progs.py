@@ -137,7 +137,7 @@ class CommunityEditPlaylistWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("music_create/u_edit_list.html", request)
+        self.template_name = self.community.get_manage_template(folder="music_create/", template="u_edit_list.html", request=request)
         return super(CommunityEditPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -180,7 +180,7 @@ class CommunityPlaylistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/c_edit_list.html", request)
+        self.template_name = self.community.get_manage_template(folder="music_create/", template="c_edit_list.html", request=request)
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
