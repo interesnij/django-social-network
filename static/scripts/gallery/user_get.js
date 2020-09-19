@@ -59,7 +59,7 @@ on('#ajax', 'click', '.u_albums_add', function() {
   open_fullscreen("/gallery/user_progs/add_album/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_albums_edit', function() {
-  list = container.querySelectorAll('.cover_block');
+  list = document.body.querySelectorAll('.cover_block');
   for (var i = 0; i < list.length; i++) {
     h6 = list[i].querySelector('h6');
     h6.classList.remove("album_title_active")
