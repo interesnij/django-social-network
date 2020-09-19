@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^souncloud_create_list_window/(?P<pk>\d+)/$', UserSoundcloudSetPlaylistWindow.as_view()),
     url(r'^souncloud_list_window/(?P<pk>\d+)/$', UserSoundcloudSetWindow.as_view()),
     url(r'^create_list_window/(?P<pk>\d+)/$', UserCreatePlaylistWindow.as_view()),
-    url(r'^edit_edit_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserEditPlaylistWindow.as_view()),
+    url(r'^edit_list_window/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserEditPlaylistWindow.as_view()),
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', UserSoundcloudSetCreate.as_view()),
     url(r'^soundcloud_set/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSet.as_view()),
