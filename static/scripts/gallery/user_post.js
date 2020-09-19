@@ -221,6 +221,7 @@ on('#ajax', 'click', '.u_album_remove', function() {
     block.querySelector(".card").style.display = "none";
     $block = document.createElement("div");
     $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
+    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 u_albums_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/album.jpg" /></a></div>'
     block.append($block);
   }}
   link_.send();
