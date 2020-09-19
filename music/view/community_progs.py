@@ -185,7 +185,7 @@ class CommunityPlaylistEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistEdit,self).get_context_data(**kwargs)
-        context["user"] = self.user
+        context["community"] = self.community
         context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
@@ -205,7 +205,7 @@ class CommunityPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == SoundList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name) and list.type == SoundList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -216,7 +216,7 @@ class CommunityPlaylistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
