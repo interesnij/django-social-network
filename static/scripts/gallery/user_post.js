@@ -28,7 +28,7 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     title = form.querySelector('#id_title').value;
     album_title = document.body.querySelector(".album_title_active");
-    album_title.innerHTML = "title";
+    album_title.innerHTML = title; 
     album_title.classList.remove("album_title_active");
   }}
   link_.send(form_data);
