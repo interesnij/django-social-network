@@ -17,7 +17,7 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  post_and_load_object_page(form, "/gallery/user_progs/edit_album/", "/users/", "/album/");
+  edit_and_load_object_page(form, "/gallery/user_progs/edit_album/", "/users/", "/album/");
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {

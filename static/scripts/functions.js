@@ -46,6 +46,29 @@ function post_and_load_object_page(form, url_post, url_1, url_2){
     }
     ajax_link.send(form_data);
 }
+function edit_and_load_object_page(form, url_post, url_1, url_2){
+  form_data = new FormData(form);
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid");
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', url_post + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.getElementById('ajax');
+        rtr.innerHTML = ajax.innerHTML;
+        window.scrollTo(0,0);
+        document.title = elem_.querySelector('title').innerHTML;
+
+        uuid = rtr.querySelector(".pk_saver").getAttribute("data-uuid");
+        window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/');
+      }
+    }
+    ajax_link.send(form_data);
+}
 
 function send_form_with_pk_and_toast(url, form, toast){
     form_data = new FormData(form);

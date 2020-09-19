@@ -18,7 +18,7 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { null }
-  post_and_load_object_page(form, "/gallery/community_progs/edit_album/", "/communities/", "/album/");
+  edit_and_load_object_page(form, "/gallery/community_progs/edit_album/", "/communities/", "/album/");
 });
 
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
