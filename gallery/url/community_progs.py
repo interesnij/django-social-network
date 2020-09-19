@@ -25,6 +25,10 @@ urlpatterns=[
     url(r'^add_photo/(?P<pk>\d+)/$', PhotoCommunityCreate.as_view()),
 	url(r'^add_attach_photo/(?P<pk>\d+)/$', PhotoAttachCommunityCreate.as_view()),
 	url(r'^add_album_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoAlbumCommunityCreate.as_view()),
-	url(r'^add_album/(?P<pk>\d+)/$', AlbumCommunityCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
+
+    url(r'^add_album/(?P<pk>\d+)/$', AlbumCommunityCreate.as_view()),
+    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityEdit.as_view(), name="photo_album_edit_community"),
+    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityDelete.as_view()),
+    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityAbortDelete.as_view()),
 ]

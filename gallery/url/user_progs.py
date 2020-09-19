@@ -25,8 +25,12 @@ urlpatterns=[
     url(r'^add_photo/(?P<pk>\d+)/$', PhotoUserCreate.as_view()),
 	url(r'^add_comment_photo/(?P<pk>\d+)/$', PhotoAttachUserCreate.as_view()),
 	url(r'^add_album_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoAlbumUserCreate.as_view(), name="photo_album_add_user"),
-	url(r'^add_album/(?P<pk>\d+)/$', AlbumUserCreate.as_view(), name="album_add_user"),
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
 
-    url(r'^get_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()),  
+    url(r'^add_album/(?P<pk>\d+)/$', AlbumUserCreate.as_view()),
+    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserEdit.as_view(), name="photo_album_edit_user"),
+    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserDelete.as_view()),
+    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserAbortDelete.as_view()),
+
+    url(r'^get_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()),
 ]

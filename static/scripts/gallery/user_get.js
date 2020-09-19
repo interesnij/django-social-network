@@ -11,7 +11,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   pk = parent.getAttribute("user-pk");
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
-  clear_attach_block(); 
+  clear_attach_block();
 })
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement;
@@ -74,6 +74,16 @@ on('#ajax', 'click', '#u_create_album_btn', function() {
     toast_error("Название - обязательное поле!");
   } else { null }
   post_and_load_object_page(form, "/gallery/user_progs/add_album/", "/users/", "/album/");
+});
+
+on('#ajax', 'click', '#u_edit_album_btn', function() {
+  form = document.body.querySelector("#u_edit_album_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/gallery/user_progs/edit_album/", "/users/", "/album/");
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {

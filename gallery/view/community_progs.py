@@ -70,37 +70,6 @@ class PhotoAttachCommunityCreate(View):
         else:
             raise Http404
 
-class AlbumCommunityCreate(TemplateView):
-    """
-    создание альбома пользователя
-    """
-    template_name="c_album/add_album.html"
-    form=None
-
-    def get(self,request,*args,**kwargs):
-        self.form = AlbumForm()
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(AlbumCommunityCreate,self).get_context_data(**kwargs)
-        context["form"] = self.form
-        context["community"] = self.community
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form = AlbumForm(request.POST)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
-            album = self.form.save(commit=False)
-            if not album.description:
-                album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=request.user, community=self.community)
-            return render(request, 'c_album/new_album.html',{'album': new_album, 'community': self.community})
-        else:
-            return HttpResponseBadRequest()
-        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
-
 
 class CommunityAddAvatar(View):
     """
@@ -342,6 +311,93 @@ class CommunityOffPrivatePhoto(View):
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
             photo.is_public = True
             photo.save(update_fields=['is_public'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AlbumCommunityCreate(TemplateView):
+    """
+    создание альбома сообщества
+    """
+    template_name = None
+    form = None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.community.get_manage_template(folder="c_album/", template="add_album.html", request=request)
+        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(AlbumCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = AlbumForm()
+        context["community"] = self.community
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = AlbumForm(request.POST)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
+            album = self.form.save(commit=False)
+            if not album.description:
+                album.description = "Без описания"
+            new_album = Album.objects.create(title=album.title, community=self.community, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.community.creator)
+            return render(request, 'c_album/new_album.html',{'album': new_album, 'community': self.community})
+        else:
+            return HttpResponseBadRequest()
+        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+
+class AlbumCommunityEdit(TemplateView):
+    """
+    изменение альбома сообщества
+    """
+    template_name = None
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.community.get_manage_template(folder="c_album/", template="edit_album.html", request=request)
+        return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(AlbumCommunityEdit,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["community"] = self.community
+        context["album"] = Album.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.form = AlbumForm(request.POST,instance=self.album)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+            album = self.form.save(commit=False)
+            if not album.description:
+                album.description = "Без описания"
+            self.form.save()
+            return render(request, 'c_album/admin_album.html',{'album': self.album, 'community': self.community})
+        else:
+            return HttpResponseBadRequest()
+        return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
+
+class AlbumCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(community.name) and album.type == Album.AL:
+            album.is_deleted = True
+            album.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class AlbumCommunityCommunityDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_administrator_of_community_with_name(community.name):
+            album.is_deleted = False
+            album.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
