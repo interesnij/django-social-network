@@ -20,8 +20,12 @@
                     <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
-                    <p class="">моя музыка</p>
+                    <h6 class="my-0 mt-1"><span class="playlist_name">{{ playlist.name }}</span> ({{ playlist.count_tracks }})</h6>
+                    <p class="">
+                      <span class="u_music_list_edit pointer">Изменить<span>
+                        &nbsp;&nbsp;
+                      <span class="u_music_list_delete pointer">Удалить<span>
+                    </p>
                   </div>
                   {% if playlist.is_not_empty %}
                     <span title="Поделиться" class="u_ucm_music_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
@@ -52,94 +56,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card mb-3 mt-3">
-              <div class="card-body">
-                <a href="{% url 'user' pk=user.pk %}" class="ajax">
-                  <div class="media">
-                      <figure style="width:50px;">
-                        {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar }}" style="border-radius:50px" alt="image">
-                        {% else %}
-                          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                        {% endif %}
-                      </figure>
-                    <div class="media-body">
-                        <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-                        <p class="small">Музыка</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="#" class="">Изменить список</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="pointer">Добавить трек в список</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="u_soundcloud_set_list pointer">Добавить треки списком</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="u_music_list_create_window pointer">Создать новый список</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a class="u_soundcloud_set_create pointer">Закачать новый список</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          {% if user.is_music_playlist_exists %}
-          <div class="card">
-            <div class="card-body">
-              <div class="nav flex-column nav-pills faqnav">
-                <h6 style="margin-bottom:15px">Плейлисты</h6>
-                {% for object in user.get_audio_playlists %}
-                  <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
-                    {{ object.name }}
-                  </a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-          {% endif %}
+          {% include 'c_music/my_sidebar.html' %}
         </div>
     </div>
 </div>
