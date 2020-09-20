@@ -430,19 +430,19 @@ class Community(models.Model):
             return None
 
     def is_video_album_exists(self):
-        return self.video_album_community.filter(community_id=self.id, type="AL", is_private=True).exists()
+        return self.video_album_community.filter(community_id=self.id, type="AL", is_public=True).exists()
     def is_my_video_album_exists(self):
-        return self.video_album_community.filter(community_id=self.id, type="AL", is_private=True).exists()
+        return self.video_album_community.filter(community_id=self.id, type="AL").exists()
     def get_my_video_albums(self):
         from video.models import VideoAlbum
 
-        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False)
+        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False, is_public=True)
         lists = DocList.objects.filter(lists_query)
         return lists
     def get_my_video_albums(self):
         from video.models import VideoAlbum
 
-        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False, is_public=True)
+        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False)
         lists = DocList.objects.filter(lists_query)
         return lists
 
