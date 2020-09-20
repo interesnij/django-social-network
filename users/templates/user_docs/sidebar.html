@@ -11,19 +11,20 @@
             </figure>
           <div class="media-body">
               <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-              <p class="small">Видеозаписи</p>
+              <p class="small">Документы</p>
           </div>
         </div>
       </a>
     </div>
 </div>
-{% if user.user_video_album_exists %}
+
+{% if user.is_doc_list_exists %}
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
-      <h6 style="margin-bottom:15px">Альбомы</h6>
-      {% for object in user.get_video_albums %}
-        <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+      <h6 style="margin-bottom:15px">Списки</h6>
+      {% for object in user.get_docs_lists %}
+        <a class="ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">
           {{ object.name }}
         </a>
       {% endfor %}

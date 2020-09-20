@@ -77,17 +77,9 @@
 </div>
 {% if community.community_music_playlist_exists %}
 <div class="card">
-  <div class="card-header">
-    <div class="media">
-        <div class="media-body">
-          <h5 class="mt-1">
-            <p>плейлисты</p>
-          </h5>
-        </div>
-    </div>
-  </div>
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
+      <h6 style="margin-bottom:15px">Плейлисты</h6>
       {% for object in community.get_audio_playlists %}
         <a class="ajax" href="{% url 'community_music_list' pk=community.pk uuid=object.uuid %}">
           {{ object.name }}
