@@ -431,7 +431,7 @@ on('#ajax', 'click', '.u_good_album_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/users/" + pk + "/goods_list/" + uuid)
+        this_page_reload("/users/" + pk + "/goods_list/" + uuid + "/")
       }
     }
     ajax_link.send();
@@ -447,7 +447,7 @@ on('#ajax', 'click', '.u_good_album_recover', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/users/" + pk + "/goods_list/" + uuid)
+        this_page_reload("/users/" + pk + "/goods_list/" + uuid + "/")
       }
     }
     ajax_link.send();

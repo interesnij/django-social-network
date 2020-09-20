@@ -15,7 +15,7 @@ on('#ajax', 'click', '.u_doc_create_window', function(e) {
 on('#ajax', 'click', '.u_doc_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+  uuid = body.getAttribute("data-uuid"); 
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });

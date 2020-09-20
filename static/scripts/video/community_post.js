@@ -236,7 +236,7 @@ on('#ajax', 'click', '.c_doc_list_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid)
+        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid + "/")
       }
     }
     ajax_link.send();
@@ -252,7 +252,7 @@ on('#ajax', 'click', '.c_video_list_recover', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid)
+        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid + "/")
       }
     }
     ajax_link.send();

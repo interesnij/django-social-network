@@ -4,9 +4,9 @@
 {% block content %}
 
 <div class="container main-container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
-  {% if not playlist.is_deleted %}
     <div class="row">
         <div class="col-md-8 mt-3">
+          {% if not playlist.is_deleted %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск треков">
             <div class="input-group-append">
@@ -61,24 +61,19 @@
                 {% endif %}
               </div>
           </div>
+          <script>
+            {% if user|is_user_list:playlist.pk %}
+              document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
+            {% endif %}
+          </script>
+          {% else %}
+            {% include 'user_music/deleted.html' %}
+          {% endif %}
         </div>
         <div class="col-md-4">
           {% include 'user_music/sidebar.html' %}
         </div>
     </div>
-    <script>
-      {% if user|is_user_list:playlist.pk %}
-        document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
-      {% endif %}
-    </script>
-    {% else %}
-    <div class="card centered" style="">
-      <div class="card-body" style="margin-top: 10%;">
-      <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
-      </div>
-      <h6 style="margin: 20px;text-align: center;">Плейлист удален. </h6>
-    </div>
-    {% endif %}
 </div>
 
 {% endblock %}

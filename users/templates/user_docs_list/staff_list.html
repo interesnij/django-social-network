@@ -5,6 +5,7 @@
 <div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row">
         <div class="col-md-8 mt-3">
+          {% if not list.is_deleted %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
             <div class="input-group-append">
@@ -72,6 +73,9 @@
                     </ul>
               </div>
           </div>
+          {% else %}
+            {% include 'user_docs/deleted.html' %}
+          {% endif %}
         </div>
         <div class="col-12 col-md-4">
           {% include 'user_docs/sidebar.html' %}

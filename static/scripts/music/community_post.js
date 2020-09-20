@@ -257,7 +257,7 @@ on('#ajax', 'click', '.c_music_list_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communities/" + pk + "/music_list/" + uuid)
+        this_page_reload("/communities/" + pk + "/music_list/" + uuid + "/")
       }
     }
     ajax_link.send();
@@ -274,7 +274,7 @@ on('#ajax', 'click', '.c_music_list_recover', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communities/" + pk + "/music_list/" + uuid)
+        this_page_reload("/communities/" + pk + "/music_list/" + uuid + "/")
       }
     }
     ajax_link.send();
