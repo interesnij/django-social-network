@@ -10,7 +10,7 @@ from users.models import User
 from django.views.generic import ListView
 from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
-from common.template.video import get_permission_user_video, get_template_user_video
+from common.template.video import get_permission_user_video
 from django.http import Http404
 from common.template.user import get_settings_template
 
@@ -203,7 +203,7 @@ class UserVideoListCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user_video(self.user, "user_create/", "create_list.html", request.user)
+        self.template_name = get_settings_template("user_create/create_list.html", request)
         return super(UserVideoListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -230,7 +230,7 @@ class UserVideoAttachCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user_video(self.user, "user_create/", "create_video_attach.html", request.user)
+        self.template_name = get_settings_template("user_create/create_video_attach.html", request)
         return super(UserVideoAttachCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -259,7 +259,7 @@ class UserVideoCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user_video(self.user, "user_create/", "create_video.html", request.user)
+        self.template_name = get_settings_template("user_create/create_video.html", request)
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -9,7 +9,7 @@ from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
-from common.template.video import get_permission_community_video, get_template_community_video
+from common.template.video import get_permission_community_video
 from django.http import Http404
 
 
