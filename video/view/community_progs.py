@@ -303,7 +303,7 @@ class CommunityVideolistEdit(TemplateView):
             return HttpResponseBadRequest()
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
-class CommunityPlaylistDelete(View):
+class CommunityVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
@@ -314,7 +314,7 @@ class CommunityPlaylistDelete(View):
         else:
             raise Http404
 
-class CommunityPlaylistAbortDelete(View):
+class CommunityVideolistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
