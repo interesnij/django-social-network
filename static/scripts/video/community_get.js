@@ -15,6 +15,12 @@ on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   clear_attach_block();
 })
 
+on('#ajax', 'click', '.с_video_list_create_window', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/community_progs/create_list/" + pk + "/", loader)
+});
+
 on('#ajax', 'click', '.c_video_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
