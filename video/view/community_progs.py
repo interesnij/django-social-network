@@ -273,7 +273,7 @@ class CommunityVideoInListCreate(View):
             return HttpResponseBadRequest()
 
 
-class CommunityVideoListCreate(TemplateView):
+class CommunityVideolistEdit(TemplateView):
     """
     изменение списка видео пользователя
     """
