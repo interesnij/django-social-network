@@ -175,7 +175,7 @@ class CommunityAlbumPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityAlbumPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["community"] = self.community
+        context["community"] = self.album.community
         context["album"] = self.album
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
