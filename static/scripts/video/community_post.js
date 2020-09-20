@@ -258,6 +258,13 @@ on('#ajax', 'click', '.c_video_list_recover', function() {
     ajax_link.send();
 });
 
+on('#ajax', 'click', '.c_video_create_window', function(e) {
+  e.preventDefault();
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/community/create_video_window/" + pk + "/", loader);
+});
+
 on('#ajax', 'click', '#c_create_video_list_btn', function() {
   this.disabled = true;
   form = document.body.querySelector("#c_video_list_create");
