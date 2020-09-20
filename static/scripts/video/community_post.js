@@ -258,9 +258,9 @@ on('#ajax', 'click', '.c_video_list_recover', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '#u_create_video_list_btn', function() {
+on('#ajax', 'click', '#c_create_video_list_btn', function() {
   this.disabled = true;
-  form = document.body.querySelector("#u_video_list_create");
+  form = document.body.querySelector("#c_video_list_create");
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
