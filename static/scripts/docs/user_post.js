@@ -242,7 +242,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
 });
 
 
-on('#ajax', 'click', '#u_edit_doc_list_btn', function() {
+on('#ajax', 'click', '#u_edit_doclist_btn', function() {
   form = document.body.querySelector("#u_edit_doc_list_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
