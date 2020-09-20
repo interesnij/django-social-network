@@ -215,7 +215,7 @@ class CommunityVideoListCreate(View):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
-            return render(request, 'c_video_list/my_list.html',{'album': new_album, 'community': community})
+            return render(request, 'c_video_list/admin_list.html',{'album': new_album, 'community': community})
         else:
             return HttpResponseBadRequest()
 
