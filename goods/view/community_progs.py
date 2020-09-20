@@ -295,7 +295,7 @@ class CommunityGoodAlbumEdit(TemplateView):
         self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.form = GoodAlbumForm(request.POST,instance=self.album)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
             album = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
