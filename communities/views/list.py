@@ -218,7 +218,7 @@ class CommunityGoodsList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		if self.user == request.user:
+		if self.user == request.user.is_staff_of_community_with_name(self.community.name):
 			self.goods_list = self.album.get_staff_goods()
 		else:
 			self.goods_list = self.album.get_goods()
