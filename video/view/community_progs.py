@@ -214,6 +214,7 @@ class CommunityVideoListCreate(View):
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
+            new_album.community = community
             new_album.save()
             return render(request, 'c_video_list/admin_list.html',{'album': new_album, 'community': community})
         else:
