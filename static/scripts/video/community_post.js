@@ -262,7 +262,7 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community/create_video_window/" + pk + "/", loader);
+  open_fullscreen("/video/community_progs/create_video/" + pk + "/", loader);
 });
 
 on('#ajax', 'click', '#c_create_video_list_btn', function() {

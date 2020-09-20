@@ -99,14 +99,14 @@ on('#ajax', 'click', '.u_video_create_window', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
+  open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
 });
 
 on('#ajax', 'click', '.user_video_create_attach', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_attach_window/" + pk + "/", loader);
+  open_fullscreen("/video/user_progs/create_video_attach/" + pk + "/", loader);
   var list = loader.querySelectorAll('select');
   var count = list.length;
   for(i=0; i<count; i++) {
