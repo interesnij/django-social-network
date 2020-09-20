@@ -91,6 +91,9 @@ class VideoAlbum(models.Model):
     def get_9_videos(self):
         return self.video_album.filter(is_deleted=False)[:9]
 
+    def is_not_empty(self):
+        return self.video_album.filter(album=self).values("pk").exists()
+
 
 class Video(models.Model):
     image = ProcessedImageField(format='JPEG',

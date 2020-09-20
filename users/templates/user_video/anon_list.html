@@ -21,7 +21,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">Мои видеоролики</p>
+                    <p class="">Видеоролики
+                    <a href="{% url 'user' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
+                      {{ user.get_full_name_genitive }}
+                    </a>
+                    </p>
                   </div>
                 </div>
               </div>

@@ -21,7 +21,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">Мои видеоролики</p>
+                    <p class="">Видеоролики
+                    <a href="{% url 'user' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
+                      {{ user.get_full_name_genitive }}
+                    </a>
+                    </p>
                   </div>
                   <span class='u_ucm_video_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
                     <svg fill='currentColor' class='svg_default' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
