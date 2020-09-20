@@ -10,7 +10,7 @@ from users.models import User
 from django.views.generic import ListView
 from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
-from common.template.video import get_permission_user_video
+from common.template.video import get_permission_user_video, get_template_user_video
 from django.http import Http404
 from common.template.user import get_settings_template
 

@@ -9,7 +9,7 @@ from video.forms import AlbumForm, VideoForm, CommentForm
 from django.shortcuts import render
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
-from common.template.video import get_permission_community_video
+from common.template.video import get_permission_community_video, get_template_community_video
 from django.http import Http404
 
 
@@ -311,7 +311,7 @@ class CommunityVideolistEdit(TemplateView):
         self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.form = AlbumForm(request.POST,instance=self.list)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name): 
+        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
