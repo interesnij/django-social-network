@@ -91,8 +91,8 @@ class GoodAlbum(models.Model):
     def get_staff_goods(self):
         return self.good_album.filter(is_deleted=False)
 
-	def is_not_empty(self):
-        return self.good_album.filter(album=self).values("pk").exists()
+    def is_not_empty(self):
+		return self.good_album.filter(album=self).values("pk").exists()
 
 
 class Good(models.Model):
