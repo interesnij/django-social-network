@@ -16,6 +16,14 @@ on('#ajax', 'click', '.c_goods_list_create_window', function() {
   open_fullscreen("/goods/community_progs/add_album/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '.c_good_list_edit_window', function() {
+  body = document.body.querySelector(".pk_saver");
+  pk = body.getAttribute("data-pk");
+  uuid = body.getAttribute("data-uuid");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/goods/community_progs/edit_album_window/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.c_ucm_good_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   good_pk = container.getAttribute('good-pk');

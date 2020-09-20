@@ -3,7 +3,6 @@ from video.view.community_progs import *
 
 
 urlpatterns = [
-    url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
     url(r'^create_video_attach/(?P<pk>\d+)/$', CommunityVideoAttachCreate.as_view()),
     url(r'^create_video_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoInListCreate.as_view()),
 
@@ -21,4 +20,9 @@ urlpatterns = [
     url(r'^reply-comment/$', VideoReplyCommunityCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityAbortDelete.as_view()),
+
+    url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
+    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistAbortDelete.as_view()),
 ]

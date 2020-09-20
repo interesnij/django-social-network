@@ -131,3 +131,56 @@ class UserDocCreate(View):
             return render(request, 'doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
+
+
+class UserDoclistEdit(TemplateView):
+    """
+    изменение списка документов пользователя
+    """
+    template_name = None
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("doc_create/u_edit_list.html", request)
+        return super(UserDoclistEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserDoclistEdit,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        context["list"] = DocList.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = DoclistForm(request.POST,instance=self.list)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(UserDoclistEdit,self).get(request,*args,**kwargs)
+
+class UserDoclistDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == DocList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class UserDoclistAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user:
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404

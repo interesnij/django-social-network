@@ -241,3 +241,61 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
 
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '#c_edit_doc_list_btn', function() {
+  form = document.body.querySelector("#c_edit_doc_list_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/docs/community_progs/edit_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        name = form.querySelector('#id_name').value;
+        document.body.querySelector(".list_name").innerHTML = name;
+        document.querySelector(".create_fullscreen").style.display = "none";
+        document.getElementById("create_loader").innerHTML="";
+        toast_success("Список документов изменен")
+      }
+    }
+    ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.c_doc_list_delete', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/docs/community_progs/delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/communities/" + pk + "/doc_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});
+
+on('#ajax', 'click', '.c_doc_list_recover', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/docs/community_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/communities/" + pk + "/doc_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});

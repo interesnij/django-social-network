@@ -8,6 +8,10 @@ urlpatterns = [
     url(r'^create_doc_window/(?P<pk>\d+)/$', UserCreateDocWindow.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', UserDoclistCreate.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistDelete.as_view()),
+    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistAbortDelete.as_view()),
+
     url(r'^create_doc/(?P<pk>\d+)/$', UserDocCreate.as_view()),
 
     url(r'^u_add_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(UserDocAdd.as_view())),

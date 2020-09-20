@@ -394,3 +394,61 @@ on('#ajax', 'click', '#u_create_good_list_btn', function() {
   } else { null }
   post_and_load_object_page(form, "/goods/user_progs/add_album/", "/users/", "/goods_list/")
 });
+
+on('#ajax', 'click', '#u_edit_good_album_btn', function() {
+  form = document.body.querySelector("#u_edit_good_list_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/goods/user_progs/edit_album/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        name = form.querySelector('#id_title').value;
+        document.body.querySelector(".list_name").innerHTML = name;
+        document.querySelector(".create_fullscreen").style.display = "none";
+        document.getElementById("create_loader").innerHTML="";
+        toast_success("Список товаров изменен")
+      }
+    }
+    ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.u_good_album_delete', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/goods/user_progs/delete_album/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/users/" + pk + "/goods_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});
+
+on('#ajax', 'click', '.u_good_album_recover', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/goods/user_progs/abort_delete_album/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/users/" + pk + "/goods_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});

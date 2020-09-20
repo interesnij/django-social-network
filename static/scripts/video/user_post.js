@@ -291,3 +291,61 @@ on('#ajax', 'click', '#u_create_video_list_btn', function() {
   post_and_load_object_page(form, "/video/user_progs/create_list/", "/users/", "/video_list/")
 
 });
+
+on('#ajax', 'click', '#u_edit_video_list_btn', function() {
+  form = document.body.querySelector("#u_edit_video_list_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+
+  pk = form.getAttribute("data-pk");
+  uuid = form.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/video/user_progs/edit_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        name = form.querySelector('#id_title').value;
+        document.body.querySelector(".list_name").innerHTML = name;
+        document.querySelector(".create_fullscreen").style.display = "none";
+        document.getElementById("create_loader").innerHTML="";
+        toast_success("Список видео изменен")
+      }
+    }
+    ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.u_doc_list_delete', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/video/user_progs/delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/users/" + pk + "/video_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});
+
+on('#ajax', 'click', '.u_video_list_recover', function() {
+  saver = document.querySelector(".pk_saver");
+  pk = saver.getAttribute("data-pk");
+  uuid = saver.getAttribute("data-uuid");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/video/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this_page_reload("/users/" + pk + "/video_list/" + uuid)
+      }
+    }
+    ajax_link.send();
+});

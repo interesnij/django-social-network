@@ -22,4 +22,7 @@ urlpatterns=[
 	url(r'^add_attach/(?P<pk>\d+)/$', GoodCommunityCreateAttach.as_view()),
 
     url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumCommunityCreate.as_view()),
+    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumEdit.as_view()),
+    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumDelete.as_view()),
+    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumAbortDelete.as_view()),
 ]

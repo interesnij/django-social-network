@@ -8,6 +8,10 @@ urlpatterns = [
     url(r'^create_doc_window/(?P<pk>\d+)/$', CommunityCreateDocWindow.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', CommunityDoclistCreate.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistDelete.as_view()),
+    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistAbortDelete.as_view()),
+
     url(r'^create_doc/(?P<pk>\d+)/$', CommunityDocCreate.as_view()),
 
     url(r'^c_add_doc/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityDocAdd.as_view())),

@@ -12,6 +12,14 @@ on('#ajax', 'click', '.u_doc_create_window', function(e) {
   open_fullscreen("/docs/user_progs/create_doc_window/" + pk + "/", loader);
 });
 
+on('#ajax', 'click', '.u_doc_list_edit_window', function() {
+  body = document.body.querySelector(".pk_saver");
+  pk = body.getAttribute("data-pk");
+  uuid = body.getAttribute("data-uuid");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/docs/user_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   doc_pk = parent.getAttribute("doc-pk");

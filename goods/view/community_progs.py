@@ -271,3 +271,56 @@ class GoodAlbumCommunityCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
+
+
+class CommunityGoodAlbumEdit(TemplateView):
+    """
+    изменение списка товаров пользователя
+    """
+    template_name = None
+    form = None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_manage_template(folder="good_base/", template="c_edit_album.html", request=request)
+        return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityGoodAlbumEdit,self).get_context_data(**kwargs)
+        context["community"] = self.community
+        context["album"] = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.form = GoodAlbumForm(request.POST,instance=self.album)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            album = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
+
+class CommunityGoodAlbumDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name) and album.type == GoodAlbum.ALBUM:
+            album.is_deleted = True
+            album.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityGoodAlbumAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+            album.is_deleted = False
+            album.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404

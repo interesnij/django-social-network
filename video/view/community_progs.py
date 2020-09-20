@@ -271,3 +271,56 @@ class CommunityVideoInListCreate(View):
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
+
+
+class CommunityVideoListCreate(TemplateView):
+    """
+    изменение списка видео пользователя
+    """
+    template_name = None
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_manage_template(folder="community_create/", template="c_edit_list.html", request=request)
+        return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityVideolistEdit,self).get_context_data(**kwargs)
+        context["community"] = self.community
+        context["list"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.form = AlbumForm(request.POST,instance=self.list)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
+
+class CommunityPlaylistDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name) and list.type == VideoAlbum.ALBUM:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityPlaylistAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404

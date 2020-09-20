@@ -22,6 +22,9 @@ urlpatterns=[
 	url(r'^add_attach/(?P<pk>\d+)/$', GoodUserCreateAttach.as_view()),
 
     url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumUserCreate.as_view()),
+    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumEdit.as_view()),
+    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumDelete.as_view()),
+    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumAbortDelete.as_view()),
 
     url(r'^get_album_preview/(?P<pk>\d+)/$', UserGoodAlbumPreview.as_view()),
 ]

@@ -278,3 +278,56 @@ class UserVideoAlbumPreview(TemplateView):
 		context = super(UserVideoAlbumPreview,self).get_context_data(**kwargs)
 		context["album"] = self.album
 		return context
+
+
+class UserVideolistEdit(TemplateView):
+    """
+    изменение списка видео пользователя
+    """
+    template_name = None
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("user_create/u_edit_list.html", request)
+        return super(UserVideolistEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideolistEdit,self).get_context_data(**kwargs)
+        context["user"] = self.user
+        context["list"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.form = AlbumForm(request.POST,instance=self.list)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(UserVideolistEdit,self).get(request,*args,**kwargs)
+
+class UserVideolistDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == VideoAlbum.ALBUM:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class UserVideolistAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user:
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
+            return HttpResponse()
+        else:
+            raise Http404
