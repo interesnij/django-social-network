@@ -6,6 +6,7 @@
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
     <div class="row">
       <div class="col-md-8 mt-3">
+        {% if not album.is_deleted %}
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -53,6 +54,9 @@
               </div>
             </div>
         </div>
+        {% else %}
+          {% include 'c_goods/deleted.html' %}
+        {% endif %}
         </div>
         <div class="col-12 col-md-4">
           {% include 'c_goods/sidebar.html' %}
