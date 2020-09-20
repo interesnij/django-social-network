@@ -199,7 +199,7 @@ class CommunityOffPrivateVideo(View):
         else:
             raise Http404
 
-class CommunityVideoListCreate(View):
+class CommunityVideoListCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
@@ -226,7 +226,7 @@ class CommunityVideoListCreate(View):
             return HttpResponseBadRequest()
 
 
-class CommunityVideoAttachCreate(View):
+class CommunityVideoAttachCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
@@ -255,7 +255,7 @@ class CommunityVideoAttachCreate(View):
             return HttpResponseBadRequest()
 
 
-class CommunityVideoCreate(View):
+class CommunityVideoCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):

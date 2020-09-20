@@ -197,7 +197,7 @@ class VideoWallCommentUserDelete(View):
         else:
             raise Http404
 
-class UserVideoListCreate(View):
+class UserVideoListCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
@@ -223,7 +223,7 @@ class UserVideoListCreate(View):
             return HttpResponseBadRequest()
 
 
-class UserVideoAttachCreate(View):
+class UserVideoAttachCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
@@ -251,8 +251,9 @@ class UserVideoAttachCreate(View):
             return HttpResponseBadRequest()
 
 
-class UserVideoCreate(View):
+class UserVideoCreate(TemplateView):
     form_post = None
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
