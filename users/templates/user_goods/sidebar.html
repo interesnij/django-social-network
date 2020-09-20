@@ -21,8 +21,8 @@
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
-      <h6 style="margin-bottom:15px">Плейлисты</h6>
-      {% for object in user.get_all_good_albums %}
+      <h6 style="margin-bottom:15px">Списки</h6>
+      {% for object in user.get_good_albums %}
         <a class="ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">
           {{ object.title }}
         </a>
