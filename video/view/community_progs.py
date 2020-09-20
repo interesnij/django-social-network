@@ -283,7 +283,7 @@ class CommunityVideolistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="community_create/", template="c_edit_list.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="community_create/", template="edit_list.html", request=request)
         return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
