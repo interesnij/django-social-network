@@ -17,7 +17,7 @@ on('#ajax', 'click', '.c_doc_list_edit_window', function() {
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/docs/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_ucm_doc_repost', function() {

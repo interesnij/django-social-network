@@ -21,7 +21,7 @@ on('#ajax', 'click', '.c_good_list_edit_window', function() {
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/goods/community_progs/edit_album_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/goods/community_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_ucm_good_repost', function() {

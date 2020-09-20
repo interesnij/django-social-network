@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_video_list_edit_window', function() {
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/video/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#video_loader', 'click', '.u_all_video_likes', function() {

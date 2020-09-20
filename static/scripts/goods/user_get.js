@@ -28,7 +28,7 @@ on('#ajax', 'click', '.u_good_album_edit_window', function() {
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/goods/user_progs/edit_album_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/goods/user_progs/edit_album/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_goods_list_create_window', function() {
