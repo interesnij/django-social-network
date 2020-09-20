@@ -58,7 +58,7 @@
       <h6 style="margin-bottom:15px">Альбомы</h6>
       {% for object in user.get_my_video_albums %}
         <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
-          {{ object.name }}
+          {{ object.title }}
         </a>
       {% endfor %}
     </div>
