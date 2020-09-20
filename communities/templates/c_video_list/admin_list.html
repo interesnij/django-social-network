@@ -21,7 +21,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">{{ community.name }} - {{ album.title }}</p>
+                    <p class="">
+                      <span class="c_video_list_edit_window pointer">изменить</span>
+                        &nbsp;
+                      <span class="c_video_list_delete pointer">удалить</span>
+                    </p>
                   </div>
                   {% if album.is_not_empty %}
                     <span title="Поделиться" class="c_ucm_video_list_repost btn_default pointer" style="margin-top: 14px;width:25px">

@@ -23,9 +23,9 @@
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_docs }})</h6>
                     <p class="">
-                      <a href="{% url 'community_docs' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
-                        {{ community.name }} - Документы
-                      </a>
+                      <span class="c_doc_list_edit_window pointer">изменить</span>
+                        &nbsp;
+                      <span class="c_doc_list_delete pointer">удалить</span>
                     </p>
                   </div>
                   {% if list.is_not_empty %}

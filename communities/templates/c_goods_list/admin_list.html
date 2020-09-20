@@ -25,9 +25,9 @@
                 <div class="media-body" style="margin-left: 10px;">
                   <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
                   <p class="">
-                    <a href="{% url 'community_goods' pk=community.pk %}" class="ajax" style="text-decoration:underline;">
-                      Товары - {{ community.name }}
-                    </a>
+                    <span class="c_good_list_edit_window pointer">изменить</span>
+                      &nbsp;
+                    <span class="c_good_list_delete pointer">удалить</span>
                   </p>
                 </div>
                 {% if album.is_not_empty %}
