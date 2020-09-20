@@ -51,16 +51,19 @@
                       </li>
                       {% endfor %}
                       {% else %}
-                      <div class="card centered">
-                        <div class="card-body" style="margin-top: 10%;">
-                        <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                        </div>
-                        <h6 style="margin: 20px;text-align: center;">В списке пока нет документов.</h6>
-                      </div>
+                        {% include 'c_docs/deleted.html' %}
                       {% endif %}
                     </ul>
               </div>
           </div>
+          {% else %}
+          <div class="card centered">
+            <div class="card-body" style="margin-top: 10%;">
+            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">В списке нет музыки. <a href="{% url 'all_music' %}" style="text-decoration:underline;" class="ajax">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
+          </div>
+          {% endif %}
         </div>
         <div class="col-12 col-md-4">
           {% include 'c_docs/sidebar.html' %}

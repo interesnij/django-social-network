@@ -73,6 +73,9 @@
                     </ul>
               </div>
           </div>
+          {% else %}
+            {% include 'c_docs/deleted.html' %}
+          {% endif %}
         </div>
         <div class="col-12 col-md-4">
           {% include 'c_docs/sidebar.html' %}
