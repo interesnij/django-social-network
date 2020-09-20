@@ -1,4 +1,13 @@
-
+on('#ajax', 'click', '#c_create_good_list_btn', function() {
+  this.disabled = true;
+  form = document.body.querySelector("#c_good_list_create");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/goods/community_progs/add_album/", "/communities/", "/goods_list/")
+});
 
 on('#ajax', 'click', '#c_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
