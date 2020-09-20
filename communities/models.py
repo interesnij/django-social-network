@@ -366,7 +366,7 @@ class Community(models.Model):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
-    def community_music_playlist_exists(self):
+    def is_music_playlist_exists(self):
         return self.community_playlist.filter(community_id=self.id, type="LI", is_deleted=False).exists()
 
     def get_audio_playlists(self):
@@ -409,7 +409,7 @@ class Community(models.Model):
         docs_list = Doc2.objects.filter(docs_query, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list
 
-    def community_docs_list_exists(self):
+    def is_docs_list_exists(self):
         return self.community_doclist.filter(community_id=self.id, type="LI", is_deleted=False).exists()
 
     def get_docs_lists(self):
@@ -428,6 +428,23 @@ class Community(models.Model):
             return video_list[0:2]
         except:
             return None
+
+    def is_video_album_exists(self):
+        return self.video_album_community.filter(community_id=self.id, type="AL", is_private=True).exists()
+    def is_my_video_album_exists(self):
+        return self.video_album_community.filter(community_id=self.id, type="AL", is_private=True).exists()
+    def get_my_video_albums(self):
+        from video.models import VideoAlbum
+
+        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False)
+        lists = DocList.objects.filter(lists_query)
+        return lists
+    def get_my_video_albums(self):
+        from video.models import VideoAlbum
+
+        lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False, is_public=True)
+        lists = DocList.objects.filter(lists_query)
+        return lists
 
     def get_manage_template(self, folder, template, request):
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.name):
