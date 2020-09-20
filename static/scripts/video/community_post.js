@@ -236,7 +236,7 @@ on('#ajax', 'click', '.c_doc_list_delete', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid + "/")
+        this_page_reload("/communties/" + pk + "/video_list/" + uuid + "/")
       }
     }
     ajax_link.send();
@@ -252,8 +252,19 @@ on('#ajax', 'click', '.c_video_list_recover', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communtiies/" + pk + "/video_list/" + uuid + "/")
+        this_page_reload("/communties/" + pk + "/video_list/" + uuid + "/")
       }
     }
     ajax_link.send();
+});
+
+on('#ajax', 'click', '#u_create_video_list_btn', function() {
+  this.disabled = true;
+  form = document.body.querySelector("#u_video_list_create");
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { null }
+  post_and_load_object_page(form, "/video/community_progs/create_list/", "/communties/", "/video_list/")
+
 });
