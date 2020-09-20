@@ -373,7 +373,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
   document.getElementById("create_loader").innerHTML="";
 });
 
-on('#ajax', 'click', '.create_video_attach_btn', function() {
+on('#ajax', 'click', '.u_create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
   user_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -440,7 +440,7 @@ on('#ajax', 'click', '.doc_load_several', function() {
     doc_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     doc_post_attach(_this, document.body.querySelector(".attach_block"))
-  } 
+  }
   this.classList.add("active_svg");
 });
 

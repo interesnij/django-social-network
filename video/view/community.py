@@ -66,41 +66,73 @@ class CommunityVideoDetail(TemplateView):
         return context
 
 
-class CommunityCreateVideoAttachWindow(TemplateView):
+class CommunityPostVideoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="community_create/", template="create_video_attach.html", request=request)
+        from posts.models import Post
 
-        return super(CommunityCreateVideoAttachWindow,self).get(request,*args,**kwargs)
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.video_list = self.post.get_attach_videos()
+
+        self.template_name = get_template_community_video(self.community, "c_album_list/", "list.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityCreateVideoAttachWindow,self).get_context_data(**kwargs)
-        context['form_post'] = VideoForm()
+        context = super(CommunityPostVideoList,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['object_list'] = self.video_list
         return context
 
-class CommunityCreateListWindow(TemplateView):
+class CommunityPostCommentVideoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="community_create/", template="create_list.html", request=request)
-        return super(CommunityCreateListWindow,self).get(request,*args,**kwargs)
+        from posts.models import PostComment
 
+        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
+        self.community = community.objects.get(pk=self.kwargs["pk"])
+        self.video_list = self.comment.get_attach_videos()
 
-class CommunityCreateVideoListWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_manage_template(folder="community_create/", template="create_list_video.html", request=request)
-        return super(CommunityCreateVideoListWindow,self).get(request,*args,**kwargs)
+        self.template_name = get_template_community_video(self.community, "u_album_list/", "list.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserCreateVideoListWindow,self).get_context_data(**kwargs)
+        context = super(CommunityPostCommentVideoList,self).get_context_data(**kwargs)
         context['community'] = self.community
-        context['album'] = self.album
-        context['form_post'] = VideoForm({'album': self.album})
+        context['object_list'] = self.video_list
+        return context
+
+
+class CommunityVideoInfo(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from stst.models import VideoNumbers
+
+        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
+        self.community = community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_authenticated:
+            try:
+                VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
+            except:
+                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
+                else:
+                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
+
+        self.template_name = get_template_community_video(self.community, "c_video_info/", "video.html", request.user)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
+        return super(CommunityVideoInfo,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityVideoInfo,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['object'] = self.video
         return context

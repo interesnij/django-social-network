@@ -200,6 +200,11 @@ class VideoWallCommentUserDelete(View):
 class UserVideoListCreate(View):
     form_post = None
 
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_manage_template(folder="user_create/", template="create_list.html", request=request)
+        return super(UserVideoListCreate,self).get(request,*args,**kwargs)
+
     def get_context_data(self,**kwargs):
         context = super(UserVideoListCreate,self).get_context_data(**kwargs)
         context["form_post"] = AlbumForm()
@@ -220,6 +225,11 @@ class UserVideoListCreate(View):
 
 class UserVideoAttachCreate(View):
     form_post = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("user_create/create_video_attach.html", request)
+        return super(UserVideoAttachCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoAttachCreate,self).get_context_data(**kwargs)
@@ -243,6 +253,11 @@ class UserVideoAttachCreate(View):
 
 class UserVideoCreate(View):
     form_post = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("user_create/create_video.html", request)
+        return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoCreate,self).get_context_data(**kwargs)

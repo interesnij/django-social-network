@@ -202,6 +202,11 @@ class CommunityOffPrivateVideo(View):
 class CommunityVideoListCreate(View):
     form_post = None
 
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_template_community_video(self.community, "community_create/", "create_list.html", request.user)
+        return super(CommunityVideoListCreate,self).get(request,*args,**kwargs)
+
     def get_context_data(self,**kwargs):
         context = super(CommunityVideoListCreate,self).get_context_data(**kwargs)
         context["form_post"] = AlbumForm()
@@ -224,6 +229,11 @@ class CommunityVideoListCreate(View):
 class CommunityVideoAttachCreate(View):
     form_post = None
 
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_template_community_video(self.community, "community_create/", "create_video_attach.html", request.user)
+        return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
+
     def get_context_data(self,**kwargs):
         context = super(CommunityVideoAttachCreate,self).get_context_data(**kwargs)
         context["form_post"] = VideoForm()
@@ -245,11 +255,16 @@ class CommunityVideoAttachCreate(View):
             return HttpResponseBadRequest()
 
 
-class CommunityVideoInListCreate(View):
+class CommunityVideoCreate(View):
     form_post = None
 
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_template_community_video(self.community, "community_create/", "create_video.html", request.user)
+        return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
+
     def get_context_data(self,**kwargs):
-        context = super(CommunityVideoInListCreate,self).get_context_data(**kwargs)
+        context = super(CommunityVideoCreate,self).get_context_data(**kwargs)
         context["form_post"] = VideoForm()
         context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         return context
