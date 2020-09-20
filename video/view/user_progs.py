@@ -199,10 +199,11 @@ class VideoWallCommentUserDelete(View):
 
 class UserVideoListCreate(TemplateView):
     form_post = None
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="user_create/", template="create_list.html", request=request)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_template_user_video(self.user, "user_create/", "create_list.html", request.user)
         return super(UserVideoListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -211,11 +212,11 @@ class UserVideoListCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = AlbumForm(request.POST)
-        user = User.objects.get(pk=self.kwargs["pk"])
+        self.form_post = AlbumForm(request.POST)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
-            new_album = form_post.save(commit=False)
+        if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
+            new_album = self.form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
             return render(request, 'user_video_list/my_list.html',{'album': new_album, 'user': request.user})
@@ -225,10 +226,11 @@ class UserVideoListCreate(TemplateView):
 
 class UserVideoAttachCreate(TemplateView):
     form_post = None
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("user_create/create_video_attach.html", request)
+        self.template_name = get_template_user_video(self.user, "user_create/", "create_video_attach.html", request.user)
         return super(UserVideoAttachCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -237,12 +239,12 @@ class UserVideoAttachCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = VideoForm(request.POST, request.FILES)
-        user = User.objects.get(pk=self.kwargs["pk"])
+        self.form_post = VideoForm(request.POST, request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
-            my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
-            new_video = form_post.save(commit=False)
+        if request.is_ajax() and form_post.is_valid() and request.user == self.user:
+            self.my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
+            new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
             my_list.video_album.add(new_video)
@@ -257,7 +259,7 @@ class UserVideoCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("user_create/create_video.html", request)
+        self.template_name = get_template_user_video(self.user, "user_create/", "create_video.html", request.user)
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -266,10 +268,10 @@ class UserVideoCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = VideoForm(request.POST, request.FILES)
-        user = User.objects.get(pk=self.kwargs["pk"])
+        self.form_post = VideoForm(request.POST, request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid() and request.user == self.user:
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")

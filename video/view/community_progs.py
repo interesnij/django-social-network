@@ -213,10 +213,10 @@ class CommunityVideoListCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = AlbumForm(request.POST)
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form_post = AlbumForm(request.POST)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.community = community
@@ -240,13 +240,13 @@ class CommunityVideoAttachCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = VideoForm(request.POST, request.FILES)
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form_post = VideoForm(request.POST, request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
 
             my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=community, type=VideoAlbum.MAIN)
-            new_video = form_post.save(commit=False)
+            new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
             my_list.video_album.add(new_video)
@@ -270,11 +270,11 @@ class CommunityVideoCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = VideoForm(request.POST, request.FILES)
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form_post = VideoForm(request.POST, request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            new_video = form_post.save(commit=False)
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
+            new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             albums = form_post.cleaned_data.get("album")
             new_video.save()
@@ -291,7 +291,7 @@ class CommunityVideoCreate(TemplateView):
 
 class CommunityVideolistEdit(TemplateView):
     """
-    изменение списка видео пользователя
+    изменение списка видео сообщества
     """
     template_name = None
     form=None
@@ -311,7 +311,7 @@ class CommunityVideolistEdit(TemplateView):
         self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.form = AlbumForm(request.POST,instance=self.list)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name): 
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
