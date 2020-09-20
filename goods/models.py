@@ -92,7 +92,7 @@ class GoodAlbum(models.Model):
         return self.good_album.filter(is_deleted=False)
 
     def is_not_empty(self):
-		return self.good_album.filter(album=self).values("pk").exists()
+	    return self.good_album.filter(album=self).values("pk").exists()
 
 
 class Good(models.Model):
