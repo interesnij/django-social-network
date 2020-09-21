@@ -1,12 +1,12 @@
 on('#ajax', 'click', '.c_all_good_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
   good_pk = container.getAttribute('good-pk');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_community_like/" + pk + "/" + good_pk + "/", loader)
 });
 on('#ajax', 'click', '.c_all_good_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = container.getAttribute('good-pk');
   good_pk = container.getAttribute('good-pk');
   loader = document.getElementById("votes_loader");
