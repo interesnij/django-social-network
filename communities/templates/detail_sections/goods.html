@@ -1,5 +1,5 @@
 
-{% if community_goods %}
+{% if community.get_last_goods %}
 <div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
@@ -11,7 +11,7 @@
       </div>
     </a>
   </div>
-    {% for object in community_goods %}
+    {% for object in community.get_last_goods %}
     <div class="col-md-4 c_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer">
             <div class="">
                 <div class="row align-items-center no-gutters">
