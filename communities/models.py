@@ -287,11 +287,11 @@ class Community(models.Model):
         return album.uuid
 
     def is_good_album_exists(self):
-        return self.good_album_community.filter(community_id=self.id, type="AL").exists()
+        return self.good_album_community.filter(community_id=self.id, type="AL", is_deleted=False).exists()
     def get_good_albums(self):
         from goods.models import GoodAlbum
 
-        albums_query = Q(community_id=self.id, is_deleted=False)
+        albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
