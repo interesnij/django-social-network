@@ -288,7 +288,7 @@ class Community(models.Model):
 
     def is_good_album_exists(self):
         return self.good_album_community.filter(community_id=self.id, type="AL").exists()
-    def get_all_good_albums(self):
+    def get_good_albums(self):
         from goods.models import GoodAlbum
 
         albums_query = Q(community_id=self.id, is_deleted=False)
