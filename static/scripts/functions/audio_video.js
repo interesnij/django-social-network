@@ -484,7 +484,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
       if (!document.body.classList.contains("list_" + list_pk) && list_pk){
         save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", track_id)
       }else{
-        music_player.loadPlaylist(0);
+        music_player.loadPlaylist(0); 
         if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
         setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
       }
