@@ -70,7 +70,7 @@ class CommunityDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
