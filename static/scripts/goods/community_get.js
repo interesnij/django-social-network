@@ -70,10 +70,10 @@ on('#ajax', 'click', '.c_all_good_reposts', function() {
 
 on('#ajax', 'click', '.c_good_comments', function() {
   clear_comment_dropdown();
-  data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk");
-  good_pk = container.getAttribute('good-pk');
-  url = "/goods/community/comment/" + uuid + "/" + good_pk + "/";
-  list_load(data.querySelector(".c_load_comments"), url);
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
+  good_pk = block.getAttribute("good-pk");
+  url = "/goods/community/comment/" + good_pk + "/" + pk + "/";
+  list_load(block.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });
