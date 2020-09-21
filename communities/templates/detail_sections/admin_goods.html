@@ -10,10 +10,10 @@
       </div>
     </a>
   </div>
-  <div style="display: flex; flex-wrap: wrap;">
+  <div style="display: flex; flex-wrap: wrap;" data-uuid="{{ community.good_album.uuid }}">
     {% for object in community.good_album.get_3_goods %}
     <div class="col-md-4 mb-3">
-            <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ community.good_album.uuid }}">
+            <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}">
                 <div class="row align-items-center no-gutters">
                     <div class="col">
                             <div class="text-center">
