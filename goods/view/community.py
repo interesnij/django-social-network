@@ -42,7 +42,7 @@ class GoodCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_post(self.user, "c_good_comment/", "comments.html", request.user)
+        self.template_name = get_template_community_good(self.community, "c_good_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(GoodCommunityCommentList,self).get(request,*args,**kwargs)
