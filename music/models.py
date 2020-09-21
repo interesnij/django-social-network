@@ -83,7 +83,7 @@ class SoundList(models.Model):
         return self.players.filter(list=self).values("pk").exists()
 
     def playlist_too(self):
-        queryset = self.players.all()
+        queryset = self.players.filter(is_deleted=False).order_by("created_at")
         return queryset
 
     def playlist_30(self):
