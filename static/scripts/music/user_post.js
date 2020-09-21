@@ -183,7 +183,7 @@ on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
   if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
-  }
+  } else {this.disabled = true}
   saver = document.body.querySelector(".pk_saver");
   pk = saver.getAttribute("data-pk");
   uuid = saver.getAttribute("data-uuid");
@@ -208,7 +208,7 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else { null }
+  } else { this.disabled = true }
   post_and_load_object_page(form, "/music/user_progs/create_list/", "/users/", "/music_list/")
 });
 

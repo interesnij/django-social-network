@@ -169,7 +169,7 @@ on('#ajax', 'click', '#u_create_doc_list_btn', function() {
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else { null }
+  } else { this.disabled = true }
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

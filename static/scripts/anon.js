@@ -40,7 +40,7 @@ on('body', 'click', '#register_ajax', function() {
   }else if (!document.body.querySelector("#password2").value){
     document.body.querySelector("#password2").style.border = "1px #FF0000 solid";
     toast_error("Введите пароль еще раз!")
-  }
+  } else {this.disabled = true}
   form_data = new FormData(document.querySelector("#signup"));
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'POST', "/rest-auth/registration/", true );
@@ -57,6 +57,7 @@ on('body', 'click', '#logg', function() {
   else if (!document.body.querySelector("#id_password").value){
     document.body.querySelector("#id_password").style.border = "1px #FF0000 solid";
     toast_error("Введите пароль!")}
+  else {this.disabled = true}
   if (document.body.querySelector("#id_username").value){document.body.querySelector("#id_username").style.border = "rgba(0, 0, 0, 0.2)";}
   if (document.body.querySelector("#id_password").value){document.body.querySelector("#id_password").style.border = "rgba(0, 0, 0, 0.2)";}
 

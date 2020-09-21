@@ -206,7 +206,7 @@ on('#ajax', 'click', '#add_good_user_btn', function() {
     form_post.querySelector("#id_album").style.border = "1px #FF0000 solid";
     toast_error("Выберите альбом!");
     return
-  }
+  } else {this.disabled = true}
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/user_progs/add/" + pk + "/", true );
@@ -391,7 +391,7 @@ on('#ajax', 'click', '#u_create_good_list_btn', function() {
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else { null }
+  } else { this.disabled = true }
   post_and_load_object_page(form, "/goods/user_progs/add_album/", "/users/", "/goods_list/")
 });
 

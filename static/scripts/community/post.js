@@ -6,7 +6,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
   } else if (!form.querySelector("#sub_category").value){
     form.querySelector("#sub_category").style.border = "1px #FF0000 solid";
     toast_error("Тематика - обязательное поле!")
-  } else {toast_info("Сообщество создано!")};
+  } else {this.disabled = true};
 
   	form_data = new FormData(form);
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
