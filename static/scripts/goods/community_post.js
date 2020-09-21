@@ -107,7 +107,7 @@ on('#ajax', 'click', '.c_good_dislike', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
   good_pk = block.getAttribute("good-pk");
-  send_dislike(good, "/goods/votes/community_dislike/" + good_pk + "/" + pk + "/");
+  send_dislike(block, "/goods/votes/community_dislike/" + good_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_dislikes");
 });
 on('#ajax', 'click', '.c_good_like2', function() {
