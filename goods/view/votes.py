@@ -230,7 +230,7 @@ class GoodCommunityDislikeCreate(View):
 
 class GoodCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
+        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"]) 
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
