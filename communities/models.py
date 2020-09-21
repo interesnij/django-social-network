@@ -294,6 +294,12 @@ class Community(models.Model):
         albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
+    def get_all_good_albums(self):
+        from goods.models import GoodAlbum
+
+        albums_query = Q(community_id=self.id, is_deleted=False)
+        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
+        return albums
 
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
