@@ -299,8 +299,8 @@ class Community(models.Model):
         from goods.models import Good
 
         goods_query = Q(album__in=self.get_all_good_albums(), is_deleted=False, status=Good.STATUS_PUBLISHED)
-        goods_list = Good.objects.filter(goods_query)[0:3]
-        return goods_list
+        goods_list = Good.objects.filter(goods_query)
+        return goods_list[0:3]
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
