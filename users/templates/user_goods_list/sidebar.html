@@ -1,6 +1,6 @@
 <div class="card mb-3 mt-3">
     <div class="card-body">
-      <a href="{% url 'user' pk=user.pk %}" class="ajax">
+      <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
         <div class="media">
             <figure style="width:50px;">
               {% if user.get_avatar %}
@@ -11,7 +11,7 @@
             </figure>
           <div class="media-body">
               <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-              <p class="small">Страница пользователя</p>
+              <p class="small">Товары</p>
           </div>
         </div>
       </a>

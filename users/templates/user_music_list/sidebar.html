@@ -1,6 +1,6 @@
 <div class="card mb-3 mt-3">
     <div class="card-body">
-      <a href="{% url 'user' pk=user.pk %}" class="ajax">
+      <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
         <div class="media">
             <figure style="width:50px;">
               {% if user.get_avatar %}
@@ -11,20 +11,20 @@
             </figure>
           <div class="media-body">
               <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-              <p class="small">Страница пользователя</p>
+              <p class="small">Музыка</p>
           </div>
         </div>
       </a>
     </div>
 </div>
-{% if user.is_good_album_exists %}
+{% if user.is_music_playlist_exists %}
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
-      <h6 style="margin-bottom:15px">Списки</h6>
-      {% for object in user.get_good_albums %}
-        <a class="ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">
-          {{ object.title }}
+      <h6 style="margin-bottom:15px">Плейлисты</h6>
+      {% for object in user.get_audio_playlists %}
+        <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
+          {{ object.name }}
         </a>
       {% endfor %}
     </div>

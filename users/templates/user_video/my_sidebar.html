@@ -11,7 +11,7 @@
             </figure>
           <div class="media-body">
               <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-              <p class="small">Видеозаписи</p>
+              <p class="small">Страница пользователя</p>
           </div>
         </div>
       </a>
@@ -56,7 +56,7 @@
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
       <h6 style="margin-bottom:15px">Альбомы</h6>
-      {% for object in user.get_my_video_albums %} 
+      {% for object in user.get_my_video_albums %}
         <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
           {{ object.title }}
         </a>
