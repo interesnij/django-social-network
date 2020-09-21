@@ -226,7 +226,7 @@ on('#ajax', 'click', '#c_edit_video_list_btn', function() {
     ajax_link.send(form_data);
 });
 
-on('#ajax', 'click', '.c_doc_list_delete', function() {
+on('#ajax', 'click', '.c_video_list_delete', function() {
   saver = document.querySelector(".pk_saver");
   pk = saver.getAttribute("data-pk");
   uuid = saver.getAttribute("data-uuid");
