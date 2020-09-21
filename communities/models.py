@@ -298,8 +298,8 @@ class Community(models.Model):
     def get_last_goods(self):
         from goods.models import Good
 
-        goods_query = Q(album__in=self.get_all_good_albums())
-        goods_list = Good.objects.filter(goods_query, is_deleted=False, status=Good.STATUS_PUBLISHED)[0:3]
+        goods_query = Q(album__in=self.get_all_good_albums(), is_deleted=False, status=Good.STATUS_PUBLISHED)
+        goods_list = Good.objects.filter(goods_query)[0:3]
         return goods_list
 
     def get_all_good_albums(self):
