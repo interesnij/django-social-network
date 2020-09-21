@@ -1070,12 +1070,8 @@ class User(AbstractUser):
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.ALBUM)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
-    def get_last_goods(self):
-        from goods.models import Good
-
-        goods_query = Q(album__in=self.get_good_albums())
-        goods_list = Good.objects.filter(goods_query, is_deleted=False, status=Good.STATUS_PUBLISHED)[0:3]
-        return goods_list
+    def good_album(self):
+        return self.good_album_creator.filter(creator_id=self.id, type="MA")[0]
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
