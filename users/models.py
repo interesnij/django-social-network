@@ -1071,7 +1071,7 @@ class User(AbstractUser):
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
     def good_album(self):
-        return self.good_album_creator.filter(creator_id=self.id, type="MA")[0]
+        return self.good_album_creator.filter(creator_id=self.id, community=None, type="MA")[0]
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
