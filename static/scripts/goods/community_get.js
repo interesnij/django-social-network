@@ -50,17 +50,19 @@ on('#ajax', 'click', '.c_good_detail', function() {
   open_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', loader);
   setTimeout(function() {good_gallery(loader)}, 1000)
 });
-on('#ajax', 'click', '.c_all_good_comment_likes', function() {
+on('#ajax', 'click', '.c_all_good_comment_likes', function() {12
   container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
+  comment_pk = container.getAttribute('comment-pk');
+  pk = container.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/goods/window/all_community_comment_like/" + pk + "/", loader)
+  open_fullscreen("/goods/window/all_community_comment_like/" + pk + "/" + comment_pk + "/", loader)
 });
 on('#ajax', 'click', '.c_all_good_comment_dislikes', function() {
   container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
+  comment_pk = container.getAttribute('comment-pk');
+  pk = container.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/goods/window/all_community_comment_dislike/" + pk + "/", loader)
+  open_fullscreen("/goods/window/all_community_comment_dislike/" + pk + "/" + comment_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_all_good_reposts', function() {
