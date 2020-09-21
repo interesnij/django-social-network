@@ -202,7 +202,7 @@ class GoodCommunityCreate(TemplateView):
         self.form = GoodForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
-            albums = form_post.cleaned_data.get("album")
+            albums = self.form.cleaned_data.get("album")
             new_good.creator = request.user
             new_good = self.form.save()
             for _album in albums:
@@ -235,10 +235,12 @@ class GoodCommunityCreateAttach(TemplateView):
         self.form = GoodForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
+            albums = self.form.cleaned_data.get("album")
             new_good.creator = request.user
             new_good = self.form.save()
-            html = render(request, 'c_good/good.html',{'object': new_good})
-            return HttpResponse()
+            for _album in albums:
+                _album.good_album.add(new_good)
+            return render(request,'c_good/good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
 
