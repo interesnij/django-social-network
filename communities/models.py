@@ -300,7 +300,7 @@ class Community(models.Model):
 
         albums = self.get_all_good_albums()
 
-        goods_query = Q(album__in=albums, is_deleted=False, status=Good.STATUS_PUBLISHED)
+        goods_query = Q(album__in=albums)
         goods_list = Good.objects.filter(goods_query)[0:3]
         return goods_list
 
