@@ -9,7 +9,7 @@
           {{ user.good_album.count_goods }}
       </div>
     </a>
-  </div>{{ good_album.title }}
+  </div>{{ user.good_album.title }}
   <div style="display: flex; flex-wrap: wrap;">
     {% for object in user.good_album.get_3_goods %}
     <div class="col-md-4 mb-3">
