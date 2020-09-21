@@ -1040,7 +1040,7 @@ class User(AbstractUser):
         from video.models import VideoAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type="AL")
-        albums = VideoAlbum.objects.filter(albums_query)
+        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_all_video_albums(self):
