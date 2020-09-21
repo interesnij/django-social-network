@@ -12,6 +12,7 @@ from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
 from django.http import Http404
+from common.processing.good import get_good_processing, get_good_offer_processing
 
 
 class GoodCommentCommunityCreate(View):
@@ -205,6 +206,7 @@ class GoodCommunityCreate(TemplateView):
             albums = self.form.cleaned_data.get("album")
             new_good.creator = request.user
             new_good = self.form.save()
+            get_good_processing(new_good)
             for _album in albums:
                 _album.good_album.add(new_good)
             return render(request,'good_base/c_new_good.html',{'object': new_good})
