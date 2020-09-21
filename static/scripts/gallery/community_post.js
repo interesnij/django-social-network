@@ -190,10 +190,12 @@ on('#ajax', 'click', '.c_photo_edit', function() {
 on('#ajax', 'click', '.c_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form.querySelector(".c_photo_description_form"));
-  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  data_display = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = data_display.getAttribute("data-uuid");
+  pk = data_display.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/description/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/description/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

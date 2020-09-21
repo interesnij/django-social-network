@@ -204,8 +204,9 @@ class CommunityPhotoDescription(View):
 
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
-        if request.is_ajax() and form_image.is_valid() and request.user.is_administrator_of_community_with_name(photo.community.name):
+        if request.is_ajax() and form_image.is_valid() and request.user.is_administrator_of_community_with_name(community.name):
             form_image.save()
             return HttpResponse(form_image.cleaned_data["description"])
         else:
@@ -215,7 +216,8 @@ class CommunityPhotoDescription(View):
 class CommunityPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.is_deleted = True
             photo.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -225,7 +227,8 @@ class CommunityPhotoDelete(View):
 class CommunityPhotoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.is_deleted = False
             photo.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -236,7 +239,8 @@ class CommunityPhotoAbortDelete(View):
 class CommunityOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -246,7 +250,8 @@ class CommunityOpenCommentPhoto(View):
 class CommunityCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -256,7 +261,8 @@ class CommunityCloseCommentPhoto(View):
 class CommunityOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.votes_on = False
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -266,7 +272,8 @@ class CommunityOffVotesPhoto(View):
 class CommunityOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -276,7 +283,8 @@ class CommunityOnVotesPhoto(View):
 class CommunityOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.is_public = False
             photo.save(update_fields=['is_public'])
             return HttpResponse()
@@ -308,7 +316,8 @@ class PhotoWallCommentCommunityAbortDelete(View):
 class CommunityOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(photo.community.name):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community_with_name(community.name):
             photo.is_public = True
             photo.save(update_fields=['is_public'])
             return HttpResponse()
