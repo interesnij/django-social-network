@@ -207,7 +207,7 @@ class GoodCommunityCreate(TemplateView):
             new_good = self.form.save()
             for _album in albums:
                 _album.good_album.add(new_good)
-            return render(request,'c_good/good.html',{'object': new_good})
+            return render(request,'good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
 

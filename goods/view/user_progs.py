@@ -200,7 +200,7 @@ class GoodUserCreate(TemplateView):
             get_good_processing(new_good)
             for _album in albums:
                 _album.good_album.add(new_good)
-            return render(request, 'u_good/good.html',{'object': new_good})
+            return render(request, 'good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
 
