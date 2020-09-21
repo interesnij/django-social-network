@@ -97,17 +97,17 @@ on('#ajax', 'click', '.community_good_abort_remove', function() {
 })
 
 on('#ajax', 'click', '.c_good_like', function() {
-  good = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
-  send_like(good, "/goods/votes/community_like/" + uuid + "/" + pk + "/");
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
+  good_pk = block.getAttribute("good-pk");
+  send_like(block, "/goods/votes/community_like/" + good_pk + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_likes");
 });
 on('#ajax', 'click', '.c_good_dislike', function() {
-  good = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
-  send_dislike(good, "/goods/votes/community_dislike/" + uuid + "/" + pk + "/");
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
+  good_pk = block.getAttribute("good-pk");
+  send_dislike(good, "/goods/votes/community_dislike/" + good_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_dislikes");
 });
 on('#ajax', 'click', '.c_good_like2', function() {
@@ -117,7 +117,7 @@ on('#ajax', 'click', '.c_good_like2', function() {
   good.getAttribute('data-pk') ? pk = good.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   send_like(good, "/goods/votes/community_comment/" + comment_pk + "/" + pk + "/like/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_comment_likes")
-}); 
+});
 on('#ajax', 'click', '.c_good_dislike2', function() {
   _this = this;
   good = _this.parentElement;

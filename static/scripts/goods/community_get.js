@@ -1,14 +1,16 @@
 on('#ajax', 'click', '.c_all_good_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('good-pk');
+  pk = container.getAttribute('data-pk');
+  good_pk = container.getAttribute('good-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/goods/window/all_community_like/" + pk + "/", loader)
+  open_fullscreen("/goods/window/all_community_like/" + pk + "/" + good_pk + "/", loader)
 });
 on('#ajax', 'click', '.c_all_good_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = container.getAttribute('good-pk');
+  good_pk = container.getAttribute('good-pk');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/goods/window/all_community_dislike/" + pk + "/", loader)
+  open_fullscreen("/goods/window/all_community_dislike/" + pk + "/" + good_pk + "/", loader)
 });
 on('#ajax', 'click', '.c_goods_list_create_window', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
