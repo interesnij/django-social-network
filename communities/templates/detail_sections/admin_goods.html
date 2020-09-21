@@ -1,4 +1,4 @@
-{% if community.good_album %}
+{% if community.good_album.is_not_empty %}
 <div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">

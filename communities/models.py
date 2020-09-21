@@ -296,7 +296,7 @@ class Community(models.Model):
         return albums
 
     def good_album(self):
-        return self.good_album_community.filter(community_id=self.id, type="MA")
+        return self.good_album_community.filter(community_id=self.id, type="MA")[0]
 
     def get_last_goods(self):
         from goods.models import Good
