@@ -114,14 +114,16 @@ on('#ajax', 'click', '.c_good_like2', function() {
   _this = this;
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
-  send_like(good, "/goods/votes/community_comment/" + comment_pk + "/like/");
+  good.getAttribute('data-pk') ? pk = good.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  send_like(good, "/goods/votes/community_comment/" + comment_pk + "/" + pk + "/like/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_comment_likes")
-});
+}); 
 on('#ajax', 'click', '.c_good_dislike2', function() {
   _this = this;
   good = _this.parentElement;
   comment_pk = good.getAttribute("data-pk");
-  send_dislike(good, "/goods/votes/community_comment/" + comment_pk + "/" + "/dislike/");
+  good.getAttribute('data-pk') ? pk = good.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  send_dislike(good, "/goods/votes/community_comment/" + comment_pk + "/" + pk + "/dislike/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_comment_dislikes")
 });
 
