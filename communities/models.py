@@ -295,6 +295,9 @@ class Community(models.Model):
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
+    def good_album(self):
+        return self.good_album_community.filter(community_id=self.id, type="MA")
+
     def get_last_goods(self):
         from goods.models import Good
 

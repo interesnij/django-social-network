@@ -1,4 +1,4 @@
-{% if community.get_last_goods %}
+{% if community.good_album.is_not_empty %}
 <div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
@@ -6,14 +6,14 @@
           <div class="media-body">
               <h4 class="content-color-primary mb-0">Товары</h4>
           </div>
-          {{ community.count_goods }}
+          {{ community.good_album.count_goods }}
       </div>
     </a>
   </div>
   <div style="display: flex; flex-wrap: wrap;">
-    {% for object in community.get_last_goods %}
+    {% for object in community.good_album.get_3_goods %}
     <div class="col-md-4 mb-3">
-            <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ object.get_album_uuid }}">
+            <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ community.good_album.uuid }}">
                 <div class="row align-items-center no-gutters">
                     <div class="col">
                             <div class="text-center">

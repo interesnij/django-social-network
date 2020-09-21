@@ -78,6 +78,8 @@ class GoodAlbum(models.Model):
 
     def get_2_goods(self):
         return self.good_album.filter(is_deleted=False)[:2]
+	def get_3_goods(self):
+        return self.good_album.filter(is_deleted=False)[:3]
 
     def count_goods(self):
         try:
