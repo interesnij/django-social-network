@@ -13,7 +13,7 @@ class GoodUserLikeWindow(TemplateView):
     template_name="good_votes/u_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
         self.template_name = get_permission_user_good(self.good.creator, "good_votes/", "page.html", request.user)
@@ -32,7 +32,7 @@ class GoodUserDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
         self.template_name = get_permission_user_good(self.good.creator, "good_votes/", "page.html", request.user)
@@ -87,7 +87,7 @@ class GoodCommunityLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
@@ -107,7 +107,7 @@ class GoodCommunityDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
@@ -256,7 +256,7 @@ class AllGoodCommunityLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
@@ -280,7 +280,7 @@ class AllGoodCommunityDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
             raise PermissionDenied("Ошибка доступа")
@@ -351,7 +351,7 @@ class AllGoodCommunityRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "all_good_votes/", "page.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -373,7 +373,7 @@ class AllGoodUserRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(uuid=self.kwargs["good_pk"])
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.template_name = get_permission_user_good(self.good.creator, "all_good_votes/", "page.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
