@@ -294,6 +294,7 @@ class Community(models.Model):
         albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
+        
     def get_last_goods(self):
         from goods.models import Good
 
@@ -307,13 +308,6 @@ class Community(models.Model):
         albums_query = Q(community_id=self.id, is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
-
-    def get_last_goods(self):
-        from goods.models import Good
-
-        goods_query = Q(album__in=self.get_good_albums())
-        goods_list = Good.objects.filter(goods_query, is_deleted=False)[0:3]
-        return goods_list
 
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
