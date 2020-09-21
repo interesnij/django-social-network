@@ -294,11 +294,11 @@ class Community(models.Model):
         albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
-        
+
     def get_last_goods(self):
         from goods.models import Good
 
-        goods_query = Q(album__in=self.get_good_albums())
+        goods_query = Q(album__in=self.get_all_good_albums())
         goods_list = Good.objects.filter(goods_query, is_deleted=False, status=Good.STATUS_PUBLISHED)[0:3]
         return goods_list
 
