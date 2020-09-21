@@ -1009,7 +1009,7 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query)
+        albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_my_albums(self):
@@ -1017,14 +1017,14 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query)
+        albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_video_albums(self):
         from video.models import VideoAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        albums = VideoAlbum.objects.filter(albums_query)
+        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def my_user_video_album_exists(self):
@@ -1047,35 +1047,35 @@ class User(AbstractUser):
         from video.models import VideoAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        albums = VideoAlbum.objects.filter(albums_query)
+        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
         playlists_query = Q(creator_id=self.id, community=None, type=SoundList.LIST, is_deleted=False)
-        playlists = SoundList.objects.filter(playlists_query)
+        playlists = SoundList.objects.filter(playlists_query).order_by("order")
         return playlists
 
     def get_all_audio_playlists(self):
         from music.models import SoundList
 
         playlists_query = Q(creator_id=self.id, community=None, is_deleted=False)
-        playlists = SoundList.objects.filter(playlists_query)
+        playlists = SoundList.objects.filter(playlists_query).order_by("order")
         return playlists
 
     def get_good_albums(self):
         from goods.models import GoodAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.ALBUM)
-        albums = GoodAlbum.objects.filter(albums_query)
+        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        albums = GoodAlbum.objects.filter(albums_query)
+        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_music(self):
@@ -1201,14 +1201,14 @@ class User(AbstractUser):
         from docs.models import DocList
 
         lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST, is_deleted=False)
-        lists = DocList.objects.filter(lists_query)
+        lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_all_docs_lists(self):
         from docs.models import DocList
 
         lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
-        lists = DocList.objects.filter(lists_query)
+        lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_followers(self):

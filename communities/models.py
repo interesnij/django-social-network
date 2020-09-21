@@ -251,7 +251,7 @@ class Community(models.Model):
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query)
+        albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
     def get_admin_albums(self):
@@ -259,7 +259,7 @@ class Community(models.Model):
 
         albums_query = Q(community=self, is_deleted=False)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query)
+        albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
     def is_album_exists(self):
@@ -273,15 +273,6 @@ class Community(models.Model):
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
-
-    def get_admin_albums(self):
-        from gallery.models import Album
-
-        albums_query = Q(is_deleted=False, community=None)
-        exclude_main = ~Q(type=Album.MAIN)
-        albums_query.add(~Q(exclude_main), Q.AND)
-        albums = Album.objects.filter(albums_query)
-        return albums
 
     def get_avatar_uuid(self):
         from gallery.models import Album
@@ -301,7 +292,7 @@ class Community(models.Model):
         from goods.models import GoodAlbum
 
         albums_query = Q(community_id=self.id, is_deleted=False)
-        albums = GoodAlbum.objects.filter(albums_query)
+        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
     def create_s_avatar(self, photo_input):
@@ -373,7 +364,7 @@ class Community(models.Model):
         from music.models import SoundList
 
         playlists_query = Q(community_id=self.id, type=SoundList.LIST, is_deleted=False)
-        playlists = SoundList.objects.filter(playlists_query)
+        playlists = SoundList.objects.filter(playlists_query).order_by("order")
         return playlists
 
     def get_docs(self):
@@ -388,7 +379,7 @@ class Community(models.Model):
         from docs.models import DocList
 
         lists_query = Q(community_id=self.id, is_deleted=False)
-        lists = DocList.objects.filter(lists_query)
+        lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_docs_count(self):
@@ -398,9 +389,6 @@ class Community(models.Model):
         docs_query = Q(list=list, is_deleted=False)
         docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
         return docs_list.count()
-
-    def get_docs_lists(self):
-        return self.community_doclist.filter(is_deleted=False).exclude(is_public=False)
 
     def get_last_docs(self):
         from docs.models import Doc2
@@ -416,7 +404,7 @@ class Community(models.Model):
         from docs.models import DocList
 
         lists_query = Q(community_id=self.id, type=DocList.LIST, is_deleted=False)
-        lists = DocList.objects.filter(lists_query)
+        lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_last_video(self):
@@ -437,13 +425,13 @@ class Community(models.Model):
         from video.models import VideoAlbum
 
         lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False, is_public=True)
-        lists = VideoAlbum.objects.filter(lists_query)
+        lists = VideoAlbum.objects.filter(lists_query).order_by("order")
         return lists
-    def get_my_video_albums(self):
+    def get_admin_video_albums(self):
         from video.models import VideoAlbum
 
         lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False)
-        lists = VideoAlbum.objects.filter(lists_query)
+        lists = VideoAlbum.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_manage_template(self, folder, template, request):
