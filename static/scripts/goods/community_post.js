@@ -1,6 +1,6 @@
 
 
-on('#ajax', 'click', '#c_good_add_attach', function() {
+on('#ajax', 'click', '.c_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen('/goods/community_progs/add_attach/' + pk + '/', loader);
@@ -46,7 +46,7 @@ on('#ajax', 'click', '.c_good_comment_abort_remove', function() {
 });
 
 
-on('#ajax', 'click', '#c_good_add', function() {
+on('#ajax', 'click', '.c_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
   open_fullscreen('/goods/community_progs/add/' + pk + '/', loader)
