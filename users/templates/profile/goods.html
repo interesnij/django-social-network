@@ -1,7 +1,7 @@
 {% if user.good_album.is_not_empty %}
 <div class="card mt-3">
   <div class="card-header">
-    <a href="{% url 'user_goods' pk=community.pk %}" class="ajax">
+    <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
       <div class="media">
           <div class="media-body">
               <h4 class="content-color-primary mb-0">Товары</h4>
