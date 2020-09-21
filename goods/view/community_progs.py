@@ -20,7 +20,7 @@ class GoodCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        good = Good.objects.get(pk=request.POST.get["good_pk"])
+        good = Good.objects.get(pk=request.POST.get("good_pk"))
         if not request.is_ajax() and not self.good.comments_enabled:
             raise Http404
         if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
