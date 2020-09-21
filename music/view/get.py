@@ -43,7 +43,7 @@ class ListMusicGet(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(ListMusicGet,self).get_context_data(**kwargs)
-        context["list"] = self.list.playlist_too().order_by('-created_at')[0:50]
+        context["list"] = self.list.playlist_too()[0:50]
         return context
 
 
