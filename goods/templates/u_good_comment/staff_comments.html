@@ -23,7 +23,7 @@
 <div>
   <form>
       {% csrf_token %}
-      <input type="hidden" name="uuid" value="{{ parent.uuid }}">
+      <input type="hidden" name="good_pk" value="{{ object.pk }}">
       <input type="hidden" name="pk" value="{{ user.pk }}">
 
       <div class="row img_block" style="margin-top: 10px"></div>
