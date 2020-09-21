@@ -180,8 +180,8 @@ on('#ajax', 'click', '#u_good_add_attach', function() {
   open_fullscreen('/goods/user_progs/add_attach/' + pk + '/', loader);
 });
 
-on('#ajax', 'click', '#add_good_user_btn', function() {
-  form_post = document.body.querySelector("#add_good_user_form");
+on('#ajax', 'click', '#u_add_good_btn', function() {
+  form_post = document.body.querySelector("#u_add_good_form");
   form_data = new FormData(form_post);
 
   lists = form_post.querySelector("#id_album");

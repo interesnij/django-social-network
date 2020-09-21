@@ -125,7 +125,7 @@ on('#ajax', 'click', '.c_good_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_comment_dislikes")
 });
 
-on('#ajax', 'click', '#add_good_community_btn', function() {
+on('#ajax', 'click', '#c_add_good_btn', function() {
   if (!document.body.querySelector("#id_title").value){
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
@@ -141,7 +141,7 @@ on('#ajax', 'click', '#add_good_community_btn', function() {
   } else {this.disabled = true}
 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_post = document.body.querySelector("#add_good_community_form");
+  form_post = document.body.querySelector("#c_add_good_form");
   form_data = new FormData(form_post);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/community_progs/add/" + pk + "/", true );
