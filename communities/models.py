@@ -419,7 +419,7 @@ class Community(models.Model):
 
     def is_video_album_exists(self):
         return self.video_album_community.filter(community_id=self.id, type="AL", is_public=True).exists()
-    def is_my_video_album_exists(self):
+    def is_admin_video_album_exists(self):
         return self.video_album_community.filter(community_id=self.id, type="AL").exists()
     def get_video_albums(self):
         from video.models import VideoAlbum

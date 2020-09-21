@@ -51,12 +51,12 @@
       </div>
     </div>
 </div>
-{% if community.is_my_video_album_exists %}
-<div class="card">  
+{% if community.is_admin_video_album_exists %}
+<div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
       <h6 style="margin-bottom:15px">Альбомы</h6>
-      {% for object in community.get_my_video_albums %}
+      {% for object in community.get_admin_video_albums %}
         <a class="ajax" href="{% url 'community_video_list' pk=community.pk uuid=object.uuid %}">
           {{ object.title }}
         </a>
