@@ -1,6 +1,6 @@
 <div class="card mb-3 mt-3">
     <div class="card-body">
-        <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
+        <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
             <div class="media">
                 <figure style="width:50px;">
                     {% if community.get_avatar %}
@@ -14,21 +14,33 @@
                 </figure>
                 <div class="media-body">
                     <h6 class="my-0 mt-1">{{ community.name }}</h6>
-                    <p class="small">Страница сообщества</p>
+                    <p class="small">Музыка</p>
                 </div>
             </div>
         </a>
     </div>
 </div>
-{% if community.is_docs_list_exists %}
+<div class="card mb-2">
+    <div class="card-header">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'all_music' %}" class="ajax">Каталог музыки</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+
+{% if community.is_music_playlist_exists %}
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
-      <h6 style="margin-bottom:15px">Списки</h6>
-      {% for object in community.get_docs_lists %}
-      <a class="ajax" href="{% url 'community_docs_list' pk=community.pk uuid=object.uuid %}">
+      <h6 style="margin-bottom:15px">Плейлисты</h6>
+      {% for object in community.get_audio_playlists %}
+        <a class="ajax" href="{% url 'community_music_list' pk=community.pk uuid=object.uuid %}">
           {{ object.name }}
-      </a>
+        </a>
       {% endfor %}
     </div>
   </div>

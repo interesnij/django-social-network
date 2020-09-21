@@ -1,6 +1,6 @@
 <div class="card mb-3 mt-3">
     <div class="card-body">
-      <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
+      <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
         <div class="media">
             <figure style="width:50px;">
               {% if community.get_avatar %}
@@ -11,7 +11,7 @@
             </figure>
           <div class="media-body">
               <h6 class="my-0 mt-1">{{ community.name }}</h6>
-              <p class="small">Страница сообщества</p>
+              <p class="small">Видеозаписи</p>
           </div>
         </div>
       </a>
