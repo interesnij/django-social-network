@@ -11,21 +11,38 @@
     </a>
   </div>
     {% for object in community.get_last_goods %}
-    <div class="col-md-4 c_good_detail" good-uuid="{{ object.uuid }}" style="cursor:pointer">
-            <div class="">
+    <div class="col-md-4">
+            <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ album.uuid }}">
                 <div class="row align-items-center no-gutters">
                     <div class="col">
                             <div class="text-center">
                               {% if object.image %}
-                                <img class="svg_default image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                <img class="image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
                               {% else %}
-                                <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                <img class="lazyload image_fit_200" data-src="/static/images/no_img/album.jpg" />
                               {% endif %}
                             </div>
                     </div>
                 </div>
                 <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
                 <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+                <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
+                      <div class="col py-3">
+                          <h5 class="content-color-primary mb-0">
+                            {% if object.price %}
+                            {{ object.price }} ₽
+                            {% else %}
+                            Без цены
+                            {% endif %}
+                          </h5>
+                      </div>
+                      <div class="col py-3">
+                          <h5 class="content-color-primary mb-0">
+                            <svg fill="currentColor" style="padding-bottom: 3px;" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                             {{ object.visits_count }}
+                           </h5>
+                      </div>
+                  </div>
             </div>
     </div>
     {% endfor %}
