@@ -20,11 +20,43 @@
 
         {{ reply.text|linebreaks }}
 
-        {% include 'generic/attach/u_photo_reply.html' %}
+        <div class="row" data-pk="{{ reply.pk }}">
+          {% for object in reply.good_comment_photo.all %}
+          <div class="col-md-6">
+              <img data-uuid="{{ object.uuid }}" photo-pk="{{ reply.commenter.pk }}" class="u_wall_image image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
+          </div>
+          {% endfor %}
+          {% for object in reply.good_comment_video.all %}
+          <div class="col-md-6" album-pk="{{ object.album.pk }}">
+              <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
+              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter0 }}"></div>
+          </div>
+          {% endfor %}
+          {% for object in reply.good_comment_music.all %}
+          <div class="col-md-12">
+            <div class="media" data-path="{{ object.uri }}" data-duration="{{ object.duration }}" music-counter="{{ forloop.counter0 }}">
+                <figure style="cursor:pointer">
+                  <a class="music_list_comment">
+                    {% if object.artwork_url %}
+                      <img style="width:30px;heigth:auto" data-src="{{ object.artwork_url }}" class="lazyload" alt="img" />
+                    {% else %}
+                      <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                    {% endif %}
+                  </a>
+                </figure>
+                <div class="media-body" style="display: flex;">
+                    <h6 class="music_list_comment music_title">
+                      <a>{{ object.title }}</a>
+                    </h6>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
 
         <div class="">
             <div class="row">
-                <div class="col">
+                <div class="col" data-pk="{{ reply.pk }}">
                   <span class="like like2 btn_default" style="cursor:pointer" title="Нравится">
                         <svg class="svg_s_info" fill="currentColor"viewBox="0 0 24 24">
                           <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
