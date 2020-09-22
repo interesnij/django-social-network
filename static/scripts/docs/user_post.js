@@ -128,7 +128,7 @@ on('#ajax', 'click', '.u_add_doc_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("doc-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/docs/user_progs/u_add_doc_in_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -148,7 +148,7 @@ on('#ajax', 'click', '.u_remove_doc_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("doc-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/docs/user_progs/u_remove_doc_in_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
