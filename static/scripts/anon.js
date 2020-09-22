@@ -1,3 +1,23 @@
+function get_video_dop(){
+  styles = document.querySelectorAll(".my_color_settings");
+  style= styles[styles.length- 1];
+  settings = [];
+  if (style.href.indexOf("white") != -1
+      || style.href.indexOf("orange") != -1
+      || style.href.indexOf("grey") != -1
+      || style.href.indexOf("brown") != -1
+      || style.href.indexOf("teal") != -1
+      || style.href.indexOf("skyblue") != -1
+      || style.href.indexOf("blue") != -1
+      || style.href.indexOf("purple") != -1
+      || style.href.indexOf("red") != -1){
+    settings += ["images/video_white",'#eeeeee','#FFFFFF']
+  }else if (style.href.indexOf("dark-grey") != -1){
+    settings += ["images/video_dark",'#000000','#000000']
+  }
+  return settings.split(',')
+}
+
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
@@ -227,6 +247,7 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
+}
 
 class ToastManager{constructor(){this.id=0;this.toasts=[];this.icons={'SUCCESS':"",'ERROR':'','INFO':'','WARNING':'',};var body=document.querySelector('#ajax');this.toastsContainer=document.createElement('div');this.toastsContainer.classList.add('toasts','border-0');body.appendChild(this.toastsContainer)}showSuccess(message){return this._showToast(message,'SUCCESS')}showError(message){return this._showToast(message,'ERROR')}showInfo(message){return this._showToast(message,'INFO')}showWarning(message){return this._showToast(message,'WARNING')}_showToast(message,toastType){var newId=this.id+1;var newToast=document.createElement('div');newToast.style.display='inline-block';newToast.classList.add(toastType.toLowerCase());newToast.classList.add('toast');newToast.innerHTML=`<progress max="100"value="0"></progress><h3>${message}</h3>`;var newToastObject={id:newId,message,type:toastType,timeout:4000,progressElement:newToast.querySelector('progress'),counter:0,timer:setInterval(()=>{newToastObject.counter+=1000/newToastObject.timeout;newToastObject.progressElement.value=newToastObject.counter.toString();if(newToastObject.counter>=100){newToast.style.display='none';clearInterval(newToastObject.timer);this.toasts=this.toasts.filter((toast)=>{return toast.id===newToastObject.id})}},10)};newToast.addEventListener('click',()=>{newToast.style.display='none';clearInterval(newToastObject.timer);this.toasts=this.toasts.filter((toast)=>{return toast.id===newToastObject.id})});this.toasts.push(newToastObject);this.toastsContainer.appendChild(newToast);return this.id++}}function toast_success(text){var toasts=new ToastManager();toasts.showSuccess(text)}function toast_error(text){var toasts=new ToastManager();toasts.showError(text)}function toast_info(text){var toasts=new ToastManager();toasts.showInfo(text)}function toast_warning(text){var toasts=new ToastManager();toasts.showWarning(text)}
 
