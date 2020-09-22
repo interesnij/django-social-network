@@ -1,5 +1,10 @@
 
 <div id="lenta_container">
+
+  {% if object %}
+    {% include 'lenta/fixed_post.html' %}
+  {% endif %}
+
     <div class="stream-update">
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>

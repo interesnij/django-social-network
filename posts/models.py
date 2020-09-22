@@ -447,7 +447,7 @@ class Post(models.Model):
     def get_fixed_for_user(self, user_id):
         try:
             item = Post.objects.get(creator_id=user_id, is_fixed=True, community=None)
-            item.is_fixed = False
+            item.is_fixed = False 
             item.save(update_fields=['is_fixed'])
             new_fixed = Post.objects.get(pk=self.pk)
             new_fixed.is_fixed = True
