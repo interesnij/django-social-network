@@ -106,9 +106,9 @@ class CommunityDetail(TemplateView):
         context["common_friends"] = self.common_friends
         context['photo_album'] = self.community.get_or_create_photo_album()
         context['video_album'] = self.community.get_or_create_video_album()
-        context['music_list'] = self.community.get_or_create_playlist().playlist_6()
-        context['docs_list'] = self.community.get_or_create_doc_list().list_6()
-        context['last_goods'] = self.community.get_or_create_good_album().get_3_goods()
+        context['music_list'] = self.community.get_or_create_playlist()
+        context['docs_list'] = self.community.get_or_create_doc_list()
+        context['good_album'] = self.community.get_or_create_good_album()
         return context
 
 
