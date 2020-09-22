@@ -1,6 +1,6 @@
 
 {% if video_album.get_2_videos %}
-<div class="card mb-3" data-uuid="{{ video_album.uuid }}">
+<div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
         <div class="media">
@@ -12,11 +12,11 @@
       </a>
     </div>
     <div class="card-body p-1">
-        <div class="row no-gutters">
+        <div class="row no-gutters" data-uuid="{{ video_album.uuid }}">
           {% for object in video_album.get_2_videos %}
             <div style="position:relative">
               <img class="lazyload image_fit_small" data-src="{{ object.image.url }}" alt="">
-              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter }}"></div>
+              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter }}" video-pk="{{ object.pk }}"></div>
               <p>{{ object.title }}</p>
             </div>
           {% endfor %}
