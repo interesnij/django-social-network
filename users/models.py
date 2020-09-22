@@ -949,6 +949,7 @@ class User(AbstractUser):
     def get_fixed_post(self):
         try:
             post = Post.objects.get(creator_id=self.pk, is_fixed=True, community=None)
+            return post
         except:
             return None
 
