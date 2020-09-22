@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^c_comment_like_window/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', GoodCommunityCommentLikeWindow.as_view()),
 	url(r'^c_comment_dislike_window/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', GoodCommunityCommentDislikeWindow.as_view()),
 
-	url(r'^all_user_like/(?P<good_pk>\d+)/$', AllGoodUserLikeWindow.as_view()),
-	url(r'^all_user_dislike/(?P<good_pk>\d+)/$', AllGoodUserDislikeWindow.as_view()),
+	url(r'^all_user_like/(?P<pk>\d+)/$', AllGoodUserLikeWindow.as_view()),
+	url(r'^all_user_dislike/(?P<pk>\d+)/$', AllGoodUserDislikeWindow.as_view()),
     url(r'^all_user_comment_like/(?P<comment_pk>\d+)/$', AllGoodUserCommentLikeWindow.as_view()),
 	url(r'^all_user_comment_dislike/(?P<comment_pk>\d+)/$', AllGoodUserCommentDislikeWindow.as_view()),
 	url(r'^all_community_like/(?P<pk>\d+)/(?P<good_pk>\d+)/$', AllGoodCommunityLikeWindow.as_view()),
