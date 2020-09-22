@@ -230,8 +230,9 @@ class Community(models.Model):
         return posts
 
     def get_fixed_post(self):
+        from posts.models import Post
         try:
-            post = Post.objects.get(community=self, is_fixed=True)
+            post = Post.objects.get(community_id=self.pk, is_fixed=True)
             return post
         except:
             return None
