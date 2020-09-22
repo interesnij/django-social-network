@@ -128,12 +128,11 @@ class CommunityPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community=self.community, type=Album.MAIN)
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_photo/photo/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.album.community, "c_photo/photo/", "photo.html", request.user)
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -143,7 +142,7 @@ class CommunityPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["community"] = self.community
+        context["community"] = self.album.community
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
