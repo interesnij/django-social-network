@@ -4,7 +4,7 @@ from posts.models import Post, PostComment
 
 class PostAdmin(admin.ModelAdmin):
     search_fields = ('name',)
-    list_display = ['creator','created', 'is_deleted']
+    list_display = ['creator','created', 'is_fixed', 'is_deleted']
     list_filter = ['is_deleted', 'created',]
 
 
