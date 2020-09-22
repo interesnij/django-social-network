@@ -20,7 +20,7 @@ function close_fullscreen() {
   } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
     document.body.querySelector(".votes_fullscreen").style.display = "none";
     document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
-  } 
+  }
 }
 
 on('body', 'click', '.clean_panel', function(event) {
@@ -63,10 +63,12 @@ on('body', 'click', '.prev_good', function(event) {
 
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
+  event.disabled = true;
   open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
 })
 on('body', 'click', '.prev_photo', function(event) {
   event.preventDefault();
+  event.disabled = true;
   open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
 })
 
