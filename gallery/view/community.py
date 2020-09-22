@@ -163,7 +163,7 @@ class CommunityAlbumPhoto(TemplateView):
             self.template_name = get_permission_community_photo(self.album.community, "c_photo/album_photo/", "photo.html", request.user)
         else:
             raise Http404
-        if request.user.is_administrator_of_community_with_name(self.album.community.name):
+        if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.album.community.name):
             self.photos = self.album.get_staff_photos()
         else:
             self.photos = self.album.get_photos()
