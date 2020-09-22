@@ -1,6 +1,6 @@
 {% if video_album.get_2_videos %}
 
-<div class="card mb-3">
+<div class="card mb-3" data-uuid="{{ video_album.uuid }}">
     <div class="card-header">
       <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
         <div class="media">
