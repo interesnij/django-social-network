@@ -141,7 +141,7 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 on('#ajax', 'click', '.u_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("user-pk");
+  pk = data.getAttribute("data-pk"); 
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/user_progs/comment/" + pk + "/" + uuid + "/";
   list_load(data.querySelector(".u_load_comments"), url);
