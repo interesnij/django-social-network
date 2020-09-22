@@ -681,7 +681,7 @@ function get_date_r(){
   dateInputMask(input)
 }
 
-on('#ajax', 'click', '.anon_color_change', function() {
+on('body', 'click', '.anon_color_change', function() {
   var span = this;
   var color = this.getAttribute('data-color');
   var input = span.querySelector(".custom-control-input");
