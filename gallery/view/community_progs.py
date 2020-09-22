@@ -29,7 +29,7 @@ class PhotoCommunityCreate(View):
                 photo = Photo.objects.create(file=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render(request, 'c_photo/new_photos.html',{'photos': photos, 'community': community})
+            return render(request, 'c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
