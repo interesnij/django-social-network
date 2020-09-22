@@ -232,6 +232,8 @@ function paginate(link, block_id){
 		link_3.send();
 	}
 }
+function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
+
 function scrolled(link, block_id, target){
 	// работа с прокруткой:
 	// 1. Ссылка на страницу с пагинацией
