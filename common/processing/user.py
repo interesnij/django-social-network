@@ -73,24 +73,10 @@ def create_user_models(user):
         UserProfileAnketa.objects.get(user=user)
     except:
         UserProfileAnketa.objects.create(user=user)
-
-    try:
-        SoundList.objects.get(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
-    except:
-        SoundList.objects.create(creator=user, community=None, type=SoundList.MAIN, name="Основной плейлист")
-    try:
-        VideoAlbum.objects.get(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
-    except:
-        VideoAlbum.objects.create(creator=user, community=None, type=VideoAlbum.MAIN, title="Основной список")
-
     try:
         Album.objects.get(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
     except:
         Album.objects.create(creator=user, community=None, type=Album.AVATAR, title="Фото со страницы")
-    try:
-        Album.objects.get(creator=user, community=None, type=Album.MAIN, title="Основной альбом")
-    except:
-        Album.objects.create(creator=user, community=None, type=Album.MAIN, title="Основной альбом")
     try:
         Album.objects.get(creator=user, community=None, type=Album.WALL, title="Фото со стены")
     except:

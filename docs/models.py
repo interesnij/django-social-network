@@ -43,6 +43,9 @@ class DocList(models.Model):
     def list_30(self):
         queryset = self.doc_list.exclude(type=Doc2.PRIVATE)[:30]
         return queryset
+    def list_6(self):
+        queryset = self.doc_list.exclude(type=Doc2.PRIVATE)[:6]
+        return queryset
 
     def count_docs(self):
         return self.doc_list.filter(is_deleted=False).values("pk").count()

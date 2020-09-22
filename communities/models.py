@@ -295,8 +295,41 @@ class Community(models.Model):
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
-    def good_album(self):
-        return self.good_album_community.filter(community_id=self.id, type="MA")[0]
+    def get_or_create_good_album(self):
+        from goods.models import GoodAlbum
+        try:
+            album = GoodAlbum.objects.get(community_id=self.pk, type=GoodAlbum.MAIN)
+        except:
+            album = GoodAlbum.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=GoodAlbum.MAIN, title="Основной альбом")
+        return album
+    def get_or_create_playlist(self):
+        from music.models import SoundList
+        try:
+            playlist = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
+        except:
+            playlist = SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, title="Основной плейлист")
+        return playlist
+    def get_or_create_video_album(self):
+        from video.models import VideoAlbum
+        try:
+            album = VideoAlbum.objects.get(community_id=self.pk, type=VideoAlbum.MAIN)
+        except:
+            album = VideoAlbum.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=VideoAlbum.MAIN, title="Основной альбом")
+        return album
+    def get_or_create_photo_album(self):
+        from video.models import Album
+        try:
+            album = Album.objects.get(community_id=self.pk, type=Album.MAIN)
+        except:
+            album = Album.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=Album.MAIN, title="Основной альбом")
+        return album
+    def get_or_create_doc_list(self):
+        from docs.models import DocList
+        try:
+            list = DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
+        except:
+            list = DocList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=DocList.MAIN, title="Основной список")
+        return list
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
