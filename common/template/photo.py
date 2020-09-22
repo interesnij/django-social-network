@@ -46,7 +46,7 @@ def get_template_community_photo(community, folder, template, request_user):
             if not community.is_verified():
                 template_name = "generic/c_template/anon_no_child_safety.html"
             else:
-                template_name = folder + "anon_public_" + template
+                template_name = folder + "anon_" + template
         elif community.is_closed():
             template_name = "generic/c_template/anon_close_community.html"
         elif community.is_private():

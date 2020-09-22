@@ -89,7 +89,7 @@ class CommunityDetail(TemplateView):
                 if not self.community.is_verified():
                     self.template_name = "c_detail/anon_no_child_safety.html"
                 else:
-                    self.template_name = "c_detail/anon_public_community.html"
+                    self.template_name = "c_detail/anon_community.html"
             elif self.community.is_closed():
                 self.template_name = "c_detail/anon_close_community.html"
             elif self.community.is_private():
