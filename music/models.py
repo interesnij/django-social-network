@@ -186,4 +186,4 @@ class SoundcloudParsing(models.Model):
         verbose_name = "спарсенные треки"
         verbose_name_plural = "спарсенные треки"
         indexes = (BrinIndex(fields=['created_at']),)
-        ordering = ['-pk']
+        ordering = ['-created_at']
