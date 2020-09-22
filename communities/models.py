@@ -307,7 +307,7 @@ class Community(models.Model):
         try:
             playlist = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
         except:
-            playlist = SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, title="Основной плейлист")
+            playlist = SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, name="Основной плейлист")
         return playlist
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
@@ -328,7 +328,7 @@ class Community(models.Model):
         try:
             list = DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
         except:
-            list = DocList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=DocList.MAIN, title="Основной список")
+            list = DocList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=DocList.MAIN, name="Основной список")
         return list
 
     def get_all_good_albums(self):

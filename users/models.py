@@ -1090,7 +1090,7 @@ class User(AbstractUser):
         try:
             playlist = SoundList.objects.get(creator_id=self.pk, community=None, type=SoundList.MAIN)
         except:
-            playlist = SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, title="Основной плейлист")
+            playlist = SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
         return playlist
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
@@ -1111,7 +1111,7 @@ class User(AbstractUser):
         try:
             list = DocList.objects.get(creator_id=self.pk, community=None, type=DocList.MAIN)
         except:
-            list = DocList.objects.create(creator_id=self.pk, community_id=None, type=DocList.MAIN, title="Основной список")
+            list = DocList.objects.create(creator_id=self.pk, community_id=None, type=DocList.MAIN, name="Основной список")
         return list
 
     def get_music(self):
