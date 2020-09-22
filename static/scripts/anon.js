@@ -1,3 +1,11 @@
+function addStyleSheets (href) {
+  $head = document.head,
+  $link = document.createElement('link');
+  $link.rel = 'stylesheet';
+  $link.classList.add("my_color_settings");
+  $link.href = href;
+  $head.appendChild($link);
+}
 function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
@@ -672,3 +680,14 @@ function get_date_r(){
   };
   dateInputMask(input)
 }
+
+on('#ajax', 'click', '.anon_color_change', function() {
+  var span = this;
+  var color = this.getAttribute('data-color');
+  var input = span.querySelector(".custom-control-input");
+    var uncheck=document.getElementsByTagName('input');
+    for(var i=0;i<uncheck.length;i++)
+    {uncheck[i].checked=false;}
+    input.checked = true;
+    addStyleSheets("/static/styles/color/" + color + ".css");
+});
