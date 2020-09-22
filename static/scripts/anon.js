@@ -191,6 +191,9 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
+        if (url == "/"){
+          get_date_r()
+        }
       }
     }
     ajax_link.send();
@@ -353,36 +356,36 @@ loadScripts('/static/scripts/goods/user_get.js')
 loadScripts('/static/scripts/video/community_get.js')
 loadScripts('/static/scripts/video/user_get.js')
 
-ready(() => {
-  try{
-var input = document.querySelectorAll('.js-date')[0];
 
-var dateInputMask = function dateInputMask(elm) {
-  elm.addEventListener('keypress', function(e) {
-    if(e.keyCode < 47 || e.keyCode > 57) {
-      e.preventDefault();
-    }
+function get_date_r(){
+  var input = document.querySelectorAll('.js-date')[0];
 
-    var len = elm.value.length;
-
-    // Если мы находимся в определенном месте, пусть пользователь введет косую черту
-    // i.e., 12/12/1212
-    if(len !== 1 || len !== 3) {
-      if(e.keyCode == 47) {
+  var dateInputMask = function dateInputMask(elm) {
+    elm.addEventListener('keypress', function(e) {
+      if(e.keyCode < 47 || e.keyCode > 57) {
         e.preventDefault();
       }
-    }
 
-    // Если они не добавляют косую черту, сделайте это за них...
-    if(len === 2) {
-      elm.value += '/';
-    }
+      var len = elm.value.length;
 
-    // Если они не добавляют косую черту, сделайте это за них...
-    if(len === 5) {
-      elm.value += '/';
-    }
-  });
-};
-dateInputMask(input)}catch{ null }
-})
+      // Если мы находимся в определенном месте, пусть пользователь введет косую черту
+      // i.e., 12/12/1212
+      if(len !== 1 || len !== 3) {
+        if(e.keyCode == 47) {
+          e.preventDefault();
+        }
+      }
+
+      // Если они не добавляют косую черту, сделайте это за них...
+      if(len === 2) {
+        elm.value += '/';
+      }
+
+      // Если они не добавляют косую черту, сделайте это за них...
+      if(len === 5) {
+        elm.value += '/';
+      }
+    });
+  };
+  dateInputMask(input)
+}
