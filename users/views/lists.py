@@ -177,10 +177,6 @@ class PostListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.fixed = Post.objects.get(creator__id=user.pk, is_fixed=True)
-		except:
-			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			self.template_name = get_permission_user_post(self.user, "lenta/", "list.html", request.user)
@@ -193,8 +189,7 @@ class PostListView(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(PostListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['object'] = self.fixed
-		context['fixed_post'] = self.user.get_fixed_post()
+		context['object'] = self.user.get_fixed_post()
 		return context
 
 	def get_queryset(self):
