@@ -1,23 +1,25 @@
-{% if last_photo %}
-<div class="card mb-3">
+{% if photo_album.get_6_photos %}
+
+<div class="card mb-3" style="">
     <div class="card-header">
       <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Фото </h6>
             </div>
-            {{ user.get_count_photos }}
+            {{ photo_album.get_count_photos }}
         </div>
       </a>
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-          {% for object in last_photo %}
+          {% for object in photo_album.get_6_photos %}
             <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
               <img class="lazyload image_fit_70" data-src="{{ object.file.url }}" alt="">
             </div>
           {% endfor %}
         </div>
+
     </div>
 </div>
 {% else %}

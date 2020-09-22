@@ -1,5 +1,5 @@
 
-{% if last_docs %}
+{% if docs_list.list_6 %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'user_docs' pk=user.pk %}" class="ajax">
@@ -7,12 +7,12 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Документы </h6>
             </div>
-            {{ user.get_docs_count }}
+            {{ docs_list.count_docs }}
         </div>
       </a>
     </div>
 
-    {% for object in last_docs %}
+    {% for object in docs_list.list_6 %}
 
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">

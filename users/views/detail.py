@@ -340,11 +340,11 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.user.get_6_communities()
-        context['last_photo'] = self.user.get_or_create_photo_album().get_6_photos()
-        context['last_video'] = self.user.get_or_create_video_album().get_2_videos()
-        context['last_music'] = self.user.get_or_create_playlist().playlist_6()
-        context['last_docs'] = self.user.get_or_create_doc_list().list_6()
-        context['last_goods'] = self.user.get_or_create_good_album().get_3_goods()
+        context['photo_album'] = self.user.get_or_create_photo_album()
+        context['video_album'] = self.user.get_or_create_video_album()
+        context['playlist'] = self.user.get_or_create_playlist()
+        context['docs_list'] = self.user.get_or_create_doc_list()
+        context['good_album'] = self.user.get_or_create_good_album()
         context['get_buttons_block'] = self.get_buttons_block
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
