@@ -12,7 +12,7 @@
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-          {% for object in photo_album.get_6_photos() %}
+          {% for object in photo_album.get_6_photos %}
             <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
               <img class="lazyload image_fit_70" data-src="{{ object.file.url }}" alt="">
             </div>
