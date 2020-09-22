@@ -4848,11 +4848,6 @@ cursor: pointer;
 .prev_photo, .prev_item, .prev_good { position: absolute; right: -7%; top: 160px; cursor: pointer; }
 .next_photo, .next_item, .next_good  { position: absolute; left: -7%; top: 160px; cursor: pointer; }
 
-#good_loader .card-body img {
-    width: 100% !important;
-    height: auto !important;
-}
-
 .hide_image {
     display: none;
 }
