@@ -229,6 +229,12 @@ class Community(models.Model):
         posts = Post.objects.filter(posts_query)
         return posts
 
+    def get_fixed_post(self):
+        try:
+            post = Post.objects.get(community_id=self.pk, is_fixed=True)
+        except:
+            return None
+
     def get_photos(self):
         from gallery.models import Album
 

@@ -4,6 +4,7 @@
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
 
+    {% if fixed_post %} {{ fixed_post.creator }} {% endif %}
     <span class="post_stream stream post_container">
       {% for object in object_list %}
         {% include 'post_user/my_post.html' %}

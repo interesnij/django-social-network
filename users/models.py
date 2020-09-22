@@ -11,6 +11,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from notify.model.user import UserNotify, notification_handler
 from datetime import date
+from posts.models import Post
 
 
 class User(AbstractUser):
@@ -941,28 +942,27 @@ class User(AbstractUser):
         return query[0:5]
 
     def get_posts(self):
-        from posts.models import Post
-
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
-    def get_draft_posts(self):
-        from posts.models import Post
 
+    def get_fixed_post(self):
+        try:
+            post = Post.objects.get(creator_id=self.pk, is_fixed=True, community=None)
+        except:
+            return None
+
+    def get_draft_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
-        from posts.models import Post
-
         posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_archive_posts(self):
-        from posts.models import Post
-
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
@@ -1093,7 +1093,7 @@ class User(AbstractUser):
             playlist = SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
         return playlist
     def get_or_create_video_album(self):
-        from video.models import VideoAlbum 
+        from video.models import VideoAlbum
         try:
             album = VideoAlbum.objects.get(creator_id=self.pk, community=None, type=VideoAlbum.MAIN)
         except:

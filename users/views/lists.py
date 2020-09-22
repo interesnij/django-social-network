@@ -194,6 +194,7 @@ class PostListView(ListView):
 		context = super(PostListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['object'] = self.fixed
+		context['fixed_post'] = self.user.get_fixed_post()
 		return context
 
 	def get_queryset(self):

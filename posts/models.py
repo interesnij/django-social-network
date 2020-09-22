@@ -446,27 +446,27 @@ class Post(models.Model):
 
     def get_fixed_for_user(self, user_id):
         try:
-            item = Post.objects.get(creator__id=user_id,is_fixed=True)
-            item.is_fixed = False
-            item.save(update_fields=['is_fixed'])
-            new_fixed = Post.objects.get(creator__id=user_id,id=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-        except:
-            new_fixed = Post.objects.get(creator__id=user_id,id=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
-
-    def get_fixed_for_community(self, community_id):
-        try:
-            item = Post.objects.get(community__id=community_id,is_fixed=True)
+            item = Post.objects.get(creator_id=user_id, is_fixed=True, community=None)
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
             new_fixed = Post.objects.get(pk=self.pk)
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
         except:
-            new_fixed = Post.objects.get(community__id=community_id,id=self.pk)
+            new_fixed = Post.objects.get(pk=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
+
+    def get_fixed_for_community(self, community_id):
+        try:
+            item = Post.objects.get(community_id=community_id, is_fixed=True)
+            item.is_fixed = False
+            item.save(update_fields=['is_fixed'])
+            new_fixed = Post.objects.get(pk=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
+        except:
+            new_fixed = Post.objects.get(community_id=community_id,id=self.pk)
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
 
