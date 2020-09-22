@@ -72,7 +72,28 @@ on('body', 'click', '#logg', function() {
   link.send(form_data);
 });
 
+function play_video_list(url, counter, pk, video_pk){
+  loader = document.getElementById("video_loader");
+  open_fullscreen(url, loader);
+  video_saver = document.body.querySelector("#video_id_saver");
+  video_player_id = video_saver.getAttribute('data-video');
+  video_saver.setAttribute('data-video', video_player_id + "a");
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a", counter);
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    function onReady(){
+    console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
 
+    info_video = document.body.querySelector("#info_video");
+    if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
+      list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
+      info_video.setAttribute("data-uuid", uuid);
+      console.log("Воспроизводится ролик № : " + video_pk)
+    }
+    }
+  }, 500);
+}
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
