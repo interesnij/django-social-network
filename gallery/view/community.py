@@ -146,6 +146,7 @@ class CommunityPhoto(TemplateView):
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
+        context["album"] = self.album
         return context
 
 
