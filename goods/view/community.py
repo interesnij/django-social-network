@@ -8,6 +8,7 @@ from common.check.community import check_can_get_lists
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 from common.template.good import get_template_community_good, get_permission_community_good
+from django.http import Http404
 
 
 class CommunityGood(TemplateView):
