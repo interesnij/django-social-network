@@ -1,5 +1,5 @@
-{% if community.get_last_music %}
-<div class="card mb-3 music_playlist" data-pk="{{ community.get_music_list_id }}">
+{% if music_list.playlist_6 %}
+<div class="card mb-3 music_playlist" data-pk="{{ music_list.pk }}">
     <div class="card-header">
       <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
         <div class="media">
@@ -11,7 +11,7 @@
       </a>
     </div>
 
-    {% for object in community.get_last_music %}
+    {% for object in music_list.playlist_6 %}
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter }}">

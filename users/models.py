@@ -1093,7 +1093,7 @@ class User(AbstractUser):
             playlist = SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
         return playlist
     def get_or_create_video_album(self):
-        from video.models import VideoAlbum
+        from video.models import VideoAlbum 
         try:
             album = VideoAlbum.objects.get(creator_id=self.pk, community=None, type=VideoAlbum.MAIN)
         except:

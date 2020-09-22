@@ -1,5 +1,5 @@
-{% if community.get_last_docs %}
-<div class="card mb-3">
+{% if docs_list.list_6 %}
+<div class="card mb-3" data-uuid="{{ docs_list.uuid }}">
     <div class="card-header">
       <a href="{% url 'community_docs' pk=community.pk %}" class="ajax">
         <div class="media">
@@ -11,7 +11,7 @@
       </a>
     </div>
 
-    {% for object in community.get_last_docs %}
+    {% for object in docs_list.list_6 %}
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media">
