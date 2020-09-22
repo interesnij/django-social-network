@@ -317,7 +317,7 @@ class Community(models.Model):
             album = VideoAlbum.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=VideoAlbum.MAIN, title="Основной альбом")
         return album
     def get_or_create_photo_album(self):
-        from video.models import Album
+        from gallery.models import Album
         try:
             album = Album.objects.get(community_id=self.pk, type=Album.MAIN)
         except:
