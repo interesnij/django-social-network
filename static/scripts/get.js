@@ -64,6 +64,7 @@ on('body', 'click', '.prev_good', function(event) {
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
   this.disabled = true;
+  this.style.display = "none"
   open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
 })
 on('body', 'click', '.prev_photo', function(event) {
