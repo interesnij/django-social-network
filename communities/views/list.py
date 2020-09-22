@@ -330,10 +330,6 @@ class PostsCommunity(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.fixed = Post.objects.get(community=community, is_fixed=True)
-		except:
-			self.fixed = None
 		if request.is_ajax():
 			self.template_name = get_permission_community_post(self.community, "c_lenta/", "list.html", request.user)
 		else:
@@ -346,6 +342,7 @@ class PostsCommunity(ListView):
 		context = super(PostsCommunity,self).get_context_data(**kwargs)
 		context['object'] = self.fixed
 		context["community"] = self.community
+		context['object'] = self.community.get_fixed_post()
 		return context
 
 	def get_queryset(self):
