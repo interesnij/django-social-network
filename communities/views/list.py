@@ -340,7 +340,6 @@ class PostsCommunity(ListView):
 
 	def get_context_data(self,**kwargs):
 		context = super(PostsCommunity,self).get_context_data(**kwargs)
-		context['object'] = self.fixed
 		context["community"] = self.community
 		context['object'] = self.community.get_fixed_post()
 		return context
