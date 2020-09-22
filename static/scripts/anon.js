@@ -17,7 +17,16 @@ function get_video_dop(){
   }
   return settings.split(',')
 }
-
+function get_resize_screen(){
+  video_player.maxWidth = 360;
+  video_player.maxHeight = 270;
+  video_player.showPlaylist();
+}
+function get_normal_screen(){
+  video_player.maxWidth = 1170;
+  video_player.maxHeight = 659;
+  video_player.hidePlaylist();
+}
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
