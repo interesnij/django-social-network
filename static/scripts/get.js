@@ -45,31 +45,34 @@ window.addEventListener('popstate', function (e) {
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
 })
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
 })
 
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 on('body', 'click', '.prev_good', function(event) {
   event.preventDefault();
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
 })
 
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
-  this.disabled = true;
-  this.style.display = "none"
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
 })
 on('body', 'click', '.prev_photo', function(event) {
   event.preventDefault();
-  event.disabled = true;
+  this.style.display = "none";
   open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
 })
 
