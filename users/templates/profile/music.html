@@ -1,5 +1,5 @@
-{% load liked_user %}
-{% if user.get_last_music %}
+
+{% if last_music %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
@@ -12,7 +12,7 @@
       </a>
     </div>
 
-    {% for object in user.get_last_music %}
+    {% for object in last_music %}
     <div data-pk="{{ user.get_music_list_id }}" class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter }}">

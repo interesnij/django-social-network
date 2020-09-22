@@ -1,4 +1,4 @@
-{% if user.get_last_video %}
+{% if last_video %}
 
 <div class="card mb-3">
     <div class="card-header">
@@ -13,7 +13,7 @@
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters" album-uuid="{{ user.get_generic_video_list_uuid }}">
-          {% for object in user.get_last_video %}
+          {% for object in last_video %}
             <div style="position:relative">
               <img class="lazyload image_fit_200" data-src="{{ object.image.url }}" alt="">
               <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter }}"></div>

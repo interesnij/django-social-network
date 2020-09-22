@@ -1,4 +1,4 @@
-{% if user.good_album.is_not_empty %}
+{% if last_goods %}
 <div class="card mt-3">
   <div class="card-header">
     <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
@@ -11,7 +11,7 @@
     </a>
   </div>
   <div style="display: flex; flex-wrap: wrap;" data-uuid="{{ user.good_album.uuid }}">
-    {% for object in user.good_album.get_3_goods %}
+    {% for object in last_goods %}
     <div class="col-md-4 mb-3">
             <div class="border u_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}">
                 <div class="row align-items-center no-gutters">
