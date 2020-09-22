@@ -354,6 +354,7 @@ loadScripts('/static/scripts/video/community_get.js')
 loadScripts('/static/scripts/video/user_get.js')
 
 ready(() => {
+  try{
 var input = document.querySelectorAll('.js-date')[0];
 
 var dateInputMask = function dateInputMask(elm) {
@@ -383,5 +384,5 @@ var dateInputMask = function dateInputMask(elm) {
     }
   });
 };
-dateInputMask(input);
+dateInputMask(input)}catch{ null }
 })
