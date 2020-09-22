@@ -57,13 +57,13 @@ class UserGood(TemplateView):
                 else:
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
         elif request.user.is_anonymous:
-            if user.is_suspended():
+            if self.user.is_suspended():
                 template_name = "generic/u_template/anon_user_suspended.html"
-            elif user.is_blocked():
+            elif self.user.is_blocked():
                 template_name = "generic/u_template/anon_user_global_block.html"
-            elif user.is_closed_profile():
+            elif self.user.is_closed_profile():
                 template_name = "generic/u_template/anon_close_user.html"
-            elif not user.is_child_safety():
+            elif not self.user.is_child_safety():
                 template_name = "generic/u_template/anon_no_child_safety.html"
             else:
                 self.template_name = "u_good/anon_good.html"
