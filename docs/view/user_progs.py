@@ -184,3 +184,18 @@ class UserDoclistAbortDelete(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class UserDoclistPreview(TemplateView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.list = DocList.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("doc_create/list_preview.html", request)
+		return super(UserDoclistPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserDoclistPreview,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context

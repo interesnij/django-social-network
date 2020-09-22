@@ -48,7 +48,7 @@ class ListMusicGet(TemplateView):
 
 
 class MusicPlaylistPreview(TemplateView):
-	template_name = 'load/u_music_load.html'
+	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):

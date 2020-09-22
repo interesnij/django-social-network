@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistDelete.as_view()),
     url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDoclistAbortDelete.as_view()),
+    url(r'^list_preview/(?P<pk>\d+)/$', login_required(UserDoclistPreview.as_view())),
 
     url(r'^create_doc/(?P<pk>\d+)/$', UserDocCreate.as_view()),
 
