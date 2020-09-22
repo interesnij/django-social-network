@@ -4,7 +4,7 @@
     <a data-href="{% url 'u_doc_load' %}" class="pointer create_ajax" style="text-decoration:underline;">
       Прикрепление документов
     </a>
-      / {{ list.title }}
+      / {{ list.name }}
     </h5>
   </div>
   <div class="card-body border-bottom">
@@ -22,8 +22,8 @@
             <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
           {% endif %}
           <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
-            <p class="">{{ list.name }}</p>
+            <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_docs }})</h6>
+            <p class="">Мои документы</p>
           </div>
           <div class="icon-circle icon-50 bg-light-white attach_doc_list pointer" data-pk="{{ list.pk }}">
             <svg fill="currentColor" class="svg_default svg_default_50" viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
