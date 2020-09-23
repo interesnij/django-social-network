@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from django.utils.safestring import mark_safe
 from chat.models import Message
-from django.views.decorators.http import require_http_methods
+from common.template.user import get_settings_template
 
 
 class MessagesListView(ListView):
@@ -26,7 +26,7 @@ class MessagesListView(ListView):
 	def get_queryset(self):
 		list = self.user.get_all_chats()
 		return list
-		
+
 
 def room(request, room_name):
     return render(request, 'room.html', {
@@ -47,7 +47,7 @@ class ConversationListView(MessagesListView):
             username=self.kwargs["username"])
         return Message.objects.get_conversation(active_user, self.request.user)
 
-@require_http_methods(["POST"])
+
 def send_message(request):
     """AJAX функциональный вид, чтобы получить только минимальную информацию, процесс
     и создать новое сообщение и вернуть новые данные, которые будут прикреплены к
@@ -67,7 +67,6 @@ def send_message(request):
     return HttpResponse()
 
 
-@require_http_methods(["GET"])
 def receive_message(request):
     """Простой индикатор функциональный вид, чтобы вернуть оказанные одно сообщение на
     сторона приемника обеспечивая соединения в реальном времени."""
