@@ -1469,3 +1469,9 @@ class User(AbstractUser):
         from managers.model.audio import ModerationPenaltyAudio
         return ModerationPenaltyAudio.objects.filter(manager__id=self.pk)
     ''''' конец модерации '''''
+
+
+    ''''' начало сообщения '''''
+
+    def get_private_chats(self):
+        return self.chat_users.filter(chat__type="PR")

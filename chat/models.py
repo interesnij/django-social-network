@@ -68,18 +68,15 @@ class Chat(models.Model):
     def is_manager(self):
         return self.type == Chat.TYPE_MANAGER
 
+    def get_members(self):
+        return self.chat_relation.only("pk")
+
     @classmethod
     def create_chat(cls, creator, type):
         chat = cls.objects.create(creator=creator, type=type)
         ChatUsers.create_membership(user=creator, is_administrator=True, chat=chat)
         chat.save()
         return chat
-
-    def user_exists(self, user_1, user_2):
-        a = self.chat_users.filter(user=user_1).exists()
-        b = self.chat_users.filter(user=user_2).exists()
-        if a and b and self.is_private():
-            return self
 
 
 class ChatUsers(models.Model):
@@ -137,12 +134,27 @@ class Message(models.Model):
             self.save()
 
     @staticmethod
-    def send_private_message(cls, sender, recipient, parent, message):
-        if ChatUsers.user_exists(sender):
-            chat = Chat.objects.get(chat__user=sender)
-        else:
-            chat = Chat.create_chat(user=sender, type=Chat.TYPE_PRIVATE)
-            ChatMembership.objects.create(user=recipient, chat=chat)
+    def send_global_private_message(cls, sender, recipient, parent, message):
+        # программа для отсылки сообщений не в чате
+        chat_list = sender.get_private_chats()
+        current_chat = None
+        for chat in chat_list:
+            users = chat.get_members().values('id')
+            users_ids = [user['id'] for user in users]
+            if recipient.pk in users_ids:
+                current_chat = chat
+        if not current_chat:
+            current_chat = Chat.create_chat(user=sender, type=Chat.TYPE_PRIVATE)
+            ChatMembership.objects.create(user=recipient, chat=current_chat)
+        new_message = cls.objects.create(chat=current_chat, sender=sender, parent=parent, recipient=recipient, message=message)
+        channel_layer = get_channel_layer()
+        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender, 'recipient': recipient}
+        async_to_sync(channel_layer.group_send)(recipient.username, payload)
+        return new_message
+
+    @staticmethod
+    def send_private_message(cls, chat, sender, recipient, parent, message):
+        # программа для отсылки сообщений в чате
         new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, recipient=recipient, message=message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender, 'recipient': recipient}
@@ -151,6 +163,7 @@ class Message(models.Model):
 
     @staticmethod
     def send_public_message(cls, chat, sender, parent, message):
+        # отсылка сообщений в групповой чат
         new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, message=message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender,}
