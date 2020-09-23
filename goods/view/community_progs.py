@@ -23,9 +23,9 @@ class GoodCommentCommunityCreate(View):
         good = Good.objects.get(pk=request.POST.get("good_pk"))
         if not request.is_ajax() and not self.good.comments_enabled:
             raise Http404
-        if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
+        if not community.is_comment_good_send_all() and not request.user.is_member_of_community(community.pk):
             raise PermissionDenied("Ошибка доступа.")
-        elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+        elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community(community.pk):
             raise PermissionDenied("Ошибка доступа.")
         elif request.is_ajax() and form_post.is_valid() and good.comments_enabled:
             comment=form_post.save(commit=False)
@@ -55,9 +55,9 @@ class GoodReplyCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
 
-            if not community.is_comment_good_send_all() and not request.user.is_member_of_community_with_name(community.name):
+            if not community.is_comment_good_send_all() and not request.user.is_member_of_community(community.pk):
                 raise PermissionDenied("Ошибка доступа.")
-            elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community_with_name(community.name):
+            elif community.is_comment_good_send_admin() and not request.user.is_staff_of_community(community.pk):
                 raise PermissionDenied("Ошибка доступа.")
             elif request.is_ajax() and request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
                 from common.attach.comment_attacher import get_comment_attach
@@ -78,7 +78,7 @@ class GoodCommentCommunityDelete(View):
             community = comment.good.community
         except:
             community = comment.parent_comment.good.community
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -92,7 +92,7 @@ class GoodCommentCommunityAbortDelete(View):
             community = comment.good.community
         except:
             community = comment.parent_comment.good.community
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -103,7 +103,7 @@ class GoodCommentCommunityAbortDelete(View):
 class CommunityOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -113,7 +113,7 @@ class CommunityOpenCommentGood(View):
 class CommunityCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -123,7 +123,7 @@ class CommunityCloseCommentGood(View):
 class CommunityOffVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.votes_on = False
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -133,7 +133,7 @@ class CommunityOffVotesGood(View):
 class CommunityOnVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.votes_on = True
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -144,7 +144,7 @@ class CommunityOnVotesGood(View):
 class CommunityHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
             return HttpResponse("!")
@@ -152,7 +152,7 @@ class CommunityHideGood(View):
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.is_hide = False
             good.save(update_fields=['is_hide'])
             return HttpResponse()
@@ -162,7 +162,7 @@ class CommunityUnHideGood(View):
 class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.is_delete = True
             good.save(update_fields=['is_delete'])
             return HttpResponse()
@@ -172,7 +172,7 @@ class CommunityGoodDelete(View):
 class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community_with_name(good.community.name):
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.is_delete = False
             good.save(update_fields=['is_delete'])
             return HttpResponse()
@@ -268,7 +268,7 @@ class GoodAlbumCommunityCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodAlbumForm(request.POST)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=self.community)
             return render(request, 'c_goods_list/admin_list.html',{'album': new_album, 'community': self.community})
@@ -299,7 +299,7 @@ class CommunityGoodAlbumEdit(TemplateView):
         self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.form = GoodAlbumForm(request.POST,instance=self.album)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             album = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
@@ -311,7 +311,7 @@ class CommunityGoodAlbumDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name) and album.type == GoodAlbum.ALBUM:
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and album.type == GoodAlbum.ALBUM:
             album.is_deleted = True
             album.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -322,7 +322,7 @@ class CommunityGoodAlbumAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             album.is_deleted = False
             album.save(update_fields=['is_deleted'])
             return HttpResponse()

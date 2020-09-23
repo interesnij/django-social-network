@@ -5,7 +5,6 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from common.checkers import *
 from django.db.models import Q
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
@@ -220,24 +219,24 @@ class User(AbstractUser):
         follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
         return follow
 
-    def community_follow_user(self, community_name):
-        return self.follow_community_with_name(community_name)
+    def community_follow_user(self, community_pk):
+        return self.follow_community(community_pk)
 
-    def follow_community_with_name(self, community_name):
+    def follow_community(self, community_pk):
         from follows.models import CommunityFollow
 
-        check_can_join_community_with_name(user=self, community_name=community_name)
-        follow = CommunityFollow.create_follow(user_id=self.pk, community_name=community_name)
+        check_can_join_community(user=self, community_pk=community_pk)
+        follow = CommunityFollow.create_follow(user_id=self.pk, community_pk=community_pk)
         return follow
 
-    def community_unfollow_user(self, community_name):
-        return self.unfollow_community_with_name(community_name)
+    def community_unfollow_user(self, community_pk):
+        return self.unfollow_community(community_pk)
 
-    def unfollow_community_with_name(self, community_name):
+    def unfollow_community(self, community_pk):
         from follows.models import CommunityFollow
 
-        check_can_join_community_with_name(user=self, community_name=community_name)
-        follow = CommunityFollow.objects.get(user=self,community__name=community_name)
+        check_can_join_community(user=self, community_pk=community_pk)
+        follow = CommunityFollow.objects.get(user=self,community__pk=community_pk)
         follow.delete()
 
     def get_or_create_possible_friend(self, user):
@@ -437,24 +436,21 @@ class User(AbstractUser):
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()
 
-    def is_invited_to_community_with_name(self, community_name):
+    def is_invited_to_community(self, community_pk):
         from communities.models import Community
 
-        return Community.is_user_with_username_invited_to_community_with_name(username=self.username, community_name=community_name)
+        return Community.is_user_with_username_invited_to_community(username=self.username, community_pk=community_pk)
 
-    def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name) or self.is_editor_of_community_with_name(community_name=community_name)
+    def is_staff_of_community(self, community_pk):
+        return self.is_administrator_of_community(community_pk=community_pk) or self.is_moderator_of_community(community_pk=community_pk) or self.is_editor_of_community(community_pk=community_pk)
 
-    def is_member_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name).exists()
+    def is_member_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk).exists()
 
-    def is_banned_from_community_with_name(self, community_name):
-        return self.banned_of_communities.filter(name=community_name).exists()
+    def is_banned_from_community(self, community_pk):
+        return self.banned_of_communities.filter(pk=community_pk).exists()
 
-    def is_star_from_community_with_name(self, community_name):
-        return self.favorite_communities.filter(name=community_name).exists()
-
-    def is_follow_from_community_with_name(self, community_pk):
+    def is_follow_from_community(self, community_pk):
         return self.community_follows.filter(community__pk=community_pk).exists()
 
     def is_closed_profile(self):
@@ -466,23 +462,23 @@ class User(AbstractUser):
             user_private = UserPrivate.objects.create(user=self)
             return False
 
-    def is_creator_of_community_with_name(self, community_name):
-        return self.created_communities.filter(name=community_name).exists()
+    def is_creator_of_community(self, community_pk):
+        return self.created_communities.filter(pk=community_pk).exists()
 
     def is_staffed_user(self):
         return self.communities_memberships.filter(Q(is_administrator=True) | Q(is_moderator=True) | Q(is_editor=True)).exists()
 
-    def is_administrator_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
+    def is_administrator_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk, is_administrator=True).exists()
 
-    def is_moderator_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()
+    def is_moderator_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk, is_moderator=True).exists()
 
-    def is_advertiser_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_advertiser=True).exists()
+    def is_advertiser_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk, is_advertiser=True).exists()
 
-    def is_editor_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_editor=True).exists()
+    def is_editor_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk, is_editor=True).exists()
 
     def is_following_user_with_id(self, user_id):
         return self.follows.filter(followed_user__id=user_id).exists()
@@ -1330,25 +1326,25 @@ class User(AbstractUser):
         return query
 
 
-    def join_community_with_name(self, community_name):
+    def join_community(self, community_pk):
         from communities.models import Community
         from follows.models import CommunityFollow
         from invitations.models import CommunityInvite
 
-        check_can_join_community_with_name(user=self, community_name=community_name)
-        community_to_join = Community.objects.get(name=community_name)
+        check_can_join_community(user=self, community_pk=community_pk)
+        community_to_join = Community.objects.get(pk=community_pk)
         community_to_join.add_member(self)
         if community_to_join.is_private():
-            CommunityInvite.objects.filter(community_name=community_name, invited_user__id=self.id).delete()
+            CommunityInvite.objects.filter(community_pk=community_pk, invited_user__id=self.id).delete()
         elif community_to_join.is_closed():
-            CommunityFollow.objects.filter(community__name=community_name, user__id=self.id).delete()
+            CommunityFollow.objects.filter(community__pk=community_pk, user__id=self.id).delete()
         return community_to_join
 
-    def leave_community_with_name(self, community_name):
+    def leave_community(self, community_pk):
         from communities.models import Community
 
-        check_can_leave_community_with_name(user=self, community_name=community_name)
-        community_to_leave = Community.objects.get(name=community_name)
+        check_can_leave_community(user=self, community_pk=community_pk)
+        community_to_leave = Community.objects.get(pk=community_pk)
         community_to_leave.remove_member(self)
         return community_to_leave
 

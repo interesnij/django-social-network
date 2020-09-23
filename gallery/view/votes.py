@@ -163,7 +163,7 @@ class PhotoCommunityLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             item.notification_community_like(request.user, community)
         likes = item.likes_count()
         if likes:
@@ -197,7 +197,7 @@ class PhotoCommunityDislikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             item.notification_community_dislike(request.user, community)
         likes = item.likes_count()
         if likes != 0:
@@ -231,7 +231,7 @@ class PhotoCommentCommunityLikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
         if likes:
@@ -265,7 +265,7 @@ class PhotoCommentCommunityDislikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:

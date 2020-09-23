@@ -28,7 +28,7 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
-		membersheeps = self.community.get_community_with_name_members(self.community.name)
+		membersheeps = self.community.get_community_members(self.community.pk)
 		return membersheeps
 
 
@@ -46,7 +46,7 @@ class CommunityFriendsView(ListView):
 		return context
 
 	def get_queryset(self):
-		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.community.name):
+		if self.community.is_private() and not self.request.user.is_member_of_community(self.community.pk):
 			frends = None
 			self.template_name = "c_detail/private_community.html"
 		else:
@@ -131,7 +131,7 @@ class CommunityDocs(ListView):
 			self.list = DocList.objects.get(community_id=self.community.id, type=DocList.MAIN)
 		except:
 			self.list = DocList.objects.create(community_id=self.community.id, creator=self.community.creator, type=DocList.MAIN, name="Основной список")
-		if user.is_authenticated and user.is_staff_of_community_with_name(self.community.name):
+		if user.is_authenticated and user.is_staff_of_community(self.community.pk):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
@@ -157,7 +157,7 @@ class CommunityDocsList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
@@ -190,7 +190,7 @@ class CommunityGoods(ListView):
             self.album = GoodAlbum.objects.get(community=self.community, type=GoodAlbum.MAIN)
         except:
             self.album = GoodAlbum.objects.create(creator=self.community.creator, community=self.community, type=GoodAlbum.MAIN, title="Основной список")
-        if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+        if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
             self.goods_list = self.album.get_staff_goods()
         else:
             self.goods_list = self.album.get_goods()
@@ -219,7 +219,7 @@ class CommunityGoodsList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
 			self.goods_list = self.album.get_staff_goods()
 		else:
 			self.goods_list = self.album.get_goods()
@@ -277,7 +277,7 @@ class CommunityVideo(ListView):
 		self.template_name = get_template_community_video(self.community, "c_video/", "list.html", request.user)
 
 		self.album = VideoAlbum.objects.get(community_id=self.community.pk, type=VideoAlbum.MAIN)
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
 			self.video_list = self.album.get_my_queryset()
 		else:
 			self.video_list = self.album.get_queryset()
@@ -303,7 +303,7 @@ class CommunityVideoList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
 			self.video_list = self.album.get_my_queryset()
 		else:
 			self.video_list = self.album.get_queryset()
@@ -357,7 +357,7 @@ class PostsDraftCommunity(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if request.user.is_authenticated:
-            if request.user.is_staff_of_community_with_name(self.community.name):
+            if request.user.is_staff_of_community(self.community.pk):
                 self.template_name = "c_list/draft_list.html"
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name

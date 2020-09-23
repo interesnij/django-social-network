@@ -9,24 +9,24 @@ def get_template_community_doc(community, folder, template, request_user):
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
-        if request_user.is_member_of_community_with_name(community.name):
-            if request_user.is_administrator_of_community_with_name(community.name):
+        if request_user.is_member_of_community(community.pk):
+            if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template
-            elif request_user.is_moderator_of_community_with_name(community.name):
+            elif request_user.is_moderator_of_community(community.pk):
                 template_name = folder + "moderator_" + template
-            elif request_user.is_editor_of_community_with_name(community.name):
+            elif request_user.is_editor_of_community(community.pk):
                 template_name = folder + "editor_" + template
-            elif request_user.is_advertiser_of_community_with_name(community.name):
+            elif request_user.is_advertiser_of_community(community.pk):
                 template_name = folder + "advertiser_" + template
             elif request_user.is_doc_manager():
                 template_name = folder + "staff_member_" + template
             else:
                 template_name = folder + "member_" + template
-        elif request_user.is_follow_from_community_with_name(community.pk):
+        elif request_user.is_follow_from_community(community.pk):
             template_name = "generic/c_template/follow_community.html"
         elif request_user.is_doc_manager():
             template_name = folder + "staff_" + template
-        elif request_user.is_banned_from_community_with_name(community.name):
+        elif request_user.is_banned_from_community(community.pk):
             template_name = "generic/c_template/block_community.html"
         elif community.is_public():
             if request_user.is_child() and not community.is_verified():
@@ -59,7 +59,7 @@ def get_permission_community_doc(community, folder, template, request_user):
     elif community.is_blocked():
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
-        if request_user.is_staff_of_community_with_name(community.name):
+        if request_user.is_staff_of_community(community.pk):
             template_name = folder + "admin_" + template
         elif request_user.is_doc_manager():
             template_name = folder + "staff_" + template

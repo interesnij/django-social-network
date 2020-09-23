@@ -521,24 +521,24 @@ class User(AbstractUser):
     def has_list_with_id(self, list_id):
         return self.lists.filter(id=list_id).exists()
 
-    def has_invited_user_with_username_to_community_with_name(self, username, community_name):
+    def has_invited_user_with_username_to_community(self, username, community_pk):
         return self.created_communities_invites.filter(invited_user__username=username,
-                                                       community__name=community_name).exists()
+                                                       community__pk=community_pk).exists()
 
     def is_member_of_communities(self):
         return self.communities_memberships.all().exists()
 
-    def is_member_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name).exists()
+    def is_member_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk).exists()
 
-    def is_banned_from_community_with_name(self, community_name):
-        return self.banned_of_communities.filter(name=community_name).exists()
+    def is_banned_from_community(self, community_pk):
+        return self.banned_of_communities.filter(pk=community_pk).exists()
 
-    def is_creator_of_community_with_name(self, community_name):
-        return self.created_communities.filter(name=community_name).exists()
+    def is_creator_of_community(self, community_pk):
+        return self.created_communities.filter(pk=community_pk).exists()
 
-    def is_moderator_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()
+    def is_moderator_of_community(self, community_pk):
+        return self.communities_memberships.filter(community__pk=community_pk, is_moderator=True).exists()
 
     def is_suspended(self):
         ModerationPenalty = get_moderation_penalty_model()
@@ -548,14 +548,9 @@ class User(AbstractUser):
     def get_longest_moderation_suspension(self):
         return self.moderation_penalties.order_by('expiration')[0:1][0]
 
-    def is_global_moderator(self):
-        moderators_community_name = settings.MODERATORS_COMMUNITY_NAME
-        return self.is_member_of_community_with_name(community_name=moderators_community_name)
-
-    def is_invited_to_community_with_name(self, community_name):
+    def is_invited_to_community_with_name(self, community_pk):
         Community = get_community_model()
-        return Community.is_user_with_username_invited_to_community_with_name(username=self.username,
-                                                                              community_name=community_name)
+        return Community.is_user_with_username_invited_to_community(username=self.username, community_pk=community_pk)
 
     def has_reported_moderated_object_with_id(self, moderated_object_id):
         ModeratedObject = get_moderated_object_model()

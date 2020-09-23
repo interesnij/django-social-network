@@ -5,7 +5,7 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import GoodVotes, GoodCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
 from django.http import Http404
@@ -19,9 +19,7 @@ class GoodUserLikeCreate(View):
             raise Http404
 
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = GoodVotes.objects.get(parent=good, user=request.user)
             if likedislike.vote is not GoodVotes.LIKE:
@@ -56,9 +54,7 @@ class GoodCommentUserLikeCreate(View):
         if not request.is_ajax():
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not GoodCommentVotes.LIKE:
@@ -93,9 +89,7 @@ class GoodUserDislikeCreate(View):
         if not good.votes_on or not request.is_ajax():
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = GoodVotes.objects.get(parent=good, user=request.user)
             if likedislike.vote is not GoodVotes.DISLIKE:
@@ -130,9 +124,7 @@ class GoodCommentUserDislikeCreate(View):
         if not request.is_ajax():
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not GoodCommentVotes.DISLIKE:
@@ -179,7 +171,7 @@ class GoodCommunityLikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             good.notification_community_like(request.user, community)
         likes = good.likes_count()
         if likes:
@@ -213,7 +205,7 @@ class GoodCommunityDislikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             good.notification_community_dislike(request.user, community)
         likes = good.likes_count()
         if likes != 0:
@@ -230,7 +222,7 @@ class GoodCommunityDislikeCreate(View):
 
 class GoodCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"]) 
+        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
@@ -247,7 +239,7 @@ class GoodCommentCommunityLikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
         if likes:
@@ -281,7 +273,7 @@ class GoodCommentCommunityDislikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:

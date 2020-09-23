@@ -84,7 +84,7 @@ class ArticleCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         self.form = ArticleForm(request.POST,request.FILES)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
+        if self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
             article = self.form.save(commit=False)
             new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, status=article.status, title=article.title,)
             return render(request, 'post_community/admin_article.html',{'object': new_article, 'user': request.user})

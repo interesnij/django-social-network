@@ -5,7 +5,6 @@ from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import VideoVotes, VideoCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
 from django.http import Http404
@@ -18,9 +17,7 @@ class VideoUserLikeCreate(View):
         if not request.is_ajax() and not video.votes_on:
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
             if likedislike.vote is not VideoVotes.LIKE:
@@ -55,9 +52,7 @@ class VideoCommentUserLikeCreate(View):
         if not request.is_ajax():
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not VideoCommentVotes.LIKE:
@@ -92,9 +87,7 @@ class VideoUserDislikeCreate(View):
         if not request.is_ajax() and not video.votes_on:
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = VideoVotes.objects.get(parent=video, user=request.user)
             if likedislike.vote is not VideoVotes.DISLIKE:
@@ -129,9 +122,7 @@ class VideoCommentUserDislikeCreate(View):
         if not request.is_ajax():
             raise Http404
         if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            check_user_can_get_list(request.user, user)
         try:
             likedislike = VideoCommentVotes.objects.get(item=comment, user=request.user)
             if likedislike.vote is not VideoCommentVotes.DISLIKE:
@@ -178,7 +169,7 @@ class VideoCommunityLikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             video.notification_community_like(request.user)
         likes = video.likes_count()
         if likes:
@@ -212,7 +203,7 @@ class VideoCommunityDislikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             video.notification_community_dislike(request.user)
         likes = video.likes_count()
         if likes != 0:
@@ -246,7 +237,7 @@ class VideoCommentCommunityLikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
         if likes:
@@ -280,7 +271,7 @@ class VideoCommentCommunityDislikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community_with_name(community.name):
+        if not request.user.is_staff_of_community(community.pk):
             comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
         if likes:

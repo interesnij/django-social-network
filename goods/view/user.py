@@ -4,7 +4,6 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good, GoodAlbum
 from users.models import User
-from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 from common.template.good import get_template_user_good, get_permission_user_good

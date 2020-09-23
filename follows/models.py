@@ -33,11 +33,11 @@ class CommunityFollow(models.Model):
 
 
     @classmethod
-    def create_follow(cls, user_id, community_name):
-        follow = CommunityFollow.objects.create(user_id=user_id, community=community_name)
+    def create_follow(cls, user_id, community_pk):
+        follow = CommunityFollow.objects.create(user_id=user_id, community_pk=community_pk)
         return follow
 
     @classmethod
-    def get_community_with_name_follows(cls, community_name):
-        follows_query = CommunityFollow.objects.filter(community__name=community_name, view=False)
+    def get_community_with(cls, community_pk):
+        follows_query = CommunityFollow.objects.filter(community__pk=community_pk, view=False)
         return follows_query

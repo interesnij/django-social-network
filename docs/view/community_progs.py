@@ -17,7 +17,7 @@ class CommunityDocAdd(View):
         doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
+        if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
         else:
@@ -30,7 +30,7 @@ class CommunityDocRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             doc.remove()
             return HttpResponse()
         else:
@@ -44,7 +44,7 @@ class CommunityDocListAdd(View):
         doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
+        if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
         else:
@@ -57,7 +57,7 @@ class CommunityDocListRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc2.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community_with_name(list.community.name):
+        if request.is_ajax() and list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.remove(doc)
             return HttpResponse()
         else:
@@ -98,7 +98,7 @@ class CommunityDoclistCreate(View):
         form_post = DoclistForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
             new_list.community = community
@@ -122,7 +122,7 @@ class CommunityDocCreate(View):
         form_post = DocForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
             list = DocList.objects.get(community_id=community.pk, type=DocList.MAIN)
             new_doc = form_post.save(commit=False)
             new_doc.creator = community.creator
@@ -174,7 +174,7 @@ class CommunityDoclistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name) and list.type == DocList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type == DocList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -185,7 +185,7 @@ class CommunityDoclistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])
             return HttpResponse()

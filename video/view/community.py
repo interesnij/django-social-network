@@ -19,7 +19,7 @@ class CommunityVideoList(ListView):
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
 
-        if request.user.is_staff_of_community_with_name(self.community.name):
+        if request.user.is_staff_of_community(self.community.pk):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()

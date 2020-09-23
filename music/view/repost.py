@@ -167,7 +167,7 @@ class UCMusicRepost(View):
             track.item.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community_with_name(community.name):
+                if request.user.is_staff_of_community(community.pk):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
@@ -184,7 +184,7 @@ class CCMusicRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             post = form_post.save(commit=False)
             communities = request.POST.getlist("staff_communities")
             if not communities:
@@ -318,7 +318,7 @@ class UCMusicListRepost(View):
             playlist.post.add(parent)
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community_with_name(community.name):
+                if request.user.is_staff_of_community(community.pk):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
@@ -335,7 +335,7 @@ class CCMusicListRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             post = form_post.save(commit=False)
             communities = request.POST.getlist("staff_communities")
             if not communities:

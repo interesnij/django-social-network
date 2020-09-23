@@ -50,25 +50,25 @@ class CommunityDetail(TemplateView):
         elif self.community.is_blocked():
             self.template_name = "c_detail/community_blocked.html"
         elif request.user.is_authenticated:
-            if request.user.is_member_of_community_with_name(self.community.name):
-                if request.user.is_administrator_of_community_with_name(self.community.name):
+            if request.user.is_member_of_community(self.community.pk):
+                if request.user.is_administrator_of_community(self.community.pk):
                     self.template_name = "c_detail/admin_community.html"
-                elif request.user.is_moderator_of_community_with_name(self.community.name):
+                elif request.user.is_moderator_of_community(self.community.pk):
                     self.template_name = "c_detail/moderator_community.html"
-                elif request.user.is_editor_of_community_with_name(self.community.name):
+                elif request.user.is_editor_of_community(self.community.pk):
                     self.template_name = "c_detail/editor_community.html"
-                elif request.user.is_advertiser_of_community_with_name(self.community.name):
+                elif request.user.is_advertiser_of_community(self.community.pk):
                     self.template_name = "c_detail/advertiser_community.html"
                 elif request.user.is_community_manager():
                     self.template_name = "c_detail/staff_member_community.html"
                 else:
                     self.template_name = "c_detail/member_community.html"
                 request.user.create_or_plus_populate_community(self.community.pk)
-            elif request.user.is_follow_from_community_with_name(self.community.pk):
+            elif request.user.is_follow_from_community(self.community.pk):
                 self.template_name = "c_detail/follow_community.html"
             elif request.user.is_community_manager():
                 self.template_name = "c_detail/staff_community.html"
-            elif request.user.is_banned_from_community_with_name(self.community.name):
+            elif request.user.is_banned_from_community(self.community.pk):
                 self.template_name = "c_detail/block_community.html"
             elif self.community.is_public():
                 if request.user.is_child() and not self.community.is_verified():
@@ -101,7 +101,7 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDetail,self).get_context_data(**kwargs)
-        context["membersheeps"] = self.community.get_community_with_name_members(self.community.name)[0:6]
+        context["membersheeps"] = self.community.get_community_members(self.community.pk)[0:6]
         context["community"] = self.community
         context["common_friends"] = self.common_friends
         context['photo_album'] = self.community.get_or_create_photo_album()

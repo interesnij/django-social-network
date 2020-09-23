@@ -8,11 +8,11 @@ def check_user_not_banned(user, community_pk):
 def check_can_get_lists(user, community):
     if user.is_authenticated:
         check_user_not_banned(user=user, community_pk=community.pk)
-        if community.is_private() and not user.is_member_of_community_with_name(community_name=community.name):
+        if community.is_private() and not user.is_member_of_community(community.pk):
             raise ValidationError(
                 'Сообщество является приватным. Вы должны стать участником, чтобы видеть его записи.',
             )
-        elif community.is_closed() and not user.is_member_of_community_with_name(community_name=community.name):
+        elif community.is_closed() and not user.is_member_of_community(community.pk):
             raise ValidationError(
                 'Сообщество является закрытым. Вы должны стать участником, чтобы видеть его записи.',
             )

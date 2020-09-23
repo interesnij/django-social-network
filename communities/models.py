@@ -11,7 +11,7 @@ from imagekit.models import ProcessedImageField
 from notify.model.user import *
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
-
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class CommunityCategory(models.Model):
@@ -87,6 +87,10 @@ class Community(models.Model):
     class Meta:
         verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
+        indexes = (BrinIndex(fields=['created']),)
+
+    def __str__(self):
+        return self.name
 
     def is_deleted(self):
         return try_except(self.perm == Community.DELETED)
@@ -133,36 +137,36 @@ class Community(models.Model):
         return community
 
     @classmethod
-    def is_user_with_username_member_of_community_with_name(cls, username, community_name):
-        return cls.objects.filter(name=community_name, memberships__user__username=username).exists()
+    def is_user_with_username_member_of_community(cls, username, community_pk):
+        return cls.objects.filter(pk=community_pk, memberships__user__username=username).exists()
 
     @classmethod
-    def is_user_with_username_administrator_of_community_with_name(cls, user_id, community_name):
-        return cls.objects.filter(name=community_name, memberships__user__id=user_id, memberships__is_administrator=True).exists()
+    def is_user_with_username_administrator_of_community(cls, user_id, community_pk):
+        return cls.objects.filter(pk=community_pk, memberships__user__id=user_id, memberships__is_administrator=True).exists()
 
     @classmethod
-    def is_user_with_username_moderator_of_community_with_name(cls, username, community_name):
-        return cls.objects.filter(name=community_name, memberships__user__username=username, memberships__is_moderator=True).exists()
+    def is_user_with_username_moderator_of_community(cls, username, community_pk):
+        return cls.objects.filter(pk=community_pk, memberships__user__username=username, memberships__is_moderator=True).exists()
 
     @classmethod
-    def is_user_with_username_banned_from_community_with_name(cls, username, community_name):
-        return cls.objects.filter(name=community_name, banned_users__username=username).exists()
+    def is_user_with_username_banned_from_community(cls, username, community_pk):
+        return cls.objects.filter(pk=community_pk, banned_users__username=username).exists()
 
     @classmethod
-    def is_community_with_name_invites_enabled(cls, community_name):
-        return cls.objects.filter(name=community_name, invites_enabled=True).exists()
+    def is_community_invites_enabled(cls, community_pk):
+        return cls.objects.filter(pk=community_pk, invites_enabled=True).exists()
 
     @classmethod
-    def is_community_with_name_private(cls, community_name):
-        return cls.objects.filter(name=community_name, type='T').exists()
+    def is_community_private(cls, community_pk):
+        return cls.objects.filter(pk=community_pk, type='T').exists()
 
     @classmethod
-    def is_community_with_name_closed(cls, community_name):
-        return cls.objects.filter(name=community_name, type='C').exists()
+    def is_community_closed(cls, community_pk):
+        return cls.objects.filter(pk=community_pk, type='C').exists()
 
     @classmethod
-    def get_community_with_name_for_user_with_id(cls, community_name, user_id):
-        query = Q(name=community_name, is_deleted=False)
+    def get_community_for_user_with_id(cls, community_pk, user_id):
+        query = Q(pk=community_pk, is_deleted=False)
         query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls.objects.get(query)
 
@@ -486,7 +490,7 @@ class Community(models.Model):
         return lists
 
     def get_manage_template(self, folder, template, request):
-        if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.name):
+        if request.user.is_authenticated and request.user.is_administrator_of_community(self.pk):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
@@ -495,7 +499,7 @@ class Community(models.Model):
         return template_name
 
     def get_moders_template(self, folder, template, request):
-        if request.user.is_administrator_of_community_with_name(self.name) or request.user.is_moderator_of_community_with_name(self.name):
+        if request.user.is_administrator_of_community(self.pk) or request.user.is_moderator_of_community(self.pk):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
@@ -523,86 +527,86 @@ class Community(models.Model):
 
 
     @classmethod
-    def get_community_with_name_members(cls, community_name):
+    def get_community_members(cls, community_pk):
         from users.models import User
 
-        community_members_query = Q(communities_memberships__community__name=community_name)
+        community_members_query = Q(communities_memberships__community__pk=community_pk)
         return User.objects.filter(community_members_query)
 
     @classmethod
-    def get_community_with_name_administrators(cls, community_name):
+    def get_community_administrators(cls, community_pk):
         from users.models import User
 
-        community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
+        community_administrators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_administrator=True)
         return User.objects.filter(community_administrators_query)
 
     @classmethod
-    def get_community_with_name_moderators(cls, community_name):
+    def get_community_moderators(cls, community_pk):
         from users.models import User
 
-        community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
+        community_administrators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_moderator=True)
         return User.objects.filter(community_administrators_query)
 
     @classmethod
-    def get_community_with_name_editors(cls, community_name):
+    def get_community_editors(cls, community_pk):
         from users.models import User
 
-        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_editor=True)
+        community_moderators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_editor=True)
         return User.objects.filter(community_moderators_query)
 
     @classmethod
-    def get_community_with_name_advertisers(cls, community_name):
+    def get_community_advertisers(cls, community_pk):
         from users.models import User
 
-        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_advertiser=True)
+        community_moderators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_advertiser=True)
         return User.objects.filter(community_moderators_query)
 
     @classmethod
-    def get_community_with_name_follows(cls, community_name):
+    def get_community_follows(cls, community_pk):
         from users.models import User
 
-        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
+        community_moderators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_moderator=True)
         return User.objects.filter(community_moderators_query)
 
     @classmethod
-    def get_community_with_name_banned_users(cls, community_name):
-        community = Community.objects.get(name=community_name)
+    def get_community_banned_users(cls, community_pk):
+        community = Community.objects.get(pk=community_pk)
         community_members_query = Q()
         return community.banned_users.filter(community_members_query)
 
     @classmethod
-    def search_community_with_name_members(cls, community_name, query):
+    def search_community_members(cls, community_pk, query):
         from users.models import User
 
-        db_query = Q(communities_memberships__community__name=community_name)
+        db_query = Q(communities_memberships__community__pk=community_pk)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
         return User.objects.filter(db_query)
 
     @classmethod
-    def search_community_with_name_moderators(cls, community_name, query):
+    def search_community_moderators(cls, community_pk, query):
         from users.models import User
 
-        db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
+        db_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_moderator=True)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
         return User.objects.filter(db_query)
 
     @classmethod
-    def search_community_with_name_administrators(cls, community_name, query):
+    def search_community_administrators(cls, community_pk, query):
         from users.models import User
 
-        db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
+        db_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_administrator=True)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
         return User.objects.filter(db_query)
 
     @classmethod
-    def search_community_with_name_banned_users(cls, community_name, query):
-        community = Community.objects.get(name=community_name)
+    def search_community_banned_users(cls, community_pk, query):
+        community = Community.objects.get(pk=community_pk)
         community_banned_users_query = Q(username__icontains=query)
         community_banned_users_query.add(Q(profile__name__icontains=query), Q.OR)
         return community.banned_users.filter(community_banned_users_query)
@@ -762,9 +766,6 @@ class Community(models.Model):
         CommunityInvite = get_community_invite_model()
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
 
-    def __str__(self):
-        return self.name
-
     def count_members(self):
         return self.memberships.count()
 
@@ -873,8 +874,8 @@ class CommunityInvite(models.Model):
         return cls.objects.create(creator=creator, invited_user=invited_user, community=community)
 
     @classmethod
-    def is_user_with_username_invited_to_community_with_name(cls, username, community_name):
-        return cls.objects.filter(community__name=community_name, invited_user__username=username).exists()
+    def is_user_with_username_invited_to_community(cls, username, community_pk):
+        return cls.objects.filter(community__pk=community_pk, invited_user__username=username).exists()
 
     class Meta:
         #unique_together = (('invited_user', 'community', 'creator'),)
