@@ -1474,7 +1474,7 @@ class User(AbstractUser):
     ''''' начало сообщения '''''
 
     def get_private_chats(self):
-        return self.chat_users.filter(chat__type="PR",is_deleted=False)
+        return self.chat_users.filter(chat__type="PR",chat__is_deleted=False)
 
     def get_all_chats(self):
-        return self.chat_users.filter(is_deleted=False)
+        return self.chat_users.filter(chat__is_deleted=False)
