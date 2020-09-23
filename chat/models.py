@@ -75,10 +75,16 @@ class Chat(models.Model):
         chat.save()
         return chat
 
+    def user_exists(self, user_1, user_2):
+        a = self.chat_users.filter(user=user_1).exists()
+        b = self.chat_users.filter(user=user_2).exists()
+        if a and b and self.is_private():
+            return self
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
-    chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Сообщество")
+    chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
 
@@ -132,9 +138,9 @@ class Message(models.Model):
 
     @staticmethod
     def send_private_message(cls, sender, recipient, parent, message):
-        try:
-            chat = Chat.objects.get(chat__user=sender, chat__user=recipient)
-        except:
+        if ChatUsers.user_exists(sender):
+            chat = Chat.objects.get(chat__user=sender)
+        else:
             chat = Chat.create_chat(user=sender, type=Chat.TYPE_PRIVATE)
             ChatMembership.objects.create(user=recipient, chat=chat)
         new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, recipient=recipient, message=message)
