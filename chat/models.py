@@ -72,6 +72,12 @@ class Chat(models.Model):
     def get_members(self):
         return self.chat_relation.only("pk")
 
+    def get_first_message(self):
+        return self.chat_message.only("pk")[0]
+
+    def get_preview(self):
+        return self.chat_message.text
+
     @classmethod
     def create_chat(cls, creator, type):
         chat = cls.objects.create(creator=creator, type=type)

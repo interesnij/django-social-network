@@ -9,9 +9,24 @@ from chat.models import Message
 from django.views.decorators.http import require_http_methods
 
 
-class MessagesListView(TemplateView):
-    template_name = "message_list.html"
+class MessagesListView(ListView):
+	template_name = None
+	paginate_by = 15
 
+	def get(self,request,*args,**kwargs):
+		self.user = request.user
+		self.template_name = get_settings_template("chat/list.html", request)
+		return super(MessagesListView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(MessagesListView,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		return context
+
+	def get_queryset(self):
+		list = self.user.get_all_chats()
+		return list
+		
 
 def room(request, room_name):
     return render(request, 'room.html', {
