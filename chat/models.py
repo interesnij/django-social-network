@@ -51,6 +51,7 @@ class Chat(models.Model):
     type = models.CharField(blank=False, null=False, choices=TYPES, default=TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     class Meta:
         verbose_name = "Беседа"
