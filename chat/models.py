@@ -48,7 +48,7 @@ class Chat(models.Model):
         (TYPE_MANAGER, 'Административный чат'),
     )
     id = models.BigAutoField(primary_key=True)
-    type = models.CharField(blank=False, null=False, choices=TYPES, default=COMMUNITY_TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
+    type = models.CharField(blank=False, null=False, choices=TYPES, default=TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
 
