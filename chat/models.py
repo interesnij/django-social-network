@@ -43,9 +43,9 @@ class Chat(models.Model):
     TYPE_PUBLIC = 'PU'
     TYPE_MANAGER = 'M'
     TYPES = (
-        (COMMUNITY_TYPE_PUBLIC, 'Приватный чат'),
-        (COMMUNITY_TYPE_PRIVATE, 'Коллективный чат'),
-        (COMMUNITY_TYPE_CLOSED, 'Административный чат'),
+        (TYPE_PRIVATE, 'Приватный чат'),
+        (TYPE_PUBLIC, 'Коллективный чат'),
+        (TYPE_MANAGER, 'Административный чат'),
     )
     id = models.BigAutoField(primary_key=True)
     type = models.CharField(blank=False, null=False, choices=TYPES, default=COMMUNITY_TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
