@@ -55,7 +55,7 @@ class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
