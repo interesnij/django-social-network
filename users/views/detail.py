@@ -52,7 +52,7 @@ class UserGallery(TemplateView):
         if self.user.pk == request.user.pk:
             self.albums_list = self.user.get_my_albums().order_by('-created')
         else:
-            self.albums_list = self.album.get_albums().order_by('-created')
+            self.albums_list = self.user.get_albums().order_by('-created')
 
         self.template_name = get_template_user_photo(self.user, "user_gallery/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
