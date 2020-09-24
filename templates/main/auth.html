@@ -16,8 +16,8 @@
                                 <div class="media-body">
                                     <h6 class="my-0 content-color-primary">Основные вехи развития</h6>
                                     <p class="small mb-0">
-                                      <a style="text-decoration:underline" href="{% url 'user' pk=1 %}" class="ajax">Администратор</a>,
-                                      <a style="text-decoration:underline" href="{% url 'community_detail' pk=1 %}" class="ajax">Сообщество</a>
+                                      <a href="{% url 'user' pk=1 %}" class="ajax underline">Администратор</a>,
+                                      <a href="{% url 'community_detail' pk=1 %}" class="ajax underline">Сообщество</a>
                                     </p>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
                         <label class="custom-control-label" for="register_">
-                            Я принимаю <a href="{% url 'terms' %}" style="text-decoration:underline;" class="ajax">Правила сайта</a>.
+                            Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a>.
                         </label>
                     </div>
                 </div>

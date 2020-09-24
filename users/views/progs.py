@@ -46,6 +46,8 @@ class GetUserGender(View):
             request.user.gender = "Man"
         if name in enfemalenames and surname in enfemalesurnames:
             request.user.gender = "Fem"
+        if request.user.gender = "Unc":
+            request.user.gender = "Man"
         request.user.save(update_fields=['gender'])
         return HttpResponse(request.user.gender)
 

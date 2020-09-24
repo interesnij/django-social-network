@@ -28,10 +28,10 @@
                   <div class="card mb-3">
                     <span style="padding: 5px;">
                       Новое видео в альбоме
-                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_video_list' pk=object.community.pk uuid=object.uuid %}">
+                      <a class="ajax underline" href="{% url 'community_video_list' pk=object.community.pk uuid=object.uuid %}">
                        {{ object.title }}
                       </a>&nbsp;
-                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
                         сообщества {{ object.community }}
                       </a>
                     </span>
@@ -57,10 +57,10 @@
                 <div class="card mb-3">
                   <span style="padding: 5px;">
                     Альбом
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
+                    <a class="ajax underline" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
                      {{ object.title }}
                     </a>&nbsp;
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
                       {{ object.creator.get_full_name_genitive }}
                     </a>
                   </span>
@@ -88,10 +88,10 @@
                 {% if object.community %}
                   <div class="card mb-3">
                     <span style="padding: 5px;">
-                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_video' pk=object.community.pk %}">
+                      <a class="ajax underline" href="{% url 'community_video' pk=object.community.pk %}">
                        Новое видео
                       </a>&nbsp;
-                      <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">
+                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
                         сообщества {{ object.community }}
                       </a>
                     </span>
@@ -116,10 +116,10 @@
                 {% else %}
                 <div class="card mb-3">
                   <span style="padding: 5px;">
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user_video' pk=object.creator.pk %}">
+                    <a class="ajax underline" href="{% url 'user_video' pk=object.creator.pk %}">
                      Новое видео
                     </a>&nbsp;
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">
+                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
                       {{ object.creator.get_full_name_genitive }}
                     </a>
                   </span>
@@ -152,11 +152,11 @@
             </div>
             <h6 style="margin: 20px;text-align: center;">
               Пока новостей нет.
-              <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
+              <a href="{% url 'all_users' %}" class="ajax underline">
                 Найдите друзей
               </a>
               и
-              <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
+              <a href="{% url 'all_communities' %}" class="ajax underline">
               вступайте в сообщества
               </a>, и их записи будут отображаться здесь.</h6>
           </div>

@@ -13,7 +13,7 @@
         <div class="media-body" style="margin-left: 10px;">
           <h6 class="my-0 mt-1">{{ playlist.name }}</h6>
           <p class="">
-            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=playlist.community.pk %}">
+            <a class="ajax underline" href="{% url 'community_detail' pk=playlist.community.pk %}">
               {{ playlist.community.name }}
             </a>
             <br>

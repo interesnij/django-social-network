@@ -24,7 +24,7 @@
                 {% if good.community %}
                 <span style="padding: 5px;">
                     Новый товар в сообществе &nbsp;
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=good.community.pk %}">
+                    <a class="ajax underline" href="{% url 'community_detail' pk=good.community.pk %}">
                         {{ good.community }}
                     </a>
                 </span>
@@ -32,7 +32,7 @@
                 {% else %}
                 <span style="padding: 5px;">
                     Новый товар &nbsp;
-                    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=good.creator.pk %}">
+                    <a class="ajax underline" href="{% url 'user' pk=good.creator.pk %}">
                         {{ good.creator.get_full_name_genitive }}
                     </a>
                 </span>
@@ -49,11 +49,11 @@
                 </div>
                 <h6 style="margin: 20px;text-align: center;">
                     Пока новостей нет.
-                    <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
+                    <a href="{% url 'all_users' %}" class="ajax underline">
                         Найдите друзей
                     </a>
                     и
-                    <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
+                    <a href="{% url 'all_communities' %}" class="ajax underline">
                         вступайте в сообщества
                     </a>, и их записи будут отображаться здесь.</h6>
             </div>

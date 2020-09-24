@@ -32,7 +32,7 @@
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                                   <div class="media-body">
                                       <h5 class="mt-1">Друзья
-                                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                                        <a class="ajax underline" href="{% url 'user' pk=user.pk %}">
                                           {{ user.get_full_name_genitive }}
                                         </a>
                                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_connections }}</small>

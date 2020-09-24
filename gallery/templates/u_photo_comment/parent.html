@@ -144,7 +144,7 @@
                       {% for reply in comment.get_replies %}
                         {% if reply.is_deleted %}
                           <div class="comment">
-                            <p style="text-decoration:underline;display: flex;">Комментарий удален</p>
+                            <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
                           {% include 'u_photo_comment/reply.html' %}

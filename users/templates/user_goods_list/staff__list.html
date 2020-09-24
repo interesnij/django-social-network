@@ -21,7 +21,7 @@
                 <div class="media-body" style="margin-left: 10px;">
                   <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
                   <p class="">Товары
-                  <a href="{% url 'user' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
+                  <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
                     {{ user.get_full_name_genitive }}
                   </a>
                   </p>

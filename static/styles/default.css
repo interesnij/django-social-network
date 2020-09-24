@@ -3,6 +3,10 @@
 
 }
 
+.underline {
+text-decoration:underline;
+}
+
 .post_attach_panel .media,
 .post_attach_panel .card-body,
 .post_attach_panel .row {

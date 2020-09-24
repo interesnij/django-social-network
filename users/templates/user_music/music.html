@@ -24,7 +24,7 @@
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">Основной плейлист ({{ playlist.count_tracks }})</h6>
                     <p class="">Музыка
-                    <a href="{% url 'user' pk=user.pk %}" class="ajax" style="text-decoration:underline;">
+                    <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
                       {{ user.get_full_name_genitive }}
                     </a>
                     </p>
@@ -58,7 +58,7 @@
                   </div>
                   <h6 style="margin: 20px;text-align: center;">
                     В основном плейлисте
-                    <a href="{% url 'user' pk=user.pk %}" style="text-decoration:underline;" class="ajax">
+                    <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
                       {{ user.get_full_name_genitive }}
                     </a>
                     пока нет музыки.

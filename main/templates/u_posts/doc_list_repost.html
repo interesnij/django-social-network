@@ -1,7 +1,7 @@
 {% with list=object.get_doc_list_repost %}
 
   <span style="padding: 5px;">
-    <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
+    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
     {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} списком документов
   </span>
 

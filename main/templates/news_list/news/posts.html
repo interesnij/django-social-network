@@ -28,7 +28,7 @@
                     </div>
                   {% else %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
-                      {% include object.get_u_news_parent %} 
+                      {% include object.get_u_news_parent %}
                       {% include 'post_user/info.html' %}
                     </div>
                   {% endif %}
@@ -57,11 +57,11 @@
             </div>
             <h6 style="margin: 20px;text-align: center;">
               Пока новостей нет.
-              <a href="{% url 'all_users' %}" style="text-decoration:underline;" class="ajax">
+              <a href="{% url 'all_users' %}" class="ajax underline">
                 Найдите друзей
               </a>
               и
-              <a href="{% url 'all_communities' %}" style="text-decoration:underline;" class="ajax">
+              <a href="{% url 'all_communities' %}" class="ajax underline">
               вступайте в сообщества
               </a>, и их записи будут отображаться здесь.</h6>
           </div>

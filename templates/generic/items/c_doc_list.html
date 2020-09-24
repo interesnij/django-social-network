@@ -13,7 +13,7 @@
           <p class="">
             Документов: {{ list.count_docs }}
             <br>
-            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=list.community.pk %}">
+            <a class="ajax underline" href="{% url 'community_detail' pk=list.community.pk %}">
               {{ list.community.name }}
             </a>
           </p>
