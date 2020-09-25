@@ -1479,4 +1479,4 @@ class User(AbstractUser):
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user=self, is_deleted=False)
+        return Chat.objects.filter(chat_relation__user=self, is_deleted=False, chat_message__isnull=False)
