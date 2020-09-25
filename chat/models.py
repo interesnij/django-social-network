@@ -156,7 +156,7 @@ class Message(models.Model):
         if not current_chat:
             current_chat = Chat.create_chat(creator=creator, type=Chat.TYPE_PRIVATE)
             ChatMembership.objects.create(user=user, chat=current_chat)
-        new_message = Chat.objects.create(chat=current_chat, creator=creator, parent=None, text=text)
+        new_message = Message.objects.create(chat=current_chat, creator=creator, parent=None, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
@@ -164,7 +164,7 @@ class Message(models.Model):
 
     def send_message(chat, creator, parent, text):
         # программа для отсылки сообщения, когда чат известен
-        new_message = Chat.objects.create(chat=chat, creator=creator, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=creator, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
