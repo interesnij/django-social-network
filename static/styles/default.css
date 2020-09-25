@@ -2,8 +2,12 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  cursor: pointer;
 }
-
+#signup select::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
 .anon_color_settings .custom-control {
   width: 15.5% !important;
 }
