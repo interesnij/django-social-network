@@ -76,7 +76,11 @@ class Chat(models.Model):
         return self.chat_message.only("pk")[0]
 
     def get_preview(self):
-        return self.chat_message.text
+        return self.get_first_message().text
+
+    def get_two_members(self):
+        two = self.chat_relation.all()[:2]
+        return two[0].get_full_name() + ", " two[1].get_full_name()
 
     @classmethod
     def create_chat(cls, creator, type):
