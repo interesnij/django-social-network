@@ -16,7 +16,9 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
-    date_birtday = serializers.CharField(required=True, write_only=True)
+    date_day = serializers.CharField(required=True, write_only=True)
+    date_month = serializers.CharField(required=True, write_only=True)
+    date_year = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -50,7 +52,12 @@ class RegisterSerializer(serializers.Serializer):
         users_count = User.objects.only("pk").count()
 
         user.phone = users_count + 156
-        self.birthday = self.validated_data.get('date_birtday', '')
+        self.date_day = self.validated_data.get('date_day', '')
+        self.date_month = self.validated_data.get('date_month', '')
+        self.date_year = self.validated_data.get('date_year', '')
+
+        self.birtday = str(self.date_day) + "." + str(self.date_month) + "." + str(self.date_year)
+
         self.birtday = datetime.strptime(self.birthday, '%m/%d/%Y')
         if timezone.now() < self.birtday:
             raise serializers.ValidationError("tttrrrrtttrrr")
