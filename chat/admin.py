@@ -16,5 +16,5 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Chat, ChatAdmin)
-admin.site.register(ChatUsers, ChatUsers)
+admin.site.register(ChatUsers, ChatUsersAdmin)
 admin.site.register(Message, MessageAdmin)
