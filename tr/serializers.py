@@ -56,7 +56,7 @@ class RegisterSerializer(serializers.Serializer):
         self.date_month = self.validated_data.get('date_month', '')
         self.date_year = self.validated_data.get('date_year', '')
 
-        birthday = str(self.date_day) + "." + str(self.date_month) + "." + str(self.date_year)
+        birthday = str(self.date_day) + "/" + str(self.date_month) + "/" + str(self.date_year)
 
         birthday = datetime.strptime(birthday, '%m/%d/%Y')
         if timezone.now() < birthday:
