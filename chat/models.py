@@ -84,7 +84,7 @@ class Chat(models.Model):
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
         if count:
-            return count
+            return '<span class="icon-rounded icon-40 bg-danger ml-2">' + str(count) + '</span>'
         else:
             return ""
 
