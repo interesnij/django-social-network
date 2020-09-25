@@ -311,11 +311,11 @@ on('body', 'click', '#register_ajax', function() {
   else if (!form.querySelector("#date_day").value){
       form.querySelector("#date_day").style.border = "1px #FF0000 solid";
       toast_error("День рождения - обязательное поле!")
-  } else if (!form.querySelector("#password2").value){
-      form.querySelector("#password2").style.border = "1px #FF0000 solid";
+  } else if (!form.querySelector("#date_month").value){
+      form.querySelector("#date_month").style.border = "1px #FF0000 solid";
       toast_error("Месяц рождения - обязательное поле!")
-  } else if (!form.querySelector("#password2").value){
-      form.querySelector("#password2").style.border = "1px #FF0000 solid";
+  } else if (!form.querySelector("#date_year").value){
+      form.querySelector("#date_years").style.border = "1px #FF0000 solid";
       toast_error("Год рождения - обязательное поле!")
   } else {this.disabled = true}
   form_data = new FormData(form);
