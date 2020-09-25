@@ -113,8 +113,7 @@ class ChatUsers(models.Model):
 
 class Message(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    sender = models.ForeignKey(ChatUsers, related_name='sent_user', verbose_name="Отправитель", null=True, on_delete=models.SET_NULL)
-    recipient = models.ForeignKey(ChatUsers, related_name='received_user', null=True, blank=True, verbose_name="Получатель", on_delete=models.SET_NULL)
+    creator = models.ForeignKey(ChatUsers, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(auto_now_add=True)
     message = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
@@ -127,8 +126,8 @@ class Message(models.Model):
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message')
 
     class Meta:
-        verbose_name = "Сооьщение"
-        verbose_name_plural = "Сооьщения"
+        verbose_name = "Сообщение"
+        verbose_name_plural = "Сообщения"
         ordering = "-created",
         indexes = (BrinIndex(fields=['created']),)
 
@@ -141,27 +140,28 @@ class Message(models.Model):
             self.save()
 
     @staticmethod
-    def send_global_private_message(cls, sender, recipient, parent, message):
-        # программа для отсылки сообщений не в чате
-        chat_list = sender.get_private_chats()
+    def get_or_create_chat_and_send_message(cls, creator, user, message):
+        # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
+        # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
+        chat_list = creator.get_all_chats()
         current_chat = None
         for chat in chat_list:
             users = chat.get_members().values('id')
             users_ids = [user['id'] for user in users]
-            if recipient.pk in users_ids:
+            if user.pk in users_ids:
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.create_chat(user=sender, type=Chat.TYPE_PRIVATE)
-            ChatMembership.objects.create(user=recipient, chat=current_chat)
-        new_message = cls.objects.create(chat=current_chat, sender=sender, parent=parent, recipient=recipient, message=message)
+            current_chat = Chat.create_chat(user=creator, type=Chat.TYPE_PRIVATE)
+            ChatMembership.objects.create(user=user, chat=current_chat)
+        new_message = cls.objects.create(chat=current_chat, creator=creator, parent=None, message=message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender, 'recipient': recipient}
-        async_to_sync(channel_layer.group_send)(recipient.username, payload)
+        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
+        async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
     @staticmethod
-    def send_private_message(cls, chat, sender, recipient, parent, message):
-        # программа для отсылки сообщений в чате
+    def send_message(cls, chat, sender, recipient, parent, message):
+        # программа для отсылки сообщения, когда чат известен
         new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, recipient=recipient, message=message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender, 'recipient': recipient}
