@@ -70,7 +70,8 @@ class Chat(models.Model):
         return self.type == Chat.TYPE_MANAGER
 
     def get_members(self):
-        return self.chat_relation.only("pk")
+        members = User.objects.filter(chat_users__chat_relation__pk=self.pk)
+        return members
 
     def get_members_ids(self):
         users = self.get_members().values('id')
