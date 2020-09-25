@@ -73,7 +73,7 @@ class Chat(models.Model):
         return self.chat_relation.only("pk")
 
     def get_first_message(self):
-        return self.message.filter(is_deleted=False).first()
+        return self.chat_message.filter(is_deleted=False).first()
 
     def get_preview(self):
         return self.get_first_message().text
