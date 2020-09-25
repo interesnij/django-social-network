@@ -60,7 +60,7 @@ class Chat(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return self.message
+        return self.creator.get_full_name()
 
     def is_private(self):
         return self.type == Chat.TYPE_PRIVATE
