@@ -21,7 +21,7 @@
                   {% with message=object.get_first_message %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                     <div class="media">
-                      <figure>
+                      <figure> {{ message }}
                         {% if message.creator.get_avatar %}
                           <img src="{{ message.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
