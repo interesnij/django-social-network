@@ -89,6 +89,9 @@ class Chat(models.Model):
         chat.save()
         return chat
 
+    def is_not_empty(self):
+        return self.chat_message.filter(chat=self).values("pk").exists()
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
