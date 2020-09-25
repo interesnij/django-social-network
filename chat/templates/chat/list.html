@@ -18,10 +18,11 @@
 
               <ul class="list-group profile_block_paginate" id="messages_container">
                   {% for object in object_list %}
+                  {{ object }}
                   {% with message=object.get_first_message %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                     <div class="media">
-                      <figure> {{ message }}
+                      <figure>
                         {% if message.creator.get_avatar %}
                           <img src="{{ message.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
