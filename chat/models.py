@@ -161,9 +161,7 @@ class Message(models.Model):
         chat_list = creator.get_all_chats()
         current_chat = None
         for chat in chat_list:
-            users = chat.get_members().values('id')
-            users_ids = [_user['id'] for _user in users]
-            if user.pk in users_ids:
+            if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
             current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PRIVATE)
