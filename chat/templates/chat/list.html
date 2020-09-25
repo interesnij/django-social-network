@@ -39,9 +39,7 @@
                         </h5>
                         <p class="mb-0">{{ object.get_preview }}</p>
                       </div>
-                      <span class="icon-rounded icon-40 bg-danger ml-2">
-                        {{ object|get_unread_count:request.user.pk }}
-                      </span>
+                      {{ object|get_unread_count:request.user.pk }}
                     </div>
                   </li>
                   {% endwith %}
