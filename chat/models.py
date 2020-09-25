@@ -80,7 +80,7 @@ class Chat(models.Model):
 
     def get_two_members(self):
         two = self.chat_relation.all()[:2]
-        return two[0] + ", " + two[1]
+        return str(two[0]) + ", " + str(two[1])
 
     @classmethod
     def create_chat(cls, creator, type):
