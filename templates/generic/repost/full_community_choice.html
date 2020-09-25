@@ -32,7 +32,12 @@
     <div id="show_user_connections" {% if object.creator.pk != request.user.pk %}style="display:none"{% endif %}>
       <select name="user_connections" multiple="" id="id_user_connections" style="height: 100%;">
         {% for chat in request.user.get_all_chats %}
-          <option value="c{{ chat.pk }}">{{ chat.get_two_members }}</option>
+        {% if chat.is_not_empty %}
+        <option value="c{{ chat.pk }}">
+          💬
+          {{ chat.get_two_members }}
+        </option>
+        {% endif %
         {% endfor %}
         {% for user in request.user.get_all_connection %}
           {% if user.pk != object.creator.pk %}
