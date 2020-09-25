@@ -6,7 +6,7 @@ from posts.forms import PostForm
 from posts.models import Post
 from gallery.models import Photo, Album
 from users.models import User
-from chat.models import Message
+from chat.models import Message, Chat
 from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
@@ -397,13 +397,25 @@ class CMPhotoAlbumRepost(View):
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
             album.post.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост фотоальбома сообщества")
-                new_post.post_message.add(message)
+            for object_id in connections:
+                if object_id[0] == "c":
+                    del object_id[0]
+                    chat = Chat.objects.get(pk=object_id)
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_message_processing(new_post)
+                    message = Message.send_message(chat=chat, creator=request.user, parent=None, message="Репост фотоальбома сообщества")
+                    new_post.post_message.add(message)
+                elif object_id[0] == "u":
+                    del object_id[0]
+                    user = User.objects.get(pk=object_id)
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_message_processing(new_post)
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, message="Репост фотоальбома сообщества")
+                    new_post.post_message.add(message)
+                else:
+                    return HttpResponse("not ok")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

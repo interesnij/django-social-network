@@ -79,7 +79,7 @@ class Chat(models.Model):
         return self.get_first_message().text
 
     def get_two_members(self):
-        two = self.chat_relation.all()[:2]
+        two = self.chat_relation.exclude()[:2]
         return str(two[0]) + ", " + str(two[1])
 
     @classmethod
@@ -151,11 +151,11 @@ class Message(models.Model):
         current_chat = None
         for chat in chat_list:
             users = chat.get_members().values('id')
-            users_ids = [user['id'] for user in users]
+            users_ids = [_user['id'] for _user in users]
             if user.pk in users_ids:
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.create_chat(user=creator, type=Chat.TYPE_PRIVATE)
+            current_chat = Chat.create_chat(creator=creator, type=Chat.TYPE_PRIVATE)
             ChatMembership.objects.create(user=user, chat=current_chat)
         new_message = cls.objects.create(chat=current_chat, creator=creator, parent=None, message=message)
         channel_layer = get_channel_layer()
@@ -164,21 +164,21 @@ class Message(models.Model):
         return new_message
 
     @staticmethod
-    def send_message(cls, chat, sender, recipient, parent, message):
+    def send_message(cls, chat, creator, parent, message):
         # программа для отсылки сообщения, когда чат известен
-        new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, recipient=recipient, message=message)
+        new_message = cls.objects.create(chat=chat, creator=creator, parent=parent, message=message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender, 'recipient': recipient}
-        async_to_sync(channel_layer.group_send)(recipient.username, payload)
+        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'creator': creator}
+        async_to_sync(channel_layer.group_send)(creator.username, payload)
         return new_message
 
     @staticmethod
-    def send_public_message(cls, chat, sender, parent, message):
+    def send_public_message(cls, chat, creator, parent, message):
         # отсылка сообщений в групповой чат
-        new_message = cls.objects.create(chat=chat, sender=sender, parent=parent, message=message)
+        new_message = cls.objects.create(chat=chat, creator=creator, parent=parent, message=message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'sender': sender,}
-        async_to_sync(channel_layer.group_send)(sender.username, payload)
+        payload = {'type': 'receive', 'key': 'message', 'message_id': new_message.uuid, 'creator': creator,}
+        async_to_sync(channel_layer.group_send)(creator.username, payload)
         return new_message
 
     def get_created(self):
