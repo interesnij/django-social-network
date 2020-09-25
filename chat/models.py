@@ -154,9 +154,12 @@ class Message(models.Model):
             if user.pk in users_ids:
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.create_chat(creator=creator, type=Chat.TYPE_PRIVATE)
-            ChatMembership.objects.create(user=user, chat=current_chat)
-        new_message = Message.objects.create(chat=current_chat, creator=creator, parent=None, text=text)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PRIVATE)
+            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
+            ChatUsers.objects.create(user=user, chat=current_chat)
+        else:
+            sender = ChatUsers.objects.get(user=creator, chat=current_chat)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, parent=None, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
