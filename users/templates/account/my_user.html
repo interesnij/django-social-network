@@ -10,9 +10,9 @@
 {% endblock %}
 {% block content %}
 
-{% if user.get_members_ids %}
-{% for chat in user.get_members_ids %}
-{{ chat.get_members }}
+{% if user.get_all_chats %}
+{% for chat in user.get_all_chats %}
+{{ chat.get_members_ids }}
 {% endfor %}
 {% endif %}
 <div class="mt-3 pk_saver" data-pk="{{ user.pk }}">
