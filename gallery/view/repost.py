@@ -387,7 +387,7 @@ class UMPhotoAlbumRepost(View):
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, message="Репост фотоальбома пользователя")
                     new_post.post_message.add(message)
                 else:
-                    return HttpResponse("not ok")
+                    return HttpResponse("hy")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
