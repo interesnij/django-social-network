@@ -315,7 +315,7 @@ on('body', 'click', '#register_ajax', function() {
       form.querySelector("#date_month").style.border = "1px #FF0000 solid";
       toast_error("Месяц рождения - обязательное поле!")
   } else if (!form.querySelector("#date_year").value){
-      form.querySelector("#date_years").style.border = "1px #FF0000 solid";
+      form.querySelector("#date_year").style.border = "1px #FF0000 solid";
       toast_error("Год рождения - обязательное поле!")
   } else {this.disabled = true}
   form_data = new FormData(form);
