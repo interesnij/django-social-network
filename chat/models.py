@@ -86,7 +86,7 @@ class Chat(models.Model):
         if count:
             return count
         else:
-            return None
+            return ""
 
     def get_preview(self):
         return self.get_first_message().text
