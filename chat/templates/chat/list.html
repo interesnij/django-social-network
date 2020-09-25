@@ -22,15 +22,15 @@
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                     <div class="media">
                       <figure>
-                        {% if message.sender.get_avatar %}
-                          <img src="{{ message.sender.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% if message.creator.get_avatar %}
+                          <img src="{{ message.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
                           <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                         {% endif %}
                       </figure>
                       <div class="media-body">
-                        <h5 class="time-title mb-0">{{ message.sender.get_full_name }}
-                          {% if message.sender.get_online %}
+                        <h5 class="time-title mb-0">{{ message.creator.get_full_name }}
+                          {% if message.creator.get_online %}
                             <span class="status bg-success"></span>
                           {% else %}
                             <span class="status bg-info"></span>
