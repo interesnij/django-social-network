@@ -376,7 +376,7 @@ class UMPhotoAlbumRepost(View):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_message_processing(new_post)
-                    message = Message.send_message(chat=chat, creator=request.user, parent=None, message="Репост фотоальбома пользователя")
+                    message = Message.send_message(chat=chat, creator=request.user, parent=None, text="Репост фотоальбома пользователя")
                     new_post.post_message.add(message)
                 elif object_id[0] == "u":
                     del object_id[0]
@@ -384,7 +384,7 @@ class UMPhotoAlbumRepost(View):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_message_processing(new_post)
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, message="Репост фотоальбома пользователя")
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, text="Репост фотоальбома пользователя")
                     new_post.post_message.add(message)
                 else:
                     return HttpResponse("hy")
@@ -414,14 +414,14 @@ class CMPhotoAlbumRepost(View):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_message_processing(new_post)
-                    message = Message.send_message(chat=chat, creator=request.user, parent=None, message="Репост фотоальбома сообщества")
+                    message = Message.send_message(chat=chat, creator=request.user, parent=None, text="Репост фотоальбома сообщества")
                     new_post.post_message.add(message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_message_processing(new_post)
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, message="Репост фотоальбома сообщества")
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, text="Репост фотоальбома сообщества")
                     new_post.post_message.add(message)
                 else:
                     return HttpResponse("not ok")
