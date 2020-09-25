@@ -165,7 +165,7 @@ class Message(models.Model):
     def send_message(chat, creator, parent, text):
         # программа для отсылки сообщения, когда чат известен
         sender = ChatUsers.objects.get(user=creator)
-        new_message = Message.objects.create(chat=chat, creator_pk=sender.pk, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
@@ -173,7 +173,8 @@ class Message(models.Model):
 
     def send_public_message(chat, creator, parent, text):
         # отсылка сообщений в групповой чат
-        new_message = Chat.objects.create(chat=chat, creator=creator, parent=parent, text=text)
+        sender = ChatUsers.objects.get(user=creator)
+        new_message = Chat.objects.create(chat=chat, creator=sender, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator,}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
