@@ -41,7 +41,7 @@
                       </div>
                     </div>
                   </li>
-                  {% endwith %}({% object|get_unread_count:request.user.pk %})
+                  {% endwith %}({{ object|get_unread_count:request.user.pk }})
                   {% endfor %}
               </ul>
 
