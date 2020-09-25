@@ -72,6 +72,11 @@ class Chat(models.Model):
     def get_members(self):
         return self.chat_relation.only("pk")
 
+    def get_members_ids(self):
+        users = self.get_members().values('id')
+        users_ids = [_user['id'] for _user in users]
+        return users_ids
+
     def get_first_message(self):
         return self.chat_message.filter(is_deleted=False).first()
 

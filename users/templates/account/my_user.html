@@ -10,8 +10,8 @@
 {% endblock %}
 {% block content %}
 
-{% if user.get_all_chats %}
-{% for chat in user.get_all_chats %}
+{% if user.get_members_ids %}
+{% for chat in user.get_members_ids %}
 {{ chat.get_members }}
 {% endfor %}
 {% endif %}
