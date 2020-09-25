@@ -12,7 +12,7 @@
 
 {% if user.get_all_chats %}
 {% for chat in user.get_all_chats %}
-{{ chat.get_members }}
+{{ chat.get_members_ids }}
 {% endfor %}
 {% endif %}
 <div class="mt-3 pk_saver" data-pk="{{ user.pk }}">
