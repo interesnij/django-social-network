@@ -4,5 +4,5 @@ from chat.models import Message
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ("sender", "created")
-    list_filter = ("sender")
+    list_display = ("creator", "created")
+    list_filter = ("creator")
