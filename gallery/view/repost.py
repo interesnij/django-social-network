@@ -379,7 +379,6 @@ class UMPhotoAlbumRepost(View):
                     message = Message.send_message(chat=chat, creator=request.user, parent=None, text="Репост фотоальбома пользователя")
                     new_post.post_message.add(message)
                 elif object_id[0] == "u":
-                    del object_id[0]
                     user = User.objects.get(pk=object_id[1:])
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                     get_post_attach(request, new_post)
