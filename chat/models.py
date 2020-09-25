@@ -82,7 +82,7 @@ class Chat(models.Model):
         return self.chat_message.filter(is_deleted=False).first()
 
     def get_unread_count_message(self, user_id):
-        return self.chat_message.filter(is_deleted=False, unread=True).exclude(message_creator__user_id=user_id).values("pk").count()
+        return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
 
     def get_preview(self):
         return self.get_first_message().text
