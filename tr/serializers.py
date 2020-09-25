@@ -56,12 +56,12 @@ class RegisterSerializer(serializers.Serializer):
         self.date_month = self.validated_data.get('date_month', '')
         self.date_year = self.validated_data.get('date_year', '')
 
-        self.birtday = str(self.date_day) + "." + str(self.date_month) + "." + str(self.date_year)
+        birtday = str(self.date_day) + "." + str(self.date_month) + "." + str(self.date_year)
 
-        self.birtday = datetime.strptime(self.birthday, '%m/%d/%Y')
-        if timezone.now() < self.birtday:
+        birtday = datetime.strptime(self.birthday, '%m/%d/%Y')
+        if timezone.now() < birtday:
             raise serializers.ValidationError("tttrrrrtttrrr")
-        user.birthday = self.birtday
+        user.birthday = birtday
 
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
