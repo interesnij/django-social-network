@@ -73,7 +73,7 @@ class Chat(models.Model):
         return self.chat_relation.only("pk")
 
     def get_first_message(self):
-        return self.chat_message.first()
+        return self.chat_message
 
     def get_preview(self):
         return self.get_first_message().text
