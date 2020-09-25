@@ -31,7 +31,7 @@
                       </figure>
                       <div class="media-body">
                         <h5 class="time-title mb-0">{{ message.creator }}
-                          {% if message.creator.get_online %}
+                          {% if message.creator.user.get_online %}
                             <span class="status bg-success"></span>
                           {% else %}
                             <span class="status bg-info"></span>
