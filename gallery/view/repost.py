@@ -367,7 +367,7 @@ class UMPhotoAlbumRepost(View):
             post = form_post.save(commit=False)
             connections = request.POST.get("chat_items")
             if not connections:
-                return HttpResponseBadRequest()
+                return HttpResponse("no connections")
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
             album.post.add(parent)
             for object_id in connections:
