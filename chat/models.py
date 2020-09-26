@@ -8,6 +8,7 @@ from channels.layers import get_channel_layer
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from posts.models import Post
+from common.utils import try_except
 
 
 class MessageQuerySet(models.query.QuerySet):
