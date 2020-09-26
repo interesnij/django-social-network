@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from chat import *
+from chat.views import *
 
 
 urlpatterns = [
