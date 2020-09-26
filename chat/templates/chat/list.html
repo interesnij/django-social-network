@@ -22,7 +22,7 @@
 
                   {% with message=object.get_first_message %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
-                    <a class="ajax" href="{% url 'chat_detali' uuid=object.uuid %}">
+                    <a class="ajax" href="{% url 'chat_detali' pk=object.pk %}">
                     <div class="media">
                       <figure>
                         {% if message.creator.user.get_avatar %}

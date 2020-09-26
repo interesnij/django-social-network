@@ -4,5 +4,5 @@ from chat.views import *
 
 urlpatterns = [
     url(r'^$', MessagesListView.as_view(), name='messages_list'),
-    url(r'^(?P<uuid>[0-9a-f-]+)/$', ChatDetailView.as_view(), name='chat_detali'),
+    url(r'^(?P<pk>\d+)/$', ChatDetailView.as_view(), name='chat_detali'),
 ]

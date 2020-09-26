@@ -34,7 +34,7 @@ class ChatDetailView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("chat/chat.html", request)
-		self.chat = Chat.objects.get(uuid=self.kwargs["uuid"])
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
