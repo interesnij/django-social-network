@@ -66,7 +66,9 @@ function create_preview_commmunity(_this){
   $name = _this.querySelector("h6").innerHTML;
 
   $div_body = document.createElement("div");
-  $div_body.innerHTML = '<div class="media-body" style="padding-left: 5px"><h6 style="white-space: nowrap;position: absolute;bottom: 14px;">' + $name + '</h6></div>'
+  $div_body.classList.add("media-body");
+  $div_body.style.paddingLeft = "5px";
+  $div_body.innerHTML = '<h6 style="white-space: nowrap;position: absolute;bottom: 14px;">' + $name + '</h6>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="communities[]" value="' + pk + '">';
