@@ -282,9 +282,10 @@ on('#ajax', 'click', '.music_preview_delete', function() {
 });
 
 on('#ajax', 'click', '.preview_item_delete', function() {
-  parent = this.parentElement;
-  this.remove();
+  _this = this;
+  parent = _this.parentElement;
   parent.querySelector(".load_pag") ? null : parent.innerHTML = "";
+  _this.remove();
 });
 
 on('#ajax', 'click', '.good_preview_delete', function() {
