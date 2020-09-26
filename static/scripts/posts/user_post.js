@@ -376,6 +376,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
 on('#votes_loader', 'click', '.commmunty_load_one', function() {
   _this = this;
   block = _this.parentElement.parentElement.parentElement.parentElement;
+  console.log(block)
   document.querySelector(".create_fullscreen")
   commmunity_form_selected(_this, block.querySelector("#selected_message_target_items"))
 });
