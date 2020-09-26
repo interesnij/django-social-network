@@ -22,6 +22,7 @@ class DocList(models.Model):
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_doclist')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doclist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()

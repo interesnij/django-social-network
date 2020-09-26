@@ -81,7 +81,7 @@ class Chat(models.Model):
         return users_ids
 
     def get_first_message(self):
-        return self.chat_message.filter(is_deleted=False).first()
+        return self.chat_message.filter(is_deleted=False).last()
 
     def get_messages(self):
         return self.chat_message.filter(is_deleted=False)
@@ -263,3 +263,76 @@ class Message(models.Model):
     def get_video_list_repost(self):
         video_list = self.post_message.parent.post_video_album.all()[0]
         return video_list
+
+    def get_attach_photos(self):
+        return self.message_photo.all()
+    def get_attach_photo_list(self):
+        return self.message_album.all()
+    def get_attach_videos(self):
+        return self.message_video.all()
+    def get_attach_video_list(self):
+        return self.message_video_album.all()
+    def get_attach_goods(self):
+        return self.message_good.all()
+    def get_attach_good_list(self):
+        return self.message_good_album.all()
+    def get_attach_articles(self):
+        return self.attached_message.all()
+    def get_attach_tracks(self):
+        return self.message_music.all()
+    def get_attach_music_list(self):
+        return self.message_soundlist.all()
+    def get_attach_docs(self):
+        return self.message_doc.all()
+    def get_attach_doc_list(self):
+        return self.message_doclist.all()
+
+    def is_photo_list_attached(self):
+        return self.message_album.filter(post__pk=self.pk).exists()
+    def is_playlist_attached(self):
+        return self.message_soundlist.filter(post__pk=self.pk).exists()
+    def is_video_list_attached(self):
+        return self.message_video_album.filter(post__pk=self.pk).exists()
+    def is_good_list_attached(self):
+        return self.message_good_album.filter(post__pk=self.pk).exists()
+    def is_doc_list_attached(self):
+        return self.message_doclist.filter(post__pk=self.pk).exists()
+
+    def get_items(self):
+        # метод выясняет, есть ли у сообщения прикрепленные большие элементы, а также их репосты.
+        # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
+        # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
+        # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
+        parent = self.post
+        if parent.is_photo_repost():
+            return "message/photo_repost.html"
+        elif parent.is_photo_album_repost():
+            return "message/photo_album_repost.html"
+        if self.is_photo_list_attached():
+            return "generic/parent_attach/u_photo_list_attach.html"
+        elif parent.is_good_repost():
+            return "message/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "message/good_list_repost.html"
+        elif self.is_good_list_attached():
+            return "generic/parent_attach/u_good_list_attach.html"
+        elif parent.is_music_repost():
+            return "message/music_repost.html"
+        elif parent.is_music_list_repost():
+            return "message/music_list_repost.html"
+        elif self.is_playlist_attached():
+            return "generic/parent_attach/u_playlist_attach.html"
+        elif parent.is_video_repost():
+            return "message/video_repost.html"
+        elif parent.is_video_list_repost():
+            return "message/video_list_repost.html"
+        elif self.is_video_list_attached():
+            return "generic/parent_attach/u_video_list_attach.html"
+        elif parent.is_doc_repost():
+            return "message/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "message/doc_list_repost.html"
+        elif self.is_doc_list_attached():
+            return "generic/parent_attach/u_doc_list_attach.html"
+        else:
+            return "message/parent_user.html"

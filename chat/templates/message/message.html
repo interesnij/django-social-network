@@ -11,7 +11,7 @@
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
       {% if object.is_repost %}
-        Это репост, прикинь?
+        {% include get_items %}
       {% else %}
         {{ object.text|linebreaks }}
       {% endif %}

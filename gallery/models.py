@@ -38,6 +38,7 @@ class Album(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
+    message = models.ManyToManyField("chat.Message", blank=True, related_name='message_album')
 
     class Meta:
         indexes = (
@@ -101,7 +102,7 @@ class Photo(models.Model):
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_photo')
     video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_photo')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_photo')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_video')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
