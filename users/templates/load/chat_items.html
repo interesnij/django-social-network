@@ -1,6 +1,6 @@
 <span class="chat_items_load_container" data-link="">
 {% for object in object_list %}
-<div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}">
+<div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}" style="padding-top: 5px;padding-bottom: 0">
   {% if object.first_name %}
   <div style="display:flex" class="chat_item_load_one pointer" data-pk="u{{ object.pk }}">
       <figure>
@@ -10,12 +10,12 @@
           <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         {% endif %}
       </figure>
-      <div class="media-body" style="padding-top: 5px; padding-left: 5px;margin-right:40px">
-          <p style="white-space: nowrap;">{{ object.get_full_name }}</p>
+      <div class="media-body" style="padding-left: 5px;margin-right:40px">
+          <p style="white-space: nowrap;position: absolute;bottom: -8px;">{{ object.get_full_name }}</p>
       </div>
   </div>
   {% elif object.type %}
-  <div style="display:flex" class="chat_item_load_one pointer" data-pk="c{{ object.pk }}">
+  <div style="display:flex" class="chat_item_load_one pointer" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 0;">
       <figure>
         {% if object.get_avatar %}
           <img style="width:30px;heigth:auto" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />
