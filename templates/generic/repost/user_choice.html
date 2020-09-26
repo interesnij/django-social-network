@@ -31,7 +31,7 @@
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     <div id="show_user_connections" {% if object.creator.pk != request.user.pk %}style="display:none"{% endif %}>
-      <select name="user_connections" multiple="" id="id_user_connections" type="hidden"></select>
+      <input name="user_connections" id="id_user_connections" type="hidden">
 
       <span id="user_chat_items_window"><span>
     </div>
