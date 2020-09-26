@@ -93,7 +93,7 @@ function create_preview_chat_item(_this){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="chat_items[]" value="' + pk + '">';
 
-  $div_flex.append($figure); $div_flex.append($div_body);
+  $div_flex.append($figure);
   $div.append($input);
   $div.append($div_flex);
   return $div
