@@ -27,7 +27,7 @@ on('#ajax', 'click', '.repost_for_community', function() {
 on('#ajax', 'click', '.repost_for_message', function() {
   parent = this.parentElement;
   parent.querySelector("#show_user_staff_communities").style.display = "none";
-  this.nextElementSibling.style.display = "unset"
+  list_load(parent.querySelector("#user_chat_items_window"), "/users/load/chat_items/");
 })
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");

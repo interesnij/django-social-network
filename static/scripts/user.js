@@ -233,9 +233,3 @@ on('#ajax', 'click', '#user_notify_video_btn', function() {
 on('#ajax', 'click', '#user_notify_music_btn', function() {
   send_form_with_pk_and_toast('/users/settings/notify_music/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_notify_music_form"), "Изменения приняты!")
 });
-
-
-on('#votes_loader', 'click', '.repost_for_message', function() {
-  block = document.getElementById("votes_loader");
-   list_load(block.querySelector("#user_chat_items_window"), "/users/load/chat_items/");
-})
