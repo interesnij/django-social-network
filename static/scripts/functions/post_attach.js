@@ -264,7 +264,7 @@ function commmunity_form_selected(_this, block) {
     return
   }
 
-  div = create_preview_commmunity(_this, pk);
+  div = create_preview_commmunity(_this);
   block.append(div);
   block.querySelector(".communities") ? null : ($communities = document.createElement("span"), $communities.innerHTML = '<input type="hidden" class="communities" name="communities" value="">', block.append($communities));
 }
@@ -275,7 +275,7 @@ function chat_item_form_selected(_this, block) {
     _this.parentElement.setAttribute("flow", "up");
     return
   }
-  div = create_preview_chat_item(_this, pk);
+  div = create_preview_chat_item(_this);
   block.append(div);
   block.querySelector(".chat_items") ? null : ($chat_items = document.createElement("span"), $chat_items.innerHTML = '<input type="hidden" class="chat_items" name="chat_items" value="">', block.append($chat_items));
 }
