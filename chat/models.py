@@ -151,7 +151,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message') 
+    post = models.ForeignKey("posts.Post", blank=True, related_name='post_message') 
 
     class Meta:
         verbose_name = "Сообщение"
