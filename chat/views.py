@@ -39,6 +39,7 @@ class ChatDetailView(ListView):
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 		chat_members = self.chat.chat_relation.exclude(user_id=self.pk)[:3]
+		self.list = request.user.get_all_chats()
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -48,7 +49,7 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		list = self.user.get_all_chats()
+		list = self.list
 		return list
 
 
