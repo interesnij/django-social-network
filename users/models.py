@@ -1482,6 +1482,7 @@ class User(AbstractUser):
         return Chat.objects.filter(chat_relation__user=self, is_deleted=False).exclude(chat_message__isnull=True)
 
     def get_chats_and_connections(self):
+        from itertools import chain
         chats = self.get_all_chats()
         friends = self.get_all_connection()
-        return chats.union(friends)
+        return list(chain(chats, friends))
