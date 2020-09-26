@@ -1,6 +1,6 @@
 <div class="form-group">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
     <div class="custom-control custom-radio repost_for_wall" style="margin-bottom:10px">
         <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
         <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
@@ -31,7 +31,7 @@
     {% endif %}
     </div>
 
-    <div class="col-md-7">
+    <div class="col-md-8">
       <span id="community_append">
         <span id="communities_input_collector">
           <input name="communities" type="hidden">
