@@ -93,6 +93,7 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
@@ -104,11 +105,8 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
   }
 
   else if(form_post.querySelector('#repost_radio_community').checked){
-    staff_communities = form_post.querySelector("#id_staff_communities");
-    selectedOptions = staff_communities.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
+
+    if(preview_target_block.querySelector(".chat_items").value){
       link_.open( 'POST', "/gallery/repost/u_c_photo_album_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
@@ -117,11 +115,7 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
   }
 
   else if(form_post.querySelector('#repost_radio_message').checked){
-    user_connections = form_post.querySelector("#id_user_connections");
-    selectedOptions = user_connections.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
+    if(preview_target_block.querySelector(".communities").value){
       link_.open( 'POST', "/gallery/repost/u_m_photo_album_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);

@@ -269,7 +269,7 @@ function commmunity_form_selected(_this, block) {
   block.querySelector(".communities") ? null : ($communities = document.createElement("span"), $communities.innerHTML = '<input type="hidden" class="communities" name="communities" value="">', block.append($communities));
 }
 function chat_item_form_selected(_this, block) {
-  pk = _this.getAttribute('data-pk');
+  pk = _this.getAttribute('data-pk'); 
   if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
     _this.setAttribute("tooltip", "Чат или друг уже выбран");
     _this.setAttribute("flow", "up");
