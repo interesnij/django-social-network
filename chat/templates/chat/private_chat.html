@@ -15,13 +15,7 @@
             {% endif %}
           </figure>
             <div class="media-body">
-                <h5 class="time-title mb-0">{{ user.user.get_full_name }}
-                  {% if user.user.get_online %}
-                    <small class="float-right text-success">Онлайн</small>
-                  {% else %}
-                    <small class="float-right text-muted">Был {{ user.user.get_last_activity }}</small>
-                  {% endif %}
-                </h5>
+                <h5 class="time-title mb-0">{{ user.user.get_full_name }}</h5>
                 {% if user.user.get_online %}
                   <p class="mb-0 text-success">Онлайн</p>
                 {% else %}
