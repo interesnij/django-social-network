@@ -15,12 +15,12 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.repost_for_wall', function() {
-  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#chat_items_append").style.display = "none";
   current_block.querySelector("#community_append").style.display = "none";
 })
 on('#ajax', 'click', '.repost_for_community', function() {
-  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#community_append").style.display = "block";
   block = current_block.querySelector("#user_communities_window");
   current_block.querySelector("#chat_items_append").style.display = "none";
@@ -29,7 +29,7 @@ on('#ajax', 'click', '.repost_for_community', function() {
   }
 })
 on('#ajax', 'click', '.repost_for_message', function() {
-  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#community_append").style.display = "none";
   block = current_block.querySelector("#user_chat_items_window");
   current_block.querySelector("#chat_items_append").style.display = "block";
