@@ -284,7 +284,7 @@ on('#ajax', 'click', '.music_preview_delete', function() {
 on('#ajax', 'click', '.preview_item_delete', function() {
   _this = this;
   parent = _this.parentElement;
-  parent.querySelector(".load_pag") ? null : parent.innerHTML = "";
+  parent.querySelector(".preview_item_delete") ? null : parent.innerHTML = "";
   _this.remove();
 });
 
