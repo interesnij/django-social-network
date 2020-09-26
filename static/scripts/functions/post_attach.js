@@ -259,8 +259,8 @@ function article_post_attach(_this, block) {
 function commmunity_form_selected(_this, block) {
   pk = _this.getAttribute('data-pk');
   if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Сообщество уже выбрано");
-    _this.parentElement.setAttribute("flow", "up");
+    _this.setAttribute("tooltip", "Сообщество уже выбрано");
+    _this.setAttribute("flow", "up");
     return
   }
 
@@ -271,8 +271,8 @@ function commmunity_form_selected(_this, block) {
 function chat_item_form_selected(_this, block) {
   pk = _this.getAttribute('data-pk');
   if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Чат или друг уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
+    _this.setAttribute("tooltip", "Чат или друг уже выбран");
+    _this.setAttribute("flow", "up");
     return
   }
   div = create_preview_chat_item(_this);

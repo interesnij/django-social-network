@@ -52,15 +52,13 @@ function create_preview_commmunity(_this){
   $name = _this.querySelector("h6").innerHTML;
 
   $div = document.createElement("div");
-  $div.style.paddingTop = "5px";
-  $div.style.paddingBottom = "5px";
+  $div.style.display = "inline-block";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_commmunity_delete", "pointer");
   $div.setAttribute("tooltip", $name);
   $div.setAttribute("flow", "up");
 
   $div_flex = document.createElement("div");
-  $div_flex.style.display = "flex";
 
   _this.querySelector("img") ? ($img = document.createElement("img"), $img.setAttribute("data-src", _this.querySelector("img").getAttribute("data-src")),$img.style.width = "50px",$img.style.heigth = "auto",$img.style.borderRadius = "50%",$img.classList.add("lazyload"))
                              : ($img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>');
@@ -76,26 +74,21 @@ function create_preview_commmunity(_this){
   return $div
 }
 function create_preview_chat_item(_this){
+  $name = _this.querySelector("h6").innerHTML;
+
   $div = document.createElement("div");
-  $div.style.paddingTop = "5px";
-  $div.style.paddingBottom = "5px";
+  $div.style.display = "inline-block";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_chat_item_delete", "pointer");
-
+  $div.setAttribute("tooltip", $name);
+  $div.setAttribute("flow", "up");
+  
   $div_flex = document.createElement("div");
-  $div_flex.style.display = "flex";
-  $div_flex.style.paddingTop = "5px";
-  $div_flex.style.paddingBottom = "5px";
 
   _this.querySelector("img") ? ($img = document.createElement("img"), $img.setAttribute("data-src", _this.querySelector("img").getAttribute("data-src")),$img.style.width = "30px",$img.style.heigth = "auto",$img.style.borderRadius = "50%",$img.classList.add("lazyload"))
                              : ($img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
   $figure = document.createElement("figure");
   $figure.append($img);
-
-  $name = _this.querySelector("h6").innerHTML;
-
-  $div_body = document.createElement("div");
-  $div_body.innerHTML = '<div class="media-body" style="padding-left: 5px"><h6 style="white-space: nowrap;position: absolute;bottom: 14px;">' + $name + '</h6></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="chat_items[]" value="' + pk + '">';
