@@ -4,7 +4,6 @@
 {% block content %}
 
 <div class="px-0 card no-shadow">
-  {{ chat_members }}
     <div class="card-header border-bottom">
         <div class="media w-100">
           {% for user in chat_members %}
@@ -23,7 +22,12 @@
                     <small class="float-right text-muted">Был {{ user.user.get_last_activity }}</small>
                   {% endif %}
                 </h5>
-                <p class="mb-0">@astha</p>
+                {% if user.user.get_online %}
+                  <p class="mb-0 text-success">Онлайн</p>
+                {% else %}
+                  <p class="mb-0">Был {{ user.user.get_last_activity }}</p>
+                {% endif %}
+
             </div>
           {% endfor %}
             <div class="dropdown d-inline-block">
@@ -42,7 +46,7 @@
         <ul class="chatlist app">
           <span class="list-divider">20 сентября 2020</span>
           {% for object in object_list %}
-            <div class="media">
+            <div class="media mt-3">
                 <figure>
                   {% if object.creator.user.get_avatar %}
                     <img src="{{ object.creator.user.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
