@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from django.utils.safestring import mark_safe
-from chat.models import Message
+from chat.models import Message, Chat
 from common.template.user import get_settings_template
 
 
