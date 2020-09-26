@@ -78,6 +78,7 @@ function create_preview_chat_item(_this){
 
   $div = document.createElement("div");
   $div.style.display = "inline-block";
+  $div.style.margin = "10px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_chat_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
@@ -85,8 +86,8 @@ function create_preview_chat_item(_this){
 
   $div_flex = document.createElement("div");
 
-  _this.querySelector("img") ? ($img = document.createElement("img"), $img.setAttribute("data-src", _this.querySelector("img").getAttribute("data-src")),$img.style.width = "30px",$img.style.heigth = "auto",$img.style.borderRadius = "50%",$img.classList.add("lazyload"))
-                             : ($img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  _this.querySelector("img") ? ($img = document.createElement("img"), $img.setAttribute("data-src", _this.querySelector("img").getAttribute("data-src")),$img.style.width = "50px",$img.style.heigth = "auto",$img.style.borderRadius = "50%",$img.classList.add("lazyload"))
+                             : ($img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
   $figure = document.createElement("figure");
   $figure.append($img);
 
