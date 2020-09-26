@@ -56,8 +56,8 @@ function create_preview_commmunity(_this){
   $div.style.paddingBottom = "5px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_commmunity_delete", "pointer");
-  $div.parentElement.setAttribute("tooltip", $name);
-  $div.parentElement.setAttribute("flow", "up");
+  $div.setAttribute("tooltip", $name);
+  $div.setAttribute("flow", "up");
 
   $div_flex = document.createElement("div");
   $div_flex.style.display = "flex";
