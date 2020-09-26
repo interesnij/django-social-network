@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^c_article_load/$', login_required(CommunityLoadArticle.as_view())),
     url(r'^c_good_load/(?P<pk>\d+)/$', login_required(CommunityLoadGood.as_view())),
 
-    url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())), 
+    url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())),
+    url(r'^communities/$', login_required(CommunitiesLoad.as_view())), 
 ]
