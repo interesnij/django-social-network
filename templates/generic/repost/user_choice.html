@@ -31,9 +31,15 @@
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     <div id="show_user_connections" {% if object.creator.pk != request.user.pk %}style="display:none"{% endif %}>
-      <input name="user_connections" id="id_user_connections" type="hidden">
-
-      <span id="user_chat_items_window"><span>
+      <div class="row">
+        <div class="col-md-5">
+          <input name="chat_items" type="hidden">
+          <span id="chat_items_input_collector"></span>
+          <span id="user_chat_items_window"><span>
+        </div>
+        <div class="col-md-7">
+          
+        <div>
     </div>
     {% else %}
     <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
