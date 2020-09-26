@@ -16,7 +16,7 @@
       </div>
   </div>
 
-  {% elif object.phone %}
+  {% else %}
   <div style="display:flex" class="chat_item_load_one pointer" data-pk="u{{ object.pk }}">
       <figure>
         {% if object.get_avatar %}
