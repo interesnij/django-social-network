@@ -2,7 +2,7 @@
 {% for object in object_list %}
 <div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}">
   {% if object.first_name %}
-  <div style="display:flex" class="chat_item_load_one" data-pk="u{{ object.pk }}">
+  <div style="display:flex" class="chat_item_load_one pointer" data-pk="u{{ object.pk }}">
       <figure>
         {% if object.get_avatar %}
           <img style="width:30px;heigth:auto" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />
@@ -15,7 +15,7 @@
       </div>
   </div>
   {% elif object.type %}
-  <div style="display:flex" class="chat_item_load_one" data-pk="c{{ object.pk }}">
+  <div style="display:flex" class="chat_item_load_one pointer" data-pk="c{{ object.pk }}">
       <figure>
         {% if object.get_avatar %}
           <img style="width:30px;heigth:auto" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />
