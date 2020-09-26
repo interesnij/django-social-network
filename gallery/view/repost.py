@@ -365,7 +365,7 @@ class UMPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            connections = request.POST.getlist("chat_items")
+            connections = request.POST.get("chat_items")
             if not connections:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
