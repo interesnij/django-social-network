@@ -304,7 +304,7 @@ class Message(models.Model):
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
         parent = self.post
-        if self.post_message.is_photo_repost():
+        if self.post.is_photo_repost():
             return "message/photo_repost.html"
         elif parent.is_photo_album_repost():
             return "message/photo_album_repost.html"
