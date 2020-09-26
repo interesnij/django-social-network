@@ -15,20 +15,24 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.repost_for_wall', function() {
-  parent = this.parentElement;
-  parent.querySelector("#show_user_staff_communities").style.display = "none";
-  parent.querySelector("#show_user_connections").style.display = "none";
+  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block.querySelector("#chat_items_append").style.display = "none";
+  current_block.querySelector("#community_append").style.display = "none";
 })
 on('#ajax', 'click', '.repost_for_community', function() {
-  this.nextElementSibling.style.display = "unset";
-  parent = this.parentElement;
-  parent.querySelector("#show_user_connections").style.display = "none";
+  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block.querySelector("#community_append").style.display = "block";
+  block = current_block.querySelector("#user_communities_window");
+  current_block.querySelector("#chat_items_append").style.display = "none";
+  if (!block.querySelector(".load_pag")){
+  list_load(block, "/users/load/chat_items/")
+  }
 })
 on('#ajax', 'click', '.repost_for_message', function() {
-  parent = this.parentElement;
-  parent.querySelector("#show_user_staff_communities").style.display = "none";
-  block = parent.querySelector("#user_chat_items_window");
-  this.nextElementSibling.style.display = "block";
+  current_block = this.parentElement.parentElement.nextElementSibling;
+  current_block.querySelector("#community_append").style.display = "none";
+  block = current_block.querySelector("#user_chat_items_window");
+  current_block.querySelector("#chat_items_append").style.display = "block";
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/chat_items/")
   }
