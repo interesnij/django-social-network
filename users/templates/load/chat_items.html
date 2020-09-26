@@ -1,8 +1,9 @@
 <span class="chat_items_load_container" data-link="">
 {% for object in object_list %}
 {{ object.get_full_name }} | {{ object.type }}
+
+{% if object.type %}
 <div class="list-group-item load_pag pointer chat_item_load_one {% if forloop.last %}load_last{% endif %}" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
-  {% if object.type %}
   <div style="display:flex" style="padding-top: 5px;padding-bottom: 5px;">
       <figure>
         {% if object.get_avatar %}
@@ -15,9 +16,11 @@
           <p style="white-space: nowrap;position: absolute;bottom: -4px;">{{ object.get_two_members }}</p>
       </div>
   </div>
+</div>
 
-  {% else %}
-  <div style="display:flex" class="chat_item_load_one pointer" data-pk="u{{ object.pk }}">
+{% elif object.last_name %}
+<div class="list-group-item load_pag pointer chat_item_load_one {% if forloop.last %}load_last{% endif %}" data-pk="u{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
+  <div style="display:flex">
       <figure>
         {% if object.get_avatar %}
           <img style="width:30px;heigth:auto; border-radius:50%" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />
