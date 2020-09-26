@@ -210,7 +210,7 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def is_repost(self):
-        return try_except(self.post_message)
+        return try_except(self.post)
 
     def is_photo_repost(self):
         return try_except(self.post_message.status == Post.PHOTO_REPOST)
