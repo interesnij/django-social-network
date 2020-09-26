@@ -151,7 +151,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_message') 
 
     class Meta:
         verbose_name = "Сообщение"
@@ -303,7 +303,7 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.post[0]
+        parent = self
         if self.post.is_photo_repost():
             return "message/photo_repost.html"
         elif parent.is_photo_album_repost():
