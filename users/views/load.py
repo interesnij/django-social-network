@@ -281,3 +281,17 @@ class CommunityLoadGood(ListView):
 	def get_queryset(self):
 		goods_list = self.album.get_goods()
 		return goods_list
+
+
+class ChatItemsLoad(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("load/chat_items.html", request)
+		self.total_list = request.user.get_chats_and_connections()
+		return super(ChatItemsLoad,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		total_list = self.total_list
+		return total_list

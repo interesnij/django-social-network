@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^u_video_load/$', login_required(UserLoadVideo.as_view()), name="u_video_load"),
     url(r'^u_video_album_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadVideoAlbum.as_view()), name="u_video_list_load"),
 
-    url(r'^u_doc_load/$', login_required(UserLoadDoc.as_view()), name="u_doc_load"), 
+    url(r'^u_doc_load/$', login_required(UserLoadDoc.as_view()), name="u_doc_load"),
     url(r'^u_doc_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadDocList.as_view()), name="u_doc_list_load"),
 
     url(r'^u_music_load/$', login_required(UserLoadMusic.as_view()), name="u_music_load"),
@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^c_music_load/$', login_required(CommunityLoadMusic.as_view())),
     url(r'^c_article_load/$', login_required(CommunityLoadArticle.as_view())),
     url(r'^c_good_load/(?P<pk>\d+)/$', login_required(CommunityLoadGood.as_view())),
+
+    url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())),
 ]
