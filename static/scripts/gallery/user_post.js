@@ -234,14 +234,14 @@ on('#ajax', 'click', '.user_photo_abort_remove', function() {
 on('#ajax', 'click', '.u_photo_like', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("user-pk");
+  pk = parent.getAttribute("data-pk");
   send_like(parent, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_likes");
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("user-pk");
+  pk = parent.getAttribute("data-pk");
   send_dislike(parent, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_dislikes");
 });
@@ -249,7 +249,7 @@ on('#ajax', 'click', '.u_photo_like2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
-  pk = document.body.querySelector(".data_display").getAttribute("user-pk");
+  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_like(photo, "/gallery/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_comment_likes")
 });
@@ -257,7 +257,7 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   _this = this;
   photo = _this.parentElement;
   comment_pk = photo.getAttribute("data-pk");
-  pk = document.body.querySelector(".data_display").getAttribute("user-pk");
+  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
   send_dislike(photo, "/gallery/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });

@@ -19,7 +19,7 @@ on('#ajax', 'click', '.u_all_photo_dislikes', function() {
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("user-pk");
+  pk = parent.getAttribute("data-pk");
   loader = document.getElementById("votes_loader");
   open_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
@@ -141,7 +141,7 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 on('#ajax', 'click', '.u_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk"); 
+  pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/user_progs/comment/" + pk + "/" + uuid + "/";
   list_load(data.querySelector(".u_load_comments"), url);
