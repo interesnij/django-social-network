@@ -74,7 +74,7 @@ function create_preview_commmunity(_this){
   return $div
 }
 function create_preview_chat_item(_this){
-  $name = _this.querySelector("h6").innerHTML;
+  $name = _this.querySelector("p").innerHTML;
 
   $div = document.createElement("div");
   $div.style.display = "inline-block";
@@ -82,7 +82,7 @@ function create_preview_chat_item(_this){
   $div.classList.add("preview_chat_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
   $div.setAttribute("flow", "up");
-  
+
   $div_flex = document.createElement("div");
 
   _this.querySelector("img") ? ($img = document.createElement("img"), $img.setAttribute("data-src", _this.querySelector("img").getAttribute("data-src")),$img.style.width = "30px",$img.style.heigth = "auto",$img.style.borderRadius = "50%",$img.classList.add("lazyload"))
