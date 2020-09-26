@@ -373,6 +373,19 @@ on('#ajax', 'click', '.photo_load_one', function() {
   document.getElementById("create_loader").innerHTML="";
 });
 
+on('#votes_loader', 'click', '.commmunty_load_one', function() {
+  _this = this;
+  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  document.querySelector(".create_fullscreen")
+  commmunty_form_selected(_this, block.querySelector(".selected_message_target_items"))
+});
+on('#votes_loader', 'click', '.chat_item_load_one', function() {
+  _this = this;
+  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  document.querySelector(".create_fullscreen")
+  chat_item_form_selected(_this, block.querySelector(".selected_message_target_items"))
+});
+
 on('#ajax', 'click', '.u_create_video_attach_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
   user_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

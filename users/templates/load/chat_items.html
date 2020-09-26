@@ -1,8 +1,8 @@
 <span class="chat_items_load_container" data-link="">
 {% for object in object_list %}
-<div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item load_pag pointer chat_item_load_one {% if forloop.last %}load_last{% endif %}" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   {% if object.type %}
-  <div style="display:flex" class="chat_item_load_one pointer" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px;">
+  <div style="display:flex" style="padding-top: 5px;padding-bottom: 5px;">
       <figure>
         {% if object.get_avatar %}
           <img style="width:30px;heigth:auto; border-radius:50%" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />

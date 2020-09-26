@@ -1,8 +1,8 @@
 <span class="commmunties_load_container" data-link="">
 {% for object in object_list %}
-<div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item load_pag commmunty_load_one pointer {% if forloop.last %}load_last{% endif %}" style="padding-top: 5px;padding-bottom: 5px" data-pk="{{ object.pk }}">
 
-  <div style="display:flex" class="commmunty_load_one pointer" data-pk="{{ object.pk }}">
+  <div style="display:flex">
       <figure>
         {% if object.get_avatar %}
           <img style="width:50px;heigth:auto; border-radius:50%" data-src="{{ object.get_avatar }}" class="lazyload" alt="img" />
