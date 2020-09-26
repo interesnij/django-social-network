@@ -78,7 +78,7 @@ function create_preview_chat_item(_this){
 
   $div = document.createElement("div");
   $div.style.display = "inline-block";
-  $div.style.margin = "10px";
+  $div.style.margin = "5px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_chat_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
