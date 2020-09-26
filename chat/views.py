@@ -33,13 +33,19 @@ class ChatDetailView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("chat/chat.html", request)
+		self.template_name = get_settings_template("chat/private_chat.html", request)
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if self.chat.is_private:
+			self.template_name = get_settings_template("chat/chat.html", request)
+		elif self.chat.is_private:
+			self.template_name = get_settings_template("chat/chat.html", request)
+		elif self.chat.is_private:
+			self.template_name = get_settings_template("chat/chat.html", request)
 		self.pk = request.user.pk
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 		self.chat_members = self.chat.chat_relation.exclude(user_id=self.pk)[:3]
-		self.list = self.chat.get_messages() 
+		self.list = self.chat.get_messages()
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

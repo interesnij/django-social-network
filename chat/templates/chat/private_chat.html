@@ -1,19 +1,31 @@
 {% extends "base.html" %}
-{% block title %}Сообщения{% endblock %}
+{% block title %}Приватный чат{% endblock %}
 {% load messager %}
 {% block content %}
 
 <div class="px-0 card no-shadow">
   {{ chat_members }}
     <div class="card-header border-bottom">
-        <div class="media w-100 ">
-            <figure class="avatar avatar-40 rounded-circle align-self-start ">
-                <img src="img/user2.png" alt="Generic placeholder image">
-            </figure>
+        <div class="media w-100">
+          {% for user in chat_members %}
+          <figure>
+            {% if user.user.get_avatar %}
+              <img src="{{ user.user.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+            {% else %}
+              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            {% endif %}
+          </figure>
             <div class="media-body">
-                <h5 class="time-title mb-0">Astha Anwar<small class="float-right text-muted">2/8/2018 | 1:00 am</small></h5>
+                <h5 class="time-title mb-0">{{ user.get_full_name }}
+                  {% if user.user.get_online %}
+                    <small class="float-right text-success">Онлайн</small>
+                  {% else %}
+                    <small class="float-right text-muted">Был {{ user.user.get_last_activity }}</small>
+                  {% endif %}
+                </h5>
                 <p class="mb-0">@astha</p>
             </div>
+          {% endfor %}
             <div class="dropdown d-inline-block">
               <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
                 <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
