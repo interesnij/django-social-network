@@ -49,11 +49,15 @@ function article_preview_delete(){
 }
 
 function create_preview_commmunity(_this){
+  $name = _this.querySelector("h6").innerHTML;
+
   $div = document.createElement("div");
   $div.style.paddingTop = "5px";
   $div.style.paddingBottom = "5px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_commmunity_delete", "pointer");
+  $div.parentElement.setAttribute("tooltip", $name);
+  $div.parentElement.setAttribute("flow", "up");
 
   $div_flex = document.createElement("div");
   $div_flex.style.display = "flex";
@@ -63,17 +67,10 @@ function create_preview_commmunity(_this){
   $figure = document.createElement("figure");
   $figure.append($img);
 
-  $name = _this.querySelector("h6").innerHTML;
-
-  $div_body = document.createElement("div");
-  $div_body.classList.add("media-body");
-  $div_body.style.paddingLeft = "5px";
-  $div_body.innerHTML = '<h6 style="white-space: nowrap;position: absolute;bottom: 14px;">' + $name + '</h6>'
-
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="communities[]" value="' + pk + '">';
 
-  $div_flex.append($figure); $div_flex.append($div_body);
+  $div_flex.append($figure);
   $div.append($input);
   $div.append($div_flex);
   return $div
