@@ -28,8 +28,10 @@ on('#ajax', 'click', '.repost_for_message', function() {
   parent = this.parentElement;
   parent.querySelector("#show_user_staff_communities").style.display = "none";
   block = parent.querySelector("#user_chat_items_window");
-  block.style.display = "unset";
-  list_load(block, "/users/load/chat_items/");
+  block.style.display = "block";
+  if (!block.firstChild){
+  list_load(block, "/users/load/chat_items/")
+  }
 })
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
