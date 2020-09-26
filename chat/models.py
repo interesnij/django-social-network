@@ -88,6 +88,9 @@ class Chat(models.Model):
         else:
             return ""
 
+    def get_unread_message(self, user_id):
+        return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id)
+
     def get_preview(self):
         return self.get_first_message().text
 

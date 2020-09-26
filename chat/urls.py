@@ -1,10 +1,8 @@
 from django.conf.urls import url
-from chat import views
+from chat import *
 
 
 urlpatterns = [
-    url(r'^$', views.MessagesListView.as_view(), name='messages_list'),
-    url(r'^send-message/$', views.send_message, name='send_message'),
-    url(r'^receive-message/$', views.receive_message, name='receive_message'),
-    url(r'^(?P<username>[\w.@+-]+)/$', views.ConversationListView.as_view(), name='conversation_detail'),
+    url(r'^$', MessagesListView.as_view(), name='messages_list'),
+    url(r'^(?P<uuid>[0-9a-f-]+)/$', ChatDetailView.as_view(), name='chat_detali'),
 ]

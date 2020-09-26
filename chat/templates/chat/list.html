@@ -22,6 +22,7 @@
 
                   {% with message=object.get_first_message %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
+                    <a class="ajax" href="{% url 'chat_detali' uuid=object.uuid %}">
                     <div class="media">
                       <figure>
                         {% if message.creator.user.get_avatar %}
@@ -41,6 +42,7 @@
                       </div>
                       {{ object|get_unread_count:request.user.pk }}
                     </div>
+                    </a>
                   </li>
                   {% endwith %}
                   {% endfor %}
@@ -53,7 +55,6 @@
                 <span class="create_private_chat pointer underline">приватный</span> или <span class="create_public_chat pointer underline"> публичный</span> чат</h6>
               </div>
               {% endif %}
-
             </div>
         </div>
     </div>

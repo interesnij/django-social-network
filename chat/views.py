@@ -28,6 +28,30 @@ class MessagesListView(ListView):
 		return list
 
 
+class ChatDetailView(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("chat/chat.html", request)
+		self.chat = Chat.objects.get(uuid=self.kwargs["uuid"])
+		self.pk = request.user.pk
+		unread_messages = self.chat.get_unread_message(self.pk)
+		unread_messages.update(unread=False)
+		chat_members = self.chat.chat_relation.exclude(user_pk=self.pk)[:3]
+		return super(ChatDetailView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(ChatDetailView,self).get_context_data(**kwargs)
+		context['chat'] = self.chat
+		context['chat_members'] = self.chat_members
+		return context
+
+	def get_queryset(self):
+		list = self.user.get_all_chats()
+		return list
+
+
 def room(request, room_name):
     return render(request, 'room.html', {
         'room_name_json': mark_safe(json.dumps(room_name))

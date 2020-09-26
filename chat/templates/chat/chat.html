@@ -1,0 +1,64 @@
+<div class="px-0 card no-shadow">
+  {{ chat_members }}
+    <div class="card-header border-bottom">
+        <div class="media w-100 ">
+            <figure class="avatar avatar-40 rounded-circle align-self-start ">
+                <img src="img/user2.png" alt="Generic placeholder image">
+            </figure> 
+            <div class="media-body">
+                <h5 class="time-title mb-0">Astha Anwar<small class="float-right text-muted">2/8/2018 | 1:00 am</small></h5>
+                <p class="mb-0">@astha</p>
+            </div>
+            <div class="dropdown d-inline-block">
+              <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 368px;">
+        <ul class="list-group chatlist app">
+          <li class="list-divider">20 сентября 2020</li>
+          {% for object in object_list %}
+            <li class="list-group-item">
+                <div class="media">
+                  <figure>
+                    {% if message.creator.user.get_avatar %}
+                      <img src="{{ message.creator.user.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+                    {% else %}
+                      <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    {% endif %}
+                  </figure>
+                    <div class="media-body w-auto no-arrow">
+                        {{ message.text }}
+                    </div>
+                </div>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="card-footer border-top">
+      <form>
+          {% csrf_token %}
+          <div class="row attach_block"></div>
+          <div class="row no-gutters" style="margin-top: 20px;">
+            {% include 'chat/form_dropdown.html' %}
+              <div class="col">
+                  <div class="input-group input-group-sm">
+                    <input type="text" name="text" class="form-control text-comment form-control-rounded">
+                  </div>
+              </div>
+              <div class="col-auto">
+                  <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_chat_send" type="button">
+                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                  </button>
+              </div>
+          </div>
+      </form>
+    </div>
+</div>
