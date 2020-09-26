@@ -60,7 +60,7 @@ class GoodAlbum(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_good_album')
-	message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good_album')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good_album')
 
     class Meta:
         indexes = (
