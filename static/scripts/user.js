@@ -237,5 +237,5 @@ on('#ajax', 'click', '#user_notify_music_btn', function() {
 
 on('#votes_loader', 'click', '.repost_for_message', function() {
   block = document.getElementById("votes_loader");
-   list_load(block.getElementById("user_chat_items_window"), "/users/load/chat_items/");
+   list_load(block.querySelector("#user_chat_items_window"), "/users/load/chat_items/");
 })
