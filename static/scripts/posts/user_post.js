@@ -377,13 +377,13 @@ on('#votes_loader', 'click', '.commmunty_load_one', function() {
   _this = this;
   block = _this.parentElement.parentElement.parentElement.parentElement;
   document.querySelector(".create_fullscreen")
-  commmunity_form_selected(_this, block.querySelector(".selected_message_target_items"))
+  commmunity_form_selected(_this, block.querySelector("#selected_message_target_items"))
 });
 on('#votes_loader', 'click', '.chat_item_load_one', function() {
   _this = this;
   block = _this.parentElement.parentElement.parentElement.parentElement;
   document.querySelector(".create_fullscreen")
-  chat_item_form_selected(_this, block.querySelector(".selected_message_target_items"))
+  chat_item_form_selected(_this, block.querySelector("#selected_message_target_items"))
 });
 
 on('#ajax', 'click', '.u_create_video_attach_btn', function() {
