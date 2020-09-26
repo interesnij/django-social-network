@@ -28,7 +28,7 @@ on('#ajax', 'click', '.repost_for_message', function() {
   parent = this.parentElement;
   parent.querySelector("#show_user_staff_communities").style.display = "none";
   block = parent.querySelector("#user_chat_items_window");
-  block.style.display = "block";
+  this.nextElementSibling.style.display = "block";
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/chat_items/")
   }
