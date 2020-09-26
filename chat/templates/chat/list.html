@@ -31,7 +31,7 @@
                         {% endif %}
                       </figure>
                       <div class="media-body">
-                        <h5 class="time-title mb-0">{{ message.creator }} ({{ object|get_unread_count:request.user.pk }})
+                        <h5 class="time-title mb-0">{{ message.creator }}
                           {% if message.creator.user.get_online %}
                             <span class="status bg-success"></span>
                           {% endif %}
