@@ -54,7 +54,7 @@ function create_preview_commmunity(_this){
   $div = document.createElement("div");
   $div.style.display = "inline-block";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
-  $div.classList.add("preview_commmunity_delete", "pointer");
+  $div.classList.add("preview_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
   $div.setAttribute("flow", "up");
 
@@ -80,7 +80,7 @@ function create_preview_chat_item(_this){
   $div.style.display = "inline-block";
   $div.style.margin = "5px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
-  $div.classList.add("preview_chat_item_delete", "pointer");
+  $div.classList.add("preview_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
   $div.setAttribute("flow", "up");
 
@@ -280,6 +280,13 @@ on('#ajax', 'click', '.music_preview_delete', function() {
   block.querySelector(".music") ? null : block.querySelector(".music_input").parentElement.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
+
+on('#ajax', 'click', '.preview_item_delete', function() {
+  parent = this.parentElement;
+  this.remove();
+  parent.querySelector(".load_pag") ? null : parent.innerHTML = "";
+});
+
 on('#ajax', 'click', '.good_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
