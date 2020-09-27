@@ -46,5 +46,6 @@ def repost_message_send(parent, community, request):
                 message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
             else:
                 return HttpResponseBadRequest()
+        return HttpResponse()
     else:
         return HttpResponseBadRequest()
