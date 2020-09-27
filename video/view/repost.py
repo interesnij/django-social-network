@@ -6,8 +6,6 @@ from posts.forms import PostForm
 from posts.models import Post
 from video.models import Video, VideoAlbum
 from users.models import User
-from chat.models import Message
-from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -158,23 +156,9 @@ class UCVideoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=video.creator, community=None, status=Post.VIDEO_REPOST)
-            video.item.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(video, Post.VIDEO_REPOST, None, request)
+        return HttpResponse()
+
 
 class CCVideoRepost(View):
     """
@@ -184,22 +168,8 @@ class CCVideoRepost(View):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=video.creator, community=community, status=Post.VIDEO_REPOST)
-            video.item.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(video, Post.VIDEO_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMVideoRepost(View):
@@ -278,23 +248,9 @@ class UCVideoAlbumRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.VIDEO_LIST_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.VIDEO_LIST_REPOST, None, request)
+        return HttpResponse()
+
 
 class CCVideoAlbumRepost(View):
     """
@@ -304,22 +260,8 @@ class CCVideoAlbumRepost(View):
         album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.VIDEO_LIST_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.VIDEO_LIST_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMVideoAlbumRepost(View):

@@ -6,8 +6,6 @@ from posts.forms import PostForm
 from posts.models import Post
 from goods.models import Good, GoodAlbum
 from users.models import User
-from chat.models import Message
-from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -158,23 +156,8 @@ class UCGoodRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=good.creator, community=None, status=Post.GOOD_REPOST)
-            good.item.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(good, Post.GOOD_REPOST, None, request)
+        return HttpResponse()
 
 class CCGoodRepost(View):
     """
@@ -184,22 +167,8 @@ class CCGoodRepost(View):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=good.creator, community=community, status=Post.GOOD_REPOST)
-            good.item.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(good, Post.GOOD_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMGoodRepost(View):
@@ -278,23 +247,8 @@ class UCGoodListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.GOOD_LIST_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.GOOD_LIST_REPOST, None, request)
+        return HttpResponse()
 
 class CCGoodListRepost(View):
     """
@@ -304,22 +258,8 @@ class CCGoodListRepost(View):
         album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.GOOD_LIST_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.GOOD_LIST_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMGoodListRepost(View):

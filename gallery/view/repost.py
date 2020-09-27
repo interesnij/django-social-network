@@ -155,23 +155,9 @@ class UCPhotoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=photo.creator, community=None, status=Post.PHOTO_REPOST)
-            photo.item.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(photo, Post.PHOTO_REPOST, None, request)
+        return HttpResponse()
+
 
 class CCPhotoRepost(View):
     """
@@ -181,22 +167,8 @@ class CCPhotoRepost(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=photo.creator, community=community, status=Post.PHOTO_REPOST)
-            photo.item.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(photo, Post.PHOTO_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMPhotoRepost(View):
@@ -275,23 +247,9 @@ class UCPhotoAlbumRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.PHOTO_ALBUM_REPOST, None, request)
+        return HttpResponse()
+
 
 class CCPhotoAlbumRepost(View):
     """
@@ -301,22 +259,8 @@ class CCPhotoAlbumRepost(View):
         album = Album.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
-            album.post.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(album, Post.PHOTO_ALBUM_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMPhotoAlbumRepost(View):

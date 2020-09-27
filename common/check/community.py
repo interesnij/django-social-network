@@ -1,6 +1,10 @@
 from rest_framework.exceptions import PermissionDenied
 
 
+def check_user_is_staff(user, community_pk):
+    if not user.is_staff_of_community(community_pk):
+        raise PermissionDenied('Ошибка доступа')
+
 def check_user_not_banned(user, community_pk):
     if user.banned_of_communities.filter(pk=community_pk).values("pk").exists():
         raise PermissionDenied('Вы заблокированы в этом сообществе')

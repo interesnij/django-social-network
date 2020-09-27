@@ -6,8 +6,6 @@ from posts.forms import PostForm
 from posts.models import Post
 from docs.models import DocList, Doc2
 from users.models import User
-from chat.models import Message
-from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -157,23 +155,9 @@ class UCDocRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=user, community=None, status=Post.DOC_REPOST)
-            doc.item.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(doc, Post.DOC_REPOST, None, request)
+        return HttpResponse()
+
 
 class CCDocRepost(View):
     """
@@ -183,22 +167,8 @@ class CCDocRepost(View):
         doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=request.user, community=community, status=Post.DOC_REPOST)
-            doc.item.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(doc, Post.DOC_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMDocRepost(View):
@@ -277,23 +247,8 @@ class UCDocListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=list.creator, community=None, status=Post.DOC_LIST_REPOST)
-            list.post.add(parent)
-            for community_id in communities:
-                community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(list, Post.DOC_LIST_REPOST, None, request)
+        return HttpResponse()
 
 class CCDocListRepost(View):
     """
@@ -303,22 +258,8 @@ class CCDocListRepost(View):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
-            if not communities:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=list.creator, community=community, status=Post.DOC_LIST_REPOST)
-            list.post.add(parent)
-            for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_processing(new_post)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_community_send(list, Post.DOC_LIST_REPOST, community, request)
+        return HttpResponse()
 
 
 class UMDocListRepost(View):

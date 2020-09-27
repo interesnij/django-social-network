@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
+from chat.models import Message, Chat
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
@@ -163,8 +164,6 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        from common.processing.post import repost_message_send
-
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
@@ -177,14 +176,10 @@ class UMPostRepost(View):
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            if parent:
-                if parent.parent:
-                    parent = parent.parent
-                else:
-                    parent = parent
+            if parent.parent:
+                parent = parent.parent
             else:
-                parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
-
+                parent = parent
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
@@ -206,8 +201,6 @@ class CMPostRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        from common.processing.post import repost_message_send
-
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
@@ -219,14 +212,10 @@ class CMPostRepost(View):
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            if parent:
-                if parent.parent:
-                    parent = parent.parent
-                else:
-                    parent = parent
+            if parent.parent:
+                parent = parent.parent
             else:
-                parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
-
+                parent = parent
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
