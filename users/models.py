@@ -65,6 +65,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_color_background(self):
+        try:
+            return self.color_settings.color
+        except:
+            return "white"
+
     def get_last_activity(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.last_activity)
