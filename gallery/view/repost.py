@@ -6,13 +6,10 @@ from posts.forms import PostForm
 from posts.models import Post
 from gallery.models import Photo, Album
 from users.models import User
-from chat.models import Message, Chat
-from django.shortcuts import render
-from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing, get_post_message_processing
+from common.processing.post import get_post_processing, repost_message_send
 
 
 class UUCMPhotoWindow(TemplateView):
@@ -312,7 +309,7 @@ class UCPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            communities = request.POST.getlist("staff_communities")
+            communities = request.POST.getlist("communities")
             if not communities:
                 return HttpResponseBadRequest()
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
@@ -362,30 +359,9 @@ class UMPhotoAlbumRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("chat_items")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
-            album.post.add(parent)
-            for object_id in connections:
-                if object_id[0] == "c":
-                    chat = Chat.objects.get(pk=object_id[1:])
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_message_processing(new_post)
-                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост фотоальбома пользователя")
-                elif object_id[0] == "u":
-                    user = User.objects.get(pk=object_id[1:])
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_message_processing(new_post)
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост фотоальбома пользователя")
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(album, Post.PHOTO_ALBUM_REPOST, None, request, "Репост фотоальбома пользователя")
+        return HttpResponse()
+
 
 class CMPhotoAlbumRepost(View):
     """
@@ -394,32 +370,6 @@ class CMPhotoAlbumRepost(View):
     def post(self, request, *args, **kwargs):
         album = Album.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("chat_items")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
-            album.post.add(parent)
-            for object_id in connections:
-                if object_id[0] == "c":
-                    chat = Chat.objects.get(pk=object_id[1:])
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_message_processing(new_post)
-                    message = Message.send_message(chat=chat, creator=request.user, parent=None, text="Репост фотоальбома сообщества")
-                    new_post.post_message.add(message)
-                elif object_id[0] == "u":
-                    user = User.objects.get(pk=object_id[1:])
-                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                    get_post_attach(request, new_post)
-                    get_post_message_processing(new_post)
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, text="Репост фотоальбома сообщества")
-                    new_post.post_message.add(message)
-                else:
-                    return HttpResponse("not ok")
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(album, Post.PHOTO_ALBUM_REPOST, community, request, "Репост фотоальбома сообщества")
+        return HttpResponse()

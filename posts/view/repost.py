@@ -5,9 +5,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
 from users.models import User
-from chat.models import Message
-from django.shortcuts import render
-from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
@@ -172,7 +169,36 @@ class UMPostRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(parent, None, request, "Репост записи пользователя")
+
+        connections = request.POST.getlist("chat_items")
+        if not connections:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent:
+                if parent.parent:
+                    parent = parent.parent
+                else:
+                    parent = parent
+            else:
+                parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
+
+            for object_id in connections:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
+                get_post_attach(request, new_post)
+                get_post_message_processing(new_post)
+                if object_id[0] == "c":
+                    chat = Chat.objects.get(pk=object_id[1:])
+                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
+                elif object_id[0] == "u":
+                    user = User.objects.get(pk=object_id[1:])
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
+                else:
+                    return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
         return HttpResponse()
 
 class CMPostRepost(View):
@@ -185,5 +211,34 @@ class CMPostRepost(View):
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(parent, community, request, "Репост записи сообщества")
+
+        connections = request.POST.getlist("chat_items")
+        if not connections:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if parent:
+                if parent.parent:
+                    parent = parent.parent
+                else:
+                    parent = parent
+            else:
+                parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
+
+            for object_id in connections:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
+                get_post_attach(request, new_post)
+                get_post_message_processing(new_post)
+                if object_id[0] == "c":
+                    chat = Chat.objects.get(pk=object_id[1:])
+                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
+                elif object_id[0] == "u":
+                    user = User.objects.get(pk=object_id[1:])
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
+                else:
+                    return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
         return HttpResponse()
