@@ -10,9 +10,9 @@
       <h5 class="time-title mb-0">{{ object.creator.user.first_name }}
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
-      {% if object.is_repost %}
-        {% include object.get_items %}
-      {% else %}
+      {% if object.post %}
+        {% include 'message_repost/repost.html' %}
+      {% endif %}
         {{ object.text|linebreaks }}
       {% endif %}
     </div>

@@ -298,41 +298,88 @@ class Message(models.Model):
     def is_doc_list_attached(self):
         return self.message_doclist.filter(post__pk=self.pk).exists()
 
-    def get_items(self):
-        # метод выясняет, есть ли у сообщения прикрепленные большие элементы, а также их репосты.
+    def get_c_repost_items(self):
+        # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
         parent = self.post
         if parent.is_photo_repost():
-            return "message_repost/photo_repost.html"
+            return "post_community/photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "message_repost/photo_album_repost.html"
-        if self.is_photo_list_attached():
-            return "message_attach/u_photo_list_attach.html"
+            return "post_community/photo_album_repost.html"
+        if parent.is_photo_list_attached():
+            return "generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "message_repost/good_repost.html"
+            return "post_community/good_repost.html"
         elif parent.is_good_list_repost():
-            return "message_repost/good_list_repost.html"
-        elif self.is_good_list_attached():
-            return "message_attach/u_good_list_attach.html"
+            return "post_community/good_list_repost.html"
+        elif parent.is_good_list_attached():
+            return "generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
-            return "message_repost/music_repost.html"
+            return "post_community/music_repost.html"
         elif parent.is_music_list_repost():
-            return "message_repost/music_list_repost.html"
-        elif self.is_playlist_attached():
-            return "message_attach/u_playlist_attach.html"
+            return "post_community/music_list_repost.html"
+        elif parent.is_playlist_attached():
+            return "generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
-            return "message_repost/video_repost.html"
+            return "post_community/video_repost.html"
         elif parent.is_video_list_repost():
-            return "message_repost/video_list_repost.html"
-        elif self.is_video_list_attached():
-            return "message_attach/u_video_list_attach.html"
+            return "post_community/video_list_repost.html"
+        elif parent.is_video_list_attached():
+            return "generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "message_repost/doc_repost.html"
+            return "post_community/doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "message_repost/doc_list_repost.html"
-        elif self.is_doc_list_attached():
-            return "message_attach/u_doc_list_attach.html"
+            return "post_community/doc_list_repost.html"
+        elif parent.is_doc_list_attached():
+            return "generic/parent_attach/c_doc_list_attach.html"
+        elif parent.is_user_repost():
+            return "post_community/user_repost.html"
+        elif parent.is_community_repost():
+            return "post_community/community_repost.html"
         else:
-            return "message_attach/parent_user.html"
+            return "generic/attach/parent_community.html"
+
+    def get_u_repost_items(self):
+        # метод выясняет, есть ли у поста-родителя пользователя прикрепленные большие элементы, а также их репосты.
+        # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
+        # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
+        # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
+        parent = self.post
+        if parent.is_photo_repost():
+            return "post_user/photo_repost.html"
+        elif parent.is_photo_album_repost():
+            return "post_user/photo_album_repost.html"
+        if parent.is_photo_list_attached():
+            return "generic/parent_attach/u_photo_list_attach.html"
+        elif parent.is_good_repost():
+            return "post_user/good_repost.html"
+        elif parent.is_good_list_repost():
+            return "post_user/good_list_repost.html"
+        elif parent.is_good_list_attached():
+            return "generic/parent_attach/u_good_list_attach.html"
+        elif parent.is_music_repost():
+            return "post_user/music_repost.html"
+        elif parent.is_music_list_repost():
+            return "post_user/music_list_repost.html"
+        elif parent.is_playlist_attached():
+            return "generic/parent_attach/u_playlist_attach.html"
+        elif parent.is_video_repost():
+            return "post_user/video_repost.html"
+        elif parent.is_video_list_repost():
+            return "post_user/video_list_repost.html"
+        elif parent.is_video_list_attached():
+            return "generic/parent_attach/u_video_list_attach.html"
+        elif parent.is_doc_repost():
+            return "post_user/doc_repost.html"
+        elif parent.is_doc_list_repost():
+            return "post_user/doc_list_repost.html"
+        elif parent.is_doc_list_attached():
+            return "generic/parent_attach/u_doc_list_attach.html"
+        elif parent.is_user_repost():
+            return "post_user/user_repost.html"
+        elif parent.is_community_repost():
+            return "post_user/community_repost.html"
+        else:
+            return "generic/attach/parent_user.html"
