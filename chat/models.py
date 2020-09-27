@@ -213,55 +213,55 @@ class Message(models.Model):
         return try_except(self.post)
 
     def is_photo_repost(self):
-        return try_except(self.post_message.status == Post.PHOTO_REPOST)
+        return try_except(self.post.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        photo = self.post_message.parent.item_photo.all()[0]
+        photo = self.post.parent.item_photo.all()[0]
         return photo
     def is_photo_album_repost(self):
-        return try_except(self.post_message.status == Post.PHOTO_ALBUM_REPOST)
+        return try_except(self.post.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.post_message.parent.post_album.all()[0]
+        photo_album = self.post.parent.post_album.all()[0]
         return photo_album
 
     def is_music_repost(self):
-        return try_except(self.post_message.status == Post.MUSIC_REPOST)
+        return try_except(self.post.status == Post.MUSIC_REPOST)
     def is_music_list_repost(self):
-        return try_except(self.post_message.status == Post.MUSIC_LIST_REPOST)
+        return try_except(self.post.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.post_message.parent.post_soundlist.all()[0]
+        playlist = self.post.parent.post_soundlist.all()[0]
         return playlist
     def get_music_repost(self):
-        music = self.post_message.parent.item_music.all()[0]
+        music = self.post.parent.item_music.all()[0]
         return music
 
     def is_good_repost(self):
-        return try_except(self.post_message.status == Post.GOOD_REPOST)
+        return try_except(self.post.status == Post.GOOD_REPOST)
     def is_good_list_repost(self):
-        return try_except(self.post_message.status == Post.GOOD_LIST_REPOST)
+        return try_except(self.post.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        good = self.post_message.parent.item_good.all()[0]
+        good = self.post.parent.item_good.all()[0]
         return good
     def get_good_list_repost(self):
-        good_list = self.post_message.parent.post_good_album.all()[0]
+        good_list = self.post.parent.post_good_album.all()[0]
         return good_list
 
     def is_doc_repost(self):
-        return try_except(self.post_message.status == Post.DOC_REPOST)
+        return try_except(self.post.status == Post.DOC_REPOST)
     def is_doc_list_repost(self):
-        return try_except(self.post_message.status == Post.DOC_LIST_REPOST)
+        return try_except(self.post.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.post_message.parent.post_doclist.all()[0]
+        list = self.post.parent.post_doclist.all()[0]
         return list
     def get_doc_repost(self):
-        doc = self.post_message.parent.item_doc.all()[0]
+        doc = self.post.parent.item_doc.all()[0]
         return doc
 
     def is_video_repost(self):
-        return try_except(self.post_message.status == Post.VIDEO_REPOST)
+        return try_except(self.post.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
-        return try_except(self.post_message.status == Post.VIDEO_LIST_REPOST)
+        return try_except(self.post.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.post_message.parent.post_video_album.all()[0]
+        video_list = self.post.parent.post_video_album.all()[0]
         return video_list
 
     def get_attach_photos(self):
