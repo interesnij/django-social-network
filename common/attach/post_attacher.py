@@ -12,42 +12,42 @@ from communities.models import Community
 def photo_attach(value, post):
     try:
         _select_photo = Photo.objects.get(uuid=value, is_public=True)
-        _select_photo.item.add(post)
+        _select_photo.post.add(post)
     except:
         raise ValidationError('Фото не найдено')
 
 def video_attach(value, post):
     try:
         _select_video = Video.objects.get(pk=value, is_public=True)
-        _select_video.item.add(post)
+        _select_video.post.add(post)
     except:
         raise ValidationError('Видео не найдено')
 
 def music_attach(value, post):
     try:
         _select_music = SoundcloudParsing.objects.get(pk=value)
-        _select_music.item.add(post)
+        _select_music.post.add(post)
     except:
         raise ValidationError('Аудиозапись не найдено')
 
 def good_attach(value, post):
     try:
         _select_good = Good.objects.get(pk=value)
-        _select_good.item.add(post)
+        _select_good.post.add(post)
     except:
         raise ValidationError('Товар не найден')
 
 def article_attach(value, post):
     try:
         _select_article = Article.objects.get(uuid=value)
-        _select_article.item_attach.add(post)
+        _select_article.post.add(post)
     except:
         raise ValidationError('Статья не найдена')
 
 def doc_attach(value, post):
     try:
         _select_doc = Doc2.objects.get(pk=value)
-        _select_doc.item.add(post)
+        _select_doc.post.add(post)
     except:
         raise ValidationError('Документ не найден')
 

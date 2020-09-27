@@ -12,7 +12,7 @@ from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing, repost_message_send 
+from common.processing.post import get_post_processing, repost_message_send
 
 
 class UUCMMusicWindow(TemplateView):
@@ -361,24 +361,9 @@ class UMMusicListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=None, status=Post.MUSIC_LIST_REPOST)
-            playlist.post.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост плейлиста пользователя")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(playlist, Post.MUSIC_LIST_REPOST, None, request, "Репост плейлиста пользователя")
+        return HttpResponse()
+
 
 class CMMusicListRepost(View):
     """
@@ -387,22 +372,6 @@ class CMMusicListRepost(View):
     def post(self, request, *args, **kwargs):
         playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=playlist.creator, community=community, status=Post.MUSIC_LIST_REPOST)
-            playlist.post.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост плейлиста сообщества")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(playlist, Post.MUSIC_LIST_REPOST, community, request, "Репост плейлиста сообщества")
+        return HttpResponse()

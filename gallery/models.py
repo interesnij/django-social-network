@@ -97,7 +97,7 @@ class Photo(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     id = models.BigAutoField(primary_key=True)
 
-    item = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
+    post = models.ManyToManyField('posts.Post', blank=True, related_name='item_photo')
     item_comment = models.ManyToManyField('posts.PostComment', blank=True, related_name='comment_photo')
     photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_photo')
     good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_photo')
