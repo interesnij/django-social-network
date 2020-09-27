@@ -50,7 +50,7 @@ def repost_message_send(list, status, community, request, text):
         connections = request.POST.getlist("chat_items")
         if not connections:
             return HttpResponseBadRequest()
-        parent = Post.create_parent_post(creator=album.creator, community=community, status=status)
+        parent = Post.create_parent_post(creator=list.creator, community=community, status=status)
         list.post.add(parent)
         for object_id in connections:
             if object_id[0] == "c":
