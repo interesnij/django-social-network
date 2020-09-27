@@ -6,12 +6,12 @@
         <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
     </div>
 
-    <div class="custom-control custom-radio repost_for_community" style="margin-bottom:10px">
+    <div class="custom-control custom-radio" id="u_repost_for_community" style="margin-bottom:10px">
         <input type="radio" {% if not request.user.get_staffed_communities %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
         <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
     </div>
 
-    <div class="custom-control custom-radio repost_for_message" style="margin-bottom:10px">
+    <div class="custom-control custom-radio" id="repost_for_message" style="margin-bottom:10px">
         <input type="radio" {% if not request.user.get_chats_and_connections %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
