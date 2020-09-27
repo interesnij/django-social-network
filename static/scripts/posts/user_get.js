@@ -20,7 +20,7 @@ on('#ajax', 'click', '.repost_for_wall', function() {
   current_block.querySelector("#chat_items_append").style.display = "none";
   current_block.querySelector("#community_append").style.display = "none";
 })
-on('#ajax', 'click', '.repost_for_community', function() {
+on('#ajax', 'click', '#repost_for_community', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#community_append").style.display = "block";
@@ -30,7 +30,7 @@ on('#ajax', 'click', '.repost_for_community', function() {
   list_load(block, "/users/load/communities/")
   }
 })
-on('#ajax', 'click', '.repost_for_message', function() {
+on('#ajax', 'click', '#repost_for_message', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#community_append").style.display = "none";
