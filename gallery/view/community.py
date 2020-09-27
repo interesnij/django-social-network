@@ -72,7 +72,10 @@ class CommunityDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+        try:
+            self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+        except:
+            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы")
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
         if request.is_ajax():
@@ -100,7 +103,10 @@ class CommunityFirstAvatar(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+        try:
+            self.album = Album.objects.get(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
+        except:
+            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
         self.photo = self.album.get_first_photo()
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()

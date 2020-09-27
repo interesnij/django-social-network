@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from users.models import User
 from common.utils import get_first_location
 from users.model.settings import UserColorSettings
-from common.processing.user import create_user_models
 from datetime import date, datetime
 from django.utils import timezone
 
@@ -68,5 +67,4 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.save()
         get_first_location(request, user)
-        create_user_models(user)
         return user

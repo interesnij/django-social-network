@@ -52,6 +52,10 @@ class UserDesign(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		try:
+			self.color = UserColorSettings.objects.get(user=request.user)
+		except:
+			self.color = UserColorSettings.objects.create(user=request.user)
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("settings/design.html", request)
 		return super(UserDesign,self).get(request,*args,**kwargs)

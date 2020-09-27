@@ -71,7 +71,7 @@ class UserPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
-        if request.is_ajax(): 
+        if request.is_ajax():
             self.template_name = get_permission_user_photo(self.album.creator, "u_photo/photo/", "photo.html", request.user)
         else:
             raise Http404
@@ -161,7 +161,10 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community=None)
+        try:
+            self.album = Album.objects.get(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
+        except:
+            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
