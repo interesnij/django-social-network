@@ -56,7 +56,7 @@ class User(AbstractUser):
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
-    USERNAME_FIELD = 'phone'
+    #USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
