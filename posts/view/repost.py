@@ -177,16 +177,21 @@ class UMPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            connections = request.POST.getlist("user_connections")
+            connections = request.POST.getlist("chat_items")
             if not connections:
                 return HttpResponseBadRequest()
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            for object_id in connections:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены пользователя")
-                new_post.post_message.add(message)
+                if object_id[0] == "c":
+                    chat = Chat.objects.get(pk=object_id[1:])
+                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
+                elif object_id[0] == "u":
+                    user = User.objects.get(pk=object_id[1:])
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
+                else:
+                    return HttpResponse("not ok")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -206,16 +211,20 @@ class CMPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            connections = request.POST.getlist("user_connections")
+            connections = request.POST.getlist("chat_items")
             if not connections:
                 return HttpResponseBadRequest()
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
+            for object_id in connections:
+                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост записи со стены сообщества")
-                new_post.post_message.add(message)
-            return HttpResponse()
+                if object_id[0] == "c":
+                    chat = Chat.objects.get(pk=object_id[1:])
+                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
+                elif object_id[0] == "u":
+                    user = User.objects.get(pk=object_id[1:])
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
+                else:
+                    return HttpResponse("not ok")
         else:
             return HttpResponseBadRequest()

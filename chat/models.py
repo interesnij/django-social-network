@@ -151,7 +151,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message') 
+    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
@@ -167,7 +167,7 @@ class Message(models.Model):
             self.unread = False
             self.save()
 
-    def get_or_create_chat_and_send_message(creator, user, text):
+    def get_or_create_chat_and_send_message(creator, user, post, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
         chat_list = creator.get_all_chats()
@@ -181,16 +181,16 @@ class Message(models.Model):
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, parent=None, text=text)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, post=post, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
-    def send_message(chat, creator, parent, text):
+    def send_message(chat, creator, post, parent, text):
         # программа для отсылки сообщения, когда чат известен
         sender = ChatUsers.objects.get(user=creator)
-        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, post=post, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
