@@ -39,8 +39,8 @@ function scrolled(link, block_id, target){
 					paginate(link, block_id);
 		}};
 		if (target == 1){get_post_view()}
-	} catch { return };
-}
+	} catch { return }
+}}
 page = 2;
 loaded = false;
 function paginate(link, block_id){
