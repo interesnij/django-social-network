@@ -240,6 +240,7 @@ on('#ajax', 'click', '#с_ucm_good_repost_btn', function() {
   form_data = new FormData(form_post);
   good_pk = container.getAttribute('good-pk');
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
@@ -287,6 +288,7 @@ on('#ajax', 'click', '#c_ucm_good_list_repost_btn', function() {
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 

@@ -1,3 +1,43 @@
+function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast){
+  form_post = _this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form_post);
+  uuid = _this.getAttribute("data-uuid");
+  pk = _this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  if (form_post.querySelector('#repost_radio_wall').checked) {
+    link_.open( 'POST', wall_url + pk + "/" + uuid + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_.send(form_data);
+    toast_info(wall_toast)
+  }
+
+  else if(form_post.querySelector('#repost_radio_community').checked){
+    staff_communities = form_post.querySelector("#id_staff_communities");
+    if(preview_target_block.querySelector(".community").value){
+      link_.open( 'POST', community_url + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info(community_toast)
+    }else{toast_error("Выберите сообщества для репоста")}
+  }
+
+  else if(form_post.querySelector('#repost_radio_message').checked){
+    if(preview_target_block.querySelector(".chat").value){
+      link_.open( 'POST', message_url + pk + "/" + uuid + "/", true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link_.send(form_data);
+      toast_info(message_toast)
+    }else{toast_error("Выберите пользователя для репоста")}
+  };
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
+  }}
+}
+
 function attach_list_for_post(_this, url){
   if (document.body.querySelector(".current_file_dropdown")){
     toast_error("Элемент прикрепляется только к постам")

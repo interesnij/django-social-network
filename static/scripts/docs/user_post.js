@@ -3,6 +3,7 @@ on('#ajax', 'click', '#u_ucm_doc_repost_btn', function() {
   form_data = new FormData(form_post);
   doc_pk = this.getAttribute("doc-pk");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
@@ -51,6 +52,7 @@ on('#ajax', 'click', '#u_ucm_doc_list_repost_btn', function() {
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 

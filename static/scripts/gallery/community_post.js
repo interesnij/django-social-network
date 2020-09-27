@@ -47,6 +47,7 @@ on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   if (form_post.querySelector('#repost_radio_wall').checked) {
@@ -93,6 +94,7 @@ on('#ajax', 'click', '#с_ucm_photo_album_repost_btn', function() {
   form_data = new FormData(form_post);
   uuid = this.getAttribute("data-uuid");
   pk = this.getAttribute("data-pk");
+  preview_target_block = form_post.querySelector('#selected_message_target_items');
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
