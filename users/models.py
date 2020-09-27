@@ -48,14 +48,13 @@ class User(AbstractUser):
     )
 
     id = models.BigAutoField(primary_key=True)
-    #uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
     perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     birthday = models.DateField(blank=True, verbose_name='День рождения')
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
     USERNAME_FIELD = 'phone'
 
