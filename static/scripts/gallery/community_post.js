@@ -41,101 +41,24 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
   link_.send(form_data);
 });
 
-
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
-  form_post = document.body.querySelector("#c_uсm_photo_repost_form");
-  form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid");
-  pk = this.getAttribute("data-pk");
-  preview_target_block = form_post.querySelector('#selected_message_target_items');
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/gallery/repost/c_u_photo_repost/" + pk + "/" + uuid + "/", true );
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link_.send(form_data);
-    toast_info("Репост фотографии на стену сделан")
-  }
-  else if(form_post.querySelector('#repost_radio_community').checked){
-    staff_communities = form_post.querySelector("#id_staff_communities");
-    selectedOptions = staff_communities.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
-      link_.open( 'POST', "/gallery/repost/c_c_photo_repost/" + pk + "/" + uuid + "/", true );
-      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      link_.send(form_data);
-      toast_info("Репост фотографии в сообщества сделан")
-    }else{toast_error("Выберите сообщества для репоста")}
-  }
-
-  else if(form_post.querySelector('#repost_radio_message').checked){
-    user_connections = form_post.querySelector("#id_user_connections");
-    selectedOptions = user_connections.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
-      link_.open( 'POST', "/gallery/repost/c_m_photo_repost/" + pk + "/" + uuid + "/", true );
-      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      link_.send(form_data);
-      toast_info("Репост фотографии в сообщения сделан")
-    }else{toast_error("Выберите пользователя для репоста")}
-  };
-
-  link_.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      document.querySelector(".votes_fullscreen").style.display = "none";
-      document.getElementById("votes_loader").innerHTML="";
-    }}
+  repost_constructor(this,
+                     "/gallery/repost/c_u_photo_repost/",
+                     "Репост фотографии на стену сделан",
+                     "/gallery/repost/c_c_photo_repost/",
+                     "Репост фотографии в сообщества сделан",
+                     "/gallery/repost/c_m_photo_repost/",
+                     "Репост фотографии в сообщения сделан")
 });
 
-on('#ajax', 'click', '#с_ucm_photo_album_repost_btn', function() {
-  form_post = document.body.querySelector("#с_uсm_photo_album_repost_form");
-  form_data = new FormData(form_post);
-  uuid = this.getAttribute("data-uuid");
-  pk = this.getAttribute("data-pk");
-  preview_target_block = form_post.querySelector('#selected_message_target_items');
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-
-  if (form_post.querySelector('#repost_radio_wall').checked) {
-    link_.open( 'POST', "/gallery/repost/с_u_photo_album_repost/" + pk + "/" + uuid + "/", true );
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link_.send(form_data);
-    toast_info("Репост фотоальбома на стену сделан")
-  }
-
-  else if(form_post.querySelector('#repost_radio_community').checked){
-    staff_communities = form_post.querySelector("#id_staff_communities");
-    selectedOptions = staff_communities.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
-      link_.open( 'POST', "/gallery/repost/с_c_photo_album_repost/" + pk + "/" + uuid + "/", true );
-      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      link_.send(form_data);
-      toast_info("Репост фотоальбома в сообщества сделан")
-    }else{toast_error("Выберите сообщества для репоста")}
-  }
-
-  else if(form_post.querySelector('#repost_radio_message').checked){
-    user_connections = form_post.querySelector("#id_user_connections");
-    selectedOptions = user_connections.selectedOptions;
-    val = false;
-    for (var i = 0; i < selectedOptions.length; i++) {if(selectedOptions[i].value) {val = true}}
-    if(val){
-      link_.open( 'POST', "/gallery/repost/с_m_photo_album_repost/" + pk + "/" + uuid + "/", true );
-      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      link_.send(form_data);
-      toast_info("Репост фотоальбома в сообщения сделан")
-    }else{toast_error("Выберите пользователя для репоста")}
-  };
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".votes_fullscreen").style.display = "none";
-    document.getElementById("votes_loader").innerHTML="";
-  }}
+on('#ajax', 'click', '#c_ucm_photo_album_repost_btn', function() {
+  repost_constructor(this,
+                     "/gallery/repost/c_u_photo_album_repost/",
+                     "Репост фотоальбома на стену сделан",
+                     "/gallery/repost/c_c_photo_album_repost/",
+                     "Репост фотоальбома в сообщества сделан",
+                     "/gallery/repost/c_m_photo_album_repost/",
+                     "Репост фотоальбома в сообщения сделан")
 });
 
 on('#ajax', 'click', '.c_photoComment', function() {

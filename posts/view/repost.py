@@ -11,7 +11,7 @@ from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing, get_post_message_processing
+from common.processing.post import get_post_processing
 
 
 class UUCMPostWindow(TemplateView):
@@ -170,61 +170,15 @@ class UMPostRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            if parent.parent:
-                parent = parent.parent
-            else:
-                parent = parent
-            connections = request.POST.getlist("chat_items")
-            if not connections:
-                return HttpResponseBadRequest()
-            for object_id in connections:
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                if object_id[0] == "c":
-                    chat = Chat.objects.get(pk=object_id[1:])
-                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
-                elif object_id[0] == "u":
-                    user = User.objects.get(pk=object_id[1:])
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
-                else:
-                    return HttpResponse("not ok")
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(parent, None, request)
 
 class CMPostRepost(View):
     """
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
+        from common.processing.post import repost_message_send
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            if parent.parent:
-                parent = parent.parent
-            else:
-                parent = parent
-            connections = request.POST.getlist("chat_items")
-            if not connections:
-                return HttpResponseBadRequest()
-            for object_id in connections:
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                if object_id[0] == "c":
-                    chat = Chat.objects.get(pk=object_id[1:])
-                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
-                elif object_id[0] == "u":
-                    user = User.objects.get(pk=object_id[1:])
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
-                else:
-                    return HttpResponse("not ok")
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(parent, community, request)
