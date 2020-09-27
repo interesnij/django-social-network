@@ -303,8 +303,8 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self
-        if self.post.is_photo_repost():
+        parent = self.post
+        if parent.is_photo_repost():
             return "message_repost/photo_repost.html"
         elif parent.is_photo_album_repost():
             return "message_repost/photo_album_repost.html"
