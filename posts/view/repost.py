@@ -9,7 +9,7 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing
+from common.processing.post import get_post_processing, get_post_message_processing
 
 
 class UUCMPostWindow(TemplateView):
