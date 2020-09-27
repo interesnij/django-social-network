@@ -9,7 +9,7 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing, repost_message_send 
+from common.processing.post import get_post_processing, repost_message_send
 
 
 class UUCMPhotoWindow(TemplateView):
@@ -208,24 +208,9 @@ class UMPhotoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=photo.creator, community=None, status=Post.PHOTO_REPOST)
-            photo.item.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост фотографии пользователя")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(photo, Post.PHOTO_REPOST, None, request, "Репост фотографии пользователя")
+        return HttpResponse()
+
 
 class CMPhotoRepost(View):
     """
@@ -234,25 +219,9 @@ class CMPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=photo.creator, community=community, status=Post.PHOTO_REPOST)
-            photo.item.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост фотографии сообщества")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(photo, Post.PHOTO_REPOST, community, request, "Репост фотографии сообщества")
+        return HttpResponse()
 
 
 class UUPhotoAlbumRepost(View):

@@ -211,24 +211,9 @@ class UMVideoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=video.creator, community=None, status=Post.VIDEO_REPOST)
-            video.item.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост видеозаписи пользователя")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(video, Post.VIDEO_REPOST, None, request, "Репост видеозаписи пользователя")
+        return HttpResponse()
+
 
 class CMVideoRepost(View):
     """
@@ -237,25 +222,9 @@ class CMVideoRepost(View):
     def post(self, request, *args, **kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-            connections = request.POST.getlist("user_connections")
-            if not connections:
-                return HttpResponseBadRequest()
-            parent = Post.create_parent_post(creator=video.creator, community=community, status=Post.VIDEO_REPOST)
-            video.item.add(parent)
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
-                message = Message.send_message(sender=request.user, recipient=user, message="Репост видеозаписи сообщества")
-                new_post.post_message.add(message)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        repost_message_send(video, Post.VIDEO_REPOST, community, request, "Репост видеозаписи сообщества")
+        return HttpResponse()
 
 
 class UUVideoAlbumRepost(View):
