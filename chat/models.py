@@ -335,4 +335,4 @@ class Message(models.Model):
         elif self.is_doc_list_attached():
             return "message_attach/u_doc_list_attach.html"
         else:
-            return "message/parent_user.html"
+            return "message_attach/parent_user.html"
