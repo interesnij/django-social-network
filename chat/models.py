@@ -187,10 +187,10 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
-    def send_message(chat, creator, parent, parent, text):
+    def send_message(chat, creator, parent, forward, text):
         # программа для отсылки сообщения, когда чат известен
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, forward=forward, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
