@@ -82,7 +82,7 @@ class Community(models.Model):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
 
     class Meta:
         verbose_name = 'сообщество'
@@ -132,7 +132,6 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
-        create_community_models(community)
         creator.create_or_plus_populate_community(community.pk)
         return community
 
