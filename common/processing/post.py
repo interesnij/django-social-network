@@ -55,12 +55,12 @@ def repost_message_send(list, status, community, request, text):
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_message_processing(new_post)
-                message = Message.send_message(chat=chat, post=new_post, creator=request.user, parent=None, text=text)
+                message = Message.send_message(chat=chat, parent=new_post, creator=request.user, parent=None, text=text)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
                 get_post_message_processing(new_post)
-                message = Message.get_or_create_chat_and_send_message(creator=request.user, post=new_post, user=user, text=text)
+                message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=new_post, user=user, text=text)
             else:
                 return HttpResponse("not ok")

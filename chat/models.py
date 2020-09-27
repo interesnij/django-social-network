@@ -145,13 +145,13 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
+    forward = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
+    parent = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
@@ -167,7 +167,7 @@ class Message(models.Model):
             self.unread = False
             self.save()
 
-    def get_or_create_chat_and_send_message(creator, user, post, text):
+    def get_or_create_chat_and_send_message(creator, user, parent, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
         chat_list = creator.get_all_chats()
@@ -181,16 +181,16 @@ class Message(models.Model):
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, post=post, text=text)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
-    def send_message(chat, creator, post, parent, text):
+    def send_message(chat, creator, parent, parent, text):
         # программа для отсылки сообщения, когда чат известен
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, post=post, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
@@ -210,58 +210,58 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def is_repost(self):
-        return try_except(self.post)
+        return try_except(self.parent)
 
     def is_photo_repost(self):
-        return try_except(self.post.status == Post.PHOTO_REPOST)
+        return try_except(self.parent.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        photo = self.post.parent.item_photo.all()[0]
+        photo = self.parent.parent.item_photo.all()[0]
         return photo
     def is_photo_album_repost(self):
-        return try_except(self.post.status == Post.PHOTO_ALBUM_REPOST)
+        return try_except(self.parent.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.post.parent.post_album.all()[0]
+        photo_album = self.parent.parent.post_album.all()[0]
         return photo_album
 
     def is_music_repost(self):
-        return try_except(self.post.status == Post.MUSIC_REPOST)
+        return try_except(self.parent.status == Post.MUSIC_REPOST)
     def is_music_list_repost(self):
-        return try_except(self.post.status == Post.MUSIC_LIST_REPOST)
+        return try_except(self.parent.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.post.parent.post_soundlist.all()[0]
+        playlist = self.parent.parent.post_soundlist.all()[0]
         return playlist
     def get_music_repost(self):
-        music = self.post.parent.item_music.all()[0]
+        music = self.parent.parent.item_music.all()[0]
         return music
 
     def is_good_repost(self):
-        return try_except(self.post.status == Post.GOOD_REPOST)
+        return try_except(self.parent.status == Post.GOOD_REPOST)
     def is_good_list_repost(self):
-        return try_except(self.post.status == Post.GOOD_LIST_REPOST)
+        return try_except(self.parent.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
         good = self.post.parent.item_good.all()[0]
         return good
     def get_good_list_repost(self):
-        good_list = self.post.parent.post_good_album.all()[0]
+        good_list = self.parent.parent.post_good_album.all()[0]
         return good_list
 
     def is_doc_repost(self):
-        return try_except(self.post.status == Post.DOC_REPOST)
+        return try_except(self.parent.status == Post.DOC_REPOST)
     def is_doc_list_repost(self):
-        return try_except(self.post.status == Post.DOC_LIST_REPOST)
+        return try_except(self.parent.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.post.parent.post_doclist.all()[0]
+        list = self.parent.parent.post_doclist.all()[0]
         return list
     def get_doc_repost(self):
-        doc = self.post.parent.item_doc.all()[0]
+        doc = self.parent.parent.item_doc.all()[0]
         return doc
 
     def is_video_repost(self):
-        return try_except(self.post.status == Post.VIDEO_REPOST)
+        return try_except(self.parent.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
-        return try_except(self.post.status == Post.VIDEO_LIST_REPOST)
+        return try_except(self.parent.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.post.parent.post_video_album.all()[0]
+        video_list = self.parent.parent.post_video_album.all()[0]
         return video_list
 
     def get_attach_photos(self):
@@ -303,7 +303,7 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.post
+        parent = self.parent
         if parent.is_photo_repost():
             return "post_community/photo_repost.html"
         elif parent.is_photo_album_repost():
@@ -346,7 +346,7 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.post
+        parent = self.parent
         if parent.is_photo_repost():
             return "post_user/photo_repost.html"
         elif parent.is_photo_album_repost():
