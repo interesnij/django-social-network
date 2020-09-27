@@ -34,7 +34,7 @@ def repost_message_send(parent, community, request):
         else:
             parent = parent
         for object_id in connections:
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=None, parent=parent, status="PG")
+            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_message_processing(new_post)
             if object_id[0] == "c":

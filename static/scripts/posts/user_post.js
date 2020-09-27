@@ -41,16 +41,6 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
-  repost_constructor(this,
-                     "/posts/repost/u_u_post_repost/",
-                     "Репост записи на стену сделан",
-                     "/posts/repost/u_c_post_repost/",
-                     "Репост записи в сообщества сделан",
-                     "/posts/repost/u_m_post_repost/",
-                     "Репост записи в сообщения сделан")
-});
-
 on('#ajax', 'click', '#article_post', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.forms.new_post);
