@@ -117,12 +117,12 @@ class UCPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            communities = request.POST.getlist("staff_communities")
+            communities = request.POST.getlist("communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(community.pk):
+                if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
@@ -145,12 +145,12 @@ class CCPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            communities = request.POST.getlist("staff_communities")
+            communities = request.POST.getlist("communities")
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
-                if request.user.is_staff_of_community(pk=community.pk):
+                if request.user.is_staff_of_community(pk=community_id):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)

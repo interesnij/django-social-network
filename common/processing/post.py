@@ -27,8 +27,6 @@ def repost_community_send(list, status, community, request):
     communities = request.POST.getlist("communities")
     if not communities:
         return HttpResponseBadRequest()
-    if community:
-        check_user_is_staff(request.user, community.pk)
     form_post = PostForm(request.POST)
     if request.is_ajax() and form_post.is_valid():
         post = form_post.save(commit=False)
