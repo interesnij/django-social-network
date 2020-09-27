@@ -305,34 +305,34 @@ class Message(models.Model):
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
         parent = self
         if self.post.is_photo_repost():
-            return "message/photo_repost.html"
+            return "message_repost/photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "message/photo_album_repost.html"
+            return "message_repost/photo_album_repost.html"
         if self.is_photo_list_attached():
-            return "generic/parent_attach/u_photo_list_attach.html"
+            return "message_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "message/good_repost.html"
+            return "message_repost/good_repost.html"
         elif parent.is_good_list_repost():
-            return "message/good_list_repost.html"
+            return "message_repost/good_list_repost.html"
         elif self.is_good_list_attached():
-            return "generic/parent_attach/u_good_list_attach.html"
+            return "message_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
-            return "message/music_repost.html"
+            return "message_repost/music_repost.html"
         elif parent.is_music_list_repost():
-            return "message/music_list_repost.html"
+            return "message_repost/music_list_repost.html"
         elif self.is_playlist_attached():
-            return "generic/parent_attach/u_playlist_attach.html"
+            return "message_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
-            return "message/video_repost.html"
+            return "message_repost/video_repost.html"
         elif parent.is_video_list_repost():
-            return "message/video_list_repost.html"
+            return "message_repost/video_list_repost.html"
         elif self.is_video_list_attached():
-            return "generic/parent_attach/u_video_list_attach.html"
+            return "message_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "message/doc_repost.html"
+            return "message_repost/doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "message/doc_list_repost.html"
+            return "message_repost/doc_list_repost.html"
         elif self.is_doc_list_attached():
-            return "generic/parent_attach/u_doc_list_attach.html"
+            return "message_attach/u_doc_list_attach.html"
         else:
             return "message/parent_user.html"
