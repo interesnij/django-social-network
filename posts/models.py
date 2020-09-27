@@ -12,6 +12,18 @@ from common.model.votes import PostVotes, PostCommentVotes
 from common.utils import try_except
 
 
+class PostCategory(models.Model):
+	name = models.CharField(max_length=100, verbose_name="Тематика")
+	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
+
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		verbose_name = "Тематика постов"
+		verbose_name_plural = "Тематики постов"
+
+
 class Post(models.Model):
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
@@ -53,12 +65,13 @@ class Post(models.Model):
     )
     id = models.BigAutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
+    category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, verbose_name="Тематика")
 
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")

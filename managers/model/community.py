@@ -23,7 +23,7 @@ class ModeratedCommunity(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='moderated_community', blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='moderated_community', blank=True, verbose_name="Сообщество")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
@@ -186,7 +186,7 @@ class CommunityModerationReport(models.Model):
 
 class ModerationPenaltyCommunity(models.Model):
     # сами санкции против сообщества.
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='community_penalties', verbose_name="Оштрафованный сообщество")
+    #community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='community_penalties', verbose_name="Оштрафованный сообщество")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_manager_penalties', verbose_name="Менеджер")
     expiration = models.DateTimeField(null=True, verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedCommunity, on_delete=models.CASCADE, related_name='community_moderated_object', verbose_name="Объект")

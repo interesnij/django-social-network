@@ -64,7 +64,7 @@ class SoundList(models.Model):
         (LIST, 'Пользовательский плейлист'),
     )
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
@@ -72,8 +72,8 @@ class SoundList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     image = models.CharField(max_length=255, blank=True, null=True)
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_soundlist')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
+    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_soundlist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -168,12 +168,12 @@ class SoundcloudParsing(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     list = models.ManyToManyField(SoundList, related_name='players', blank="True")
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
-    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
-    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_music')
-    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_music')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_music')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='item_music')
+    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_music')
+    #photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_music')
+    #good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_music')
+    #video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_music')
+    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_music')
 
     def __str__(self):
         return self.title

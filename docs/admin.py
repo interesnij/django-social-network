@@ -10,7 +10,7 @@ class DocAdmin(admin.ModelAdmin):
         model = Doc2
 
 class DocListAdmin(admin.ModelAdmin):
-    list_display = ['name','creator','community']
+    list_display = ['name','creator']
     search_fields = ('name',)
     class Meta:
         model = DocList
