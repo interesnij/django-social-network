@@ -115,7 +115,7 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
   }
 
   else if(form_post.querySelector('#repost_radio_message').checked){
-    if(preview_target_block.querySelector(".chat").value){ 
+    if(preview_target_block.querySelector(".chat").value){
       link_.open( 'POST', "/gallery/repost/u_m_photo_album_repost/" + pk + "/" + uuid + "/", true );
       link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link_.send(form_data);
@@ -125,8 +125,8 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    document.querySelector(".vote_fullscreen").style.display = "none";
+    document.getElementById("vote_loader").innerHTML="";
   }}
 });
 
