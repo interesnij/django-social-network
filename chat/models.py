@@ -189,7 +189,7 @@ class Message(models.Model):
 
     def send_message(chat, creator, post, parent, text):
         # программа для отсылки сообщения, когда чат известен
-        sender = ChatUsers.objects.get(user=creator)
+        sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, post=post, parent=parent, text=text)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
