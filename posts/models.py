@@ -71,7 +71,7 @@ class Post(models.Model):
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     status = models.CharField(choices=STATUSES, default=STATUS_PUBLISHED, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
-    category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, verbose_name="Тематика")
+    category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
 
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
