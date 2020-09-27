@@ -1,5 +1,5 @@
 <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-{% if object.post.community %}
+{% if object.parent.community %}
     {% include object.get_c_repost_items %}
 {% else %}
   {% include object.get_u_repost_items %}
