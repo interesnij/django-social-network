@@ -21,7 +21,7 @@ def get_post_offer_processing(post):
     post.save(update_fields=['status'])
     return post
 
-def repost_message_send(parent, community, request):
+def repost_message_send(parent, community, request, text):
     connections = request.POST.getlist("chat_items")
     if not connections:
         return HttpResponseBadRequest()
@@ -40,12 +40,11 @@ def repost_message_send(parent, community, request):
             get_post_message_processing(new_post)
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
-                message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
+                message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text=text)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
-                message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
+                message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text=text)
             else:
                 return HttpResponseBadRequest()
-        return HttpResponse()
     else:
         return HttpResponseBadRequest()

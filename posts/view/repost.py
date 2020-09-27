@@ -172,7 +172,8 @@ class UMPostRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(parent, None, request)
+        repost_message_send(parent, None, request, "Репост записи пользователя")
+        return HttpResponse()
 
 class CMPostRepost(View):
     """
@@ -180,8 +181,9 @@ class CMPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
-        
+
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(parent, community, request)
+        repost_message_send(parent, community, request, "Репост записи сообщества")
+        return HttpResponse()
