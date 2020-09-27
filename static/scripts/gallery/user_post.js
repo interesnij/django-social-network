@@ -125,8 +125,8 @@ on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector(".vote_fullscreen").style.display = "none";
-    document.getElementById("vote_loader").innerHTML="";
+    document.querySelector(".votes_fullscreen").style.display = "none";
+    document.getElementById("votes_loader").innerHTML="";
   }}
 });
 
