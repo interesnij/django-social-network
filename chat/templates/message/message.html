@@ -12,7 +12,7 @@
       </h5>
       {% if object.post %}
         {% include 'message_repost/repost.html' %}
-      {% endif %}
+      {% else %}
         {{ object.text|linebreaks }}
       {% endif %}
     </div>
