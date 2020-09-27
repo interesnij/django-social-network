@@ -66,7 +66,7 @@ function create_preview_commmunity(_this){
   $figure.append($img);
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" class="community" name="communities[]" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" class="community" name="communities" value="' + pk + '">';
 
   $div_flex.append($figure);
   $div.append($input);
@@ -92,7 +92,7 @@ function create_preview_chat_item(_this){
   $figure.append($img);
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" class="chat" name="chat_items[]" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" class="chat" name="chat_items" value="' + pk + '">';
 
   $div_flex.append($figure);
   $div.append($input);
