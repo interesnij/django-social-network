@@ -55,7 +55,7 @@ class User(AbstractUser):
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     birthday = models.DateField(blank=True, verbose_name='День рождения')
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
     USERNAME_FIELD = 'phone'
 
