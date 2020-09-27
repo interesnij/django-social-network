@@ -166,6 +166,8 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
+        from common.processing.post import repost_message_send
+
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
@@ -178,6 +180,7 @@ class CMPostRepost(View):
     """
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
+        
         parent = Post.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
