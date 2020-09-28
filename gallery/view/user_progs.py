@@ -80,7 +80,10 @@ class PhotoAttachUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
+            try:
+                _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
+            except:
+                _album = Album.objects.create(creator=request.user, community=None, type=Album.WALL, title="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, creator=self.user)
                 _album.photo_album.add(photo)

@@ -143,7 +143,7 @@ class UserWallPhoto(TemplateView):
         try:
             self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         except:
-            self.album = Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены")
+            self.album = Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены", description="Фото со стены")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
@@ -175,9 +175,9 @@ class UserDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.get(creator=self.user, community=None, type=Album.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "u_photo/avatar/", "photo.html", request.user)
@@ -209,7 +209,7 @@ class UserFirstAvatar(TemplateView):
         try:
             self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community=None)
         except:
-            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photo = self.album.get_first_photo()
         self.photos = self.album.get_photos()
         if request.is_ajax():

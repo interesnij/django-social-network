@@ -84,7 +84,7 @@ class CommunityDetailAvatar(TemplateView):
         try:
             self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
         if request.is_ajax():
@@ -113,9 +113,9 @@ class CommunityFirstAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(community=self.community, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы")
+            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photo = self.album.get_first_photo()
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
@@ -209,9 +209,9 @@ class CommunityWallPhoto(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         try:
-            self.album = Album.objects.get(community=self.community, type=Album.WALL, title="Фото со стены")
+            self.album = Album.objects.get(community=self.community, type=Album.WALL)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.WALL, title="Фото со стены")
+            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.WALL, title="Фото со стены", description="Фото со стены")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.community, self.photo, "c_photo/wall_photo/", "photo.html", request.user)

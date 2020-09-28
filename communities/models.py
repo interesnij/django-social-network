@@ -240,22 +240,10 @@ class Community(models.Model):
         except:
             return None
 
-    def get_photos(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
-        return album.get_photos()
-
     def get_count_photos(self):
         from gallery.models import Album
         album = Album.objects.get(community_id=self.id, community=None, type=Album.MAIN)
         return album.count_photo()
-
-    def get_admin_photos(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        return album.get_staff_photos()
 
     def get_albums(self):
         from gallery.models import Album
@@ -284,18 +272,6 @@ class Community(models.Model):
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
-
-    def get_avatar_uuid(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, type=Album.AVATAR, title="Фото со страницы")
-        return album.photo_album.first().uuid
-
-    def get_main_album_uuid(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, type=Album.MAIN, title="Основной альбом")
-        return album.uuid
 
     def is_good_album_exists(self):
         return self.good_album_community.filter(community_id=self.id, type="AL", is_deleted=False).exists()

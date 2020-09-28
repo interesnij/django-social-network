@@ -1118,22 +1118,6 @@ class User(AbstractUser):
         count = Video.objects.filter(video_query).values("pk")
         return count.count()
 
-    def get_video(self):
-        from video.models import Video, VideoAlbum
-
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
-        video_query = Q(album=list, is_deleted=False, is_public=True)
-        video_list = Video.objects.filter(video_query).order_by("-created")
-        return video_list
-
-    def get_my_video(self):
-        from video.models import Video, VideoAlbum
-
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
-        video_query = Q(album=list, is_deleted=False)
-        video_list = Video.objects.filter(video_query).order_by("-created")
-        return video_list
-
     def get_last_video(self):
         from video.models import Video, VideoAlbum
 
@@ -1141,18 +1125,6 @@ class User(AbstractUser):
         video_query = Q(album=list, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
-
-    def get_generic_video_list_uuid(self):
-        from video.models import VideoAlbum
-
-        album = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
-        return album.uuid
-
-    def get_music_list_id(self):
-        from music.models import SoundList
-
-        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
-        return list.pk
 
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
@@ -1179,16 +1151,6 @@ class User(AbstractUser):
         else:
             queryset = self.get_music()
             return queryset
-
-    def get_my_docs(self):
-        from docs.models import DocList, Doc2
-        try:
-            list = DocList.objects.get(creator_id=self.id, community=None, type=DocList.MAIN)
-        except:
-            list = DocList.objects.create(creator_id=self.id, community=None, type=DocList.MAIN, name="Основной список")
-        docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc2.objects.filter(Doc_query)
-        return docs_list
 
     def get_docs_count(self):
         from docs.models import Doc2
