@@ -10,10 +10,25 @@
       <h5 class="time-title mb-0">{{ object.creator.user.first_name }}
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
-      {% if object.parent %}
-        {% include 'message_repost/repost.html' %}
-      {% else %}
-        {{ object.text|linebreaks }}
+
+      {% if object.text %}
+        <div class="">
+          {{ object.text|linebreaks }}
+        </div>
+      {% endif %}
+
+      <span class="post_attach_panel">
+        {% include object.get_attach_items %}
+      </span>
+
+      {% if object.repost %}
+        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+          {% if object.repost.community %}
+            {% include object.get_c_repost_items %}
+          {% else %}
+            {% include object.get_u_repost_items %}
+          {% endif %}
+        </span>
       {% endif %}
     </div>
 </div>

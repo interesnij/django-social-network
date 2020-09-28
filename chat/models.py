@@ -11,35 +11,6 @@ from posts.models import Post
 from common.utils import try_except
 
 
-class MessageQuerySet(models.query.QuerySet):
-    """Personalized queryset created to improve model usability."""
-
-    def get_conversation(self, sender, recipient):
-        """Возвращает все сообщения, отправленные между двумя пользователями."""
-        qs_one = self.filter(sender=sender, recipient=recipient)
-        qs_two = self.filter(sender=recipient, recipient=sender)
-        return qs_one.union(qs_two).order_by('created')
-
-    def get_most_recent_conversation(self, recipient):
-        """Возвращает имя пользователя самого последнего собеседника."""
-        try:
-            qs_sent = self.filter(sender=recipient)
-            qs_recieved = self.filter(recipient=recipient)
-            qs = qs_sent.union(qs_recieved).latest("created")
-            if qs.sender == recipient:
-                return qs.recipient
-
-            return qs.sender
-
-        except self.model.DoesNotExist:
-            return User.objects.get(id=recipient.id)
-
-    def mark_conversation_as_read(self, sender, recipient):
-        """Отметьте как прочитанные все непрочитанные элементы в текущем разговоре."""
-        qs = self.filter(sender=sender, recipient=recipient)
-        return qs.update(unread=False)
-
-
 class Chat(models.Model):
     TYPE_PRIVATE = 'PR'
     TYPE_PUBLIC = 'PU'
@@ -148,7 +119,6 @@ class ChatUsers(models.Model):
         verbose_name_plural = 'участники бесед'
 
 
-
 class Message(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     creator = models.ForeignKey(ChatUsers, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
@@ -158,8 +128,8 @@ class Message(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
+    is_edit = models.BooleanField(default=False, verbose_name="Изменено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
-    objects = MessageQuerySet.as_manager()
 
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
 
@@ -402,3 +372,51 @@ class Message(models.Model):
             return "post_user/community_repost.html"
         else:
             return "generic/attach/parent_user.html"
+
+    def get_attach_items(self):
+        if self.is_photo_list_attached():
+            return "generic/attach/u_photo_list_attach.html"
+        elif self.is_playlist_attached():
+            return "generic/attach/u_playlist_attach.html"
+        elif self.is_video_list_attached():
+            return "generic/attach/u_video_list_attach.html"
+        elif self.is_good_list_attached():
+            return "generic/attach/u_good_list_attach.html"
+        elif self.is_doc_list_attached():
+            return "generic/attach/u_doc_list_attach.html"
+        else:
+            return "generic/attach/u_post_attach.html"
+
+    def get_fixed_message_for_chat(self, chat_id):
+        try:
+            message = Message.objects.get(chat_id=chat_id, is_fixed=True)
+            message.is_fixed = False
+            message.save(update_fields=['is_fixed'])
+            new_fixed = Message.objects.get(pk=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
+        except:
+            new_fixed = Message.objects.get(pk=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
+
+
+class MessageFavorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
+    message = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Члены сообщества")
+
+    class Meta:
+        unique_together = (('user', 'message'),)
+        indexes = [
+            models.Index(fields=['chat', 'user']),
+            ]
+        verbose_name = 'Избранное сообщение'
+        verbose_name_plural = 'Избранные сообщения'
+
+    @classmethod
+    def create_favorite(cls, user_id, message):
+        if not cls.objects.filter(user_id=user_id, message=message).exists():
+            favorite = cls.objects.create(user_id=user_id, message=message,)
+            return favorite
+        else:
+            pass
