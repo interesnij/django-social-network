@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from common.attach.post_attacher import get_post_attach
 from posts.forms import PostForm
 from common.check.community import check_user_is_staff
+from common.attach.message_attacher import get_message_attach
 
 
 def get_post_processing(post):
@@ -54,13 +55,13 @@ def repost_message_send(list, status, community, request, text):
                 chat = Chat.objects.get(pk=object_id[1:])
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
                 message = Message.send_message(chat=chat, parent=new_post, creator=request.user, forward=None, text=text)
+                get_message_attach(request, message)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
                 message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=new_post, user=user, text=text)
+                get_message_attach(request, message)
             else:
                 return HttpResponse("not ok")

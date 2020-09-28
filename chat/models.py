@@ -9,6 +9,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from posts.models import Post
 from common.utils import try_except
+from common.processing.post import get_post_message_processing
 
 
 class MessageQuerySet(models.query.QuerySet):
@@ -46,7 +47,7 @@ class Chat(models.Model):
     TYPE_MANAGER = 'M'
     TYPES = (
         (TYPE_PRIVATE, 'Приватный чат'),
-        (TYPE_PUBLIC, 'Коллективный чат'),
+        (TYPE_PUBLIC, 'Открытый чат'),
         (TYPE_MANAGER, 'Административный чат'),
     )
     id = models.BigAutoField(primary_key=True)
@@ -113,6 +114,16 @@ class Chat(models.Model):
     def is_not_empty(self):
         return self.chat_message.filter(chat=self,is_deleted=False).values("pk").exists()
 
+    def add_administrator(self, user):
+        member = self.chat_relation.get(user=user)
+        member.is_administrator = True
+        member.save(update_fields=["is_administrator"])
+        return member
+    def remove_administrator(self, user):
+        member = self.chat_relation.get(user=user)
+        member.is_administrator = False
+        member.save(update_fields=["is_administrator"])
+        return member
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
@@ -176,12 +187,13 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PRIVATE)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
             sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
         new_message = Message.objects.create(chat=current_chat, creator=sender, parent=parent, text=text)
+        get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
@@ -191,6 +203,7 @@ class Message(models.Model):
         # программа для отсылки сообщения, когда чат известен
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, forward=forward, text=text)
+        get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
@@ -200,6 +213,7 @@ class Message(models.Model):
         # отсылка сообщений в групповой чат
         sender = ChatUsers.objects.get(user=creator)
         new_message = Chat.objects.create(chat=chat, creator=sender, parent=parent, text=text)
+        get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator,}
         async_to_sync(channel_layer.group_send)(creator.username, payload)

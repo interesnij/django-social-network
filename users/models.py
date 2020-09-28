@@ -1423,3 +1423,8 @@ class User(AbstractUser):
         chats = self.get_all_chats()
         friends = self.get_all_connection()
         return list(chain(chats, friends))
+
+    def is_administrator_of_chat(self, chat_pk):
+        return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True).exists()
+    def is_member_of_chat(self, chat_pk):
+        return self.chat_users.filter(chat__pk=chat_pk).exists()

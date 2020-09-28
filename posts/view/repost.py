@@ -9,7 +9,8 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing, get_post_message_processing
+from common.processing.post import get_post_processing
+from common.attach.message_attacher import get_message_attach
 
 
 class UUCMPostWindow(TemplateView):
@@ -183,13 +184,14 @@ class UMPostRepost(View):
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
+                    get_message_attach(request, message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
+                    get_message_attach(request, message)
                 else:
                     return HttpResponseBadRequest()
         else:
@@ -219,13 +221,14 @@ class CMPostRepost(View):
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
                 get_post_attach(request, new_post)
-                get_post_message_processing(new_post)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
+                    get_message_attach(request, message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
+                    get_message_attach(request, message)
                 else:
                     return HttpResponseBadRequest()
         else:

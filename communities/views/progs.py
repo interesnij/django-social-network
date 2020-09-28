@@ -7,35 +7,20 @@ from gallery.models import Album
 from users.models import User
 from django.shortcuts import render
 from django.http import Http404
-
-
-class UserCreateCommunityWindow(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = "manage/create_community.html"
-		else:
-			self.template_name = "about.html"
-		return super(UserCreateCommunityWindow,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserCreateCommunityWindow,self).get_context_data(**kwargs)
-		context["form"] = CommunityForm()
-		context["categories"] = CommunityCategory.objects.only("id")
-		return context
+from common.template.user import get_settings_template
 
 
 class CommunityCreate(TemplateView):
-	template_name="community_add.html"
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.form=CommunityForm()
+		self.template_name = get_settings_template("manage/create_community.html", request)
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
-		context["form"]=self.form
+		context["form"]=CommunityForm()
+		context["categories"] = CommunityCategory.objects.only("id")
 		return context
 
 	def post(self,request,*args,**kwargs):
