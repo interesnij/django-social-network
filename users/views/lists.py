@@ -111,7 +111,7 @@ class UserMusicList(ListView):
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-		if self.album.type == SoundList.MAIN:
+		if self.playlist.type == SoundList.MAIN:
 			self.template_name = get_template_user_music(self.user, "user_music/", "music.html", request.user)
 		else:
 			self.template_name = get_template_user_music(self.user, "user_music_list/", "list.html", request.user)

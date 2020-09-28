@@ -161,8 +161,10 @@ class CommunityDocsList(ListView):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
-
-		self.template_name = get_template_community_doc(self.community, "c_docs_list/", "list.html", request.user)
+		if self.list.type == DocList.MAIN:
+			self.template_name = get_template_community_doc(self.community, "c_docs/", "list.html", request.user)
+		else:
+			self.template_name = get_template_community_doc(self.community, "c_docs_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
@@ -195,7 +197,7 @@ class CommunityGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_community_good(self.community, "c_goods/", "list.html", request.user)
+		self.template_name = get_template_community_good(self.community, "c_goods/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGoods,self).get(request,*args,**kwargs)
@@ -224,7 +226,10 @@ class CommunityGoodsList(ListView):
 		else:
 			self.goods_list = self.album.get_goods()
 
-		self.template_name = get_template_community_good(self.community, "c_goods_list/", "list.html", request.user)
+		if self.album.type == GoodAlbum.MAIN:
+			self.template_name = get_template_community_good(self.community, "c_goods/", "list.html", request.user)
+		else:
+			self.template_name = get_template_community_good(self.community, "c_goods_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
@@ -249,8 +254,10 @@ class CommunityMusicList(ListView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-
-		self.template_name = get_template_community_music(self.community, "c_music_list/", "list.html", request.user)
+		if self.playlist.type == SoundList.MAIN:
+			self.template_name = get_template_community_music(self.community, "c_music/", "list.html", request.user)
+		else:
+			self.template_name = get_template_community_music(self.community, "c_music_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
@@ -307,8 +314,10 @@ class CommunityVideoList(ListView):
 			self.video_list = self.album.get_my_queryset()
 		else:
 			self.video_list = self.album.get_queryset()
-
-		self.template_name = get_template_community_video(self.community, "c_video_list/", "list.html", request.user)
+		if self.album.type == VideoAlbum.MAIN:
+			self.template_name = get_template_community_video(self.community, "c_video/", "list.html", request.user)
+		else:
+			self.template_name = get_template_community_video(self.community, "c_video_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
