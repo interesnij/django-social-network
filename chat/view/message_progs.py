@@ -46,7 +46,7 @@ class SendPageMessage(TemplateView):
                 for object_id in connections:
                     if object_id[0] == "c":
                         chat = Chat.objects.get(pk=object_id[1:])
-                        message = Message.send_message(chat=chat, parent=None, creator=request.user, forward=None, text=text)
+                        message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=text)
                         get_message_attach(request, message)
                     elif object_id[0] == "u":
                         user = User.objects.get(pk=object_id[1:])
@@ -74,15 +74,15 @@ class SendMessage(View):
                 request.POST.get('photo_list') or request.POST.get('doc_list') or \
                 request.POST.get('doc') or request.POST.get('good_list'):
 
-                message = Message.send_message(chat=chat, parent=None, creator=request.user, forward=None, text=message.text)
+                message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
                 get_message_attach(request, message)
             else:
                 return HttpResponseBadRequest()
 
 
-class UUPostRepost(View):
+class MessageParent(View):
     def post(self, request, *args, **kwargs):
-        forward = Message.objects.get(uuid=self.kwargs["uuid"])
+        parent = Message.objects.get(uuid=self.kwargs["uuid"])
         chat = Chat.objects.get(pk=self.kwargs["pk"])
         check_can_send_message(request.user, chat)
         form_post = MessageForm(request.POST)
@@ -95,7 +95,7 @@ class UUPostRepost(View):
                 request.POST.get('photo_list') or request.POST.get('doc_list') or \
                 request.POST.get('doc') or request.POST.get('good_list'):
 
-            new_message = Message.send_message(chat=chat, parent=None, creator=request.user, forward=forward, text=message.text)
+            new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=repost, text=message.text)
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             return HttpResponse()

@@ -177,7 +177,7 @@ class Message(models.Model):
             self.unread = False
             self.save()
 
-    def get_or_create_chat_and_send_message(creator, user, parent, text):
+    def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
         from common.processing.post import get_post_message_processing
@@ -193,19 +193,19 @@ class Message(models.Model):
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, parent=parent, text=text)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
-    def send_message(chat, creator, parent, forward, text):
+    def send_message(chat, creator, repost, parent, text):
         # программа для отсылки сообщения, когда чат известен
         from common.processing.post import get_post_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, forward=forward, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
@@ -229,58 +229,58 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def is_repost(self):
-        return try_except(self.parent)
+        return try_except(self.repost)
 
     def is_photo_repost(self):
-        return try_except(self.parent.status == Post.PHOTO_REPOST)
+        return try_except(self.repost.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        photo = self.parent.parent.item_photo.filter(is_deleted=False)[0]
+        photo = self.repost.parent.item_photo.filter(is_deleted=False)[0]
         return photo
     def is_photo_album_repost(self):
-        return try_except(self.parent.status == Post.PHOTO_ALBUM_REPOST)
+        return try_except(self.repost.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.parent.parent.post_album.filter(is_deleted=False)[0]
+        photo_album = self.repost.parent.post_album.filter(is_deleted=False)[0]
         return photo_album
 
     def is_music_repost(self):
-        return try_except(self.parent.status == Post.MUSIC_REPOST)
+        return try_except(self.repost.status == Post.MUSIC_REPOST)
     def is_music_list_repost(self):
-        return try_except(self.parent.status == Post.MUSIC_LIST_REPOST)
+        return try_except(self.repost.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.parent.parent.post_soundlist.filter(is_deleted=False)[0]
+        playlist = self.repost.parent.post_soundlist.filter(is_deleted=False)[0]
         return playlist
     def get_music_repost(self):
-        music = self.parent.parent.item_music.filter(is_deleted=False)[0]
+        music = self.repost.parent.item_music.filter(is_deleted=False)[0]
         return music
 
     def is_good_repost(self):
-        return try_except(self.parent.status == Post.GOOD_REPOST)
+        return try_except(self.repost.status == Post.GOOD_REPOST)
     def is_good_list_repost(self):
-        return try_except(self.parent.status == Post.GOOD_LIST_REPOST)
+        return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        good = self.post.parent.item_good.filter(is_deleted=False)[0]
+        good = self.repost.item_good.filter(is_deleted=False)[0]
         return good
     def get_good_list_repost(self):
-        good_list = self.parent.parent.post_good_album.filter(is_deleted=False)[0]
+        good_list = self.repost.parent.post_good_album.filter(is_deleted=False)[0]
         return good_list
 
     def is_doc_repost(self):
-        return try_except(self.parent.status == Post.DOC_REPOST)
+        return try_except(self.repost.status == Post.DOC_REPOST)
     def is_doc_list_repost(self):
-        return try_except(self.parent.status == Post.DOC_LIST_REPOST)
+        return try_except(self.repost.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.parent.parent.post_doclist.filter(is_deleted=False)[0]
+        list = self.repost.parent.post_doclist.filter(is_deleted=False)[0]
         return list
     def get_doc_repost(self):
-        doc = self.parent.parent.item_doc.filter(is_deleted=False)[0]
+        doc = self.repost.parent.item_doc.filter(is_deleted=False)[0]
         return doc
 
     def is_video_repost(self):
-        return try_except(self.parent.status == Post.VIDEO_REPOST)
+        return try_except(self.repost.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
-        return try_except(self.parent.status == Post.VIDEO_LIST_REPOST)
+        return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.parent.parent.post_video_album.filter(is_deleted=False)[0]
+        video_list = self.repost.parent.post_video_album.filter(is_deleted=False)[0]
         return video_list
 
     def get_attach_photos(self):
@@ -322,40 +322,40 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.parent
-        if parent.is_photo_repost():
+        repost = self.repost
+        if repost.is_photo_repost():
             return "post_community/photo_repost.html"
-        elif parent.is_photo_album_repost():
+        elif repost.is_photo_album_repost():
             return "post_community/photo_album_repost.html"
-        if parent.is_photo_list_attached():
+        if repost.is_photo_list_attached():
             return "generic/parent_attach/c_photo_list_attach.html"
-        elif parent.is_good_repost():
+        elif repost.is_good_repost():
             return "post_community/good_repost.html"
-        elif parent.is_good_list_repost():
+        elif repost.is_good_list_repost():
             return "post_community/good_list_repost.html"
-        elif parent.is_good_list_attached():
+        elif repost.is_good_list_attached():
             return "generic/parent_attach/c_good_list_attach.html"
-        elif parent.is_music_repost():
+        elif repost.is_music_repost():
             return "post_community/music_repost.html"
-        elif parent.is_music_list_repost():
+        elif repost.is_music_list_repost():
             return "post_community/music_list_repost.html"
-        elif parent.is_playlist_attached():
+        elif repost.is_playlist_attached():
             return "generic/parent_attach/c_playlist_attach.html"
-        elif parent.is_video_repost():
+        elif repost.is_video_repost():
             return "post_community/video_repost.html"
-        elif parent.is_video_list_repost():
+        elif repost.is_video_list_repost():
             return "post_community/video_list_repost.html"
-        elif parent.is_video_list_attached():
+        elif repost.is_video_list_attached():
             return "generic/parent_attach/c_video_list_attach.html"
-        elif parent.is_doc_repost():
+        elif repost.is_doc_repost():
             return "post_community/doc_repost.html"
-        elif parent.is_doc_list_repost():
+        elif repost.is_doc_list_repost():
             return "post_community/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
+        elif repost.is_doc_list_attached():
             return "generic/parent_attach/c_doc_list_attach.html"
-        elif parent.is_user_repost():
+        elif repost.is_user_repost():
             return "post_community/user_repost.html"
-        elif parent.is_community_repost():
+        elif repost.is_community_repost():
             return "post_community/community_repost.html"
         else:
             return "generic/attach/parent_community.html"
@@ -365,40 +365,40 @@ class Message(models.Model):
         # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
         # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
         # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-        parent = self.parent
-        if parent.is_photo_repost():
+        repost = self.repost
+        if repost.is_photo_repost():
             return "post_user/photo_repost.html"
-        elif parent.is_photo_album_repost():
+        elif repost.is_photo_album_repost():
             return "post_user/photo_album_repost.html"
-        if parent.is_photo_list_attached():
+        if repost.is_photo_list_attached():
             return "generic/parent_attach/u_photo_list_attach.html"
-        elif parent.is_good_repost():
+        elif repost.is_good_repost():
             return "post_user/good_repost.html"
-        elif parent.is_good_list_repost():
+        elif repost.is_good_list_repost():
             return "post_user/good_list_repost.html"
-        elif parent.is_good_list_attached():
+        elif repost.is_good_list_attached():
             return "generic/parent_attach/u_good_list_attach.html"
-        elif parent.is_music_repost():
+        elif repost.is_music_repost():
             return "post_user/music_repost.html"
-        elif parent.is_music_list_repost():
+        elif repost.is_music_list_repost():
             return "post_user/music_list_repost.html"
-        elif parent.is_playlist_attached():
+        elif repost.is_playlist_attached():
             return "generic/parent_attach/u_playlist_attach.html"
-        elif parent.is_video_repost():
+        elif repost.is_video_repost():
             return "post_user/video_repost.html"
-        elif parent.is_video_list_repost():
+        elif repost.is_video_list_repost():
             return "post_user/video_list_repost.html"
-        elif parent.is_video_list_attached():
+        elif repost.is_video_list_attached():
             return "generic/parent_attach/u_video_list_attach.html"
-        elif parent.is_doc_repost():
+        elif repost.is_doc_repost():
             return "post_user/doc_repost.html"
-        elif parent.is_doc_list_repost():
+        elif repost.is_doc_list_repost():
             return "post_user/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
+        elif repost.is_doc_list_attached():
             return "generic/parent_attach/u_doc_list_attach.html"
-        elif parent.is_user_repost():
+        elif repost.is_user_repost():
             return "post_user/user_repost.html"
-        elif parent.is_community_repost():
+        elif repost.is_community_repost():
             return "post_user/community_repost.html"
         else:
             return "generic/attach/parent_user.html"

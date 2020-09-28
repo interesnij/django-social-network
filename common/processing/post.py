@@ -48,20 +48,16 @@ def repost_message_send(list, status, community, request, text):
     form_post = PostForm(request.POST)
     if request.is_ajax() and form_post.is_valid():
         post = form_post.save(commit=False)
-        parent = Post.create_parent_post(creator=list.creator, community=community, status=status)
+        repost = Post.create_parent_post(creator=list.creator, community=community, status=status)
         list.post.add(parent)
         for object_id in connections:
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                message = Message.send_message(chat=chat, parent=new_post, creator=request.user, forward=None, text=text)
+                message = Message.send_message(chat=chat, repost=repost, creator=request.user, parent=None, text=text)
                 get_message_attach(request, message)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
-                message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=new_post, user=user, text=text)
+                message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=repost, user=user, text=text)
                 get_message_attach(request, message)
             else:
                 return HttpResponse("not ok")
