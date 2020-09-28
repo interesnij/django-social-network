@@ -27,9 +27,9 @@ class CommunityPhotosList(ListView):
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-			self.photo_list = self.album.get_staff_photos()
-		else:
-			self.photo_list = self.album.get_photos()
+            self.photo_list = self.album.get_staff_photos()
+        else:
+            self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
@@ -55,9 +55,9 @@ class CommunityAlbumPhotosList(ListView):
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-			self.photo_list = self.album.get_staff_photos()
-		else:
-			self.photo_list = self.album.get_photos()
+            self.photo_list = self.album.get_staff_photos()
+        else:
+            self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
