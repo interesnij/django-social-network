@@ -24,8 +24,10 @@ class UserAddAvatar(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
-
-            _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
+            try:
+                _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
+            except:
+                _album = Album.objects.create(creator=user, type=Album.AVATAR, community=None, title="Фото со страницы", description="Фото со страницы")
             photo = Photo.objects.create(file=photo_input, creator=user)
             photo.album.add(_album)
 
