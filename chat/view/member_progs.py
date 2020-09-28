@@ -26,7 +26,7 @@ class ChatMembers(ListView):
 		return members
 
 
-class CommunityMemberCreate(View):
+class ChatMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		user = User.objects.get(pk=self.kwargs["user_pk"])
@@ -36,7 +36,7 @@ class CommunityMemberCreate(View):
 		else:
 			raise Http404
 
-class CommunityMemberDelete(View):
+class ChatMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		user = User.objects.get(pk=self.kwargs["user_pk"])
