@@ -15,6 +15,3 @@ def create_community_models(community):
     CommunityNotificationsPhoto.objects.create(community=community)
     CommunityNotificationsGood.objects.create(community=community)
     CommunityNotificationsVideo.objects.create(community=community)
-
-    Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, title="Фото со страницы")
-    Album.objects.create(creator=community.creator, community=community, type=Album.WALL, title="Фото со стены")

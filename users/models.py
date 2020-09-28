@@ -976,36 +976,6 @@ class User(AbstractUser):
         articles = Article.objects.filter(articles_query)
         return articles
 
-    def get_photos(self):
-        from gallery.models import Album
-        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        return album.get_photos()
-
-    def get_count_photos(self):
-        from gallery.models import Album
-        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        return album.count_photo()
-    def get_my_photos(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        return album.get_staff_photos()
-
-    def get_main_album_uuid(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(creator_id=self.id, community=None, type=Album.MAIN)
-        return album.uuid
-
-    def get_avatar_uuid(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(creator_id=self.id, community=None, type=Album.AVATAR)
-        return album.photo_album.first().uuid
-
-    def get_profile_photos(self):
-        return self.get_photos()[0:6]
-
     def get_albums(self):
         from gallery.models import Album
 
