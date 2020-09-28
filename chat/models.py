@@ -9,7 +9,6 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from posts.models import Post
 from common.utils import try_except
-from common.processing.post import get_post_message_processing
 
 
 class MessageQuerySet(models.query.QuerySet):
@@ -181,6 +180,8 @@ class Message(models.Model):
     def get_or_create_chat_and_send_message(creator, user, parent, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
+        from common.processing.post import get_post_message_processing
+
         chat_list = creator.get_all_chats()
         current_chat = None
         for chat in chat_list:
@@ -201,6 +202,8 @@ class Message(models.Model):
 
     def send_message(chat, creator, parent, forward, text):
         # программа для отсылки сообщения, когда чат известен
+        from common.processing.post import get_post_message_processing
+
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, parent=parent, forward=forward, text=text)
         get_post_message_processing(new_message)
@@ -211,6 +214,8 @@ class Message(models.Model):
 
     def send_public_message(chat, creator, parent, text):
         # отсылка сообщений в групповой чат
+        from common.processing.post import get_post_message_processing
+        
         sender = ChatUsers.objects.get(user=creator)
         new_message = Chat.objects.create(chat=chat, creator=sender, parent=parent, text=text)
         get_post_message_processing(new_message)
