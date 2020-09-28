@@ -196,11 +196,11 @@ class CommunityGoods(ListView):
             self.goods_list = self.album.get_staff_goods()
         else:
             self.goods_list = self.album.get_goods()
-
 		self.template_name = get_template_community_good(self.community, "c_goods/", "list.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
-        return super(CommunityGoods,self).get(request,*args,**kwargs)
+		
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityGoods,self).get_context_data(**kwargs)
