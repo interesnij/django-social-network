@@ -27,36 +27,35 @@ class SendPageMessage(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.form=CommunityForm(request.POST)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, user)
-        form_post = MessageForm(request.POST)
-        connections = request.POST.getlist("chat_items")
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		check_user_can_get_list(request.user, user)
+		form_post = MessageForm(request.POST)
+		connections = request.POST.getlist("chat_items")
 
 		if not connections:
-            return HttpResponseBadRequest()
-
-        if request.is_ajax() and form_post.is_valid():
-            message = self.form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('photo') or \
-                request.POST.get('video') or request.POST.get('music') or \
-                request.POST.get('good') or request.POST.get('article') or \
-                request.POST.get('playlist') or request.POST.get('video_list') or \
-                request.POST.get('photo_list') or request.POST.get('doc_list') or \
-                request.POST.get('doc') or request.POST.get('good_list'):
-                for object_id in connections:
-                    if object_id[0] == "c":
-                        chat = Chat.objects.get(pk=object_id[1:])
-                        message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=text)
-                        get_message_attach(request, message)
-                    elif object_id[0] == "u":
-                        user = User.objects.get(pk=object_id[1:])
-                        message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=user, text=text)
-                        get_message_attach(request, message)
-                    else:
-                        return HttpResponse("not ok")
-                return HttpResponse()
-            else:
-                return HttpResponseBadRequest()
+			return HttpResponseBadRequest()
+		if request.is_ajax() and form_post.is_valid():
+			message = self.form_post.save(commit=False)
+			if request.POST.get('text') or request.POST.get('photo') or \
+				request.POST.get('video') or request.POST.get('music') or \
+				request.POST.get('good') or request.POST.get('article') or \
+				request.POST.get('playlist') or request.POST.get('video_list') or \
+				request.POST.get('photo_list') or request.POST.get('doc_list') or \
+				request.POST.get('doc') or request.POST.get('good_list'):
+				for object_id in connections:
+					if object_id[0] == "c":
+						chat = Chat.objects.get(pk=object_id[1:])
+						message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=text)
+						get_message_attach(request, message)
+					elif object_id[0] == "u":
+						user = User.objects.get(pk=object_id[1:])
+						message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=user, text=text)
+						get_message_attach(request, message)
+					else:
+						return HttpResponse("not ok")
+				return HttpResponse()
+			else:
+				return HttpResponseBadRequest()
 
 
 class SendMessage(View):
