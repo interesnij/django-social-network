@@ -3,12 +3,24 @@ from common.template.user import get_settings_template
 
 
 class UserLoadPhoto(ListView):
-	template_name = 'load/u_photo_load.html'
+	template_name = None
 	paginate_by = 15
 
+	def get(self,request,*args,**kwargs):
+		from gallery.models import Album
+		self.album = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None)
+		self.template_name = get_settings_template("load/u_photo_load.html", request)
+		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadPhoto,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
 	def get_queryset(self):
-		photos_list = self.request.user.get_photos().order_by('-created')
-		return photos_list
+		photo_list = self.album.get_photos()
+		return photo_list
+
 
 class UserLoadPhotoAlbum(ListView):
 	template_name = None
@@ -26,7 +38,7 @@ class UserLoadPhotoAlbum(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos().order_by('-created')
+		photo_list = self.album.get_photos()
 		return photo_list
 
 class UserLoadPhotoComment(ListView):
