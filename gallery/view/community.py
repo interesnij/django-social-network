@@ -21,10 +21,15 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(community_id=seld.community.pk, type=Album.MAIN)
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_gallery/", "list.html", request.user)
         else:
             raise Http404
+        if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
@@ -35,7 +40,7 @@ class CommunityPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.community.get_photos().order_by('-created')
+        photo_list = self.photo_list
         return photo_list
 
 class CommunityAlbumPhotosList(ListView):
@@ -49,6 +54,10 @@ class CommunityAlbumPhotosList(ListView):
             self.template_name = get_permission_community_photo(self.community, "c_album/", "list.html", request.user)
         else:
             raise Http404
+        if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
@@ -60,7 +69,7 @@ class CommunityAlbumPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.album.get_photos().order_by('-created')
+        photo_list = self.photo_list
         return photo_list
 
 class CommunityDetailAvatar(TemplateView):

@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 
 urlpatterns=[
-	url(r'^photos/(?P<uuid>[0-9a-f-]+)/$', UserPhotosList.as_view()),
+	url(r'^photos/(?P<pk>\d+)/$', UserPhotosList.as_view()),
 	url(r'^album_photos/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserAlbumPhotosList.as_view(), name="user_photos"),
 
 	url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhoto.as_view(), name="user_photo"),

@@ -17,11 +17,17 @@ class UserPhotosList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator_id=seld.user.pk, type=Album.MAIN, community=None)
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "user_gallery/", "list.html", request.user)
         else:
             raise Http404
+
+        if self.user == request.user:
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserPhotosList,self).get(request,*args,**kwargs)
@@ -32,7 +38,7 @@ class UserPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.user.get_photos().order_by('-created')
+        photo_list = self.photo_list
         return photo_list
 
 class UserAlbumPhotosList(ListView):
@@ -46,6 +52,10 @@ class UserAlbumPhotosList(ListView):
             self.template_name = get_permission_user_photo(self.user, "user_album/", "list.html", request.user)
         else:
             raise Http404
+        if self.user == request.user:
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
@@ -57,7 +67,7 @@ class UserAlbumPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.album.get_photos().order_by('-created')
+        photo_list = self.photo_list
         return photo_list
 
 
