@@ -60,23 +60,19 @@ class SendPageMessage(TemplateView):
 
 class SendMessage(View):
 	def post(self,request,*args,**kwargs):
-        chat = Chat.objects.get(pk=self.kwargs["pk"])
-        check_can_send_message(request.user, chat)
-        form_post = MessageForm(request.POST)
-
-        if request.is_ajax() and form_post.is_valid():
-            message = form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('photo') or \
-                request.POST.get('video') or request.POST.get('music') or \
-                request.POST.get('good') or request.POST.get('article') or \
-                request.POST.get('playlist') or request.POST.get('video_list') or \
-                request.POST.get('photo_list') or request.POST.get('doc_list') or \
-                request.POST.get('doc') or request.POST.get('good_list'):
-
-                message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
-                get_message_attach(request, message)
-            else:
-                return HttpResponseBadRequest()
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		check_can_send_message(request.user, chat)
+		form_post = MessageForm(request.POST)
+		if request.POST.get('text') or request.POST.get('photo') or \
+			request.POST.get('video') or request.POST.get('music') or \
+			request.POST.get('good') or request.POST.get('article') or \
+			request.POST.get('playlist') or request.POST.get('video_list') or \
+			request.POST.get('photo_list') or request.POST.get('doc_list') or \
+			request.POST.get('doc') or request.POST.get('good_list'):
+			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
+			get_message_attach(request, message)
+		else:
+			return HttpResponseBadRequest()
 
 
 class MessageParent(View):
