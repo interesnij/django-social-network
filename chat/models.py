@@ -407,9 +407,6 @@ class MessageFavorite(models.Model):
 
     class Meta:
         unique_together = (('user', 'message'),)
-        indexes = [
-            models.Index(fields=['chat', 'user']),
-            ]
         verbose_name = 'Избранное сообщение'
         verbose_name_plural = 'Избранные сообщения'
 
