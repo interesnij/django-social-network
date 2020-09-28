@@ -53,6 +53,7 @@ function create_preview_commmunity(_this){
 
   $div = document.createElement("div");
   $div.style.display = "inline-block";
+  $div.style.margin = "5px";
   $div.setAttribute("data-pk", _this.getAttribute("data-pk"));
   $div.classList.add("preview_item_delete", "pointer");
   $div.setAttribute("tooltip", $name);
