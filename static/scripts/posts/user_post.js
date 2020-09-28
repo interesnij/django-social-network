@@ -260,8 +260,8 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
       return;
   }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.open( 'POST', "/gallery/user_progs/add_photo/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
