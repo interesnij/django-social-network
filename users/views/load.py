@@ -85,7 +85,7 @@ class UserLoadVideo(ListView):
 		return context
 
 	def get_queryset(self):
-		videos_list = self.request.user.get_video().order_by('-created')
+		videos_list = self.album.get_video()
 		return videos_list
 
 class UserLoadVideoAlbum(ListView):
