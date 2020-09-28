@@ -18,7 +18,7 @@ class UserPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=seld.user.pk, type=Album.MAIN, community=None)
+        self.album = Album.objects.get(creator_id=self.user.pk, type=Album.MAIN, community=None)
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "user_gallery/", "list.html", request.user)
         else:

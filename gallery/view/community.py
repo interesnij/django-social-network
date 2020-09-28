@@ -21,7 +21,7 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community_id=seld.community.pk, type=Album.MAIN)
+        self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.community, "c_gallery/", "list.html", request.user)
         else:
