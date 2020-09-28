@@ -135,7 +135,7 @@ class Post(models.Model):
         return self.parent.post_doclist.all()
 
     def get_attach_photos(self):
-        return self.item_photo.all()
+        return self.item_photo.filter(is_deleted=True)
     def get_attach_photo_list(self):
         return self.post_album.all()
     def get_attach_videos(self):
