@@ -2,7 +2,7 @@ import uuid
 from users.models import User
 from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.http import HttpResponse
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.contrib.postgres.indexes import BrinIndex
@@ -108,6 +108,14 @@ class ChatUsers(models.Model):
     def create_membership(cls, user, chat, is_administrator=False):
         membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
         return membership
+
+    def delete_membership(user, chat):
+        if ChatUsers.objects.filter(user=user, chat=chat).exists():
+            membership = ChatUsers.objects.get(user=user, chat=chat)
+            membership.delete()
+            return HttpResponse()
+        else:
+            pass
 
     class Meta:
         unique_together = (('user', 'chat'),)
