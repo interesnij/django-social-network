@@ -53,9 +53,9 @@ class UserAlbumPhotosList(ListView):
         else:
             raise Http404
         if self.user == request.user:
-			self.photo_list = self.album.get_staff_photos()
-		else:
-			self.photo_list = self.album.get_photos()
+            self.photo_list = self.album.get_staff_photos()
+        else:
+            self.photo_list = self.album.get_photos()
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
