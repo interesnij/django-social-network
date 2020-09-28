@@ -16,7 +16,7 @@ class SendPageMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("message/add_message.html", request)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		return super(SendPageMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
