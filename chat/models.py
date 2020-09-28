@@ -161,7 +161,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    parent = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
+    #parent = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
@@ -215,7 +215,7 @@ class Message(models.Model):
     def send_public_message(chat, creator, parent, text):
         # отсылка сообщений в групповой чат
         from common.processing.post import get_post_message_processing
-        
+
         sender = ChatUsers.objects.get(user=creator)
         new_message = Chat.objects.create(chat=chat, creator=sender, parent=parent, text=text)
         get_post_message_processing(new_message)
