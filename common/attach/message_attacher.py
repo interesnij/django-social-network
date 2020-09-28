@@ -170,7 +170,7 @@ def get_message_attach(request, message):
                 good_attach(request.POST.get('select_good1'), message)
             if request.POST.get('select_good2'):
                 good_attach(request.POST.get('select_good2'), message)
-            if request.POST.get('select_good3')
+            if request.POST.get('select_good3'):
                 good_attach(request.POST.get('select_good3'), message)
             if request.POST.get('select_good4'):
                 good_attach(request.POST.get('select_good4'), message)
