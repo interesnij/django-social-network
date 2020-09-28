@@ -2,17 +2,17 @@
   <div class="row">
     <div class="col-md-4">
     <div class="custom-control custom-radio repost_for_wall" style="margin-bottom:10px">
-        <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
+        <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %}flow="up" tooltip="Запись уже есть на Вашей стене" disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
         <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
     </div>
 
     <div class="custom-control custom-radio" id="u_repost_for_community" style="margin-bottom:10px">
-        <input type="radio" {% if not request.user.get_staffed_communities %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
+        <input type="radio" {% if not request.user.get_staffed_communities %}flow="up" tooltip="У Вас нет управляемых сообществ" disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
         <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
     </div>
 
     <div class="custom-control custom-radio" id="repost_for_message" style="margin-bottom:10px">
-        <input type="radio" {% if not request.user.get_chats_and_connections %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
+        <input type="radio" {% if not request.user.get_chats_and_connections %}flow="up" tooltip="У Вас нет друзей и/или сообщений" disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     </div>
