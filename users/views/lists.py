@@ -51,8 +51,10 @@ class UserVideoList(ListView):
 			self.video_list = self.album.get_my_queryset()
 		else:
 			self.video_list = self.album.get_queryset()
-
-		self.template_name = get_template_user_video(self.user, "user_video_list/", "list.html", request.user)
+		if self.album.type == VideoAlbum.MAIN:
+			self.template_name = get_template_user_video(self.user, "user_video/", "list.html", request.user)
+		else:
+			self.template_name = get_template_user_video(self.user, "user_video_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserVideoList,self).get(request,*args,**kwargs)
@@ -81,8 +83,10 @@ class UserGoodsList(ListView):
 			self.goods_list = self.album.get_staff_goods()
 		else:
 			self.goods_list = self.album.get_goods()
-
-		self.template_name = get_template_user_good(self.user, "user_goods_list/", "list.html", request.user)
+		if self.album.type == GoodAlbum.MAIN:
+			self.template_name = get_template_user_good(self.user, "user_goods/", "goods.html", request.user)
+		else:
+			self.template_name = get_template_user_good(self.user, "user_goods_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
@@ -107,8 +111,10 @@ class UserMusicList(ListView):
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-
-		self.template_name = get_template_user_music(self.user, "user_music_list/", "list.html", request.user)
+		if self.album.type == SoundList.MAIN:
+			self.template_name = get_template_user_music(self.user, "user_music/", "music.html", request.user)
+		else:
+			self.template_name = get_template_user_music(self.user, "user_music_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserMusicList,self).get(request,*args,**kwargs)
@@ -137,8 +143,10 @@ class UserDocsList(ListView):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
-
-		self.template_name = get_template_user_doc(self.user, "user_docs_list/", "list.html", request.user)
+		if self.list.type == DocList.MAIN:
+			self.template_name = get_template_user_doc(self.user, "user_docs/", "docs.html", request.user)
+		else:
+			self.template_name = get_template_user_doc(self.user, "user_docs_list/", "list.html", request.user)
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
 		return super(UserDocsList,self).get(request,*args,**kwargs)
