@@ -143,7 +143,7 @@ class UserWallPhoto(TemplateView):
         try:
             self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
         except:
-            Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены")
+            self.album = Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.user, self.photo, "u_photo/wall_photo/", "photo.html", request.user)
