@@ -155,13 +155,13 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
-    forward = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
+    #forward = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     objects = MessageQuerySet.as_manager()
 
-    #parent = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
+    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
