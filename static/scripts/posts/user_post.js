@@ -254,7 +254,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form = document.body.querySelector("#add_photos");
   form_data = new FormData(form);
-  input = form.querySelector("#u_photo_post_comment_attach")
+  input = form.querySelector(".upload_for_post_attach")
   if (input.files.length > 10) {
       toast_error("Не больше 10 фотографий");
       return;
