@@ -85,7 +85,7 @@ class UserLoadVideo(ListView):
 		return context
 
 	def get_queryset(self):
-		videos_list = self.album.get_video()
+		videos_list = self.album.get_queryset()
 		return videos_list
 
 class UserLoadVideoAlbum(ListView):
