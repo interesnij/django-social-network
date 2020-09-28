@@ -111,7 +111,7 @@ class Chat(models.Model):
         return chat
 
     def is_not_empty(self):
-        return self.chat_message.filter(chat=self).values("pk").exists()
+        return self.chat_message.filter(chat=self,is_deleted=False).values("pk").exists()
 
 
 class ChatUsers(models.Model):
@@ -215,12 +215,12 @@ class Message(models.Model):
     def is_photo_repost(self):
         return try_except(self.parent.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        photo = self.parent.parent.item_photo.all()[0]
+        photo = self.parent.parent.item_photo.filter(is_deleted=False)[0]
         return photo
     def is_photo_album_repost(self):
         return try_except(self.parent.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.parent.parent.post_album.all()[0]
+        photo_album = self.parent.parent.post_album.filter(is_deleted=False)[0]
         return photo_album
 
     def is_music_repost(self):
@@ -228,10 +228,10 @@ class Message(models.Model):
     def is_music_list_repost(self):
         return try_except(self.parent.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.parent.parent.post_soundlist.all()[0]
+        playlist = self.parent.parent.post_soundlist.filter(is_deleted=False)[0]
         return playlist
     def get_music_repost(self):
-        music = self.parent.parent.item_music.all()[0]
+        music = self.parent.parent.item_music.filter(is_deleted=False)[0]
         return music
 
     def is_good_repost(self):
@@ -239,10 +239,10 @@ class Message(models.Model):
     def is_good_list_repost(self):
         return try_except(self.parent.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        good = self.post.parent.item_good.all()[0]
+        good = self.post.parent.item_good.filter(is_deleted=False)[0]
         return good
     def get_good_list_repost(self):
-        good_list = self.parent.parent.post_good_album.all()[0]
+        good_list = self.parent.parent.post_good_album.filter(is_deleted=False)[0]
         return good_list
 
     def is_doc_repost(self):
@@ -250,10 +250,10 @@ class Message(models.Model):
     def is_doc_list_repost(self):
         return try_except(self.parent.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.parent.parent.post_doclist.all()[0]
+        list = self.parent.parent.post_doclist.filter(is_deleted=False)[0]
         return list
     def get_doc_repost(self):
-        doc = self.parent.parent.item_doc.all()[0]
+        doc = self.parent.parent.item_doc.filter(is_deleted=False)[0]
         return doc
 
     def is_video_repost(self):
@@ -261,42 +261,42 @@ class Message(models.Model):
     def is_video_list_repost(self):
         return try_except(self.parent.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.parent.parent.post_video_album.all()[0]
+        video_list = self.parent.parent.post_video_album.filter(is_deleted=False)[0]
         return video_list
 
     def get_attach_photos(self):
-        return self.message_photo.all()
+        return self.message_photo.filter(is_deleted=False)
     def get_attach_photo_list(self):
-        return self.message_album.all()
+        return self.message_album.filter(is_deleted=False)
     def get_attach_videos(self):
-        return self.message_video.all()
+        return self.message_video.filter(is_deleted=False)
     def get_attach_video_list(self):
-        return self.message_video_album.all()
+        return self.message_video_album.filter(is_deleted=False)
     def get_attach_goods(self):
-        return self.message_good.all()
+        return self.message_good.filter(is_deleted=False)
     def get_attach_good_list(self):
-        return self.message_good_album.all()
+        return self.message_good_album.filter(is_deleted=False)
     def get_attach_articles(self):
-        return self.attached_message.all()
+        return self.attached_message.filter(is_deleted=False)
     def get_attach_tracks(self):
-        return self.message_music.all()
+        return self.message_music.filter(is_deleted=False)
     def get_attach_music_list(self):
-        return self.message_soundlist.all()
+        return self.message_soundlist.filter(is_deleted=False)
     def get_attach_docs(self):
-        return self.message_doc.all()
+        return self.message_doc.filter(is_deleted=False)
     def get_attach_doc_list(self):
-        return self.message_doclist.all()
+        return self.message_doclist.filter(is_deleted=False)
 
     def is_photo_list_attached(self):
-        return self.message_album.filter(post__pk=self.pk).exists()
+        return self.message_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_playlist_attached(self):
-        return self.message_soundlist.filter(post__pk=self.pk).exists()
+        return self.message_soundlist.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_video_list_attached(self):
-        return self.message_video_album.filter(post__pk=self.pk).exists()
+        return self.message_video_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_good_list_attached(self):
-        return self.message_good_album.filter(post__pk=self.pk).exists()
+        return self.message_good_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_doc_list_attached(self):
-        return self.message_doclist.filter(post__pk=self.pk).exists()
+        return self.message_doclist.filter(post__pk=self.pk, is_deleted=False).exists()
 
     def get_c_repost_items(self):
         # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.

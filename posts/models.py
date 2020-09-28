@@ -137,36 +137,36 @@ class Post(models.Model):
     def get_attach_photos(self):
         return self.item_photo.filter(is_deleted=False)
     def get_attach_photo_list(self):
-        return self.post_album.all()
+        return self.post_album.filter(is_deleted=False)
     def get_attach_videos(self):
-        return self.item_video.all()
+        return self.item_video.filter(is_deleted=False)
     def get_attach_video_list(self):
-        return self.post_video_album.all()
+        return self.post_video_album.filter(is_deleted=False)
     def get_attach_goods(self):
-        return self.item_good.all()
+        return self.item_good.filter(is_deleted=False)
     def get_attach_good_list(self):
-        return self.post_good_album.all()
+        return self.post_good_album.filter(is_deleted=False)
     def get_attach_articles(self):
-        return self.attached_item.all()
+        return self.attached_item.filter(is_deleted=False)
     def get_attach_tracks(self):
-        return self.item_music.all()
+        return self.item_music.filter(is_deleted=False)
     def get_attach_music_list(self):
-        return self.post_soundlist.all()
+        return self.post_soundlist.filter(is_deleted=False)
     def get_attach_docs(self):
-        return self.item_doc.all()
+        return self.item_doc.filter(is_deleted=False)
     def get_attach_doc_list(self):
-        return self.post_doclist.all()
+        return self.post_doclist.filter(is_deleted=False)
 
     def is_photo_list_attached(self):
-        return self.post_album.filter(post__pk=self.pk).exists()
+        return self.post_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_playlist_attached(self):
-        return self.post_soundlist.filter(post__pk=self.pk).exists()
+        return self.post_soundlist.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_video_list_attached(self):
-        return self.post_video_album.filter(post__pk=self.pk).exists()
+        return self.post_video_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_good_list_attached(self):
-        return self.post_good_album.filter(post__pk=self.pk).exists()
+        return self.post_good_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_doc_list_attached(self):
-        return self.post_doclist.filter(post__pk=self.pk).exists()
+        return self.post_doclist.filter(post__pk=self.pk, is_deleted=False).exists()
 
     def get_u_attach_items(self):
         if self.is_photo_list_attached():
@@ -199,12 +199,12 @@ class Post(models.Model):
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
-        photo = self.parent.item_photo.all()[0]
+        photo = self.parent.item_photo.filter(is_deleted=False)[0]
         return photo
     def is_photo_album_repost(self):
         return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.parent.post_album.all()[0]
+        photo_album = self.parent.post_album.filter(is_deleted=False)[0]
         return photo_album
 
     def is_music_repost(self):
@@ -212,10 +212,10 @@ class Post(models.Model):
     def is_music_list_repost(self):
         return try_except(self.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.parent.post_soundlist.all()[0]
+        playlist = self.parent.post_soundlist.filter(is_deleted=False)[0]
         return playlist
     def get_music_repost(self):
-        music = self.parent.item_music.all()[0]
+        music = self.parent.item_music.filter(is_deleted=False)[0]
         return music
 
     def is_good_repost(self):
@@ -223,10 +223,10 @@ class Post(models.Model):
     def is_good_list_repost(self):
         return try_except(self.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        good = self.parent.item_good.all()[0]
+        good = self.parent.item_good.filter(is_deleted=False)[0]
         return good
     def get_good_list_repost(self):
-        good_list = self.parent.post_good_album.all()[0]
+        good_list = self.parent.post_good_album.filter(is_deleted=False)[0]
         return good_list
 
     def is_doc_repost(self):
@@ -234,10 +234,10 @@ class Post(models.Model):
     def is_doc_list_repost(self):
         return try_except(self.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.parent.post_doclist.all()[0]
+        list = self.parent.post_doclist.filter(is_deleted=False)[0]
         return list
     def get_doc_repost(self):
-        doc = self.parent.item_doc.all()[0]
+        doc = self.parent.item_doc.filter(is_deleted=False)[0]
         return doc
 
     def is_video_repost(self):
@@ -245,7 +245,7 @@ class Post(models.Model):
     def is_video_list_repost(self):
         return try_except(self.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.parent.post_video_album.all()[0]
+        video_list = self.parent.post_video_album.filter(is_deleted=False)[0]
         return video_list
 
     def is_user_repost(self):
