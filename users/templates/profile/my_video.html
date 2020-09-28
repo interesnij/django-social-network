@@ -28,7 +28,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'user_video_list' pk=user.pk uuid=user.get_generic_video_list_uuid %}" class="ajax">
+            <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
                 <div class="media-body">
                     <h4 class="content-color-primary mb-0">Добавьте видео</h4>
                 </div>
