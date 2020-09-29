@@ -75,7 +75,10 @@ class Chat(models.Model):
         return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id)
 
     def get_preview(self):
-        return self.get_first_message().text
+        if self.is_not_empty():
+            return self.get_first_message().text
+        else:
+            return 'Нет сообщений'
 
     def get_avatar(self):
         if self.avatar:
