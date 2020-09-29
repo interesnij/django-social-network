@@ -6,5 +6,5 @@ on('#ajax', 'click', '.user_create_chat', function() {
 
 on('#ajax', 'click', '.user_add_members', function() {
   block = this.parentElement.parentElement.parentElement.querySelector("#chat_members");
-  list_load(block, "/users/load/users/")
+  list_load(block, "/users/load/friends/")
 })
