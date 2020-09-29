@@ -87,7 +87,7 @@ class Chat(models.Model):
         if self.image:
             return self.image.url
         else:
-            user = self.chat_relation.exclude(creator_pk=self.chat_relation.pk)[:1]
+            user = self.chat_relation.exclude(pk=self.creator.pk)[:1]
             return user.get_avatar()
 
     def get_name(self):
