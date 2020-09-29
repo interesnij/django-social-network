@@ -84,8 +84,8 @@ class Chat(models.Model):
             return 'Нет сообщений'
 
     def get_avatar(self):
-        if self.avatar:
-            return self.avatar.url
+        if self.image:
+            return self.image.url
         else:
             user = self.chat_relation.exclude(creator_pk=self.chat_relation.pk)[:1]
             return user.get_avatar()
