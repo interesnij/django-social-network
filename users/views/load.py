@@ -329,7 +329,7 @@ class FriendsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("load/friends.html", request)
-		self.list = request.user.get_all_connections()
+		self.list = request.user.get_all_connection()
 		return super(FriendsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
