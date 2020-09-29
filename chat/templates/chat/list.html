@@ -53,7 +53,7 @@
                 <div class="card-body"></div>
                 <h6 style="margin: 20px;text-align: center;"> Пока сообщений нет. Вы можете
                 <br>
-                <span class="user_create_chat pointer underline">создать чат</span></h6>
+                <span class="user_create_chat pointer underline" data-pk="{{ user.pk }}">создать чат</span></h6>
               </div>
               {% endif %}
             </div>
@@ -80,7 +80,7 @@
             </a>
           </div>
           </div>
-        <button class="btn btn-outline-success user_create_chat" style="margin-bottom:15px;width:100%;">Создать чат</button>
+        <button class="btn btn-outline-success user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
         <br>
         <div class="card mb-2">
             <div class="card-header">
