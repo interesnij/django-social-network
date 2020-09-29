@@ -35,7 +35,7 @@
                         {% endif %}
                       </figure>
                       <div class="media-body">
-                        <h5 class="time-title mb-0">{{ message.creator }}
+                        <h5 class="time-title mb-0">{{ message.get_name }}
                           {% if message.creator.user.get_online %}
                             <span class="status bg-success"></span>
                           {% endif %}

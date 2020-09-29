@@ -9,7 +9,7 @@
       {% endif %}
     </figure>
     <div class="media-body">
-      <h5 class="time-title mb-0">{{ object.creator }}
+      <h5 class="time-title mb-0">{{ object.get_name }}
         {% if object.creator.get_online %}
           <span class="status bg-success"></span>
         {% endif %}
