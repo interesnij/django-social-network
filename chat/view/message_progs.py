@@ -16,14 +16,17 @@ class SendPageMessage(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("message/add_message.html", request)
+		if request.user.get_6_friends():
+			self.template_name = get_settings_template("message/add_friend_message.html", request)
+		else:
+			self.template_name = get_settings_template("message/add_message.html", request)
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		return super(SendPageMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(SendPageMessage,self).get_context_data(**kwargs)
 		context["form"] = MessageForm()
-		context["user"] = self.user
+		context["member"] = self.user
 		return context
 
 	def post(self,request,*args,**kwargs):

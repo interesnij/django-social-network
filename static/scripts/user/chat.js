@@ -3,6 +3,11 @@ on('#ajax', 'click', '.user_create_chat', function() {
   pk = this.getAttribute("data-pk");
   open_fullscreen("/chat/chat_progs/create_chat/" + pk + "/", loader)
 });
+on('#ajax', 'click', '.user_send_page_message', function() {
+  loader = document.getElementById("create_loader");
+  pk = this.getAttribute("data-pk");
+  open_fullscreen("/chat/message_progs/send_page_message/" + pk + "/", loader)
+});
 
 on('#ajax', 'click', '.user_add_members', function() {
   block = this.parentElement.parentElement.parentElement.querySelector("#chat_members");
@@ -10,7 +15,7 @@ on('#ajax', 'click', '.user_add_members', function() {
 })
 
 on('#ajax', 'click', '#add_chat_btn', function() {
-  form = document.querySelector("#add_chat_form");
+  form = this.parentElement.parentElement.parentElement;
   this.disabled = true;
   pk = this.getAttribute("data-pk");
   form_data = new FormData(form);
@@ -30,6 +35,25 @@ on('#ajax', 'click', '#add_chat_btn', function() {
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
             window.history.pushState(null, "vfgffgfgf", "/chat/" + pk + "/");
+        }
+      }
+      ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '#send_page_message_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  this.disabled = true;
+  pk = this.getAttribute("data-pk");
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/chat/message_progs/send_page_message/' + pk + '/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            toast_success("Сообщение отправлено");
+            document.querySelector(".create_fullscreen").style.display = "none";
+            document.getElementById("create_loader").innerHTML="";
         }
       }
       ajax_link.send(form_data);
