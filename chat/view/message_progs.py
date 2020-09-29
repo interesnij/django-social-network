@@ -30,16 +30,15 @@ class SendPageMessage(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.form=CommunityForm(request.POST)
+		self.form=MessageForm(request.POST)
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		check_user_can_get_list(request.user, user)
-		form_post = MessageForm(request.POST)
 		connections = request.POST.getlist("chat_items")
 
 		if not connections:
 			return HttpResponseBadRequest()
-		if request.is_ajax() and form_post.is_valid():
-			message = self.form_post.save(commit=False)
+		if request.is_ajax() and form.is_valid():
+			message = self.form.save(commit=False)
 			if request.POST.get('text') or request.POST.get('photo') or \
 				request.POST.get('video') or request.POST.get('music') or \
 				request.POST.get('good') or request.POST.get('article') or \
