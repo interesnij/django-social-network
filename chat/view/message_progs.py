@@ -35,7 +35,7 @@ class SendPageMessage(TemplateView):
 		check_user_can_get_list(request.user, self.user)
 		connections = request.POST.getlist("chat_items")
 
-		if request.is_ajax() and form.is_valid():
+		if request.is_ajax() and self.form.is_valid():
 			message = self.form.save(commit=False)
 			if request.POST.get('text') or request.POST.get('photo') or \
 				request.POST.get('video') or request.POST.get('music') or \
