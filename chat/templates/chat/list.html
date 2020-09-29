@@ -18,9 +18,12 @@
               {% if object_list %}
 
               <ul class="list-group profile_block_paginate" id="messages_container">
-                  {% for object in object_list %}
-
+                {% for object in object_list %}
+                  {% if not object.is_not_empty %}
+                    {% include 'message/empty_message.html' %}
+                  {% else %}
                   {% with message=object.get_first_message %}
+
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                     <a class="ajax" href="{% url 'chat_detali' pk=object.pk %}">
                     <div class="media">
@@ -45,7 +48,8 @@
                     </a>
                   </li>
                   {% endwith %}
-                  {% endfor %}
+                  {% endif %}
+                {% endfor %}
               </ul>
 
               {% else %}
