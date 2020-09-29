@@ -19,15 +19,23 @@ class CreateChat(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user:
 			self.member = self.user
-		if request.user.get_6_friends():
+
+		if self.user == request.user and not request.user.get_6_friends():
+			self.template_name = get_settings_template("chat/create_chat_empty.html", request)
+		elif self.user == request.user and request.user.get_6_friends():
+			self.template_name = get_settings_template("chat/create_chat_with_members.html", request)
+		elif self.user != request.user and not request.user.get_6_friends():
+			self.template_name = get_settings_template("chat/create_chat_send_message.html", request)
 			self.friends = True
-		self.template_name = get_settings_template("chat/create_chat.html", request)
+		elif self.user != request.user and request.user.get_6_friends():
+			self.template_name = get_settings_template("chat/create_chat_send_message_with_members.html", request)
+			self.friends = True
 		return super(CreateChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CreateChat,self).get_context_data(**kwargs)
 		context["form"] = ChatForm()
-		context["member"] = self.member
+		context["member"] = self.user
 		context["friends"] = self.friends
 		return context
 
