@@ -11,6 +11,7 @@ from common.attach.message_attacher import get_message_attach
 from common.template.user import get_settings_template
 from common.check.message import check_can_send_message
 
+
 class SendPageMessage(TemplateView):
 	template_name = None
 
@@ -99,7 +100,8 @@ class MessageParent(View):
 class MessageFixed(View):
     def get(self,request,*args,**kwargs):
         message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == message.creator:
+		check_can_send_message(request.user, message.chat)
+        if request.is_ajax():
             message.get_fixed_message_for_chat(message.chat.pk)
             return HttpResponse()
         else:
@@ -108,7 +110,8 @@ class MessageFixed(View):
 class MessageUnFixed(View):
     def get(self,request,*args,**kwargs):
         message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == message.creator:
+        if request.is_ajax():
+			check_can_send_message(request.user, message.chat)
             message.is_fixed = False
             message.save(update_fields=['is_fixed'])
             return HttpResponse()
@@ -120,6 +123,7 @@ class MessageFavorite(View):
     def get(self,request,*args,**kwargs):
         message = Message.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
+			check_can_send_message(request.user, message.chat)
             MessageFavorite.create_favorite(request.user.pk, message)
             return HttpResponse()
         else:
@@ -139,7 +143,7 @@ class MessageUnFavorite(View):
 class MessageDelete(View):
     def get(self,request,*args,**kwargs):
         message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == message.creator.pk:
+        if request.is_ajax() and message.creator == request.user:
             message.is_deleted = True
             message.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -149,7 +153,7 @@ class MessageDelete(View):
 class MessageAbortDelete(View):
     def get(self,request,*args,**kwargs):
         message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == message.creator.pk:
+        if request.is_ajax() and message.creator == request.user:
             message.is_deleted = False
             message.save(update_fields=['is_deleted'])
             return HttpResponse()

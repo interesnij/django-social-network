@@ -40,10 +40,12 @@
                     </li>
                   </ul>
             </div>
+            {% if community.is_good_open %}
             {% if community.is_good_upload_member or community.is_good_upload_nomember %}
               {% include 'detail_sections/admin_goods.html' %}
             {% else %}
               {% include 'detail_sections/goods.html' %}
+            {% endif %}
             {% endif %}
 
             <span class="draft_post_container">

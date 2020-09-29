@@ -18,3 +18,14 @@ def check_can_send_message(user, chat):
         raise ValidationError('Ошибка доступа.')
     else:
         return True
+
+def check_can_change_chat(user, chat):
+    if user.is_authenticated and not user.is_deleted and not user.is_no_phone_verified():
+        if not user.is_administrator_of_chat(chat.pk):
+            raise ValidationError(
+                'У Вас нет прав доступа.',
+            )
+    elif user.is_anonymous:
+        raise ValidationError('Ошибка доступа.')
+    else:
+        return True

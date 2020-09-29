@@ -38,8 +38,9 @@
                         </div>
                     </li>
             </div>
-
-            {% include 'detail_sections/admin_goods.html' %}
+            {% if community.is_good_open %}
+              {% include 'detail_sections/admin_goods.html' %}
+            {% endif %}
 
             {% if community.id_draft_posts_exists %}
             <div class="card mt-3 user_draft_list">

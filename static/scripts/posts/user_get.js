@@ -1,3 +1,8 @@
+on('#ajax', 'click', '#holder_article_image', function() {
+  img = this.previousElementSibling.querySelector("#id_g_image")
+  get_image_priview(this, img);
+});
+
 on('#ajax', 'click', '.fullscreen', function() {
   container = this.parentElement;
   uuid = container.getAttribute('data-uuid');

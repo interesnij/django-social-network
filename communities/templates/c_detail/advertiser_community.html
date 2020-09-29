@@ -40,7 +40,13 @@
                   </ul>
             </div>
 
-            {% include 'detail_sections/goods.html' %}
+            {% if community.is_good_open %}
+            {% if community.is_good_upload_member or community.is_good_upload_nomember %}
+              {% include 'detail_sections/admin_goods.html' %}
+            {% else %}
+              {% include 'detail_sections/goods.html' %}
+            {% endif %}
+            {% endif %}
 
             {% if community.id_draft_posts_exists %}
             <div class="card mt-3">
