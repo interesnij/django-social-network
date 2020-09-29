@@ -43,17 +43,17 @@ class SendPageMessage(TemplateView):
 				request.POST.get('playlist') or request.POST.get('video_list') or \
 				request.POST.get('photo_list') or request.POST.get('doc_list') or \
 				request.POST.get('doc') or request.POST.get('good_list'):
-				_message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=self.user, text=text)
+				_message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=self.user, text=message.text)
 				get_message_attach(request, _message)
 				if connections:
 					for object_id in connections:
 						if object_id[0] == "c":
 							chat = Chat.objects.get(pk=object_id[1:])
-							message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=text)
+							_message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 							get_message_attach(request, message)
 						elif object_id[0] == "u":
 							user = User.objects.get(pk=object_id[1:])
-							message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=user, text=text)
+							_message = Message.get_or_create_chat_and_send_message(creator=request.user, parent=None, user=user, text=message.text)
 							get_message_attach(request, message)
 						else:
 							return HttpResponse("not ok")
