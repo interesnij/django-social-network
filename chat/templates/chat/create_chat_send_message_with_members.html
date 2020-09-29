@@ -6,7 +6,7 @@
             <div class="card-header">
                 <div id="chat_members">
                   <div data-pk="{{ member.pk }}" tooltip="{{ member.get_full_name }}" flow="up" style="display: inline-block; margin: 5px;">
-                    <input type="hidden" class="community" name="communities" value="{{ member.pk }}">
+                    <input type="hidden" class="chat" name="chat_items" value="{{ member.pk }}">
                       <figure>
                         {% if member.get_avatar %}
                           <img src="{{ member.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
