@@ -98,64 +98,64 @@ class MessageParent(View):
 
 
 class MessageFixed(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		check_can_send_message(request.user, message.chat)
-        if request.is_ajax():
-            message.get_fixed_message_for_chat(message.chat.pk)
-            return HttpResponse()
-        else:
-            raise Http404
+		if request.is_ajax():
+			message.get_fixed_message_for_chat(message.chat.pk)
+			return HttpResponse()
+		else:
+			raise Http404
 
 class MessageUnFixed(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax():
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
+		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
-            message.is_fixed = False
-            message.save(update_fields=['is_fixed'])
-            return HttpResponse()
-        else:
-            raise Http404
+			message.is_fixed = False
+			message.save(update_fields=['is_fixed'])
+			return HttpResponse()
+		else:
+			raise Http404
 
 
 class MessageFavorite(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax():
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
+		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
-            MessageFavorite.create_favorite(request.user.pk, message)
-            return HttpResponse()
-        else:
-            raise Http404
+			MessageFavorite.create_favorite(request.user.pk, message)
+			return HttpResponse()
+		else:
+			raise Http404
 
 class MessageUnFavorite(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
-            message.is_fixed = False
-            message.save(update_fields=['is_fixed'])
-            return HttpResponse()
-        else:
-            raise Http404
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
+		if request.is_ajax() and MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
+			message.is_fixed = False
+			message.save(update_fields=['is_fixed'])
+			return HttpResponse()
+		else:
+			raise Http404
 
 
 class MessageDelete(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and message.creator == request.user:
-            message.is_deleted = True
-            message.save(update_fields=['is_deleted'])
-            return HttpResponse()
-        else:
-            raise Http404
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
+		if request.is_ajax() and message.creator == request.user:
+			message.is_deleted = True
+			message.save(update_fields=['is_deleted'])
+			return HttpResponse()
+		else:
+			raise Http404
 
 class MessageAbortDelete(View):
-    def get(self,request,*args,**kwargs):
-        message = Message.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and message.creator == request.user:
-            message.is_deleted = False
-            message.save(update_fields=['is_deleted'])
-            return HttpResponse()
-        else:
-            raise Http404
+	def get(self,request,*args,**kwargs):
+		message = Message.objects.get(uuid=self.kwargs["uuid"])
+		if request.is_ajax() and message.creator == request.user:
+			message.is_deleted = False
+			message.save(update_fields=['is_deleted'])
+			return HttpResponse()
+		else:
+			raise Http404
