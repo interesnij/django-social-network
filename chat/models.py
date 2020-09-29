@@ -91,7 +91,7 @@ class Chat(models.Model):
         else:
             members = self.chat_relation.all()[:10]
             for user in members:
-                urls += [user.get_avatar()]
+                urls += [user.user.get_avatar()]
         return urls
 
 
