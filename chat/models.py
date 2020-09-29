@@ -77,9 +77,32 @@ class Chat(models.Model):
     def get_preview(self):
         return self.get_first_message().text
 
-    def get_two_members(self):
-        two = self.chat_relation.exclude()[:2]
-        return str(two[0]) + ", " + str(two[1])
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            user = self.chat_relation.exclude(creator_pk=self.chat_relation.pk)[:1]
+            return user.get_avatar()
+
+    def get_name(self):
+        if self.name:
+            return self.name
+        count = self.get_members_ids().count()
+        if count > 2:
+            a = count % 10
+            b = count % 100
+            if (a == 1) and (b != 11):
+                return str(count) + " участник"
+            elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+                return str(count) + " участника"
+            else:
+                return str(count) + " участников"
+            return count
+        elif count == 2:
+            two = self.chat_relation.exclude(creator_pk=self.chat_relation.pk)[:1]
+            return str(two[0]) + ", " + str(two[1])
+        elif count == 1:
+            return self.creator.get_full_name()
 
     @classmethod
     def create_chat(cls, creator, type):
