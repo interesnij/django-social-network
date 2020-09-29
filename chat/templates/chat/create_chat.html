@@ -31,12 +31,16 @@
                         <option value="PR">Закрытый</option>
                     </select>
                 </div>
-                {% if friends %}
+
                 <div class="form-group centered">
+                  {% if friends %}
                   <span class="user_add_members pointer">Добавить участников</span>
                   <div></div>
+                  {% else %}
+                  У Вас пока некого добавлять в чат (пока друзей нет).
+                  {% endif %}
                 </div>
-                {% endif %}
+
             </div>
             <div class="card-footer">
                 <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
