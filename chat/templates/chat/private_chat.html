@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ chat.get_type_display }}{% endblock %}
 {% load messager %}
-{% block content %} 
+{% block content %}
 
 <div class="px-0 card no-shadow pk_saver" data-pk="{{ chat.pk }}">
     <div class="card-header border-bottom">
@@ -11,7 +11,7 @@
               {% if url %}
                 <img src="{{ url }}" style="border-radius:50px;" alt="image">
               {% else %}
-                <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
+                <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
               {% endif %}
             </figure>
           {% endfor %}
