@@ -181,7 +181,7 @@ class Message(models.Model):
     is_edit = models.BooleanField(default=False, verbose_name="Изменено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
 
-    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, related_name='post_message')
+    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, blank=True, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
