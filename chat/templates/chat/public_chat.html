@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Открытый чат{% endblock %}
+{% load messager %}
+{% block content %}
+
+<div class="px-0 card no-shadow pk_saver" data-pk="{{ object.pk }}">
+    <div class="card-header border-bottom">
+        <div class="media w-100">
+          {% for user in chat_members %}
+          <figure>
+            {% if user.user.get_avatar %}
+              <img src="{{ user.user.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+            {% else %}
+              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            {% endif %}
+          </figure>
+            <div class="media-body">
+                <h5 class="time-title mb-0">{{ user.user.get_full_name }}</h5>
+                {% if user.user.get_online %}
+                  <p class="mb-0 text-success">Онлайн</p>
+                {% else %}
+                  <p class="mb-0">Был {{ user.user.get_last_activity }}</p>
+                {% endif %}
+
+            </div>
+          {% endfor %}
+            <div class="dropdown d-inline-block">
+              <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 548px;">
+        <ul class="chatlist app">
+          <span class="list-divider">20 сентября 2020</span>
+          {% for object in object_list %}
+            {% include 'message/message.html' %}
+          {% endfor %}
+    </div>
+    <div class="card-footer border-top">
+      <form>
+          {% csrf_token %}
+          <div class="row attach_block"></div>
+          <div class="row no-gutters" style="margin-top: 20px;">
+            {% include 'message/form_dropdown.html' %}
+              <div class="col">
+                  <div class="input-group input-group-sm">
+                    <input type="text" name="text" class="form-control text-comment form-control-rounded">
+                  </div>
+              </div>
+              <div class="col-auto">
+                  <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_chat_send" type="button">
+                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                  </button>
+              </div>
+          </div>
+      </form>
+    </div>
+</div>
+{% endblock %}
