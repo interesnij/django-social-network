@@ -13,11 +13,14 @@ from common.check.message import check_can_change_chat
 class CreateChat(TemplateView):
 	template_name = None
 	member = None
+	member = False
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user:
 			self.member = self.user
+		if request.user.get_6_friends():
+			self.friends = True
 		self.template_name = get_settings_template("chat/create_chat.html", request)
 		return super(CreateChat,self).get(request,*args,**kwargs)
 
@@ -25,6 +28,7 @@ class CreateChat(TemplateView):
 		context=super(CreateChat,self).get_context_data(**kwargs)
 		context["form"] = ChatForm()
 		context["member"] = self.member
+		context["friends"] = self.friends
 		return context
 
 	def post(self,request,*args,**kwargs):
