@@ -26,54 +26,54 @@ class CreateChat(TemplateView):
 		self.form = ChatForm(request.POST)
 		if self.form.is_valid() and request.is_ajax():
 			new_chat = self.form.save(commit=False)
-            new_chat.creator = request.user
-            self.form.save()
-            ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
-            members = [request.user, ]
+			new_chat.creator = request.user
+			self.form.save()
+			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
+			members = [request.user, ]
 
-            connections = request.POST.getlist("connections")
-            for user_id in connections:
-                user = User.objects.get(pk=user_id)
-                ChatUsers.create_membership(user=user, chat=new_chat)
-                members += [user, ]
+			connections = request.POST.getlist("connections")
+			for user_id in connections:
+				user = User.objects.get(pk=user_id)
+				ChatUsers.create_membership(user=user, chat=new_chat)
+				members += [user, ]
 
-            if new_chat.is_private():
-                template = 'chat/private_chat.html'
-            elif new_chat.is_public():
-                template = 'chat/public_chat.html'
+			if new_chat.is_private():
+				template = 'chat/private_chat.html'
+			elif new_chat.is_public():
+				template = 'chat/public_chat.html'
 			return render(request, template, {'chat': chat, 'chat_members': members, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
 
 
 class ChatDelete(View):
-    def get(self,request,*args,**kwargs):
-        chat = Chat.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            check_can_change_chat(request.user, chat)
-            chat.is_deleted = True
-            message.save(update_fields=['is_deleted'])
-            return HttpResponse()
-        else:
-            raise Http404
+	def get(self,request,*args,**kwargs):
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax():
+			check_can_change_chat(request.user, chat)
+			chat.is_deleted = True
+			message.save(update_fields=['is_deleted'])
+			return HttpResponse()
+		else:
+			raise Http404
 
-class ChatAbortDelete(View):
-    def get(self,request,*args,**kwargs):
-        chat = Chat.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            check_can_change_chat(request.user, chat)
-            chat.is_deleted = False
-            message.save(update_fields=['is_deleted'])
-            return HttpResponse()
-        else:
-            raise Http404
+class ChatDelete(View):
+	def get(self,request,*args,**kwargs):
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax():
+			check_can_change_chat(request.user, chat)
+			chat.is_deleted = False
+			message.save(update_fields=['is_deleted'])
+			return HttpResponse()
+		else:
+			raise Http404
 
 
 class ChatExit(View):
-    def get(self,request,*args,**kwargs):
-        chat = Chat.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            ChatUsers.delete_membership(request.user, chat)
-            return HttpResponse()
-        else:
-            raise Http404
+	def get(self,request,*args,**kwargs):
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax():
+			ChatUsers.delete_membership(request.user, chat)
+			return HttpResponse()
+		else:
+			raise Http404
