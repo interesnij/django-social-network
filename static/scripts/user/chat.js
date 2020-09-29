@@ -1,10 +1,10 @@
 on('#ajax', 'click', '.user_create_chat', function() {
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
   open_fullscreen("/chat/chat_progs/create_chat/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
   open_fullscreen("/chat/message_progs/send_page_message/" + pk + "/", loader)
 });
@@ -52,8 +52,8 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             toast_success("Сообщение отправлено");
-            document.querySelector(".create_fullscreen").style.display = "none";
-            document.getElementById("create_loader").innerHTML="";
+            document.querySelector(".item_fullscreen").style.display = "none";
+            document.getElementById("item_loader").innerHTML="";
         }
       }
       ajax_link.send(form_data);
