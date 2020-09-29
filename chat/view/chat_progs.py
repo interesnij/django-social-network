@@ -57,7 +57,7 @@ class ChatDelete(View):
 		else:
 			raise Http404
 
-class ChatDelete(View):
+class ChatAbortDelete(View):
 	def get(self,request,*args,**kwargs):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
