@@ -90,7 +90,11 @@ class Chat(models.Model):
     def get_name(self):
         if self.name:
             return self.name
-        count = self.get_members_ids().count()
+        members_ids = self.get_members_ids()
+        if members_ids:
+            count = members_ids.count()
+        else:
+            return "Пустой чат"
         if count > 2:
             a = count % 10
             b = count % 100
