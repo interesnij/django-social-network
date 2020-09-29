@@ -1,12 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Приватный чат{% endblock %}
+{% block title %}{{ chat.get_type_display }}{% endblock %}
 {% load messager %}
 {% block content %}
 
 <div class="px-0 card no-shadow pk_saver" data-pk="{{ chat.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
-          {{ chat.get_name }}
+          <figure>
+            {{ chat.get_avatar }}
+          </figure>
+            <div class="media-body">
+                <h5 class="time-title mb-0">{{ chat.get_name }}</h5>
+                <p class="mb-0 text-success">{{ chat.get_type_display }}</p> 
+
+            </div>
 
             <div class="dropdown d-inline-block">
               <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
