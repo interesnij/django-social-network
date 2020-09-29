@@ -58,7 +58,7 @@ class CreateChat(TemplateView):
 				template = 'chat/private_chat.html'
 			elif new_chat.is_public():
 				template = 'chat/public_chat.html'
-			return render(request, template, {'chat': chat, 'chat_members': members, 'user': request.user})
+			return render(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
 
