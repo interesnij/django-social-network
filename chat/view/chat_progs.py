@@ -13,7 +13,7 @@ from common.check.message import check_can_change_chat
 class CreateChat(TemplateView):
 	template_name = None
 	member = None
-	member = False
+	friends = False
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
