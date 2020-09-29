@@ -58,6 +58,9 @@ class Chat(models.Model):
         users_ids = [_user['id'] for _user in users]
         return users_ids
 
+    def get_members_count(self):
+        return self.get_members().values('id').count()
+
     def get_first_message(self):
         return self.chat_message.filter(is_deleted=False).last()
 
@@ -90,11 +93,8 @@ class Chat(models.Model):
     def get_name(self):
         if self.name:
             return self.name
-        members_ids = self.get_members_ids()
-        if members_ids:
-            count = members_ids.count()
-        else:
-            return "Пустой чат"
+        count = self.get_members_count()
+
         if count > 2:
             a = count % 10
             b = count % 100
