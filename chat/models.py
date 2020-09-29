@@ -83,11 +83,17 @@ class Chat(models.Model):
         else:
             return 'Нет сообщений'
 
-    def get_avatar(self):
+    def get_avatars(self):
+        urls = []
         if self.image:
-            return self.image.url
+            urls = [self.image.url, ]
+            return urls
         else:
-            return self.chat_relation.all()
+            members = self.chat_relation.all()[:10]
+            for user in members:
+                urls += [user.get_avatar()]
+        return urls
+
 
     def get_name(self):
         if self.name:
