@@ -16,7 +16,7 @@ class CreateChat(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		if self.user != requset.user:
+		if self.user != request.user:
 			self.member = self.user
 		self.template_name = get_settings_template("chat/create_chat.html", request)
 		return super(CreateChat,self).get(request,*args,**kwargs)
