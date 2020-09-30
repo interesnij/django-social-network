@@ -357,6 +357,22 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
+    def create_chat_append_members_and_send_message(creator, users_ids, text): 
+        # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
+        from common.processing.post import get_post_message_processing
+
+        chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
+        sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
+        for user_id in users_ids:
+            ChatUsers.objects.create(user_id=user_id, chat=chat)
+
+        new_message = Message.objects.create(chat=chat, creator=sender, text=text, status=Message.STATUS_PROCESSING)
+        get_post_message_processing(new_message)
+        channel_layer = get_channel_layer()
+        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': users}
+        async_to_sync(channel_layer.group_send)(user.username, payload)
+        return new_message
+
     def send_message(chat, creator, repost, parent, text):
         # программа для отсылки сообщения, когда чат известен
         from common.processing.post import get_post_message_processing
