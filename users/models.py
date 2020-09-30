@@ -11,6 +11,7 @@ from common.utils import try_except
 from notify.model.user import UserNotify, notification_handler
 from datetime import date
 from posts.models import Post
+from common.check.user import *
 
 
 class User(AbstractUser):
@@ -218,7 +219,7 @@ class User(AbstractUser):
     def follow_user_with_id(self, user_id):
         from follows.models import Follow
 
-        check_can_follow_user_with_id(user_id=user_id, user=self)
+        check_can_follow_user(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
         follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)

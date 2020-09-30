@@ -658,39 +658,6 @@ loadScripts('/static/scripts/video/community_get.js')
 loadScripts('/static/scripts/video/user_get.js')
 
 
-function get_date_r(){
-  var input = document.querySelectorAll('.js-date')[0];
-
-  var dateInputMask = function dateInputMask(elm) {
-    elm.addEventListener('keypress', function(e) {
-      if(e.keyCode < 47 || e.keyCode > 57) {
-        e.preventDefault();
-      }
-
-      var len = elm.value.length;
-
-      // Если мы находимся в определенном месте, пусть пользователь введет косую черту
-      // i.e., 12/12/1212
-      if(len !== 1 || len !== 3) {
-        if(e.keyCode == 47) {
-          e.preventDefault();
-        }
-      }
-
-      // Если они не добавляют косую черту, сделайте это за них...
-      if(len === 2) {
-        elm.value += '/';
-      }
-
-      // Если они не добавляют косую черту, сделайте это за них...
-      if(len === 5) {
-        elm.value += '/';
-      }
-    });
-  };
-  dateInputMask(input)
-}
-
 on('body', 'click', '.anon_color_change', function() {
   var span = this;
   var color = this.getAttribute('data-color');
