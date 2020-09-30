@@ -12,6 +12,11 @@ def check_not_can_follow_user(user, user_id):
     check_is_following_user(user=user, user_id=user_id)
     check_has_not_reached_max_follows(user=user)
 
+def check_can_block_user(user, user_id):
+    if user_id == user.pk:
+        raise ValidationError('Вы не можете блокировать себя')
+    check_user_not_blocked(user=user, user_id=user_id)
+
 def check_is_following_user(user, user_id):
     if not user.is_following_user_with_id(user_id):
         return True
