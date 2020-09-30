@@ -347,8 +347,7 @@ on('#ajax', 'click', '.chat_item_load_one', function() {
 });
 on('#ajax', 'click', '.chat_friends_load_one', function() {
   _this = this;
-  block = this.nextElementSibling;
-  console.log(this.nextElementSibling);
+  block = this.parentElement.parentElement.nextElementSibling;
   chat_item_form_selected(_this, block)
 });
 
