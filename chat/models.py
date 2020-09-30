@@ -111,7 +111,7 @@ class Chat(models.Model):
                 return str(count) + " участников"
             return count
         elif count == 2:
-            two = self.chat_relation.exclude(creator_pk=self.chat_relation.pk)[:1]
+            two = self.chat_relation.exclude(pk=self.creator.pk)[:1]
             return str(two[0]) + ", " + str(two[1])
         elif count == 1:
             return self.creator.get_full_name()
