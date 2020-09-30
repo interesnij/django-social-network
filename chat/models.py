@@ -345,12 +345,12 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC, status=Message.STATUS_PROCESSING)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
             sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, status=Message.STATUS_PROCESSING)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
