@@ -370,7 +370,7 @@ class Message(models.Model):
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': creator}
-        async_to_sync(channel_layer.group_send)(user.username, payload)
+        async_to_sync(channel_layer.group_send)(creator.username, payload)
         return new_message
 
     def send_message(chat, creator, repost, parent, text):
