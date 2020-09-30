@@ -348,7 +348,7 @@ on('#ajax', 'click', '.chat_item_load_one', function() {
 on('#ajax', 'click', '.chat_friends_load_one', function() {
   _this = this;
   block = this.parentElement.parentElement.nextElementSibling;
-  chat_item_form_selected(_this, block)
+  chat_item_form_selected(_this, block) 
 });
 
 on('#ajax', 'click', '.u_create_video_attach_btn', function() {
