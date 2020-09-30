@@ -17,6 +17,10 @@ def check_can_block_user(user, user_id):
         raise ValidationError('Вы не можете блокировать себя')
     check_user_not_blocked(user=user, user_id=user_id)
 
+def check_can_unblock_user(user, user_id):
+    if not user.has_blocked_user_with_id(user_id=user_id):
+        raise ValidationError('Вы не можете разблокировать учетную запись, которую вы не заблокировали')
+
 def check_is_following_user(user, user_id):
     if not user.is_following_user_with_id(user_id):
         return True

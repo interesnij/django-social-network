@@ -388,7 +388,7 @@ class User(AbstractUser):
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
-        check_can_unblock_user_with_id(user=self, user_id=user_id)
+        check_can_unblock_user(user=self, user_id=user_id) 
         self.user_blocks.filter(blocked_user_id=user_id).delete()
         return User.objects.get(pk=user_id)
 
@@ -398,7 +398,7 @@ class User(AbstractUser):
 
     def block_user_with_id(self, user_id):
         from users.model.list import UserBlock
-        check_can_block_user(user=self, user_id=user_id) 
+        check_can_block_user(user=self, user_id=user_id)
 
         if self.is_connected_with_user_with_id(user_id=user_id):
             self.disconnect_from_user_with_id(user_id=user_id)
