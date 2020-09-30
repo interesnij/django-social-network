@@ -188,7 +188,7 @@ class Chat(models.Model):
                 chat_name = member.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>'
+            return figure + media_body
         elif count > 2:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -205,7 +205,7 @@ class Chat(models.Model):
                 chat_name = "Групповой чат"
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
-            return '<div class="media">' + avatars + media_body + '</div>'
+            return avatars + media_body
         elif count == 1:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -219,7 +219,7 @@ class Chat(models.Model):
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>'
+            return figure + media_body
 
     def get_name(self, user_id):
         if self.name:
