@@ -10,7 +10,7 @@ on('#ajax', 'click', '.user_send_page_message', function() {
 });
 
 on('#ajax', 'click', '.user_add_members', function() {
-  block = this.nextElementSibling;
+  block = this.nextElementSibling.querySelector("#chat_members");
   list_load(block, "/users/load/friends/")
 })
 
