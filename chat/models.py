@@ -114,8 +114,8 @@ class Chat(models.Model):
             return self.creator.get_avatar()
 
     def get_chat_member(self, user_id):
-        member = self.chat_relation.exclude(user_id=user_id)
-        return member.user
+        members = self.chat_relation.exclude(user_id=user_id)
+        return member[0].user
 
     def get_preview(self, user_id):
         count = self.get_members_count()
