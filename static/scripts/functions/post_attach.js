@@ -269,8 +269,9 @@ function commmunity_form_selected(_this, block) {
 }
 function chat_item_form_selected(_this, block) {
   pk = _this.getAttribute('data-pk');
-  if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
-    _this.setAttribute("tooltip", "Чат или друг уже выбран");
+  member_pk = _this.parentElement.parentElement.getAttribute("data-pk");
+  if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' ) || member_pk == pk){
+    _this.setAttribute("tooltip", "Друг уже выбран");
     _this.setAttribute("flow", "up");
     return
   }
