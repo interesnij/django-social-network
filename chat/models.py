@@ -357,7 +357,7 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
-    def create_chat_append_members_and_send_message(creator, users_ids, text): 
+    def create_chat_append_members_and_send_message(creator, users_ids, text):
         # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
         from common.processing.post import get_post_message_processing
 
@@ -369,7 +369,7 @@ class Message(models.Model):
         new_message = Message.objects.create(chat=chat, creator=sender, text=text, status=Message.STATUS_PROCESSING)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': users}
+        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': creator}
         async_to_sync(channel_layer.group_send)(user.username, payload)
         return new_message
 
