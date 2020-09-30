@@ -170,6 +170,17 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
+    STATUS_DRAFT = 'D'
+    STATUS_PROCESSING = 'PG'
+    STATUS_PUBLISHED = 'P'
+    STATUS_EDIT = 'E'
+    STATUSES = (
+        (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PROCESSING, 'Обработка'),
+        (STATUS_PUBLISHED, 'Опубликовано'),
+        (STATUS_EDIT, 'Изменено'),
+    )
+
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     creator = models.ForeignKey(ChatUsers, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(auto_now_add=True)
@@ -178,8 +189,8 @@ class Message(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
-    is_edit = models.BooleanField(default=False, verbose_name="Изменено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
+    status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=5, verbose_name="Статус сообщения")
 
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
@@ -209,7 +220,7 @@ class Message(models.Model):
                 current_chat = chat
         if not current_chat:
             current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
-            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
+            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat, status=Nessage.STATUS_PROCESSING)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
@@ -225,22 +236,10 @@ class Message(models.Model):
         from common.processing.post import get_post_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text)
+        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Nessage.STATUS_PROCESSING)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
-        async_to_sync(channel_layer.group_send)(creator.username, payload)
-        return new_message
-
-    def send_public_message(chat, creator, parent, text):
-        # отсылка сообщений в групповой чат
-        from common.processing.post import get_post_message_processing
-
-        sender = ChatUsers.objects.get(user=creator)
-        new_message = Chat.objects.create(chat=chat, creator=sender, parent=parent, text=text)
-        get_post_message_processing(new_message)
-        channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator,}
         async_to_sync(channel_layer.group_send)(creator.username, payload)
         return new_message
 
