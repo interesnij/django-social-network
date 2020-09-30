@@ -117,7 +117,7 @@ class Chat(models.Model):
         members = self.chat_relation.exclude(user_id=user_id)
         return members[0].user
 
-    def get_preview(self, user_id):
+    def get_preview_message(self, user_id):
         count = self.get_members_count()
         first_message = self.get_first_message()
         if count == 1:
@@ -135,7 +135,7 @@ class Chat(models.Model):
             '<small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
-        if count == 2:
+        elif count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -151,7 +151,7 @@ class Chat(models.Model):
             '<small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
-        if count > 2:
+        elif count > 2:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
