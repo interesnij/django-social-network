@@ -3,12 +3,12 @@ from django.conf import settings
 
 
 def check_can_follow_user(user, user_id):
-    check_is_not_blocked(user=user, user_id=user_id)
-    check_is_not_following(user_id=user_id, user=user)
+    check_user_not_blocked(user=user, user_id=user_id)
+    check_user_not_following(user_id=user_id, user=user)
     check_has_not_reached_max_follows(user=user)
 
 
-def check_is_not_following(user, user_id):
+def check_user_not_following(user, user_id):
     if user.is_following_user_with_id(user_id):
         raise ValidationError('Вы уже подписаны на этого пользователя',)
 
