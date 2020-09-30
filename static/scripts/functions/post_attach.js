@@ -276,5 +276,5 @@ function chat_item_form_selected(_this, block) {
   }
   div = create_preview_chat_item(_this);
   block.append(div);
-  _this.parentElement.previousElementSibling.style.display = "none"
+  _this.parentElement.parentElement.style.display = "none"
 }
