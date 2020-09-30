@@ -193,12 +193,12 @@ class Chat(models.Model):
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
-                avatars = []
+                avatars = ''
                 for figure in self.get_avatars():
                     if figure:
-                        avatars += ['<figure><img src="' + figure + '" style="border-radius:50px;width:50px;" alt="image"></figure>',]
+                        avatars += '<figure><img src="' + figure + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
                     else:
-                        avatars += ['<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>',]
+                        avatars += '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
