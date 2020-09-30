@@ -112,7 +112,7 @@ class Chat(models.Model):
             return count
         elif count == 2:
             user = self.chat_relation.exclude(user_id=self.creator.pk)
-            return user.get_full_name()
+            return user
         elif count == 1:
             return self.creator.get_full_name()
 
