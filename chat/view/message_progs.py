@@ -47,16 +47,9 @@ class SendPageMessage(TemplateView):
 				get_message_attach(request, _message)
 				if connections:
 					for object_id in connections:
-						if object_id[0] == "c":
-							chat = Chat.objects.get(pk=object_id[1:])
-							_message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
-							get_message_attach(request, message)
-						elif object_id[0] == "u":
-							user = User.objects.get(pk=object_id[1:])
-							_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=user, text=message.text)
-							get_message_attach(request, message)
-						else:
-							return HttpResponse("not ok")
+						user = User.objects.get(pk=object_id)
+						_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=user, text=message.text)
+						get_message_attach(request, message)
 				return HttpResponse()
 			else:
 				return HttpResponseBadRequest()
