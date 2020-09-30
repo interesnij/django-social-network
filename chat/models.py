@@ -119,17 +119,12 @@ class Chat(models.Model):
 
     def get_preview(self, user_id):
         count = self.get_members_count()
-        figure = None
-        media_body = None
-        if self.is_not_empty():
-            text = self.get_first_message().text
-        else:
-            text = 'Нет сообщений'
+        first_message = self.get_first_message()
         if count == 1:
             if self.image:
-                figure = '<figure><img src=' + self.image.url + 'style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.creator.get_avatar():
-                figure = '<figure><img src=' + self.creator.get_avatar() + 'style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="' + self.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
@@ -137,8 +132,8 @@ class Chat(models.Model):
             else:
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<small class="float-right text-muted">' + self.get_last_message_created() + \
-            '</small></h5><p class="mb-0">' + text + '</p></div>'
+            '<small class="float-right text-muted">' + first_message.get_created() + \
+            '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         if count == 2:
             member = self.get_chat_member(user_id)
@@ -153,12 +148,12 @@ class Chat(models.Model):
             else:
                 chat_name = member.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<small class="float-right text-muted">' + self.get_last_message_created() + \
-            '</small></h5><p class="mb-0">' + text + '</p></div>'
+            '<small class="float-right text-muted">' + first_message.get_created() + \
+            '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
         if count > 2:
             if self.image:
-                figure = '<figure><img src=' + self.image.url + 'style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><img src="/static/images/group_chat.png" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
@@ -166,8 +161,8 @@ class Chat(models.Model):
             else:
                 chat_name = "Групповой чат"
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<small class="float-right text-muted">' + self.get_last_message_created() + \
-            '</small></h5><p class="mb-0">' + text + '</p></div>'
+            '<small class="float-right text-muted">' + first_message.get_created() + \
+            '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
 
 

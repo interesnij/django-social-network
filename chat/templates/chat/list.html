@@ -22,7 +22,6 @@
                   {% if not object.is_not_empty %}
                     {% include 'message/empty_message.html' %}
                   {% else %}
-
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                     <a class="ajax" href="{% url 'chat_detali' pk=object.pk %}">
                       {{ object|get_preview_message:request.user.pk|safe }}
