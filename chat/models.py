@@ -345,8 +345,8 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
-            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat, status=Message.STATUS_PROCESSING)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC, status=Message.STATUS_PROCESSING)
+            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
