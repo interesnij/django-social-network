@@ -6,19 +6,7 @@
 <div class="px-0 card no-shadow pk_saver" data-pk="{{ chat.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
-          {% for url in chat.get_avatars %}
-            <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-              {% if url %}
-                <img src="{{ url }}" style="border-radius:50px;" alt="image">
-              {% else %}
-                <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
-              {% endif %}
-            </figure>
-          {% endfor %}
-          <div class="media-body">
-            <h5 class="time-title mb-0">{{ chat.get_name }}</h5>
-            <p class="mb-0 text-success">{{ chat.get_type_display }}</p>
-          </div>
+          {{ object|get_chat_header:request.user.pk|safe }}
             <div class="dropdown d-inline-block">
               <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
                 <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
