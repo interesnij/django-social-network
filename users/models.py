@@ -332,7 +332,7 @@ class User(AbstractUser):
         from frends.models import Connect
         from users.model.list import UserFeaturedFriend
 
-        check_can_connect_with_user_with_id(user=self, user_id=user_id)
+        check_can_connect_with_user(user=self, user_id=user_id)
         if self.pk == user_id:
             raise ValidationError('Вы не можете добавить сами на себя',)
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
@@ -367,7 +367,7 @@ class User(AbstractUser):
     def unfrend_user_with_id(self, user_id):
         from follows.models import Follow
 
-        check_is_following_user_with_id(user=self, user_id=user_id)
+        check_is_following_user(user=self, user_id=user_id)
         follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
         follow.view = True
         follow.save(update_fields=["view"])
@@ -376,7 +376,7 @@ class User(AbstractUser):
         return connection.delete()
 
     def disconnect_from_user_with_id(self, user_id):
-        check_is_connected_with_user_with_id(user=self, user_id=user_id)
+        check_is_connected(user=self, user_id=user_id)
         if self.is_following_user_with_id(user_id):
             self.unfollow_user_with_id(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
@@ -388,7 +388,7 @@ class User(AbstractUser):
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
-        check_can_unblock_user(user=self, user_id=user_id) 
+        check_can_unblock_user(user=self, user_id=user_id)
         self.user_blocks.filter(blocked_user_id=user_id).delete()
         return User.objects.get(pk=user_id)
 

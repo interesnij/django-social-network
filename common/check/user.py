@@ -1,6 +1,10 @@
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from django.conf import settings
 
+def check_can_connect_with_user(user, user_id):
+    check_user_not_blocked(user=user, user_id=user_id)
+    check_is_not_connected(user=user, user_id=user_id)
+    check_has_not_reached_max_connections(user=user)
 
 def check_can_follow_user(user, user_id):
     check_user_not_blocked(user=user, user_id=user_id)
@@ -16,6 +20,9 @@ def check_can_block_user(user, user_id):
     if user_id == user.pk:
         raise ValidationError('Вы не можете блокировать себя')
     check_user_not_blocked(user=user, user_id=user_id)
+def check_has_not_reached_max_connections(user):
+    if user.count_connections() > settings.USER_MAX_CONNECTIONS:
+        raise ValidationError('Достигнуто максимальное количество друзей',)
 
 def check_can_unblock_user(user, user_id):
     if not user.has_blocked_user_with_id(user_id=user_id):
@@ -41,6 +48,10 @@ def check_user_not_blocked(user, user_id):
 def check_user_connected(user, request_user):
     if not request_user.is_connected_with_user_with_id(user.pk):
         raise ValidationError('Не дружит с пользователем.')
+
+def check_is_not_connected(user, user_id):
+    if user.is_connected_with_user_with_id(user_id):
+        raise ValidationError('Пользователь уже в друзьях',)
 
 def check_user_can_get_list(request_user, user):
     check_user_not_blocked(request_user, user.pk)
