@@ -346,7 +346,7 @@ class Message(models.Model):
                 current_chat = chat
         if not current_chat:
             current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
-            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat, status=Nessage.STATUS_PROCESSING)
+            sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat, status=Message.STATUS_PROCESSING)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
@@ -362,7 +362,7 @@ class Message(models.Model):
         from common.processing.post import get_post_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Nessage.STATUS_PROCESSING)
+        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Message.STATUS_PROCESSING)
         get_post_message_processing(new_message)
         channel_layer = get_channel_layer()
         payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
