@@ -6,7 +6,7 @@
 <div class="px-0 card no-shadow pk_saver" data-pk="{{ chat.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
-          {{ object|get_chat_header:request.user.pk|safe }}
+          {{ chat|get_chat_header:request.user.pk|safe }}
 
             <div class="dropdown d-inline-block">
               <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
