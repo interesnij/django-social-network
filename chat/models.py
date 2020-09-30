@@ -83,6 +83,12 @@ class Chat(models.Model):
         else:
             return 'Нет сообщений'
 
+    def get_last_message_created(self):
+        if self.is_not_empty():
+            return self.get_first_message().get_created()
+        else:
+            return ''
+
     def get_avatars(self):
         urls = []
         if self.image:
@@ -93,6 +99,19 @@ class Chat(models.Model):
             for user in members:
                 urls += [user.user.get_avatar()]
         return urls
+
+    def get_avatar(self):
+        if self.image:
+            return self.image.url
+        count = self.get_members_count()
+
+        if count > 2:
+            return "/static/images/group_chat.png"
+        elif count == 2:
+            user = self.chat_relation.exclude(user_id=self.creator.pk)
+            return user[0].user.get_avatar()
+        elif count == 1:
+            return self.creator.get_avatar()
 
 
     def get_name(self):
