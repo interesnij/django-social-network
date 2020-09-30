@@ -44,6 +44,7 @@ class SendPageMessage(TemplateView):
 				request.POST.get('photo_list') or request.POST.get('doc_list') or \
 				request.POST.get('doc') or request.POST.get('good_list'):
 				if connections:
+					connections += [self.user.pk,]
 					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text)
 					get_message_attach(request, _message)
 				else:
