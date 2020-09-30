@@ -110,9 +110,7 @@ body {
 .card {
   background-color: #da4e4e;
 }
-.staked {
-  border: 2px solid #e58080;
-}
+
 a.media:hover {
   background-color: rgba(211, 44, 44, 0.4);
 }
