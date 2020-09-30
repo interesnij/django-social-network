@@ -196,9 +196,9 @@ class Chat(models.Model):
                 avatars = ''
                 for figure in self.get_avatars():
                     if figure:
-                        avatars += '<figure class="avatar-50 staked"><img src="' + figure + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                        avatars += '<figure class="avatar-50"><img src="' + figure + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
                     else:
-                        avatars += '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                        avatars += '<figure class="avatar-50"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
                  chat_name = self.name
             else:
