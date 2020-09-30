@@ -155,7 +155,7 @@ class Chat(models.Model):
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + self.get_last_message_created() + \
             '</small></h5><p class="mb-0">' + text + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count(user_id)
+            return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
         if count > 2:
             if self.image:
                 figure = '<figure><img src=' + self.image.url + 'style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -168,7 +168,7 @@ class Chat(models.Model):
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + self.get_last_message_created() + \
             '</small></h5><p class="mb-0">' + text + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count(user_id)
+            return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
 
 
     def get_name(self, user_id):
