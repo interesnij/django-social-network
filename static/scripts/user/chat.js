@@ -11,7 +11,7 @@ on('#ajax', 'click', '.user_send_page_message', function() {
 
 on('#ajax', 'click', '.user_add_members', function() {
   block = this.nextElementSibling.querySelector("#chat_members");
-  block.classList.add("mt-3")
+  block.classList.add("mt-4")
   list_load(block, "/users/load/friends/")
 })
 
