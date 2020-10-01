@@ -9,7 +9,8 @@
       </a>
     </figure>
     <div class="media-body">
-      <h5 class="time-title mb-0"><a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
+      <h5 class="time-title mb-0">
+        <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
       {% if object.text %}
