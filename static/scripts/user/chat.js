@@ -75,12 +75,12 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.text').value = "";
-    clear_attach_block(); 
+    clear_attach_block();
 
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".media") ? (message_load.querySelector(".stream").prepend(new_post),
+    new_post.querySelector(".media") ? (message_load.prepend(new_post),
                                        message_load.querySelector(".message_empty") ? message_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");
   }};
