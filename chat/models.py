@@ -117,7 +117,7 @@ class Chat(models.Model):
         members = self.chat_relation.exclude(user_id=user_id)
         return members[0]
     def get_chat_user(self, user_id):
-        members = self.chat_relation.exclude(user_id=user_id)
+        members = self.chat_relation.filter(user_id=user_id)
         return members[0].user
 
     def get_preview_message(self, user_id):
