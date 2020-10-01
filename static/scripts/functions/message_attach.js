@@ -62,8 +62,8 @@ function photo_message_attach(_this, block) {
     block.append(div);
   block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
 
-  add_file_attach()
-  is_full_attach();
+  add_file_message_attach()
+  is_full_message_attach();
 }
 
 function photo_message_upload_attach(photo_list, block, block_divs_length){
