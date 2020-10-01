@@ -75,7 +75,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.text').value = "";
-    clear_attach_block();
+    clear_message_attach_block(); 
 
     elem = link_.responseText;
     new_post = document.createElement("span");
