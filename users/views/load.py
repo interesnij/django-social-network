@@ -42,11 +42,17 @@ class UserLoadPhotoAlbum(ListView):
 		return photo_list
 
 class UserLoadPhotoComment(ListView):
-	template_name = 'load/u_photo_comments_load.html'
+	template_name = None
 	paginate_by = 15
 
+	def get(self,request,*args,**kwargs):
+		from gallery.models import Album
+		self.album = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None)
+		self.template_name = get_settings_template("load/u_photo_comments_load.html", request)
+		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
+
 	def get_queryset(self):
-		photos_list = self.request.user.get_photos().order_by('-created')
+		photos_list = self.album.get_photos()
 		return photos_list
 
 class UserLoadPhotoAlbumComment(ListView):
@@ -65,7 +71,7 @@ class UserLoadPhotoAlbumComment(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos().order_by('-created')
+		photo_list = self.album.get_photos()
 		return photo_list
 
 
