@@ -272,13 +272,11 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
 
     if (document.body.querySelector(".attach_block")){
       block = document.body.querySelector(".attach_block");
+      photo_post_upload_attach(photo_list, block, photo_list.length);
     } else if (document.body.querySelector(".message_attach_block")){
       block = document.body.querySelector(".message_attach_block");
+      photo_message_upload_attach(photo_list, block, photo_list.length);
     }
-    block_divs = block.querySelectorAll("div");
-    block_divs_length = photo_list.length;
-
-    photo_post_upload_attach(photo_list, block, block_divs_length);
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
