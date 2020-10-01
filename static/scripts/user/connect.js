@@ -41,6 +41,7 @@ on('#ajax', 'click', '.follow_view', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.remove();
     toast_info("Пользователь оставлен в подписчиках");
+    minus_new_followers();
   }};
   link_.send();
 })
@@ -55,6 +56,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
+    minus_new_followers();
     document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
         : (a = document.createElement("a"), a.classList.add("small", "connect_delete", "pointer"), a.innerHTML = 'Убрать из друзей', _this.parentElement.append(a), _this.remove())
   }}

@@ -172,7 +172,15 @@ function minus_one_chat(){
 		count > 0 ? unread_chats.innerHTML = count : unread_chats.innerHTML = ""
 	}
 }
-
+function minus_new_followers(){
+	if (document.body.querySelector(".new_followers_bagde")) {
+		new_followers = document.body.querySelector(".new_followers_bagde"),
+		count = new_followers.innerHTML,
+		count*1,
+		count -= 1,
+		count > 0 ? new_followers.innerHTML = count : new_followers.innerHTML = ""
+	}
+}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
