@@ -490,9 +490,6 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
-        if (url == "/"){
-          get_date_r()
-        }
       }
     }
     ajax_link.send();
