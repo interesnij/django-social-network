@@ -89,30 +89,6 @@ class Chat(models.Model):
         else:
             return ''
 
-    def get_avatars(self):
-        urls = []
-        if self.image:
-            urls = [self.image.url, ]
-            return urls
-        else:
-            members = self.chat_relation.all()[:10]
-            for user in members:
-                urls += [user.user.get_avatar()]
-        return urls
-
-    def get_avatar(self):
-        if self.image:
-            return self.image.url
-        count = self.get_members_count()
-
-        if count > 2:
-            return "/static/images/group_chat.png"
-        elif count == 2:
-            user = self.chat_relation.exclude(user_id=self.creator.pk)
-            return user[0].user.get_avatar()
-        elif count == 1:
-            return self.creator.get_avatar()
-
     def get_chat_member(self, user_id):
         members = self.chat_relation.exclude(user_id=user_id)
         return members[0]
@@ -136,7 +112,7 @@ class Chat(models.Model):
             else:
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
+            ' <span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         elif count == 2:
