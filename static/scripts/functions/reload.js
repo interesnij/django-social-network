@@ -159,7 +159,7 @@ function create_pagination(block){
 	}
 }
 function gotoBottom(){
-	document.querySelector('.chatlist').scrollTop = 9999999;
+	document.querySelector('.chatview').scrollTop = 9999999;
 }
 
 function if_list(block){
@@ -225,10 +225,6 @@ function ajax_get_reload(url) {
 				page = 2;
 				loaded = false;
 				create_pagination(rtr);
-				if(rtr.querySelector('.chatlist')){
-					gotoBottom();
-					console.log("bottom!!!")
-			  };
       }
     }
     ajax_link.send();
