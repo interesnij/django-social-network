@@ -191,8 +191,8 @@ function if_list(block){
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
 		//gotoBottom(block.querySelector('.chatview'));
-		//gotoBottom(block.querySelector('.chatlist'));
-		gotoBottom(block);
+		gotoBottom(block.querySelector('.chatlist'));
+		//gotoBottom(block);
 		console.log("bottom!!!")
   };
 }
