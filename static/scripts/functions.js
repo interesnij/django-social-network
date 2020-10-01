@@ -275,6 +275,7 @@ function send_photo_change(span, _link, new_class, html){
 loadScripts('/static/scripts/functions/preview.js')
 loadScripts('/static/scripts/functions/comment_attach.js')
 loadScripts('/static/scripts/functions/post_attach.js')
+loadScripts('/static/scripts/functions/message_attach.js')
 loadScripts('/static/scripts/functions/reload.js')
 
 class ToastManager {
