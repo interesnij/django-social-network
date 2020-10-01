@@ -179,6 +179,43 @@ on('#ajax', 'click', '.u_select_article', function() {
   open_load_fullscreen('/users/load/u_article_load/', loader)
 });
 
+on('#ajax', 'click', '.m_select_photo', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_img_load/', loader)
+});
+on('#ajax', 'click', '.m_select_video', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_video_load/', loader)
+});
+on('#ajax', 'click', '.m_select_music', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_music_load/', loader)
+});
+on('#ajax', 'click', '.m_select_doc', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_doc_load/', loader)
+});
+on('#ajax', 'click', '.m_select_good', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_good_load/', loader)
+});
+on('#ajax', 'click', '.m_select_article', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_article_load/', loader)
+});
+
 on('#ajax', 'click', '.delete_thumb', function(e) {
   e.preventDefault();
   this.nextElementSibling.remove();
