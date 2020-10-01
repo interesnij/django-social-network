@@ -322,7 +322,7 @@ on('#ajax', 'click', '.photo_load_several', function() {
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block"))
   } else if (document.body.querySelector(".message_attach_block")){
-    photo_comment_attach(_this, document.body.querySelector(".message_attach_block"))
+    photo_message_attach(_this, document.body.querySelector(".message_attach_block"))
   }
   this.classList.add("active_svg");
 });
@@ -333,7 +333,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block"))
   } else if (document.body.querySelector(".message_attach_block")){
-    photo_comment_attach(_this, document.body.querySelector(".message_attach_block"))
+    photo_message_attach(_this, document.body.querySelector(".message_attach_block"))
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
