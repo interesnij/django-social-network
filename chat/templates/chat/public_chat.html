@@ -22,10 +22,10 @@
     <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 530px;">
         <ul class="chatlist app">
           {% if object_list %}
-          <input type="hidden" id="scrolled">
           {% for object in object_list %}
             {% include 'message/message.html' %}
           {% endfor %}
+          <input type="hidden" id="scrolled">
           {% else %}
           <div class="message_empty mb-3">
             <div class="card-body"></div>
