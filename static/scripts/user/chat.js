@@ -101,11 +101,10 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
-				scrollToBottom (".chatlist");
+				window.scrollTo(0,1000);
         window.history.pushState(null, "vfgffgfgf", url);
 				page = 2;
 				loaded = false;
-				create_pagination(rtr);
       }
     }
     ajax_link.send();
