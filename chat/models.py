@@ -91,7 +91,7 @@ class Chat(models.Model):
 
     def get_chat_member(self, user_id):
         members = self.chat_relation.exclude(user_id=user_id)
-        return members[0]
+        return members[0].user
     def get_chat_user(self, user_id):
         members = self.chat_relation.filter(user_id=user_id)
         return members[0].user
@@ -116,7 +116,7 @@ class Chat(models.Model):
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         elif count == 2:
-            member = self.get_chat_user(user_id)
+            member = self.get_chat_member(user_id)
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             elif member.get_avatar():
