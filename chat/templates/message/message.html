@@ -16,7 +16,9 @@
         </div>
       {% endif %}
 
-      {% include object.get_attach_items %}
+      <span>
+        {% include object.get_attach_items %}
+      </span>
 
       {% if object.repost %}
         <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
