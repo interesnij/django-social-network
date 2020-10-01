@@ -25,7 +25,7 @@
           {% for object in object_list %}
             {% include 'message/message.html' %}
           {% endfor %}
-          <input type="hidden" id="scrolled">
+          <input display="none" id="scrolled">
           {% else %}
           <div class="message_empty mb-3">
             <div class="card-body"></div>
