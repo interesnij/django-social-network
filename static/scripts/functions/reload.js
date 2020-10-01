@@ -164,7 +164,7 @@ function scrollToBottom (id) {
 }
 
 function minus_one_chat(){
-	document.body.querySelector(".new_unread_chats") ? (count = document.body.querySelector(".new_unread_chats").innerHTML, count*1, count -= 1 ) : null
+	document.body.querySelector(".new_unread_chats") ? (unread_chats = document.body.querySelector(".new_unread_chats"), count = unread_chats.innerHTML, count*1, count -= 1,  unread_chats.innerHTML = count) : null
 }
 
 
