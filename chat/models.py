@@ -167,7 +167,7 @@ class Chat(models.Model):
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
+            return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
 
     def get_avatars(self):
         urls = []
