@@ -88,8 +88,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.chat_ajax', function() {
-	// перезагрузка основного блока на страницу с указанным url
+on('#ajax', 'click', '.chat_ajax', function(e) {
+  e.preventDefault();
 	var url = this.getAttribute('href');
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', url, true );
@@ -101,7 +101,7 @@ on('#ajax', 'click', '.chat_ajax', function() {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
-				scrollToBottom (".chatlist"); 
+				scrollToBottom (".chatlist");
         title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
