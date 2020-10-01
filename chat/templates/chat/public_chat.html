@@ -21,29 +21,21 @@
     </div>
     <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 548px;">
         <ul class="chatlist app">
-          <span class="list-divider">20 сентября 2020</span>
+          {% if object_list %}
           {% for object in object_list %}
             {% include 'message/message.html' %}
           {% endfor %}
+          {% else %}
+          <div class="message_empty mb-3">
+            <div class="card-body"></div>
+            <h6 style="margin: 20px;text-align: center;">
+               Пока сообщений нет.
+            </h6>
+          </div>
+          {% endif %}
     </div>
     <div class="card-footer border-top">
-      <form>
-          {% csrf_token %}
-          <div class="row attach_block"></div>
-          <div class="row no-gutters" style="margin-top: 20px;">
-            {% include 'message/form_dropdown.html' %}
-              <div class="col">
-                  <div class="input-group input-group-sm">
-                    <input type="text" name="text" class="form-control text-comment form-control-rounded">
-                  </div>
-              </div>
-              <div class="col-auto">
-                  <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_chat_send" type="button">
-                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                  </button>
-              </div>
-          </div>
-      </form>
+      {% include 'chat/form.html' %}
     </div>
 </div>
 {% endblock %}

@@ -68,6 +68,7 @@ class SendMessage(View):
 			request.POST.get('doc') or request.POST.get('good_list'):
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 			get_message_attach(request, message)
+			return render(request, 'message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
 

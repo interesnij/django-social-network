@@ -61,3 +61,30 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       }
       ajax_link.send(form_data);
 });
+
+on('#ajax', 'click', '#message_post_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form_post);
+  message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/chat/message_progs/send_message/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector('.text').value = "";
+    clear_message_attach_block();
+
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(new_post),
+                                       toast_info("Запись опубликована"),
+                                       lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
+                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+  }};
+
+  link_.send(form_data);
+});
