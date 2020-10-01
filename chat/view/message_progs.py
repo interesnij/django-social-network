@@ -66,7 +66,7 @@ class SendMessage(View):
 			request.POST.get('playlist') or request.POST.get('video_list') or \
 			request.POST.get('photo_list') or request.POST.get('doc_list') or \
 			request.POST.get('doc') or request.POST.get('good_list'):
-			message = self.form_post.save(commit=False)
+			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 			get_message_attach(request, message)
 			return render(request, 'message/message.html', {'object': message})
