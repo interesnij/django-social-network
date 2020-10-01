@@ -170,7 +170,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = "Групповой чат"
-            if first_message.creator == self.get_chat_member(user_id):
+            if first_message.creator == self.get_chat_user(user_id):
                 creator_figure = '<div class="small"' + figure + '</div>'
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
