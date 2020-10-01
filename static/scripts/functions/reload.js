@@ -162,13 +162,7 @@ function gotoBottom(){
 	document.querySelector('.chatview').scrollTop = 9999999;
 }
 function scrollToBottom (id) {
-   var div = document.querySelector(id);
-   div.scrollTop = div.scrollHeight - div.clientHeight;
-	 	console.log(div);
-		console.log(div.scrollTop);
-		console.log(div.scrollHeight);
-		console.log(div.clientHeight);
-		div.scrollTop = div.lastChild.offsetTop
+	document.querySelector(id).scrollIntoView(false);
 }
 
 function if_list(block){
