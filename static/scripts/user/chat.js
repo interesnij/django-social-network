@@ -81,7 +81,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     new_post.querySelector(".media") ? (message_load.append(new_post),
-                                       message_load.querySelector(".message_empty") ? message_load.querySelector(".post_empty").style.display = "none" : null)
+                                       message_load.querySelector(".message_empty") ? message_load.querySelector(".message_load").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");
   }};
 
