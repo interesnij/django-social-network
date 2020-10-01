@@ -152,7 +152,7 @@ class Chat(models.Model):
             else:
                 chat_name = member.get_full_name()
             if member.get_online():
-                status = ' <span class="status bg-success"></span>'
+                status = ' <a class="status bg-success"></a>'
             else:
                 status = ''
             if first_message.creator.user_id == user_id:
@@ -171,7 +171,7 @@ class Chat(models.Model):
             else:
                 chat_name = "Групповой чат"
             if first_message.creator.user_id == user_id:
-                creator_figure = '<span class="underline">Вы:</span> '
+                creator_figure = '<a class="underline">Вы:</a> '
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + creator_figure + first_message.text + '</p></div>'
