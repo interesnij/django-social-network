@@ -214,7 +214,7 @@ function ajax_get_reload(url) {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-
+				window.scrollTo(0,0);
         title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
