@@ -191,7 +191,7 @@ function if_list(block){
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
-    block.scrollTo(0, 1000);
+    block.querySelector('.chatlist').scrollTo(0, 1000);
   };
 }
 if_list(document.getElementById('ajax'));
