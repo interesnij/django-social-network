@@ -159,8 +159,7 @@ function create_pagination(block){
 	}
 }
 function gotoBottom(block){
-   var element = block;
-   element.scrollTop = element.scrollHeight - element.clientHeight;
+	block.scrollTop = block.scrollHeight;
 }
 
 function if_list(block){
@@ -191,8 +190,8 @@ function if_list(block){
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
-		objDiv = block.querySelector(".chatlist");
-		objDiv.scrollTop = objDiv.scrollHeight;
+		gotoBottom(block.querySelector('.chatlist'));
+		console.log("bottom!!!")
   };
 }
 if_list(document.getElementById('ajax'));
