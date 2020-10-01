@@ -347,7 +347,10 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        return self.text[:60]
+        if self.message_photo.filter(is_deleted=False).exists():
+            return "Фотография"
+        else:
+            return self.text[:60]
 
     def is_repost(self):
         return try_except(self.repost)
