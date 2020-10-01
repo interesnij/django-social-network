@@ -75,7 +75,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.text').value = "";
-    clear_message_attach_block(); 
+    clear_message_attach_block();
 
     elem = link_.responseText;
     new_post = document.createElement("span");
@@ -87,3 +87,28 @@ on('#ajax', 'click', '#message_post_btn', function() {
 
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '.chat_ajax', function() {
+	// перезагрузка основного блока на страницу с указанным url
+	var url = this.getAttribute('href');
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url, true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.querySelector('.chat_load_container');
+        rtr.innerHTML = ajax.innerHTML;
+				scrollToBottom (".chatlist"); 
+        title = elem_.querySelector('title').innerHTML;
+        window.history.pushState(null, "vfgffgfgf", url);
+        document.title = title;
+				page = 2;
+				loaded = false;
+				create_pagination(rtr);
+      }
+    }
+    ajax_link.send();
+})

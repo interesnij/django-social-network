@@ -209,9 +209,7 @@ function if_list(block){
     album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
-  } else if(block.querySelector('.chatlist')){
-		scrollToBottom (".chatlist")
-	}
+  }
 }
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));

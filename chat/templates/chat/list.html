@@ -5,7 +5,7 @@
 
 <div class="container main-container">
 <div class="row">
-    <div class="col-md-8 mt-3">
+    <div class="col-md-8 mt-3 chat_load_container">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск сообщений">
             <div class="input-group-append">
@@ -23,7 +23,7 @@
                     {% include 'message/empty_message.html' %}
                   {% else %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
-                    <a class="ajax" href="{% url 'chat_detali' pk=object.pk %}">
+                    <a class="chat_ajax" href="{% url 'chat_detali' pk=object.pk %}">
                       {{ object|get_preview_message:request.user.pk|safe }}
                     </a>
                   </li>

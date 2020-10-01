@@ -1,8 +1,6 @@
-{% extends "base.html" %}
-{% block title %}Открытый чат{% endblock %}
-{% load messager %}
-{% block content %}
 
+{% load messager %}
+ <span id="reload_block">
 <div class="px-0 card no-shadow pk_saver" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
@@ -40,4 +38,4 @@
       {% include 'chat/form.html' %}
     </div>
 </div>
-{% endblock %}
+</span>
