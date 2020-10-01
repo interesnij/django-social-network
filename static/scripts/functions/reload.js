@@ -158,9 +158,7 @@ function create_pagination(block){
 		else if(block.querySelector('#penalty_users_container')){scrolled(window.location.href, '#penalty_users_container', target=0)}
 	}
 }
-function gotoBottom(){
-	document.querySelector('.chatview').scrollTop = 9999999;
-}
+
 function scrollToBottom (id) {
 	document.querySelector(id).scrollIntoView(false);
 }
@@ -192,9 +190,6 @@ function if_list(block){
     album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
-  }else if(block.querySelector('.chatlist')){
-		scrollToBottom (".chatlist");
-		block.querySelector("#scrolled").focus();
   };
 }
 if_list(document.getElementById('ajax'));
@@ -217,7 +212,11 @@ function ajax_get_reload(url) {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-        window.scrollTo(0,0);
+				if(rtr.querySelector('.chatlist')){
+					scrollToBottom (".chatlist")
+			  } else {
+        window.scrollTo(0,0)
+			}
         title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", url);
         document.title = title;
