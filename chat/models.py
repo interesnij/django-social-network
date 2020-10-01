@@ -107,7 +107,7 @@ class Chat(models.Model):
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             ' <span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + first_message.get_preview_text() + '</p></div>'
+            '</small></h5><p class="mb-0" style="white-space: nowrap;">' + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         elif count == 2:
             member = self.get_chat_member(user_id)
@@ -129,7 +129,7 @@ class Chat(models.Model):
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + creator_figure + first_message.get_preview_text() + '</p></div>'
+            '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
         elif count > 2:
             if self.image:
@@ -144,7 +144,7 @@ class Chat(models.Model):
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + creator_figure + first_message.get_preview_text() + '</p></div>'
+            '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
 
     def get_avatars(self):
@@ -347,7 +347,7 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        return '<span style="white-space: nowrap;"' + self.text[:60] + '</span>'
+        return self.text[:60]
 
     def is_repost(self):
         return try_except(self.repost)
