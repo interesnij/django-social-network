@@ -158,6 +158,10 @@ function create_pagination(block){
 		else if(block.querySelector('#penalty_users_container')){scrolled(window.location.href, '#penalty_users_container', target=0)}
 	}
 }
+function gotoBottom(block){
+   var element = block;
+   element.scrollTop = element.scrollHeight - element.clientHeight;
+}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
@@ -187,7 +191,7 @@ function if_list(block){
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
-    block.scrollTop = Math.ceil(block.scrollHeight - block.clientHeight);
+    gotoBottom(block)
   };
 }
 if_list(document.getElementById('ajax'));
