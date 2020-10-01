@@ -77,9 +77,6 @@ class Chat(models.Model):
     def get_unread_message(self, user_id):
         return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id)
 
-    def get_preview_text(self):
-        return self.text[:70] + "..."
-
     def get_last_message_created(self):
         if self.is_not_empty():
             return self.get_first_message().get_created()
@@ -348,6 +345,9 @@ class Message(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
+
+    def get_preview_text(self):
+        return self.text[:70] + "..."
 
     def is_repost(self):
         return try_except(self.repost)
