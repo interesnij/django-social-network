@@ -164,6 +164,10 @@ function gotoBottom(){
 function scrollToBottom (id) {
    var div = document.getElementById(id);
    div.scrollTop = div.scrollHeight - div.clientHeight;
+	 	console.log(div);
+		console.log(div.scrollTop);
+		console.log(div.scrollHeight);
+		console.log(div.clientHeight);
 }
 
 function if_list(block){
@@ -195,7 +199,6 @@ function if_list(block){
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
 		scrollToBottom ("chatcontent");
-		console.log("bottom!!!")
   };
 }
 if_list(document.getElementById('ajax'));
