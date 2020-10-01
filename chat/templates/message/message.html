@@ -10,7 +10,7 @@
       <h5 class="time-title mb-0">{{ object.get_creator.first_name }}
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
-
+      {{ object.get_creator }}
       {% if object.text %}
         <div class="">
           {{ object.text|linebreaks }}
