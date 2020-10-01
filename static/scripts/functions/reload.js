@@ -199,7 +199,7 @@ function if_list(block){
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
 		scrollToBottom (".chatlist");
-		document.getElementById(".text").focus();
+		block.querySelector(".text").focus();
   };
 }
 if_list(document.getElementById('ajax'));
