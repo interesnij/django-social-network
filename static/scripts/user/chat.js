@@ -66,7 +66,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/chat/message_progs/send_message/" + pk + "/", true );
