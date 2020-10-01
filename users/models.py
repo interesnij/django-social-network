@@ -1448,3 +1448,14 @@ class User(AbstractUser):
         return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True).exists()
     def is_member_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk).exists()
+
+    def get_unread_chats(self):
+        chats = self.get_all_chats()
+        count = 0
+        for chat in chats:
+            if chat.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=self.pk).exists():
+                count += 1
+        if count > 0:
+            return count
+        else:
+            return ''
