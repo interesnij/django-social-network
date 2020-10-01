@@ -123,7 +123,7 @@ class Chat(models.Model):
         if count == 1:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-            if self.creator.get_avatar():
+            elif self.creator.get_avatar():
                 figure = '<figure><img src="' + self.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
@@ -139,7 +139,7 @@ class Chat(models.Model):
             member = self.get_chat_member(user_id)
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-            if member.get_avatar():
+            elif member.get_avatar():
                 figure = '<figure><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
@@ -178,7 +178,7 @@ class Chat(models.Model):
             member = self.get_chat_member(user_id)
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-            if member.get_avatar():
+            elif member.get_avatar():
                 figure = '<figure><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
@@ -209,7 +209,7 @@ class Chat(models.Model):
         elif count == 1:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-            if self.creator.get_avatar():
+            elif self.creator.get_avatar():
                 figure = '<figure><img src="' + self.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
