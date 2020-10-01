@@ -155,7 +155,7 @@ class Chat(models.Model):
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
             else:
-                figure = '<figure><img src="/static/images/group_chat.png" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="/static/images/group_chat.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
                  chat_name = self.name
             else:
