@@ -225,6 +225,10 @@ function ajax_get_reload(url) {
 				page = 2;
 				loaded = false;
 				create_pagination(rtr);
+				if(rtr.querySelector('.chatlist')){
+					gotoBottom();
+					console.log("bottom!!!")
+			  };
       }
     }
     ajax_link.send();
