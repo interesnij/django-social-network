@@ -159,7 +159,7 @@ class Chat(models.Model):
         if count == 2:
             member = self.get_chat_user(user_id)
             if self.image:
-                figure = '<figure><a href="/users/' + str(member.pk) + '/" class="ajax"><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
+                figure = '<figure><a href="/users/' + str(self.get_chat_member(user_id).pk) + '/" class="ajax"><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
             elif member.get_avatar():
                 figure = '<figure><a href="/users/' + str(member.pk) + '/" class="ajax"><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
             else:
