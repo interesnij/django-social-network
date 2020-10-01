@@ -347,7 +347,7 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        return '<span style="white-space: nowrap;" + self.text[:60] + "/span>"
+        return '<span style="white-space: nowrap;"' + self.text[:60] + '</span>'
 
     def is_repost(self):
         return try_except(self.repost)
