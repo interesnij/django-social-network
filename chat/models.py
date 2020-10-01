@@ -288,8 +288,8 @@ class Message(models.Model):
             self.unread = False
             self.save()
 
-    def get_cretor(self):
-        return self.creator.user.user.pk
+    def get_creator(self):
+        return self.creator.user.user
 
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
