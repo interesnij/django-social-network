@@ -34,11 +34,11 @@ class ChatDetailView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if self.chat.is_private:
+		if self.chat.is_private():
 			self.template_name = get_settings_template("chat/private_chat.html", request)
-		elif self.chat.is_public:
+		elif self.chat.is_public():
 			self.template_name = get_settings_template("chat/public_chat.html", request)
-		elif self.chat.is_manager:
+		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/manager_chat.html", request)
 		self.pk = request.user.pk
 		unread_messages = self.chat.get_unread_message(self.pk)
