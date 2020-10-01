@@ -77,11 +77,8 @@ class Chat(models.Model):
     def get_unread_message(self, user_id):
         return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id)
 
-    def get_preview(self):
-        if self.is_not_empty():
-            return self.get_first_message().text
-        else:
-            return 'Нет сообщений'
+    def get_preview_text(self):
+        return self.text[:70] + "..."
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -113,7 +110,7 @@ class Chat(models.Model):
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             ' <span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
+            '</small></h5><p class="mb-0">' + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         elif count == 2:
             member = self.get_chat_member(user_id)
@@ -135,7 +132,7 @@ class Chat(models.Model):
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + creator_figure + first_message.text + '</p></div>'
+            '</small></h5><p class="mb-0">' + creator_figure + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
         elif count > 2:
             if self.image:
@@ -150,7 +147,7 @@ class Chat(models.Model):
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + creator_figure + first_message.text + '</p></div>'
+            '</small></h5><p class="mb-0">' + creator_figure + first_message.get_preview_text() + '</p></div>'
             return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
 
     def get_avatars(self):
@@ -208,34 +205,6 @@ class Chat(models.Model):
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
             '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
             return figure + media_body
-
-    def get_name(self, user_id):
-        if self.name:
-            return self.name
-        count = self.get_members_count()
-
-        if count > 2:
-            a = count % 10
-            b = count % 100
-            if (a == 1) and (b != 11):
-                return str(count) + " участник"
-            elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-                return str(count) + " участника"
-            else:
-                return str(count) + " участников"
-            return count
-        elif count == 2:
-            user = self.chat_relation.exclude(user_id=user_id)
-            return user[0].user.get_full_name()
-        elif count == 1:
-            return self.creator.get_full_name()
-
-    @classmethod
-    def create_chat(cls, creator, type):
-        chat = cls.objects.create(creator=creator, type=type)
-        ChatUsers.create_membership(user=creator, is_administrator=True, chat=chat)
-        chat.save()
-        return chat
 
     def is_not_empty(self):
         return self.chat_message.filter(chat=self,is_deleted=False).values("pk").exists()
@@ -321,6 +290,9 @@ class Message(models.Model):
         if self.unread:
             self.unread = False
             self.save()
+
+    def get_cretor(self):
+        return self.creator.user
 
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
