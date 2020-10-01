@@ -132,7 +132,7 @@ class Chat(models.Model):
             else:
                 chat_name = self.creator.get_full_name()
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<small class="float-right text-muted">' + first_message.get_created() + \
+            '<span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>'
         elif count == 2:
@@ -147,7 +147,11 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = member.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
+            if member.get_online():
+                status = '<span class="status bg-success"></span>'
+            else:
+                status = '<span class="status bg-success"></span>'
+            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
             '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
             return '<div class="media">' + figure + media_body + '</div>' + self.get_unread_count_message(user_id)
