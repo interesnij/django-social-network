@@ -102,9 +102,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
 				scrollToBottom (".chatlist");
-        title = elem_.querySelector('title').innerHTML;
         window.history.pushState(null, "vfgffgfgf", url);
-        document.title = title;
 				page = 2;
 				loaded = false;
 				create_pagination(rtr);
