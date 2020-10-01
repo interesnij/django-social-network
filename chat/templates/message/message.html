@@ -16,9 +16,7 @@
         </div>
       {% endif %}
 
-      <span class="message_attach_block"> 
-        {% include object.get_attach_items %}
-      </span>
+      {% include object.get_attach_items %}
 
       {% if object.repost %}
         <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
