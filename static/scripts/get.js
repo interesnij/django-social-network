@@ -32,6 +32,10 @@ on('body', 'click', '.menu_drop', function() {var block = this.nextElementSiblin
 
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
+  if this.querySelector(".unread_count"){
+    minus_one_chat();
+    console.log("minus_one_chat")
+  }
   var url = this.getAttribute('href');
   if (url != window.location.pathname){
     ajax_get_reload(url);

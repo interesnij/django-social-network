@@ -25,7 +25,7 @@
           </div>
           &nbsp;Сообщения
           {% if request.user.get_unread_chats %}
-            <span class="badge badge-success new_connect_bagde">{{ request.user.get_unread_chats }}</span>
+            <span class="badge badge-success new_unread_chats">{{ request.user.get_unread_chats }}</span>
           {% endif %}
         </a>
         <a class="ajax" href="{% url 'frends' pk=request.user.pk %}">

@@ -163,6 +163,11 @@ function scrollToBottom (id) {
 	document.querySelector(id).scrollIntoView(false);
 }
 
+function minus_one_chat(){
+	document.body.querySelector(".new_unread_chats") ? (count = document.body.querySelector(".new_unread_chats").innerHTML, count*1, count -= 1, )
+}
+
+
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
   if(block.querySelector('#lenta_load')){
