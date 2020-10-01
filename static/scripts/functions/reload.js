@@ -159,7 +159,7 @@ function create_pagination(block){
 	}
 }
 function gotoBottom(){
-	document.getElementById('ajax').scrollTop = 9999999;
+	document.querySelector('.chatlist').scrollTop = 9999999;
 }
 
 function if_list(block){
