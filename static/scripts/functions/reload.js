@@ -159,7 +159,7 @@ function create_pagination(block){
 	}
 }
 function gotoBottom(block){
-	block.scrollTop = 10000;
+	block.scrollTop = block.scrollHeight;
 }
 
 function if_list(block){
