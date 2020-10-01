@@ -155,7 +155,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            if first_message.creator == self.get_chat_member(user_id):
+            if first_message.creator.user_id == user_id:
                 creator_figure = '<div class="small"' + figure + '</div>'
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
