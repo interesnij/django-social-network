@@ -161,6 +161,10 @@ function create_pagination(block){
 function gotoBottom(){
 	document.querySelector('.chatview').scrollTop = 9999999;
 }
+function scrollToBottom (id) {
+   var div = document.getElementById(id);
+   div.scrollTop = div.scrollHeight - div.clientHeight;
+}
 
 function if_list(block){
   // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
@@ -190,9 +194,7 @@ function if_list(block){
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
-		//gotoBottom(block.querySelector('.chatview'));
-		gotoBottom();
-		//gotoBottom(block);
+		scrollToBottom ("chatcontent");
 		console.log("bottom!!!")
   };
 }
