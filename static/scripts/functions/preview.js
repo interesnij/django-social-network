@@ -254,14 +254,22 @@ function create_preview_article(div_class, img_src, uuid, title){
 on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".photo") ? null : block.querySelector(".photo_input").parentElement.remove();
-
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.doc_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".doc") ? null : block.querySelector(".doc_input").parentElement.remove();
 
@@ -270,16 +278,24 @@ on('#ajax', 'click', '.doc_preview_delete', function() {
 on('#ajax', 'click', '.video_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".video") ? null : block.querySelector(".video_input").parentElement.remove();
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.music_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".music") ? null : block.querySelector(".music_input").parentElement.remove();
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 
 on('#ajax', 'click', '.preview_item_delete', function() {
@@ -292,16 +308,24 @@ on('#ajax', 'click', '.preview_item_delete', function() {
 on('#ajax', 'click', '.good_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".good") ? null : block.querySelector(".good_input").parentElement.remove();
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.article_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  }
   parent.remove();
   block.querySelector(".article") ? null : block.querySelector(".article_input").parentElement.remove();
-  try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 
 function like_reload(like_block, dislike_block, _class){

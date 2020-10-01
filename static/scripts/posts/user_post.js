@@ -321,6 +321,8 @@ on('#ajax', 'click', '.photo_load_several', function() {
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block"))
+  } else if (document.body.querySelector(".message_attach_block")){
+    photo_comment_attach(_this, document.body.querySelector(".message_attach_block"))
   }
   this.classList.add("active_svg");
 });
@@ -330,25 +332,11 @@ on('#ajax', 'click', '.photo_load_one', function() {
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     photo_post_attach(_this, document.body.querySelector(".attach_block"))
+  } else if (document.body.querySelector(".message_attach_block")){
+    photo_comment_attach(_this, document.body.querySelector(".message_attach_block"))
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
-});
-
-on('#ajax', 'click', '.commmunty_load_one', function() {
-  _this = this;
-  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  commmunity_form_selected(_this, block.querySelector("#selected_message_target_items"))
-});
-on('#ajax', 'click', '.chat_item_load_one', function() {
-  _this = this;
-  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  chat_item_form_selected(_this, block.querySelector("#selected_message_target_items"))
-});
-on('#ajax', 'click', '.chat_friends_load_one', function() {
-  _this = this;
-  block = this.parentElement.parentElement.nextElementSibling;
-  chat_item_form_selected(_this, block) 
 });
 
 on('#ajax', 'click', '.u_create_video_attach_btn', function() {
@@ -505,4 +493,20 @@ on('#ajax', 'click', '.article_load_several', function() {
     article_post_attach(_this, document.body.querySelector(".attach_block"))
   }
   this.classList.add("active_svg");
+});
+
+on('#ajax', 'click', '.commmunty_load_one', function() {
+  _this = this;
+  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  commmunity_form_selected(_this, block.querySelector("#selected_message_target_items"))
+});
+on('#ajax', 'click', '.chat_item_load_one', function() {
+  _this = this;
+  block = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  chat_item_form_selected(_this, block.querySelector("#selected_message_target_items"))
+});
+on('#ajax', 'click', '.chat_friends_load_one', function() {
+  _this = this;
+  block = this.parentElement.parentElement.nextElementSibling;
+  chat_item_form_selected(_this, block)
 });
