@@ -270,7 +270,11 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".u_photo_detail");
 
-    block = document.body.querySelector(".attach_block");
+    if (document.body.querySelector(".attach_block")){
+      block = document.body.querySelector(".attach_block");
+    } else if (document.body.querySelector(".message_attach_block")){
+      block = document.body.querySelector(".message_attach_block");
+    }
     block_divs = block.querySelectorAll("div");
     block_divs_length = photo_list.length;
 
