@@ -187,7 +187,7 @@ function if_list(block){
     list_load(block.querySelector("#c_album_photo_load"), link);
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
-    window.scrollTo(0, document.body.scrollHeight);
+    block.scrollTop = Math.ceil(el.scrollHeight - el.clientHeight);
   };
 }
 if_list(document.getElementById('ajax'));
