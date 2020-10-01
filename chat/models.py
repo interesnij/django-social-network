@@ -161,7 +161,7 @@ class Chat(models.Model):
             if self.image:
                 figure = '<figure><a href="/users/"' + str(member.pk) + '" class="ajax"><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
             elif member.get_avatar():
-                figure = '<figure><a href="/users/"' + tr(member.pk) + '" class="ajax"><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
+                figure = '<figure><a href="/users/"' + str(member.pk) + '" class="ajax"><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
