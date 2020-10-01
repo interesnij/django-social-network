@@ -158,8 +158,8 @@ function create_pagination(block){
 		else if(block.querySelector('#penalty_users_container')){scrolled(window.location.href, '#penalty_users_container', target=0)}
 	}
 }
-function gotoBottom(block){
-	block.scrollTop = block.scrollHeight;
+function gotoBottom(){
+	document.getElementById('ajax').scrollTop = 9999999;
 }
 
 function if_list(block){
@@ -191,7 +191,7 @@ function if_list(block){
 		scrolled(link, '#c_album_photo_load', target=0)
   }else if(block.querySelector('.chatlist')){
 		//gotoBottom(block.querySelector('.chatview'));
-		gotoBottom(block.querySelector('.chatlist'));
+		gotoBottom();
 		//gotoBottom(block);
 		console.log("bottom!!!")
   };
