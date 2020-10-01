@@ -347,7 +347,7 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        return self.text[:70] + "..."
+        return self.text[:40] + "..."
 
     def is_repost(self):
         return try_except(self.repost)
