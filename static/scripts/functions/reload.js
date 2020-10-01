@@ -168,6 +168,7 @@ function scrollToBottom (id) {
 		console.log(div.scrollTop);
 		console.log(div.scrollHeight);
 		console.log(div.clientHeight);
+		div.scrollTop = div.lastChild.offsetTop
 }
 
 function if_list(block){
