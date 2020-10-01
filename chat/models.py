@@ -153,8 +153,8 @@ class Chat(models.Model):
                 status = ''
             media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + \
             '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0">' + first_message.text + '</p></div>'
-            return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
+            '</small></h5><p class="mb-0">' + first_message.text + '</p>' + self.get_unread_count_message(user_id) + '</div>'
+            return '<div class="media">' + figure + media_body + '</div>'
         elif count > 2:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
