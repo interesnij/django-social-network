@@ -17,12 +17,6 @@
     transform: scale(1.05)
 }
 
-.progressive img.reveal {
-    position: absolute;
-    left: 0;
-    top: 0;
-    animation: progressiveReveal 1s linear
-}
 
 @keyframes progressiveReveal {
     0% {
