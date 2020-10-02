@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from pilkit.processors import ResizeToFill, ResizeToFit
+from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models import Q
 from django.conf import settings
@@ -87,7 +87,7 @@ class Album(models.Model):
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     album = models.ManyToManyField(Album, related_name="photo_album", blank=True)
-    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[processors.Transpose(), ResizeToFit(width=1024, upscale=False)])
+    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=1024, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
