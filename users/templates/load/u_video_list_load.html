@@ -27,11 +27,11 @@
 <div class="col-md-6 mb-3 load_pag {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}">
   <div>
     {% if object.image %}
-      <img class="lazyload image_fit_200 video_load_one"
+      <img class="image_fit_200 video_load_one"
            style="cursor:pointer"
            video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
            data-pk="{{ object.pk }}"
-           data-src="{{ object.image.url }}" alt="img">
+           src="{{ object.image.url }}" alt="img">
     {% else %}
       <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}

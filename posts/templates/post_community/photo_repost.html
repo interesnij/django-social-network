@@ -1,3 +1,32 @@
+{% with photo=object.get_photo_repost %}
+
+{% if object.parent.community %}
+  {% include 'c_posts/card_header.html' %}
+
+  {% if object.text %}
+    <div class="fullscreen pointer">
+      <p class="">{{ object.text|linebreaks }}</p>
+    </div>
+  {% endif %}
+  <div class="photo">
+    <div class="progressive replace c_WA_photo pointer" data-href="{{ photo.file.url }}" photo-pk="{{ photo.pk }}" data-pk="{{ object.parent.community.pk }}">
+      <img class="preview image_fit" src="{{ photo.preview.url }}" alt="img">
+    </div>
+  </div>
+{% else %}
+
+  {% include 'u_posts/card_header.html' %}
+
+{% if object.text %}
+  <div class="fullscreen pointer">
+    <p class="">{{ object.text|linebreaks }}</p>
+  </div>
+{% endif %}
 <div class="photo">
-    <img photo-uuid="{{ object.get_photo_repost.uuid }}" data-pk="{{ object.parent.community.pk }}" class="c_WA_photo image_fit lazyload pointer" data-src="{{ object.get_photo_repost.file.url }}" alt="img">
+  <div class="progressive replace u_WA_photo pointer" data-href="{{ photo.file.url }}" photo-pk="{{ photo.pk }}" data-pk="{{ object.parent.creator.pk }}">
+    <img class="preview image_fit" src="{{ photo.preview.url }}" alt="img">
+  </div>
 </div>
+{% endif %}
+
+{% endwith %}

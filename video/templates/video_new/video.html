@@ -2,7 +2,7 @@
   <div class="col-md-6 u_video_list_detail pag pointer {% if forloop.last %}last{% endif %}" video-counter="0">
     <span class="span1 {% for list in object.get_albums_for_video %}{{ list.uuid }} {% endfor %}"></span>
     {% if object.image %}
-      <img class="image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+      <img class="image_fit_200" src="{{ object.image.url }}" alt="">
     {% else %}
       <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
     {% endif %}

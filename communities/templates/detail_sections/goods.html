@@ -18,9 +18,9 @@
                     <div class="col">
                             <div class="text-center">
                               {% if object.image %}
-                                <img class="image_fit_200 lazyload" data-src="{{ object.image.url }}" alt="">
+                                <img class="image_fit_200" src="{{ object.image.url }}" alt="">
                               {% else %}
-                                <img class="lazyload image_fit_200" data-src="/static/images/no_img/album.jpg" />
+                                <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
                               {% endif %}
                             </div>
                     </div>

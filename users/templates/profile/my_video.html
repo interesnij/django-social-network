@@ -15,7 +15,7 @@
         <div class="row no-gutters" data-uuid="{{ video_album.uuid }}">
           {% for object in video_album.get_2_videos %}
           <div style="position:relative">
-            <img class="lazyload image_fit_200" data-src="{{ object.image.url }}" alt="">
+            <img class="image_fit_200" src="{{ object.image.url }}" alt="">
             <div class="video_icon_play_v2 u_video_list_detail" video-pk="{{ object.pk }}" video-counter="{{ forloop.counter }}"></div>
             <p>{{ object.title }}</p>
           </div>

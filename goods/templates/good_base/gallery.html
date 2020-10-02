@@ -26,9 +26,9 @@
     <div class="col-md-9">
       <div id="big_img">
         {% if object.image %}
-        <img data-src="{{ object.image.url }}" class="big_img lazyload" alt="">
+        <img src="{{ object.image.url }}" class="big_img" alt="">
         {% else %}
-        <img data-src="/static/images/no_album_photo.png" class="big_img lazyload" alt="">
+        <img src="/static/images/no_album_photo.png" class="big_img" alt="">
         {% endif %}
       </div>
     </div>
