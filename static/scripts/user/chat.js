@@ -101,7 +101,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
-        scrolled = document.querySelector(".chatlist");
+        scrolled = ajax.querySelector(".chatlist");
 				scrolled.scrollIntoView(false);
         window.history.pushState(null, "vfgffgfgf", url);
 				page = 2;
