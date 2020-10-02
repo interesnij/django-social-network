@@ -4,7 +4,7 @@
       <figure>
         <a class="ajax" href="{% url 'user_community' pk=album.community.pk uuid=album.uuid %}">
         {% if album.get_cover_photo %}
-          <img class="lazyload" style="width:60px;height:70px;object-fit: cover;" data-src="{{ album.get_cover_photo.file.url }}" />
+          <img style="width:60px;height:70px;object-fit: cover;" src="{{ album.get_cover_photo.file.url }}" />
         {% else %}
         <svg fill="currentColor" class="svg_default border" style="width:60x;height:70px;" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none"/><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/>
@@ -34,10 +34,10 @@
   </div>
 <div class="row border-left" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-    <div class="u_AL_photo col-md-6 col-lg-4" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}">
+    <div class="c_AL_photo col-md-6 col-lg-4 progressive replace" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}" data-href="{{ photo.file.url }}">
       <div class="card rounded-0 border-0 mb-3 pointer">
         {% if photo.file %}
-          <img class="lazyload image_fit_small" data-src="{{ photo.file.url }}" alt="img">
+          <img class="preview image_fit_small" width="20" height="15" loading="lazy" src="{% if photo.preview %}{{ photo.preview.url }}{% else %}/static/images/tiny.png{% endif %}" alt="img">
         {% else %}
           <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
