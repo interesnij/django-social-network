@@ -2,39 +2,29 @@
 
 <div class="attach_container" data-pk="{{ object.pk }}">
   {% for photo in object.get_attach_photos %}
-  <div class="photo">
-      <img photo-uuid="{{ photo.uuid }}" data-pk="{{ object.community.pk }}" class="c_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ photo.file.url }}" alt="img">
-  </div>
+    {% include 'generic/items/c_photo.html' %}
   {% endfor %}
+
   {% for album in object.get_attach_photo_list %}
     {% include 'generic/items/c_album.html' %}
   {% endfor %}
+
   {% for video in object.get_attach_videos %}
     {% include 'generic/items/c_video.html' %}
   {% endfor %}
+
   {% for good in object.get_attach_goods %}
     {% include 'generic/items/c_good.html' %}
   {% endfor %}
-  {% for item in object.get_attach_articles %}
-  <div class="article" data-uuid="{{ item.uuid }}">
-    <span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;">
-      <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-      {{ item.title}}
-    </span>
-    <div class="text-center c_article_detail pointer">
-      <div class="align-items-center">
-          {% if item.g_image %}
-            <img class="lazyload image_fit" data-src="{{ item.g_image.url }}" alt="img">
-          {% else %}
-            <img class="lazyload image_fit" data-src="/static/images/no-image.jpg" />
-          {% endif %}
-      </div>
-   </div>
-  </div>
+
+  {% for article in object.get_attach_articles %}
+    {% include 'generic/items/c_article.html' %}
   {% endfor %}
+
   {% for music in object.get_attach_tracks %}
     {% include 'generic/items/c_music.html' %}
   {% endfor %}
+  
   {% for doc in object.get_attach_docs %}
     {% include 'generic/items/c_doc.html' %}
   {% endfor %}

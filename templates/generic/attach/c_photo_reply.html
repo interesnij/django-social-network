@@ -1,20 +1,18 @@
 <!-- прикрепленные элементы к ответам на комментарии к фотографиям сообществ -->
 
 <div class="row" data-pk="{{ reply.pk }}">
-  {% for object in reply.gallery_comment_photo.all %}
-  <div class="col-md-6">
-      <img photo-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}" class="c_WA_photo image_fit lazyload" style="cursor:pointer" data-src="{{ object.file.url }}" alt="img">
-  </div>
+  {% for photo in reply.gallery_comment_photo.all %}
+    {% include 'generic/items/c_photo.html' %}
   {% endfor %}
-  {% for object in reply.gallery_comment_video.all %}
-  <div class="col-md-6">
-      <img class="image_fit lazyload" data-src="{{ object.image.url }}" alt="img">
-      <div class="video_icon_play_v2 c_play_comment_video" data-pk="{{ object.creator.pk }}" comment-pk="{{ reply.pk }}" video-counter="{{ forloop.counter }}"></div>
-  </div>
+
+  {% for video in reply.gallery_comment_video.all %}
+    {% include 'generic/items/c_video.html' %}
   {% endfor %}
+
   {% for music in reply.gallery_comment_music.all %}
     {% include 'generic/items/c_music.html' %}
   {% endfor %}
+  
   {% for doc in reply.get_attach_docs %}
     {% include 'generic/items/c_doc.html' %}
   {% endfor %}
