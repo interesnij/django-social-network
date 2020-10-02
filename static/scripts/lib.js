@@ -50,7 +50,7 @@ function loadScripts( src ) {
     head.appendChild( script );
 }
 
-loadScripts('/static/scripts/lib/lazysizes.min.js')
+loadScripts('/static/scripts/lib/progressive-image.js')
 loadScripts('/static/scripts/lib/Chart.min.js')
 
 loadScripts('/static/scripts/lib/video_player.js')
