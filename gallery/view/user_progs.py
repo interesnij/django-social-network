@@ -28,7 +28,7 @@ class UserAddAvatar(View):
                 _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
             except:
                 _album = Album.objects.create(creator=user, type=Album.AVATAR, community=None, title="Фото со страницы", description="Фото со страницы")
-            photo = Photo.objects.create(file=photo_input, creator=user)
+            photo = Photo.objects.create(file=photo_input, preview=photo_input,creator=user)
             photo.album.add(_album)
 
             request.user.create_s_avatar(photo_input)
@@ -48,7 +48,7 @@ class PhotoUserCreate(View):
 
             _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=self.user)
+                photo = Photo.objects.create(file=p, preview=photo_input, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
 
@@ -67,7 +67,7 @@ class PhotoAlbumUserCreate(View):
         uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=user)
+                photo = Photo.objects.create(file=p, preview=photo_input, creator=user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'u_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'user': request.user})
@@ -87,7 +87,7 @@ class PhotoAttachUserCreate(View):
             except:
                 _album = Album.objects.create(creator=request.user, community=None, type=Album.WALL, title="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=self.user)
+                photo = Photo.objects.create(file=p, preview=photo_input, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'user_gallery/my_list.html',{'object_list': photos, 'user': request.user})
