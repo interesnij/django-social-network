@@ -26,7 +26,7 @@ class PhotoCommunityCreate(View):
             check_can_get_lists(request.user, community)
             _album = Album.objects.get(community=community, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=request.user)
+                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'c_photo/new_photos.html',{'object_list': photos, 'community': community})
@@ -45,7 +45,7 @@ class PhotoAlbumCommunityCreate(View):
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=request.user)
+                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
@@ -63,7 +63,7 @@ class PhotoAttachCommunityCreate(View):
             check_can_get_lists(request.user, community)
             _album = Album.objects.get(creator=request.user, type=Album.WALL, community=community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, creator=request.user)
+                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
             return render(request, 'c_gallery/list.html',{'object_list': photos, 'community': community})
@@ -83,7 +83,7 @@ class CommunityAddAvatar(View):
                 _album = Album.objects.get(community=community, type=Album.AVATAR)
             except:
                 _album = Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
-            photo = Photo.objects.create(file=photo_input, creator=request.user)
+            photo = Photo.objects.create(file=photo_input, preview=photo_input, creator=request.user)
             photo.album.add(_album)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
