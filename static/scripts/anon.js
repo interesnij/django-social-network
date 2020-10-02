@@ -644,7 +644,7 @@ on('#ajax', 'click', '.show_replies', function() {
 
 loadScripts('/static/scripts/lib/video_player.js')
 loadScripts('/static/scripts/lib/video_init.js')
-loadScripts('/static/scripts/lib/lazysizes.min.js')
+loadScripts('/static/scripts/lib/progressive-image.js')
 loadScripts('/static/scripts/posts/community_get.js')
 loadScripts('/static/scripts/posts/user_get.js')
 loadScripts('/static/scripts/gallery/community_get.js')
