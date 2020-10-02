@@ -18,8 +18,8 @@
 }
 .progressive img.reveal {
     position: absolute;
-    left: 7px;
-    top: 7px;
+    left: 0;
+    top: 0;
     animation: progressiveReveal 1s linear
 }
 
