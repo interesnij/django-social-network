@@ -35,14 +35,12 @@
   </div>
 <div class="row border-left" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-  <div class="u_AL_photo col-md-6 col-lg-4 progressive replace" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}" data-href="{{ photo.file.url }}">
-    <div class="card rounded-0 border-0 mb-3 pointer">
+  <div class="u_AL_photo col-md-6 col-lg-4 progressive replace pointer" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}" data-href="{{ photo.file.url }}">
       {% if photo.file %}
         <img class="preview image_fit_small" width="20" height="15" loading="lazy" src="{% if photo.preview %}{{ photo.preview.url }}{% else %}/static/images/tiny.png{% endif %}" alt="img">
       {% else %}
         <svg class="svg_default image_fit_small" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
       {% endif %}
-    </div>
   </div>
   {% endfor %}
 </div>
