@@ -102,7 +102,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
         scrolled = elem_.querySelector("#scrolled");
-				scrolled.scrollIntoView(false); 
+				scrolled.scrollIntoView({block: "center", behavior: "smooth"}); 
         window.history.pushState(null, "vfgffgfgf", url);
 				page = 2;
 				loaded = false;
