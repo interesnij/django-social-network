@@ -78,7 +78,7 @@ class CommunityDetail(TemplateView):
             elif self.community.is_closed():
                 self.template_name = "c_detail/close_community.html"
             elif self.community.is_private():
-                self.template_name = "c_detail/private_community.html"
+                self.template_name = "generic/c_template/private_community.html"
             if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
             else:
