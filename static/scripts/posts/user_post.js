@@ -378,9 +378,10 @@ on('#ajax', 'click', '.video_load_one', function() {
   }
 });
 on('#ajax', 'click', '.video_load_several', function() {
-  _this = this;
-  pk = _this.parentElement.getAttribute('video-pk');
-
+  previous = this.previousElementSibling
+  _this = previous.querySelector("img");
+  pk = _this.getAttribute('video-pk');
+  
   if (document.body.querySelector(".current_file_dropdown")){
     check_video_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
