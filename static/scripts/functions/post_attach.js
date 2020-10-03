@@ -42,21 +42,21 @@ function remove_file_attach(){
   else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
 }
 
-function photo_post_attach(_this, block, pk) {
+function photo_post_attach(_this, block, photo_pk, user_pk) {
   is_full_attach();
   parent = _this.parentElement;
   parent.classList.add("attach_toggle");
 
-    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", parent.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo5")){div = create_preview_photo("select_photo5", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo6")){div = create_preview_photo("select_photo6", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo7")){div = create_preview_photo("select_photo7", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", parent.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", parent.getAttribute('data-href'), pk)}
+    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo5")){div = create_preview_photo("select_photo5", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo6")){div = create_preview_photo("select_photo6", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo7")){div = create_preview_photo("select_photo7", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", parent.getAttribute('data-href'), photo_pk, user_pk)}
+    else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", parent.getAttribute('data-href'), photo_pk, user_pk)}
     block.append(div);
   block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
 

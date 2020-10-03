@@ -30,7 +30,7 @@
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="img_load_container" data-link="/users/load/u_album_img_load/{{ album.uuid }}/">
 {% for object in object_list %}
   <div class="col-md-4 mb-3 load_pag {% if forloop.last %}load_last{% endif %}">
-    <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}">
+    <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
         <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
     </div>
       <span class="item_attach_circle photo_load_several"

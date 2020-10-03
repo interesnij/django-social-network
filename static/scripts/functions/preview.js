@@ -101,15 +101,16 @@ function create_preview_chat_item(_this){
   return $div
 }
 
-function create_preview_photo(div_class, img_src, pk){
+function create_preview_photo(div_class, img_src, photo_pk, user_pk){
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "photo", div_class);
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("u_photo_detail", "image_fit", "lazyload");
+  $img.classList.add("u_WA_photo", "image_fit", "lazyload");
   $img.setAttribute("src", img_src);
-  $img.setAttribute('photo-pk', pk);
+  $img.setAttribute('photo-pk', photo_pk);
+  $img.setAttribute('data-pk', user_pk);
   $div.append(photo_preview_delete());
   $div.append($input);
   $div.append($img);

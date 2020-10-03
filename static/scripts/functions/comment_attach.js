@@ -41,17 +41,17 @@ function remove_file_dropdown(){
     dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
 }
 
-function photo_comment_attach(_this, dropdown, pk) {
+function photo_comment_attach(_this, dropdown, photo_pk, user_pk) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
   parent = _this.parentElement;
   parent.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), pk)
+        div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), photo_pk, user_pk)
       }
     else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), pk)
+        div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), photo_pk, user_pk)
       }
   img_block.append(div);
   img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
