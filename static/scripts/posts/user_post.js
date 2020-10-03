@@ -341,14 +341,13 @@ on('#ajax', 'click', '.photo_load_one', function() {
 
   if (document.body.querySelector(".current_file_dropdown")){
     check_photo_in_block(document.body.querySelector(".current_file_dropdown"))
-    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk)}
+    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk)
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"))
-    photo_post_attach(_this, document.body.querySelector(".attach_block"), pk) }
-
+    photo_post_attach(_this, document.body.querySelector(".attach_block"), pk)
   } else if (document.body.querySelector(".message_attach_block")){
     check_photo_in_block(document.body.querySelector(".message_attach_block"))
-    photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk) }
+    photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk)
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
