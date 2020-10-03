@@ -40,15 +40,9 @@ function remove_file_message_attach(){
   else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
 }
 
-function photo_message_attach(_this, block) {
+function photo_message_attach(_this, block, pk) {
   is_full_message_attach();
-  if (block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
   _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('photo-uuid');
     if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk);}

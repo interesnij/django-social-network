@@ -41,15 +41,10 @@ function remove_file_dropdown(){
     dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
 }
 
-function photo_comment_attach(_this, dropdown) {
+function photo_comment_attach(_this, dropdown, pk) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
 
-  if (img_block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
   _this.parentElement.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (img_block.querySelector(".select_photo1")){
