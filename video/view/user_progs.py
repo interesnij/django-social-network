@@ -274,7 +274,7 @@ class UserVideoCreate(TemplateView):
         if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
-            albums = self.form_post.cleaned_data.get("album")
+            albums = request.POST.getlist("album")
             new_video.save()
             for _album in albums:
                 _album.video_album.add(new_video)

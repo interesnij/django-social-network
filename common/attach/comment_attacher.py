@@ -7,7 +7,7 @@ from article.models import Article
 
 def photo_attach(value, comment, target):
     try:
-        _select_photo = Photo.objects.get(uuid=value, is_public=True)
+        _select_photo = Photo.objects.get(pk=value, is_public=True)
         if target == "item_comment":
             _select_photo.item_comment.add(comment)
         elif target == "photo_comment":
