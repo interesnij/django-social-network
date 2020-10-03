@@ -323,7 +323,7 @@ on('#ajax', 'click', '.photo_load_several', function() {
   photo_pk = previous.getAttribute('photo-pk');
   user_pk = previous.getAttribute('data-pk');
   if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, photo_pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown"), photo_pk, user_pk), this.classList.add("active_svg"))
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, photo_pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_pk, user_pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, photo_pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), photo_pk, user_pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
@@ -337,7 +337,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
   user_pk = _this.parentElement.getAttribute('data-pk');
 
   if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, photo_pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown"), photo_pk, user_pk), close_create_window())
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, photo_pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_pk, user_pk), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, photo_pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), photo_pk, user_pk), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
