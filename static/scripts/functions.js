@@ -1,3 +1,15 @@
+function check_photo_in_block(block, _this, pk){
+  if (block.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
+    _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+    _this.parentElement.parentElement.setAttribute("flow", "up");
+    return true
+} else { return false }
+}
+function close_create_window(){
+  document.querySelector(".create_fullscreen").style.display = "none";
+  document.getElementById("create_loader").innerHTML="";
+}
+
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast){
   form_post = _this.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);

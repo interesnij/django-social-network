@@ -320,39 +320,24 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
 on('#ajax', 'click', '.photo_load_several', function() {
   _this = this.previousElementSibling.querySelector("img");
   if (document.body.querySelector(".current_file_dropdown")){
-    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
-    photo_post_attach(_this, document.body.querySelector(".attach_block"))
+    check_photo_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
-    photo_message_attach(_this, document.body.querySelector(".message_attach_block"))
+    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
   }
-  this.classList.add("active_svg");
 });
-
-function check_photo_in_block(block, _this, pk){
-  if (block.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
-    _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-    _this.parentElement.parentElement.setAttribute("flow", "up");
-    return true
-} else { return false }
-}
-function close_create_window(){
-  document.querySelector(".create_fullscreen").style.display = "none";
-  document.getElementById("create_loader").innerHTML="";
-}
 
 on('#ajax', 'click', '.photo_load_one', function() {
   _this = this;
   pk = _this.parentElement.getAttribute('photo-pk');
 
   if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), pk)
-    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk)
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_photo_in_block(document.body.querySelector(".message_attach_block"), pk)
-    photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk)
+    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), close_create_window())
   }
 });
 
