@@ -357,11 +357,10 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
     elem_ = document.createElement('div');
     elem_.innerHTML = link_.responseText;
 
-      dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-      video_comment_attach(elem_.querySelector("img"), dropdown);
+    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
+    video_comment_attach(elem_.querySelector("img"), dropdown);
 
-      document.querySelector(".create_fullscreen").style.display = "none";
-      document.getElementById("create_loader").innerHTML="";
+    close_create_window()
   }};
 
   link_.send(form_data);
@@ -379,11 +378,15 @@ on('#ajax', 'click', '.video_load_one', function() {
   }
 });
 on('#ajax', 'click', '.video_load_several', function() {
-  _this = this.previousElementSibling.querySelector("img");
+  _this = this;
+  pk = _this.parentElement.getAttribute('video-pk');
+
   if (document.body.querySelector(".current_file_dropdown")){
-    video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    check_video_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
-    video_post_attach(_this, document.body.querySelector(".attach_block"))
+    check_video_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_post_attach(_this, document.body.querySelector(".attach_block"), pk), close_create_window())
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_video_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_message_attach(_this, document.body.querySelector(".message_attach_block"), pk), close_create_window())
   }
   this.classList.add("active_svg");
 });
