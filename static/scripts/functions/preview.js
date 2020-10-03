@@ -107,7 +107,7 @@ function create_preview_photo(div_class, img_src, photo_pk, user_pk){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("u_WA_photo", "image_fit", "lazyload");
+  $img.classList.add("u_WA_photo", "image_fit", "pointer");
   $img.setAttribute("src", img_src);
   $img.setAttribute('photo-pk', photo_pk);
   $img.setAttribute('data-pk', user_pk);
