@@ -369,25 +369,28 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
 on('#ajax', 'click', '.video_load_one', function() {
   _this = this;
   pk = _this.getAttribute('video-pk');
+  counter = _this.getAttribute('video-counter');
+  src = _this.getAttribute('src');
   if (document.body.querySelector(".current_file_dropdown")){
-    check_video_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk), close_create_window())
+    check_video_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (video_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, counter, src), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
-    check_video_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_post_attach(_this, document.body.querySelector(".attach_block"), pk), close_create_window())
+    check_video_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_video_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_message_attach(_this, document.body.querySelector(".message_attach_block"), pk), close_create_window())
+    check_video_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_message_attach(_this, document.body.querySelector(".message_attach_block"), pk, counter, src), close_create_window())
   }
 });
 on('#ajax', 'click', '.video_load_several', function() {
   previous = this.previousElementSibling
   _this = previous.querySelector("img");
   pk = _this.getAttribute('video-pk');
-
+  counter = _this.getAttribute('video-counter');
+  src = _this.getAttribute('src');
   if (document.body.querySelector(".current_file_dropdown")){
-    check_video_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk), this.classList.add("active_svg"))
+    check_video_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (video_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, counter, src), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
-    check_video_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_post_attach(_this, document.body.querySelector(".attach_block"), pk), this.classList.add("active_svg"))
+    check_video_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
-    check_video_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_message_attach(_this, document.body.querySelector(".message_attach_block"), pk), this.classList.add("active_svg"))
+    check_video_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_message_attach(document.body.querySelector(".message_attach_block"), pk, counter, src), this.classList.add("active_svg"))
   }
 });
 

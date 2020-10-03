@@ -106,20 +106,18 @@ function photo_post_upload_attach(photo_list, block, block_divs_length){
   }
 
 
-function video_post_attach(_this, block, pk) {
+function video_post_attach(block, pk, counter, src) {
   is_full_attach();
-  counter = _this.getAttribute('video-counter');
-  _this.parentElement.classList.add("attach_toggle");
-    if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video2")){div = create_preview_video("select_video2", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video3")){div = create_preview_video("select_video3", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video4")){div = create_preview_video("select_video4", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video5")){div = create_preview_video("select_video5", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video6")){div = create_preview_video("select_video6", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video7")){div = create_preview_video("select_video7", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video8")){div = create_preview_video("select_video8", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video9")){div = create_preview_video("select_video9", _this.getAttribute('src'), pk, counter)}
-    else if (!block.querySelector(".select_video10")){div = create_preview_video("select_video10", _this.getAttribute('src'), pk, counter)}
+    if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", src, pk, counter)}
+    else if (!block.querySelector(".select_video2")){div = create_preview_video("select_video2", src, pk, counter)}
+    else if (!block.querySelector(".select_video3")){div = create_preview_video("select_video3", src, pk, counter)}
+    else if (!block.querySelector(".select_video4")){div = create_preview_video("select_video4", src, pk, counter)}
+    else if (!block.querySelector(".select_video5")){div = create_preview_video("select_video5", src, pk, counter)}
+    else if (!block.querySelector(".select_video6")){div = create_preview_video("select_video6", src, pk, counter)}
+    else if (!block.querySelector(".select_video7")){div = create_preview_video("select_video7", src, pk, counter)}
+    else if (!block.querySelector(".select_video8")){div = create_preview_video("select_video8", src, pk, counter)}
+    else if (!block.querySelector(".select_video9")){div = create_preview_video("select_video9", src, pk, counter)}
+    else if (!block.querySelector(".select_video10")){div = create_preview_video("select_video10", src, pk, counter)}
   block.append(div);
   block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', block.append($video_input));
 
