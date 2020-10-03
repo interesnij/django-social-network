@@ -276,7 +276,8 @@ class UserVideoCreate(TemplateView):
             new_video.creator = request.user
             albums = request.POST.getlist("album")
             new_video.save()
-            for _album in albums:
+            for _album_pk in albums:
+                _album = VideoAlbum.objects.get(pk=_album_pk)
                 _album.video_album.add(new_video)
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
