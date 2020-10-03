@@ -44,14 +44,14 @@ function remove_file_dropdown(){
 function photo_comment_attach(_this, dropdown, pk) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
-
-  _this.parentElement.classList.add("attach_toggle");
+  parent = _this.parentElement;
+  parent.classList.add("attach_toggle");
   pk = _this.getAttribute('photo-uuid');
     if (img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk)
+        div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), pk)
       }
     else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk)
+        div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), pk)
       }
   img_block.append(div);
   img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
@@ -66,10 +66,10 @@ function photo_comment_upload_attach(photo_list, dropdown, block_divs_length){
   img_block = dropdown.parentElement.previousElementSibling;
   for (var i = 0; i < block_divs_length; i++){
     if (!img_block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", photo_list[i].querySelector("img").getAttribute('data-src'), photo_list[i].getAttribute("photo-uuid"))
+      div = create_preview_photo("select_photo1", photo_list[i].querySelector("img").getAttribute('data-href'), photo_list[i].getAttribute("photo-uuid"))
     }
     else if(!img_block.querySelector(".select_photo2")){
-      div = create_preview_photo("select_photo2", photo_list[i].querySelector("img").getAttribute('data-src'), photo_list[i].getAttribute("photo-uuid"))
+      div = create_preview_photo("select_photo2", photo_list[i].querySelector("img").getAttribute('data-href'), photo_list[i].getAttribute("photo-uuid"))
     }
     img_block.append(div);
     add_file_dropdown()
