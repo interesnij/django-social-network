@@ -43,7 +43,7 @@ function remove_file_message_attach(){
 function photo_message_attach(_this, block, pk) {
   is_full_message_attach();
   _this.parentElement.classList.add("attach_toggle");
-    if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);}
+    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", _this.getAttribute('data-src'), pk);}
     else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", _this.getAttribute('data-src'), pk)}
