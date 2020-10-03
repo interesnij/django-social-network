@@ -64,37 +64,37 @@ function photo_post_upload_attach(photo_list, block, block_divs_length){
   is_full_attach();
   for (var i = 0; i < block_divs_length; i++){
     parent = photo_list[i]
-    if (!block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    } else if (!block.querySelector(".select_photo2")){ 
-      div = create_preview_photo("select_photo1", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+    if (!block.querySelector(".select_photo1")){ 
+      div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+    } else if (!block.querySelector(".select_photo2")){
+      div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo2")){
-      div = create_preview_photo("select_photo2", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo3")){
-      div = create_preview_photo("select_photo3", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo3", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo4")){
-      div = create_preview_photo("select_photo4", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo4", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo5")){
-      div = create_preview_photo("select_photo5", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo5", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo6")){
-      div = create_preview_photo("select_photo6", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo6", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo7")){
-      div = create_preview_photo("select_photo7", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo7", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo8")){
-      div = create_preview_photo("select_photo8", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo8", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo9")){
-      div = create_preview_photo("select_photo9", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo9", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo10")){
-      div = create_preview_photo("select_photo10", parent.getAttribute('src'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
+      div = create_preview_photo("select_photo10", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
   }
   block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));

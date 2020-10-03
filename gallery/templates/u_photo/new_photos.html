@@ -1,5 +1,7 @@
 {% for object in object_list %}
-<div src="{{ object.file.url }}" alt="img" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
-    <img>
+<div class="col-md-4 mb-3">
+  <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
+      <img src="{{ object.preview.url }}" alt="img">
+  </div>
 </div>
 {% endfor %}
