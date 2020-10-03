@@ -268,7 +268,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".progressive");
+    photo_list = response.querySelectorAll(".col-md-4");
 
     if (document.body.querySelector("attach_block")){
       block = document.body.querySelector(".attach_block");

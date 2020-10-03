@@ -64,9 +64,10 @@ function photo_post_upload_attach(photo_list, block, block_divs_length){
   is_full_attach();
   for (var i = 0; i < block_divs_length; i++){
     parent = photo_list[i]
-    if (!block.querySelector(".select_photo1")){ 
+    if (!block.querySelector(".select_photo1")){
       div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    } else if (!block.querySelector(".select_photo2")){
+    }
+    else if (!block.querySelector(".select_photo2")){
       div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
     }
     else if (!block.querySelector(".select_photo2")){
