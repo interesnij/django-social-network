@@ -280,7 +280,7 @@ class UserVideoCreate(TemplateView):
                 _album.video_album.add(new_video)
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse()
 
 
 class UserVideoAlbumPreview(TemplateView):
