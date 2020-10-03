@@ -50,7 +50,7 @@ function photo_post_attach(_this, block) {
     return
   };
   _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('photo-pk');
+  pk = _this.parentElement.getAttribute('photo-pk');
     if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", _this.parentElement.getAttribute('data-href'), pk);}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.parentElement.getAttribute('data-href'), pk);}
     else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", _this.parentElement.getAttribute('data-href'), pk);}
