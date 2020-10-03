@@ -334,7 +334,7 @@ function check_photo_in_block(block){
     _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
     _this.parentElement.setAttribute("flow", "up");
     return
-}
+}}
 on('#ajax', 'click', '.photo_load_one', function() {
   _this = this;
   pk = _this.parentElement.getAttribute('photo-pk');
