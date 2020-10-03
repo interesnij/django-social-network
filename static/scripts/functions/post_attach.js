@@ -44,18 +44,19 @@ function remove_file_attach(){
 
 function photo_post_attach(_this, block, pk) {
   is_full_attach();
-  _this.parentElement.classList.add("attach_toggle");
+  parent = _this.parentElement;
+  parent.classList.add("attach_toggle");
 
-    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", _this.parentElement.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.parentElement.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", _this.parentElement.getAttribute('data-href'), pk);}
-    else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo5")){div = create_preview_photo("select_photo5", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo6")){div = create_preview_photo("select_photo6", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo7")){div = create_preview_photo("select_photo7", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", _this.parentElement.getAttribute('data-href'), pk)}
-    else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", _this.parentElement.getAttribute('data-href'), pk)}
+    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), pk);}
+    else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), pk);}
+    else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", parent.getAttribute('data-href'), pk);}
+    else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo5")){div = create_preview_photo("select_photo5", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo6")){div = create_preview_photo("select_photo6", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo7")){div = create_preview_photo("select_photo7", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", parent.getAttribute('data-href'), pk)}
+    else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", parent.getAttribute('data-href'), pk)}
     block.append(div);
   block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
 

@@ -318,10 +318,10 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
 });
 
 on('#ajax', 'click', '.photo_load_several', function() {
-  _this = this.previousElementSibling;
+  _this = this.previousElementSibling.querySelector("img");
   pk = _this.getAttribute('photo-pk');
   if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
