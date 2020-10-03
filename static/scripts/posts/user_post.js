@@ -330,12 +330,30 @@ on('#ajax', 'click', '.photo_load_several', function() {
 });
 on('#ajax', 'click', '.photo_load_one', function() {
   _this = this;
+  pk = _this.parentElement.getAttribute('photo-pk');
+
   if (document.body.querySelector(".current_file_dropdown")){
-    photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    a1 = document.body.querySelector(".current_file_dropdown");
+    if (a1.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
+      _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+      _this.parentElement.setAttribute("flow", "up");
+      return
+    } else {photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk)}
   } else if (document.body.querySelector(".attach_block")){
-    photo_post_attach(_this, document.body.querySelector(".attach_block"))
+    a2 = document.body.querySelector(".attach_block");
+    if (a1.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
+      _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+      _this.parentElement.setAttribute("flow", "up");
+      return
+    } else{ photo_post_attach(_this, document.body.querySelector(".attach_block"), pk) }
+
   } else if (document.body.querySelector(".message_attach_block")){
-    photo_message_attach(_this, document.body.querySelector(".message_attach_block"))
+    a3 = document.body.querySelector(".message_attach_block");
+    if (a1.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
+      _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+      _this.parentElement.setAttribute("flow", "up");
+      return
+    } else{ photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk) }
   }
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
