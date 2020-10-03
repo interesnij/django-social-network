@@ -86,10 +86,10 @@ function video_comment_attach(_this, dropdown, pk){
   counter = _this.getAttribute('video-counter');
 
     if (img_block.querySelector(".select_video1")){
-        create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)
+        create_preview_video("select_video2", _this.getAttribute('src'), pk, counter)
       }
     else if (img_block.querySelector(".select_video2") || !img_block.querySelector(".select_video1")){
-        create_preview_video("select_video1", _this.getAttribute('data-src'), pk, counter)
+        create_preview_video("select_video1", _this.getAttribute('src'), pk, counter)
       }
   img_block.append($div);
   img_block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', img_block.append($video_input));

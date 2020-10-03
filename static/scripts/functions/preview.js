@@ -135,7 +135,7 @@ function create_preview_video(div_class, img_src, pk, counter){
   $img.src = img_src;
   $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
   $icon_div.setAttribute("video-counter", counter);
-  $icon_div.setAttribute("data-pk", pk);
+  $icon_div.setAttribute("video-pk", pk);
 
   $div.append(video_preview_delete());
   $div.append($input);
