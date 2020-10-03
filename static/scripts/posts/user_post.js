@@ -368,7 +368,7 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
 
 on('#ajax', 'click', '.video_load_one', function() {
   _this = this;
-  pk = _this.getAttribute('data-pk');
+  pk = _this.getAttribute('video-pk');
   if (document.body.querySelector(".current_file_dropdown")){
     check_video_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (video_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
