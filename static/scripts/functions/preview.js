@@ -109,7 +109,7 @@ function create_preview_photo(div_class, img_src, pk){
   $img = document.createElement("img");
   $img.classList.add("u_photo_detail", "image_fit", "lazyload");
   $img.setAttribute("src", img_src);
-  $img.setAttribute('photo-uuid', pk);
+  $img.setAttribute('photo-pk', pk);
   $div.append(photo_preview_delete());
   $div.append($input);
   $div.append($img);
