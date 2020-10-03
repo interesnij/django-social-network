@@ -90,7 +90,7 @@ class PhotoAttachUserCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render(request, 'user_gallery/my_list.html',{'object_list': photos, 'user': request.user})
+            return render(request, 'u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
