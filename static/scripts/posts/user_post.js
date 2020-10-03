@@ -336,7 +336,7 @@ function check_photo_in_block(block, pk){
     return true
 } else { return false }
 }
-function check_photo_in_block(){
+function close_create_window(){
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";
 }
@@ -349,7 +349,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
     check_photo_in_block(document.body.querySelector(".current_file_dropdown"), pk)
     photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk)
   } else if (document.body.querySelector(".attach_block")){
-    check_photo_in_block(document.body.querySelector(".attach_block"), pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), check_photo_in_block())
+    check_photo_in_block(document.body.querySelector(".attach_block"), pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
     check_photo_in_block(document.body.querySelector(".message_attach_block"), pk)
     photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk)
