@@ -320,13 +320,13 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
 on('#ajax', 'click', '.photo_load_several', function() {
   previous = this.previousElementSibling
   _this = previous.querySelector("img");
-  pk = previous.getAttribute('photo-pk'); 
+  pk = previous.getAttribute('photo-pk');
   if (document.body.querySelector(".current_file_dropdown")){
     check_photo_in_block(document.body.querySelector(".current_file_dropdown"), _this, pk) ? null : (photo_comment_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
-    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), this.classList.add("active_svg"))
+    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk), this.classList.add("active_svg"))
   }
 });
 
@@ -339,7 +339,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_post_attach(_this, document.body.querySelector(".attach_block"), pk), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".current_file_dropdown"), pk), close_create_window())
+    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_message_attach(_this, document.body.querySelector(".message_attach_block"), pk), close_create_window())
   }
 });
 
