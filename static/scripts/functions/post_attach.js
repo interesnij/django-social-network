@@ -1,3 +1,5 @@
+
+
 function clear_attach_block(){
   document.body.querySelector(".attach_block") ? (a_b = document.body.querySelector(".attach_block"), a_b.innerHTML = "", a_b.classList = "", a_b.classList.add("files_0"), a_b.classList.remove("attach_block")) : null;
 }
@@ -42,14 +44,14 @@ function remove_file_attach(){
 
 function photo_post_attach(_this, block) {
   is_full_attach();
-  if (block.querySelector( '[photo-uuid=' + '"' + _this.getAttribute('photo-uuid') + '"' + ']' )){
+  if (block.querySelector( '[photo-pk=' + '"' + _this.getAttribute('photo-pk') + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
     _this.parentElement.setAttribute("flow", "up");
     return
   };
   _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('photo-uuid');
-    if (!block.querySelector(".photo_input")){div = create_preview_photo("select_photo1", _this.parentElement.getAttribute('data-href'), pk);}
+  pk = _this.getAttribute('photo-pk');
+    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", _this.parentElement.getAttribute('data-href'), pk);}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", _this.parentElement.getAttribute('data-href'), pk);}
     else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", _this.parentElement.getAttribute('data-href'), pk);}
     else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", _this.parentElement.getAttribute('data-href'), pk)}

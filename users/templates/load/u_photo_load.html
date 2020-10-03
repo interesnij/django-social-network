@@ -53,7 +53,7 @@
   <div class="col-md-4 mb-3 load_pag {% if forloop.last %}load_last{% endif %}">
     <div class="progressive replace" data-href="{{ object.file.url }}">
           <img class="image_fit_200 photo_load_one preview pointer"
-               photo-uuid="{{ object.uuid }}"
+               photo-pk="{{ object.pk }}"
                src="{{ object.preview.url }}"
                alt="img">
     </div>
