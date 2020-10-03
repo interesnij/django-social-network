@@ -5,6 +5,14 @@ function check_photo_in_block(block, _this, pk){
     return true
 } else { return false }
 }
+function check_video_in_block(block, _this, pk){
+  if (block.querySelector( '[video-pk=' + '"' + pk + '"' + ']' )) {
+    _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
+    _this.parentElement.parentElement.setAttribute("flow", "up");
+    return true
+} else { return false }
+}
+
 function close_create_window(){
   document.querySelector(".create_fullscreen").style.display = "none";
   document.getElementById("create_loader").innerHTML="";

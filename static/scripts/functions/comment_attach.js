@@ -80,16 +80,10 @@ document.querySelector(".create_fullscreen").style.display = "none";
 document.getElementById("create_loader").innerHTML="";
 }
 
-function video_comment_attach(_this, dropdown){
+function video_comment_attach(_this, dropdown, pk){
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.previousElementSibling;
   counter = _this.getAttribute('video-counter');
-  pk = _this.getAttribute('data-pk');
-  if (img_block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
 
     if (img_block.querySelector(".select_video1")){
         create_preview_video("select_video2", _this.getAttribute('data-src'), pk, counter)

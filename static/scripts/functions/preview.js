@@ -89,8 +89,7 @@ function create_preview_chat_item(_this){
 
   _this.querySelector("img") ? (
     $img = document.createElement("img"),
-    $img.setAttribute("data-src"),
-    _this.querySelector("img").getAttribute("src"),
+    $img.setAttribute("src", _this.querySelector("img").getAttribute("src")),
     $img.style.width = "50px",
     $img.style.heigth = "auto",
     $img.style.borderRadius = "50%")
