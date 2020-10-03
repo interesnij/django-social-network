@@ -11,7 +11,7 @@ from communities.models import Community
 
 def photo_attach(value, message):
     try:
-        _select_photo = Photo.objects.get(uuid=value, is_public=True)
+        _select_photo = Photo.objects.get(pk=value, is_public=True)
         _select_photo.message.add(message)
     except:
         raise ValidationError('Фото не найдено')
