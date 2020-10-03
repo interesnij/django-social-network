@@ -268,9 +268,9 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".col-md-4");
+    photo_list = response.querySelectorAll("img");
 
-    if (document.body.querySelector(".attach_block")){
+    if (document.body.querySelector("attach_block")){
       block = document.body.querySelector(".attach_block");
       photo_post_upload_attach(photo_list, block, photo_list.length);
     } else if (document.body.querySelector(".message_attach_block")){
