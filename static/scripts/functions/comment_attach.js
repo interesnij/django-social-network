@@ -19,8 +19,7 @@ function is_full_dropdown(){
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   if (dropdown.classList.contains("files_two")){
     dropdown.style.display = "none";
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window()
   }
   if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
     dropdown.style.display = "block"}
@@ -41,17 +40,15 @@ function remove_file_dropdown(){
     dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
 }
 
-function photo_comment_attach(_this, dropdown, photo_pk, user_pk) {
+function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
-  parent = _this.parentElement;
-  parent.classList.add("attach_toggle");
-  pk = _this.getAttribute('photo-uuid');
+
     if (img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), photo_pk, user_pk)
+        div = create_preview_photo("select_photo2", src, photo_pk, user_pk)
       }
     else if (img_block.querySelector(".select_photo2") || !img_block.querySelector(".select_photo1")){
-        div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), photo_pk, user_pk)
+        div = create_preview_photo("select_photo1", src, photo_pk, user_pk)
       }
   img_block.append(div);
   img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
@@ -65,19 +62,19 @@ function photo_comment_upload_attach(photo_list, dropdown, block_divs_length){
 
   img_block = dropdown.parentElement.previousElementSibling;
   for (var i = 0; i < block_divs_length; i++){
+    parent = photo_list[i].parentElement;
     if (!img_block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", photo_list[i].querySelector("img").getAttribute('data-href'), photo_list[i].getAttribute("photo-uuid"))
+      div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_dropdown(); block.append(div);
     }
     else if(!img_block.querySelector(".select_photo2")){
-      div = create_preview_photo("select_photo2", photo_list[i].querySelector("img").getAttribute('data-href'), photo_list[i].getAttribute("photo-uuid"))
+      div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_dropdown(); block.append(div);
     }
     img_block.append(div);
     add_file_dropdown()
     is_full_dropdown();
   }
 img_block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', img_block.append($photo_input));
-document.querySelector(".create_fullscreen").style.display = "none";
-document.getElementById("create_loader").innerHTML="";
+close_create_window()
 }
 
 function video_comment_attach(dropdown, pk, counter, src){

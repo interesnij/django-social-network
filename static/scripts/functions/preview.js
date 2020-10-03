@@ -108,7 +108,7 @@ function create_preview_chat_item(_this){
   return $div
 }
 
-function create_preview_photo(div_class, img_src, photo_pk, user_pk){
+function create_preview_photo(div_class, img_src, photo_pk, user_pk){ 
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "photo", div_class);
   $input = document.createElement("span");
