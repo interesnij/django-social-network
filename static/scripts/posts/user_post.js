@@ -331,8 +331,8 @@ on('#ajax', 'click', '.photo_load_several', function() {
 
 function check_photo_in_block(block, _this, pk){
   if (block.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
-    _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-    _this.parentElement.parentElement.setAttribute("flow", "up");
+    _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+    _this.parentElement.setAttribute("flow", "up");
     return true
 } else { return false }
 }
