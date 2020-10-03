@@ -44,7 +44,9 @@ function remove_file_attach(){
 
 function photo_post_attach(_this, block) {
   is_full_attach();
-  if (block.querySelector( '[photo-pk=' + '"' + _this.getAttribute('photo-pk') + '"' + ']' )){
+
+  pk = _this.parentElement.getAttribute('photo-pk');
+  if (block.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )){
     _this.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
     _this.parentElement.setAttribute("flow", "up");
     return
