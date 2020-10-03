@@ -175,7 +175,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

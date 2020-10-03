@@ -276,14 +276,11 @@ class CommunityVideoCreate(TemplateView):
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
-            albums = self.form_post.cleaned_data.get("album")
+            albums = request.POST.getlist("album")
             new_video.save()
-            if not new_video.album:
-                new_video.album = album
-            else:
-                for album in albums:
-                    album.video_album.add(new_video)
-
+            for _album_pk in albums:
+                _album = VideoAlbum.objects.get(pk=_album_pk)
+                _album.video_album.add(new_video)
             return render(request, 'video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
