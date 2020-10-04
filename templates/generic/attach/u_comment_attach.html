@@ -9,8 +9,8 @@
     {% include 'generic/items/c_video.html' %}
   {% endfor %}
 
-  {% for object in comment.comment_good.all %}
-    {% include 'user_goods/good.html' %} 
+  {% for good in comment.comment_good.all %}
+    {% include 'generic/items/u_comment_good.html' %}
   {% endfor %}
 
   {% for article in comment.attached_comment.all %}
