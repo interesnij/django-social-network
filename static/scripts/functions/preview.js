@@ -202,7 +202,7 @@ function create_preview_doc(div_class, pk){
   $media.style.marginRight = "40px";
   $media.style.overflow = "hidden";
   h6 = $media.querySelector("h6");
-  h6.style.paddingTop = "8px";
+  h6.style.paddingTop = "8px"; 
 
   $div.append(doc_preview_delete());
   $div.append($input);
