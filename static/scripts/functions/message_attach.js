@@ -158,7 +158,7 @@ function doc_message_attach(block, media_block, pk) {
   is_full_message_attach();
 }
 
-function good_message_attach(dropdown, src, pk, uuid, title) {
+function good_message_attach(block, src, pk, uuid, title) {
   is_full_message_attach();
 
     if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, pk, uuid, title)}
