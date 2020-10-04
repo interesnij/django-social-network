@@ -14,8 +14,8 @@ function check_video_in_block(block, _this, pk){
 }
 function check_music_in_block(block, _this, counter){
   if (block.querySelector( '[music-counter=' + '"' + pk + '"' + ']' )) {
-    _this.parentElement.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
-    _this.parentElement.parentElement.setAttribute("flow", "up");
+    _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
+    _this.parentElement.setAttribute("flow", "up");
     return true
 } else { return false }
 }
