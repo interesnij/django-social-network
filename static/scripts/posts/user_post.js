@@ -429,12 +429,19 @@ on('#ajax', 'click', '.music_load_several', function() {
 });
 on('#ajax', 'click', '.doc_load_several', function() {
   _this = this.previousElementSibling;
+  pk = _this.getAttribute('data-pk');
   if (document.body.querySelector(".current_file_dropdown")){
     doc_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     doc_post_attach(_this, document.body.querySelector(".attach_block"))
   }
-  this.classList.add("active_svg");
+  if (document.body.querySelector(".current_file_dropdown")){
+    check_doc_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (doc_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement), this.classList.add("active_svg"))
+  } else if (document.body.querySelector(".attach_block")){
+    check_doc_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (doc_post_attach(document.body.querySelector(".attach_block")), this.classList.add("active_svg"))
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_doc_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (doc_message_attach(document.body.querySelector(".message_attach_block")), this.classList.add("active_svg"))
+  }
 });
 
 on('#ajax', 'click', '.music_attach_playlist', function() {

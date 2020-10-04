@@ -132,6 +132,7 @@ function music_message_attach(block, pk, counter, src) {
     else if (!block.querySelector(".select_music9")){div = create_preview_music("select_music9", src, pk, counter)}
     else if (!block.querySelector(".select_music10")){div = create_preview_music("select_music10", src, pk, counter)}
   block.append(div);
+  block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
 
   add_file_message_attach()
   is_full_message_attach();
@@ -139,20 +140,8 @@ function music_message_attach(block, pk, counter, src) {
 
 function doc_message_attach(_this, block) {
   is_full_message_attach();
-  pk = _this.getAttribute('data-pk');
-  if (block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Документ уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
-  _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('data-pk');
-    if (!block.querySelector(".doc_input")){
-      div = create_preview_doc("select_doc1", pk);
-      $doc_input = document.createElement("span");
-      $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">';
-      block.append($doc_input)
-    }
+
+    if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", pk)}
     else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", pk)}
     else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", pk)}
     else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", pk)}
@@ -163,6 +152,7 @@ function doc_message_attach(_this, block) {
     else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", pk)}
     else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", pk)}
   block.append(div);
+  block.querySelector(".doc_input") ? null : ($doc_input = document.createElement("span"), $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">', block.append($doc_input));
 
   add_file_message_attach()
   is_full_message_attach();
