@@ -180,7 +180,7 @@ function create_preview_music(div_class, img_src, pk, counter){
 function create_preview_doc(div_class, media_body, pk){
   $div = document.createElement("div");
   $input = document.createElement("span");
-  $span = document.createElement("span"); 
+  $span = document.createElement("span");
   $figure = document.createElement("figure");
   $media = document.createElement("span");
 

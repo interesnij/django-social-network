@@ -429,7 +429,7 @@ on('#ajax', 'click', '.music_load_several', function() {
 });
 on('#ajax', 'click', '.doc_load_several', function() {
   _this = this.previousElementSibling;
-  pk = _this.getAttribute('data-pk'); 
+  pk = _this.getAttribute('data-pk');
   media_block = _this.querySelector(".media-body")
   if (document.body.querySelector(".current_file_dropdown")){
     check_doc_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (doc_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk), this.classList.add("active_svg"))
@@ -487,21 +487,33 @@ on('#ajax', 'click', '.photo_attach_album_remove', function() {
 
 on('#ajax', 'click', '.good_load_one', function() {
   _this = this;
+  data_pk = _this.getAttribute('good-pk');
+  data_uuid = _this.getAttribute('good-uuid');
+  src = _this.querySelector("img").getAttribute('src');
+  title = _this.querySelector(".good_title").innerHTML;
+
   if (document.body.querySelector(".current_file_dropdown")){
-    good_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    check_good_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (good_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk), close_create_window())
   } else if (document.body.querySelector(".attach_block")){
-    good_post_attach(_this, document.body.querySelector(".attach_block"))
+    check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk), close_create_window())
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk), close_create_window())
   }
-  close_create_window()
 });
 on('#ajax', 'click', '.good_load_several', function() {
   _this = this.previousElementSibling;
+  data_pk = _this.getAttribute('good-pk');
+  data_uuid = _this.getAttribute('good-uuid');
+  src = _this.querySelector("img").getAttribute('src');
+  title = _this.querySelector(".good_title").innerHTML;
+
   if (document.body.querySelector(".current_file_dropdown")){
-    good_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    check_good_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (good_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
-    good_post_attach(_this, document.body.querySelector(".attach_block"))
+    check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk), this.classList.add("active_svg"))
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk), this.classList.add("active_svg")
   }
-  this.classList.add("active_svg");
 });
 
 on('#ajax', 'click', '.article_load_one', function() {
