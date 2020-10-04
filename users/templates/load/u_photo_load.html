@@ -28,7 +28,7 @@
                 <div class="media">
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
                         <h6 class="mb-0">{{ object.title }}</h6>
-                        <p class="pointer photo_attach_album" data-pk="{{ object.pk }}">Прикрепить альбом</p>
+                        {% if object.is_not_empty %}<p class="pointer photo_attach_album" data-pk="{{ object.pk }}">Прикрепить альбом</p>{% endif %}
                     </div>
                 </div>
             </div>

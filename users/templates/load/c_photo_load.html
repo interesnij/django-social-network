@@ -1,21 +1,52 @@
 <style>
-  #c_multi_photos {
+  #add_multi_comments_photos {
     border: 1px dashed green;
     padding: 5px;
     text-align: center;}
-  #c_multi_photos:hover {cursor: pointer}
+  #add_multi_comments_photos:hover {cursor: pointer}
 </style>
 
-
-<h4 class="m-0 mb-3" style="position: absolute;top: 50px;">Прикрепление фотографий</h4>
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">Прикрепление фотографий</h5>
+  </div>
+  <div class="card-body border-bottom">
 <form id="add_photos" method="post">
     {% csrf_token %}
-      <input type="file" id="c_photo_post_attach" class="upload_for_post" name="file" style="display:none" multiple="multiple">
-      <div id="c_multi_photos" class="border centered">
+      <input type="file" id="c_photo_post_attach" class="upload_for_post_attach" name="file" style="display:none" multiple="multiple">
+      <div id="u_multi_comments_photos" class="border centered" style="cursor:pointer">
           <h4>загрузить и прикрепить (до 10)</h4>
       </div>
 </form>
-<br><br>
+<br>
+
+<div class="row" style="margin-left: 0;margin-right: 0;">
+    {% for object in request.user.get_albums %}
+    <div class="col-md-6 mb-3 col-lg-4 cover_block">
+        <div class="card rounded-0 border mb-3">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
+                        <h6 class="mb-0">{{ object.title }}</h6>
+                        {% if object.is_not_empty %}<p class="pointer photo_attach_album" data-pk="{{ object.pk }}">Прикрепить альбом</p>{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+              <a data-href="{% url 'u_photo_list_load' uuid=object.uuid %}" class="pointer create_ajax">
+                  {% if object.get_cover_photo %}
+                    <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
+                  {% else %}
+                    <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
+                  {% endif %}
+                <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
+              </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="img_load_container" data-link="/users/load/u_img_load/">
 {% for object in object_list %}
@@ -39,6 +70,8 @@
   <div class="card-body">
   <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
   </div>
-  <h6 style="text-align: center;margin: 20px;"> У Вас нет фотографий ...</h6>
+  <h6 style="text-align: center;margin: 20px;"> В основном альбоме нет фотографий.</h6>
 </div>
 {% endif %}
+</div>
+</div>

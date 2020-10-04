@@ -83,6 +83,9 @@ class Album(models.Model):
     def get_staff_photos(self):
         return self.photo_album.filter(is_deleted=False)
 
+    def is_not_empty(self):
+        return self.photo_album.filter(album=self).values("pk").exists()
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
