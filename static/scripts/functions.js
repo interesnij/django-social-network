@@ -28,8 +28,8 @@ function check_doc_in_block(block, _this, pk){
 }
 function check_good_in_block(block, _this, pk){
   if (block.querySelector( '[good-pk=' + '"' + pk + '"' + ']' )) {
-    _this.parentElement.parentElement.setAttribute("tooltip", "Товар уже выбран");
-    _this.parentElement.parentElement.setAttribute("flow", "up");
+    _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
+    _this.parentElement.setAttribute("flow", "up");
     return true
 } else { return false }
 }
