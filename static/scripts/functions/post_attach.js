@@ -135,6 +135,7 @@ function music_post_attach(block, pk, counter, src) {
     else if (!block.querySelector(".select_music9")){div = create_preview_music("select_music9", src, pk, counter)}
     else if (!block.querySelector(".select_music10")){div = create_preview_music("select_music10", src, pk, counter)}
   block.append(div);
+  block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
 
   add_file_attach()
   is_full_attach();
@@ -166,6 +167,7 @@ function doc_post_attach(_this, block) {
     else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", pk)}
     else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", pk)}
   block.append(div);
+  block.querySelector(".doc_input") ? null : ($doc_input = document.createElement("span"), $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">', block.append($doc_input));
 
   add_file_attach()
   is_full_attach();
