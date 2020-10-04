@@ -11,8 +11,8 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
 on('#ajax', 'click', '#u_add_article', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-  CKEDITOR.replace('id_content');
-  CKEDITOR.instances.id_content.updateElement();
+  //CKEDITOR.replace('id_content');
+  //CKEDITOR.instances.id_content.updateElement();
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {
