@@ -422,7 +422,7 @@ on('#ajax', 'click', '.music_load_several', function() {
   if (document.body.querySelector(".current_file_dropdown")){
     check_music_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (music_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, counter, src), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".attach_block")){
-    check_music_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (music_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), this.classList.add("active_svg");)
+    check_music_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (music_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
     check_music_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (music_message_attach(document.body.querySelector(".message_attach_block"), pk, counter, src), this.classList.add("active_svg"))
   }
