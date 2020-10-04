@@ -138,19 +138,19 @@ function music_message_attach(block, pk, counter, src) {
   is_full_message_attach();
 }
 
-function doc_message_attach(_this, block) {
+function doc_message_attach(block, media_block, pk) {
   is_full_message_attach();
 
-    if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", pk)}
-    else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", pk)}
-    else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", pk)}
-    else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", pk)}
-    else if (!block.querySelector(".select_doc5")){div = create_preview_doc("select_doc5", pk)}
-    else if (!block.querySelector(".select_doc6")){div = create_preview_doc("select_doc6", pk)}
-    else if (!block.querySelector(".select_doc7")){div = create_preview_doc("select_doc7", pk)}
-    else if (!block.querySelector(".select_doc8")){div = create_preview_doc("select_doc8", pk)}
-    else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", pk)}
-    else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", pk)}
+    if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", media_block, pk)}
+    else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", media_block, pk)}
+    else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", media_block, pk)}
+    else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", media_block, pk)}
+    else if (!block.querySelector(".select_doc5")){div = create_preview_doc("select_doc5", media_block, pk)}
+    else if (!block.querySelector(".select_doc6")){div = create_preview_doc("select_doc6", media_block, pk)}
+    else if (!block.querySelector(".select_doc7")){div = create_preview_doc("select_doc7", media_block, pk)}
+    else if (!block.querySelector(".select_doc8")){div = create_preview_doc("select_doc8", media_block, pk)}
+    else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", media_block, pk)}
+    else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", media_block, pk)}
   block.append(div);
   block.querySelector(".doc_input") ? null : ($doc_input = document.createElement("span"), $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">', block.append($doc_input));
 
@@ -160,14 +160,7 @@ function doc_message_attach(_this, block) {
 
 function good_message_attach(_this, block) {
   is_full_message_attach();
-  pk = _this.getAttribute('good-pk');
-  uuid = _this.getAttribute('data-uuid');
-  if (block.querySelector( '[good-pk=' + '"' + pk + '"]' )){
-    _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
-  _this.parentElement.classList.add("attach_toggle");
+
   title = _this.querySelector(".good_title").innerHTML;
     if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}
     else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", _this.querySelector("img").getAttribute('data-src'), pk, uuid, title)}

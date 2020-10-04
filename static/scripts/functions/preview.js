@@ -177,14 +177,12 @@ function create_preview_music(div_class, img_src, pk, counter){
   $div.append($media);
   return $div
 }
-function create_preview_doc(div_class, pk){
+function create_preview_doc(div_class, media_body, pk){
   $div = document.createElement("div");
   $input = document.createElement("span");
   $span = document.createElement("span");
   $figure = document.createElement("figure");
   $media = document.createElement("span");
-
-  //media_body = _this.querySelector(".media-body");
 
   $div.classList.add("col-md-12", "doc", div_class);
   $div.setAttribute("data-pk", pk);
@@ -197,17 +195,17 @@ function create_preview_doc(div_class, pk){
   $span.innerHTML = '<svg fill="currentColor" style="width:35px;heigth:35px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
   $figure.append($span);
 
-  //$media.innerHTML = media_body.innerHTML;
+  $media.innerHTML = media_body.innerHTML;
   $media.style.marginLeft = "10px";
   $media.style.marginRight = "40px";
   $media.style.overflow = "hidden";
   h6 = $media.querySelector("h6");
-  h6.style.paddingTop = "8px"; 
+  h6.style.paddingTop = "8px";
 
   $div.append(doc_preview_delete());
   $div.append($input);
   $div.append($figure);
-  //$div.append($media);
+  $div.append($media);
   return $div
 }
 function create_preview_good(div_class, img_src, pk, uuid, title){
