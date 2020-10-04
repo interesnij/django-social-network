@@ -10,7 +10,7 @@
   {% endfor %}
 
   {% for good in comment.comment_good.all %}
-    {% include 'generic/items/c_good.html' %}
+    {% include 'generic/items/c_comment_good.html' %}
   {% endfor %}
 
   {% for article in comment.attached_comment.all %}
@@ -20,7 +20,7 @@
   {% for music in comment.comment_music.all %}
     {% include 'generic/attach/c_music.html' %}
   {% endfor %}
-  
+
   {% for doc in comment.get_attach_docs %}
     {% include 'generic/items/c_doc.html' %}
   {% endfor %}

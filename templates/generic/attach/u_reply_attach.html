@@ -9,7 +9,7 @@
   {% endfor %}
 
   {% for good in reply.comment_good.all %}
-    {% include 'generic/items/u_good.html' %}
+    {% include 'generic/items/u_comment_good.html' %}
   {% endfor %}
 
   {% for article in comment.attached_comment.all %}

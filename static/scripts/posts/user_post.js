@@ -8,10 +8,11 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
                      "Репост записи в сообщения сделан")
 });
 
-on('#ajax', 'click', '#article_add', function() {
-  var pk = this.getAttribute('data-pk');
+on('#ajax', 'click', '#u_add_article', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-  //setTimeout(function() { CKEDITOR.replace('id_content'); CKEDITOR.instances.id_content.updateElement(); }, 1000);
+  CKEDITOR.replace('id_content');
+  CKEDITOR.instances.id_content.updateElement();
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {
