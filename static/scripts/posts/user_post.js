@@ -429,7 +429,7 @@ on('#ajax', 'click', '.music_load_several', function() {
 });
 on('#ajax', 'click', '.doc_load_several', function() {
   _this = this.previousElementSibling;
-  pk = _this.getAttribute('data-pk');
+  pk = _this.getAttribute('data-pk'); 
   media_block = _this.querySelector(".media-body")
   if (document.body.querySelector(".current_file_dropdown")){
     check_doc_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (doc_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk), this.classList.add("active_svg"))

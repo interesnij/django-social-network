@@ -143,7 +143,7 @@ function music_post_attach(block, pk, counter, src) {
 
 function doc_post_attach(block, media_block, pk) {
   is_full_attach();
-  if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", pk)}
+  if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", media_block, pk)} 
   else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", media_block, pk)}
     else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", media_block, pk)}
     else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", media_block, pk)}
