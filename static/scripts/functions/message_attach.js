@@ -41,8 +41,6 @@ function remove_file_message_attach(){
 
 function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
-  parent = _this.parentElement;
-  parent.classList.add("attach_toggle");
     if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", src, photo_pk, user_pk)}
     else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", src, photo_pk, user_pk)}
     else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", src, photo_pk, user_pk)}
@@ -121,32 +119,18 @@ function video_message_attach(block, pk, counter, src) {
   is_full_message_attach();
 }
 
-function music_message_attach(_this, block) {
+function music_message_attach(block, pk, counter, src) {
   is_full_message_attach();
-  counter = _this.getAttribute('music-counter');
-  if (block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
-  _this.parentElement.classList.add("attach_toggle");
-  pk = _this.getAttribute('data-pk');
-    if (!block.querySelector(".music_input")){
-      _this.querySelector("img") ? img = _this.querySelector("img").getAttribute('data-src') : img = "/static/images/no_track_img.jpg";
-      div = create_preview_music("select_music1", img, pk, counter);
-      $music_input = document.createElement("span");
-      $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">';
-      block.append($music_input)
-    }
-    else if (!block.querySelector(".select_music2")){div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music3")){div = create_preview_music("select_music3", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music4")){div = create_preview_music("select_music4", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music5")){div = create_preview_music("select_music5", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music6")){div = create_preview_music("select_music6", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music7")){div = create_preview_music("select_music7", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music8")){div = create_preview_music("select_music8", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music9")){div = create_preview_music("select_music9", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
-    else if (!block.querySelector(".select_music10")){div = create_preview_music("select_music10", _this.querySelector("img").getAttribute('data-src'), pk, counter)}
+    if (!block.querySelector(".select_music1")){div = create_preview_music("select_music1", src, pk, counter)}
+    else if (!block.querySelector(".select_music2")){div = create_preview_music("select_music2", src, pk, counter)}
+    else if (!block.querySelector(".select_music3")){div = create_preview_music("select_music3", src, pk, counter)}
+    else if (!block.querySelector(".select_music4")){div = create_preview_music("select_music4", src, pk, counter)}
+    else if (!block.querySelector(".select_music5")){div = create_preview_music("select_music5", src, pk, counter)}
+    else if (!block.querySelector(".select_music6")){div = create_preview_music("select_music6", src, pk, counter)}
+    else if (!block.querySelector(".select_music7")){div = create_preview_music("select_music7", src, pk, counter)}
+    else if (!block.querySelector(".select_music8")){div = create_preview_music("select_music8", src, pk, counter)}
+    else if (!block.querySelector(".select_music9")){div = create_preview_music("select_music9", src, pk, counter)}
+    else if (!block.querySelector(".select_music10")){div = create_preview_music("select_music10", src, pk, counter)}
   block.append(div);
 
   add_file_message_attach()

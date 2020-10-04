@@ -94,23 +94,16 @@ function video_comment_attach(dropdown, pk, counter, src){
   is_full_dropdown();
 }
 
-function music_comment_attach(_this, dropdown){
+function music_comment_attach(dropdown, pk, counter, src){
   is_full_dropdown(dropdown);
 
-  counter = _this.getAttribute('music-counter');
   img_block = dropdown.parentElement.previousElementSibling;
 
-  if (img_block.querySelector( '[music-counter=' + '"' + counter + '"' + ']' )){
-    _this.setAttribute("tooltip", "Аудиозапись уже выбрана");
-    _this.setAttribute("flow", "up");
-    return
-  };
-  _this.parentElement.classList.add("attach_toggle");
     if (img_block.querySelector(".select_music1")){
-        div = create_preview_music("select_music2", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        div = create_preview_music("select_music2", src, pk, counter )
       }
     else if (img_block.querySelector(".select_music2") || !img_block.querySelector(".select_music1")){
-        div = create_preview_music("select_music1", _this.querySelector("img").getAttribute('data-src'), _this.getAttribute('data-pk'), _this.getAttribute('music-counter') )
+        div = create_preview_music("select_music1", src, pk, counter )
       }
     add_file_dropdown();
     img_block.append(div)

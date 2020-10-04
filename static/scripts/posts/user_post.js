@@ -397,22 +397,35 @@ on('#ajax', 'click', '.video_load_several', function() {
 
 on('#ajax', 'click', '.music_load_one', function() {
   _this = this;
+  pk = _this.getAttribute('music-pk');
+  counter = _this.getAttribute('music-counter');
+  _this.querySelector("img") ? src = _this.querySelector("img").getAttribute('src') : src = '/static/images/no_track_img.jpg'
+  if (document.body.querySelector(".current_file_dropdown")){
+    check_music_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (music_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, counter, src), close_create_window())
+  } else if (document.body.querySelector(".attach_block")){
+    check_music_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (music_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), close_create_window())
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_music_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (music_message_attach(document.body.querySelector(".message_attach_block"), pk, counter, src), close_create_window())
+  }
   if (document.body.querySelector(".current_file_dropdown")){
     music_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
   } else if (document.body.querySelector(".attach_block")){
     music_post_attach(_this, document.body.querySelector(".attach_block"))
   }
-  document.querySelector(".create_fullscreen").style.display = "none";
-  document.getElementById("create_loader").innerHTML="";
+  close_create_window()
 });
 on('#ajax', 'click', '.music_load_several', function() {
-  _this = this.previousElementSibling;
+  _this = this.previousElementSibling
+  pk = _this.getAttribute('music-pk');
+  counter = _this.getAttribute('music-counter');
+  _this.querySelector("img") ? src = _this.querySelector("img").getAttribute('src') : src = '/static/images/no_track_img.jpg'
   if (document.body.querySelector(".current_file_dropdown")){
-    music_comment_attach(_this, document.body.querySelector(".current_file_dropdown").parentElement.parentElement)
+    check_music_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (music_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, counter, src), this.classList.add("active_svg");)
   } else if (document.body.querySelector(".attach_block")){
-    music_post_attach(_this, document.body.querySelector(".attach_block"))
+    check_music_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (music_post_attach(document.body.querySelector(".attach_block"), pk, counter, src), this.classList.add("active_svg");)
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_music_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (music_message_attach(document.body.querySelector(".message_attach_block"), pk, counter, src), this.classList.add("active_svg");)
   }
-  this.classList.add("active_svg");
 });
 on('#ajax', 'click', '.doc_load_several', function() {
   _this = this.previousElementSibling;
@@ -476,8 +489,7 @@ on('#ajax', 'click', '.good_load_one', function() {
   } else if (document.body.querySelector(".attach_block")){
     good_post_attach(_this, document.body.querySelector(".attach_block"))
   }
-  document.querySelector(".create_fullscreen").style.display = "none";
-  document.getElementById("create_loader").innerHTML="";
+  close_create_window()
 });
 on('#ajax', 'click', '.good_load_several', function() {
   _this = this.previousElementSibling;
@@ -496,8 +508,7 @@ on('#ajax', 'click', '.article_load_one', function() {
   } else if (document.body.querySelector(".attach_block")){
     article_post_attach(_this, document.body.querySelector(".attach_block"))
   }
-  document.querySelector(".create_fullscreen").style.display = "none";
-  document.getElementById("create_loader").innerHTML="";
+  close_create_window()
 });
 on('#ajax', 'click', '.article_load_several', function() {
   _this = this.previousElementSibling;
