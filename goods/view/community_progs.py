@@ -214,39 +214,6 @@ class GoodCommunityCreate(TemplateView):
             return HttpResponseBadRequest()
 
 
-class GoodCommunityCreateAttach(TemplateView):
-    template_name = "c_good/add_attach.html"
-    form = None
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.form = GoodForm(initial={"creator":request.user})
-        return super(GoodCommunityCreateAttach,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from goods.models import GoodSubCategory, GoodCategory
-
-        context = super(GoodCommunityCreateAttach,self).get_context_data(**kwargs)
-        context["form"] = self.form
-        context["sub_categories"] = GoodSubCategory.objects.only("id")
-        context["categories"] = GoodCategory.objects.only("id")
-        context["community"] = self.community
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form = GoodForm(request.POST,request.FILES)
-        if request.is_ajax() and self.form.is_valid():
-            new_good = self.form.save(commit=False)
-            albums = self.form.cleaned_data.get("album")
-            new_good.creator = request.user
-            new_good = self.form.save()
-            for _album in albums:
-                _album.good_album.add(new_good)
-            return render(request,'c_good/good.html',{'object': new_good})
-        else:
-            return HttpResponseBadRequest()
-
-
 class GoodAlbumCommunityCreate(TemplateView):
     """
     создание списка товаров сообщества

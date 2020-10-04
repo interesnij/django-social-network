@@ -204,36 +204,6 @@ class GoodUserCreate(TemplateView):
         else:
             return HttpResponseBadRequest("")
 
-class GoodUserCreateAttach(TemplateView):
-    template_name = "u_good/add_attach.html"
-    form = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.form = GoodForm(initial={"creator":self.user})
-        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(GoodUserCreateAttach,self).get_context_data(**kwargs)
-        context["form"] = self.form
-        context["sub_categories"] = GoodSubCategory.objects.only("id")
-        context["categories"] = GoodCategory.objects.only("id")
-        context["user"] = self.user
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form = GoodForm(request.POST,request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid():
-            new_good = self.form.save(commit=False)
-            new_good.creator = self.user
-            new_good = self.form.save()
-            html = render(request, 'u_good/good.html',{'object': new_good})
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-        return super(GoodUserCreateAttach,self).get(request,*args,**kwargs)
-
 
 class GoodAlbumUserCreate(TemplateView):
     """
