@@ -512,7 +512,7 @@ on('#ajax', 'click', '.good_load_several', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk), this.classList.add("active_svg"))
   } else if (document.body.querySelector(".message_attach_block")){
-    check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk), this.classList.add("active_svg")
+    check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk), this.classList.add("active_svg"))
   }
 });
 
