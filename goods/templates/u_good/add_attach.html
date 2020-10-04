@@ -4,21 +4,20 @@
 <h5 class="m-0">Добавление товара</h5>
 <br><br>
 
-<form action="" id="add_good_user_form" method="post" enctype="multipart/form-data">
+<form id="u_add_good_form" type="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
         <label>Название (обязательно)</label>
-        <input type="text" required name="title" class="form-control" id="id_title">
+        <input type="text" name="title" class="form-control" id="id_title">
       </div>
       <div class="col-lg-6 col-md-6">
         <label>Цена товара</label>
-        <input type="number" name="price" class="form-control" id="id_price">
+        <input type="number" value="0" min="0" name="price" class="form-control" id="id_price">
       </div>
     </div>
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
-
         <label>Категория</label>
         <select class="form-control goods_category" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
           <option value="">Выберите категорию</option>
@@ -32,10 +31,17 @@
       </div>
 
       <div class="col-lg-6 col-md-6">
-        <br>
+        <div class="form-group">
+          <label>Список</label>
+          <select name="album" multiple="" id="id_album" style="height:100%">
+            {% for object in user.get_all_good_albums %}
+              <option value="{{ object.pk }}">{{ object.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
         <div class="hide_image">{{ form.image }}</div>
-        <div id="good_image" class="border">
-            <h4 style="font-weight:bold;font-size:50px;color:#CECECE">обложка</h4>
+        <div id="good_image" class="border centered pointer">
+            <h4>обложка</h4>
             <p>Нажмите, чтобы добавить</p>
 
             <i style="">(обязательно)</i>
@@ -75,16 +81,21 @@
     </div>
     <br>
 
-    <div class="form-group ">
+    <div class="form-group">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" checked class="custom-control-input" name="comments_enabled" id="id_comments_enabled">
             <label class="custom-control-label" for="id_comments_enabled">Разрешить комментарии</label>
         </div>
     </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" checked class="custom-control-input" name="votes_on" id="id_votes_on">
+            <label class="custom-control-label" for="id_votes_on">Разрешить реакции</label>
+        </div>
+    </div>
 
     <div class="card-footer">
         <button class="btn btn-secondary create_fullscreen_hide" style="float:none;position:relative;top:0;right:0">Отмена</button>
-        <button type="button" id="add_good_user_btn" class="btn btn-success float-right">Опубликовать</button>
+        <button type="button" id="u_add_good_btn" class="btn btn-success float-right">Опубликовать</button>
     </div>
-<span class="is_attach"></span>
 </form>
