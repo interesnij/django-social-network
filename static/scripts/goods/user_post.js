@@ -237,6 +237,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
     new_good.innerHTML = elem;
     good = new_good.querySelector(".u_good_detail");
     data_pk = good.getAttribute('good-pk');
+    data_uuid = good.getAttribute('good-uuid');
     src = good.querySelector("img").getAttribute('src');
     title = good.querySelector(".good_title").innerHTML;
 
@@ -251,9 +252,9 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
       };
       new_good.classList.add("attach_toggle");
       if (!img_block.querySelector(".select_good1")){
-        div = create_preview_good("select_good1", src, data_pk, title)
+        div = create_preview_good("select_good1", src, data_pk, data_uuid, title)
       } else if (!img_block.querySelector(".select_good2")){
-        div = create_preview_good("select_good2", src, data_pk, title)
+        div = create_preview_good("select_good2", src, data_pk, data_uuid, title)
       }
       img_block.append(div);
       img_block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', img_block.append($good_input));
@@ -270,16 +271,16 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
         return
       };
       new_good.classList.add("attach_toggle");
-      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, data_pk, title)}
-      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", src, data_pk, title)}
-      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", src, data_pk, title)}
-      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", src, data_pk, title)}
-      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", src, data_pk, title)}
-      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", src, data_pk, title)}
-      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", src, data_pk, title)}
-      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", src, data_pk, title)}
-      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", src, data_pk, title)}
-      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", src, data_pk, title)}
+      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", src, data_pk, data_uuid, title)}
     block.append(div);
     block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
     add_file_attach()
@@ -296,16 +297,16 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
         return
       };
       new_good.classList.add("attach_toggle");
-      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, data_pk, title)}
-      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", src, data_pk, title)}
-      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", src, data_pk, title)}
-      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", src, data_pk, title)}
-      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", src, data_pk, title)}
-      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", src, data_pk, title)}
-      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", src, data_pk, title)}
-      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", src, data_pk, title)}
-      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", src, data_pk, title)}
-      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", src, data_pk, title)}
+      if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", src, data_pk, data_uuid, title)}
+      else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", src, data_pk, data_uuid, title)}
     block.append(div);
     block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
 
@@ -315,7 +316,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
     else {
       uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
       span1 = new_good.querySelector('.span1')
-      if (span1.classList.contains(uuid)){
+      if (span1.classList.contains(data_pk)){
         container = document.body.querySelector(".profile_block_paginate");
         container.insertAdjacentHTML('afterBegin', new_good.innerHTML);
         container.querySelector(".goods_empty") ? container.querySelector(".goods_empty").style.display = "none" : null;
