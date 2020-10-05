@@ -109,3 +109,32 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     }
     ajax_link.send();
 })
+
+  ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+  ws_path = ws_scheme + '://' + window.location.host + "/" + currentUser + "/";
+  webSocket = new channels.WebSocketBridge();
+  webSocket.connect(ws_path);
+
+
+  webSocket.socket.onclose = function () {
+    console.log("Disconnected from inbox stream");
+  };
+
+  webSocket.listen(function (event) {
+    switch (event.key) {
+      case "message":
+        if (event.sender === activeUser) {
+          addNewMessage(event.message_id);
+          // I hope there is a more elegant way to work this out.
+          setTimeout(function () { $("#unread-count").hide() }, 1);
+        } else {
+          $("#new-message-" + event.sender).show();
+        }
+        break;
+
+      default:
+        console.log('error: ', event);
+        console.log(typeof (event))
+        break;
+    }
+  });

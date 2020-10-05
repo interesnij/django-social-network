@@ -52,6 +52,6 @@ function loadScripts( src ) {
 
 loadScripts('/static/scripts/lib/progressive-image.js')
 loadScripts('/static/scripts/lib/Chart.min.js')
-
+loadScripts('/static/scripts/lib/websocketbridge.js')
 loadScripts('/static/scripts/lib/video_player.js')
 loadScripts('/static/scripts/lib/video_init.js')
