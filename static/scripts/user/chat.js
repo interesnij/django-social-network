@@ -112,7 +112,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
   request_user_username = document.body.querySelector(".userpic").getAttribute("data-username");
   ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-  ws_path = ws_scheme + '://' + window.location.host + "/" + request_user_username + "/";
+  ws_path = ws_scheme + '://' + window.location.host + "/chat/" + str(16) + "/";
   webSocket = new channels.WebSocketBridge();
   webSocket.connect(ws_path);
 
