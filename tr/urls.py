@@ -9,8 +9,6 @@ from ckeditor_uploader import views
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'', include ('main.urls')),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="account/logout.html"), name='logout'),
     url(r'^signup/$', TemplateView.as_view(template_name="main/auth.html"), name='signup'),
     url(r'^email-verification/$', TemplateView.as_view(template_name="account/email_verification.html"), name='email-verification'),
@@ -21,6 +19,9 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
+
+    url(r'^admin/', admin.site.urls),
+    url(r'', include ('main.urls')),
 
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),

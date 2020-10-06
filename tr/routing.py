@@ -12,7 +12,7 @@ application = ProtocolTypeRouter({
     "websocket": AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter([
-                url('ws://раса.рус/notify/post/', NotificationsConsumer),
+                url(r"^notify/post/$", NotificationsConsumer),
                 url('ws://раса.рус/(?P<username>[^/]+)/$', MessagerConsumer),
             ])
         ),
