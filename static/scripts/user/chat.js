@@ -1,6 +1,6 @@
 request_user_username = document.body.querySelector(".userpic").getAttribute("data-username");
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-ws_path = ws_scheme + '://' + window.location.host + ":8001" + "/notify/post/";
+ws_path = ws_scheme + '://' + 134.0.119.249 + ":8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
