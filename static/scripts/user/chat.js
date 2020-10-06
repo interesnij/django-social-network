@@ -1,6 +1,6 @@
 request_user_username = document.body.querySelector(".userpic").getAttribute("data-username");
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-ws_path = ws_scheme + '://' + "134.0.119.249:8002" + "/notify/post/";
+ws_path = ws_scheme + '://' + "134.0.119.249:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
@@ -11,10 +11,6 @@ webSocket.socket.onclose = function () {
 
 webSocket.listen(function (event) {
   switch (event.key) {
-    case "message":
-      alert("Message!!!")
-      break;
-
     case "notification":
       document.body.querySelector("#notification").classList.add("btn-danger");
       break;
