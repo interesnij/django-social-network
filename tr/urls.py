@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^about/', include('about.urls')),
     url(r'^logs/', include('logs.urls')),
     url(r'^managers/', include('managers.urls')),
-    url(r'^notifications/', include('notify.urls')),
+    url(r'^notify/', include('notify.urls')),
     url(r'^docs/', include('docs.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
