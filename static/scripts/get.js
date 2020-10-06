@@ -1,3 +1,41 @@
+request_user_username = document.body.querySelector(".userpic").getAttribute("data-username");
+ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+ws_path = ws_scheme + '://' + window.location.host + "/notify/post/";
+webSocket = new channels.WebSocketBridge();
+webSocket.connect(ws_path);
+
+
+webSocket.socket.onclose = function () {
+  console.log("Disconnected from inbox stream");
+};
+
+webSocket.listen(function (event) {
+  switch (event.key) {
+    case "message":
+      alert("Message!!!")
+      break;
+
+    case "notification":
+      document.body.querySelector("#notification").classList.add("btn-danger");
+      break;
+
+    case "social_update":
+      document.body.querySelector("#notification").classList.add("btn-danger");
+      update_social_activity(event.id_value);
+      break;
+
+    case "additional_news":
+      if (event.actor_name !== currentUser) {
+        $(".stream-update").show();
+      }
+      break;
+
+    default:
+      console.log('error: ', event);
+      console.log(typeof (event))
+      break;
+  }
+
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
     document.body.querySelector(".create_fullscreen").style.display = "none";

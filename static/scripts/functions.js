@@ -1,3 +1,22 @@
+function checkNotifications() {
+  emptyMessage = 'data-empty="true"';
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/notify/post/latest/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem_ = document.createElement('span');
+    elem_.innerHTML = link_.responseText;
+    if (!elem_.querySelector(emptyMessage)) {
+        document.body.querySelector("#notification").classList.add("btn-danger");
+    }
+  }};
+
+  link_.send();
+};
+
 function check_photo_in_block(block, _this, pk){
   if (block.querySelector( '[photo-pk=' + '"' + pk + '"' + ']' )) {
     _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
