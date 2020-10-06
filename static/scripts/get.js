@@ -35,6 +35,7 @@ webSocket.listen(function (event) {
       console.log(typeof (event))
       break;
   }
+})
 
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
