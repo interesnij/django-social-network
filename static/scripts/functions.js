@@ -310,7 +310,7 @@ function comment_wall_abort_delete(_this, _link) {
 function send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk") link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk"); link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + uuid + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
