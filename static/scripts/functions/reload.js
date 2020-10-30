@@ -213,7 +213,7 @@ function if_list(block){
 }
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
-load_chart();
+load_chart(); 
 
 function list_load(block,link) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
