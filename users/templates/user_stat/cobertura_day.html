@@ -5,7 +5,7 @@
 
 <div class="container mt-4 main-container">
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-12">
         <div class="card">
           <div class="card-header">
               <div class="media">
@@ -36,7 +36,7 @@
 												data-label_2="Рекламный охват"
 												data-data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
 												data-data_2="0,1,2"></canvas>
-                        <br><br>
+                        <br>
 
             						<h5 class="mt-1" style="margin:10px">География за этот день</h5>
 
@@ -55,10 +55,6 @@
                         </div>
           </div>
         </div>
-    </div>
-
-    <div class="col-md-3 left_menu">
-      {% include 'settings/menu.html' %}
     </div>
 </div>
 </div>
