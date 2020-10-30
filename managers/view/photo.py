@@ -7,7 +7,7 @@ from managers.forms import PhotoModeratedForm, PhotoCommentModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.photo import ModeratedPhoto, ModeratedPhotoComment
 from django.http import Http404
-from common.template.user import get_detect_platform_template 
+from common.template.user import get_detect_platform_template
 
 
 class PhotoAdminCreate(View):
@@ -248,7 +248,7 @@ class PhotoDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_photo_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_delete", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_delete", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PhotoDeleteWindow,self).get(request,*args,**kwargs)
@@ -263,7 +263,7 @@ class PhotoClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_claim", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_claim", request_user, request.META['HTTP_USER_AGENT'])
         return super(PhotoClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -278,7 +278,7 @@ class PhotoCommentDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_photo_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_delete", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_delete", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PhotoCommentDeleteWindow,self).get(request,*args,**kwargs)
@@ -297,7 +297,7 @@ class PhotoCommentClaimWindow(TemplateView):
             self.photo = self.comment.parent_comment.photo
         except:
             self.photo = self.comment.photo
-        self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_claim", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_claim", request_user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

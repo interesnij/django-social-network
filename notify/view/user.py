@@ -12,7 +12,7 @@ class UserNotificationListView(LoginRequiredMixin, ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("notify/user/user_notify_list.html", request)
+        self.template_name = get_settings_template("notify/user/user_notify_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserNotificationListView,self).get(request,*args,**kwargs)
 
     def get_queryset(self, **kwargs):
@@ -26,7 +26,7 @@ class CommunityNotificationListView(LoginRequiredMixin, ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("notify/user/community_notify_list.html", request)
+        self.template_name = get_settings_template("notify/user/community_notify_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityNotificationListView,self).get(request,*args,**kwargs)
 
     def get_queryset(self, **kwargs):
@@ -56,7 +56,7 @@ class UserLastNotify(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("notify/user/u_most_recent.html", request)
+        self.template_name = get_settings_template("notify/user/u_most_recent.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserLastNotify,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
@@ -68,7 +68,7 @@ class CommunityLastNotify(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("notify/user/c_most_recent.html", request)
+        self.template_name = get_settings_template("notify/user/c_most_recent.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityLastNotify,self).get(request,*args,**kwargs)
 
     def get_queryset(self):

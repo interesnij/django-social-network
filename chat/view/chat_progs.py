@@ -21,14 +21,14 @@ class CreateChat(TemplateView):
 			self.member = self.user
 
 		if self.user == request.user and not request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_empty.html", request)
+			self.template_name = get_settings_template("chat/create_chat_empty.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user == request.user and request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_with_members.html", request)
+			self.template_name = get_settings_template("chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and not request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_send_message.html", request)
+			self.template_name = get_settings_template("chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.friends = True
 		elif self.user != request.user and request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_send_message_with_members.html", request)
+			self.template_name = get_settings_template("chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.friends = True
 		return super(CreateChat,self).get(request,*args,**kwargs)
 

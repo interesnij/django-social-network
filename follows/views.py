@@ -37,7 +37,7 @@ class FollowingsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("follows/followings.html", request)
+		self.template_name = get_settings_template("follows/followings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FollowingsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

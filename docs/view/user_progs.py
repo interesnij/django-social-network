@@ -68,7 +68,7 @@ class UserCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class UserCreateDocWindow(TemplateView):
@@ -76,7 +76,7 @@ class UserCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -142,7 +142,7 @@ class UserDoclistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_edit_list.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -192,7 +192,7 @@ class UserDoclistPreview(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = DocList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("docs/doc_create/list_preview.html", request)
+		self.template_name = get_settings_template("docs/doc_create/list_preview.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDoclistPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

@@ -14,7 +14,7 @@ class CommunityCreate(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("communities/manage/create_community.html", request)
+		self.template_name = get_settings_template("communities/manage/create_community.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

@@ -11,7 +11,7 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
-from common.template.user import get_detect_platform_template 
+from common.template.user import get_detect_platform_template
 
 
 class UUCMGoodWindow(TemplateView):
@@ -25,7 +25,7 @@ class UUCMGoodWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(UUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -45,7 +45,7 @@ class CUCMGoodWindow(TemplateView):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_good.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_good.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(CUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -67,7 +67,7 @@ class UUCMGoodListWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_list_good.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_list_good.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -87,7 +87,7 @@ class CUCMGoodListWindow(TemplateView):
         self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_list_good.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_list_good.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -53,7 +53,7 @@ class MusicPlaylistPreview(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.playlist = SoundList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("music/playlist_preview.html", request)
+		self.template_name = get_settings_template("music/playlist_preview.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MusicPlaylistPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

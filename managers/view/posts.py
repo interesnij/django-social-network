@@ -7,7 +7,7 @@ from managers.forms import PostModeratedForm, PostCommentModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.post import ModeratedPost, ModeratedPostComment
 from django.http import Http404
-from common.template.user import get_detect_platform_template 
+from common.template.user import get_detect_platform_template
 
 
 class PostAdminCreate(View):
@@ -249,7 +249,7 @@ class PostDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/post/post_delete.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/post/post_delete.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PostDeleteWindow,self).get(request,*args,**kwargs)
@@ -264,7 +264,7 @@ class PostClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("managers/manage_create/post/post_claim.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/post/post_claim.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(PostClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -279,7 +279,7 @@ class PostCommentDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_post_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_delete.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_delete.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PostCommentDeleteWindow,self).get(request,*args,**kwargs)
@@ -298,7 +298,7 @@ class PostCommentClaimWindow(TemplateView):
             self.post = self.comment.parent_comment.post
         except:
             self.post = self.comment.post
-        self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_claim.html", request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_claim.html", request_user, request.META['HTTP_USER_AGENT'])
         return super(PostCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

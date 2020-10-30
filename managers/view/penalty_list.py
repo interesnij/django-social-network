@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from django.http import Http404
-from common.template.user import get_detect_platform_template 
+from common.template.user import get_detect_platform_template
 
 
 class PenaltyUserList(ListView):
@@ -11,7 +11,7 @@ class PenaltyUserList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/user_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/user_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyUserList,self).get(request,*args,**kwargs)
@@ -32,7 +32,7 @@ class PenaltyCommunityList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/community_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/community_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyCommunityList,self).get(request,*args,**kwargs)
@@ -53,7 +53,7 @@ class PenaltyPostList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/post_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/post_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyPostList,self).get(request,*args,**kwargs)
@@ -74,7 +74,7 @@ class PenaltyPostCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_post_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/post_comment_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/post_comment_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyPostCommentList,self).get(request,*args,**kwargs)
@@ -96,7 +96,7 @@ class PenaltyPhotoList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_administrator or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/photo_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/photo_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyPhotoList,self).get(request,*args,**kwargs)
@@ -117,7 +117,7 @@ class PenaltyPhotoCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_photo_administrator or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/photo_comment_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/photo_comment_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyPhotoCommentList,self).get(request,*args,**kwargs)
@@ -139,7 +139,7 @@ class PenaltyGoodList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/good_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/good_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyGoodList,self).get(request,*args,**kwargs)
@@ -160,7 +160,7 @@ class PenaltyGoodCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_good_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/good_comment_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/good_comment_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyGoodCommentList,self).get(request,*args,**kwargs)
@@ -182,7 +182,7 @@ class PenaltyAudioList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_audio_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/audio_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/audio_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyAudioList,self).get(request,*args,**kwargs)
@@ -204,7 +204,7 @@ class PenaltyVideoList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/video_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/video_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyVideoList,self).get(request,*args,**kwargs)
@@ -225,7 +225,7 @@ class PenaltyVideoCommentList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_video_manager or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/video_comment_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/video_comment_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyVideoCommentList,self).get(request,*args,**kwargs)
@@ -246,7 +246,7 @@ class PenaltyUserAdvertiserList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_user_advertiser or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/user_advertiser_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/user_advertiser_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyUserAdvertiserList,self).get(request,*args,**kwargs)
@@ -267,7 +267,7 @@ class PenaltyCommunityAdvertiserList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_community_advertiser or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/penalty_list/community_advertiser_list.html", request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/penalty_list/community_advertiser_list.html", request_user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PenaltyCommunityAdvertiserList,self).get(request,*args,**kwargs)

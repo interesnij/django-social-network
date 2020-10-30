@@ -17,9 +17,9 @@ class SendPageMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/message/add_friend_message.html", request)
+			self.template_name = get_settings_template("chat/message/add_friend_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_settings_template("chat/message/add_message.html", request)
+			self.template_name = get_settings_template("chat/message/add_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		return super(SendPageMessage,self).get(request,*args,**kwargs)
 
