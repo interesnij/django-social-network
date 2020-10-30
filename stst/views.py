@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from common.utils import get_client_ip, get_location
 from users.models import User
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 from posts.models import Post
 
 

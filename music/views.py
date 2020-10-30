@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.views import View
 from music.models import *
 from django.views.generic import ListView
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class AllMusicView(TemplateView):

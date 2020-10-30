@@ -7,7 +7,7 @@ from managers.forms import GoodModeratedForm, GoodCommentModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.good import ModeratedGood, ModeratedGoodComment
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class GoodAdminCreate(View):

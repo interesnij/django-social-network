@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from quan.models import Question, QuestionsCategory
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class QuanCategoryView(ListView):

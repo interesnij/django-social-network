@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class ModerationUserList(ListView):

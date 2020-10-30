@@ -7,7 +7,7 @@ from common.staff_progs.community import *
 from managers.model.community import ModeratedCommunity
 from managers.forms import CommunityModeratedForm, CommunityReportForm
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class CommunityAdminCreate(View):

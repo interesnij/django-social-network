@@ -8,10 +8,11 @@ from posts.models import Post
 from docs.models import DocList, Doc2
 from users.models import User
 from django.http import Http404
-from common.check.user import check_user_can_get_list, get_detect_platform_template
+from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
+from common.template.user import get_detect_platform_template
 
 
 class UUCMDocWindow(TemplateView):

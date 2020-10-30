@@ -6,7 +6,7 @@ from managers.forms import UserModeratedForm, UserReportForm
 from django.views.generic.base import TemplateView
 from managers.model.user import ModeratedUser
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class UserAdminCreate(View):

@@ -7,7 +7,7 @@ from managers.forms import PostModeratedForm, PostCommentModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.post import ModeratedPost, ModeratedPostComment
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class PostAdminCreate(View):

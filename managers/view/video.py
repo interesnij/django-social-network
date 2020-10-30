@@ -7,7 +7,7 @@ from managers.forms import VideoModeratedForm, VideoCommentModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.video import ModeratedVideo, ModeratedVideoComment
 from django.http import Http404
-from common.check.user import get_detect_platform_template
+from common.template.user import get_detect_platform_template 
 
 
 class VideoAdminCreate(View):
