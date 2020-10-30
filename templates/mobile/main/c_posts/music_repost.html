@@ -1,0 +1,17 @@
+
+{% with track=object.get_music_repost %}
+  <span style="padding: 5px;">
+    Сообщество&nbsp;<a class="ajax underline" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось аудиозаписью
+  </span>
+<br>
+  {% if object.parent.community %}
+
+    {% include 'generic/repost/c_music_repost.html' %}
+
+  {% else %}
+
+    {% include 'generic/repost/u_music_repost.html' %}
+
+  {% endif %}
+
+{% endwith %}

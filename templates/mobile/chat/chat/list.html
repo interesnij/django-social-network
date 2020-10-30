@@ -1,0 +1,83 @@
+{% extends "base_mobile.html" %}
+{% block title %}Сообщения{% endblock %}
+{% load messager %}
+{% block content %}
+
+<div class="container main-container">
+<div class="row">
+    <div class="col-md-8 mt-3 chat_load_container">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск сообщений">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-body px-0 py-0">
+              {% if object_list %}
+
+              <ul class="list-group profile_block_paginate" id="messages_container">
+                {% for object in object_list %}
+                  {% if not object.is_not_empty %}
+                    {% include 'message/empty_message.html' %}
+                  {% else %}
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
+                    <a class="chat_ajax" href="{% url 'chat_detali' pk=object.pk %}">
+                      {{ object|get_preview_message:request.user.pk|safe }}
+                    </a>
+                  </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+              {% else %}
+              <div class="card message_empty centered mb-3">
+                <div class="card-body"></div>
+                <h6 style="margin: 20px;text-align: center;">
+                   Пока сообщений нет. Вы можете
+                <br>
+                <span class="user_create_chat pointer underline" data-pk="{{ user.pk }}">создать чат</span></h6>
+              </div>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card mb-3 mt-3">
+          <div class="card-body">
+            <a href="{% url 'user' pk=user.pk %}" class="ajax">
+              <div class="media">
+                  <figure style="width:50px;">
+                    {% if user.get_avatar %}
+                      <img src="{{ user.get_avatar }}" style="border-radius:50px" alt="image">
+                    {% else %}
+                      <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    {% endif %}
+                  </figure>
+                <div class="media-body">
+                    <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
+                    <p class="small">Сообщения</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          </div>
+        <button class="btn btn-outline-success user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
+        <br>
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h6 class="mt-1">
+                      <a class="ajax pointer">Избранное</a>
+                    </h6>
+                  </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+</div>
+{% endblock %}

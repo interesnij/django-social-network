@@ -181,12 +181,13 @@ class CommunityGoodAbortDelete(View):
 
 
 class GoodCommunityCreate(TemplateView):
-    template_name = "c_good/add.html"
+    template_name = None
     form = None
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.form = GoodForm(initial={"creator":request.user})
+        self.template_name = self.community.get_manage_template(folder="good/c_good/", template="add.html", request=request)
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -218,12 +219,13 @@ class GoodAlbumCommunityCreate(TemplateView):
     """
     создание списка товаров сообщества
     """
-    template_name="good_base/c_add_album.html"
-    form=None
+    template_name = None
+    form = None
 
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_manage_template(folder="good/good_base/", template="c_add_album.html", request=request)
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -253,7 +255,7 @@ class CommunityGoodAlbumEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="good_base/", template="c_edit_album.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="good/good_base/", template="c_edit_album.html", request=request)
         return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

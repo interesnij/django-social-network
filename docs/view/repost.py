@@ -1,3 +1,4 @@
+
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from django.views import View
@@ -7,7 +8,7 @@ from posts.models import Post
 from docs.models import DocList, Doc2
 from users.models import User
 from django.http import Http404
-from common.check.user import check_user_can_get_list
+from common.check.user import check_user_can_get_list, get_detect_platform_template
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
@@ -20,12 +21,11 @@ class UUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "doc_repost_window/u_ucm_doc.html"
+        self.doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("docs/doc_repost_window/u_ucm_doc.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,11 +44,8 @@ class CUCMDocWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "doc_repost_window/c_ucm_doc.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("docs/doc_repost_window/c_ucm_doc.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -65,12 +62,11 @@ class UUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "doc_repost_window/u_ucm_list_doc.html"
+        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("docs/doc_repost_window/u_ucm_list_doc.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMDocListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -89,11 +85,8 @@ class CUCMDocListWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "doc_repost_window/c_ucm_list_doc.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("docs/doc_repost_window/c_ucm_list_doc.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMDocListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

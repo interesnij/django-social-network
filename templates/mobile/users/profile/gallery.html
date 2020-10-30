@@ -1,0 +1,25 @@
+{% if photo_album.get_6_photos %}
+
+<div class="card mb-3" data-uuid="{{ photo_album.uuid }}">
+    <div class="card-header">
+      <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Фото </h6>
+            </div>
+            {{ photo_album.count_photo }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        <div class="row no-gutters">
+          {% for object in photo_album.get_6_photos %}
+            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="u_photo_detail" photo-pk="{{ object.pk }}">
+              <img class="image_fit_70" src="{{ object.file.url }}" alt="">
+            </div>
+          {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endif %}

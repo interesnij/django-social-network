@@ -1,0 +1,25 @@
+{% if video_album.get_2_videos %}
+<div class="card mb-3">
+    <div class="card-header">
+      <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Видео </h4>
+            </div>
+            {{ video_album.count_video }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1" data-uuid="{{ video_album.uuid }}">
+        <div class="row no-gutters">
+          {% for object in video_album.get_2_videos %}
+            <div style="position:relative">
+              <img class="image_fit_small" src="{{ object.image.url }}" alt="">
+              <div class="video_icon_play_v2 u_video_list_detail" video-counter="{{ forloop.counter }}" video-pk="{{ object.pk }}"></div>
+              <p>{{ object.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

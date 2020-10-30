@@ -3,8 +3,6 @@ from django.conf.urls import url, include
 
 
 urlpatterns = [
-    url(r'^$', PostsView.as_view(), name='posts'),
-
     url(r'^user/', include('posts.url.user')),
 	url(r'^community/', include('posts.url.community')),
 	url(r'^votes/', include('posts.url.votes')),

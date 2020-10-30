@@ -13,7 +13,7 @@ class PostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/news/posts.html", request)
+			self.template_name = get_settings_template("main/news_list/news/posts.html", request)
 		else:
 			self.template_name = "main/auth.html"
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -33,7 +33,7 @@ class FeaturedPostsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/featured/posts.html", request)
+			self.template_name = get_settings_template("main/news_list/featured/posts.html", request)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedPostsView,self).get(request,*args,**kwargs)
@@ -52,7 +52,7 @@ class PhotosListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/news/photos.html", request)
+			self.template_name = get_settings_template("main/news_list/news/photos.html", request)
 		else:
 			self.template_name = "main/auth.html"
 		return super(PhotosListView,self).get(request,*args,**kwargs)
@@ -70,7 +70,7 @@ class FeaturedPhotosView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/featured/photos.html", request)
+			self.template_name = get_settings_template("main/news_list/featured/photos.html", request)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedPhotosView,self).get(request,*args,**kwargs)
@@ -89,7 +89,7 @@ class GoodsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/news/goods.html", request)
+			self.template_name = get_settings_template("main/news_list/news/goods.html", request)
 		else:
 			self.template_name = "main/auth.html"
 		return super(GoodsListView,self).get(request,*args,**kwargs)
@@ -107,7 +107,7 @@ class FeaturedGoodsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/featured/goods.html", request)
+			self.template_name = get_settings_template("main/news_list/featured/goods.html", request)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedGoodsView,self).get(request,*args,**kwargs)
@@ -126,7 +126,7 @@ class VideosListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/news/videos.html", request)
+			self.template_name = get_settings_template("main/news_list/news/videos.html", request)
 		else:
 			self.template_name = "main/auth.html"
 		return super(VideosListView,self).get(request,*args,**kwargs)
@@ -144,7 +144,7 @@ class FeaturedVideosView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/featured/videos.html", request)
+			self.template_name = get_settings_template("main/news_list/featured/videos.html", request)
 		else:
 			self.template_name = 'main/auth.html'
 		return super(FeaturedVideosView,self).get(request,*args,**kwargs)
@@ -162,7 +162,7 @@ class AudiosListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/news/audios.html", request)
+			self.template_name = get_settings_template("main/news_list/news/audios.html", request)
 		else:
 			self.template_name = "main/auth.html"
 		return super(AudiosListView,self).get(request,*args,**kwargs)
@@ -181,7 +181,7 @@ class FeaturedAudiosView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("news_list/featured/audios.html", request)
+			self.template_name = get_settings_template("main/news_list/featured/audios.html", request)
 			self.items = get_timeline_audios_for_possible_users(request.user)
 		else:
 			self.template_name = 'main/auth.html'

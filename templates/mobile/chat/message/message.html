@@ -1,0 +1,36 @@
+<div class="media mt-3">
+    <figure>
+      <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">
+        {% if object.get_creator.get_avatar %}
+          <img src="{{ object.get_creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+        {% else %}
+          <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        {% endif %}
+      </a>
+    </figure>
+    <div class="media-body">
+      <h5 class="time-title mb-0">
+        <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
+        <small class="float-right text-muted">{{ object.get_created }}</small>
+      </h5>
+      {% if object.text %}
+        <div class="">
+          {{ object.text|linebreaks }}
+        </div>
+      {% endif %}
+
+      <span>
+        {% include object.get_attach_items %}
+      </span>
+
+      {% if object.repost %}
+        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+          {% if object.repost.community %}
+            {% include object.get_c_repost_items %}
+          {% else %}
+            {% include object.get_u_repost_items %}
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+</div>

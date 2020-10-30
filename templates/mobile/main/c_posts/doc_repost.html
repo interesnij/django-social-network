@@ -1,0 +1,8 @@
+{% with object=object.get_doc_repost %}
+<span style="padding: 5px;">
+  Сообщество&nbsp;<a class="ajax underline" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось документом
+</span>
+<br>
+  {% include 'generic/items/c_doc.html' %}
+
+{% endwith %}

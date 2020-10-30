@@ -1,0 +1,35 @@
+
+<div class="col-md-8 col-lg-8 col-xl-6 mx-auto">
+    <form id="add_chat_form">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <div id="chat_members"></div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="name" class="form-control" id="id_name" placeholder="Необязательно">
+                </div>
+                <div class="form-group">
+                    <label>Тип открытости</label>
+                    <select class="form-control" name="type">
+                        <option value="PU">Публичный</option>
+                        <option value="PR">Закрытый</option>
+                    </select>
+                </div>
+
+                <span class="centered user_add_members pointer">Добавить участников</span>
+                <div class="row">
+                  <div class="col-md-7" id="chat_members" data-pk="{{ user.pk }}"></div>
+                  <div class="col-md-5" id="user_collector"></div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-secondary item_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button type="button" class="btn btn-success float-right" data-pk="{{ user.pk }}" id="add_chat_btn">Создать</button>
+            </div>
+        </div>
+    </form>
+</div>

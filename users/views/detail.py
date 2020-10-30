@@ -24,7 +24,7 @@ class UserPostView(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.posts = self.user.get_posts()
 
-        self.template_name = get_template_user_post(self.user, "lenta/", "post.html", request.user)
+        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
@@ -54,7 +54,7 @@ class UserGallery(TemplateView):
         else:
             self.albums_list = self.user.get_albums().order_by('-created')
 
-        self.template_name = get_template_user_photo(self.user, "user_gallery/", "gallery.html", request.user)
+        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGallery,self).get(request,*args,**kwargs)
@@ -75,7 +75,7 @@ class UserAlbum(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_template_user_photo(self.user, "user_album/", "album.html", request.user)
+        self.template_name = get_template_user_photo(self.user, "users/user_album/", "album.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserAlbum,self).get(request,*args,**kwargs)
@@ -93,9 +93,9 @@ class UserCommunities(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user(self.user, "user_community/", "communities.html", request.user)
+        self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user)
         if self.user.is_staffed_user() and self.user == request.user:
-            self.template_name = "user_community/my_staffed_communities.html"
+            self.template_name = "users/user_community/my_staffed_communities.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -117,7 +117,7 @@ class UserStaffCommunities(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_staffed_user() and self.user == request.user:
-            self.template_name = "user_community/staffed_communities.html"
+            self.template_name = "users/user_community/staffed_communities.html"
         return super(UserStaffCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -136,7 +136,7 @@ class UserMobStaffed(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user == request.user:
-            self.template_name = "mob_user_community/staffed.html"
+            self.template_name = "users/mob_user_community/staffed.html"
         return super(UserMobStaffed,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -155,7 +155,7 @@ class UserMusic(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
 
-        self.template_name = get_template_user_music(self.user, "user_music/", "music.html", request.user)
+        self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserMusic,self).get(request,*args,**kwargs)
@@ -188,7 +188,7 @@ class UserDocs(ListView):
         else:
             self.doc_list = self.list.get_docs()
 
-        self.template_name = get_template_user_doc(self.user, "user_docs/", "docs.html", request.user)
+        self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserDocs,self).get(request,*args,**kwargs)
@@ -221,7 +221,7 @@ class UserGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_user_good(self.user, "user_goods/", "goods.html", request.user)
+        self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(UserGoods,self).get(request,*args,**kwargs)
@@ -251,7 +251,7 @@ class UserVideo(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.user, "user_video/", "list.html", request.user)
+        self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -287,9 +287,9 @@ class ProfileUserView(TemplateView):
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/you_global_block.html"
                 elif self.user.is_child():
-                    self.template_name = "account/my_user_child.html"
+                    self.template_name = "users/account/my_user_child.html"
                 else:
-                    self.template_name = "account/my_user.html"
+                    self.template_name = "users/account/my_user.html"
             elif request.user.pk != self.user.pk:
                 self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
                 if self.user.is_suspended():
@@ -297,24 +297,24 @@ class ProfileUserView(TemplateView):
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name = "account/staff_user.html"
+                    self.template_name = "users/account/staff_user.html"
                     self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
                     if request.user.is_connected_with_user_with_id(user_id=self.user.pk):
                         request.user.create_or_plus_populate_friend(self.user.pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
-                    self.template_name = "account/block_user.html"
+                    self.template_name = "users/account/block_user.html"
                 elif request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                    self.template_name = "account/user.html"
+                    self.template_name = "users/account/user.html"
                     request.user.create_or_plus_populate_friend(self.user.pk)
                 elif self.user.is_closed_profile():
                     if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                        self.template_name = "account/user.html"
+                        self.template_name = "users/account/user.html"
                     else:
-                        self.template_name = "account/close_user.html"
+                        self.template_name = "users/account/close_user.html"
                 elif request.user.is_child() and not self.user.is_child_safety():
-                    self.template_name = "account/no_child_safety.html"
+                    self.template_name = "users/account/no_child_safety.html"
                 else:
-                    self.template_name = "account/user.html"
+                    self.template_name = "users/account/user.html"
                 if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
                     UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
                 else:
@@ -325,11 +325,11 @@ class ProfileUserView(TemplateView):
             elif self.user.is_blocked():
                 self.template_name = "generic/u_template/anon_user_global_block.html"
             elif self.user.is_closed_profile():
-                self.template_name = "account/anon_close_user.html"
+                self.template_name = "users/account/anon_close_user.html"
             elif not self.user.is_child_safety():
-                self.template_name = "account/anon_no_child_safety.html"
+                self.template_name = "users/account/anon_no_child_safety.html"
             else:
-                self.template_name = "account/anon_user.html"
+                self.template_name = "users/account/anon_user.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

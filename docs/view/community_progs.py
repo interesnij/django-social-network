@@ -105,7 +105,7 @@ class CommunityDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'c_docs_list/admin_list.html',{'list': new_list, 'community': community})
+            return render(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -135,7 +135,7 @@ class CommunityDocCreate(View):
                 for _list in lists:
                     _list.doc_list.add(new_doc)
 
-            return render(request, 'doc_create/new_user_doc.html',{'object': new_doc})
+            return render(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 
@@ -149,7 +149,7 @@ class CommunityDoclistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_edit_list.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="docs/doc_create/", template="c_edit_list.html", request=request)
         return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

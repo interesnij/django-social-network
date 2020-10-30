@@ -16,7 +16,7 @@ class UserSoundcloudSetPlaylistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/u_soundcloud_add_playlist.html", request)
+        self.template_name = get_settings_template("music/music_create/u_soundcloud_add_playlist.html", request)
         return super(UserSoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -29,7 +29,7 @@ class UserSoundcloudSetWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/u_soundcloud_set_playlist.html", request)
+        self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request)
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -54,7 +54,7 @@ class UserSoundcloudSetCreate(View):
             new_list.creator = request.user
             new_list.save()
             add_playlist(request.POST.get('permalink'), request.user, new_list)
-            return render(request, 'user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'user': request.user})
+            return render(request, 'music/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -128,7 +128,7 @@ class UserCreatePlaylistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/u_create_list.html", request)
+        self.template_name = get_settings_template("music/music_create/u_create_list.html", request)
         return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
 class UserEditPlaylistWindow(TemplateView):
@@ -137,7 +137,7 @@ class UserEditPlaylistWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("music_create/u_edit_list.html", request)
+        self.template_name = get_settings_template("music/music_create/u_edit_list.html", request)
         return super(UserEditPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -178,7 +178,7 @@ class UserPlaylistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/u_edit_list.html", request)
+        self.template_name = get_settings_template("music/music_create/u_edit_list.html", request)
         return super(UserPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

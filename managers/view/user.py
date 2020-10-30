@@ -6,6 +6,7 @@ from managers.forms import UserModeratedForm, UserReportForm
 from django.views.generic.base import TemplateView
 from managers.model.user import ModeratedUser
 from django.http import Http404
+from common.check.user import get_detect_platform_template
 
 
 class UserAdminCreate(View):
@@ -261,7 +262,7 @@ class UserSuspendWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
-            self.template_name = "manage_create/user_suspend.html"
+            self.template_name = get_detect_platform_template("managers/manage_create/user_suspend.html", request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserSuspendWindow,self).get(request,*args,**kwargs)
@@ -277,7 +278,7 @@ class UserBlockWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
-            self.template_name = "manage_create/user_block.html"
+            self.template_name = get_detect_platform_template("managers/manage_create/user_block.html", request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserBlockWindow,self).get(request,*args,**kwargs)
@@ -293,7 +294,7 @@ class UserWarningBannerdWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_user_manager or request.user.is_superuser:
-            self.template_name = "manage_create/user_warning_banner.html"
+            self.template_name = get_detect_platform_template("managers/manage_create/user_warning_banner.html", request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserWarningBannerdWindow,self).get(request,*args,**kwargs)
@@ -308,7 +309,7 @@ class UserClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = "manage_create/user_claim.html"
+        self.template_name = get_detect_platform_template("managers/manage_create/user_claim.html", request.META['HTTP_USER_AGENT'])
         return super(UserClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -3,11 +3,11 @@ from goods.models import GoodSubCategory
 
 
 class GoodCategories(TemplateView):
-	template_name = "good_base/categories.html"
+	template_name = "goods/good_base/categories.html"
 
 
 class GoodSubCategories(TemplateView):
-	template_name = "good_base/subcategories.html"
+	template_name = "goods/good_base/subcategories.html"
 
 
 class GoodsCats(TemplateView):

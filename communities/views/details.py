@@ -22,7 +22,7 @@ class PostCommunity(TemplateView):
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
-        self.template_name = get_template_community_post(self.community, "c_lenta/", "item.html", request.user)
+        self.template_name = get_template_community_post(self.community, "communities/lenta/", "item.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(PostCommunity,self).get(request,*args,**kwargs)
@@ -46,37 +46,37 @@ class CommunityDetail(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if self.community.is_suspended():
-            self.template_name = "c_detail/community_suspended.html"
+            self.template_name = "communities/detail/community_suspended.html"
         elif self.community.is_blocked():
-            self.template_name = "c_detail/community_blocked.html"
+            self.template_name = "communities/detail/community_blocked.html"
         elif request.user.is_authenticated:
             if request.user.is_member_of_community(self.community.pk):
                 if request.user.is_administrator_of_community(self.community.pk):
-                    self.template_name = "c_detail/admin_community.html"
+                    self.template_name = "communities/detail/admin_community.html"
                 elif request.user.is_moderator_of_community(self.community.pk):
-                    self.template_name = "c_detail/moderator_community.html"
+                    self.template_name = "communities/detail/moderator_community.html"
                 elif request.user.is_editor_of_community(self.community.pk):
-                    self.template_name = "c_detail/editor_community.html"
+                    self.template_name = "communities/detail/editor_community.html"
                 elif request.user.is_advertiser_of_community(self.community.pk):
-                    self.template_name = "c_detail/advertiser_community.html"
+                    self.template_name = "communities/detail/advertiser_community.html"
                 elif request.user.is_community_manager():
-                    self.template_name = "c_detail/staff_member_community.html"
+                    self.template_name = "communities/detail/staff_member_community.html"
                 else:
-                    self.template_name = "c_detail/member_community.html"
+                    self.template_name = "communities/detail/member_community.html"
                 request.user.create_or_plus_populate_community(self.community.pk)
             elif request.user.is_follow_from_community(self.community.pk):
-                self.template_name = "c_detail/follow_community.html"
+                self.template_name = "communities/detail/follow_community.html"
             elif request.user.is_community_manager():
-                self.template_name = "c_detail/staff_community.html"
+                self.template_name = "communities/detail/staff_community.html"
             elif request.user.is_banned_from_community(self.community.pk):
-                self.template_name = "c_detail/block_community.html"
+                self.template_name = "communities/detail/block_community.html"
             elif self.community.is_public():
                 if request.user.is_child() and not self.community.is_verified():
-                    self.template_name = "c_detail/no_child_safety.html"
+                    self.template_name = "communities/detail/no_child_safety.html"
                 else:
-                    self.template_name = "c_detail/public_community.html"
+                    self.template_name = "communities/detail/public_community.html"
             elif self.community.is_closed():
-                self.template_name = "c_detail/close_community.html"
+                self.template_name = "communities/detail/close_community.html"
             elif self.community.is_private():
                 self.template_name = "generic/c_template/private_community.html"
             if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -87,13 +87,13 @@ class CommunityDetail(TemplateView):
         elif request.user.is_anonymous:
             if self.community.is_public():
                 if not self.community.is_verified():
-                    self.template_name = "c_detail/anon_no_child_safety.html"
+                    self.template_name = "communities/detail/anon_no_child_safety.html"
                 else:
-                    self.template_name = "c_detail/anon_community.html"
+                    self.template_name = "communities/detail/anon_community.html"
             elif self.community.is_closed():
-                self.template_name = "c_detail/anon_close_community.html"
+                self.template_name = "communities/detail/anon_close_community.html"
             elif self.community.is_private():
-                self.template_name = "c_detail/anon_private_community.html"
+                self.template_name = "communities/detail/anon_private_community.html"
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
@@ -124,7 +124,7 @@ class CommunityGallery(TemplateView):
         self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
         self.albums_list = self.community.get_albums().order_by('-created')
 
-        self.template_name = get_template_community_photo(self.community, "c_gallery/", "gallery.html", request.user)
+        self.template_name = get_template_community_photo(self.community, "communities/gallery/", "gallery.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGallery,self).get(request,*args,**kwargs)
@@ -144,7 +144,7 @@ class CommunityAlbum(TemplateView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.community, "c_album/", "album.html", request.user)
+        self.template_name = get_template_community_photo(self.community, "communities/album/", "album.html", request.user)
 
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name

@@ -1,0 +1,18 @@
+{% with album=object.get_good_list_repost %}
+
+  <span style="padding: 5px;">
+    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
+    {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} списком товаров
+  </span>
+
+  {% if object.parent.community %}
+
+    {% include 'generic/items/c_good_list.html' %}
+
+  {% else %}
+
+    {% include 'generic/items/u_good_list.html' %}
+
+  {% endif %}
+
+{% endwith %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Мои уведомления{% endblock %}
+{% block content %}
+
+<span class="notifications" style="padding:20px">
+{% if object_list %}
+
+{% for object in object_list %}
+<div class="card mb-3 notification">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure>
+              {% if object.actor.get_avatar %}
+                <img src="{{ notification.actor.get_avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
+              {% else %}
+                <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+              {% endif %}
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">
+                  <a href="{% url 'user' pk=object.actor.pk %}" class="ajax">
+                    {{ object.actor.get_full_name }}
+                  </a>
+                  <p class="mb-0">{{ object.get_created }}</p>
+                </h6>
+                <p class="mb-0">
+                  {{ object.get_verb_display }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% else %}
+Пока ничего нет...
+{% endif %}
+</span>
+
+{% endblock %}

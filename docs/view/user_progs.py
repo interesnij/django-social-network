@@ -68,7 +68,7 @@ class UserCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("doc_create/u_create_doc_list.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request)
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class UserCreateDocWindow(TemplateView):
@@ -76,7 +76,7 @@ class UserCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("doc_create/u_create_doc.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request)
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -103,7 +103,7 @@ class UserDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render(request, 'docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -128,7 +128,7 @@ class UserDocCreate(View):
             new_doc.save()
             for _list in lists:
                 _list.doc_list.add(new_doc)
-            return render(request, 'doc_create/new_user_doc.html',{'object': new_doc})
+            return render(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 
@@ -142,7 +142,7 @@ class UserDoclistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("doc_create/u_edit_list.html", request)
+        self.template_name = get_settings_template("docs/doc_create/u_edit_list.html", request)
         return super(UserDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -192,7 +192,7 @@ class UserDoclistPreview(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = DocList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("doc_create/list_preview.html", request)
+		self.template_name = get_settings_template("docs/doc_create/list_preview.html", request)
 		return super(UserDoclistPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

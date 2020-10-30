@@ -1,27 +1,15 @@
 from django.views.generic.base import TemplateView
 from common.utils import get_client_ip, get_location
 from users.models import User
+from common.check.user import get_detect_platform_template
+from posts.models import Post
 
-
-class StatView(TemplateView):
-    template_name = "stat.html"
-
-    def get(self,request,*args,**kwargs):
-        self.ip = get_client_ip(request)
-        get_location(request)
-        return super(StatView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(StatView,self).get_context_data(**kwargs)
-        context["ip"] = self.ip
-        return context
 
 class StatItemView(TemplateView):
-    template_name = "item_stat.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        from posts.models import Post
-
+        self.template_name = get_detect_platform_template("stst/item_stat.html", request.META['HTTP_USER_AGENT'])
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 

@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
 from users.models import User
-from common.check.user import check_user_can_get_list
+from common.check.user import check_user_can_get_list, get_detect_platform_template
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
@@ -20,12 +20,11 @@ class UUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "post_repost_window/u_ucm_post.html"
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("posts/post_repost_window/u_ucm_post.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -42,11 +41,10 @@ class CUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-            self.community = Community.objects.get(pk=self.kwargs["pk"])
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "post_repost_window/c_ucm_post.html"
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("posts/post_repost_window/c_ucm_post.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

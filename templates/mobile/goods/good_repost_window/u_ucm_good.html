@@ -1,0 +1,19 @@
+
+<div class="col-md-12">
+    <form id="u_uсm_good_repost_form">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Поделиться товаром {{ object.creator.get_full_name_genitive }}</h5>
+            </div>
+            <div class="card-body">
+              {% include 'generic/repost/full_user_choice.html' %}
+              {% include 'generic/repost/form.html' %}
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-secondary votes_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button type="button" class="btn btn-success float-right" id="u_ucm_good_repost_btn" data-uuid="{{ object.pk }}" data-pk="{{ user.pk }}">Поделиться</button>
+            </div>
+        </div>
+    </form>
+</div>

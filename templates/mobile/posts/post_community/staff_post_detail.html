@@ -1,0 +1,21 @@
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
+    {% include 'post_community/staff_card_header.html' %}
+
+    {{ object.text|linebreaks }}
+
+    <span class="post_attach_panel">
+      {% include object.get_c_attach_items %}
+    </span>
+
+    {% if object.parent %}
+    <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+      {% if object.parent.community %}
+        {% include object.get_c_post_parent_items %}
+      {% else %}
+        {% include object.get_u_post_parent_items %}
+      {% endif %}
+    </span>
+    {% endif %}
+
+    {% include 'post_community/info.html' %}
+</div>

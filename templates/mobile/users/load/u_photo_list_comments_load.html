@@ -1,0 +1,55 @@
+<style>
+  #add_multi_comments_photos {
+    border: 1px dashed green;
+    padding: 5px;
+    text-align: center;}
+  #add_multi_comments_photos:hover {cursor: pointer}
+</style>
+
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">
+    <a data-href="{% url 'u_photo_comment_load' %}" class="pointer create_ajax underline">
+      Прикрепление фотографий
+    </a>
+      / {{ album.title }}
+    </h5>
+  </div>
+  <div class="card-body border-bottom">
+    <form id="add_comment_photos" method="post">
+        {% csrf_token %}
+          <input type="file" class="u_photo_post_comment_attach" id="u_photo_post_attach" name="file" style="display:none" multiple="multiple">
+          <div id="u_multi_comments_photos" class="border centered" style="cursor:pointer">
+              <h4>загрузить и прикрепить (до 2х)</h4>
+          </div>
+    </form>
+<br>
+
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="img_load_container" data-link="/users/load/u_album_img_load/{{ album.uuid }}/">
+{% for object in object_list %}
+<div class="col-md-4 mb-3 load_pag {% if forloop.last %}load_last{% endif %}">
+  <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
+      <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
+  </div>
+    <span class="item_attach_circle photo_load_several"
+         tooltip="Выбрать несколько"
+         flow="up">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+        </svg>
+    </span>
+</div>
+  {% endfor %}
+
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+  </div>
+  <h6 style="text-align: center;margin: 20px;"> У Вас нет фотографий ...</h6>
+</div>
+{% endif %}
+</div>
+</div>

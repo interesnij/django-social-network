@@ -1,0 +1,64 @@
+{% extends "base_anon.html" %}
+{% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
+{% block content %}
+
+<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+    <div class="row">
+        <div class="col-md-8 mt-3">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск документов">
+            <div class="input-group-append">
+              <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+          </div>
+          <div class="card mb-2">
+              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+                <div style="display:flex">
+                  {% if community.get_avatar %}
+                    <img src="{{ community.get_avatar }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
+                  {% else %}
+                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+                  {% endif %}
+                  <div class="media-body" style="margin-left: 10px;">
+                    <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
+                    <p class="">
+                      <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
+                        {{ community.name }}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="card mb-2">
+              <div class="card-body">
+                    <ul id="community_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate">
+                      {% if object_list %}
+                      {% for doc in object_list %}
+                      <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
+                          <div class="media" style="align-items: unset;position: relative;">
+                              <div class="media-body doc_media_body">
+                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
+                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                      {% else %}
+                      <div class="card centered">
+                        <div class="card-body" style="margin-top: 10%;">
+                        <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        </div>
+                        <h6 style="margin: 20px;text-align: center;">В списке пока нет документов.</h6>
+                      </div>
+                      {% endif %}
+                    </ul>
+              </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          {% include 'c_docs/sidebar.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

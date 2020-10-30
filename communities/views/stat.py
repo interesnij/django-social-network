@@ -9,7 +9,7 @@ class CommunityCoberturaYear(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_year.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="cobertura_year.html", request=request)
 		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
 		self.sities = []
@@ -42,7 +42,7 @@ class CommunityCoberturaMonth(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_month.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="cobertura_month.html", request=request)
 		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		self.sities = []
@@ -76,7 +76,7 @@ class CommunityCoberturaWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_week.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="cobertura_week.html", request=request)
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
 		self.range = []
 		self.views = []
@@ -113,7 +113,7 @@ class CommunityCoberturaDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_day.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="cobertura_day.html", request=request)
 		self.days = CommunityNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		self.sities = []
@@ -145,7 +145,7 @@ class CommunityTrafficYear(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_year.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="traffic_year.html", request=request)
 		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
 		self.un_views = []
@@ -183,7 +183,7 @@ class CommunityTrafficMonth(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_month.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="traffic_month.html", request=request)
 		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		self.un_views = []
@@ -222,7 +222,7 @@ class CommunityTrafficWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_week.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="traffic_week.html", request=request)
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
 		self.views = []
 		self.un_views = []
@@ -266,7 +266,7 @@ class CommunityTrafficDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_day.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="communities/stat/", template="traffic_day.html", request=request)
 		self.days = CommunityNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		self.un_views = []

@@ -1,0 +1,35 @@
+
+<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <form action="" id="u_edit_album_form" method="post" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение альбома {{ album.title }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group ">
+                  <label>Название</label>
+                  <input data-error="Это поле обязательно" type="text" value="{{ album.title }}" name="title" class="form-control" id="id_title" required>
+                </div>
+                <div class="form-group ">
+                  <label>Описание</label>
+                  <input type="text" name="description" value="{{ album.description }}" class="form-control" id="id_description">
+                </div>
+                <div class="form-group ">
+                  <label>Порядковый номер</label>
+                  <input type="number" value="{{ album.order }}" name="order" class="form-control" id="id_order">
+                </div>
+                <div class="form-group ">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_public" class="custom-control-input" {% if album.is_public %}checked{% endif %} id="id_is_public">
+                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
+                  </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button id="u_edit_album_btn" type="button" class="btn btn-success float-right">Изменить</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -15,7 +15,7 @@ class CommunityVideoList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_template_community_video(self.community, "c_album_list/", "list.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/c_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
 
@@ -45,7 +45,7 @@ class CommunityVideoDetail(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_template_community_video(self.community, "c_video_detail/", "video.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/c_video_detail/", "video.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
 
@@ -76,7 +76,7 @@ class CommunityPostVideoList(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.video_list = self.post.get_attach_videos()
 
-        self.template_name = get_template_community_video(self.community, "c_album_list/", "list.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/c_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
@@ -97,7 +97,7 @@ class CommunityPostCommentVideoList(TemplateView):
         self.community = community.objects.get(pk=self.kwargs["pk"])
         self.video_list = self.comment.get_attach_videos()
 
-        self.template_name = get_template_community_video(self.community, "u_album_list/", "list.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/u_album_list/", "list.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
@@ -126,7 +126,7 @@ class CommunityVideoInfo(TemplateView):
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
 
-        self.template_name = get_template_community_video(self.community, "c_video_info/", "video.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/c_video_info/", "video.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityVideoInfo,self).get(request,*args,**kwargs)

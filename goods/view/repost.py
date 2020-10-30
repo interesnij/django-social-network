@@ -7,7 +7,7 @@ from posts.models import Post
 from goods.models import Good, GoodAlbum
 from users.models import User
 from django.http import Http404
-from common.check.user import check_user_can_get_list
+from common.check.user import check_user_can_get_list, get_detect_platform_template
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
@@ -20,12 +20,11 @@ class UUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.good = Good.objects.get(pk=self.kwargs["good_pk"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "good_repost_window/u_ucm_good.html"
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,11 +43,8 @@ class CUCMGoodWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "good_repost_window/c_ucm_good.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_good.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -66,12 +62,11 @@ class UUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "good_repost_window/u_ucm_list_good.html"
+        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_list_good.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -90,11 +85,8 @@ class CUCMGoodListWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "good_repost_window/c_ucm_list_good.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("goods/good_repost_window/c_ucm_list_good.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

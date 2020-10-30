@@ -17,9 +17,9 @@ class SendPageMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.get_6_friends():
-			self.template_name = get_settings_template("message/add_friend_message.html", request)
+			self.template_name = get_settings_template("chat/message/add_friend_message.html", request)
 		else:
-			self.template_name = get_settings_template("message/add_message.html", request)
+			self.template_name = get_settings_template("chat/message/add_message.html", request)
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		return super(SendPageMessage,self).get(request,*args,**kwargs)
 
@@ -69,7 +69,7 @@ class SendMessage(View):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 			get_message_attach(request, message)
-			return render(request, 'message/message.html', {'object': message})
+			return render(request, 'chat/message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
 

@@ -14,7 +14,7 @@ class CommunityCreate(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("manage/create_community.html", request)
+		self.template_name = get_settings_template("communities/manage/create_community.html", request)
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -29,7 +29,7 @@ class CommunityCreate(TemplateView):
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
 			membersheeps = [request.user,]
-			return render(request, 'c_detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
+			return render(request, 'communities/detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
 

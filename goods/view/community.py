@@ -19,7 +19,7 @@ class CommunityGood(TemplateView):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.goods = self.album.get_goods()
 
-        self.template_name = get_template_community_good(self.album.community, "c_good/", "good.html", request.user)
+        self.template_name = get_template_community_good(self.album.community, "goods/c_good/", "good.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(CommunityGood,self).get(request,*args,**kwargs)
@@ -43,7 +43,7 @@ class GoodCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_template_community_good(self.community, "c_good_comment/", "comments.html", request.user)
+        self.template_name = get_template_community_good(self.community, "goods/c_good_comment/", "comments.html", request.user)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(GoodCommunityCommentList,self).get(request,*args,**kwargs)

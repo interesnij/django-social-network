@@ -1,0 +1,68 @@
+<style>
+  #video_holder{
+  width: 100%;
+  min-height: 276px;
+  min-width: 250px;
+  border: 1px dashed #FF0000;
+  color: grey;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  }
+
+  #video_holder img{
+  width: 95%;
+  height: auto;
+  }
+  .id_image input,
+  .id_image{
+      display: none;
+  }
+  #id_album{
+    height: auto;
+  }
+</style>
+    <form action="" id="create_video_form">
+      {% csrf_token %}
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="title" class="form-control" id="id_title">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Ссылка на ролик</label>
+                    <input type="text" name="uri" class="form-control" id="id_uri">
+                  </div>
+                  <div class="form-group">
+                    <label>Описание</label>
+                    {{ form_post.description }}
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group">
+                    <label>Обложка</label>
+                    <div class="id_image">
+                      <input type="file" name="image" accept="image/*" id="id_image">
+                    </div>
+                    <div id="video_holder">
+                      <h4>Изображение</h4>
+                      <i>(обязательно)</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <div class="card-footer">
+              <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+              <button type="button" class="btn btn-success float-right u_create_video_attach_btn">Создать</button>
+            </div>
+        </div>
+    </form>

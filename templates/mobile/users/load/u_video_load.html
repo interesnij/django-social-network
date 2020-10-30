@@ -1,0 +1,78 @@
+
+<style>
+  .user_video_create_attach {
+    border: 1px dashed green;
+    padding: 5px;
+    text-align: center;}
+  .user_video_create_attach:hover {cursor: pointer}
+</style>
+
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">Прикрепление видеозаписей</h5>
+  </div>
+  <div class="card-body border-bottom">
+<div class="row">
+  <div class="col-md-8">
+  <h4 class="user_video_create_attach mb-3 border centered">Создать видео</h4>
+{% if object_list %}
+  <h4 class="attach_video_album mb-3 border centered pointer" data-pk="{{ album.pk }}" style="padding:5px">Прикрепить альбом</h4>
+
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="video_load_container" data-link="/users/load/u_video_load/">
+{% for object in object_list %}
+<div class="col-md-6 mb-3 load_pag {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}">
+  <div>
+    {% if object.image %}
+      <img class="image_fit_200 video_load_one pointer"
+           video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
+           video-pk="{{ object.pk }}"
+           src="{{ object.image.url }}" alt="img">
+    {% else %}
+      <svg class="svg_default image_fit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    {% endif %}
+  </div>
+  <span class="item_attach_circle video_load_several"
+       tooltip="Выбрать несколько"
+       flow="up">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+      </svg>
+  </span>
+  <div class="card-body">
+    <h5 class="text-truncate w-100">{{ object.title }}</h5>
+    <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </div>
+  <h6 style="text-align: center;margin: 20px;"> В основном списке нет видео.</h6>
+</div>
+{% endif %}
+
+</div>
+<div class="col-md-4">
+  {% if request.user.user_video_album_exists %}
+  <div class="card">
+      <div class="nav flex-column nav-pills faqnav">
+        <h6 style="margin-bottom:15px">Видеоальбомы</h6>
+        <a>Основной видеоальбом</a>
+        {% for object in request.user.get_my_video_albums %}
+          <a class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}">
+            {{ object.title }}
+          </a>
+        {% endfor %}
+      </div>
+  </div>
+  {% else %}
+    <p style="text-align: center;margin: 20px;"> Списков видео нет.</p>
+  {% endif %}
+</div>
+</div>
+</div>
+</div>

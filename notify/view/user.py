@@ -3,12 +3,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from notify.model.user import UserNotify, UserCommunityNotify
+from common.template.user import get_settings_template
 
 
 class UserNotificationListView(LoginRequiredMixin, ListView):
     model = UserNotify
     context_object_name = 'notification_list'
-    template_name = 'notify_user/user_notify_list.html'
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_settings_template("notify/user/user_notify_list.html", request)
+        return super(UserNotificationListView,self).get(request,*args,**kwargs)
 
     def get_queryset(self, **kwargs):
         notify = UserNotify.objects.filter(recipient=self.request.user)
@@ -18,7 +23,11 @@ class UserNotificationListView(LoginRequiredMixin, ListView):
 class CommunityNotificationListView(LoginRequiredMixin, ListView):
     model = UserCommunityNotify
     context_object_name = 'notification_list'
-    template_name = 'notify_user/community_notify_list.html'
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_settings_template("notify/user/community_notify_list.html", request)
+        return super(CommunityNotificationListView,self).get(request,*args,**kwargs)
 
     def get_queryset(self, **kwargs):
         notify = UserCommunityNotify.objects.filter(community__creator=self.request.user)
@@ -43,16 +52,24 @@ def community_all_read(request):
 
 
 class UserLastNotify(ListView):
-    template_name = "notify_user/u_most_recent.html"
+    template_name = None
     paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_settings_template("notify/user/u_most_recent.html", request)
+        return super(UserLastNotify,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         notifications = self.request.user.user_notifications.get_most_recent()
         return notifications
 
 class CommunityLastNotify(ListView):
-    template_name = "notify_user/c_most_recent.html"
+    template_name = None
     paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_settings_template("notify/user/c_most_recent.html", request)
+        return super(CommunityLastNotify,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         notifications = self.request.user.user_notifications.get_most_recent()

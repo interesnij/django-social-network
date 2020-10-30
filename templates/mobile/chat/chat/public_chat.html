@@ -1,0 +1,44 @@
+{% extends "base_mobile.html" %}
+{% block title %}Сообщения{% endblock %}
+{% load messager %}
+{% block content %}
+
+<div class="px-0 card no-shadow pk_saver" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+    <div class="card-header border-bottom">
+        <div class="media w-100">
+          {{ chat|get_chat_header:request.user.pk|safe }}
+            <div class="dropdown d-inline-block">
+              <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 530px;">
+        <ul class="chatlist app">
+          {% if object_list %}
+          {% for object in object_list %}
+            {% include 'message/message.html' %}
+          {% endfor %}
+          <span id="scrolled"></span>
+          {% else %}
+          <div class="message_empty mb-3">
+            <div class="card-body"></div>
+            <h6 style="margin: 20px;text-align: center;">
+               Пока сообщений нет.
+            </h6>
+          </div>
+          {% endif %}
+        </ul>
+    </div>
+    <div class="card-footer border-top">
+      {% include 'chat/form.html' %}
+    </div>
+</div>
+
+{% endblock %}

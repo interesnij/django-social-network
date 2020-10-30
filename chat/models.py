@@ -251,11 +251,13 @@ class ChatUsers(models.Model):
 
 class Message(models.Model):
     STATUS_DRAFT = 'D'
+    STATUS_ERROR = 'ER'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
     STATUS_EDIT = 'E'
     STATUSES = (
         (STATUS_DRAFT, 'Черновик'),
+        (STATUS_ERROR, 'Ошибка отправления'),
         (STATUS_PROCESSING, 'Обработка'),
         (STATUS_PUBLISHED, 'Опубликовано'),
         (STATUS_EDIT, 'Изменено'),

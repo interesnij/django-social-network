@@ -1,0 +1,38 @@
+
+<div class="row" style="margin-left: 0;margin-right: 0;">
+    {% for object in albums_list %}
+    <div class="col-md-6 col-lg-4 cover_block" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}">
+
+        <div class="card rounded-0 border-0 mb-3">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
+                        <h6 class="mb-0">{{ object.title }}</h6>
+                    </div>
+                    {% if object.is_user_album %}
+                    <div class="dropdown d-inline-block">
+                        <a style="cursor:pointer;width:20px;display:inline-block">
+                          <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <span class="dropdown-item pointer u_album_edit">Изменить</span>
+                            <span class="dropdown-item pointer u_album_remove">Удалить</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+              <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
+                  {% if object.get_cover_photo %}
+                    <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
+                  {% else %}
+                    <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
+                  {% endif %}
+                <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
+              </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

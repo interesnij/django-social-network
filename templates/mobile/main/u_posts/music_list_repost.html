@@ -1,0 +1,18 @@
+{% with playlist=object.get_playlist_repost %}
+
+  <span style="padding: 5px;">
+    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator }}</a>
+    {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} плейлистом
+  </span>
+
+  {% if object.parent.community %}
+
+    {% include 'generic/items/c_music_list.html' %}
+
+  {% else %}
+
+    {% include 'generic/items/u_music_list.html' %}
+
+  {% endif %}
+
+{% endwith %}

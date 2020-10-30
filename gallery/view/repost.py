@@ -6,7 +6,7 @@ from posts.forms import PostForm
 from posts.models import Post
 from gallery.models import Photo, Album
 from users.models import User
-from common.check.user import check_user_can_get_list
+from common.check.user import check_user_can_get_list, get_detect_platform_template
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
@@ -19,12 +19,11 @@ class UUCMPhotoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "photo_repost_window/u_ucm_photo.html"
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -43,11 +42,8 @@ class CUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "photo_repost_window/c_ucm_photo.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -65,12 +61,11 @@ class UUCMPhotoAlbumWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-            self.user = User.objects.get(pk=self.kwargs["pk"])
-            if self.user != request.user:
-                check_user_can_get_list(request.user, self.user)
-            self.template_name = "photo_repost_window/u_ucm_photo_album.html"
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo_album.html", request.META['HTTP_USER_AGENT'])
         return super(UUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -89,11 +84,8 @@ class CUCMPhotoAlbumWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and request.is_ajax():
-            check_can_get_lists(request.user, self.community)
-            self.template_name = "photo_repost_window/c_ucm_photo_album.html"
-        else:
-            Http404
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo_album.html", request.META['HTTP_USER_AGENT'])
         return super(CUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -1,0 +1,16 @@
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
+
+    {% include 'post_user/card_header.html' %}
+
+    {% if object.is_repost %}
+    {% include 'post_user/repost_detail.html' %}
+    {% endif %}
+
+    {{ object.text|linebreaks }}
+
+    <span class="post_attach_panel">
+      {% include object.get_u_attach_items %}
+    </span>
+
+    {% include 'post_user/info.html' %}
+</div>
