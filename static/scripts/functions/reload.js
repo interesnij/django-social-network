@@ -1,26 +1,5 @@
 
-function get_post_view(){
-	if(document.querySelector(".post_stream")){
-		container = document.querySelector(".post_stream");
-		link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    list = container.querySelectorAll('.pag');
-    for (var i = 0; i < list.length; i++) {
-      if(!list[i].classList.contains("showed")){
-        inViewport = elementInViewport(list[i]);
-        if(inViewport){
-					try{
-          uuid = list[i].getAttribute('data-uuid');
-					if (list[i].querySelector(".reklama")){
-						link.open( 'GET', '/posts/user_progs/post_market_view/' + uuid + "/", true );
-					} else if(!list[i].querySelector(".reklama")){
-						link.open( 'GET', '/posts/user_progs/post_view/' + uuid + "/", true );
-				}}catch{ null }
-				link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-				link.send();
-				list[i].classList.add("showed");
-				console.log(i + " получил класс showed");
-    }}}}}
+function get_post_view(){if(document.querySelector(".post_stream")){container=document.querySelector(".post_stream");link=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');list=container.querySelectorAll('.pag');for(var i=0;i<list.length;i++){if(!list[i].classList.contains("showed")){inViewport=elementInViewport(list[i]);if(inViewport){try{uuid=list[i].getAttribute('data-uuid');if(list[i].querySelector(".reklama")){link.open('GET','/posts/user_progs/post_market_view/'+uuid+"/",true)}else if(!list[i].querySelector(".reklama")){link.open('GET','/posts/user_progs/post_view/'+uuid+"/",true)}}catch{null}link.setRequestHeader('X-Requested-With','XMLHttpRequest');link.send();list[i].classList.add("showed");console.log(i+" получил класс showed")}}}}}
 
 function scrolled(link, block_id, target){
 	// работа с прокруткой:
@@ -182,87 +161,17 @@ function minus_new_followers(){
 	}
 }
 
-function if_list(block){
-  // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список/С пагинацией сразу
-  if(block.querySelector('#lenta_load')){
-    lenta_load = block.querySelector('#lenta_load');
-		link = lenta_load.getAttribute("data-link");
-    list_load(lenta_load, link);
-		scrolled(link, '#lenta_load', target=1)
-  }else if(block.querySelector('#lenta_community')){
-    lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_community"), link);
-		scrolled(link, '#lenta_community', target=1)
-  }else if(block.querySelector('#photo_load')){
-    photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#photo_load"), link);
-		scrolled(link, '#photo_load', target=0)
-  }else if(block.querySelector('#c_photo_load')){
-    photo_load = block.querySelector('#c_photo_load');link = photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#c_photo_load"), link);
-		scrolled(link, '#c_photo_load', target=0)
-  }else if(block.querySelector('#album_photo_load')){
-    album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#album_photo_load"), link);
-		scrolled(link, '#album_photo_load', target=0)
-  }else if(block.querySelector('#c_album_photo_load')){
-    album_photo_load = block.querySelector('#c_album_photo_load');link = album_photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#c_album_photo_load"), link);
-		scrolled(link, '#c_album_photo_load', target=0)
-  }
-}
+function if_list(block){if(block.querySelector('#lenta_load')){lenta_load=block.querySelector('#lenta_load');link=lenta_load.getAttribute("data-link");list_load(lenta_load,link);scrolled(link,'#lenta_load',target=1)}else if(block.querySelector('#lenta_community')){lenta_community=block.querySelector('#lenta_community');link=lenta_community.getAttribute("data-link");list_load(block.querySelector("#lenta_community"),link);scrolled(link,'#lenta_community',target=1)}else if(block.querySelector('#photo_load')){photo_load=block.querySelector('#photo_load');link=photo_load.getAttribute("data-link");list_load(block.querySelector("#photo_load"),link);scrolled(link,'#photo_load',target=0)}else if(block.querySelector('#c_photo_load')){photo_load=block.querySelector('#c_photo_load');link=photo_load.getAttribute("data-link");list_load(block.querySelector("#c_photo_load"),link);scrolled(link,'#c_photo_load',target=0)}else if(block.querySelector('#album_photo_load')){album_photo_load=block.querySelector('#album_photo_load');link=album_photo_load.getAttribute("data-link");list_load(block.querySelector("#album_photo_load"),link);scrolled(link,'#album_photo_load',target=0)}else if(block.querySelector('#c_album_photo_load')){album_photo_load=block.querySelector('#c_album_photo_load');link=album_photo_load.getAttribute("data-link");list_load(block.querySelector("#c_album_photo_load"),link);scrolled(link,'#c_album_photo_load',target=0)}}
+
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
-load_chart(); 
+load_chart()
 
 function list_load(block,link) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 	request.open( 'GET', link, true ); request.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
 }
 
-function ajax_get_reload(url) {
-	// перезагрузка основного блока на страницу с указанным url
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url, true );
-		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector("#reload_block");
-        rtr = document.getElementById('ajax');
-        rtr.innerHTML = ajax.innerHTML;
-				window.scrollTo(0,0);
-        title = elem_.querySelector('title').innerHTML;
-        window.history.pushState(null, "vfgffgfgf", url);
-        document.title = title;
-        if_list(rtr);
-        load_chart();
-				page = 2;
-				loaded = false;
-				create_pagination(rtr);
-      }
-    }
-    ajax_link.send();
-}
+function ajax_get_reload(url){var ajax_link=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');ajax_link.open('GET',url,true);ajax_link.setRequestHeader('X-Requested-With','XMLHttpRequest');ajax_link.onreadystatechange=function(){if(this.readyState==4&&this.status==200){elem_=document.createElement('span');elem_.innerHTML=ajax_link.responseText;ajax=elem_.querySelector("#reload_block");rtr=document.getElementById('ajax');rtr.innerHTML=ajax.innerHTML;window.scrollTo(0,0);title=elem_.querySelector('title').innerHTML;window.history.pushState(null,"vfgffgfgf",url);document.title=title;if_list(rtr);load_chart();page=2;loaded=false;create_pagination(rtr)}}ajax_link.send()}
 
-function this_page_reload(url) {
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url, true );
-		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector("#reload_block");
-        rtr = document.getElementById('ajax');
-        rtr.innerHTML = ajax.innerHTML;
-        window.scrollTo(0,0);
-        if_list(rtr);
-				page = 2;
-				loaded = false;
-				create_pagination(rtr);
-      }
-    }
-    ajax_link.send();
-}
+function this_page_reload(url){var ajax_link=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');ajax_link.open('GET',url,true);ajax_link.setRequestHeader('X-Requested-With','XMLHttpRequest');ajax_link.onreadystatechange=function(){if(this.readyState==4&&this.status==200){elem_=document.createElement('span');elem_.innerHTML=ajax_link.responseText;ajax=elem_.querySelector("#reload_block");rtr=document.getElementById('ajax');rtr.innerHTML=ajax.innerHTML;window.scrollTo(0,0);if_list(rtr);page=2;loaded=false;create_pagination(rtr)}}ajax_link.send()}
