@@ -6,7 +6,7 @@ class AboutView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("about/about.html", request)
+        self.template_name = get_settings_template("about/about.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AboutView,self).get(request,*args,**kwargs)
 
 

@@ -53,19 +53,21 @@ def get_template_user(user, folder, template, request_user):
             template_name = folder + "anon_" + template
     return template_name
 
-def get_settings_template(template, request):
-    if request.user.is_authenticated:
-        if request.user.is_no_phone_verified():
+def get_settings_template(template, request_user, user_agent):
+    if request_user.is_authenticated:
+        if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
-        elif request.user.is_suspended():
+        elif request_user.is_suspended():
             template_name = "generic/u_template/you_suspended.html"
-        elif request.user.is_blocked():
+        elif request_user.is_blocked():
             template_name = "generic/u_template/you_global_block.html"
         else:
             template_name = template
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
-    elif request.user.is_anonymous:
+        if MOBILE_AGENT_RE.match(user_agent):
+            template_name = "mobile/" + template_name
+        else:
+            template_name = "desctop/" + template_name
+    elif request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
     return template_name
 
@@ -80,11 +82,11 @@ def get_default_template(folder, template, request):
         template_name = "mob_" + template_name
     return template_name
 
-def get_detect_platform_template(template, user_agent):
-    if request.user.is_authenticated:
+def get_detect_platform_template(template, request_user, user_agent):
+    if request_user.is_authenticated:
         template_name = folder + template
-    elif request.user.is_anonymous:
-        raise PermissionDenied("Ошибка доступа") 
+    elif request_user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
 
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name

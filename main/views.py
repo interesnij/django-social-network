@@ -13,7 +13,7 @@ class PostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/posts.html", request)
+			self.template_name = get_settings_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = "main/auth.html"
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
