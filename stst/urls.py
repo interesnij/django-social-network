@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from stst.views import StatView, StatItemView
+from stst.views import StatItemView
 
 
 urlpatterns = [
