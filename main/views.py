@@ -7,15 +7,26 @@ from common.user_progs.timelines import *
 from common.template.user import get_settings_template
 
 
+def get_detect_main_template(template, request_user, user_agent):
+	""" получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
+	if MOBILE_AGENT_RE.match(user_agent):
+		if request_user.is_authenticated:
+			template_name = "mobile/" + template
+		else:
+			template_name = "mobile/main/auth.html"
+	else:
+		if request_user.is_authenticated:
+			template_name = "desctop/" + template
+		else:
+			template_name = "desctop/main/auth.html"
+	return template_name
+
 class PostsListView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = "main/auth.html"
+		self.template_name = get_detect_main_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -30,10 +41,7 @@ class FeaturedPostsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/featured/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = 'main/auth.html'
+		self.template_name = get_detect_main_template("main/news_list/featured/posts.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedPostsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -49,10 +57,7 @@ class PhotosListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = "main/auth.html"
+		self.template_name = get_detect_main_template("main/news_list/news/photos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PhotosListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -67,10 +72,7 @@ class FeaturedPhotosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/featured/photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = 'main/auth.html'
+		self.template_name = get_detect_main_template("main/news_list/featured/photos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedPhotosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -86,10 +88,7 @@ class GoodsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = "main/auth.html"
+		self.template_name = get_detect_main_template("main/news_list/news/goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -104,10 +103,7 @@ class FeaturedGoodsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/featured/goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = 'main/auth.html'
+		self.template_name = get_detect_main_template("main/news_list/featured/goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedGoodsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -123,10 +119,7 @@ class VideosListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = "main/auth.html"
+		self.template_name = get_detect_main_template("main/news_list/news/videos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(VideosListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -141,10 +134,7 @@ class FeaturedVideosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/featured/videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = 'main/auth.html'
+		self.template_name = get_detect_main_template("main/news_list/featured/videos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedVideosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -159,10 +149,7 @@ class AudiosListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/news/audios.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = "main/auth.html"
+		self.template_name = get_detect_main_template("main/news_list/news/audios.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AudiosListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -178,11 +165,7 @@ class FeaturedAudiosView(ListView):
 	items = []
 
 	def get(self,request,*args,**kwargs):
-		if request.user.is_authenticated:
-			self.template_name = get_settings_template("main/news_list/featured/audios.html", request.user, request.META['HTTP_USER_AGENT'])
-			self.items = get_timeline_audios_for_possible_users(request.user)
-		else:
-			self.template_name = 'main/auth.html'
+		self.template_name = get_detect_main_template("main/news_list/featured/audios.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedAudiosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -190,8 +173,8 @@ class FeaturedAudiosView(ListView):
 
 
 class MainPhoneSend(TemplateView):
-	template_name = "phone_verification.html"
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("main/phone_verification.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/phone_verification.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MainPhoneSend,self).get(request,*args,**kwargs)
