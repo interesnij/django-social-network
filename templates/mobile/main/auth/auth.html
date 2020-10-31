@@ -1,0 +1,13 @@
+{% extends "base_anon_mobile.html" %}
+{% block title %}Рады Вас видеть | трезвый.рус{% endblock %}
+{% block content %}
+
+<div class="container mt-3">
+    <div class="h-md-100 h-sm-auto">
+      {% include 'mobile/main/auth/login.html' %}
+
+      {% include 'mobile/main/auth/signup.html' %}
+    </div>
+</div>
+
+{% endblock %}
