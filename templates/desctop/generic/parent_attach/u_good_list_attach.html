@@ -1,4 +1,4 @@
-{% include 'u_posts/card_header.html' %}
+{% include 'desctop/main/u_posts/card_header.html' %}
 
 {% if object.parent.text %}
   <div class="fullscreen pointer">
@@ -7,5 +7,5 @@
 {% endif %}
 
 {% for album in object.parent.get_attach_good_list %}
-  {% include 'generic/items/u_good_list.html' %}
+  {% include 'desctop/generic/items/u_good_list.html' %}
 {% endfor %}

@@ -36,7 +36,7 @@
                 {% if object_list %}
                     <ul id="community_tracks_list_container" data-pk="{{ playlist.pk }}" class="community_block_paginate">
                       {% for object in object_list %}
-                        {% include 'generic/track.html' %}
+                        {% include 'desctop/generic/track.html' %}
                       {% endfor %}
                     </ul>
 
@@ -65,7 +65,7 @@
           {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_music_list/admin_sidebar.html' %}
+          {% include 'desctop/communities/c_music_list/admin_sidebar.html' %}
         </div>
     </div>
 </div>

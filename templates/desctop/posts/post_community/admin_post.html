@@ -1,5 +1,5 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
-    {% include 'post_community/admin_card_header.html' %}
+    {% include 'desctop/posts/post_community/admin_card_header.html' %}
 
       <div class="c_fullscreen pointer">
         {{ object.text|linebreaks }}
@@ -13,10 +13,10 @@
         {% if object.parent.community %}
           {% include object.get_c_post_parent_items %}
         {% else %}
-          {% include object.get_u_post_parent_items %} 
+          {% include object.get_u_post_parent_items %}
         {% endif %}
       </span>
     {% endif %}
 
-    {% include 'post_community/info.html' %}
+    {% include 'desctop/posts/post_community/info.html' %}
 </div>

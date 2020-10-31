@@ -41,7 +41,7 @@
               {% if object_list %}
 
               {% for object in object_list %}
-                {% include 'c_goods/good.html' %}
+                {% include 'desctop/communities/c_goods/good.html' %}
               {% endfor %}
 
               {% else %}
@@ -56,11 +56,11 @@
             </div>
         </div>
         {% else %}
-          {% include 'c_goods/deleted.html' %}
+          {% include 'desctop/communities/c_goods/deleted.html' %}
         {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_goods_list/sidebar.html' %}
+          {% include 'desctop/communities/c_goods_list/sidebar.html' %}
         </div>
 </div>
 

@@ -43,7 +43,7 @@
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
                                   <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
                                     <span class='span_btn' data-pk="{{ doc.pk }}">
-                                      {% include 'user_docs/add_dropdown.html' %}
+                                      {% include 'desctop/users/user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
                                         <a class="btn_default drop pointer">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -80,7 +80,7 @@
           {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_docs_list/admin_sidebar.html' %}
+          {% include 'desctop/communities/c_docs_list/admin_sidebar.html' %}
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 
 <div class="infinite-container">
   {% if object %}
-    {% include 'c_lenta/fixed_post.html' %}
+    {% include 'desctop/communities/c_lenta/fixed_post.html' %}
   {% endif %}
 
   <div class="stream-update">
@@ -10,7 +10,7 @@
 
   <span class="post_stream community_stream post_container">
       {% for object in object_list %}
-          {% include 'post_community/post.html' %}
+          {% include 'desctop/posts/post_community/post.html' %}
       {% endfor %}
   </span>
 </div>

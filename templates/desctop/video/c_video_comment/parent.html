@@ -23,7 +23,7 @@
           {% for object in comment.video_comment_photo.all %}
             {% include 'generic/comment_item/c_comment_photo.html' %}
           {% endfor %}
-          
+
           {% for object in comment.video_comment_video.all %}
             {% include 'generic/comment_item/c_comment_video.html' %}
           {% endfor %}
@@ -118,7 +118,7 @@
                             {% csrf_token %}
                             <div class="row img_block" style="margin:10px"></div>
                             <div class="row no-gutters">
-                              {% include 'c_video_comment/form_dropdown.html' %}
+                              {% include 'desctop/video/c_video_comment/form_dropdown.html' %}
 
                                 <div class="col">
                                     <div class="input-group input-group-sm">
@@ -148,7 +148,7 @@
                             <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
-                          {% include 'c_video_comment/reply.html' %}
+                          {% include 'desctop/video/c_video_comment/reply.html' %}
                         {% endif %}
                       {% endfor %}
 

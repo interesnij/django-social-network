@@ -11,12 +11,12 @@
         </span>
         <span class="stream_reply_comments">
             {% for reply in comment.get_replies %}
-              {% include 'c_good_comment/reply.html' %}
+              {% include 'desctop/goods/c_good_comment/reply.html' %}
             {% endfor %}
         </span>
       </div>
     {% else %}
-      {% include 'c_good_comment/parent.html' %}
+      {% include 'desctop/goods/c_good_comment/parent.html' %}
     {% endif %}
   {% endfor %}
 </span>
@@ -29,7 +29,7 @@
 
       <div class="row no-gutters" style="margin-top: 20px;">
 
-        {% include 'c_good_comment/form_dropdown.html' %}
+        {% include 'desctop/goods/c_good_comment/form_dropdown.html' %}
           <div class="col">
             <input type="hidden" name="good_pk" value="{{ parent.pk }}">
             <input type="hidden" name="pk" value="{{ community.pk }}">

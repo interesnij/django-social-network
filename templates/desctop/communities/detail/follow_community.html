@@ -67,16 +67,16 @@
             </div>
           <br>
           {% if common_friends %}
-            {% include 'detail_sections/frends_member.html' %}
+            {% include 'desctop/communities/detail_sections/frends_member.html' %}
           {% endif %}
           {% if community.is_contacts_open %}
-            {% include 'detail_sections/membersheeps.html' %}
+            {% include 'desctop/communities/detail_sections/membersheeps.html' %}
           {% endif %}
 
         </div>
     </div>
 </div>
 
-{% include 'detail_sections/warning_banner.html' %}
+{% include 'desctop/communities/detail_sections/warning_banner.html' %}
 
 {% endblock %}

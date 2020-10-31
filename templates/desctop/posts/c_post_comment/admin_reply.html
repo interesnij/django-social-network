@@ -20,7 +20,7 @@
 
         {{ reply.text }}
 
-        {% include 'generic/attach/c_reply_attach.html' %}
+        {% include 'desctop/generic/attach/c_reply_attach.html' %}
 
         <div class="">
             <div class="row">
@@ -107,7 +107,7 @@
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters" style="margin-top: 20px;">
-                              {% include 'c_post_comment/form_dropdown.html' %}
+                              {% include 'desctop/posts/c_post_comment/form_dropdown.html' %}
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 105%;">
                                       <input type="hidden" name="pk" value="{{ community.pk }}">

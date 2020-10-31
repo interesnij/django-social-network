@@ -21,7 +21,7 @@
         </h5>
         {{ comment.text|linebreaks }}
 
-        {% include 'generic/attach/u_photo_comment.html' %}
+        {% include 'desctop/generic/attach/u_photo_comment.html' %}
 
         <div class="">
             <div class="row">
@@ -118,7 +118,7 @@
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters">
-                                {% include 'u_photo_comment/form_dropdown.html' %}
+                                {% include 'desctop/gallery/u_photo_comment/form_dropdown.html' %}
 
                                 <div class="col">
                                     <div class="input-group input-group-sm">
@@ -147,7 +147,7 @@
                             <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
-                          {% include 'u_photo_comment/reply.html' %}
+                          {% include 'desctop/gallery/u_photo_comment/reply.html' %}
                         {% endif %}
                       {% endfor %}
                     </span>

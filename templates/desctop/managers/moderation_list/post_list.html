@@ -52,30 +52,30 @@
                               </div>
                           </div>
                             {% if object.post.is_repost %}
-                              {% include 'post_community/repost.html' %}
+                              {% include 'desctop/posts/post_community/repost.html' %}
                             {% endif %}
 
                             <div class="card-body"><p class="">{{ object.post.text }}</p></div>
 
                             <div class="attach_container" data-pk="{{ object.post.community.pk }}">
                               {% for photo in object.post.item_photo.all %}
-                                {% include 'generic/item/c_photo.html' %}
+                                {% include 'desctop/generic/item/c_photo.html' %}
                               {% endfor %}
 
                               {% for video in object.post.item_video.all %}
-                                {% include 'generic/item/c_video.html' %}
+                                {% include 'desctop/generic/item/c_video.html' %}
                               {% endfor %}
 
                               {% for good in object.post.item_good.all %}
-                                {% include 'generic/item/c_good.html' %}
+                                {% include 'desctop/generic/item/c_good.html' %}
                               {% endfor %}
 
                               {% for article in object.post.attached_item.all %}
-                                {% include 'generic/item/c_article.html' %}
+                                {% include 'desctop/generic/item/c_article.html' %}
                               {% endfor %}
 
                               {% for music in object.post.item_music.all %}
-                                {% include 'generic/item/c_music.html' %}
+                                {% include 'desctop/generic/item/c_music.html' %}
                               {% endfor %}
                             </div>
                           {% else %}
@@ -103,7 +103,7 @@
                               </div>
                           </div>
                             {% if object.post.is_repost %}
-                              {% include 'post_user/repost_detail.html' %}
+                              {% include 'desctop/posts/post_user/repost_detail.html' %}
                             {% endif %}
 
                             <div class="card-body">
@@ -111,23 +111,23 @@
 
                                 <div class="attach_container" data-pk="{{ object.post.creator.pk }}">
                                   {% for photo in object.post.item_photo.all %}
-                                    {% include 'generic/item/u_photo.html' %}
+                                    {% include 'desctop/generic/item/u_photo.html' %}
                                   {% endfor %}
 
                                   {% for video in object.post.item_video.all %}
-                                    {% include 'generic/item/u_video.html' %}
+                                    {% include 'desctop/generic/item/u_video.html' %}
                                   {% endfor %}
 
                                   {% for good in object.post.item_good.all %}
-                                    {% include 'generic/item/u_good.html' %}
+                                    {% include 'desctop/generic/item/u_good.html' %}
                                   {% endfor %}
 
                                   {% for item in object.post.attached_item.all %}
-                                    {% include 'generic/item/u_good.html' %}
+                                    {% include 'desctop/generic/item/u_good.html' %}
                                   {% endfor %}
-                                  
+
                                   {% for music in object.post.item_music.all %}
-                                    {% include 'generic/item/u_music.html' %}
+                                    {% include 'desctop/generic/item/u_music.html' %}
                                   {% endfor %}
                                 </div>
 

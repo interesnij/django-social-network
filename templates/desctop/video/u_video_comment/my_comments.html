@@ -11,12 +11,12 @@
         </span>
         <span class="stream_reply_comments">
             {% for reply in comment.get_replies %}
-              {% include 'u_video_comment/my_reply.html' %}
+              {% include 'desctop/video/u_video_comment/my_reply.html' %}
             {% endfor %}
         </span>
       </div>
     {% else %}
-      {% include 'u_video_comment/my_parent.html' %}
+      {% include 'desctop/video/u_video_comment/my_parent.html' %}
     {% endif %}
   {% endfor %}
 </span>
@@ -29,7 +29,7 @@
       <div class="row img_block" style="margin-top: 10px"></div>
       <div class="row no-gutters">
 
-        {% include 'u_video_comment/form_dropdown.html' %}
+        {% include 'desctop/video/u_video_comment/form_dropdown.html' %}
           <div class="col">
               <div class="input-group input-group-sm">
                 <input type="text" name="text" class="form-control text-comment form-control-rounded">

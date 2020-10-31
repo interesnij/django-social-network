@@ -2,18 +2,18 @@
 
 <div class="row" data-pk="{{ comment.pk }}">
   {% for photo in comment.gallery_comment_photo.all %}
-    {% include 'generic/items/c_photo.html' %}
+    {% include 'desctop/generic/items/c_photo.html' %}
   {% endfor %}
 
   {% for video in comment.gallery_comment_video.all %}
-    {% include 'generic/items/c_video.html' %}
+    {% include 'desctop/generic/items/c_video.html' %}
   {% endfor %}
 
   {% for music in comment.gallery_comment_music.all %}
-    {% include 'generic/items/u_music.html' %}
+    {% include 'desctop/generic/items/u_music.html' %}
   {% endfor %}
 
   {% for doc in comment.get_attach_docs %}
-    {% include 'generic/items/u_doc.html' %}
+    {% include 'desctop/generic/items/u_doc.html' %}
   {% endfor %}
 </div>

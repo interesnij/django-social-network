@@ -42,9 +42,9 @@
 
             {% if community.is_good_open %}
             {% if community.is_good_upload_member or community.is_good_upload_nomember %}
-              {% include 'detail_sections/admin_goods.html' %}
+              {% include 'desctop/communities/detail_sections/admin_goods.html' %}
             {% else %}
-              {% include 'detail_sections/goods.html' %}
+              {% include 'desctop/communities/detail_sections/goods.html' %}
             {% endif %}
             {% endif %}
 
@@ -62,7 +62,7 @@
             </div>
             {% endif %}
 
-            {% include 'detail_sections/create_post.html' %}
+            {% include 'desctop/communities/detail_sections/create_post.html' %}
 
             <div class="mt-3" id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 
@@ -84,29 +84,29 @@
             </div>
             <br>
             {% if common_friends %}
-              {% include 'detail_sections/frends_member.html' %}
+              {% include 'desctop/communities/detail_sections/frends_member.html' %}
             {% endif %}
 
             {% if community.is_contacts_open %}
-              {% include 'detail_sections/membersheeps.html' %}
+              {% include 'desctop/communities/detail_sections/membersheeps.html' %}
             {% endif %}
             {% if community.is_photo_open %}
-              {% include 'detail_sections/photo.html' %}
+              {% include 'desctop/communities/detail_sections/photo.html' %}
             {% endif %}
             {% if community.is_music_open %}
-              {% include 'detail_sections/music.html' %}
+              {% include 'desctop/communities/detail_sections/music.html' %}
             {% endif %}
             {% if community.is_video_open %}
-              {% include 'detail_sections/video.html' %}
+              {% include 'desctop/communities/detail_sections/video.html' %}
             {% endif %}
             {% if community.is_doc_open %}
-              {% include 'detail_sections/docs.html' %}
+              {% include 'desctop/communities/detail_sections/docs.html' %}
             {% endif %}
         </div>
 
     </div>
 </div>
 
-{% include 'detail_sections/warning_banner.html' %}
+{% include 'desctop/communities/detail_sections/warning_banner.html' %}
 
 {% endblock %}

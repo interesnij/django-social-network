@@ -45,7 +45,7 @@
                 {% if object_list %}
                     <ul id="user_tracks_container" data-tag="li" data-pk="{{ playlist.pk }}" class="profile_block_paginate">
                       {% for object in object_list %}
-                        {% include 'generic/track.html' %}
+                        {% include 'desctop/generic/track.html' %}
                       {% endfor %}
                     </ul>
 
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4">
-          {% include 'user_music/sidebar.html' %}
+          {% include 'desctop/users/user_music/sidebar.html' %}
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@
         </h5>
         {{ comment.text|linebreaks }}
 
-        {% include 'generic/attach/c_photo_comment.html' %}
+        {% include 'desctop/generic/attach/c_photo_comment.html' %}
 
         <div class="">
             <div class="row">
@@ -91,7 +91,7 @@
                             <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
-                          {% include 'c_photo_comment/anon_reply.html' %}
+                          {% include 'desctop/gallery/c_photo_comment/anon_reply.html' %}
 
                         {% endif %}
                       {% endfor %}

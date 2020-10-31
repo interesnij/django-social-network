@@ -25,7 +25,7 @@
           {% if object_list %}
           <input type="hidden" id="scrolled">
           {% for object in object_list %}
-            {% include 'message/message.html' %}
+            {% include 'desctop/chat/message/message.html' %}
           {% endfor %}
           {% else %}
           <div class="message_empty mb-3">
@@ -37,7 +37,7 @@
           {% endif %}
     </div>
     <div class="card-footer border-top">
-      {% include 'chat/form.html' %}
+      {% include 'desctop/chat/chat/form.html' %}
     </div>
 </div>
 {% endblock %}

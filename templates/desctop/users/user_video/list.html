@@ -45,7 +45,7 @@
                   <div class="row movies_list_in_list profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'user_video/video.html' %}
+                        {% include 'desctop/users/user_video/video.html' %}
                       {% endfor %}
                       {% else %}
                       <div class="card video_none centered">
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4">
-          {% include 'user_video/sidebar.html' %}
+          {% include 'desctop/users/user_video/sidebar.html' %}
         </div>
     </div>
 </div>

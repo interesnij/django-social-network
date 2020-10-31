@@ -23,7 +23,7 @@
         <ul class="chatlist app">
           {% if object_list %}
           {% for object in object_list %}
-            {% include 'message/message.html' %}
+            {% include 'desctop/chat/message/message.html' %}
           {% endfor %}
           <span id="scrolled"></span>
           {% else %}
@@ -37,7 +37,7 @@
         </ul>
     </div>
     <div class="card-footer border-top">
-      {% include 'chat/form.html' %}
+      {% include 'desctop/chat/chat/form.html' %}
     </div>
 </div>
 

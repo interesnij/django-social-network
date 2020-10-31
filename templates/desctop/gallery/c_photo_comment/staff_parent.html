@@ -19,7 +19,7 @@
         </h5>
         {{ comment.text|linebreaks }}
 
-        {% include 'generic/attach/c_photo_comment.html' %}
+        {% include 'desctop/generic/attach/c_photo_comment.html' %}
 
         <div class="">
             <div class="row">
@@ -103,7 +103,7 @@
                             {% csrf_token %}
                             <div class="row img_block" style="margin:10px"></div>
                             <div class="row no-gutters">
-                              {% include 'c_photo_comment/form_dropdown.html' %}
+                              {% include 'desctop/gallery/c_photo_comment/form_dropdown.html' %}
 
                                 <div class="col">
                                     <div class="input-group input-group-sm">
@@ -133,7 +133,7 @@
                             <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
-                          {% include 'c_photo_comment/staff_reply.html' %}
+                          {% include 'desctop/gallery/c_photo_comment/staff_reply.html' %}
                         {% endif %}
                       {% endfor %}
                     </span>

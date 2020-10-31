@@ -1,4 +1,4 @@
-{% include 'c_posts/card_header.html' %}
+{% include 'desctop/main/c_posts/card_header.html' %}
 
 {% if object.parent.text %}
   <div class="fullscreen pointer">
@@ -7,5 +7,5 @@
 {% endif %}
 
 {% for list in object.parent.get_attach_doc_list %}
-  {% include 'generic/repost/c_doc_list_repost.html' %}
+  {% include 'desctop/generic/repost/c_doc_list_repost.html' %}
 {% endfor %}

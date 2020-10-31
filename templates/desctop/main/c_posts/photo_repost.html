@@ -2,10 +2,10 @@
   <span style="padding: 5px;">
     Сообщество&nbsp;<a class="ajax underline" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось фотографией
   </span>
-  
+
   {% if object.parent.community %}
 
-    {% include 'c_posts/card_header.html' %}
+    {% include 'desctop/main/c_posts/card_header.html' %}
 
     {% if object.get_photo_repost.preview %}
     <div class="photo">
@@ -16,7 +16,7 @@
     {% endif %}
   {% else %}
 
-    {% include 'u_posts/card_header.html' %}
+    {% include 'desctop/main/u_posts/card_header.html' %}
     {% if object.get_photo_repost.preview %}
     <div class="photo">
       <div class="progressive replace image_fit u_WA_photo pointer" data-href="{{ object.get_photo_repost.file.url }}" photo-pk="{{ object.get_photo_repost.pk }}" data-pk="{{ object.get_photo_repost.creator.pk }}">

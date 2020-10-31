@@ -20,7 +20,7 @@
         </h5>
         {{ comment.text }}
 
-        {% include 'generic/attach/c_comment_attach.html' %}
+        {% include 'desctop/generic/attach/c_comment_attach.html' %}
 
         <div class="">
             <div class="row">
@@ -91,7 +91,7 @@
                             <p class="underline" style="display: flex;">Комментарий удален</p>
                           </div>
                         {% else %}
-                          {% include 'c_post_comment/anon_reply.html' %}
+                          {% include 'desctop/posts/c_post_comment/anon_reply.html' %}
                         {% endif %}
                       {% endfor %}
                     </span>

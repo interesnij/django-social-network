@@ -28,7 +28,7 @@
                         {{ object.community }}
                     </a>
                 </span>
-                  {% include 'generic/items/c_good.html' %}
+                  {% include 'desctop/generic/items/c_good.html' %}
                 {% else %}
                 <span style="padding: 5px;">
                     Новый товар &nbsp;
@@ -36,7 +36,7 @@
                         {{ object.creator.get_full_name_genitive }}
                     </a>
                 </span>
-                  {% include 'generic/items/u_good.html' %}
+                  {% include 'desctop/generic/items/u_good.html' %}
                 {% endif %}
                 {% endfor %}
             </span>
@@ -60,7 +60,7 @@
         <div class="col-12 col-md-4 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    {% include 'news_list/left_menu.html' %}
+                    {% include 'desctop/main/news_list/left_menu.html' %}
                 </div>
             </div>
         </div>

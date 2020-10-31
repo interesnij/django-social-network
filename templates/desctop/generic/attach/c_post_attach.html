@@ -2,30 +2,30 @@
 
 <div class="attach_container" data-pk="{{ object.pk }}">
   {% for photo in object.get_attach_photos %}
-    {% include 'generic/items/c_photo.html' %}
+    {% include 'desctop/generic/items/c_photo.html' %}
   {% endfor %}
 
   {% for album in object.get_attach_photo_list %}
-    {% include 'generic/items/c_album.html' %}
+    {% include 'desctop/generic/items/c_album.html' %}
   {% endfor %}
 
   {% for video in object.get_attach_videos %}
-    {% include 'generic/items/c_video.html' %}
+    {% include 'desctop/generic/items/c_video.html' %}
   {% endfor %}
 
   {% for good in object.get_attach_goods %}
-    {% include 'generic/items/c_good.html' %}
+    {% include 'desctop/generic/items/c_good.html' %}
   {% endfor %}
 
   {% for article in object.get_attach_articles %}
-    {% include 'generic/items/c_article.html' %}
+    {% include 'desctop/generic/items/c_article.html' %}
   {% endfor %}
 
   {% for music in object.get_attach_tracks %}
-    {% include 'generic/items/c_music.html' %}
+    {% include 'desctop/generic/items/c_music.html' %}
   {% endfor %}
-  
+
   {% for doc in object.get_attach_docs %}
-    {% include 'generic/items/c_doc.html' %}
+    {% include 'desctop/generic/items/c_doc.html' %}
   {% endfor %}
 </div>

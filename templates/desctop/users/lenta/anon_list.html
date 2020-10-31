@@ -2,7 +2,7 @@
 <div id="lenta_container">
 
   {% if object %}
-    {% include 'lenta/anon_fixed_post.html' %}
+    {% include 'desctop/users/lenta/anon_fixed_post.html' %}
   {% endif %}
 
     <div class="stream-update">
@@ -11,7 +11,7 @@
 
     <span class="stream post_container">
       {% for object in object_list %}
-        {% include 'post_user/anon_post.html' %}
+        {% include 'desctop/posts/post_user/anon_post.html' %}
       {% endfor %}
     </span>
 </div>

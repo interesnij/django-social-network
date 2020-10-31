@@ -24,26 +24,26 @@
                   {% if object.parent.community %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
                       {% include object.get_c_news_parent %}
-                      {% include 'post_community/info.html' %}
+                      {% include 'desctop/posts/post_community/info.html' %}
                     </div>
                   {% else %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
                       {% include object.get_u_news_parent %}
-                      {% include 'post_user/info.html' %}
+                      {% include 'desctop/posts/post_user/info.html' %}
                     </div>
                   {% endif %}
                 {% else %}
                   {% if object.community %}
                     {% if object.community in request.user.get_staffed_communities %}
-                      {% include 'c_posts/admin_post.html' %}
+                      {% include 'desctop/main/c_posts/admin_post.html' %}
                     {% else %}
-                      {% include 'c_posts/post.html' %}
+                      {% include 'desctop/msin/c_posts/post.html' %}
                     {% endif %}
                   {% else %}
                     {% if object.creator == request.user %}
-                      {% include 'u_posts/my_post.html' %}
+                      {% include 'desctop/main/u_posts/my_post.html' %}
                     {% else %}
-                      {% include 'u_posts/post.html' %}
+                      {% include 'desctop/main/u_posts/post.html' %}
                     {% endif %}
                   {% endif %}
                 {% endif %}
@@ -71,7 +71,7 @@
         <div class="col-12 col-md-4 col-lg-4">
           <div class="card">
             <div class="card-body">
-              {% include 'news_list/left_menu.html' %}
+              {% include 'desctop/main/news_list/left_menu.html' %}
             </div>
           </div>
         </div>

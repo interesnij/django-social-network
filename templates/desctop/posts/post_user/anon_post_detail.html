@@ -1,7 +1,7 @@
 {% load liked_user %}
 
 <div class="card mb-3" data-uuid="{{ object.uuid }}">
-    {% include 'post_user/anon_card_header.html' %}
+    {% include 'desctop/posts/post_user/anon_card_header.html' %}
 
     {{ object.text|linebreaks }}
 
@@ -10,7 +10,7 @@
     </span>
 
     {% if object.parent %}
-    {% include 'post_user/repost_detail.html' %}
+    {% include 'desctop/posts/post_user/repost_detail.html' %}
     {% endif %}
 
     <div class="card-footer border-top py-2">
