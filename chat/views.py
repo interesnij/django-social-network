@@ -15,7 +15,7 @@ class MessagesListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = request.user
-		self.template_name = get_settings_template("chat/list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MessagesListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -35,11 +35,11 @@ class ChatDetailView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if self.chat.is_private():
-			self.template_name = get_settings_template("chat/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_public():
-			self.template_name = get_settings_template("chat/public_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/public_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_manager():
-			self.template_name = get_settings_template("chat/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.pk = request.user.pk
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
