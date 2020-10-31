@@ -67,10 +67,6 @@ def get_settings_template(template, request_user, user_agent):
             template_name = "generic/u_template/you_global_block.html"
         else:
             template_name = template
-        if MOBILE_AGENT_RE.match(user_agent):
-            template_name = "mobile/" + template_name
-        else:
-            template_name = "desctop/" + template_name
     elif request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
     if MOBILE_AGENT_RE.match(user_agent):
@@ -80,7 +76,7 @@ def get_settings_template(template, request_user, user_agent):
     return template_name
 
 
-def get_default_template(folder, template, request_user, user_agent): 
+def get_default_template(folder, template, request_user, user_agent):
     """ получаем шаблон для любого пользователя. """
     if request_user.is_authenticated:
         template_name = folder + template
