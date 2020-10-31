@@ -168,31 +168,31 @@ class Post(models.Model):
     def is_doc_list_attached(self):
         return self.post_doclist.filter(post__pk=self.pk, is_deleted=False).exists()
 
-    def get_u_attach_items(self):
+    def get_u_attach_items_desctop(self):
         if self.is_photo_list_attached():
-            return "generic/attach/u_photo_list_attach.html"
+            return "desctop/generic/attach/u_photo_list_attach.html"
         elif self.is_playlist_attached():
-            return "generic/attach/u_playlist_attach.html"
+            return "desctop/generic/attach/u_playlist_attach.html"
         elif self.is_video_list_attached():
-            return "generic/attach/u_video_list_attach.html"
+            return "desctop/generic/attach/u_video_list_attach.html"
         elif self.is_good_list_attached():
-            return "generic/attach/u_good_list_attach.html"
+            return "desctop/generic/attach/u_good_list_attach.html"
         elif self.is_doc_list_attached():
-            return "generic/attach/u_doc_list_attach.html"
+            return "desctop/generic/attach/u_doc_list_attach.html"
         else:
-            return "generic/attach/u_post_attach.html"
+            return "desctop/generic/attach/u_post_attach.html"
 
-    def get_c_attach_items(self):
+    def get_c_attach_items_desctop(self):
         if self.is_photo_list_attached():
-            return "generic/attach/c_photo_list_attach.html"
+            return "desctop/generic/attach/c_photo_list_attach.html"
         elif self.is_playlist_attached():
-            return "generic/attach/c_playlist_attach.html"
+            return "desctop/generic/attach/c_playlist_attach.html"
         elif self.is_video_list_attached():
-            return "generic/attach/c_video_list_attach.html"
+            return "desctop/generic/attach/c_video_list_attach.html"
         elif self.is_good_list_attached():
-            return "generic/attach/c_good_list_attach.html"
+            return "desctop/generic/attach/c_good_list_attach.html"
         elif self.is_doc_list_attached():
-            return "generic/attach/c_doc_list_attach.html"
+            return "desctop/generic/attach/c_doc_list_attach.html"
         else:
             return "generic/attach/c_post_attach.html"
 
