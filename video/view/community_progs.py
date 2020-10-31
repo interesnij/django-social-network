@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from video.models import VideoAlbum, Video, VideoComment
@@ -22,10 +21,7 @@ class VideoCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.video.comments_enabled:
             raise Http404
-        self.template_name = get_permission_community_photo(self.video.community, "video/c_video_comment/", "comments.html", request.user)
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
+        self.template_name = get_permission_community_photo(self.video.community, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -204,7 +200,7 @@ class CommunityVideoListCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_list.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -231,7 +227,7 @@ class CommunityVideoAttachCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video_attach.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video_attach.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -260,7 +256,7 @@ class CommunityVideoCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user)
+        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

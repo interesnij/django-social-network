@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
@@ -19,9 +18,7 @@ class PostCommunityCommentList(ListView):
         if not request.is_ajax() or not self.item.comments_enabled:
             raise Http404
 
-        self.template_name = get_permission_community_post(self.community, "posts/c_post_comment/", "comments.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+        self.template_name = get_permission_community_post(self.community, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -41,9 +38,7 @@ class PostCommunityDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_permission_community_post(self.community, "posts/post_community/", "detail.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+        self.template_name = get_permission_community_post(self.community, "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

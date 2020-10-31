@@ -7,7 +7,7 @@ from common.check.community import check_can_get_lists, check_anon_can_get_list
 from users.model.list import UserPopulateFriend
 
 
-def get_template_user(user, folder, template, request_user):
+def get_template_user(user, folder, template, request_user, user_agent):
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -51,6 +51,10 @@ def get_template_user(user, folder, template, request_user):
             template_name = "generic/u_template/anon_no_child_safety.html"
         else:
             template_name = folder + "anon_" + template
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
 def get_settings_template(template, request_user, user_agent):
@@ -69,20 +73,28 @@ def get_settings_template(template, request_user, user_agent):
             template_name = "desctop/" + template_name
     elif request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
 
-def get_default_template(folder, template, request):
-    if request.user.is_authenticated:
+def get_default_template(folder, template, request_user, user_agent): 
+    """ получаем шаблон для любого пользователя. """
+    if request_user.is_authenticated:
         template_name = folder + template
-    elif request.user.is_anonymous:
+    elif request_user.is_anonymous:
         template_name = folder + "anon_" + template
 
-    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-        template_name = "mob_" + template_name
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
 def get_detect_platform_template(template, request_user, user_agent):
+    """ получаем шаблон для зарегистрированного пользователя. Анонимов не пускаем."""
     if request_user.is_authenticated:
         template_name = folder + template
     elif request_user.is_anonymous:

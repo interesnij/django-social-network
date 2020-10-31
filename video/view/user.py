@@ -19,10 +19,7 @@ class UserVideoList(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-
-        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -45,10 +42,7 @@ class UserPostVideoList(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.video_list = self.post.get_attach_videos()
-
-        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -66,10 +60,7 @@ class UserPostCommentVideoList(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.video_list = self.comment.get_attach_videos()
-
-        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.user, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostCommentVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -95,10 +86,7 @@ class UserVideoInfo(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-
-        self.template_name = get_template_user_video(self.user, "video/u_video_info/", "video.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.user, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoInfo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -124,10 +112,7 @@ class UserVideoDetail(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-
-        self.template_name = get_template_user_video(self.album.creator, "video/u_video_detail/", "video.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.album.creator, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

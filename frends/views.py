@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from users.models import User
 from django.views import View
 from django.http import HttpResponse
@@ -15,10 +14,7 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-
-		self.template_name = get_template_user(self.user, "frends/", "frends.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+		self.template_name = get_template_user(self.user, "frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		#self.common_users=self.user.get_common_friends_of_user(request.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
@@ -39,10 +35,7 @@ class OnlineFrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-
-		self.template_name = get_template_user(self.user, "frends_online/", "frends.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+		self.template_name = get_template_user(self.user, "frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -60,10 +53,7 @@ class CommonFrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-
 		self.template_name = get_settings_template("frends_common/frends.html", request.user, request.META['HTTP_USER_AGENT'])
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

@@ -18,6 +18,7 @@ class UserGood(TemplateView):
         self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.goods = self.album.get_goods()
         self.user = self.album.creator
+        user_agent = request.META['HTTP_USER_AGENT']
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -52,7 +53,7 @@ class UserGood(TemplateView):
             try:
                 GoodNumbers.objects.filter(user=request.user.pk, good=self.good.pk).exists()
             except:
-                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                if MOBILE_AGENT_RE.match(user_agent):
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
                 else:
                     GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
@@ -68,8 +69,10 @@ class UserGood(TemplateView):
             else:
                 self.template_name = "u_good/anon_good.html"
 
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        if MOBILE_AGENT_RE.match(user_agent):
+            self.template_name = "mobile/" + self.template_name
+        else:
+            self.template_name = "desctop/" + self.template_name
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)
@@ -93,9 +96,7 @@ class GoodUserCommentList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_good(self.user, "u_good_comment/", "comments.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
+        self.template_name = get_permission_user_good(self.user, "u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

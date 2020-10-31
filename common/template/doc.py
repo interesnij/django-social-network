@@ -1,9 +1,11 @@
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from common.check.community import check_can_get_lists, check_anon_can_get_list
 
 
-def get_template_community_doc(community, folder, template, request_user):
+def get_template_community_doc(community, folder, template, request_user, user_agent):
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -51,9 +53,13 @@ def get_template_community_doc(community, folder, template, request_user):
             template_name = "generic/c_template/anon_close_community.html"
         elif community.is_private():
             template_name = "generic/c_template/anon_private_community.html"
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
-def get_permission_community_doc(community, folder, template, request_user):
+def get_permission_community_doc(community, folder, template, request_user, user_agent):
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():
@@ -74,9 +80,13 @@ def get_permission_community_doc(community, folder, template, request_user):
             template_name = folder + "anon_" + template
         else:
             raise PermissionDenied('Ошибка доступа')
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
-def get_template_user_doc(user, folder, template, request_user):
+def get_template_user_doc(user, folder, template, request_user, user_agent):
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -116,9 +126,13 @@ def get_template_user_doc(user, folder, template, request_user):
             template_name = "generic/u_template/anon_no_child_safety.html"
         else:
             template_name = folder + "anon_" + template
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name
 
-def get_permission_user_doc(user, folder, template, request_user):
+def get_permission_user_doc(user, folder, template, request_user, user_agent):
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif user.is_blocked():
@@ -136,4 +150,8 @@ def get_permission_user_doc(user, folder, template, request_user):
     elif request_user.is_anonymous:
         if check_anon_user_can_get_list(user):
             template_name = folder + "anon_" + template
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "desctop/" + template_name
     return template_name

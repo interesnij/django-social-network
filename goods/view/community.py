@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good, GoodAlbum
@@ -19,9 +18,7 @@ class CommunityGood(TemplateView):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.goods = self.album.get_goods()
 
-        self.template_name = get_template_community_good(self.album.community, "goods/c_good/", "good.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_community_good(self.album.community, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -43,9 +40,7 @@ class GoodCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_template_community_good(self.community, "goods/c_good_comment/", "comments.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_community_good(self.community, "goods/c_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

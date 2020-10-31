@@ -1,30 +1,24 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ album.title }} - альбом {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-  <div class="row mb-3">
-      <div class="col-12 col-md-8">
-        <h5 class="mt-1">{{ album.title }} - <a class="ajax underline" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
-          <a class="underline" href="{% url 'user' pk=user.pk %}">{{ user.get_full_name_genitive }}</a>
-        </h5>
-        Фото: {{ album.count_photo }}
-      </div>
-      <div class="col-12 col-md-4">
-        {% if album.is_user_album %}
-        <form id="add_photos" method="post">
-            {% csrf_token %}
-              <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
-              <button id="u_add_multi_photos" class="btn btn-outline-success" type="button">
-                Добавить фотографии
-              </button>
-        </form>
-        {% endif %}
-      </div>
+<div class="container mt-3">
+  <div class="card-header p-0" style="margin-bottom:30px">
+    <div class="dropdown">
+        <button type="button" class="btn btn-secondary dropdown-toggle drop" style="width:100%;">
+            Альбом {{ album.title }}
+        </button>
+        <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; width: 100%;">
+            <a class="dropdown-item ajax" href="{% url 'user_gallery' pk=user.pk %}">Галерея {{ user.get_full_name_genitive }}</a>
+        </div>
     </div>
+  </div>
 
-  <div id="album_photo_load" data-link="/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/"></div>
+  <div class="media mt-3" style="display:flex;align-items: flex-start">
+    <h5 class="mt-1" style="flex: 1;">Альбом {{ album.title }}</h5>
+    <span>Фото: {{ album.count_photo }}</span>
+  </div>
 
+<div id="album_photo_load" data-link="/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/"></div>
 </div>
-
 {% endblock %}

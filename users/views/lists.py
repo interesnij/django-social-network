@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post
@@ -9,7 +8,9 @@ from common.template.music import get_template_user_music
 from common.template.user import get_settings_template
 from common.template.good import get_template_user_good
 from common.template.doc import get_template_user_doc
+from common.template.user import get_default_template
 from django.http import Http404
+
 
 
 class UserVisitCommunities(ListView):
@@ -52,11 +53,9 @@ class UserVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user)
+			self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_video(self.user, "users/user_video_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_user_video(self.user, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -84,11 +83,9 @@ class UserGoodsList(ListView):
 		else:
 			self.goods_list = self.album.get_goods()
 		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user)
+			self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_good(self.user, "users/user_goods_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_user_good(self.user, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -112,11 +109,9 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user)
+			self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_music(self.user, "users/user_music_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_user_music(self.user, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -144,11 +139,9 @@ class UserDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 		if self.list.type == DocList.MAIN:
-			self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user)
+			self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_doc(self.user, "users/user_docs_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_user_doc(self.user, "users/user_docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -187,11 +180,9 @@ class PostListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
-			self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user)
+			self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			raise Http404
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + template_name
 		return super(PostListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -210,9 +201,7 @@ class AllUsers(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_default_template
-
-		self.template_name = get_default_template(folder="users/u_list/", template="all_users.html", request=request)
+		self.template_name = get_default_template("users/u_list/", "all_users.html", request_user, request.META['HTTP_USER_AGENT'])
 		return super(AllUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

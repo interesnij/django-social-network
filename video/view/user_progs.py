@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import Video, VideoComment, VideoAlbum
@@ -25,7 +24,7 @@ class VideoUserCommentList(ListView):
         #if not request.is_ajax() or not self.video.comments_enabled:
             #raise Http404
 
-        self.template_name = get_permission_user_video(self.video.creator, "video/u_video_comment/", "comments.html", request.user)
+        self.template_name = get_permission_user_video(self.video.creator, "video/u_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic.base import TemplateView
 from users.models import User
 from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory, GoodAlbum

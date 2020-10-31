@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership, CommunityCategory
 from users.models import User
@@ -19,7 +18,7 @@ class CommunityMembersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_default_template(folder="communities/list/", template="members.html", request=request)
+		self.template_name = get_default_template("communities/list/", "members.html", request_user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -52,8 +51,6 @@ class CommunityFriendsView(ListView):
 		else:
 			frends = self.request.user.get_common_friends_of_community(self.community.pk)
 			self.template_name = "communities/detail/friends.html"
-		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
 		return frends
 
 
@@ -62,7 +59,7 @@ class AllCommunities(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_default_template(folder="communities/list/", template="all_communities.html", request=request)
+		self.template_name = get_default_template("communities/list/", "all_communities.html", request_user, request.META['HTTP_USER_AGENT'])
 		return super(AllCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -81,7 +78,7 @@ class CommunityCategoryView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_default_template(folder="communities/list/", template="cat_communities.html", request=request)
+		self.template_name = get_default_template("communities/list/", "cat_communities.html", request_user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -105,7 +102,7 @@ class CommunityMusic(ListView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
-        self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user)
+        self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -135,7 +132,7 @@ class CommunityDocs(ListView):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
-		self.template_name = get_template_community_doc(self.community, "communities/docs/", "list.html", request.user)
+		self.template_name = get_template_community_doc(self.community, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -162,11 +159,9 @@ class CommunityDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 		if self.list.type == DocList.MAIN:
-			self.template_name = get_template_community_doc(self.community, "communities/docs/", "list.html", request.user)
+			self.template_name = get_template_community_doc(self.community, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_doc(self.community, "communities/docs_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_community_doc(self.community, "communities/docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -196,10 +191,7 @@ class CommunityGoods(ListView):
 			self.goods_list = self.album.get_staff_goods()
 		else:
 			self.goods_list = self.album.get_goods()
-		self.template_name = get_template_community_good(self.community, "communities/goods/", "list.html", request.user)
-
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+		self.template_name = get_template_community_good(self.community, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -227,11 +219,9 @@ class CommunityGoodsList(ListView):
 			self.goods_list = self.album.get_goods()
 
 		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_community_good(self.community, "communities/goods/", "list.html", request.user)
+			self.template_name = get_template_community_good(self.community, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_good(self.community, "communities/goods_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_community_good(self.community, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -255,11 +245,9 @@ class CommunityMusicList(ListView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user)
+			self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_music(self.community, "communities/music_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_community_music(self.community, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -281,7 +269,7 @@ class CommunityVideo(ListView):
 		from video.models import VideoAlbum
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.community, "communities/video/", "list.html", request.user)
+		self.template_name = get_template_community_video(self.community, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		self.album = VideoAlbum.objects.get(community_id=self.community.pk, type=VideoAlbum.MAIN)
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -315,11 +303,9 @@ class CommunityVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_community_video(self.community, "communities/video/", "list.html", request.user)
+			self.template_name = get_template_community_video(self.community, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_video(self.community, "communities/video_list/", "list.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = get_template_community_video(self.community, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -340,11 +326,9 @@ class PostsCommunity(ListView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
-			self.template_name = get_permission_community_post(self.community, "communities/lenta/", "list.html", request.user)
+			self.template_name = get_permission_community_post(self.community, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			raise Http404
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + template_name
 		return super(PostsCommunity,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -364,12 +348,9 @@ class PostsDraftCommunity(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-
         if request.user.is_authenticated:
             if request.user.is_staff_of_community(self.community.pk):
                 self.template_name = "communities/list/draft_list.html"
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
         return super(PostsDraftCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -387,12 +368,9 @@ class PostsUserDraftCommunity(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-
         if request.user.is_authenticated:
             if request.user.get_draft_posts_of_community_with_pk(self.community.pk):
                 self.template_name = "communities/list/user_draft_list.html"
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
         return super(PostsUserDraftCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

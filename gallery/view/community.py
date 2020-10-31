@@ -23,7 +23,7 @@ class CommunityPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_gallery/", "list.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -51,7 +51,7 @@ class CommunityAlbumPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_album/", "list.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_album/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -88,7 +88,7 @@ class CommunityDetailAvatar(TemplateView):
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_photo/avatar/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -120,7 +120,7 @@ class CommunityFirstAvatar(TemplateView):
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.community, "c_photo/avatar/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.community, "c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -147,7 +147,7 @@ class CommunityPhoto(TemplateView):
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album.community, "c_photo/photo/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.album.community, "c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -175,7 +175,7 @@ class CommunityAlbumPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album.community, "c_photo/album_photo/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo(self.album.community, "c_photo/album_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_administrator_of_community(self.album.community.pk):
@@ -214,7 +214,7 @@ class CommunityWallPhoto(TemplateView):
             self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.WALL, title="Фото со стены", description="Фото со стены")
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo_detail(self.community, self.photo, "c_photo/wall_photo/", "photo.html", request.user)
+            self.template_name = get_permission_community_photo_detail(self.community, self.photo, "c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):

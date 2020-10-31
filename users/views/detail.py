@@ -23,10 +23,7 @@ class UserPostView(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.posts = self.user.get_posts()
-
-        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
         self.prev = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
         return super(UserPostView,self).get(request,*args,**kwargs)
@@ -53,10 +50,7 @@ class UserGallery(TemplateView):
             self.albums_list = self.user.get_my_albums().order_by('-created')
         else:
             self.albums_list = self.user.get_albums().order_by('-created')
-
-        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,10 +68,7 @@ class UserAlbum(TemplateView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_template_user_photo(self.user, "users/user_album/", "album.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_photo(self.user, "users/user_album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -93,12 +84,9 @@ class UserCommunities(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user)
+        self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = "users/user_community/my_staffed_communities.html"
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -154,10 +142,7 @@ class UserMusic(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
-
-        self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -188,9 +173,7 @@ class UserDocs(ListView):
         else:
             self.doc_list = self.list.get_docs()
 
-        self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -221,9 +204,7 @@ class UserGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -251,10 +232,7 @@ class UserVideo(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user)
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -277,6 +255,7 @@ class ProfileUserView(TemplateView):
         from users.model.list import UserPopulateFriend
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        user_agent = request.META['HTTP_USER_AGENT']
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -315,7 +294,7 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/no_child_safety.html"
                 else:
                     self.template_name = "users/account/user.html"
-                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+                if MOBILE_AGENT_RE.match(user_agent):
                     UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
                 else:
                     UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
@@ -331,8 +310,10 @@ class ProfileUserView(TemplateView):
             else:
                 self.template_name = "users/account/anon_user.html"
 
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        if MOBILE_AGENT_RE.match(user_agent):
+            self.template_name = "mobile/" + self.template_name
+        else:
+            self.template_name = "desctop/" + self.template_name
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

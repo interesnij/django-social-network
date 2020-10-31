@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from django.views.generic.base import TemplateView
 from article.forms import ArticleForm
 from users.models import User
@@ -22,10 +21,7 @@ class ArticleUserDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_permission_user_post(self.user, "article/u_article/", "article.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_permission_user_post(self.user, "article/u_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -41,9 +37,7 @@ class ArticleCommunityDetailView(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
 
-        self.template_name = get_permission_community_post(self.community, "article/c_article/", "article.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_permission_community_post(self.community, "article/c_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

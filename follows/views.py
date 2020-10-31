@@ -1,5 +1,4 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
 from communities.models import Community
 from django.views import View
 from follows.models import Follow, CommunityFollow
@@ -17,10 +16,7 @@ class FollowsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-
-		self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+		self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

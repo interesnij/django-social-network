@@ -22,9 +22,7 @@ class PostCommunity(TemplateView):
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
-        self.template_name = get_template_community_post(self.community, "communities/lenta/", "item.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_community_post(self.community, "communities/lenta/", "item.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,6 +42,7 @@ class CommunityDetail(TemplateView):
         from stst.models import CommunityNumbers
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        user_agent = request.META['HTTP_USER_AGENT']
 
         if self.community.is_suspended():
             self.template_name = "communities/detail/community_suspended.html"
@@ -79,7 +78,7 @@ class CommunityDetail(TemplateView):
                 self.template_name = "communities/detail/close_community.html"
             elif self.community.is_private():
                 self.template_name = "generic/c_template/private_community.html"
-            if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            if MOBILE_AGENT_RE.match(user_agent):
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
             else:
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
@@ -95,8 +94,10 @@ class CommunityDetail(TemplateView):
             elif self.community.is_private():
                 self.template_name = "communities/detail/anon_private_community.html"
 
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        if MOBILE_AGENT_RE.match(user_agent):
+            self.template_name = "mobile/" + self.template_name
+        else:
+            self.template_name = "desctop/" + self.template_name
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -124,9 +125,7 @@ class CommunityGallery(TemplateView):
         self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
         self.albums_list = self.community.get_albums().order_by('-created')
 
-        self.template_name = get_template_community_photo(self.community, "communities/gallery/", "gallery.html", request.user)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_community_photo(self.community, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -144,10 +143,7 @@ class CommunityAlbum(TemplateView):
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.community, "communities/album/", "album.html", request.user)
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
+        self.template_name = get_template_community_photo(self.community, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

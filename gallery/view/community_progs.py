@@ -100,7 +100,7 @@ class PhotoCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
-        self.template_name = get_permission_community_photo(self.community, "c_photo_comment/", "comments.html", request.user)
+        self.template_name = get_permission_community_photo(self.community, "c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name += "mob_"
         return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)

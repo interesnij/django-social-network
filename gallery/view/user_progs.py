@@ -104,7 +104,7 @@ class PhotoUserCommentList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo_comment/", "comments.html", request.user)
+        self.template_name = get_permission_user_photo(self.photo.creator, "u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
