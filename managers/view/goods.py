@@ -248,7 +248,7 @@ class GoodDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_good_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/good/good_delete.html", request_user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/good/good_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(GoodDeleteWindow,self).get(request,*args,**kwargs)
@@ -263,7 +263,7 @@ class GoodClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Good.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("managers/manage_create/good/good_claim.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/good/good_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -278,7 +278,7 @@ class GoodCommentDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_good_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_delete.html", request_user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(GoodCommentDeleteWindow,self).get(request,*args,**kwargs)
@@ -297,7 +297,7 @@ class GoodCommentClaimWindow(TemplateView):
             self.photo = self.comment.parent_comment.photo
         except:
             self.photo = self.comment.photo
-        self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

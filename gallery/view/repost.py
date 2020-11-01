@@ -24,7 +24,7 @@ class UUCMPhotoWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,7 +44,7 @@ class CUCMPhotoWindow(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -66,7 +66,7 @@ class UUCMPhotoAlbumWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo_album.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/u_ucm_photo_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -86,7 +86,7 @@ class CUCMPhotoAlbumWindow(TemplateView):
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo_album.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("gallery/photo_repost_window/c_ucm_photo_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

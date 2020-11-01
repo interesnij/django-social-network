@@ -12,7 +12,7 @@ from common.template.video import get_template_user_video
 from common.template.good import get_template_user_good
 from common.template.doc import get_template_user_doc
 from common.template.photo import get_template_user_photo
-from common.template.user import get_template_user
+from common.template.user import get_template_user, get_detect_platform_template
 
 
 class UserPostView(TemplateView):
@@ -86,7 +86,7 @@ class UserCommunities(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user.is_staffed_user() and self.user == request.user:
-            self.template_name = "users/user_community/my_staffed_communities.html"
+            self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.htm", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

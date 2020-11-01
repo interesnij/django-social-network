@@ -195,7 +195,7 @@ class AudioDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_audio_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_delete.html", request_user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
     def get_context_data(self,**kwargs):
@@ -208,7 +208,7 @@ class AudioClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_claim.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AudioClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

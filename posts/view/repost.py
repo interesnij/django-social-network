@@ -25,7 +25,7 @@ class UUCMPostWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("posts/post_repost_window/u_ucm_post.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("posts/post_repost_window/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -45,7 +45,7 @@ class CUCMPostWindow(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("posts/post_repost_window/c_ucm_post.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("posts/post_repost_window/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

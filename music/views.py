@@ -17,7 +17,7 @@ class AllMusicView(TemplateView):
         self.angl_tegs_count = SoundTags.objects.filter(symbol__type='AS').values('pk').count()
         self.number_tegs_count = SoundTags.objects.filter(symbol__type='NS').values('pk').count()
         self.genres = SoundGenres.objects.only('id')
-        self.template_name = get_detect_platform_template("music/all_music.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("music/all_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -40,7 +40,7 @@ class AllTagsMusicView(ListView):
     def get(self,request,*args,**kwargs):
         self.symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
         self.tags = SoundTags.objects.filter(symbol=self.symbol)
-        self.template_name = get_detect_platform_template("music/tags_music.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("music/tags_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllTagsMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -62,7 +62,7 @@ class AllTagMusicView(ListView):
         self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.is_tag_playlist = request.user.is_tag_playlist(self.tag)
-        self.template_name = get_detect_platform_template("music/tag_music.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("music/tag_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllTagMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -84,7 +84,7 @@ class GenreMusicView(ListView):
         self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.is_genre_playlist = request.user.is_genre_playlist(self.genre)
-        self.template_name = get_detect_platform_template("music/genre_music.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("music/genre_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GenreMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -102,7 +102,7 @@ class AllSearchMusicView(View):
     template_name = None
     def get(self,request,*args,**kwargs):
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        self.template_name = get_detect_platform_template("music/search_music.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("music/search_music.html", request.user, request.META['HTTP_USER_AGENT'])
         if request.method == 'GET':
             q = request.GET.get('music_search')
             s_tracks = client.get('/tracks', q=q, license='cc-by-sa')

@@ -25,7 +25,7 @@ class UUCMVideoWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("video/video_repost_window/u_ucm_video.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/video_repost_window/u_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMVideoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -45,7 +45,7 @@ class CUCMVideoWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("video/video_repost_window/c_ucm_video.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/video_repost_window/c_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMVideoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -67,7 +67,7 @@ class UUCMVideoAlbumWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("video/video_repost_window/u_ucm_video_album.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/video_repost_window/u_ucm_video_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMVideoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -87,7 +87,7 @@ class CUCMVideoAlbumWindow(TemplateView):
         self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("video/video_repost_window/c_ucm_video_album.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/video_repost_window/c_ucm_video_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMVideoAlbumWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

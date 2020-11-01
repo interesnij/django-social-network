@@ -248,7 +248,7 @@ class VideoDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_video_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/video/video_delete.html", request_user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/video/video_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(VideoDeleteWindow,self).get(request,*args,**kwargs)
@@ -263,7 +263,7 @@ class VideoClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("managers/manage_create/video/video_claim.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/video/video_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -278,7 +278,7 @@ class VideoCommentDeleteWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_video_manager or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/video/video_comment_delete.html", request_user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/video/video_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(VideoCommentDeleteWindow,self).get(request,*args,**kwargs)
@@ -298,7 +298,7 @@ class VideoCommentClaimWindow(TemplateView):
         except:
             self.photo = self.comment.photo
         self.template_name = "manage_create/video/video_comment_claim.html"
-        self.template_name = get_detect_platform_template("managers/manage_create/video/video_comment_claim.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/video/video_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -9,7 +9,7 @@ class StatItemView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("stst/item_stat.html", request_user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("stst/item_stat.html", request.user, request.META['HTTP_USER_AGENT'])
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 
