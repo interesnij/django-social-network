@@ -95,7 +95,7 @@ def get_detect_platform_template(template, request_user, user_agent):
         raise PermissionDenied("Ошибка доступа")
 
     if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
+        template += "mobile/"
     else:
-        template_name = "desctop/" + template_name
-    return template_name
+        template += "desctop/"
+    return template
