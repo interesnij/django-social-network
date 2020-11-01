@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from managers.views import MainManagersView, ManagersView, SuperManagersView
+from managers.views import ManagersView, SuperManagersView
 
 
 urlpatterns = [
