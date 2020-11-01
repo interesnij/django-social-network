@@ -13,7 +13,7 @@ from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_permission_user_photo
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class UserAddAvatar(View):
@@ -45,14 +45,13 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-
             _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
 
-            return render(request, 'u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
+            render_for_platform(request, 'u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
