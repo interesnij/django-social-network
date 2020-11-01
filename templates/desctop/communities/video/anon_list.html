@@ -33,7 +33,7 @@
                   <div class="row community_block_paginate" id="community_video_container" data-list="/communities/{{ community.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'desctop/communities/c_video/video.html' %}
+                        {% include 'desctop/communities/video/video.html' %}
                       {% endfor %}
                     {% else %}
                       <div class="card video_none centered">
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4">
-          {% include 'desctop/communities/c_video/sidebar.html' %}
+          {% include 'desctop/communities/video/sidebar.html' %}
         </div>
     </div>
 </div>
