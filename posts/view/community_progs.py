@@ -1,6 +1,5 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from django.shortcuts import render
 from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
@@ -10,7 +9,7 @@ from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
 from common.check.community import check_can_get_lists
 from django.http import Http404
-
+from common.template.user import render_for_platform
 
 
 class PostCommunityCreate(View):
@@ -35,7 +34,7 @@ class PostCommunityCreate(View):
                 new_post = post.create_post(creator=request.user, text=post.text, parent=None, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
-                return render(request, 'post_community/admin_post.html', {'object': new_post})
+                return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -58,7 +57,7 @@ class PostOfferCommunityCreate(View):
                 new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, is_signature=post.is_signature, status="PG")
                 get_post_attach(request, new_post)
                 get_post_offer_processing(new_post)
-                return render(request, 'post_community/post.html', {'object': new_post})
+                return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -83,7 +82,7 @@ class PostCommunityCommentCreate(View):
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
-                return render(request, 'c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -107,7 +106,7 @@ class PostCommunityReplyCreate(View):
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
-                return render(request, 'c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
+                return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()
         else:

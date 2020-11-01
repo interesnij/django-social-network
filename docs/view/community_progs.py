@@ -5,8 +5,8 @@ from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
 from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
 from django.http import Http404
+from common.template.user import render_for_platform 
 
 
 class CommunityDocAdd(View):
@@ -105,7 +105,7 @@ class CommunityDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
+            return render_for_platform(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -135,7 +135,7 @@ class CommunityDocCreate(View):
                 for _list in lists:
                     _list.doc_list.add(new_doc)
 
-            return render(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
+            return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 

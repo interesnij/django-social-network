@@ -2,13 +2,12 @@
 from django.views.generic.base import TemplateView
 from article.forms import ArticleForm
 from users.models import User
-from django.shortcuts import render
 from article.models import Article
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
 from django.views import View
 from common.template.post import get_permission_community_post, get_permission_user_post
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class ArticleView(TemplateView):
@@ -64,7 +63,7 @@ class ArticleUserCreate(View):
         if self.form.is_valid() and request.user == self.user:
             article = self.form.save(commit=False)
             new_article = article.create_article(creator=request.user, content=article.content, community=None, g_image=article.g_image, status=article.status, title=article.title,)
-            return render(request, 'post_user/my_article.html',{'object': new_article, 'user': request.user})
+            return render_for_platform(request, 'posts/post_user/my_article.html',{'object': new_article, 'user': request.user})
         else:
            return HttpResponseBadRequest()
 
@@ -86,6 +85,6 @@ class ArticleCommunityCreate(View):
         if self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
             article = self.form.save(commit=False)
             new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, status=article.status, title=article.title,)
-            return render(request, 'post_community/admin_article.html',{'object': new_article, 'user': request.user})
+            return render_for_platform(request, 'posts/post_community/admin_article.html',{'object': new_article, 'user': request.user})
         else:
            HttpResponseBadRequest()

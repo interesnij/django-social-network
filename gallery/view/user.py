@@ -6,7 +6,6 @@ from gallery.models import Album, Photo
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from django.shortcuts import render
 from common.template.photo import get_template_user_photo, get_permission_user_photo, get_permission_user_photo_detail
 from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
@@ -28,8 +27,6 @@ class UserPhotosList(ListView):
             self.photo_list = self.album.get_staff_photos()
         else:
             self.photo_list = self.album.get_photos()
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -56,8 +53,6 @@ class UserAlbumPhotosList(ListView):
             self.photo_list = self.album.get_staff_photos()
         else:
             self.photo_list = self.album.get_photos()
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -85,9 +80,6 @@ class UserPhoto(TemplateView):
             self.template_name = get_permission_user_photo(self.album.creator, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -115,9 +107,6 @@ class UserAlbumPhoto(TemplateView):
             self.template_name = get_permission_user_photo(self.album.creator, "gallery/u_photo/album_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -149,8 +138,6 @@ class UserWallPhoto(TemplateView):
             self.template_name = get_permission_user_photo_detail(self.user, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -183,8 +170,6 @@ class UserDetailAvatar(TemplateView):
             self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -216,8 +201,6 @@ class UserFirstAvatar(TemplateView):
             self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

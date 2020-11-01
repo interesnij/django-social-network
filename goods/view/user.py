@@ -96,7 +96,7 @@ class GoodUserCommentList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_good(self.user, "u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_good(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

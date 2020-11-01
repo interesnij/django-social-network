@@ -5,9 +5,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
 from gallery.models import Album
 from users.models import User
-from django.shortcuts import render
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class CommunityCreate(TemplateView):
@@ -29,7 +28,7 @@ class CommunityCreate(TemplateView):
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
 			membersheeps = [request.user,]
-			return render(request, 'communities/detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
+			return render_for_platform(request, 'communities/detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
 

@@ -5,13 +5,13 @@ from goods.models import Good, GoodComment, GoodAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.community import check_can_get_lists
-from django.shortcuts import render
 from django.views.generic import ListView
 from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
 from django.http import Http404
 from common.processing.good import get_good_processing, get_good_offer_processing
+from common.template.user import render_for_platform
 
 
 class GoodCommentCommunityCreate(View):
@@ -36,7 +36,7 @@ class GoodCommentCommunityCreate(View):
                 get_comment_attach(request, new_comment, "good_comment")
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
-                return render(request, 'c_good_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -66,7 +66,7 @@ class GoodReplyCommunityCreate(View):
                     new_comment.notification_community_reply_comment(request.user, community)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+            return render_for_platform(request, 'goods/c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -209,7 +209,7 @@ class GoodCommunityCreate(TemplateView):
             get_good_processing(new_good)
             for _album in albums:
                 _album.good_album.add(new_good)
-            return render(request,'good_base/c_new_good.html',{'object': new_good})
+            return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
 
@@ -239,7 +239,7 @@ class GoodAlbumCommunityCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=self.community)
-            return render(request, 'c_goods_list/admin_list.html',{'album': new_album, 'community': self.community})
+            return render_for_platform(request, 'goods/c_goods_list/admin_list.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)

@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from chat.forms import ChatForm, MessageForm
 from chat.models import Chat, Message, MessageFavorite
 from users.models import User
-from django.shortcuts import render
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.attach.message_attacher import get_message_attach
@@ -69,7 +68,7 @@ class SendMessage(View):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 			get_message_attach(request, message)
-			return render(request, 'chat/message/message.html', {'object': message})
+			return render_for_platform(request, 'chat/chat/message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
 

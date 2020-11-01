@@ -5,11 +5,11 @@ from video.models import VideoAlbum, Video, VideoComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from video.forms import AlbumForm, VideoForm, CommentForm
-from django.shortcuts import render
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from common.template.video import get_permission_community_video
 from django.http import Http404
+from common.template.user import render_for_platform
 
 
 class VideoCommunityCommentList(ListView):
@@ -56,7 +56,7 @@ class VideoCommentCommunityCreate(View):
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
-                return render(request, 'c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -85,7 +85,7 @@ class VideoReplyCommunityCreate(View):
                     new_comment.notification_community_reply_comment(request.user, community)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+            return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -217,7 +217,7 @@ class CommunityVideoListCreate(TemplateView):
             new_album.creator = request.user
             new_album.community = community
             new_album.save()
-            return render(request, 'c_video_list/admin_list.html',{'album': new_album, 'community': community})
+            return render_for_platform(request, 'communities/video_list/admin_list.html',{'album': new_album, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -246,7 +246,7 @@ class CommunityVideoAttachCreate(TemplateView):
             new_video.creator = request.user
             new_video.save()
             my_list.video_album.add(new_video)
-            return render(request, 'video_new/video.html',{'object': new_video})
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
 
@@ -277,7 +277,7 @@ class CommunityVideoCreate(TemplateView):
             for _album_pk in albums:
                 _album = VideoAlbum.objects.get(pk=_album_pk)
                 _album.video_album.add(new_video)
-            return render(request, 'video_new/video.html',{'object': new_video})
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
 

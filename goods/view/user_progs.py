@@ -5,13 +5,12 @@ from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory, GoodA
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
-from django.shortcuts import render
 from users.models import User
 from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from rest_framework.exceptions import PermissionDenied
 from common.processing.good import get_good_processing, get_good_offer_processing
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class GoodCommentUserCreate(View):
@@ -33,7 +32,7 @@ class GoodCommentUserCreate(View):
                 get_comment_attach(request, new_comment, "good_comment")
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_user_comment(request.user)
-                return render(request, 'u_good_comment/my_parent.html',{'comment': new_comment})
+                return render_for_platform(request, 'goods/u_good_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -59,7 +58,7 @@ class GoodReplyUserCreate(View):
                     new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'u_good_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'goods/u_good_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 
@@ -199,7 +198,7 @@ class GoodUserCreate(TemplateView):
             get_good_processing(new_good)
             for _album in albums:
                 _album.good_album.add(new_good)
-            return render(request, 'good_base/u_new_good.html',{'object': new_good})
+            return render_for_platform(request, 'goods/good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")
 
@@ -227,7 +226,7 @@ class GoodAlbumUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=None)
-            return render(request, 'user_goods_list/my_list.html',{'album': new_album})
+            return render_for_platform(request, 'goods/user_goods_list/my_list.html',{'album': new_album})
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)

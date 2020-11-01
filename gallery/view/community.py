@@ -7,7 +7,6 @@ from gallery.models import Album, Photo
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_template_community_photo, get_permission_community_photo, get_permission_community_photo_detail
 from common.check.community import check_can_get_lists
@@ -30,8 +29,6 @@ class CommunityPhotosList(ListView):
             self.photo_list = self.album.get_staff_photos()
         else:
             self.photo_list = self.album.get_photos()
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name += "mob_"
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -58,8 +55,6 @@ class CommunityAlbumPhotosList(ListView):
             self.photo_list = self.album.get_staff_photos()
         else:
             self.photo_list = self.album.get_photos()
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -91,8 +86,6 @@ class CommunityDetailAvatar(TemplateView):
             self.template_name = get_permission_community_photo(self.community, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -123,8 +116,6 @@ class CommunityFirstAvatar(TemplateView):
             self.template_name = get_permission_community_photo(self.community, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -150,8 +141,6 @@ class CommunityPhoto(TemplateView):
             self.template_name = get_permission_community_photo(self.album.community, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -182,9 +171,6 @@ class CommunityAlbumPhoto(TemplateView):
             self.photos = self.album.get_staff_photos()
         else:
             self.photos = self.album.get_photos()
-
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityAlbumPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -217,8 +203,6 @@ class CommunityWallPhoto(TemplateView):
             self.template_name = get_permission_community_photo_detail(self.community, self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + self.template_name
         return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

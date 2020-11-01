@@ -1,5 +1,4 @@
 from users.models import User
-from django.shortcuts import render
 from posts.models import Post, PostComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
@@ -8,6 +7,7 @@ from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from django.http import Http404
+from common.template.user import render_for_platform
 
 
 class PostUserCreate(View):
@@ -28,7 +28,7 @@ class PostUserCreate(View):
                 new_post = post.create_post(creator=request.user, is_signature=False, parent=None, text=post.text, community=None, comments_enabled=post.comments_enabled, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
-                return render(request, 'post_user/my_post.html', {'object': new_post})
+                return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -85,7 +85,7 @@ class PostCommentUserCreate(View):
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_user_comment(request.user)
-                return render(request, 'u_post_comment/my_parent.html', {'comment': new_comment})
+                return render_for_platform(request, 'posts/u_post_comment/my_parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -112,7 +112,7 @@ class PostReplyUserCreate(View):
                     new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'posts/u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 

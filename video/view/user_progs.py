@@ -4,14 +4,13 @@ from users.models import User
 from video.models import Video, VideoComment, VideoAlbum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
 from video.forms import AlbumForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 from common.template.video import get_permission_user_video
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class VideoUserCommentList(ListView):
@@ -55,7 +54,7 @@ class VideoCommentUserCreate(View):
                 get_comment_attach(request, new_comment, "video_comment")
                 if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
-                return render(request, 'u_video_comment/my_parent.html',{'comment': new_comment})
+                return render_for_platform(request, 'video/u_video_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -81,7 +80,7 @@ class VideoReplyUserCreate(View):
                     new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render(request, 'u_video_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'video/u_video_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 
@@ -218,7 +217,7 @@ class UserVideoListCreate(TemplateView):
             new_album = self.form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
-            return render(request, 'user_video_list/my_list.html',{'album': new_album, 'user': request.user})
+            return render_for_platform(request, 'users/user_video_list/my_list.html',{'album': new_album, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -247,7 +246,7 @@ class UserVideoAttachCreate(TemplateView):
             new_video.creator = request.user
             new_video.save()
             my_list.video_album.add(new_video)
-            return render(request, 'video_new/video.html',{'object': new_video})
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
 
@@ -278,7 +277,7 @@ class UserVideoCreate(TemplateView):
             for _album_pk in albums:
                 _album = VideoAlbum.objects.get(pk=_album_pk)
                 _album.video_album.add(new_video)
-            return render(request, 'video_new/video.html',{'object': new_video})
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponse()
 

@@ -96,16 +96,3 @@ class GenreMusicView(ListView):
     def get_queryset(self):
         genre_list = SoundcloudParsing.objects.filter(genre__id=self.genre.pk)
         return genre_list
-
-
-class AllSearchMusicView(View):
-    template_name = None
-    def get(self,request,*args,**kwargs):
-        client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        self.template_name = get_detect_platform_template("music/search_music.html", request.user, request.META['HTTP_USER_AGENT'])
-        if request.method == 'GET':
-            q = request.GET.get('music_search')
-            s_tracks = client.get('/tracks', q=q, license='cc-by-sa')
-            response = render(request,'all_music.html',{'tracks_list':s_tracks,'q':q})
-            return response
-        return super(AllSearchMusicView,self).get(request,*args,**kwargs)

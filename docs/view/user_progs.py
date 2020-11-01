@@ -5,9 +5,8 @@ from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
 from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class UserDocAdd(View):
@@ -68,7 +67,7 @@ class UserCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class UserCreateDocWindow(TemplateView):
@@ -76,7 +75,7 @@ class UserCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -103,7 +102,7 @@ class UserDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -128,7 +127,7 @@ class UserDocCreate(View):
             new_doc.save()
             for _list in lists:
                 _list.doc_list.add(new_doc)
-            return render(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
+            return render_for_platform(request, 'users/docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 

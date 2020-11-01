@@ -5,10 +5,9 @@ from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
 from common.parsing_soundcloud.add_playlist import add_playlist
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 
 
 class UserSoundcloudSetPlaylistWindow(TemplateView):
@@ -54,7 +53,7 @@ class UserSoundcloudSetCreate(View):
             new_list.creator = request.user
             new_list.save()
             add_playlist(request.POST.get('permalink'), request.user, new_list)
-            return render(request, 'music/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'user': request.user})
+            return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.playlist_too(),'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -164,7 +163,7 @@ class UserPlaylistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render(request, 'user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 

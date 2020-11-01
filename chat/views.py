@@ -1,7 +1,6 @@
 import json
 from users.models import User
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from django.utils.safestring import mark_safe
@@ -59,7 +58,7 @@ class ChatDetailView(ListView):
 
 
 def room(request, room_name):
-    return render(request, 'room.html', {
+    return render_for_platform(request, 'room.html', {
         'room_name_json': mark_safe(json.dumps(room_name))
     })
 
@@ -91,7 +90,7 @@ def send_message(request):
 
     if sender != recipient:
         msg = Message.send_message(sender, recipient, message)
-        return render(request, 'single_message.html',
+        return render_for_platform(request, 'single_message.html',
                       {'message': msg})
 
     return HttpResponse()
@@ -102,5 +101,5 @@ def receive_message(request):
     сторона приемника обеспечивая соединения в реальном времени."""
     message_id = request.GET.get('message_id')
     message = Message.objects.get(pk=message_id)
-    return render(request,
+    return render_for_platform(request,
                   'single_message.html', {'message': message})

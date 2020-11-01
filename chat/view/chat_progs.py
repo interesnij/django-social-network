@@ -4,7 +4,6 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from chat.forms import ChatForm
 from users.models import User
-from django.shortcuts import render
 from django.http import Http404
 from common.template.user import get_settings_template
 from common.check.message import check_can_change_chat
@@ -21,14 +20,14 @@ class CreateChat(TemplateView):
 			self.member = self.user
 
 		if self.user == request.user and not request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_empty.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/create_chat_empty.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user == request.user and request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and not request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.friends = True
 		elif self.user != request.user and request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.friends = True
 		return super(CreateChat,self).get(request,*args,**kwargs)
 
@@ -55,10 +54,10 @@ class CreateChat(TemplateView):
 				members += [user, ]
 
 			if new_chat.is_private():
-				template = 'chat/private_chat.html'
+				template = 'chat/chat/private_chat.html'
 			elif new_chat.is_public():
-				template = 'chat/public_chat.html'
-			return render(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
+				template = 'chat/chat/public_chat.html'
+			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
 			HttpResponseBadRequest()
 
