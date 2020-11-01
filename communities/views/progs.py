@@ -35,7 +35,7 @@ class CommunityCreate(TemplateView):
 
 
 class CommunitiesCatsView(TemplateView):
-	template_name="communities_cats.html"
+	template_name="desctop/communities/communities_cats.html"
 	categ = None
 
 	def get(self,request,*args,**kwargs):
