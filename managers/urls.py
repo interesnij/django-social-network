@@ -3,9 +3,8 @@ from managers.views import MainManagersView, ManagersView, SuperManagersView
 
 
 urlpatterns = [
-    url(r'^$', MainManagersView.as_view(), name='main_manager'),
-    url(r'^(?P<pk>\d+)/$', ManagersView.as_view(), name='managers'),
-    url(r'^high_officer/(?P<pk>\d+)/$', SuperManagersView.as_view(), name='super_managers'),
+    url(r'^$', ManagersView.as_view(), name='managers'),
+    url(r'^high_officer/$', SuperManagersView.as_view(), name='super_managers'),
 
     url(r'^progs_user/', include('managers.url.progs_user')),
     url(r'^progs_community/', include('managers.url.progs_community')),

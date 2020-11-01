@@ -91,9 +91,7 @@ def get_default_template(folder, template, request_user, user_agent):
 
 def get_detect_platform_template(template, request_user, user_agent):
     """ получаем шаблон для зарегистрированного пользователя. Анонимов не пускаем."""
-    if request_user.is_authenticated:
-        template_name = template
-    elif request_user.is_anonymous:
+    if request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
 
     if MOBILE_AGENT_RE.match(user_agent):
