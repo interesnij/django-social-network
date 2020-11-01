@@ -64,9 +64,9 @@
     {% if object.parent %}
       <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
         {% if object.parent.community %}
-          {% include object.get_c_post_parent_items %}
+          {% include object.get_c_post_parent_items_desctop %}
         {% else %}
-          {% include object.get_u_post_parent_items %}
+          {% include object.get_u_post_parent_items_desctop %}
         {% endif %}
       </span>
     {% endif %}
