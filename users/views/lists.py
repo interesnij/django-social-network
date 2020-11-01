@@ -201,7 +201,7 @@ class AllUsers(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_default_template("users/u_list/", "all_users.html", request_user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AllUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
