@@ -29,7 +29,7 @@ class UserGood(TemplateView):
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/you_global_block.html"
                 else:
-                    self.template_name = "u_good/my_good.html"
+                    self.template_name = "goods/u_good/my_good.html"
             elif request.user.pk != self.user.pk:
                 self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
                 if self.user.is_suspended():
@@ -37,19 +37,19 @@ class UserGood(TemplateView):
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name = "u_good/staff_good.html"
+                    self.template_name = "goods/u_good/staff_good.html"
                     self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "generic/u_template/block_user.html"
                 elif self.user.is_closed_profile():
                     if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                        self.template_name = "u_good/good.html"
+                        self.template_name = "goods/u_good/good.html"
                     else:
                         self.template_name = "generic/u_template/close_user.html"
                 elif request.user.is_child() and not self.user.is_child_safety():
                     self.template_name = "generic/u_template/no_child_safety.html"
                 else:
-                    self.template_name = "u_good/good.html"
+                    self.template_name = "goods/u_good/good.html"
             try:
                 GoodNumbers.objects.filter(user=request.user.pk, good=self.good.pk).exists()
             except:
@@ -67,7 +67,7 @@ class UserGood(TemplateView):
             elif not self.user.is_child_safety():
                 template_name = "generic/u_template/anon_no_child_safety.html"
             else:
-                self.template_name = "u_good/anon_good.html"
+                self.template_name = "goods/u_good/anon_good.html"
 
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
