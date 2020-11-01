@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} - {{ playlist.name }}{% endblock %}
 {% load get_key %}
 {% block content %}
@@ -35,7 +35,7 @@
                 {% if object_list %}
                     <ul id="community_tracks_list_container" data-pk="{{ playlist.pk }}" class="community_block_paginate">
                       {% for object in object_list %}
-                        {% include 'generic/track.html' %}
+                        {% include 'mobile/generic/track.html' %}
                       {% endfor %}
                     </ul>
                 {% else %}
@@ -63,7 +63,7 @@
           {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'music_list/sidebar.html' %}
+          {% include 'mobile/communities/music_list/sidebar.html' %}
         </div>
     </div>
 </div>

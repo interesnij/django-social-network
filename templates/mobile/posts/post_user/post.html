@@ -1,5 +1,5 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
-    {% include 'post_user/card_header.html' %}
+    {% include 'mobile/posts/post_user/card_header.html' %}
 
     {% if object.text %}
       <div class="fullscreen pointer">
@@ -12,8 +12,8 @@
     </span>
 
     {% if object.parent %}
-      {% include 'post_user/repost.html' %}
+      {% include 'mobile/posts/post_user/repost.html' %}
     {% endif %}
 
-    {% include 'post_user/info.html' %}
+    {% include 'mobile/posts/post_user/info.html' %}
 </div>

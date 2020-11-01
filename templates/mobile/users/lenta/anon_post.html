@@ -12,4 +12,6 @@
   {% endif %}
 </span>
 
-{% include 'item_user/post_detail.html' %}
+<div class="mb-3" item-id="{{ object.uuid }}">
+  {% include 'mobile/posts/post_user/post_detail.html' %}
+</div>

@@ -1,4 +1,4 @@
-{% extends "base_anon.html" %}
+{% extends "base_anon_mobile.html" %}
 {% load liked_user %}
 {% block title %}{{ community.name }} | Товары - {{ album.title }}{% endblock %}
 {% block content %}
@@ -36,7 +36,7 @@
               {% if object_list %}
 
               {% for object in object_list %}
-                {% include 'c_goods/good.html' %}
+                {% include 'mobile/communities/goods/good.html' %}
               {% endfor %}
 
               {% else %}
@@ -51,11 +51,11 @@
             </div>
         </div>
         {% else %}
-          {% include 'c_goods/deleted.html' %}
+          {% include 'mobile/communities/goods/deleted.html' %}
         {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_goods_list/sidebar.html' %}
+          {% include 'mobile/communities/goods_list/sidebar.html' %}
         </div>
 </div>
 

@@ -1,5 +1,5 @@
 <div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
-    {% include 'post_user/staff_card_header.html' %}
+    {% include 'mobile/posts/post_user/staff_card_header.html' %}
 
     {{ object.text|linebreaks }}
 
@@ -8,8 +8,8 @@
     </span>
 
     {% if object.parent %}
-      {% include 'post_user/repost.html' %}
+      {% include 'mobile/posts/post_user/repost.html' %}
     {% endif %}
 
-    {% include 'post_user/info.html' %}
+    {% include 'mobile/posts/post_user/info.html' %}
 </div>

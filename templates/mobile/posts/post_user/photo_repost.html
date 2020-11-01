@@ -1,7 +1,7 @@
 {% with photo=object.get_photo_repost %}
 
 {% if object.parent.community %}
-  {% include 'c_posts/card_header.html' %}
+  {% include 'mobile/main/c_posts/card_header.html' %}
 
   {% if object.text %}
     <div class="fullscreen pointer">
@@ -15,7 +15,7 @@
   </div>
 {% else %}
 
-  {% include 'u_posts/card_header.html' %}
+  {% include 'mobile/main/u_posts/card_header.html' %}
 
 {% if object.text %}
   <div class="fullscreen pointer">

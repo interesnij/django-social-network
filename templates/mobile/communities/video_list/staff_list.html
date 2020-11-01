@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} - {{ album.title }}{% endblock %}
 {% block content %}
 
@@ -35,7 +35,7 @@
                   <div class="row community_block_paginate" id="community_video_container" data-list="/communities/{{ community.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'c_video/video.html' %}
+                        {% include 'mobile/video/video.html' %}
                       {% endfor %}
                     {% else %}
                       <div class="card video_none centered">
@@ -53,11 +53,11 @@
               </div>
           </div>
           {% else %}
-            {% include 'c_video/deleted.html' %}
+            {% include 'mobile/video/deleted.html' %}
           {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_video_list/sidebar.html' %}
+          {% include 'mobile/video_list/sidebar.html' %}
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
@@ -17,7 +17,7 @@
       </div>
   </div>
   <div class="container mt-4">
-    {% include 'c_gallery/albums.html' %}
+    {% include 'mobile/communities/gallery/albums.html' %}
   </div>
 {% else %}
   <div class="container-fluid mt-3">

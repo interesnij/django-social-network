@@ -13,9 +13,9 @@
 </span>
 
 {% if object.post %}
-  {% include 'item_community/admin_post_detail.html' with post=post %}
+  {% include 'mobile/posts/post_community/admin_post_detail.html' with post=post %}
 {% endif %}
 
 {% if object.article %}
-    {% include 'item_community/admin_article.html' with article=article  %}
+    {% include 'mobile/posts/post_community/admin_article.html' with article=article  %}
 {% endif %}

@@ -22,15 +22,15 @@
 
         <div class="row" data-pk="{{ reply.pk }}">
           {% for object in reply.good_comment_photo.all %}
-            {% include 'generic/comment_item/u_comment_photo.html' %}
+            {% include 'mobile/generic/comment_item/u_comment_photo.html' %}
           {% endfor %}
 
           {% for object in reply.good_comment_video.all %}
-            {% include 'generic/comment_item/u_comment_video.html' %}
+            {% include 'mobile/generic/comment_item/u_comment_video.html' %}
           {% endfor %}
-          
+
           {% for object in reply.good_comment_music.all %}
-            {% include 'generic/comment_item/u_comment_music.html' %}
+            {% include 'mobile/generic/comment_item/u_comment_music.html' %}
           {% endfor %}
         </div>
 

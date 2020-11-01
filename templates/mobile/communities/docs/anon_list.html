@@ -1,4 +1,4 @@
-{% extends "base_anon.html" %}
+{% extends "base_anon_mobile.html" %}
 {% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
 {% block content %}
 
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4">
-          {% include 'c_docs/sidebar.html' %}
+          {% include 'mobile/communities/docs/sidebar.html' %}
         </div>
     </div>
 </div>

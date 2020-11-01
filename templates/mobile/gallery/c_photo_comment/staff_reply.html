@@ -19,7 +19,7 @@
         </h5>
         {{ reply.text|linebreaks }}
 
-        {% include 'generic/attach/c_photo_reply.html' %}
+        {% include 'mobile/generic/attach/c_photo_reply.html' %}
 
         <div class="">
             <div class="row">
@@ -103,7 +103,7 @@
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters">
-                              {% include 'c_photo_comment/form_dropdown.html' %}
+                              {% include 'mobile/gallery/c_photo_comment/form_dropdown.html' %}
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 105%;">
                                       <input type="hidden" name="pk" value="{{ community.pk }}">

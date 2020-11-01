@@ -16,7 +16,7 @@
         </span>
       </div>
     {% else %}
-      {% include 'c_photo_comment/admin_parent.html' %}
+      {% include 'mobile/gallery/c_photo_comment/admin_parent.html' %}
     {% endif %}
   {% endfor %}
 </span>
@@ -28,7 +28,7 @@
       <div class="row img_block" style="margin:10px"></div>
       <div class="row no-gutters">
 
-        {% include 'c_photo_comment/form_dropdown.html' %}
+        {% include 'mobile/gallery/c_photo_comment/form_dropdown.html' %}
 
           <div class="col">
             <input type="hidden" name="uuid" value="{{ parent.uuid }}">

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ album.title }} : Мои видеоролики{% endblock %}
 {% block content %}
 
@@ -38,7 +38,7 @@
                   <div class="row profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'user_video/video.html' %}
+                        {% include 'mobile/users/user_video/video.html' %}
                       {% endfor %}
                     {% else %}
                       <div class="card video_none centered">
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4">
-          {% include 'user_video/my_sidebar.html' %}
+          {% include 'mobile/users/user_video/my_sidebar.html' %}
         </div>
     </div>
 </div>

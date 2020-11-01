@@ -9,7 +9,7 @@
 </style>
 <div class="container mt-3">
 
-  {% include 'mob_settings/menu.html' %}
+  {% include 'mobile/users/settings/menu.html' %}
 
     <form id="ABOUT-FORM" action="" method="post" class="contact-form">
         {% csrf_token %}
@@ -32,18 +32,4 @@
     </form>
   </div>
 
-<script>
-  document.querySelector(".ab_btn").addEventListener("click", (e) => {
-   var form10 = document.getElementById('ABOUT-FORM');
-   var formEntries = new FormData(form10);
-   var options = {
-     method: 'POST',
-     body: formEntries,
-   };
-   fetch('{% url "user_about_form" pk=request.user.pk %}', options).then(data => {
-     console.log("Все ОК")
-   }).catch(error => {console.log("Все не ОК")})
-})
-
-</script>
 {% endblock %}

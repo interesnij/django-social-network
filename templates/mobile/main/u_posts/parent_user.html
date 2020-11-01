@@ -8,7 +8,7 @@
   {% endif %}
 </span>
 
-{% include 'u_posts/card_header.html' %}
+{% include 'mobile/main/u_posts/card_header.html' %}
 
 {% if object.parent.text %}
   <div class="fullscreen pointer">
@@ -18,22 +18,22 @@
 
 <div class="attach_container" data-pk="{{ object.pk }}">
 {% for photo in object.get_parent_attach_photos %}
-  {% include 'generic/item/u_photo.html' %}
+  {% include 'mobile/generic/item/u_photo.html' %}
 {% endfor %}
 
 {% for video in object.get_parent_attach_videos %}
-  {% include 'generic/item/u_video.html' %}
+  {% include 'mobile/generic/item/u_video.html' %}
 {% endfor %}
 
 {% for good in object.get_parent_attach_goods %}
-  {% include 'generic/item/u_good.html' %}
+  {% include 'mobile/generic/item/u_good.html' %}
 {% endfor %}
 
 {% for article in object.get_parent_attach_articles %}
-  {% include 'generic/item/u_zrticle.html' %}
+  {% include 'mobile/generic/item/u_zrticle.html' %}
 {% endfor %}
 
 {% for music in object.get_parent_attach_tracks %}
-  {% include 'generic/items/u_music.html' %}
+  {% include 'mobile/generic/items/u_music.html' %}
 {% endfor %}
 </div>

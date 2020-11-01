@@ -1,5 +1,5 @@
 
-{% include 'item_community/post.html' with post=post  %}
+{% include 'mobile/posts/post_community/post.html' with post=post  %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -9,7 +9,7 @@
   <span class="community_stream">
     {% if object_list %}
       {% for object in object_list %}
-        {% include 'item_community/post.html' with post=post  %}
+        {% include 'mobile/posts/post_community/post.html' with post=post  %}
       {% endfor %}
     {% endif %}
   </span>

@@ -22,15 +22,15 @@
 
         <div class="row" data-pk="{{ reply.pk }}">
           {% for object in reply.video_comment_photo.all %}
-            {% include 'generic/comment_item/c_comment_photo.html' %}
+            {% include 'mobile/generic/comment_item/c_comment_photo.html' %}
           {% endfor %}
 
           {% for object in reply.video_comment_video.all %}
-            {% include 'generic/comment_item/c_comment_video.html' %}
+            {% include 'mobile/generic/comment_item/c_comment_video.html' %}
           {% endfor %}
-          
+
           {% for object in reply.video_comment_music.all %}
-            {% include 'generic/comment_item/c_comment_music.html' %}
+            {% include 'mobile/generic/comment_item/c_comment_music.html' %}
           {% endfor %}
         </div>
 
@@ -113,7 +113,7 @@
                             <div class="row img_block" style="margin:10px"></div>
 
                             <div class="row no-gutters">
-                              {% include 'c_video_comment/form_dropdown.html' %}
+                              {% include 'mobile/video/c_video_comment/form_dropdown.html' %}
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 105%;">
                                       <input type="hidden" name="pk" value="{{ community.pk }}">

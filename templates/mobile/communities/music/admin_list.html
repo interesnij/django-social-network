@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} - {{ playlist.name }}{% endblock %}
 {% load get_key %}
 {% block content %}
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          {% include 'desctop/communities/music/admin_sidebar.html' %}
+          {% include 'mobile/communities/music/admin_sidebar.html' %}
         </div>
     </div>
 </div>

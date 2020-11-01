@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% load liked_user %}
 {% block title %}Мои товары - {{ album.title }}{% endblock %}
 {% block content %}
@@ -41,7 +41,7 @@
               {% if object_list %}
 
               {% for object in object_list %}
-                {% include 'user_goods/good.html' %}
+                {% include 'mobile/users/user_goods/good.html' %}
               {% endfor %}
 
               {% else %}
@@ -65,7 +65,7 @@
         {% endif %}
         </div>
         <div class="col-md-4">
-          {% include 'user_goods_list/my_sidebar.html' %}
+          {% include 'mobile/users/user_goods_list/my_sidebar.html' %}
         </div>
 </div>
 

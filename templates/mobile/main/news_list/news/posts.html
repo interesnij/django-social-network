@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mt-3">
-  {% include 'mob_news_list/menu.html' %}
+  {% include 'mobile/main/news_list/menu.html' %}
 
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
@@ -18,27 +18,27 @@
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
                       {% include object.get_c_news_parent %}
 
-                      {% include 'post_community/info.html' %}
+                      {% include 'mobile/posts/post_community/info.html' %}
                     </div>
                   {% else %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
                       {% include object.get_u_news_parent %}
 
-                      {% include 'post_user/info.html' %}
+                      {% include 'mobile/posts/post_user/info.html' %}
                     </div>
                   {% endif %}
                 {% else %}
                   {% if object.community %}
                     {% if object.community in request.user.get_staffed_communities %}
-                      {% include 'c_posts/admin_post.html' %}
+                      {% include 'mobile/main/c_posts/admin_post.html' %}
                     {% else %}
-                      {% include 'c_posts/post.html' %}
+                      {% include 'mobile/main/c_posts/post.html' %}
                     {% endif %}
                   {% else %}
                     {% if object.creator == request.user %}
-                      {% include 'u_posts/my_post.html' %}
+                      {% include 'mobile/main/u_posts/my_post.html' %}
                     {% else %}
-                      {% include 'u_posts/post.html' %}
+                      {% include 'mobile/main/u_posts/post.html' %}
                     {% endif %}
                   {% endif %}
                 {% endif %}

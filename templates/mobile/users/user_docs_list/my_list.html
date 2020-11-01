@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}Мои документы - {{ list.name }} {% endblock %}
 {% block content %}
 
@@ -45,7 +45,7 @@
                                   </h6>
                                     <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
                                     <span class='span_btn' data-pk="{{ doc.pk }}">
-                                      {% include 'user_docs/add_dropdown.html' %}
+                                      {% include 'mobile/users/user_docs/add_dropdown.html' %}
                                       <div class="dropdown" style="position: inherit;">
                                         <a class="btn_default drop pointer">
                                           <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -83,7 +83,7 @@
           {% endif %}
         </div>
         <div class="col-12 col-md-4">
-          {% include 'user_docs_list/my_sidebar.html' %}
+          {% include 'mobile/users/user_docs_list/my_sidebar.html' %}
         </div>
     </div>
 </div>

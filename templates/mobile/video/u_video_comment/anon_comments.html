@@ -11,12 +11,12 @@
         </span>
         <span class="stream_reply_comments">
             {% for reply in comment.get_replies %}
-              {% include 'u_video_comment/anon_reply.html' %}
+              {% include 'mobile/video/u_video_comment/anon_reply.html' %}
             {% endfor %}
         </span>
       </div>
     {% else %}
-      {% include 'u_video_comment/anon_parent.html' %}
+      {% include 'mobile/video/u_video_comment/anon_parent.html' %}
     {% endif %}
   {% endfor %}
 </span>
