@@ -10,11 +10,10 @@
                 <input type="password" name="password1" id="password1" autocomplete="new-password" class="form-control form-control-lg" placeholder="Пароль">
                 <hr class="my-0">
                 <input type="password" name="password2" id="password2" autocomplete="new-password" class="form-control form-control-lg" placeholder="Повторите пароль">
-
-                {% include 'mobile/main/auth/birtday.html' %}
             </div>
         </div>
-        <div class="col mt-3">
+        {% include 'mobile/main/auth/birtday.html' %}
+        <div class="col mt-1">
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
                 <label class="custom-control-label" for="register_">
