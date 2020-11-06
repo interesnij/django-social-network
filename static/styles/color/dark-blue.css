@@ -110,7 +110,7 @@ body {
 .iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
   background: #121a32;
 }
-.card {
+.card, .mobile_naw {
   background-color: #19234e;
 }
 

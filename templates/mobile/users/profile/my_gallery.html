@@ -1,19 +1,19 @@
-{% if user.get_profile_photos %}
+{% if photo_album.get_6_photos %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Фото </h4>
-            </div> 
+            </div>
             все
         </div>
       </a>
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-          {% for object in user.get_profile_photos %}
-            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
+          {% for object in photo_album.get_6_photos %}
+            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="u_photo_detail" photo-pk="{{ object.pk }}">
               <img style="width:100%;object-fit:cover;height:auto;" src="{{ object.file.url }}" alt="">
             </div>
           {% endfor %}

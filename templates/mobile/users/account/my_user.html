@@ -11,11 +11,11 @@
 <div class="container">
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
-    <div class="media">
+    <div style="padding-top: 10px; display: flex; padding-left: 10px;">
       <figure style="width:50px;">
         <img src="/media/users/1/23343230-08a3-452a-86be-3109b6df622b.jpg.50x50_q85_crop-smart_detail.jpg" style="border-radius:50px" alt="image">
       </figure>
-      <div class="media-body">
+      <div class="media-body" style="margin-left:10px">
         <h6 class="my-0 mt-1">
           <h6 class="mb-0">{{ user.get_full_name }}
             {% if user.is_identified %}
@@ -36,8 +36,8 @@
         </p>
       </div>
     </div>
-    <p class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></p>
-    <div style="padding:10px">
+    <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
+    <div style="padding-left: 10px;">
       <span>Д. р.: </span>{{ user.birthday }}<br>
       <span>Тел.: </span>{{ user.phone }}<br>
       <span>Пол: </span>{{ user.get_gender_display }}<br>
@@ -47,6 +47,8 @@
   {% include 'mobile/users/profile/my_frends.html' %}
 
   {% include 'mobile/users/profile/followers.html' %}
+
+  {% include 'mobile/users/profile/my_communities.html' %}
 
   {% include 'mobile/users/profile/my_gallery.html' %}
 
