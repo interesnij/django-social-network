@@ -6,11 +6,11 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
 from ckeditor_uploader import views
+from main.views import SignupView
 
 
 urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="account/logout.html"), name='logout'),
-    url(r'^signup/$', TemplateView.as_view(template_name="main/auth.html"), name='signup'),
     url(r'^email-verification/$', TemplateView.as_view(template_name="account/email_verification.html"), name='email-verification'),
     url(r'^password-reset/$', TemplateView.as_view(template_name="account/password_reset.html"), name='password-reset'),
     url(r'^password-reset/confirm/$', TemplateView.as_view(template_name="account/password_reset_confirm.html"), name='password-reset-confirm'),
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
+    url(r'^signup/', SignupView.as_view(), name='signup'),
 
     url(r'^admin/', admin.site.urls),
     url(r'', include ('main.urls')),

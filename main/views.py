@@ -21,6 +21,20 @@ def get_detect_main_template(template, request_user, user_agent):
 			template_name = "mobile/main/auth/auth.html"
 	return template_name
 
+class SignupView(TemplateView):
+	template_name = "mobile/main/auth/signup.html"
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostsListView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_posts_for_user(self.request.user).order_by('-created')
+		else:
+			items = []
+		return items
+
 class PostsListView(ListView):
 	template_name = None
 	paginate_by = 15
