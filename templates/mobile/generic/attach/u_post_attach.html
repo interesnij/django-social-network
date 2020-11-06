@@ -1,0 +1,26 @@
+ <!-- прикрепленные элементы к записям пользователей -->
+
+<div class="attach_container">
+  {% for photo in object.get_attach_photos %}
+    {% include 'desctop/generic/items/u_photo.html' %}
+  {% endfor %}
+
+  {% for video in object.get_attach_videos %}
+    {% include 'desctop/generic/items/u_video.html' %}
+  {% endfor %}
+
+  {% for good in object.get_attach_goods %}
+    {% include 'desctop/generic/items/u_good.html' %}
+  {% endfor %}
+  {% for article in object.get_attach_articles %}
+    {% include 'desctop/generic/items/u_article.html' %}
+  {% endfor %}
+
+  {% for music in object.get_attach_tracks %}
+    {% include 'desctop/generic/items/u_music.html' %}
+  {% endfor %}
+
+  {% for doc in object.get_attach_docs %}
+    {% include 'desctop/generic/items/u_doc.html' %}
+  {% endfor %}
+</div>

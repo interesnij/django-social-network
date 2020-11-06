@@ -1,0 +1,26 @@
+<!-- прикрепленные элементы к ответам на комментарии к записям пользователей -->
+<div class="row" data-pk="{{ reply.pk }}">
+  {% for photo in reply.comment_photo.all %}
+    {% include 'desctop/generic/items/u_photo.html' %}
+  {% endfor %}
+
+  {% for video in reply.comment_video.all %}
+    {% include 'desctop/generic/items/u_video.html' %}
+  {% endfor %}
+
+  {% for good in reply.comment_good.all %}
+    {% include 'desctop/generic/items/u_comment_good.html' %}
+  {% endfor %}
+
+  {% for article in comment.attached_comment.all %}
+    {% include 'desctop/generic/items/u_article.html' %}
+  {% endfor %}
+
+  {% for music in reply.comment_music.all %}
+    {% include 'desctop/generic/items/u_music.html' %}
+  {% endfor %}
+
+  {% for doc in reply.get_attach_docs %}
+    {% include 'desctop/generic/items/u_doc.html' %}
+  {% endfor %}
+</div>

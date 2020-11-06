@@ -1,0 +1,19 @@
+<!-- прикрепленные элементы к комментариям к фотографиям сообществ -->
+
+<div class="row" data-pk="{{ comment.pk }}">
+  {% for photo in comment.gallery_comment_photo.all %}
+    {% include 'desctop/generic/items/c_photo.html' %}
+  {% endfor %}
+
+  {% for video in comment.gallery_comment_video.all %}
+    {% include 'desctop/generic/items/c_video.html' %}
+  {% endfor %}
+
+  {% for music in comment.gallery_comment_music.all %}
+    {% include 'desctop/generic/items/c_music.html' %}
+  {% endfor %}
+
+  {% for doc in comment.get_attach_docs %}
+    {% include 'desctop/generic/items/c_doc.html' %}
+  {% endfor %}
+</div>

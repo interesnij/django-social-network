@@ -1,0 +1,11 @@
+{% include 'desctop/main/c_posts/card_header.html' %}
+
+{% if object.parent.text %}
+  <div class="fullscreen pointer">
+    {{ object.parent.text|linebreaks }}
+  </div>
+{% endif %}
+
+{% for playlist in object.parent.get_attach_music_list %}
+  {% include 'desctop/generic/repost/c_music_list_repost.html' %}
+{% endfor %}

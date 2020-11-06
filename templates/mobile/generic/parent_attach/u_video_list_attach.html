@@ -1,0 +1,11 @@
+{% include 'desctop/main/u_posts/card_header.html' %}
+
+{% if object.parent.text %}
+  <div class="fullscreen pointer">
+    {{ object.parent.text|linebreaks }}
+  </div>
+{% endif %}
+
+{% for album in object.parent.get_attach_video_list %}
+  {% include 'desctop/generic/items/u_video_list.html' %}
+{% endfor %}
