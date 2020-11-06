@@ -12,235 +12,41 @@
 
 <div class="container">
 <div class="user_page">
-      <div class="card mb-3">
-          <span style="margin:25px;line-height: 1.3;">
-            <h3 class="mb-0">{{ user.get_full_name }}</h3>
-            {% if user.get_online %}
-              <i class="text-success">Онлайн</i>
-            {% else %}
-              <i style="color:#888888">Был(а) {{ user.get_last_activity }}</i>
-            {% endif %}
-          </span>
-          <div class="card-body">
-              <div class="align-items-center no-gutters">
-                  <a class="col">
-                      <figure class="mx-auto mb-3" id="avatar_reload">
-                        {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
-                        {% else %}
-                          <svg fill="currentColor" class="svg_default" style="width:100%;height: auto;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                        {% endif %}
-                      </figure>
-                  </a>
-              </div>
-
-              <span style="display: flex;align-items:center;justify-content:center;">
-                <a class="btn ajax pt-2" href="{% url 'user_general_form' request.user.pk %}" style="width:100%">Редактировать</a>
-              </span>
-          </div>
+  <div class="card mb-3" style="padding:10px">
+      <h3 class="mb-0">{{ user.get_full_name }}
+        {% if user.is_identified %}
+          <svg class="svg_info svg_default" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect fill="none" /></g><g><path d="M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z"/></g></svg>
+        {% elif user.is_child_safety %}
+          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+        {% elif user.is_child %}
+          <svg class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z"/></svg>
+        {% endif %}
+      </h3>
+      <p class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></p>
+      <div class="row" style="padding:10px">
+        <div class="col-md-6">
+        <span>Дата рождения: </span><br>
+        <span>Моб. телефон: </span><br>
+        <span>Пол: </span><br>
+        </div>
+        <div class="col-md-6">
+        <span>{{ user.birthday }}</span><br>
+        <span>{{ user.phone }}</span><br>
+        <span>{{ user.get_gender_display }}</span><br>
+        </div>
       </div>
+  </div>
 
-      {% if user.get_6_friends %}
-      <div class="card mb-3">
-        <a href="{% url 'frends' pk=user.pk %}" class="ajax">
-          <div class="card-body py-2">
-              <div class="media">
-                  <div class="media-body">
-                    <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
-                    <p class="small">{{ user.get_online_connection_count }} онлайн</p>
-                  </div>
-                  {% for object in user.get_6_friends %}
-                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                      {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
-                      {% else %}
-                      <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
-                      {% endif %}
-                    </figure>
-                  {% endfor %}
-              </div>
-          </div>
-        </a>
-        </div>
-        {% else %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                    <a href="{% url 'all_users' %}" class="ajax">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% if user.get_pop_followers %}
-        <div class="card mb-3">
-          <a href="{% url 'frends' pk=user.pk %}" class="ajax">
-            <div class="card-body py-2">
-                <div class="media">
-                    <div class="media-body">
-                      <h6 class="my-0 text-truncated">{{ user.count_followers }} {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
-                      <p class="small">{{ user.count_followers }} онлайн</p>
-                    </div>
-                    {% for object in user.get_pop_followers %}
-                      <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                        {% if object.get_avatar %}
-                        <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
-                        {% else %}
-                        <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
-                        {% endif %}
-                      </figure>
-                    {% endfor %}
-                </div>
-            </div>
-          </a>
-          </div>
-          {% else %}
-          <div class="card mb-3">
-              <div class="card-header">
-                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                      <a href="{% url 'all_users' %}" class="ajax">
-                          <div class="media-body">
-                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          {% endif %}
+  {% include 'desctop/users/profile/my_frends.html' %}
 
-      {% if user.get_6_communities %}
-      <div class="card mb-3">
-        <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-          <div class="card-body py-2">
-              <div class="media">
-                  <div class="media-body">
-                    <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
-                    <p class="small">нет осоьых</p>
-                  </div>
-                  {% for object in user.get_6_communities %}
-                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                      {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar }}" style="border-radius:50px;" alt="image">
-                      {% else %}
-                      <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
-                      {% endif %}
-                    </figure>
-                  {% endfor %}
-              </div>
-          </div>
-        </a>
-          </div>
-          {% else %}
-          <div class="card mb-3">
-              <div class="card-header">
-                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                      <a href="{% url 'all_users' %}" class="ajax">
-                          <div class="media-body">
-                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          {% endif %}
+  {% include 'desctop/users/profile/followers.html' %}
 
-          {% if user.get_last_music %}
-          <div class="card mb-3 music_playlist" data-pk="{{ user.get_music_list_id }}">
-              <div class="card-header">
-                  <div class="media">
-                      <div class="media-body">
-                          <h4 class="content-color-primary mb-0"></h4>
-                      </div>
-                      <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
-                          все
-                      </a>
-                  </div>
-              </div>
+  {% include 'desctop/users/profile/my_gallery.html' %}
 
-              {% for object in user.get_last_music %}
-              <div class="card border-top">
-                  <div class="card-body">
-                      <div class="media" music-counter="{{ forloop.counter0 }}">
-                          <figure style="cursor:pointer">
-                            <a class="music_list_item">
-                              {% if object.artwork_url %}
-                                <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
-                              {% else %}
-                                <svg fill="currentColor" style="width:50px;heigth:50px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-                              {% endif %}
-                            </a>
-                          </figure>
-                          <div class="media-body">
-                              <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %}
-          </div>
-          {% else %}
-          <div class="card mb-3">
-              <div class="card-header">
-                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                      <a href="{% url 'all_music' %}" class="ajax">
-                          <div class="media-body">
-                              <h4 class="content-color-primary mb-0">Добавьте музыку</h4>
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          {% endif %}
+  {% include 'mobile/users/profile/new_post.html' %}
 
-          {% if user.get_profile_photos %}
-          <div class="card mb-3">
-              <div class="card-header">
-                <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
-                  <div class="media">
-                      <div class="media-body">
-                          <h4 class="content-color-primary mb-0">Фото </h4>
-                      </div>
-                      все
-                  </div>
-                </a>
-              </div>
-              <div class="card-body p-1">
-                  <div class="row no-gutters">
-                    {% for object in user.get_profile_photos %}
-                      <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;">
-                        <img style="width:100%;object-fit:cover;height:auto;" src="{{ object.file.url }}" alt="">
-                      </div>
-                    {% endfor %}
-                  </div>
-              </div>
-          </div>
-          {% else %}
-          <div class="card mb-3">
-              <div class="card-header">
-                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                      <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
-                          <div class="media-body">
-                              <h4 class="content-color-primary mb-0">Добавляйте фото</h4>
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-        {% endif %}
-
-        {% include 'mobile/users/profile/new_post.html' %}
-
-        <div id="lenta_load" data-link="/users/detail/list/{{ user.pk }}/"></div>
-
+  <div id="lenta_load" data-link="/users/detail/list/{{ user.pk }}/"></div>
 </div>
 </div>
-<script>
-{% if user.is_user_playlist %}
-  document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
-{% endif %}
-</script>
 
 {% endblock %}
