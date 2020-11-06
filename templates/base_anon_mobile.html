@@ -9,8 +9,19 @@
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'styles/analog.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" media="all" />
-    <link rel="stylesheet" href="/static/styles/color/white.css" />
+    <link rel="stylesheet" href="/static/styles/color/{{ request.user.color_settings.color }}.css" />
     <link rel="stylesheet" href="{% static 'styles/load.cs' %}" media="none" onload="if(media!='all')media='all'" />
+    <style>
+    .sidebar .nav .nav-item a{
+      font-size:30px;
+      border-bottom: 1px solid black;
+      margin-top: 10px;
+    }
+    .sidebar .nav .nav-item svg{
+      width:30px;
+      height:30px;
+    }
+    </style>
 </head>
   <body class="fixed-header">
         <div id="ajax" style="padding-right:0px;padding-left:0px;">
@@ -18,9 +29,11 @@
            {% block content %}
            {% endblock %}
           </span>
+            {% include "mobile/mobile_nav.html" %}
+           {% include "mobile/fullscreens.html" %}
 				</div>
+          {% include "mobile/mobile_tab.html" %}
 
-        <script defer src="/static/scripts/anon.js" type="text/javascript"></script>
-        <div id="video_loader"></div>
+    <script defer src="/static/scripts/anon.js" type="text/javascript"></script>
   </body>
 </html>
