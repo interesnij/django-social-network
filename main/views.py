@@ -18,7 +18,7 @@ def get_detect_main_template(template, request_user, user_agent):
 		if request_user.is_authenticated:
 			template_name = "desctop/" + template
 		else:
-			template_name = "desctop/main/auth/auth.html"
+			template_name = "mobile/main/auth/auth.html"
 	return template_name
 
 class PostsListView(ListView):

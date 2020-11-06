@@ -4902,6 +4902,7 @@ cursor: pointer;
   right: 40px;
   margin: 10px;
   top: 40px;
+  z-index: 500;
 }
 .prev_photo, .prev_item, .prev_good { position: absolute; right: -7%; top: 160px; cursor: pointer; }
 .next_photo, .next_item, .next_good  { position: absolute; left: -7%; top: 160px; cursor: pointer; }
