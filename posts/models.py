@@ -196,7 +196,7 @@ class Post(models.Model):
         else:
             return "desctop/generic/attach/c_post_attach.html"
 
-	def get_u_attach_items_mobile(self):
+    def get_u_attach_items_mobile(self):
 		if self.is_photo_list_attached():
 			return "mobile/generic/attach/u_photo_list_attach.html"
 		elif self.is_playlist_attached():
