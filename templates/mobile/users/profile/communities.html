@@ -1,3 +1,5 @@
+{% load liked_user %}
+
 {% if communities %}
 <div class="card mb-3">
   <a href="{% url 'communities' pk=user.pk %}" class="ajax">

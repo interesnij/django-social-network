@@ -1,3 +1,5 @@
+{% load liked_user %}
+
 {% if user.get_pop_followers %}
 <div class="card mb-3">
   <a href="{% url 'frends' pk=user.pk %}" class="ajax">
