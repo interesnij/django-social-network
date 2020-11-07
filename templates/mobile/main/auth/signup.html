@@ -1,28 +1,55 @@
-<form id="signup" class="row align-items-center h-sm-auto">
-    <div style="width: 100%;">
-        <h5 class="mb-3 content-color-secondary text-left">Регистрация</h5>
-        <div class="card mb-2">
-            <div class="card-body p-0">
-                <input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg" placeholder="Имя">
-                <hr class="my-0">
-                <input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg" placeholder="Фамилия">
-                <hr class="my-0">
-                <input type="password" name="password1" id="password1" autocomplete="new-password" class="form-control form-control-lg" placeholder="Пароль">
-                <hr class="my-0">
-                <input type="password" name="password2" id="password2" autocomplete="new-password" class="form-control form-control-lg" placeholder="Повторите пароль">
+{% extends "base_anon_mobile.html" %}
+{% block title %}Вход | трезвый.рус{% endblock %}
+{% block content %}
+<div class="wrapper h-100  h-sm-auto justify-content-center pink-gradient" style="height: 100vh !important;padding-top:0">
+<div class="container h-100  h-sm-auto align-items-center ">
+            <div class="align-items-center h-100  h-sm-auto">
+                <div class="text-center">
+                    <h2 class="font-weight-light mb-3 text-white mt-3"><span class="font-weight-normal">трезвый</span>.рус</h2>
+                    <h5 class="font-weight-light mb-5 text-white text-center">
+                      Нравственная сеть
+                      <br>
+                      для счастливых людей.
+                    </h5>
+                    <form id="signup" class="">
+                      <div class="card mb-3">
+                        <div class="card-body p-0">
+                            <div class="card mb-2">
+                              <div class="card-body p-0">
+                                <input type="text" name="first_name" id="id_first_name" class="form-control text-center form-control-lg border-0" placeholder="Имя">
+                                <hr class="my-0">
+                                <input type="text" name="last_name" id="id_last_name" class="form-control text-center form-control-lg border-0" placeholder="Фамилия">
+                                <hr class="my-0">
+                                <input type="password" name="password1" id="password1" autocomplete="new-password" class="form-control text-center form-control-lg border-0" placeholder="Пароль">
+                                <hr class="my-0">
+                                <input type="password" name="password2" id="password2" autocomplete="new-password" class="form-control text-center form-control-lg border-0" placeholder="Повторите пароль">
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="col mt-1">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
+                            <label class="custom-control-label" for="register_">
+                                Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a>.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button desabled id="register_ajax" class="btn btn-success success-gradient">Регистрация</button>
+                        <a href="{% url 'main' %}" class="btn btn-outline-light ajax">Вход</a>
+                    </div>
+                    <br>
+                    <div class="text-center mb-4">
+                        <a href="" class="text-white">О сайте</a>
+                        <a href="" class="text-white">Правила использования</a>
+                        <a href="" class="text-white">Политика безопасности</a>
+                        <a href="" class="text-white">Условия лицензирования</a>
+                        <a href="" class="text-white">Вопросы / Ответы</a>
+                    </div>
+                </div>
             </div>
         </div>
-        {% include 'mobile/main/auth/birtday.html' %}
-        <div class="col mt-1">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
-                <label class="custom-control-label" for="register_">
-                    Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a>.
-                </label>
-            </div>
-        </div>
-        <div class="text-left mt-3">
-            <button type="button" class="btn btn-sm btn-primary pink-gradient" desabled id="register_ajax">Создать аккаунт</button>
-        </div>
-    </div>
-</form>
+</div>
+{% endblock %}
