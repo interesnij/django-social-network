@@ -35,7 +35,7 @@ class SignupView(TemplateView):
 			if request.user.is_authenticated:
 				self.template_name = "desctop/main/news_list/news/posts.html"
 			else:
-				self.template_name = "desctop/main/auth/auth.html"
+				self.template_name = "mobile/main/auth/auth.html"
 		return super(SignupView,self).get(request,*args,**kwargs)
 
 
