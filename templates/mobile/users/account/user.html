@@ -47,6 +47,14 @@
       <span>Пол: </span>{{ user.get_gender_display }}<br>
     </div>
   </div>
+  <div class="row no-gutters">
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      <span class="btn btn-sm btn-warning warning-gradient ml-2 user_send_page_message" data-pk="{{ user.pk }}">Сообщение</span>
+    </div>
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      {% include get_buttons_block %}
+    </div>
+  </div>
 
   {% include 'mobile/users/profile/frends.html' %}
 
