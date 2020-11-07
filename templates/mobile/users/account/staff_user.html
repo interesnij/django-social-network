@@ -20,15 +20,6 @@
         {% endif %}
       </figure>
 
-      <div class="row no-gutters">
-        <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-          {% include get_buttons_block %}
-        </div>
-        <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-          <span class="btn btn-sm btn-warning warning-gradient ml-2 user_send_page_message" data-pk="{{ user.pk }}">Написать сообщение</span>
-        </div>
-      </div>
-
       <div class="media-body" style="margin-left:10px">
         <h6 class="my-0 mt-1">
           <h6 class="mb-0">{{ user.get_full_name }}
@@ -56,6 +47,16 @@
       <span>Тел.: </span>{{ user.phone }}<br>
       <span>Пол: </span>{{ user.get_gender_display }}<br>
     </div>
+
+    <div class="row no-gutters">
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        {% include get_buttons_block %}
+      </div>
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <span class="btn btn-sm btn-warning warning-gradient ml-2 user_send_page_message" data-pk="{{ user.pk }}">Написать сообщение</span>
+      </div>
+    </div>
+    
   </div>
 
   {% include 'mobile/users/profile/frends.html' %}
