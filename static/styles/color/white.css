@@ -175,9 +175,7 @@ a.media:hover {
 .btn_success svg, .btn_success span{ color:#41cd52}
 .btn_danger svg, .btn_danger span{ color:#FF0000}
 
-.svg_default_30 {border: #6C757D solid 1px;}
-.svg_default_40 {border: #6C757D solid 1px;}
-.svg_default_50 {border: #6C757D solid 1px;}
+.svg_default_30, .svg_default_40, .svg_default_50, .svg_default_80{border: #6C757D solid 1px;}
 .like_window, .dislike_window, .repost_window,
 .comment_like_window, .comment_dislike_window {
   background: #D6DAE1; color: rgba(0, 0, 0, 0.8) !important;

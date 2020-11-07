@@ -234,6 +234,6 @@ THUMBNAIL_DEFAULT_OPTIONS = {"crop":"smart","detail":True}
 THUMBNAIL_ALIASES = {
     "":{
         "avatar": {"size":(200,250)},
-        "small_avatar": {"size":(50,50)},
+        "small_avatar": {"size":(100,100)},
     },
 }
