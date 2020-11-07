@@ -1,4 +1,7 @@
-
+on('body', 'click', '.mobile_naw', function() {
+  document.body.querySelector("settings_block_hide") ? (settings_block = document.body.querySelector("settings_block_hide"),settings_block.classList.add(".settings_block_show");settings_block.classList.remove(".settings_block_hide"))
+  : (settings_block = document.body.querySelector("settings_block_show"),settings_block.classList.add(".settings_block_hide");settings_block.classList.remove(".settings_block_show"))
+});
 
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
