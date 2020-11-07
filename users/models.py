@@ -819,8 +819,8 @@ class User(AbstractUser):
     def count_goods(self):
         return self.good_creator.values('pk').count()
 
-    def count_posts(self):
-        return self.posts.values('pk').count()
+    def count_public_posts(self):
+        return self.posts.filter(status="P")values('pk').count()
 
 
     ''''' GET всякие  219-186 '''''
