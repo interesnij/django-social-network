@@ -26,7 +26,7 @@ class SignupView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		if MOBILE_AGENT_RE.match(user_agent):
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			if request.user.is_authenticated:
 				self.template_name = "mobile/main/news_list/news/posts.html"
 			else:
