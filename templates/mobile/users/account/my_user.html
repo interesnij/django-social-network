@@ -12,7 +12,7 @@
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
     <div style="padding-top: 10px; display: flex; padding-left: 10px;">
-      <figure style="width:50px;">
+      <figure>
         {% if user.get_avatar %}
           <img src="{{ user.get_avatar }}" style="border-radius:80px" alt="image">
         {% else %}
@@ -38,9 +38,9 @@
             <i>Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
           {% endif %}
         </p>
+        <p class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></p>
       </div>
     </div>
-    <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
     <div style="padding-left: 10px;">
       <span>Д. р.: </span>{{ user.birthday }}<br>
       <span>Тел.: </span>{{ user.phone }}<br>
