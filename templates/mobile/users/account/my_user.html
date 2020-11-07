@@ -31,14 +31,14 @@
             {% endif %}
           </h6>
         </h6>
-        <p class="small">
+        <span class="small">
           {% if user.get_online %}
             <i class="text-success">Онлайн</i>
           {% else %}
             <i>Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
           {% endif %}
-        </p>
-        <p class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></p>
+        </span>
+        <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
       </div>
     </div>
     <div style="padding-left: 10px;">
