@@ -1,5 +1,8 @@
-.text-center {
-  text-align:center !important;
+.settings_block_hide{
+  display: none
+}
+.settings_block_show{
+  display: block
 }
 
 .progressive {
