@@ -1,6 +1,5 @@
 <style>
   nav {
-    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
@@ -9,6 +8,9 @@
     justify-content: space-around;
     background: white;
     z-index:10;
+    position: fixed;
+    width: 100%;
+    padding-bottom:8px
   }
   .icon {
     font-size: 30px;
@@ -48,18 +50,9 @@
   }
 }
 
-button:active, button:focus {
-  outline: none;
-}
-button::-moz-focus-inner {
-  border: 0;
-}
-.style_hide{
-  display:none;
-}
 </style>
 
-  <nav style="position: fixed;width: 100%;padding-bottom:8px" class="mobile_naw">
+  <nav class="mobile_naw">
     <button class="icon border">
       <a href="{% url 'post_list' %}" class="ajax">
         <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
@@ -74,7 +67,7 @@ button::-moz-focus-inner {
     <button class="icon border">
       <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
-    <button class="icon border">
+    <button class="icon border user_nav_button">
       <svg class="svg_default svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
   </nav>
