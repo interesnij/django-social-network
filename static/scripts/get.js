@@ -1,4 +1,4 @@
-on('body', 'click', '.mobile_naw', function() {
+on('body', 'click', '.user_nav_button', function() {
   document.body.querySelector(".settings_block_hide") ? (settings_block = document.body.querySelector(".settings_block_hide"),settings_block.classList.add("settings_block_show"),settings_block.classList.remove("settings_block_hide"))
   : (settings_block = document.body.querySelector(".settings_block_show"),settings_block.classList.add("settings_block_hide"),settings_block.classList.remove("settings_block_show"))
 });
