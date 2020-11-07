@@ -28,11 +28,12 @@
           <span id="reload_block">
            {% block content %}
            {% endblock %}
+
+           {% include "mobile/mobile_nav.html" %}
+           {% include "mobile/fullscreens.html" %}
           </span>
 				</div>
         {% include "mobile/mobile_tab.html" %}
-        {% include "mobile/mobile_nav.html" %}
-        {% include "mobile/fullscreens.html" %}
 
     {% include "mobile_base_scripts.html" %}
   </body>
