@@ -1,6 +1,6 @@
  <!-- прикрепленные элементы к записям пользователей -->
 
-<div class="attach_container">
+<div class="attach_container card-body">
   {% for photo in object.get_attach_photos %}
     {% include 'desctop/generic/items/u_photo.html' %}
   {% endfor %}

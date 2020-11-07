@@ -1,6 +1,6 @@
  <!-- прикрепленные элементы к записям сообществ -->
 
-<div class="attach_container" data-pk="{{ object.pk }}">
+<div class="attach_container card-body" data-pk="{{ object.pk }}">
   {% for photo in object.get_attach_photos %}
     {% include 'desctop/generic/items/c_photo.html' %}
   {% endfor %}
