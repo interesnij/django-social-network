@@ -1,3 +1,7 @@
+.text-center {
+  text-align: center !important;
+}
+
 nav {
   bottom: 0;
   left: 0;

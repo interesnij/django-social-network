@@ -1,16 +1,6 @@
 {% load liked_user %}
 
 <div class="row mb-3">
-  {% if user.count_public_posts %}
-  <div class="col text-center">
-    <div class="media">
-      <div class="media-body">
-        <h4 class="content-color-primary mb-0">{{ user.count_public_posts }}</h4>
-        <p class="content-color-secondary mb-0">{{ user.count_public_posts|rupluralize:"запись,записи,записей" }}</p>
-      </div>
-    </div>
-  </div>
-  {% endif %}
    {% if user.count_followers %}
    <div class="col text-center">
      <div class="media">
