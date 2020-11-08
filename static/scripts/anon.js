@@ -665,3 +665,5 @@ on('body', 'click', '.anon_color_change', function() {
     input.checked = true;
     addStyleSheets("/static/styles/color/" + color + ".css");
 });
+
+on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
