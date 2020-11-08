@@ -8,7 +8,7 @@
                   <button type="button" class="btn btn-secondary dropdown-toggle menu_drop" style="width:100%;">
                       Вопросы и ответы
                   </button>
-                  <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); width: 100%;top: 45px;">
+                  <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); right: 15px;left: 15px;top: 45px;">
                     <a class="dropdown-item ajax" href="{% url 'quan' %}">Популярные вопросы</a>
                       {% for object in quest_categories %}
                         {% if category.pk != object.pk %}
