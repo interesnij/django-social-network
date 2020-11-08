@@ -5,18 +5,16 @@
 <div class="container mt-3">
         <div class="card mb-2">
           <div class="card-header p-0">
-              <div class="dropdown">
                   <button type="button" class="btn btn-secondary dropdown-toggle menu_drop" style="width:100%;">
                       Вопросы и ответы
                   </button>
-                  <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); width: 100%;">
+                  <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); width: 100%;top: 45px;">
                       {% for object in quest_categories %}
                         <a class="dropdown-item ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">{{ object.name_ru }}</a>
                       {% endfor %}
                       <a class="dropdown-item">111</a>
                       <a class="dropdown-item">111</a>
                   </div>
-              </div>
           </div>
 
           <div class="card-body px-0 py-0">
