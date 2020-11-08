@@ -118,19 +118,17 @@ class UserStaffCommunities(ListView):
         return communities_list
 
 
-class UserMobStaffed(TemplateView):
-    template_name = None
+class UserMobStaffed(ListView):
+    template_name = "mobile/users/user_community/staffed.html"
+    paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user == request.user:
-            self.template_name = "mobile/users/user_community/staffed.html"
+        self.user = request.user
         return super(UserMobStaffed,self).get(request,*args,**kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(UserMobStaffed, self).get_context_data(**kwargs)
-        context['user'] = self.user
-        return context
+    def get_queryset(self):
+        music_list = self.user.get_staffed_communities()
+        return music_list
 
 
 class UserMusic(ListView):
