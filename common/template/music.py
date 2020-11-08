@@ -51,7 +51,7 @@ def get_template_community_music(community, folder, template, request_user, user
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 def get_permission_community_music(community, folder, template, request_user, user_agent):
@@ -78,7 +78,7 @@ def get_permission_community_music(community, folder, template, request_user, us
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 def get_template_user_music(user, folder, template, request_user, user_agent):
@@ -124,7 +124,7 @@ def get_template_user_music(user, folder, template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 def get_permission_user_music(user, folder, template, request_user, user_agent):
@@ -148,5 +148,5 @@ def get_permission_user_music(user, folder, template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name

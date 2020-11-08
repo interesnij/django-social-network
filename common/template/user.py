@@ -54,7 +54,7 @@ def get_template_user(user, folder, template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 def get_settings_template(template, request_user, user_agent):
@@ -72,7 +72,7 @@ def get_settings_template(template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 
@@ -97,11 +97,11 @@ def get_detect_platform_template(template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template = "mobile/" + template
     else:
-        template = "desctop/" + template
+        template = "mobile/" + template
     return template
 
 def render_for_platform(request, template, data):
     if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         return render(request, "mobile/" + template, data)
     else:
-        return render(request, "desctop/" + template, data)
+        return render(request, "mobile/" + template, data)
