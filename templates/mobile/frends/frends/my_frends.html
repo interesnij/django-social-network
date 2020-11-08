@@ -7,7 +7,7 @@
             <button type="button" class="btn btn-secondary dropdown-toggle menu_drop" style="width:100%;">
                 Мои друзья ({{ user.count_connections }})
             </button>
-            <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); width: 100%;;top: 45px;">
+            <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); width: 100%;;top: 60px;">
               {% if user.get_online_connection_count != 0 %}
                 <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% endif %}
