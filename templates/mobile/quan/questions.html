@@ -2,68 +2,45 @@
 {% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container">
-<div class="row">
-    <div class="col-md-9 order-1">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск по вопросам" aria-label="Recipient's username">
-            <div class="input-group-append">
-                <button class="btn btn-outline-link" type="button">Искать</button>
-            </div>
-        </div>
+<div class="container mt-3">
         <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">
-                          <svg class="svg_info svg_default" style="margin-bottom: 5px;margin-right: 5px;" fill="currentColor" viewBox="0 0 24 24">
-                            {{ category.icon|safe }}
-                          </svg>  {{ category.name_ru }}</h5>
-                    </div>
-                </div>
-            </div>
+          <div class="card-header p-0">
+              <div class="dropdown">
+                  <button type="button" class="btn btn-secondary dropdown-toggle drop" style="width:100%;">
+                      Вопросы и ответы
+                  </button>
+                  <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; width: 100%;">
+                    <a class="dropdown-item ajax" href="{% url 'quan' %}">Популярные вопросы</a>
+                      {% for object in quest_categories %}
+                        {% if category.pk != object.pk %}
+                          <a class="dropdown-item ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">{{ object.name_ru }}</a>
+                        {% endfor %}
+                      {% endfor %}
+                  </div>
+              </div>
+          </div>
 
-            <div class="card-body px-0 py-0">
-                <ul class="list-group list_block_paginate" id="quan_container">
-                    {% for object in object_list %}
-                    <div class="card pag {% if forloop.last %}last{% endif %}">
-						            <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">
-								            {{ object.quest}}
-						            </a>
-
-						            <div class="collapse ckeditor_support">
-							               <div class="card-body">{{ object.content|safe }}</div>
-						            </div>
-					           </div>
-                    {% empty %}
-                    <div class="card">
-                      <div class="card-body">
-                        Пока нет вопросов у матросов...
+          <div class="card-body px-0 py-0">
+              <ul class="list-group list_block_paginate" id="quan_container">
+                  {% for object in object_list %}
+                  <div class="card pag {% if forloop.last %}last{% endif %}">
+                      <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">
+                          {{ object.quest}}
+                      </a>
+                      <div class="collapse ckeditor_support">
+                           <div class="card-body">{{ object.content|safe }}</div>
                       </div>
+                   </div>
+                  {% empty %}
+                  <div class="card">
+                    <div class="card-body">
+                      Пока нет вопросов у матросов...
                     </div>
-                    {% endfor %}
-                </ul>
-            </div>
+                  </div>
+                  {% endfor %}
+              </ul>
+          </div>
         </div>
     </div>
-
-    <div class="col-md-3 order-2 left_menu" style="line-height: 30px;">
-      <br><br>
-        {% for object in quest_categories %}
-          <a class="ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">
-            {{ object.name_ru }}
-          </a>
-          <br>
-        {% endfor %}
-    </div>
-</div>
-</div>
-
-<div class="card mb-3 manage_window_fullscreen" style="display:none">
-  <span class="community_manage_fullscreen_hide">
-    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-  </span>
-  <div id="load_staff_window" style="margin-top:30px"></div>
-</div>
 
 {% endblock %}
