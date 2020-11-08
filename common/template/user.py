@@ -86,7 +86,7 @@ def get_default_template(folder, template, request_user, user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
     else:
-        template_name = "desctop/" + template_name
+        template_name = "mobile/" + template_name
     return template_name
 
 def get_detect_platform_template(template, request_user, user_agent):
