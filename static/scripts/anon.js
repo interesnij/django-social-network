@@ -506,31 +506,6 @@ on('body', 'click', '.ajax', function(event) {
 
 if_list(document.getElementById('ajax'));
 
-page = 2;
-loaded = false;
-function paginate(link, block_id){
-	block = document.body.querySelector(block_id);
-	if(block.getElementsByClassName('pag').length === (page-1)*15){
-		if (loaded){return};
-		var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-		link_3.open( 'GET', link + '/?page=' + page++, true );
-		link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-		link_3.onreadystatechange = function () {
-		if ( this.readyState == 4 && this.status == 200 ) {
-			var elem = document.createElement('span');
-			elem.innerHTML = link_3.responseText;
-			if(elem.getElementsByClassName('pag').length < 15){loaded = true};
-			if (elem.querySelector(block_id)){
-				xxx = document.createElement("span");
-				xxx.innerHTML = elem.querySelector(block_id).innerHTML;
-				block.append(xxx);
-			} else {block.append(elem)}
-			}
-		}
-		link_3.send();
-	}
-}
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
 function scrolled(link, block_id, target){
@@ -548,6 +523,40 @@ function scrolled(link, block_id, target){
 					paginate(link, block_id);
 		}};
 	}
+}
+page = 2;
+loaded = false;
+
+function paginate(link, block_id) {
+    block = document.body.querySelector(block_id);
+    if (block.getElementsByClassName('pag').length === (page - 1) * 15) {
+        if (loaded) {
+            return
+        };
+        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        link_3.open('GET', link + '?page=' + page++, true);
+        link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        link_3.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var elem = document.createElement('span');
+                elem.innerHTML = link_3.responseText;
+                if (elem.getElementsByClassName('pag').length < 15) {
+                    loaded = true
+                };
+                if (elem.querySelector(block_id)) {
+                    xxx = document.createElement("span");
+                    xxx.innerHTML = elem.querySelector(block_id).innerHTML;
+                    block.insertAdjacentHTML('beforeend', xxx.innerHTML)
+                    //block.append(xxx);
+                } else {
+                    //block.append(elem)
+                    block.insertAdjacentHTML('beforeend', elem.innerHTML)
+                }
+            }
+        }
+        link_3.send();
+    }
 }
 
 function create_pagination(block){
