@@ -8,7 +8,7 @@
           <button type="button" class="btn btn-secondary dropdown-toggle menu_drop" style="width:100%;">
               Управляемые сообщества ({{ user.count_community }})
           </button>
-          <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 60px; width: 100%;">
+          <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); top: 60px; right: 15px;left: 15px">
               <a class="dropdown-item ajax" href="{% url 'communities' pk=request.user.pk %}">Мои сообщества</a>
               <a class="dropdown-item ajax" href="">Популярные сообщества</a>
               <a class="dropdown-item ajax" href="">Посещенные сообщества</a>
