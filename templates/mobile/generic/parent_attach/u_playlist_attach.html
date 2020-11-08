@@ -1,4 +1,4 @@
-{% include 'desctop/main/u_posts/card_header.html' %}
+{% include 'mobile/main/u_posts/card_header.html' %}
 
 {% if object.parent.text %}
   <div class="fullscreen pointer">
@@ -7,5 +7,5 @@
 {% endif %}
 
 {% for playlist in object.parent.get_attach_music_list %}
-  {% include 'desctop/generic/items/u_music_list.html' %}
+  {% include 'mobile/generic/items/u_music_list.html' %}
 {% endfor %}

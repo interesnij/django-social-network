@@ -202,6 +202,9 @@ class User(AbstractUser):
         except:
             return None
 
+    def get_photos_count(self):
+        return self.photo_creator.values("pk").count()
+
     def get_online(self):
         from datetime import datetime, timedelta
 
@@ -783,12 +786,6 @@ class User(AbstractUser):
 
     ''''' количества всякие  196-216 '''''
 
-    def count_followers(self):
-        return self.followers.values('pk').count()
-
-    def count_blacklist(self):
-        return self.user_blocks.values('pk').count()
-
     def is_no_view_followers(self):
         return self.followers.filter(view=False).exists()
 
@@ -807,6 +804,12 @@ class User(AbstractUser):
     def count_following(self):
         return self.follows.values('pk').count()
 
+    def count_followers(self):
+        return self.followers.values('pk').count()
+
+    def count_blacklist(self):
+        return self.user_blocks.values('pk').count()
+
     def count_connections(self):
         return self.connections.values('pk').count()
 
@@ -820,7 +823,9 @@ class User(AbstractUser):
         return self.good_creator.values('pk').count()
 
     def count_public_posts(self):
-        return self.post_creator.filter(status="P").values('pk').count() 
+        return self.post_creator.filter(status="P").values('pk').count()
+    def count_public_articles(self):
+        return self.article_creator.filter(status="P").values('pk').count()
 
 
     ''''' GET всякие  219-186 '''''
