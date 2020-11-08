@@ -161,7 +161,7 @@ class AllPossibleUsersList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = request.user
-		self.template_name = get_settings_template("users/u_list/", "possible_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/u_list/possible_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AllPossibleUsersList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
