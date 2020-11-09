@@ -11,7 +11,8 @@
       <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
         <form id="c_add_photos" method="post">
           {% csrf_token %}
-          <span class="btn btn-sm btn-warning warning-gradient ml-2" id="c_gallery_photo_add">Добавить фото</span>
+          <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
+          <span class="btn btn-sm btn-warning warning-gradient ml-2" id="c_add_multi_photos">Добавить фото</span>
         </form>
       </div>
     </div>
