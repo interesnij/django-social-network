@@ -29,7 +29,7 @@ class PhotoCommunityCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
+            return render_for_platform(request, 'communities/gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
@@ -48,7 +48,7 @@ class PhotoAlbumCommunityCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
+            return render_for_platform(request, 'communities/gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
             raise Http404
 
@@ -100,7 +100,7 @@ class PhotoCommunityCommentList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
-        self.template_name = get_permission_community_photo(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_photo(self.community, "communities/gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -135,7 +135,7 @@ class PhotoCommentCommunityCreate(View):
                 get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
-                return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'communities/gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -164,7 +164,7 @@ class PhotoReplyCommunityCreate(View):
                     new_comment.notification_community_reply_comment(request.user, community)
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'gallery/c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+            return render_for_platform(request, 'communities/gallery/c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -332,7 +332,7 @@ class AlbumCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.community.get_manage_template(folder="c_album/", template="add_album.html", request=request)
+        self.community.get_manage_template(folder="communities/album/", template="add_album.html", request=request)
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -349,7 +349,7 @@ class AlbumCommunityCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, community=self.community, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.community.creator)
-            return render_for_platform(request, 'gallery/album/new_album.html',{'album': new_album, 'community': self.community})
+            return render_for_platform(request, 'communities/gallery/album/new_album.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
@@ -363,7 +363,7 @@ class AlbumCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="c_album/", template="edit_album.html", request=request)
+        self.template_name = self.community.get_manage_template(folder="communities/album/", template="edit_album.html", request=request)
         return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
