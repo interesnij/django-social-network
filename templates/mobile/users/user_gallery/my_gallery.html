@@ -2,7 +2,7 @@
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
   <div class="card-header p-0">
     <div class="row no-gutters">
       <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
@@ -18,10 +18,10 @@
 
 <div class="media mt-3" style="display:flex;align-items: flex-start">
   <h5 class="mt-1" style="flex: 1;">Мои фото</h5>
-  <span>Фото: {{ user.count_photos }}</span>
+  <span>Фото: {{ album.count_photo }}</span>
 </div>
 
-<div id="photo_load" data-link="/gallery/user/photos/{{ user.uuid }}/"></div>
+<div id="photo_load" data-link="/gallery/user/photos/{{ user.pk }}/"></div>
 
 </div>
 

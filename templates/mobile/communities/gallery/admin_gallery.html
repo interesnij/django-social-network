@@ -2,70 +2,26 @@
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-{% if albums_list %}
-  <div class="container-fluid mt-3">
-      <div class="row">
-          <div class="col-12 col-md-8">
-            <h5 class="mt-1">
-              <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                {{ community.name }}
-              </a> - альбомы
-            </h5>
-          </div>
-          <div class="col-12 col-md-4">
-            <button class="c_album_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-              Добавить альбом
-            </button>
-          </div>
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+  <div class="card-header p-0">
+    <div class="row no-gutters">
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <span class="btn btn-sm btn-warning warning-gradient ml-2 c_album_add">Добавить альбом</span>
       </div>
-  </div>
-  <div class="container mt-4">
-    {% include 'mobile/communities/gallery/admin_albums.html' %}
-  </div>
-{% else %}
-  <div class="container-fluid mt-3">
-      <div class="row">
-          <div class="col-12 col-md-8">
-              <h5 class="mt-1">
-                <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                  {{ community.name }}
-                </a>
-                - Альбомов нет</h5>
-          </div>
-          <div class="col-12 col-md-4">
-            <button class="c_albums_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-              Добавить альбом
-            </button>
-          </div>
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <span class="btn btn-sm btn-warning warning-gradient ml-2" id="c_add_multi_photos">Добавить фото</span>
       </div>
-  </div>
-{% endif %}
-
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <h5 class="mt-1">
-              <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                {{ community.name }}
-              </a> - фотографии
-            </h5>
-            Фото: {{ album.count_photo }}
-        </div>
-        <div class="col-12 col-md-4">
-          <form id="c_add_photos" method="post">
-              {% csrf_token %}
-                <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-                <button id="c_add_multi_photos" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-                  Добавить фотографии
-                </button>
-          </form>
-        </div>
     </div>
+  </div>
+{% include 'mobile/communities/gallery/my_albums.html' %}
+
+<div class="media mt-3" style="display:flex;align-items: flex-start">
+  <h5 class="mt-1" style="flex: 1;">Фото</h5>
+  <span>Фото: {{ album.count_photo }}</span>
 </div>
 
-<div class="container mt-4 main-container">
-      <div id="c_photo_load" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
-  </div>
+<div id="photo_load" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+
 </div>
+
 {% endblock %}

@@ -1,7 +1,7 @@
 
 <div class="row" style="margin-left: 0;margin-right: 0;">
     {% for object in albums_list %}
-    <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
+    <div class="cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}" style="flex: 0 0 50%;max-width:50%;padding:5px;">
 
         <div class="card rounded-0 border-0 mb-3">
             <div class="card-header">
@@ -13,11 +13,11 @@
             </div>
             <div class="card-body">
               <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
-                {% if object.get_cover_photo %}
-                  <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
-                {% else %}
-                  <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
-                {% endif %}
+                  {% if object.get_cover_photo %}
+                    <img class="image_fit_70" src="{{ object.get_cover_photo.file.url }}" />
+                  {% else %}
+                    <img class="image_fit_70" src="/static/images/no_img/album.jpg" />
+                  {% endif %}
                 <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
               </a>
             </div>
