@@ -4927,7 +4927,7 @@ cursor: pointer;
 }
 .open_300 {
   position: fixed;
-  z-index: 300;
+  z-index: 1000;
 }
 
 @media screen and (min-width: 621px) {
