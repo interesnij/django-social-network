@@ -2,19 +2,19 @@
 {% block title %}{{ community.name }} - {{ album.title }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-  <h5 class="mt-1">
-    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-      {{ community.name }}
-    </a> -
-    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax underline">
-      Галерея
-    </a> - {{ album.title }}
-  </h5>
-  Фото: {{ album.count_photo }}
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+  <div class="card-header p-0">
+      <div style="width:100%;">
+        <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'community_gallery' pk=community.pk %}" style="width: -webkit-fill-available;">Назад в галерею</a>
+      </div>
+  </div>
+
+  <div class="media mt-3" style="display:flex;align-items: flex-start">
+    <h5 class="mt-1" style="flex: 1;">{{ album.title }}</h5>
+    <span>Фото: {{ album.count_photo }}</span>
+  </div>
+
+<div id="album_photo_load" data-link="/gallery/community/album_photos/{{ community.pk }}/{{ album.uuid }}/"></div>
 </div>
 
-<div class="container mt-4 main-container">
-    <div id="c_album_photo_load" data-link="/gallery/community/album_photos/{{ community.pk }}/{{ album.uuid }}/"></div>
-</div>
 {% endblock %}
