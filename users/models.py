@@ -817,7 +817,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_albums(self):
-        return self.photo_album_creator.values('pk').count() 
+        return self.photo_album_creator.filter(community=None, is_deleted=False).values('pk').count() 
 
     def count_goods(self):
         return self.good_creator.values('pk').count()
