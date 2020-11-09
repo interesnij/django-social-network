@@ -1,9 +1,9 @@
 
+<div class="media mt-3" style="display:flex;align-items: flex-start">
+  <h5 class="mt-1" style="flex: 1;">Мои альбомы</h5>
+  <span>{{ user.count_albums }}</span>
+</div>
 <div class="row overflow-x-auto no-gutters">
-  <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">Мои альбомы</h5>
-    <span>{{ user.count_albums }}</span>
-  </div>
   <div class="col-12">
   <ul class="date-list" style="width:max-content">
     {% for object in albums_list %}
