@@ -13,15 +13,15 @@
               <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
                 {% if object.pk == avatars_album.pk %}
                   {% if object.get_cover_photo_for_avatars %}
-                    <img class="image_fit_70" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
+                    <img class="image_fit_160" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
                   {% else %}
-                    <img class="image_fit_70" src="/static/images/no_album_photo.png" />
+                    <img class="image_fit_160" src="/static/images/no_album_photo.png" />
                   {% endif %}
                 {% else %}
                   {% if object.get_cover_photo %}
-                    <img class="image_fit_70" src="{{ object.get_cover_photo.file.url }}" />
+                    <img class="image_fit_160" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
-                    <img class="image_fit_70" src="/static/images/no_album_photo.png" />
+                    <img class="image_fit_160" src="/static/images/no_album_photo.png" />
                   {% endif %}
                 {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>

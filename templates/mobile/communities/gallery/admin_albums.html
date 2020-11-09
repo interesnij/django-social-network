@@ -23,9 +23,9 @@
             <div class="card-body">
               <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
                   {% if object.get_cover_photo %}
-                    <img class="image_fit_70" src="{{ object.get_cover_photo.file.url }}" />
+                    <img class="image_fit_160" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
-                    <img class="image_fit_70" src="/static/images/no_img/album.jpg" />
+                    <img class="image_fit_160" src="/static/images/no_img/album.jpg" />
                   {% endif %}
                 <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
               </a>
