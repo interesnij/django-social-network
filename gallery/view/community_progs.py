@@ -47,7 +47,7 @@ class PhotoAlbumCommunityCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
-                photos += [photo,]
+                photos += [photo,] 
             return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
             raise Http404
