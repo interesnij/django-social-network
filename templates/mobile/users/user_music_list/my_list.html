@@ -40,8 +40,8 @@
   {% else %}
   <div class="row no-gutters">
     <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax" href="{% url 'user_music' pk=user.pk %}">
-      <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5V7z"/><path fill="none" d="M24 0v24H0V0h24z"/></svg>
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'user_music' pk=user.pk %}">
+        Назад
       </a>
     </div>
     <div style="flex: 0 0 70%;max-width:70%;padding:5px;">
@@ -59,6 +59,8 @@
   </div>
   </div>
   {% endif %}
+
+  {% if not playlist.is_deleted %}
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
                 <div style="display:flex">
@@ -69,7 +71,11 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
                     <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
-                    <p class="">Моя музыка</p>
+                    <p class="">
+                      <span class="u_music_list_edit_window pointer">изменить</span>
+                        &nbsp;
+                      <span class="u_music_list_delete pointer">удалить</span>
+                    </p>
                   </div>
                   {% if playlist.is_not_empty %}
                     <span title="Поделиться" class="u_ucm_music_list_repost btn_default pointer" style="margin-top: 4px;width:25px">
@@ -141,11 +147,19 @@
                 {% endif %}
               </div>
           </div>
+          <script>
+            {% if user|is_user_list:playlist.pk %}
+              document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
+            {% endif %}
+          </script>
+          
+          {% else %}
+          <div class="card centered" style="">
+            <div class="card-body" style="margin-top: 10%;">
+            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">Плейлист удален. Вы можете <span class="pointer u_music_list_recover underline">восстановить</span> его</h6>
+          </div>
+          {% endif %}
     </div>
-
-<script>
-  {% if user|is_user_list:playlist.pk %}
-    document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
-  {% endif %}
-</script>
 {% endblock %}
