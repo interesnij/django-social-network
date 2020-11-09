@@ -253,6 +253,9 @@ class Community(models.Model):
         albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
+    def count_albums(self):
+        return self.album_community.filter(community_id=self.pk, is_deleted=False).values('pk').count()
+
     def get_admin_albums(self):
         from gallery.models import Album
 

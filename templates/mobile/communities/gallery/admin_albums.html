@@ -1,4 +1,4 @@
-
+{% if community.count_albums %}
 <div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
   <h5 class="mt-1" style="flex: 1;">Альбомы</h5>
   <span>{{ community.count_albums }}</span>
@@ -45,3 +45,9 @@
   </ul>
   </div>
 </div>
+
+{% else %}
+<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
+  <h5 class="mt-1" style="flex: 1;">Альбомов нет</h5>
+</div>
+{% endif %}
