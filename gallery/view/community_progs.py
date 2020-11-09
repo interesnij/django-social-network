@@ -29,7 +29,7 @@ class PhotoCommunityCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'communities/gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
+            return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
@@ -48,7 +48,7 @@ class PhotoAlbumCommunityCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'communities/gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
+            return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
             raise Http404
 

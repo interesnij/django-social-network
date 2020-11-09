@@ -50,7 +50,7 @@ class PhotoUserCreate(View):
                 _album.photo_album.add(photo)
                 photos += [photo,]
 
-            return render_for_platform(request, 'users/user_gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
@@ -68,7 +68,7 @@ class PhotoAlbumUserCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'users/user_gallery/u_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'user': request.user})
         else:
             raise Http404
 
@@ -88,7 +88,7 @@ class PhotoAttachUserCreate(View):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
                 _album.photo_album.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'users/user_gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
@@ -102,7 +102,7 @@ class PhotoUserCommentList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_photo(self.photo.creator, "users/user_gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_photo(self.photo.creator, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
@@ -135,7 +135,7 @@ class PhotoCommentUserCreate(View):
                 get_comment_attach(request, new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
-                return render_for_platform(request, 'users/user_gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
+                return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -161,7 +161,7 @@ class PhotoReplyUserCreate(View):
                     new_comment.notification_user_reply_comment(request.user)
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'users/user_gallery/u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'gallery/u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 
@@ -357,7 +357,7 @@ class AlbumUserCreate(TemplateView):
             if not album.description:
                 album.description = "Без описания"
             new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
-            return render_for_platform(request, 'users/user_gallery/user_album/new_album.html',{'album': new_album, 'user': self.user})
+            return render_for_platform(request, 'users/user_album/new_album.html',{'album': new_album, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
