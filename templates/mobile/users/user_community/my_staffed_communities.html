@@ -12,7 +12,6 @@
               <a class="dropdown-item ajax" href="{% url 'mob_staffed_communities' pk=user.pk %}">Управление</a>
               <a class="dropdown-item ajax" href="">Популярные сообщества</a>
               <a class="dropdown-item ajax" href="">Посещенные сообщества</a>
-              <a class="dropdown-item pointer user_community_create_window" >Создать сообщество</a>
           </div>
     </div>
     <div class="card mb-2">
@@ -21,7 +20,7 @@
                 <div class="input-group mb-3" style="display:flex">
                     <input type="text" class="form-control" placeholder="Поиск сообществ">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-link" type="button">Искать</button>
+                        <button class="btn btn-outline-link user_community_create_window">Создать</button>
                     </div>
                 </div>
                 {% if object_list %}
