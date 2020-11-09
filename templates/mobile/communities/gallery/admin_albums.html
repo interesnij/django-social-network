@@ -1,36 +1,47 @@
 
-<div class="row" style="margin-left: 0;margin-right: 0;">
+<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
+  <h5 class="mt-1" style="flex: 1;">Альбомы</h5>
+  <span>{{ community.count_albums }}</span>
+</div>
+<div class="row overflow-x-auto no-gutters">
+  <div class="col-12">
+  <ul class="date-list" style="width:max-content">
     {% for object in albums_list %}
-    <div class="cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}" style="flex: 0 0 50%;max-width:50%;padding:5px;">
-
-        <div class="card rounded-0 border-0 mb-3">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
-                        <h6 class="mb-0">{{ object.title }}</h6>
-                    </div>
-                    <div class="dropdown d-inline-block">
-                        <a style="cursor:pointer;width:20px;display:inline-block">
-                          <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <span class="dropdown-item pointer c_album_edit">Изменить</span>
-                            <span class="dropdown-item pointer c_album_remove">Удалить</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-              <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
-                  {% if object.get_cover_photo %}
-                    <img class="image_fit_160" src="{{ object.get_cover_photo.file.url }}" />
-                  {% else %}
-                    <img class="image_fit_160" src="/static/images/no_img/album.jpg" />
-                  {% endif %}
-                <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
-              </a>
-            </div>
-        </div>
-    </div>
+        <li class="date">
+          <div class="cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}" style="padding:5px;">
+              <div class="card rounded-0 border-0 mb-3">
+                  <div class="card-header">
+                      <div class="media">
+                          <div class="media-body" style="white-space:nowrap;overflow:hidden;">
+                              <h6 class="mb-0">{{ object.title }}</h6>
+                          </div>
+                          {% if object.is_user_album %}
+                          <div class="dropdown d-inline-block">
+                              <a style="cursor:pointer;width:20px;display:inline-block">
+                                <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                  <span class="dropdown-item pointer c_album_edit">Изменить</span>
+                                  <span class="dropdown-item pointer c_album_remove">Удалить</span>
+                              </div>
+                          </div>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="card-body">
+                    <a href="{% url 'community_album' pk=community.pk uuid=object.uuid %}" class="ajax">
+                        {% if object.get_cover_photo %}
+                          <img style="object-fit: cover;height: 150px;width: 170px;" src="{{ object.get_cover_photo.file.url }}" />
+                        {% else %}
+                          <img style="object-fit: cover;height: 150px;width: 170px;" src="/static/images/no_img/album.jpg" />
+                        {% endif %}
+                      <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
+                    </a>
+                  </div>
+              </div>
+          </div>
+        </li>
     {% endfor %}
+  </ul>
+  </div>
 </div>

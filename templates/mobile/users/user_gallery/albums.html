@@ -1,33 +1,36 @@
 
-
-{% if albums_list %}
-<div style="margin-left: 0;margin-right: 0;display: flex;flex-wrap: wrap;">
+<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
+  <h5 class="mt-1" style="flex: 1;">Альбомы</h5>
+  <span>{{ user.count_albums }}</span>
+</div>
+<div class="row overflow-x-auto no-gutters">
+  <div class="col-12">
+  <ul class="date-list" style="width:max-content">
     {% for object in albums_list %}
-        <div class="card rounded-0 border-0" style="flex: 0 0 50%;max-width:50%;padding:5px;">
-            <div class="media">
-                <div class="media-body" style="white-space:nowrap;overflow:hidden;">
-                    <h6 class="mb-0">{{ object.title }}</h6>
-                </div>
-            </div>
-            <div class="card-body">
-              <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
-                {% if object.pk == avatars_album.pk %}
-                  {% if object.get_cover_photo_for_avatars %}
-                    <img class="image_fit_160" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
-                  {% else %}
-                    <img class="image_fit_160" src="/static/images/no_album_photo.png" />
-                  {% endif %}
-                {% else %}
-                  {% if object.get_cover_photo %}
-                    <img class="image_fit_160" src="{{ object.get_cover_photo.file.url }}" />
-                  {% else %}
-                    <img class="image_fit_160" src="/static/images/no_album_photo.png" />
-                  {% endif %}
-                {% endif %}
-                <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
-              </a>
-            </div>
-        </div>
+        <li class="date">
+          <div class="cover_block" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}" style="padding:5px;">
+              <div class="card rounded-0 border-0 mb-3">
+                  <div class="card-header">
+                      <div class="media">
+                          <div class="media-body" style="white-space:nowrap;overflow:hidden;">
+                              <h6 class="mb-0">{{ object.title }}</h6>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                    <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
+                        {% if object.get_cover_photo %}
+                          <img style="object-fit: cover;height: 150px;width: 170px;" src="{{ object.get_cover_photo.file.url }}" />
+                        {% else %}
+                          <img style="object-fit: cover;height: 150px;width: 170px;" src="/static/images/no_img/album.jpg" />
+                        {% endif %}
+                      <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
+                    </a>
+                  </div>
+              </div>
+          </div>
+        </li>
     {% endfor %}
+  </ul>
   </div>
-{% endif %}
+</div>
