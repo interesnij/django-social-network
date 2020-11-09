@@ -6,7 +6,12 @@
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
   {% if user.is_music_playlist_exists %}
   <div class="row no-gutters">
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+    <div style="flex: 0 0 10%;max-width:10%;padding:5px;">
+      <a class="ajax" href="{% url 'user_music' pk=user.pk %}">
+      <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5V7z"/><path fill="none" d="M24 0v24H0V0h24z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 45%;max-width:45%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
             <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
                 Плейлисты
@@ -18,7 +23,7 @@
             </div>
       </span>
     </div>
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+    <div style="flex: 0 0 45%;max-width:45%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
             <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
                 Опции
@@ -33,6 +38,13 @@
     </div>
   </div>
   {% else %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 10%;max-width:10%;padding:5px;">
+      <a class="ajax" href="{% url 'user_music' pk=user.pk %}">
+      <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5V7z"/><path fill="none" d="M24 0v24H0V0h24z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 90%;max-width:90%;padding:5px;">
   <span style="margin-bottom: 10px;position:relative" class="centered">
         <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
             Опции
@@ -44,6 +56,8 @@
           <a class="dropdown-item pointer">Добавить трек в список</a>
         </div>
   </span>
+  </div>
+  </div>
   {% endif %}
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
