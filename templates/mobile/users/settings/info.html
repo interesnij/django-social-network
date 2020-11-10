@@ -1,6 +1,6 @@
 {% extends "base_mobile.html" %}
 
-{% block title %}Изменение информации{% endblock %}
+{% block title %}Изменение основной информации{% endblock %}
 {% block content %}
 
 <div class="container mt-3">
@@ -11,11 +11,9 @@
       {% csrf_token %}
       <div class="card mb-3">
           <div class="card-header border-bottom">
-              <h5 class="content-color-primary mb-0">Главная информация</h5>
+              <h5 class="content-color-primary mb-0">Основная информация</h5>
           </div>
           <div class="card-body">
-              <div class="row justify-content-center">
-                  <div class="col-md-10 ">
                       <div class="form-group row">
                           <div class="col-lg-12 col-md-12">
                               <label>Имя</label>
@@ -40,8 +38,6 @@
                               <input type="numder" readonly value="{{ user.phone }}" class="form-control" placeholder="">
                           </div>
                       </div>
-                  </div>
-              </div>
           </div>
           <div class="card-footer">
               <button type="button" class="mb-2 btn btn-sm btn-success float-righ info_user_btn">Сохранить</button>
