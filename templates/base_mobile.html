@@ -23,7 +23,7 @@
     </style>
 </head>
   <body class="fixed-header">
-        <div id="ajax" style="padding-right:0px; padding-left:0px;margin-bottom: 200px;">
+        <div id="ajax" style="padding-right:0px; padding-left:0px;">
           <span id="reload_block">
            {% block content %}
            {% endblock %}
@@ -32,6 +32,7 @@
            {% include "mobile/fullscreens.html" %}
           </span>
 				</div>
+        <br><br><br>
         {% include "mobile/mobile_tab.html" %}
 
     {% include "mobile_base_scripts.html" %}
