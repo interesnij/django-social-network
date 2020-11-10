@@ -72,3 +72,11 @@ def check_anon_user_can_get_list(user):
         raise PermissionDenied('Это не проверенный профиль, поэтому может навредить ребенку.')
     else:
         return True
+
+
+def check_can_leave_community(user, community_id):
+    if not user.is_member_of_community(community_id=community_id):
+        raise ValidationError('Вы не состоите в сообществе, поэтому не можете из него выйти')
+
+    if user.is_creator_of_community(community_id=community_id):
+        raise ValidationError('Вы создатель сообщества, поэтому не можете из него выйти.')
