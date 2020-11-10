@@ -8,6 +8,7 @@ def create_community_models(community):
     CommunityPrivatePhoto.objects.create(community=community)
     CommunityPrivateGood.objects.create(community=community)
     CommunityPrivateVideo.objects.create(community=community)
+    CommunityPrivateMusic.objects.create(community=community)
 
     CommunitySectionsOpen.objects.create(community=community)
 

@@ -1,4 +1,5 @@
 from rest_framework.exceptions import PermissionDenied
+from communities.model.settings import CommunityPrivatePost
 
 
 def check_user_is_staff(user, community_pk):
@@ -35,3 +36,9 @@ def check_anon_can_get_list(community):
         raise ValidationError('Ошибка доступа.')
     else:
         return True
+
+def check_private_post_exists(community):
+    try:
+        CommunityPrivatePost.objects.get(community=community)
+    except:
+        CommunityPrivatePost.objects.create(community=community)

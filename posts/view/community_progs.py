@@ -7,7 +7,7 @@ from communities.models import Community
 from posts.forms import PostForm, CommentForm
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
-from common.check.community import check_can_get_lists
+from common.check.community import check_can_get_lists, check_private_post_exists
 from django.http import Http404
 from common.template.user import render_for_platform
 
@@ -17,6 +17,7 @@ class PostCommunityCreate(View):
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
+        check_private_post_exists(community)
         if (community.is_wall_close() or community.is_staff_post_member_can()) and not request.user.is_staff_of_community(community.pk):
             raise PermissionDenied("Ошибка доступа.")
         elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community(community.pk):
@@ -45,6 +46,7 @@ class PostOfferCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
+        check_private_post_exists(community)
 
         if community.is_wall_close():
             raise PermissionDenied("Ошибка доступа.")
