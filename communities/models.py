@@ -727,7 +727,7 @@ class Community(models.Model):
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
 
     def count_members(self):
-        return self.memberships.count()
+        return self.memberships.values("pk").count()
 
     def get_sity_count(self, sity):
         from stst.models import CommunityNumbers
