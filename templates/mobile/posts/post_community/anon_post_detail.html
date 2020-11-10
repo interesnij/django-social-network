@@ -1,20 +1,20 @@
 {% load liked_user %}
 
 <div class="card mb-3" data-uuid="{{ object.uuid }}">
-    {% include 'desctop/posts/post_community/anon_card_header.html' %}
+    {% include 'mobile/posts/post_community/anon_card_header.html' %}
 
     {{ object.text|linebreaks }}
 
     <span class="post_attach_panel">
-      {% include object.get_c_attach_items_desctop %}
+      {% include object.get_c_attach_items_mobile %}
     </span>
 
     {% if object.parent %}
     <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
       {% if object.parent.community %}
-        {% include object.get_c_post_parent_items_desctop %}
+        {% include object.get_c_post_parent_items_mobile %}
       {% else %}
-        {% include object.get_u_post_parent_items_desctop %}
+        {% include object.get_u_post_parent_items_mobile %}
       {% endif %}
     </span>
     {% endif %}
