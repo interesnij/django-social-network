@@ -2,7 +2,7 @@
 <div id="lenta_container">
 
   {% if object %}
-    {% include 'mobile/communities/lenta/my_fixed_post.html' %}
+    {% include 'mobile/communities/lenta/admin_fixed_post.html' %}
   {% endif %}
 
     <div class="stream-update">
@@ -10,7 +10,7 @@
     </div>
     <span class="post_stream community_stream post_container">
       {% for object in object_list %}
-        {% include 'mobile/posts/post_community/my_post.html' %}
+        {% include 'mobile/posts/post_community/admin_post.html' %}
       {% endfor %}
     </span>
 </div>
