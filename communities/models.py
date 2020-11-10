@@ -467,24 +467,6 @@ class Community(models.Model):
         lists = VideoAlbum.objects.filter(lists_query).order_by("order")
         return lists
 
-    def get_manage_template(self, folder, template, request):
-        if request.user.is_authenticated and request.user.is_administrator_of_community(self.pk):
-            template_name = folder + template
-        else:
-            raise PermissionDenied('Ошибка доступа.')
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
-        return template_name
-
-    def get_moders_template(self, folder, template, request):
-        if request.user.is_administrator_of_community(self.pk) or request.user.is_moderator_of_community(self.pk):
-            template_name = folder + template
-        else:
-            raise PermissionDenied('Ошибка доступа.')
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
-        return template_name
-
     @classmethod
     def get_trending_communities(cls, category_name=None):
         trending_communities_query = cls._make_trending_communities_query(category_name=category_name)

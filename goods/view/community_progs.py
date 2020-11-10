@@ -12,6 +12,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.http import Http404
 from common.processing.good import get_good_processing, get_good_offer_processing
 from common.template.user import render_for_platform
+from common.template.community import get_community_manage_template
 
 
 class GoodCommentCommunityCreate(View):
@@ -186,7 +187,7 @@ class GoodCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.form = GoodForm(initial={"creator":request.user})
-        self.template_name = self.community.get_manage_template(folder="good/c_good/", template="add.html", request=request)
+        self.template_name = get_community_manage_template("good/c_good/add.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -224,7 +225,7 @@ class GoodAlbumCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="good/good_base/", template="c_add_album.html", request=request)
+        self.template_name = get_community_manage_template("good/good_base/c_add_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -254,7 +255,7 @@ class CommunityGoodAlbumEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="good/good_base/", template="c_edit_album.html", request=request)
+        self.template_name = get_community_manage_template("good/good_base/c_edit_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

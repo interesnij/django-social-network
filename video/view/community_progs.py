@@ -10,6 +10,7 @@ from django.views.generic import ListView
 from common.template.video import get_permission_community_video
 from django.http import Http404
 from common.template.user import render_for_platform
+from common.template.community import get_community_manage_template
 
 
 class VideoCommunityCommentList(ListView):
@@ -291,7 +292,7 @@ class CommunityVideolistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="video/community_create/", template="edit_list.html", request=request)
+        self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

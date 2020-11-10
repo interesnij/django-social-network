@@ -6,7 +6,8 @@ from rest_framework.exceptions import PermissionDenied
 from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
-from common.template.user import render_for_platform 
+from common.template.user import render_for_platform
+from common.template.community import get_community_manage_template
 
 
 class CommunityDocAdd(View):
@@ -68,7 +69,7 @@ class CommunityCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_create_doc_list.html", request=request)
+        self.template_name = get_community_manage_template("doc_create/c_create_doc_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class CommunityCreateDocWindow(TemplateView):
@@ -76,7 +77,7 @@ class CommunityCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="doc_create/", template="c_create_doc.html", request=request)
+        self.template_name = get_community_manage_template("doc_create/c_create_doc.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -149,7 +150,7 @@ class CommunityDoclistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="docs/doc_create/", template="c_edit_list.html", request=request)
+        self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

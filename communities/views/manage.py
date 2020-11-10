@@ -8,6 +8,7 @@ from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
 from datetime import datetime, timedelta
+from common.template.community import get_community_manage_template, get_community_moders_template
 
 
 class CommunityGeneralView(TemplateView):
@@ -17,7 +18,7 @@ class CommunityGeneralView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(instance=self.community)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="general.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/general.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGeneralView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -43,7 +44,7 @@ class CommunitySectionsOpenView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="sections.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/sections.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.sections = CommunitySectionsOpen.objects.get(community=self.community)
 		except:
@@ -74,7 +75,7 @@ class CommunityNotifyPostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="notify_post.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/notify_post.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.notify_post = CommunityNotificationsPost.objects.get(community=self.community)
 		except:
@@ -105,7 +106,7 @@ class CommunityNotifyPhotoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="notify_photo.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/notify_photo.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.notify_photo = CommunityNotificationsPhoto.objects.get(community=self.community)
 		except:
@@ -136,7 +137,7 @@ class CommunityNotifyGoodView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="notify_good.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/notify_good.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.notify_good = CommunityNotificationsGood.objects.get(community=self.community)
 		except:
@@ -167,7 +168,7 @@ class CommunityNotifyVideoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="notify_video.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/notify_video.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.notify_video = CommunityNotificationsVideo.objects.get(community=self.community)
 		except:
@@ -197,7 +198,7 @@ class CommunityNotifyMusicView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="notify_music.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/notify_music.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		try:
 			self.notify_music = CommunityNotificationsMusic.objects.get(community=self.community)
 		except:
@@ -231,7 +232,7 @@ class CommunityPrivatePostView(TemplateView):
 		except:
 			self.private_post = CommunityPrivatePost.objects.create(community=self.community)
 		self.form = CommunityPrivatePostForm(instance=self.private_post)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="private_post.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/private_post.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -258,7 +259,7 @@ class CommunityPrivateGoodView(TemplateView):
 		except:
 			self.private_good = CommunityPrivateGood.objects.create(community=self.community)
 		self.form = CommunityPrivateGoodForm(instance=self.private_good)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="private_good.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/private_good.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -285,7 +286,7 @@ class CommunityPrivateVideoView(TemplateView):
 		except:
 			self.private_video = CommunityPrivateVideo.objects.create(community=self.community)
 		self.form = CommunityPrivateVideoForm(instance=self.private_video)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="private_video.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/private_video.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -312,7 +313,7 @@ class CommunityPrivatePhotoView(TemplateView):
 		except:
 			self.private_photo = CommunityPrivatePhoto.objects.create(community=self.community)
 		self.form = CommunityPrivatePhotoForm(instance=self.private_photo)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="private_photo.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/private_photo.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -339,7 +340,7 @@ class CommunityPrivateMusicView(TemplateView):
 		except:
 			self.private_music = CommunityPrivateMusic.objects.create(community=self.community)
 		self.form = CommunityPrivateMusicForm(instance=self.private_music)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="private_music.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/private_music.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -362,7 +363,7 @@ class CommunityAdminView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="admins.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/admins.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityAdminView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -381,7 +382,7 @@ class CommunityEditorsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="editors.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/editors.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityEditorsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -400,7 +401,7 @@ class CommunityAdvertisersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="advertisers.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/advertisers.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityAdvertisersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -419,7 +420,7 @@ class CommunityModersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="moders.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/moders.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityModersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -439,7 +440,7 @@ class CommunityBlackListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_moders_template(folder="communities/manage/", template="moders.html", request=request)
+		self.template_name = get_community_moders_template("communities/manage/moders.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityBlackListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -458,7 +459,7 @@ class CommunityFollowsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="follows.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/follows.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityFollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -481,7 +482,7 @@ class CommunityMemberManageView(ListView):
 		self.moderators = Community.get_community_moderators(self.community.pk)
 		self.editors = Community.get_community_editors(self.community.pk)
 		self.advertisers = Community.get_community_advertisers(self.community.pk)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="members.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/members.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -508,7 +509,7 @@ class CommunityStaffWindow(TemplateView):
 		self.moderator = self.user.is_moderator_of_community(self.community.pk)
 		self.editor = self.user.is_editor_of_community(self.community.pk)
 		self.advertiser = self.user.is_advertiser_of_community(self.community.pk)
-		self.template_name = self.community.get_manage_template(folder="communities/manage/", template="staff_window.html", request=request)
+		self.template_name = get_community_manage_template("communities/manage/staff_window.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityStaffWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

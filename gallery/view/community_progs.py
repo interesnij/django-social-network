@@ -12,6 +12,7 @@ from communities.models import Community
 from rest_framework.exceptions import PermissionDenied
 from common.template.photo import get_permission_community_photo
 from common.template.user import render_for_platform
+from common.template.community import get_community_manage_template
 from django.http import Http404
 
 
@@ -47,7 +48,7 @@ class PhotoAlbumCommunityCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
                 _album.photo_album.add(photo)
-                photos += [photo,] 
+                photos += [photo,]
             return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
         else:
             raise Http404
@@ -332,7 +333,7 @@ class AlbumCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.community.get_manage_template(folder="communities/album/", template="add_album.html", request=request)
+        self.template_name = get_community_manage_template("communities/album/add_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -363,7 +364,7 @@ class AlbumCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template(folder="communities/album/", template="edit_album.html", request=request)
+        self.template_name = get_community_manage_template("communities/album/edit_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
