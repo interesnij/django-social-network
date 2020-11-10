@@ -8,7 +8,7 @@
                 <h6 class="my-0 text-truncated">{{ community.count_members_ru }}</h6>
               </a>
               <a href="{% url 'community_friends' pk=community.pk %}" class="ajax">
-                <p class="small">{{ community.common_friends_count }}</p>
+                <p class="small">{{ common_friends_count }}</p>
               </a>
             </div>
             {% for object in membersheeps %}

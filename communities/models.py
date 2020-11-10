@@ -206,6 +206,13 @@ class Community(models.Model):
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
+    def get_count_articles(self):
+        from article.models import Article
+
+        articles_query = Q(community_id=self.pk, is_deleted=False, status=Article.STATUS_DRAFT)
+        count_articles = Article.objects.filter(articles_query).values("pk").count()
+        return count_articles
+
     def id_draft_posts_exists(self):
         from posts.models import Post
 
@@ -242,8 +249,11 @@ class Community(models.Model):
 
     def get_count_photos(self):
         from gallery.models import Album
-        album = Album.objects.get(community_id=self.id, community=None, type=Album.MAIN)
-        return album.count_photo()
+        albums = Album.objects.filter(community_id=self.id)
+        count = 0
+        for album in albums:
+            count += album.count_photo()
+        return count
 
     def get_albums(self):
         from gallery.models import Album
@@ -266,12 +276,6 @@ class Community(models.Model):
 
     def is_album_exists(self):
         return self.album_community.filter(community=self, is_deleted=False).exists()
-
-    def count_photos(self):
-        from gallery.models import Album
-
-        album = Album.objects.get(community_id=self.id, type=Album.MAIN)
-        return album.count_photo()
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]
@@ -369,12 +373,12 @@ class Community(models.Model):
         return music_list
 
     def get_music_count(self):
-        from music.models import SoundList, SoundcloudParsing
-
-        list = SoundList.objects.get(community=self, type=SoundList.MAIN)
-        music_query = Q(list=list, is_deleted=False)
-        music_list = SoundcloudParsing.objects.filter(music_query).values("pk")
-        return music_list.count()
+        from music.models import SoundList
+        playlists = SoundList.objects.filter(community_id=self.id)
+        count = 0
+        for playlist in playlists:
+            count += playlist.count_tracks()
+        return count
 
     def get_music_list_id(self):
         from music.models import SoundList
@@ -415,14 +419,6 @@ class Community(models.Model):
         lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
-    def get_docs_count(self):
-        from docs.models import DocList, Doc2
-
-        list = DocList.objects.get(community=self, type=DocList.MAIN)
-        docs_query = Q(list=list, is_deleted=False)
-        docs_list = Doc2.objects.filter(Doc_query).valuse("pk")
-        return docs_list.count()
-
     def get_last_docs(self):
         from docs.models import Doc2
 
@@ -439,6 +435,14 @@ class Community(models.Model):
         lists_query = Q(community_id=self.id, type=DocList.LIST, is_deleted=False)
         lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
+
+    def get_docs_count(self):
+        from docs.models import DocList
+        lists = DocList.objects.filter(community_id=self.id)
+        count = 0
+        for list in lists:
+            count += list.count_docs()
+        return count
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
@@ -466,6 +470,14 @@ class Community(models.Model):
         lists_query = Q(community_id=self.id, type=VideoAlbum.ALBUM, is_deleted=False)
         lists = VideoAlbum.objects.filter(lists_query).order_by("order")
         return lists
+
+    def get_video_count(self):
+        from video.models import VideoAlbum
+        albums = VideoAlbum.objects.filter(community_id=self.id)
+        count = 0
+        for album in albums:
+            count += album.count_video()
+        return count
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
