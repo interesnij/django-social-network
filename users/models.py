@@ -1313,7 +1313,7 @@ class User(AbstractUser):
         from follows.models import CommunityFollow
         from invitations.models import CommunityInvite
 
-        check_can_join_community(user=self, community_pk=community_pk)
+        check_can_join_community(user=self, community_id=community_pk)
         community_to_join = Community.objects.get(pk=community_pk)
         community_to_join.add_member(self)
         if community_to_join.is_private():
@@ -1325,7 +1325,8 @@ class User(AbstractUser):
     def leave_community(self, community_pk):
         from communities.models import Community
 
-        check_can_leave_community(user=self, community_pk=community_pk)
+
+        check_can_leave_community(user=self, community_id=community_pk)
         community_to_leave = Community.objects.get(pk=community_pk)
         community_to_leave.remove_member(self)
         return community_to_leave
