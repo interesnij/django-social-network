@@ -80,3 +80,10 @@ def check_can_leave_community(user, community_id):
 
     if user.is_creator_of_community(community_id=community_id):
         raise ValidationError('Вы создатель сообщества, поэтому не можете из него выйти.')
+
+def check_can_join_community_with_name(user, community_id):
+    if user.is_banned_from_community(community_id):
+        raise ValidationError('Вы не можете вступить в сообщество, поскольку Вы в его черном списке')
+
+    if user.is_member_of_community(community_id):
+        raise ValidationError('Вы уже подписчик этого сообщества.')
