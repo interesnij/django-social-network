@@ -1264,7 +1264,7 @@ class User(AbstractUser):
         community_frends_ids = [user_id['user_id'] for user_id in community_frends]
         result=list(set(my_frends_ids) & set(community_frends_ids))
         query = Q(id__in=result)
-        count = User.objects.filter(query).values("pk").count
+        count = User.objects.filter(query).values("pk").count()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):
