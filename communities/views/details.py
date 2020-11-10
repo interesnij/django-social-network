@@ -35,7 +35,7 @@ class PostCommunity(TemplateView):
 
 
 class CommunityDetail(TemplateView):
-    template_name, common_friends = None, None
+    template_name, common_friends, common_friends_count = None, None, None
 
     def get(self,request,*args,**kwargs):
         from stst.models import CommunityNumbers
