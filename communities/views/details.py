@@ -35,14 +35,12 @@ class PostCommunity(TemplateView):
 
 
 class CommunityDetail(TemplateView):
-    template_name = None
-    common_friends = None
+    template_name, common_friends = None, None
 
     def get(self,request,*args,**kwargs):
         from stst.models import CommunityNumbers
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        user_agent = request.META['HTTP_USER_AGENT']
+        self.community, user_agent = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT']
 
         if self.community.is_suspended():
             self.template_name = "communities/detail/community_suspended.html"
