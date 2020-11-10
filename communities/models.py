@@ -729,6 +729,17 @@ class Community(models.Model):
     def count_members(self):
         return self.memberships.values("pk").count()
 
+    def count_members_ru(self):
+        count = self.memberships.values("pk").count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " подписчик"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " подписчика"
+        else:
+            return str(count) + " подписчиков"
+
     def get_sity_count(self, sity):
         from stst.models import CommunityNumbers
         from users.model.profile import OneUserLocation

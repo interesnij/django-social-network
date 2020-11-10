@@ -81,6 +81,7 @@ class CommunityDetail(TemplateView):
             else:
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
+            self.common_friends_count = request.user.get_common_friends_of_community_count_ru(self.community.pk)
         elif request.user.is_anonymous:
             if self.community.is_public():
                 if not self.community.is_verified():
@@ -102,7 +103,7 @@ class CommunityDetail(TemplateView):
         context = super(CommunityDetail,self).get_context_data(**kwargs)
         context["membersheeps"] = self.community.get_community_members(self.community.pk)[0:6]
         context["community"] = self.community
-        context["common_friends"] = self.common_friends
+        context["common_friends"], context["common_friends_count"] = self.common_friends, self.common_friends_count
         context['photo_album'] = self.community.get_or_create_photo_album()
         context['video_album'] = self.community.get_or_create_video_album()
         context['music_list'] = self.community.get_or_create_playlist()

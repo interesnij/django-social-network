@@ -817,7 +817,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_albums(self):
-        return self.photo_album_creator.filter(community=None, is_deleted=False).values('pk').count() 
+        return self.photo_album_creator.filter(community=None, is_deleted=False).values('pk').count()
 
     def count_goods(self):
         return self.good_creator.values('pk').count()
@@ -1253,6 +1253,26 @@ class User(AbstractUser):
         query = Q(id__in=result)
         connection = User.objects.filter(query)
         return connection
+
+    def get_common_friends_of_community_count_ru(self, community_id):
+        from communities.models import Community
+
+        community = Community.objects.get(pk=community_id)
+        my_frends = self.connections.values('target_user_id')
+        community_frends = community.memberships.values('user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        community_frends_ids = [user_id['user_id'] for user_id in community_frends]
+        result=list(set(my_frends_ids) & set(community_frends_ids))
+        query = Q(id__in=result)
+        count = User.objects.filter(query).values("pk").count
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " друг"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " друга"
+        else:
+            return str(count) + " друзей"
 
     def get_target_users(self):
         from stst.models import UserNumbers
