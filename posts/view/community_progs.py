@@ -22,7 +22,7 @@ class PostCommunityCreate(View):
             raise PermissionDenied("Ошибка доступа.")
         elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community(community.pk):
             raise PermissionDenied("Ошибка доступа.")
-        elif request.is_ajax() and form_post.is_valid() and check_can_get_lists(request.user,community):
+        elif request.is_ajax() and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or \
