@@ -37,9 +37,9 @@ class PostCommunityCreate(View):
                 get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
-                return HttpResponseBadRequest()
+                return HttpResponse("1")
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse("2")
 
 
 class PostOfferCommunityCreate(View):
