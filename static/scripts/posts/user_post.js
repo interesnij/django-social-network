@@ -203,7 +203,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 
-on('#ajax', 'click', '.u_like', function() {
+on('#ajax', 'click', '.u_like', function() { 
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
