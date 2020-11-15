@@ -240,7 +240,7 @@ class GoodAlbumCommunityCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=self.community)
-            return render_for_platform(request, 'goods/c_goods_list/admin_list.html',{'album': new_album, 'community': self.community})
+            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'album': new_album, 'community': self.community})
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)

@@ -228,7 +228,7 @@ class GoodAlbumUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             album = self.form.save(commit=False)
             new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=None)
-            return render_for_platform(request, 'goods/user_goods_list/my_list.html',{'album': new_album})
+            return render_for_platform(request, 'users/user_goods_list/my_list.html',{'album': new_album})
         else:
             return HttpResponseBadRequest()
         return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
