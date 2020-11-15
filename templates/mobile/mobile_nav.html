@@ -1,8 +1,8 @@
 
-<div class="sidebar settings_block_hide" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;overflow: auto">
+<div class="sidebar settings_block_hide" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;overflow: auto;z-index:2000">
   <div class="media w-100 my-3">
         <a href="{% url 'user' pk=request.user.pk %}" class="ajax" >
-          <figure class="rounded-circle align-self-start userpic" data-pk="{{ request.user.pk }}" data-username="{{ request.user.username }}" data-name="{{ request.user.get_full_name }}"> 
+          <figure class="rounded-circle align-self-start userpic" data-pk="{{ request.user.pk }}" data-username="{{ request.user.username }}" data-name="{{ request.user.get_full_name }}">
             {% if request.user.get_avatar %}
               <img src="{{ request.user.get_avatar }}" alt="image" style="border-radius:50px;width: 50px;">
             {% else %}
