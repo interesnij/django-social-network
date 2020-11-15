@@ -1,8 +1,8 @@
 {% extends "base_mobile.html" %}
-{% block title %}Настройки основных уведомлений{% endblock %}
+{% block title %}Уведомления профиля{% endblock %}
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}">
 
   {% include 'mobile/users/settings/menu.html' %}
 

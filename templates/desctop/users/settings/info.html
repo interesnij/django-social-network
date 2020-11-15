@@ -2,7 +2,7 @@
 
 {% block title %}Изменение профиля - главная информация{% endblock %}
 {% block content %}
-<div class="container mt-4 main-container">
+<div class="container mt-4 main-container pk_saver" data-pk="{{ user.pk }}">
     <div class="row">
         <div class="col-md-9">
             <form action="" id="info_user_form" method="post" class="contact-form">
