@@ -26,9 +26,7 @@
   </div>
   {% else %}
   <span style="margin-bottom: 10px;position:relative" class="centered">
-    <span style="margin-bottom: 10px;position:relative" class="centered">
-      <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">Назад в профиль</a>
-    </span>
+    <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">Назад в профиль</a>
   </span>
   {% endif %}
 
