@@ -9,39 +9,64 @@
 <div class="container mt-3">
   {% include 'mobile/communities/manage/menu.html' %}
 
-            <form id="info_form" class="contact-form">
-                {% csrf_token %}
-                <div class="card mb-3">
-                    <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Изменение информации -
-                            <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                              {{ community.name }}
-                            </a>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Название</label>
-                            {{ form.name }}
-                        </div>
-                        <div class="form-group">
+  <form id="community_general_info_form" class="contact-form">
+      {% csrf_token %}
+      <div class="card mb-3">
+          <div class="card-header border-bottom">
+              <h5 class="content-color-primary mb-0">Изменение информации -
+                  <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
+                    {{ community.name }}
+                  </a>
+              </h5>
+          </div>
+          <div class="card-body">
+              <div class="row justify-content-center">
+                  <div class="col-md-10 ">
+                      <div class="form-group row">
+                          <div class="col-lg-12 col-md-12">
+                              <label>Название</label>
+                              {{ form.name }}
+                          </div>
+                      </div>
+
+                      <div class="form-group ">
+                          <label>Категория</label>
+                          {{ form.category }}
+                          <div id="subcat"></div>
+                      </div>
+
+                      <div class="form-group row">
+                          <div class="col-lg-12 col-md-12">
                             <label>Описание</label>
                             {{ form.description }}
-                        </div>
-                        <div class="form-group">
-                            <label>Правила</label>
-                            {{ form.rules }}
-                        </div>
-                        <div class="form-group">
-                            <label>Статус</label>
-                            {{ form.status }}
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" id="general_button" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
-                    </div>
-                </div>
-            </form>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-lg-12 col-md-12">
+                              <label>Статус</label>
+                              {{ form.status }}
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-lg-12 col-md-12">
+                              <label>Верификация</label>
+                              {% if community.is_standart %}
+                                <a class="pointer create_community_verification">Подать заявку</a>
+                              {% elif community.is_verified_send %}
+                                <a class="pointer created_community_verification">Заявка отправлена</a>
+                              {% else %}
+                                <p>Сообщество верифицировано</p>
+                              {% endif %}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer">
+              <button type="button" id="community_general_info_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+          </div>
+      </div>
+  </form>
         </div>
 
 {% endblock %}

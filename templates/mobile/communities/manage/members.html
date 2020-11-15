@@ -4,7 +4,6 @@
 
 
 <div class="container mt-3">
-
   {% include 'mobile/communities/manage/menu.html' %}
 
         <div class="card mb-2">
@@ -61,10 +60,10 @@
                                 <span class="staff_btn">
                                   Модератор<br>
                                   <span class="small">
-                                    <a class="show_staff_window pointer">Редактировать</span> | <span class="remove_moderator pointer">Разжаловать</span>
+                                    <a class="show_staff_window pointer">Редактировать</a> |
+                                    <a class="remove_moderator pointer">Разжаловать</a>
                                   </span>
                                   <br>
-                                </span>
                               {% endif %}
                               {% if object in editors %}
                                 <span class="staff_btn">
