@@ -10,7 +10,7 @@ from goods.forms import CommentForm, GoodForm, GoodAlbumForm
 from rest_framework.exceptions import PermissionDenied
 from common.processing.good import get_good_processing, get_good_offer_processing
 from django.http import Http404
-from common.template.user import get_settings_template, render_for_platform
+from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
 
 
 class GoodCommentUserCreate(View):
@@ -169,6 +169,7 @@ class GoodUserCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form = GoodForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_detect_platform_template("goods/u_good/add.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
