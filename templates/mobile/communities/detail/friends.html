@@ -5,15 +5,15 @@
 <div class="container mt-3">
     <div class="card-header p-0">
       <div class="row no-gutters">
-        <div style="flex: 0 0 30%;max-width:50%;padding:5px;">
+        <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
           <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
             Назад
           </a>
         </div>
-        <div style="flex: 0 0 70%;max-width:50%;padding:5px;">
-          <a class="ajax btn btn-sm btn-secondary" style="width: -webkit-fill-available;">
-            Друзья в "{{ community.name }}"
-          </a>
+        <div style="flex: 0 0 70%;max-width:70%;padding:5px;">
+          <span class="ajax btn btn-sm btn-secondary" style="width: -webkit-fill-available;">
+            Друзья в сообществе
+          </span>
         </div>
       </div>
     </div>
