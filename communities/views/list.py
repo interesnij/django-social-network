@@ -18,7 +18,7 @@ class CommunityMembersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_default_template("communities/list/", "members.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_default_template("communities/detail/", "members.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
