@@ -4,8 +4,34 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-    <div class="row">
-      <div class="col-md-8 mt-3">
+  {% if user.is_good_album_exists %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      <span style="margin-bottom: 10px;position:relative" class="centered">
+        <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">Назад в профиль</a>
+      </span>
+    </div>
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      <span style="margin-bottom: 10px;position:relative" class="centered">
+            <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+                Подборки
+            </button>
+            <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+              {% for object in user.get_all_good_albums %}
+                <a class="dropdown-item ajax" href="{% url 'user_good_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
+              {% endfor %}
+            </div>
+      </span>
+    </div>
+  </div>
+  {% else %}
+  <span style="margin-bottom: 10px;position:relative" class="centered">
+    <span style="margin-bottom: 10px;position:relative" class="centered">
+      <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">Назад в профиль</a>
+    </span>
+  </span>
+  {% endif %}
+
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -60,10 +86,6 @@
               {% endif %}
               </div>
             </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-          {% include 'user_goods/sidebar.html' %}
         </div>
 </div>
 
