@@ -1,6 +1,6 @@
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form action="" id="c_edit_album_form" method="post" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+    <form id="c_edit_album_form" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">

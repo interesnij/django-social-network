@@ -12,7 +12,7 @@
       </div>
       <div class="col-12 col-md-4">
         {% if album.is_user_album %}
-        <form id="add_photos" method="post">
+        <form id="add_photos">
             {% csrf_token %}
               <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
               <button id="u_add_multi_photos" class="btn btn-outline-success" type="button">

@@ -11,7 +11,7 @@
     <h5 class="content-color-primary mb-0">Прикрепление фотографий</h5>
   </div>
   <div class="card-body border-bottom">
-<form id="add_photos" method="post">
+<form id="add_photos">
     {% csrf_token %}
       <input type="file" id="c_photo_post_attach" class="upload_for_post_attach" name="file" style="display:none" multiple="multiple">
       <div id="u_multi_comments_photos" class="border centered" style="cursor:pointer">

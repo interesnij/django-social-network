@@ -16,7 +16,7 @@
     </h5>
   </div>
   <div class="card-body border-bottom">
-    <form id="add_comment_photos" method="post">
+    <form id="add_comment_photos">
         {% csrf_token %}
           <input type="file" class="u_photo_post_comment_attach" id="u_photo_post_attach" name="file" style="display:none" multiple="multiple">
           <div id="u_multi_comments_photos" class="border centered" style="cursor:pointer">

@@ -1,6 +1,6 @@
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form action="" id="u_edit_playlist_form" method="post" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
+    <form id="u_edit_playlist_form" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">

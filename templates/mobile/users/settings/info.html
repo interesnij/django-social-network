@@ -3,11 +3,11 @@
 {% block title %}Изменение основной информации{% endblock %}
 {% block content %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}"> 
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}">
 
   {% include 'mobile/users/settings/menu.html' %}
 
-  <form action="" id="info_user_form" method="post" class="contact-form">
+  <form id="info_user_form" class="contact-form">
       {% csrf_token %}
       <div class="card mb-3">
           <div class="card-header border-bottom">

@@ -15,7 +15,7 @@
 </div>
 
 {% if album.is_user_album and community.is_photo_upload_nomember %}
-<form id="c_add_photos" method="post">
+<form id="c_add_photos">
     {% csrf_token %}
       <input type="file" id="c_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
       <button id="c_add_multi_photos" class="btn btn-outline-success" type="button">
