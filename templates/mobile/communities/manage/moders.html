@@ -2,7 +2,7 @@
 {% block title %}Модераторы сообщества - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}">
 
   {% include 'mobile/communities/manage/menu.html' %}
 

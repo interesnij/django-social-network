@@ -1,12 +1,8 @@
 {% extends "base_mobile.html" %}
 {% block title %}Информация - {{ community.name }} {% endblock %}
 {% block content %}
-<style>
-  .form-group{
-    margin-bottom:15px
-  }
-</style>
-<div class="container mt-3">
+
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}">
   {% include 'mobile/communities/manage/menu.html' %}
 
   <form id="community_general_info_form" class="contact-form">

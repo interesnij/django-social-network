@@ -2,7 +2,7 @@
 {% block title %}Приватность записей - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}">
 
   {% include 'mobile/communities/manage/menu.html' %}
   <form id="community_private_post_form" class="contact-form">
