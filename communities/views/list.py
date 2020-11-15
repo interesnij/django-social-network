@@ -37,6 +37,7 @@ class CommunityFriendsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_default_template("communities/detail/", "friends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityFriendsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -45,12 +46,7 @@ class CommunityFriendsView(ListView):
 		return context
 
 	def get_queryset(self):
-		if self.community.is_private() and not self.request.user.is_member_of_community(self.community.pk):
-			frends = None
-			self.template_name = "communities/detail/private_community.html"
-		else:
-			frends = self.request.user.get_common_friends_of_community(self.community.pk)
-			self.template_name = "communities/detail/friends.html"
+		frends = self.request.user.get_common_friends_of_community(self.community.pk)
 		return frends
 
 
