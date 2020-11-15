@@ -208,12 +208,13 @@ class GoodAlbumUserCreate(TemplateView):
     """
     создание списка товаров пользователя
     """
-    template_name="good_base/u_add_album.html"
-    form=None
+    template_name = None
+    form = None
 
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_detect_platform_template("goods/u_good/u_add_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

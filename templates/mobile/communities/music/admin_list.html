@@ -69,7 +69,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
                     <h6 class="my-0 mt-1"><span class="playlist_name">{{ playlist.name }}</span>&nbsp; ({{ playlist.count_tracks }})</h6>
-                    <p class="">Моя музыка</p>
+                    <p class="">{{ community.name }} - {{ playlist.name }}</p>
                   </div>
                   {% if playlist.is_not_empty %}
                     <span title="Поделиться" class="c_ucm_music_list_repost btn_default pointer" style="margin-top: 4px;width:25px">
