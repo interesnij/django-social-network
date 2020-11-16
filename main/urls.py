@@ -3,7 +3,6 @@ from main.views import *
 
 
 urlpatterns = [
-	url(r'^$', PostsListView.as_view(), name="post_list"),
 	url(r'^phone_verify/$', MainPhoneSend.as_view(), name="phone_send"),
 
 	url(r'^news/', include('main.url.news')),
