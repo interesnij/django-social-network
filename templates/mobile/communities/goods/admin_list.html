@@ -6,13 +6,13 @@
   {% if community.is_good_album_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
+      <a class="ajax btn btn-sm custom_color border" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
         Назад
       </a>
     </div>
     <div style="flex: 0 0 35%;max-width:35%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-        <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+        <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Подборки
         </button>
         <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
@@ -24,7 +24,7 @@
     </div>
     <div style="flex: 0 0 35%;max-width:35%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-        <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+        <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Опции
         </button>
         <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width: 200%;position: absolute;">
@@ -37,13 +37,13 @@
   {% else %}
   <div class="row no-gutters">
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
+      <a class="ajax btn btn-sm custom_color border" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
         Назад
       </a>
     </div>
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-            <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Опции
             </button>
             <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width: 200%;position: absolute;">

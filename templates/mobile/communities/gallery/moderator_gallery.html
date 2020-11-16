@@ -3,7 +3,13 @@
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-
+  <div class="card-header p-0">
+    <div class="row no-gutters">
+      <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
+        <a class="btn btn-sm custom_color border ajax" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">Назад в сообщество</a>
+      </div>
+    </div>
+  </div>
 {% include 'mobile/communities/gallery/albums.html' %}
 
 <div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
