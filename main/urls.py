@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from main.views import *
 
 
@@ -14,4 +14,10 @@ urlpatterns = [
 	url(r'^featured_videos/$', FeaturedVideosView.as_view(), name="featured_videos_list"),
 	url(r'^audios/$', AudiosListView.as_view(), name="audios_list"),
 	url(r'^featured_audios/$', FeaturedAudiosView.as_view(), name="featured_audios_list"),
+
+	url(r'^news/', include('main.url.news')),
+	url(r'^featured/', include('main.url.featured')),
+	url(r'^comments/', include('main.url.comments')),
+	url(r'^like/', include('main.url.like')),
+	url(r'^dislike/', include('main.url.dislike')),
 ]

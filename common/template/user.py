@@ -105,3 +105,18 @@ def render_for_platform(request, template, data):
         return render(request, "mobile/" + template, data)
     else:
         return render(request, "mobile/" + template, data)
+
+
+def get_detect_main_template(template, request_user, user_agent):
+	""" получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
+	if MOBILE_AGENT_RE.match(user_agent):
+		if request_user.is_authenticated:
+			template_name = "mobile/" + template
+		else:
+			template_name = "mobile/main/auth/auth.html"
+	else:
+		if request_user.is_authenticated:
+			template_name = "desctop/" + template
+		else:
+			template_name = "mobile/main/auth/auth.html"
+	return template_name
