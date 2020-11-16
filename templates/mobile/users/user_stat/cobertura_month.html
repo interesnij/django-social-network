@@ -17,16 +17,15 @@
                     </a>
                   </h5>
                 </div>
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle mb-2 drop">
+
+                <button class="btn custom_color border dropdown-toggle mb-2 drop">
                     Месяц
                 </button>
-                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 60px; left: 0px; will-change: transform;">
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_year' user.pk %}">Год</a>
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_week' user.pk %}">Неделя</a>
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_day' user.pk %}">День</a>
                 </div>
-              </div>
             </div>
           </div>
           <div class="card-body px-0 py-0">

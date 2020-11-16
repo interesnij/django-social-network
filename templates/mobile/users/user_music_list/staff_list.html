@@ -5,7 +5,7 @@
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
   <div class="row no-gutters">
     <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'user_music' pk=user.pk %}">
+      <a class="ajax btn btn-sm custom_color border" href="{% url 'user_music' pk=user.pk %}">
         Назад
       </a>
     </div>
@@ -16,10 +16,10 @@
     </div>
     <div style="flex: 0 0 35%;max-width:35%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-            <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Плейлисты
             </button>
-            <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+            <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
               {% for object in user.get_audio_playlists %}
                 <a class="dropdown-item ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
               {% endfor %}

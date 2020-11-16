@@ -7,10 +7,10 @@
   <div class="row no-gutters">
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-            <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Подборки
             </button>
-            <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+            <div class="dropdown-menu custom_color border dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
               {% for object in user.get_all_good_albums %}
                 <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
               {% endfor %}
@@ -19,7 +19,7 @@
     </div>
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
-            <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Опции
             </button>
             <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width: 200%;position: absolute;">
@@ -31,10 +31,10 @@
   </div>
   {% else %}
   <span style="margin-bottom: 10px;position:relative" class="centered">
-        <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+        <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Опции
         </button>
-        <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;">
+        <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width:100%;">
           <a class="dropdown-item u_good_add pointer">Добавить товар</a>
           <a class="dropdown-item u_goods_list_create_window pointer">Создать список</a>
         </div>

@@ -3,7 +3,7 @@
 
 <span style="margin-bottom: 10px;position:relative" class="centered">
   {% if request.user|is_you_block:user.pk %}
-    <button class="btn btn-sm btn-success success-gradient" disabled style="width: -webkit-fill-available">Вы заблокированы</button>
+    <button class="btn btn-sm custom_color border" disabled style="width: -webkit-fill-available">Вы заблокированы</button>
   {% else %}
     <button class="btn btn-sm btn-success success-gradient follow_create" style="width: -webkit-fill-available">Добавить в друзья</button>
   {% endif %}
