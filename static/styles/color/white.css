@@ -167,7 +167,7 @@ a.media:hover {
   border-left: 20px solid #f6f8fa;
 }
 
-.svg_default {color:rgba(0, 0, 0, 0.5)}
+.svg_default {color:rgba(0, 0, 0, 0.5) !important}
 .btn_default svg{color:rgba(0, 0, 0, 0.5) !important}
 .btn_default span{color:rgba(0, 0, 0, 0.8) !important}
 .btn_default button{background-color: #F0F0F0 !important;}
