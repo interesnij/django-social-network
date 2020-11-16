@@ -1,4 +1,3 @@
-
 from django.views.generic import ListView
 from django.http import Http404
 from common.user_progs.timelines import *
