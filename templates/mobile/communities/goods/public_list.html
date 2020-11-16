@@ -1,11 +1,36 @@
 {% extends "base_mobile.html" %}
-{% load liked_user %}
 {% block title %}{{ community.name }} | Товары - {{ album.title }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-    <div class="row">
-      <div class="col-md-8 mt-3">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
+  {% if community.is_good_album_exists %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}">
+        Назад
+      </a>
+    </div>
+    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+      <span style="margin-bottom: 10px;position:relative" class="centered">
+        <button type="button" class="btn btn-sm btn-secondary menu_drop" style="width: -webkit-fill-available;">
+            Подборки
+        </button>
+        <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+          {% for object in community.get_all_good_albums %}
+            <a class="dropdown-item ajax" href="{% url 'community_good_album' pk=community.pk uuid=object.uuid %}">{{ object.title }}</a>
+          {% endfor %}
+        </div>
+      </span>
+    </div>
+  </div>
+  {% else %}
+    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
+        Назад
+      </a>
+    </div>
+  {% endif %}
+
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -17,20 +42,16 @@
             <div class="card-body" style="padding: 10px;padding-bottom: 0;">
               <div style="display:flex">
                 {% if community.get_avatar %}
-                  <img src="{{ community.get_avatar }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
+                  <img src="{{ community.get_avatar }}" style="width: 40px; height: 40px; border-radius:50px" alt="image">
                 {% else %}
-                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+                  <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                 {% endif %}
-                <div class="media-body" style="margin-left: 10px;">
-                  <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
-                  <p class="">Товары -
-                    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-                      {{ community.name }}
-                    </a>
-                  </p>
+                <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
+                  <h6 class="my-0 mt-1"><span class="playlist_name">{{ playlist.name }}</span>&nbsp; ({{ playlist.count_tracks }})</h6>
+                  <p class="">{{ community.name }} - {{ playlist.name }}</p>
                 </div>
-                {% if album.is_not_empty %}
-                  <span title="Поделиться" class="c_ucm_good_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
+                {% if playlist.is_not_empty %}
+                  <span title="Поделиться" class="c_ucm_music_list_repost btn_default pointer" style="margin-top: 4px;width:25px">
                     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                   </span>
                 {% endif %}
@@ -39,8 +60,8 @@
           </div>
 
         <div class="card mb-2">
-          <div class="card-body">
-            <div class="row community_block_paginate" id="community_goods_container">
+            <div class="card-body">
+            <div class="row profile_block_paginate" id="user_goods_container">
               {% if object_list %}
 
               {% for object in object_list %}
@@ -57,10 +78,6 @@
               {% endif %}
               </div>
             </div>
-        </div>
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/communities/goods/sidebar.html' %}
         </div>
 </div>
 

@@ -17,7 +17,7 @@
             </button>
             <div class="dropdown-menu btn-secondary dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
               {% for object in user.get_all_good_albums %}
-                <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
+                <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
               {% endfor %}
             </div>
       </span>
