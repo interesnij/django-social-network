@@ -7,7 +7,7 @@
   {% if community.is_music_playlist_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}">
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
         Назад
       </a>
     </div>
