@@ -171,7 +171,7 @@ a.media:hover {
 .btn_default span{
   color: rgba(255, 255, 255, 0.9) !important;
 }
-.btn_default button, .btn_default a{
+.btn_default button{
   background-color: #0FB7F5 !important;
 }
 .svg_default{color: rgba(255, 255, 255, 0.8)}
@@ -188,7 +188,7 @@ a.media:hover {
     color: rgba(255, 255, 255, 0.9) !important;
 }
 .like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window {
+.comment_like_window, .comment_dislike_window, .custom_color {
   background: #009bd5; color: rgba(255, 255, 255, 0.9) !important;
 }
 .thumb{
