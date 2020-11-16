@@ -36,11 +36,11 @@
       </div>
     </div>
     <span class="row no-gutters">
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm btn-warning warning-gradient ajax" href="{% url 'community_general_form' pk=community.pk %}" style="width: -webkit-fill-available;">Управление</a>
+      <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
+        <a class="btn btn-sm ajax" href="{% url 'community_general_form' pk=community.pk %}" style="width: -webkit-fill-available;">Управление</a>
       </span>
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm btn-warning warning-gradient member_delete pointer" style="width: -webkit-fill-available;" data-id="{{ community.pk }}">Отписаться</a>
+      <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
+        <a class="btn btn-sm member_delete pointer" style="width: -webkit-fill-available;" data-id="{{ community.pk }}">Отписаться</a>
       </span>
     </span>
     <div style="padding-left: 10px;">

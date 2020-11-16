@@ -170,7 +170,7 @@ a.media:hover {
 .svg_default {color:rgba(0, 0, 0, 0.5)}
 .btn_default svg{color:rgba(0, 0, 0, 0.5) !important}
 .btn_default span{color:rgba(0, 0, 0, 0.8) !important}
-.btn_default button{background-color: #F0F0F0 !important;}
+.btn_default button, .btn_default a{background-color: #F0F0F0 !important;}
 .btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{color: rgba(0, 0, 0, 0.7) !important;}
 .btn_success svg, .btn_success span{ color:#41cd52}
 .btn_danger svg, .btn_danger span{ color:#FF0000}
