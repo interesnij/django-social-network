@@ -6,7 +6,7 @@
   {% if community.is_good_album_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}">
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
         Назад
       </a>
     </div>
@@ -37,7 +37,7 @@
   {% else %}
   <div class="row no-gutters">
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}">
+      <a class="ajax btn btn-sm btn-secondary" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
         Назад
       </a>
     </div>
@@ -54,7 +54,7 @@
     </div>
   </div>
   {% endif %}
-
+  {% if not album.is_deleted %}
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -107,6 +107,14 @@
               </div>
             </div>
         </div>
+        {% else %}
+        <div class="card centered" style="">
+          <div class="card-body" style="margin-top: 10%;">
+          <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+          </div>
+          <h6 style="margin: 20px;text-align: center;">Список удален. Вы можете <span class="pointer c_good_list_recover underline">восстановить</span> его</h6>
+        </div>
+        {% endif %}
 </div>
 
 {% endblock %}
