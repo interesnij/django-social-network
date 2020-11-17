@@ -14,6 +14,7 @@
           </span>
         </div>
         <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+          <span style="margin-bottom: 10px; position:relative">
             <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
                 Друзья {{ user.get_name_genitive }} ({{ user.count_connections }})
             </button>
@@ -26,6 +27,7 @@
               {% endif %}
                 <a class="dropdown-item ajax" href="{% url 'all_users' %}">Найти друзей</a>
             </div>
+          </div>
         </div>
       </div>
     </div>
