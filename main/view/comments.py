@@ -1,5 +1,4 @@
 from django.views.generic import ListView
-from django.http import Http404
 from common.user_progs.timelines_comments import *
 from common.template.user import get_settings_template, get_detect_main_template
 

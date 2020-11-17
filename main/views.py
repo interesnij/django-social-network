@@ -1,6 +1,7 @@
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 from common.template.user import get_detect_main_template
 
 
