@@ -835,6 +835,9 @@ class User(AbstractUser):
     def count_goods(self):
         return self.good_creator.values('pk').count()
 
+    def count_docs(self):
+        return self.doc_creator.values('pk').count()
+
     def count_public_posts(self):
         return self.post_creator.filter(status="P").values('pk').count()
     def count_public_articles(self):
