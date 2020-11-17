@@ -11,12 +11,22 @@
           <div class="card-header">
               <div class="media">
                   <div class="media-body">
-										<h5 class="mt-1">Охват по годам -
-											<a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-													{{ community.name }}
-											</a>
-										</h5>
+                    <h5 class="mt-1">Охват по годам -
+                      <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
+                          {{ community.name }}
+                      </a>
+                    </h5>
 									</div>
+
+                <button class="btn custom_color border dropdown-toggle mb-2 menu_drop">
+                    Год
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 60px; right: 0px; will-change: transform;">
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_month' community.pk %}">Месяц</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_week' community.pk %}">Неделя</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
+                </div>
+
               </div>
           </div>
 
