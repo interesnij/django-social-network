@@ -11,7 +11,7 @@ class UserCoberturaYear(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.years = UserNumbers.objects.dates('created', 'year')[0:10]
-		self.views, self.sities = []
+		self.views, self.sities = [], []
 		for i in self.years:
 			view = UserNumbers.objects.filter(created__year=i.year, target=self.user.pk).distinct("target").count()
 			self.views += [view]
@@ -43,7 +43,7 @@ class UserCoberturaMonth(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/cobertura_month.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.months = UserNumbers.objects.dates('created', 'month')[0:10]
-		self.views, self.sities = []
+		self.views, self.sities = [], []
 		for i in self.months:
 			view = UserNumbers.objects.filter(created__month=i.month, target=self.user.pk).distinct("target").count()
 			self.views += [view]
@@ -76,7 +76,7 @@ class UserCoberturaWeek(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/cobertura_week.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.weeks = UserNumbers.objects.dates('created', 'week')[0:10]
-		self.range, self.views, self.sities = []
+		self.range, self.views, self.sities = [], [], []
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = UserNumbers.objects.filter(created__day__in=days, target=self.user.pk).distinct("target").count()
@@ -142,7 +142,7 @@ class UserTrafficYear(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/traffic_year.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.years = UserNumbers.objects.dates('created', 'year')[0:10]
-		self.views, self.un_views, self.sities = []
+		self.views, self.un_views, self.sities = [], [], []
 		for i in self.years:
 			view = UserNumbers.objects.filter(created__year=i.year, target=self.user.pk).count()
 			self.views += [view]
@@ -178,7 +178,7 @@ class UserTrafficMonth(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/traffic_month.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.months = UserNumbers.objects.dates('created', 'month')[0:10]
-		self.views, self.un_views, self.sities = []
+		self.views, self.un_views, self.sities = [], [], []
 		for i in self.months:
 			view = UserNumbers.objects.filter(created__month=i.month, target=self.user.pk).count()
 			self.views += [view]
@@ -215,7 +215,7 @@ class UserTrafficWeek(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/traffic_week.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.weeks = UserNumbers.objects.dates('created', 'week')[0:10]
-		self.views, self.range, self.un_views, self.sities = []
+		self.views, self.range, self.un_views, self.sities = [], [], [], []
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = UserNumbers.objects.filter(created__day__in=days, target=self.user.pk).count()
@@ -256,7 +256,7 @@ class UserTrafficDay(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/traffic_day.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.days = UserNumbers.objects.dates('created', 'day')[0:10]
-		self.views, self.un_views, self.sities = []
+		self.views, self.un_views, self.sities = [], []
 		for i in self.days:
 			view = UserNumbers.objects.filter(created__day=i.day, target=self.user.pk).count()
 			self.views += [view]
