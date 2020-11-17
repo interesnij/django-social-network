@@ -40,7 +40,7 @@ on('#ajax', 'click', '#repost_for_message', function() {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#community_append").style.display = "none";
   block = current_block.querySelector("#user_chat_items_window");
-  current_block.querySelector("#chat_items_append").style.display = "block";
+  current_block.querySelector("#user_chat_items_window").style.display = "block";
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/chat_items/")
   }

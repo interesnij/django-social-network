@@ -5,7 +5,7 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
   block = current_block.querySelector("#user_communities_window");
   current_block.querySelector("#chat_items_append").style.display = "none";
   if (!block.querySelector(".load_pag")){
-  list_load(block, "/users/load/c_communities/")
+  list_load(block, "/users/load/communities/")
   }
 })
 
