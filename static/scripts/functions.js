@@ -528,7 +528,9 @@ function load_chart() {
                 }]
             },
             options: {
-                responsive: true,
+                //responsive: true,
+                responsive: false,
+                maintainAspectRatio: false,
                 title: {
                     display: true,
                     text: ''
