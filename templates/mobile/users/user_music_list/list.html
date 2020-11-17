@@ -4,22 +4,18 @@
 
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ playlist.uuid }}">
   <div class="row no-gutters">
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
-        <a class="btn btn-sm custom_color border ajax" href="{% url 'user_music' pk=user.pk %}" style="width: -webkit-fill-available;">Вернуться назад</a>
-      </span>
-    </div>
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
+    <a class="btn btn-sm custom_color border ajax" href="{% url 'user_music' pk=user.pk %}" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+    </a>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Плейлисты
             </button>
-            <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
               {% for object in user.get_audio_playlists %}
                 <a class="dropdown-item ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
               {% endfor %}
             </div>
-      </span>
     </div>
   </div>
 

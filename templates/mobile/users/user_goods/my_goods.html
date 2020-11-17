@@ -6,19 +6,16 @@
   {% if user.is_good_album_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Подборки
             </button>
-            <div class="dropdown-menu custom_color border dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+            <div class="dropdown-menu custom_color border" style="right: 15px;left: 15px; top: 60px;">
               {% for object in user.get_all_good_albums %}
                 <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
               {% endfor %}
             </div>
-      </span>
     </div>
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Опции
             </button>
@@ -26,7 +23,6 @@
               <a class="dropdown-item u_good_add pointer">Добавить товар</a>
               <a class="dropdown-item u_goods_list_create_window pointer">Создать список</a>
             </div>
-      </span>
     </div>
   </div>
   {% else %}
