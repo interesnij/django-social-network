@@ -5,14 +5,27 @@
 
 <div class="container mt-3">
     <div class="card-header p-0">
-          <button type="button" class="btn custom_color border dropdown-toggle menu_drop" style="width:100%;">
-              Управляемые сообщества ({{ user.count_community }})
-          </button>
-          <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); top: 60px; right: 15px;left: 15px">
-              <a class="dropdown-item ajax" href="{% url 'communities' pk=request.user.pk %}">Мои сообщества</a>
-              <a class="dropdown-item ajax" href="">Популярные сообщества</a>
-              <a class="dropdown-item ajax" href="">Посещенные сообщества</a>
+      <div class="row no-gutters">
+        <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+          <span style="margin-bottom: 10px;position:relative" class="centered">
+            <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+              <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+            </a>
+          </span>
+        </div>
+        <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+          <span style="margin-bottom: 10px; position:relative">
+            <button class="btn btn-sm custom_color border dropdown-toggle" style="width: -webkit-fill-available;">
+                Мои сообщества ({{ user.count_community }})
+            </button>
+            <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); top: 60px; right: 15px;left: 15px">
+                <a class="dropdown-item ajax" href="{% url 'communities' pk=request.user.pk %}">Мои сообщества</a>
+                <a class="dropdown-item ajax" href="">Популярные сообщества</a>
+                <a class="dropdown-item ajax" href="">Посещенные сообщества</a>
+                <a class="dropdown-item ajax" href="{% url 'all_communities' %}">Все сообщества</a>
+            </div>
           </div>
+        </div>
     </div>
     <div class="card mb-2">
         <div class="card">

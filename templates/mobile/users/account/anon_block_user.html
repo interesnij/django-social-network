@@ -1,4 +1,4 @@
-{% extends "base_mobile.html" %}
+{% extends "base_anon_mobile.html" %}
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
 <meta property="og:url" content="dvizhenie.tv" />
@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
 
-<div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
+<div class="container pk_saver mt-3">
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
     <div style="padding-top: 10px; display: flex;margin-bottom: 10px">

@@ -11,29 +11,23 @@
 
 <div class="container mt-3">
 <div class="user_page">
-      <div class="card mb-3">
-          <span style="margin:25px;line-height: 1.3;">
-            <h3 class="mb-0">{{ user.get_full_name }}</h3>
-            {% if user.get_online %}
-              <i>Онлайн</i>
-            {% else %}
-              <i>Был(а) {{ user.get_created }}</i>
-            {% endif %}
-          </span>
-          <div class="card-body">
-              <div class="align-items-center no-gutters">
-                  <a class="col">
-                      <figure class="mx-auto mb-3" id="avatar_reload">
-                        {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
-                        {% else %}
-                          <svg fill="currentColor" class="svg_default" style="width:100%;height: auto;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                        {% endif %}
-                      </figure>
-                  </a>
-              </div>
-          </div>
+  <div class="card mb-3" style="padding:10px">
+    <div style="padding-top: 10px; display: flex;margin-bottom: 10px">
+      <figure>
+        {% if user.get_avatar %}
+          <img src="{{ user.get_avatar }}" style="border-radius:80px" alt="image">
+        {% else %}
+          <svg fill="currentColor" class="svg_default svg_default_80" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /><path d="M0 0h24v24H0z" fill="none" /></svg>
+        {% endif %}
+      </figure>
+
+      <div class="media-body" style="margin-left:10px">
+        <h6 class="my-0 mt-1">
+          <h6 class="mb-0">{{ user.get_full_name }}</h6>
+        </h6>
       </div>
+    </div>
+  </div>
       <div class="card mb-3 centered">
         <div class="card-body">
         <svg class="thumb_big svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
