@@ -18,7 +18,7 @@
             <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
                 Друзья {{ user.get_name_genitive }} ({{ user.count_connections }})
             </button>
-            <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); top: 60px; width: 100%;">
+            <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); top: 40px; width: 100%;">
               {% if user.get_online_connection_count != 0 %}
                 <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% endif %}
