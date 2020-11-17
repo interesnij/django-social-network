@@ -2,11 +2,7 @@
 {% block title %}Охват по дням{% endblock %}
 {% load post_count %}
 {% block content %}
-<style>
-  .chartjs-render-monitor{
-    height: 300px !important;
-  }
-</style>
+
 <div class="container mt-3">
 
   {% include 'mobile/communities/manage/menu.html' %}
@@ -41,7 +37,7 @@
                     data-label_2="Рекламный охват"
                     data-data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
                     data-data_2="0,1,2"
-                    style="width:800px">
+                    style="height: 20rem !important">
             </canvas>
             </div>
             <br><br>
