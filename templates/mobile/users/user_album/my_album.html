@@ -3,18 +3,21 @@
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-  <div class="card-header p-0">
-    <div class="row no-gutters">
-      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm custom_color border ajax" href="{% url 'user_gallery' pk=user.pk %}" style="width: -webkit-fill-available;">Моя галерея</a>
-      </div>
-      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <form id="add_photos">
-          {% csrf_token %}
-          <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
-          <span class="btn btn-sm custom_color border" id="u_add_multi_photos" style="width: -webkit-fill-available;">Добавить фото</span>
-        </form>
-      </div>
+
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <span style="margin-bottom: 10px;position:relative" class="centered">
+        <a class="btn btn-sm custom_color border ajax" href="{% url 'user_gallery' pk=user.pk %}" style="width: -webkit-fill-available;">
+          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+        </a>
+      </span>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+      <form id="add_photos">
+        {% csrf_token %}
+        <input type="file" id="u_gallery_album_photo_add" name="file" style="display:none" multiple="multiple">
+        <span class="btn btn-sm custom_color border" id="u_add_multi_photos" style="width: -webkit-fill-available;">Добавить фото</span>
+      </form>
     </div>
   </div>
 

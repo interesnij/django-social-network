@@ -13,13 +13,13 @@
         </span>
       </div>
       <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
-        <span class="btn btn-sm custom_color border u_album_add" style="width: -webkit-fill-available;">Добавить альбом</span>
+        <span class="btn btn-sm custom_color border u_album_add" style="width: -webkit-fill-available;">+ альбом</span>
       </div>
       <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
         <form id="add_photos">
           {% csrf_token %}
           <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-          <span class="btn btn-sm custom_color border" id="u_add_multi_photos" style="width: -webkit-fill-available;">Добавить фото</span>
+          <span class="btn btn-sm custom_color border" id="u_add_multi_photos" style="width: -webkit-fill-available;">+ фото</span>
         </form>
       </div>
     </div>
