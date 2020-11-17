@@ -111,7 +111,7 @@ class UserCoberturaDay(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/user_stat/cobertura_day.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.days = UserNumbers.objects.dates('created', 'day')[0:10]
-		self.views, self.sities = []
+		self.views, self.sities = [], []
 		for i in self.days:
 			view = UserNumbers.objects.filter(created__day=i.day, target=self.user.pk).distinct("target").count()
 			self.views += [view]
