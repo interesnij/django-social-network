@@ -529,7 +529,7 @@ function load_chart() {
             },
             options: {
                 responsive: true,
-                
+                maintainAspectRatio: false,
                 title: {
                     display: true,
                     text: ''
