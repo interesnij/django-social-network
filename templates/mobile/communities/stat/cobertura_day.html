@@ -2,7 +2,11 @@
 {% block title %}Охват по дням{% endblock %}
 {% load post_count %}
 {% block content %}
-
+<style>
+  .chartjs-render-monitor{
+    height: 300px !important;
+  }
+</style>
 <div class="container mt-3">
 
   {% include 'mobile/communities/manage/menu.html' %}
