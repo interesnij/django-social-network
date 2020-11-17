@@ -32,11 +32,11 @@
           <div class="card-body px-0 py-0">
             <div class="table-responsive">
             <canvas id="canvas"
-                    data-dates='{% for month in months %}{{ month|date:"F, Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
-                    data-label_1="Уникальные просмотры"
-                    data-label_2="Все просмотры"
-                    data-data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
-                    data-data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    dates='{% for month in months %}{{ month|date:"F, Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    label_1="Уникальные просмотры"
+                    label_2="Все просмотры"
+                    data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
                     style="height: 20rem !important">
             </canvas>
             </div>
