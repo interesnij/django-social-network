@@ -32,7 +32,7 @@
           <div class="card-body px-0 py-0">
             <div class="table-responsive">
             <canvas id="canvas"
-                    data-dates='{% for day in days %}{{ day|date:'m-d' }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    data-dates='{% for day in days %}{{ day|date:'d.m' }}{% if not forloop.last %},{% endif %}{% endfor %}'
                     data-label_1="Общий охват"
                     data-label_2="Рекламный охват"
                     data-data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
