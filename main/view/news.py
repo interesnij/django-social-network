@@ -4,22 +4,6 @@ from common.user_progs.timelines_post import *
 from common.template.user import get_settings_template, get_detect_main_template
 
 
-class PostsListView(ListView):
-	template_name = None
-	paginate_by = 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PostsListView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_posts_for_user(self.request.user).order_by('-created')
-		else:
-			items = []
-		return items
-
-
 class PhotosListView(ListView):
 	template_name = None
 	paginate_by = 15

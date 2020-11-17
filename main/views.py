@@ -27,3 +27,19 @@ class MainPhoneSend(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/phone_verification.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MainPhoneSend,self).get(request,*args,**kwargs)
+
+
+class PostsListView(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostsListView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_posts_for_user(self.request.user).order_by('-created')
+		else:
+			items = []
+		return items
