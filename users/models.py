@@ -1322,7 +1322,11 @@ class User(AbstractUser):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).order_by("-created")
-        query = Community.objects.filter(id__in=v_s).distinct()
+        query = []
+        for id in v_s:
+            community = Community.objects.get(id=id.community)
+            if not community in query:
+                query = query + [community]
         return query
 
 
