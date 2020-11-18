@@ -19,7 +19,7 @@
                     <h6 class="content-color-primary mb-0 border">
                         <svg class="svg_default" style="width: 50px;" fill="currentColor" x="0px" y="0px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
                             <g id="Bounding_Box">
-                                <rect fill="none" width="24" height="24" />
+                                <rect fill="none" />
                             </g>
                             <g id="Flat">
                                 <g id="ui_x5F_spec_x5F_header_copy_2"></g>
@@ -39,7 +39,7 @@
                 </a>
             </li>
             <li class="date">
-                <a href="{% url 'community_music' pk=community.pk %}">
+                <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
                     <h6 class="content-color-primary mb-0 border">
                         <svg class="svg_default" style="width: 50px;" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0z" fill="none" />
@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="date">
-                <a href="{% url 'community_video' pk=community.pk %}">
+                <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
                     <h6 class="content-color-primary mb-0 border">
                         <svg class="svg_default" style="width: 50px;" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z" />
@@ -65,7 +65,7 @@
                 </a>
             </li>
             <li class="date">
-                <a href="{% url 'community_docs' pk=community.pk %}">
+                <a href="{% url 'community_docs' pk=community.pk %}" class="ajax">
                     <h6 class="content-color-primary mb-0 border">
                         <svg class="svg_default" style="width: 50px;" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0z" fill="none" />

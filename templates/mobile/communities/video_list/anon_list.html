@@ -2,22 +2,32 @@
 {% block title %}{{ community.name }} - {{ album.title }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver mt-3" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container pk_saver mt-3" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'community_video' pk=community.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+        <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+            Видеоальбомы
+        </button>
+        <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+          {% for object in community.get_admin_video_albums %}
+            <a class="dropdown-item ajax" href="{% url 'community_video_list' pk=community.pk uuid=object.uuid %}">{{ object.title }}</a>
+          {% endfor %}
+        </div>
+    </div>
+  </div>
           {% if not album.is_deleted %}
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск видео">
-            <div class="input-group-append">
-              <button class="btn btn-outline-link" type="button">Искать</button>
-            </div>
-          </div>
+
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
                 <div style="display:flex">
                   <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
+                    <h6 class="my-0 mt-1"><span class="list_name">{{ album.title }}</span>&nbsp;({{ album.count_video }})</h6>
                     <p class="">{{ community.name }} - {{ album.title }}</p>
                   </div>
                 </div>
@@ -48,13 +58,15 @@
               </div>
           </div>
           {% else %}
-            {% include 'mobile/communities/video/deleted.html' %}
+
+          <div class="card centered" style="">
+            <div class="card-body" style="margin-top: 10%;">
+            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">Видеоальбом удален. Вы можете <span class="pointer c_video_list_recover underline">восстановить</span> его</h6>
+          </div>
           {% endif %}
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/communities/video_list/sidebar.html' %}
-        </div>
-    </div>
+
 </div>
 
 
