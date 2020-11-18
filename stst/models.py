@@ -23,9 +23,12 @@ class CommunityNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        #ordering = ['-created''-created']
         verbose_name = "Посещение сообщества"
         verbose_name_plural = "Посещения сообщества"
+
+    @classmethod
+    def get_ordered_distinct(user_id):
+        return cls.objects.filter(user=user_id).distinct('community')
 
 
 class GoodNumbers(models.Model):
