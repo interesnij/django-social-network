@@ -23,7 +23,7 @@ class CommunityNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        #ordering = ['-created']
+        ordering = ['-created']
         verbose_name = "Посещение сообщества"
         verbose_name_plural = "Посещения сообщества"
 
