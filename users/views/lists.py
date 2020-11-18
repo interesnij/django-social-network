@@ -18,7 +18,7 @@ class UserVisitCommunities(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/user_community/visits.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/user_community/visited_communities.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVisitCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

@@ -5,6 +5,7 @@ from communities.views.details import *
 
 urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
+    url(r'^trend-communities/$', TrendCommunities.as_view(), name='trend_communities'),
     url(r'^category/(?P<pk>\d+)/$', CommunityCategoryView.as_view(), name='community_category'),
 
     url(r'^members/(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),

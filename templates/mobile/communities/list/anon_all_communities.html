@@ -1,0 +1,73 @@
+{% extends "base_anon_mobile.html" %}
+{% load liked_user %}
+{% block title %}Все сообщества{% endblock %}
+{% block content %}
+
+<div class="container mt-3">
+    <div class="card-header p-0">
+      <div class="row no-gutters">
+        <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+            <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+              <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+            </a>
+        </div>
+        <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+            <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
+                Все сообщества ({{ count_communities }})
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              <a class="dropdown-item ajax" href="{% url 'trend_communities' %}">Популярные сообщества</a>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="card mb-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group mb-3" style="display:flex">
+                    <input type="text" class="form-control" placeholder="Поиск сообществ">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-link user_community_create_window">Создать</button>
+                    </div>
+                </div>
+                {% if object_list %}
+
+                <ul class="list-group profile_block_paginate" id="all_communities_container">
+                    {% for object in object_list %}
+                    <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
+                        <div class="media">
+                            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                <figure>
+                                  {% if object.get_avatar %}
+                                    <img src="{{ object.get_avatar }}" style="border-radius:50px;width:50px;" alt="image">
+                                  {% else %}
+                                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                  {% endif %}
+                                </figure>
+                            </a>
+                            <div class="media-body">
+                                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.name }}
+                                    </h6>
+                                </a>
+                                <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                {% else %}
+                <div class="card post_empty centered">
+                  <div class="card-body">
+                  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                  </div>
+                  <h6 style="margin: 20px;text-align: center;"> Пока сообществ нет...</h6>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
