@@ -2,9 +2,34 @@
 {% block title %}{{ album.title }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
+  {% if user.is_video_album_exists %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                Видеоальбомы
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              {% for object in user.get_my_video_albums %}
+                <a class="dropdown-item ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
+              {% endfor %}
+            </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+  </div>
+  {% endif %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -21,10 +46,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">Видеоролики
-                    <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
-                      {{ user.get_full_name_genitive }}
-                    </a>
+                    <p class="">Видеоролики {{ user.get_name_genitive }}</a>
                     </p>
                   </div>
                 </div>
@@ -53,61 +75,6 @@
                 </div>
               </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4">
-          <div class="card mb-3 mt-3">
-              <div class="card-body">
-                <a href="{% url 'user' pk=user.pk %}" class="ajax">
-                  <div class="media">
-                      <figure style="width:50px;">
-                        {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar }}" style="border-radius:50px" alt="image">
-                        {% else %}
-                        <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                        {% endif %}
-                      </figure>
-                    <div class="media-body">
-                        <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-                        <p class="small">Видеозаписи</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-          </div>
-          <div class="card mb-3">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="" class="ajax">Видеокаталог</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <div class="media">
-                  <div class="media-body">
-                    <h5 class="mt-1">
-                      <p>Списки</p>
-                    </h5>
-                  </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="nav flex-column nav-pills faqnav">
-                {% for object in user.get_my_video_albums %}
-                  <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
-                    {{ object.title }}
-                  </a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
 </div>
-
 
 {% endblock %}

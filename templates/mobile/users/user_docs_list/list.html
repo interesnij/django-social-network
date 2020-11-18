@@ -2,9 +2,24 @@
 {% block title %}Документы {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user_docs' pk=user.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                Списки
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              {% for object in user.get_docs_lists %}
+                <a class="dropdown-item ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
+              {% endfor %}
+            </div>
+    </div>
+  </div>
           {% if not list.is_deleted %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
@@ -73,10 +88,5 @@
           {% else %}
             {% include 'mobile/users/user_docs/deleted.html' %}
           {% endif %}
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/users/user_docs_list/sidebar.html' %}
-        </div>
-    </div>
 </div>
 {% endblock %}

@@ -2,9 +2,53 @@
 {% block title %}{{ album.title }} : Мои видеоролики{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
+  {% if user.is_video_album_exists %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                Видеоальбомы
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              {% for object in user.get_my_video_albums %}
+                <a class="dropdown-item ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
+              {% endfor %}
+            </div>
+    </div>
+    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                Опции
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              <a class="dropdown-item u_video_create_window pointer">Добавить видео</a>
+              <a class="dropdown-item u_video_list_create_window pointer">Создать список</a>
+            </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+      <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+          Опции
+      </button>
+      <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+        <a class="dropdown-item u_video_create_window pointer">Добавить видео</a>
+        <a class="dropdown-item u_video_list_create_window pointer">Создать список</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -55,11 +99,6 @@
                 </div>
               </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/users/user_video/my_sidebar.html' %}
-        </div>
-    </div>
 </div>
 
 

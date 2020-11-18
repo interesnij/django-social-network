@@ -2,10 +2,34 @@
 {% block title %}Мои документы - {{ list.name }} {% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
           {% if not list.is_deleted %}
+          <div class="row no-gutters">
+            <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+              <a class="btn btn-sm custom_color border ajax" href="{% url 'user_docs' pk=user.pk %}" style="width: -webkit-fill-available;">
+                <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+              </a>
+            </div>
+            <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+                    <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                        Списки
+                    </button>
+                    <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+                      {% for object in user.get_my_docs_lists %}
+                        <a class="dropdown-item ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
+                      {% endfor %}
+                    </div>
+            </div>
+            <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+                    <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                        Опции
+                    </button>
+                    <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+                      <a class="dropdown-item u_doc_create_window pointer">Добавить Документ</a>
+                      <a class="dropdown-item u_doc_list_create_window pointer">Создать список</a>
+                    </div>
+            </div>
+          </div>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
             <div class="input-group-append">
@@ -74,6 +98,23 @@
               </div>
           </div>
           {% else %}
+          <div class="row no-gutters">
+            <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+              <a class="btn btn-sm custom_color border ajax" href="{% url 'user_docs' pk=user.pk %}" style="width: -webkit-fill-available;">
+                <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+              </a>
+            </div>
+            <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+                    <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                        Списки
+                    </button>
+                    <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+                      {% for object in user.get_my_docs_lists %}
+                        <a class="dropdown-item ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
+                      {% endfor %}
+                    </div>
+            </div>
+          </div>
           <div class="card centered" style="">
             <div class="card-body" style="margin-top: 10%;">
             <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
@@ -81,10 +122,6 @@
             <h6 style="margin: 20px;text-align: center;">Список удален. Вы можете <span class="pointer u_doc_list_recover underline">восстановить</span> его</h6>
           </div>
           {% endif %}
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/users/user_docs_list/my_sidebar.html' %}
-        </div>
-    </div>
+
 </div>
 {% endblock %}
