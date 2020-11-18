@@ -1323,7 +1323,9 @@ class User(AbstractUser):
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values("community")
         ids = [use['community'] for use in v_s]
-        query = Community.objects.filter(id__in=ids)
+        query = []
+        for id in ids:
+            query = query + [Community.objects.get(id=id)]
         return query
 
 
