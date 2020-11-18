@@ -2,9 +2,24 @@
 {% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="row no-gutters">
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'community_docs' pk=community.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+                Списки
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              {% for object in community.get_docs_lists %}
+                <a class="dropdown-item ajax" href="{% url 'community_docs_list' pk=community.pk uuid=object.uuid %}">{{ object.name }}</a>
+              {% endfor %}
+            </div>
+    </div>
+  </div>
           {% if not list.is_deleted %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
@@ -34,7 +49,7 @@
             </div>
           <div class="card mb-2">
               <div class="card-body">
-                    <ul id="community_list_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate">
+                    <ul id="community_list_docs_container" data-pk="{{ list.pk }}" class="community_block_paginate" >
                       {% if object_list %}
                       {% for doc in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
@@ -50,7 +65,7 @@
                                         </a>
                                           <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
                                               <span class="dropdown-item c_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item doc_delete_window">♦ Удалить</span>
+                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
                                           </div>
                                       </div>
                                     </span>
@@ -72,10 +87,5 @@
           {% else %}
             {% include 'mobile/communities/docs/deleted.html' %}
           {% endif %}
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'mobile/communities/docs_list/sidebar.html' %}
-        </div>
-    </div>
 </div>
 {% endblock %}

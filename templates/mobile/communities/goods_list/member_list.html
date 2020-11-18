@@ -10,7 +10,6 @@
       </a>
     </div>
     <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
         <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Подборки
         </button>
@@ -19,7 +18,6 @@
             <a class="dropdown-item ajax" href="{% url 'community_good_album' pk=community.pk uuid=object.uuid %}">{{ object.title }}</a>
           {% endfor %}
         </div>
-      </span>
     </div>
   </div>
 

@@ -5,35 +5,31 @@
 
 <div class="container pk_saver mt-3" data-pk="{{ community.pk }}" data-uuid="{{ playlist.uuid }}">
   <div class="row no-gutters">
-    <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
-      <a class="ajax btn btn-sm custom_color border" href="{% url 'community_music' pk=community.pk %}" style="width: -webkit-fill-available;">
-        Назад
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'community_music' pk=community.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
-    <div style="flex: 0 0 35%;max-width:35%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
+    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Плейлисты
             </button>
-            <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
               {% for object in community.get_audio_playlists %}
                 <a class="dropdown-item ajax" href="{% url 'community_music_list' pk=community.pk uuid=object.uuid %}">{{ object.name }}</a>
               {% endfor %}
             </div>
-      </span>
     </div>
-    <div style="flex: 0 0 35%;max-width:35%;padding:5px;">
-      <span style="margin-bottom: 10px;position:relative" class="centered">
+    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
                 Опции
             </button>
-            <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width: 200%;position: absolute;">
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
               <a class="dropdown-item c_soundcloud_set_list pointer">Добавить список в плейлист</a>
               <a class="dropdown-item c_music_list_create_window pointer">Создать новый список</a>
               <a class="dropdown-item c_soundcloud_set_create pointer">Закачать новый список</a>
               <a class="dropdown-item pointer">Добавить трек в список</a>
             </div>
-      </span>
     </div>
   </div>
 

@@ -14,7 +14,7 @@
         <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Подборки
         </button>
-        <div class="dropdown-menu custom_color border" style="right: 15px;left: 15px; top: 60px;">
+        <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
           {% for object in community.get_all_good_albums %}
             <a class="dropdown-item ajax" href="{% url 'community_good_album' pk=community.pk uuid=object.uuid %}">{{ object.title }}</a>
           {% endfor %}
