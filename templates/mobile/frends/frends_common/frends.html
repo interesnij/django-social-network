@@ -12,17 +12,17 @@
         </div>
         <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
             <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-                {{ user.get_full_name }} | Общие друзья
+                {{ user.first_name }} | Общие друзья
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Все друзья {{ user.get_full_name_genitive }} ({{ user.count_connections }})</a>
-              {% if user.get_online_connection_count != 0 %}
+              <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Друзья {{ user.get_name_genitive }} ({{ user.count_connections }})</a>
+              {% if user.get_online_connection_count %}
                 <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% endif %}
               {% if common_users %}
                 <a class="dropdown-item ajax" href="{% url 'all_common_users' pk=user.pk %}">Общие друзья</a>
               {% endif %}
-              {% if user.count_followers != 0 %}
+              {% if user.count_followers %}
                 <a class="dropdown-item ajax" href="{% url 'follows' pk=user.pk %}">Подписчики ({{ user.count_followers }})</a>
               {% endif %}
               <a class="dropdown-item ajax" href="{% url 'all_users' %}">Найти друзей</a>

@@ -16,7 +16,7 @@
                 Друзья онлайн {{ user.get_name_genitive }} ({{ user.count_connections }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Все друзья {{ user.get_full_name_genitive }} ({{ user.count_connections }})</a>
+              <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Друзья {{ user.get_name_genitive }} ({{ user.count_connections }})</a>
               {% if common_users %}
                 <a class="dropdown-item ajax" href="{% url 'all_common_users' pk=user.pk %}">Общие друзья</a>
               {% endif %}

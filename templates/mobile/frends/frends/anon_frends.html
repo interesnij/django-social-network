@@ -15,10 +15,10 @@
                 Друзья {{ user.get_name_genitive }} ({{ user.count_connections }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% if user.get_online_connection_count != 0 %}
+              {% if user.get_online_connection_count %}
                 <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% endif %}
-              {% if user.count_followers != 0 %}
+              {% if user.count_followers %}
                 <a class="dropdown-item ajax" href="{% url 'follows' pk=user.pk %}">Подписчики ({{ user.count_followers }})</a>
               {% endif %}
                 <a class="dropdown-item ajax" href="{% url 'all_users' %}">Найти друзей</a>

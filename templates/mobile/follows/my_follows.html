@@ -13,14 +13,16 @@
                 Мои подписчики ({{ user.count_followers }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-                <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Все друзья</a>
-              {% if user.get_online_connection_count != 0 %}
-                <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
+                <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Мои друзья</a>
+              {% if user.get_online_connection_count %}
+                <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% endif %}
-              {% if user.count_following != 0 %}
+              {% if user.count_following %}
                 <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}">Мои заявки ({{ user.count_following }})</a>
               {% endif %}
-                <a class="dropdown-item ajax" href="{% url 'possible_users' pk=user.pk %}">Возможные друзья</a>
+              {% if user.get_possible_friends_count %}
+                <a class="dropdown-item ajax" href="{% url 'possible_users' pk=user.pk %}">Возможные друзья ({{ user.get_possible_friends_count }})</a>
+              {% endif %}
                 <a class="dropdown-item ajax" href="{% url 'all_users' %}">Найти друзей</a>
             </div>
         </div>

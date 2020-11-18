@@ -3,19 +3,18 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-  {% if community.is_good_album_exists %}
   <div class="row no-gutters">
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <a class="ajax btn btn-sm custom_color border" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
-        Назад
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'community_goods' pk=community.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
-    <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
       <span style="margin-bottom: 10px;position:relative" class="centered">
         <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
             Подборки
         </button>
-        <div class="dropdown-menu dropdown-menu-right" style="margin-top:5px;width:100%;position: absolute;">
+        <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
           {% for object in community.get_all_good_albums %}
             <a class="dropdown-item ajax" href="{% url 'community_good_album' pk=community.pk uuid=object.uuid %}">{{ object.title }}</a>
           {% endfor %}
@@ -23,15 +22,7 @@
       </span>
     </div>
   </div>
-  {% else %}
-  <div class="row no-gutters">
-    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
-      <a class="ajax btn btn-sm custom_color border" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
-        Назад
-      </a>
-    </div>
-  </div>
-  {% endif %}
+
 {% if not album.is_deleted %}
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
