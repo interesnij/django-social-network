@@ -8,7 +8,7 @@
       <div class="row no-gutters">
         <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
             <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-                Посещенные сообщества ({{ user.count_visited_community }})
+                Посещенные сообщества ({{ user.get_visited_communities_count }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
               <a class="dropdown-item ajax" href="{% url 'communities' pk=request.user.pk %}">Мои сообщества</a>

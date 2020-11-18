@@ -1321,13 +1321,15 @@ class User(AbstractUser):
     def get_visited_communities(self):
         from stst.models import CommunityNumbers
         from communities.models import Community
-        v_s = CommunityNumbers.objects.filter(user=self.pk).order_by("created")
-        query = []
-        for id in v_s:
-            community = Community.objects.get(id=id.community)
-            if not community in query:
-                query = query + [community]
+        v_s = CommunityNumbers.objects.filter(user=self.pk).distinct("community").values("community")
+        ids = [use['community'] for use in v_s]
+        query = Community.objects.filter(id__in=ids)
         return query
+
+    def get_visited_communities_count(self):
+        from stst.models import CommunityNumbers
+        from communities.models import Community
+        return CommunityNumbers.objects.filter(user=self.pk).distinct("community").values("community").count()
 
 
     def join_community(self, community_pk):
