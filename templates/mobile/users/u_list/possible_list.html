@@ -12,10 +12,10 @@
       </div>
       <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
           <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-              Рекомендованные друзья ({{ user.count_connections }})
+              Рекомендованные друзья ({{ user.get_possible_friends_count }}) 
           </button>
           <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-            <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья ({{ user.get_online_connection_count }})</a>
+            <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья ({{ user.get_connection_count }})</a>
             {% if user.get_online_connection_count != 0 %}
               <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
             {% endif %}
