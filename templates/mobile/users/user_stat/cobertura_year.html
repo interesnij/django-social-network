@@ -21,7 +21,7 @@
                 <button class="btn custom_color border dropdown-toggle mb-2 menu_drop">
                     Год
                 </button>
-                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 60px; right: 0px; will-change: transform;">
+                <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_month' user.pk %}">Месяц</a>
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_week' user.pk %}">Неделя</a>
                   <a class="dropdown-item ajax" href="{% url 'user_cuberture_day' user.pk %}">День</a>

@@ -13,7 +13,7 @@
         </div>
         <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
             <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-                Мои сообщества ({{ user.count_community }})
+                Управляемые сообщества ({{ user.count_community }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
                 <a class="dropdown-item ajax" href="{% url 'communities' pk=request.user.pk %}">Мои сообщества</a>
