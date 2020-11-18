@@ -17,7 +17,7 @@
                         Списки
                     </button>
                     <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-                      {% for object in community.get_docs_lists %}
+                      {% for object in community.get_admin_docs_lists %}
                         <a class="dropdown-item ajax" href="{% url 'community_docs_list' pk=community.pk uuid=object.uuid %}">{{ object.name }}</a>
                       {% endfor %}
                     </div>

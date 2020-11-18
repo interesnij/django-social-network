@@ -432,6 +432,13 @@ class Community(models.Model):
     def get_docs_lists(self):
         from docs.models import DocList
 
+        lists_query = Q(community_id=self.id, type=DocList.LIST, is_public=True, is_deleted=False)
+        lists = DocList.objects.filter(lists_query).order_by("order")
+        return lists
+
+    def get_admin_docs_lists(self):
+        from docs.models import DocList
+
         lists_query = Q(community_id=self.id, type=DocList.LIST, is_deleted=False)
         lists = DocList.objects.filter(lists_query).order_by("order")
         return lists

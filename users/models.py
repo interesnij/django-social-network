@@ -1215,6 +1215,13 @@ class User(AbstractUser):
         lists = DocList.objects.filter(lists_query).order_by("order")
         return lists
 
+    def get_my_docs_lists(self):
+        from docs.models import DocList
+
+        lists_query = Q(creator_id=self.id, community=None, is_public=True, type=DocList.LIST, is_deleted=False)
+        lists = DocList.objects.filter(lists_query).order_by("order")
+        return lists
+
     def get_all_docs_lists(self):
         from docs.models import DocList
 

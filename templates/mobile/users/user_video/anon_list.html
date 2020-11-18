@@ -46,7 +46,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">Видеоролики {{ user.get_name_genitive }}</a>
+                    <p class="">Видеоролики {{ user.get_name_genitive }}
                     </p>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <div class="row movies_list_in_list profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'user_video/video.html' %}
+                        {% include 'mobile/users/user_video/video.html' %}
                       {% endfor %}
                       {% else %}
                       <div class="card video_none centered">
