@@ -3,13 +3,13 @@ from common.user_progs.timelines_post import *
 from common.template.user import get_settings_template, get_detect_main_template
 
 
-class PhotosListView(ListView):
+class PhotosView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/news/photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PhotosListView,self).get(request,*args,**kwargs)
+		return super(PhotosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
@@ -19,13 +19,13 @@ class PhotosListView(ListView):
 		return items
 
 
-class GoodsListView(ListView):
+class GoodsView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/news/goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(GoodsListView,self).get(request,*args,**kwargs)
+		return super(GoodsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
@@ -35,13 +35,13 @@ class GoodsListView(ListView):
 		return items
 
 
-class VideosListView(ListView):
+class VideosView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/news/videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(VideosListView,self).get(request,*args,**kwargs)
+		return super(VideosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
@@ -51,13 +51,13 @@ class VideosListView(ListView):
 		return items
 
 
-class AudiosListView(ListView):
+class AudiosView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/news/audios.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(AudiosListView,self).get(request,*args,**kwargs)
+		return super(AudiosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:

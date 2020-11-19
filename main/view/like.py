@@ -3,65 +3,129 @@ from common.user_progs.timelines_likes import *
 from common.template.user import get_settings_template, get_detect_main_template
 
 
-class PostLikesListView(ListView):
+class PostLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/likes/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PostLikesListView,self).get(request,*args,**kwargs)
+		return super(PostLikesView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_post_likes_for_user(self.request.user).order_by('-created')
+			items = get_timeline_post_likes(self.request.user).order_by('-created')
 		else:
 			items = []
 		return items
 
 
-class PhotoLikesListView(ListView):
+class PhotoLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/likes/photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PhotoLikesListView,self).get(request,*args,**kwargs)
+		return super(PhotoLikesView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_photo_likes_for_user(self.request.user)
+			items = get_timeline_photo_likes(self.request.user)
 		else:
 			items = []
 		return items
 
 
-class GoodLikesListView(ListView):
+class GoodLikesListView(View):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/likes/goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(GoodLikesListView,self).get(request,*args,**kwargs)
+		return super(GoodLikesView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_good_likes_for_user(self.request.user)
+			items = get_timeline_good_likes(self.request.user)
 		else:
 			items = []
 		return items
 
 
-class VideoLikesListView(ListView):
+class VideoLikesListView(View):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/likes/videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(VideoLikesListView,self).get(request,*args,**kwargs)
+		return super(VideoLikesView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_video_likes_for_user(self.request.user)
+			items = get_timeline_video_likes(self.request.user)
+		else:
+			items = []
+		return items
+
+
+class FeaturedPostLikesView(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/likes/featured_posts.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(FeaturedPostLikesView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_featured_post_likes(self.request.user).order_by('-created')
+		else:
+			items = []
+		return items
+
+
+class FeaturedPhotoLikesView(ListView):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/likes/featured_photos.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(FeaturedPhotoLikesView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_featured_photo_likes(self.request.user)
+		else:
+			items = []
+		return items
+
+
+class FeaturedGoodLikesListView(View):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/likes/featured_goods.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(FeaturedGoodLikesView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_featured_good_likes(self.request.user)
+		else:
+			items = []
+		return items
+
+
+class FeaturedVideoLikesListView(View):
+	template_name = None
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/news_list/likes/featured_videos.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(FeaturedVideoLikesView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
+			items = get_timeline_featured_video_likes(self.request.user)
 		else:
 			items = []
 		return items

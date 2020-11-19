@@ -17,10 +17,10 @@
           <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
         </button>
         <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
-          <a class="dropdown-item ajax" href="{% url 'post_comments_list' %}">Записи</a>
-          <a class="dropdown-item ajax" href="{% url 'photo_comments_list' %}">Фото</a>
-          <a class="dropdown-item ajax" href="{% url 'good_comments_list' %}">Товары</a>
-          <a class="dropdown-item ajax" href="{% url 'video_comments_list' %}">Видео</a>
+          <span class="dropdown-item"><a class="ajax" href="{% url 'post_comments_list' %}">Записи</a> | <a class="ajax" href="{% url 'featured_post_comments_list' %}">Рекомендации</a></span>
+          <span class="dropdown-item"><a class="ajax" href="{% url 'photo_comments_list' %}">Фотографии</a> | <a class="ajax" href="{% url 'featured_photo_comments_list' %}">Рекомендации</a></span>
+          <span class="dropdown-item"><a class="ajax" href="{% url 'good_comments_list' %}">Товары</a> | <a class="ajax" href="{% url 'featured_good_comments_list' %}">Рекомендации</a></span>
+          <span class="dropdown-item"><a class="ajax" href="{% url 'video_comments_list' %}">Видеозаписи</a> | <a class="ajax" href="{% url 'featured_video_comments_list' %}">Рекомендации</a></span>
         </div>
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:3px;">
@@ -28,10 +28,10 @@
             <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
           </button>
           <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
-            <a class="dropdown-item ajax" href="{% url 'post_likes_list' %}">Записи</a>
-            <a class="dropdown-item ajax" href="{% url 'photo_likes_list' %}">Фото</a>
-            <a class="dropdown-item ajax" href="{% url 'good_likes_list' %}">Товары</a>
-            <a class="dropdown-item ajax" href="{% url 'video_likes_list' %}">Видео</a>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'post_likes_list' %}">Записи</a> | <a class="ajax" href="{% url 'featured_post_likes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'photo_likes_list' %}">Фотографии</a> | <a class="ajax" href="{% url 'featured_photo_likes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'good_likes_list' %}">Товары</a> | <a class="ajax" href="{% url 'featured_good_likes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'video_likes_list' %}">Видеозаписи</a> | <a class="ajax" href="{% url 'featured_video_likes_list' %}">Рекомендации</a></span>
           </div>
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:2px;">
@@ -39,10 +39,10 @@
             <svg fill="currentColor" class="svg_info svg_default" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
           </button>
           <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
-            <a class="dropdown-item ajax" href="{% url 'post_dislikes_list' %}">Записи</a>
-            <a class="dropdown-item ajax" href="{% url 'photo_dislikes_list' %}">Фото</a>
-            <a class="dropdown-item ajax" href="{% url 'good_dislikes_list' %}">Товары</a>
-            <a class="dropdown-item ajax" href="{% url 'video_dislikes_list' %}">Видео</a>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'post_dislikes_list' %}">Записи</a> | <a class="ajax" href="{% url 'featured_post_dislikes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'photo_dislikes_list' %}">Фотографии</a> | <a class="ajax" href="{% url 'featured_photo_dislikes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'good_dislikes_list' %}">Товары</a> | <a class="ajax" href="{% url 'featured_good_dislikes_list' %}">Рекомендации</a></span>
+            <span class="dropdown-item"><a class="ajax" href="{% url 'video_dislikes_list' %}">Видеозаписи</a> | <a class="ajax" href="{% url 'featured_video_dislikes_list' %}">Рекомендации</a></span>
           </div>
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:2px;">
