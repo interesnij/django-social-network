@@ -6,7 +6,7 @@ from video.models import VideoAlbum
 from music.models import SoundList
 
 
-def get_timeline_posts_for_user(user):
+def get_timeline_posts(user):
     own_posts_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
     own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
 
@@ -26,7 +26,7 @@ def get_timeline_posts_for_user(user):
     final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
     return final_queryset
 
-def get_timeline_posts_for_possible_users(user):
+def get_timeline_featured_posts(user):
     possible_users = user.get_possible_friends_ids()
     posts_query = Q(creator_id__in=possible_users, creator__user_private__is_private=False, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
     posts_queryset = Post.objects.only('created').filter(posts_query)
@@ -37,7 +37,7 @@ def get_timeline_posts_for_possible_users(user):
     return final_queryset
 
 
-def get_timeline_photos_for_user(user):
+def get_timeline_photos(user):
     own_albums_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True, photo_album__isnull=False)
     own_albums_queryset = user.photo_album_creator.only('created').filter(own_albums_query)
 
@@ -59,7 +59,7 @@ def get_timeline_photos_for_user(user):
     final_queryset = own_albums_queryset.union(community_albums_queryset, followed_users_queryset, frends_queryset).order_by("-created")
     return final_queryset
 
-def get_timeline_photos_for_possible_users(user):
+def get_timeline_featured_photos(user):
     possible_users = user.get_possible_friends_ids()
     albums_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True, photo_album__isnull=False)
     albums_queryset = Album.objects.only('created').filter(albums_query)
@@ -70,7 +70,7 @@ def get_timeline_photos_for_possible_users(user):
     return final_queryset
 
 
-def get_timeline_goods_for_user(user):
+def get_timeline_goods(user):
     own_goods_query = Q(creator_id=user.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
     own_goods_queryset = user.good_creator.only('created').filter(own_goods_query)
 
@@ -86,14 +86,14 @@ def get_timeline_goods_for_user(user):
     final_queryset = own_goods_queryset.union(followed_users_queryset, frends_queryset).order_by("-created")
     return final_queryset
 
-def get_timeline_goods_for_possible_users(user):
+def get_timeline_featured_goods(user):
     possible_users = user.get_possible_friends_ids()
     goods_query = Q(creator_id__in=possible_users, is_deleted=False, status=Good.STATUS_PUBLISHED)
     goods_queryset = Good.objects.only('created').filter(goods_query)
     return goods_queryset
 
 
-def get_timeline_videos_for_user(user):
+def get_timeline_videos(user):
     empty_list_exclude = Q(video_album__isnull=True)
     own_videos_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
     own_videos_query.add(~Q(empty_list_exclude), Q.AND)
@@ -118,7 +118,7 @@ def get_timeline_videos_for_user(user):
     final_queryset = own_videos_queryset.union(community_videos_queryset, followed_users_queryset, frends_queryset).order_by("-id")
     return final_queryset
 
-def get_timeline_videos_for_possible_users(user):
+def get_timeline_featured_videos(user):
     possible_users = user.get_possible_friends_ids()
     empty_list_exclude = Q(video_album__isnull=True)
     videos_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
@@ -132,7 +132,7 @@ def get_timeline_videos_for_possible_users(user):
     return final_queryset
 
 
-def get_timeline_audios_for_user(user):
+def get_timeline_audios(user):
     empty_list_exclude = Q(players__isnull=True)
     own_audios_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False)
     own_audios_query.add(~Q(empty_list_exclude), Q.AND)
@@ -157,7 +157,7 @@ def get_timeline_audios_for_user(user):
     final_queryset = own_audios_queryset.union(community_audios_queryset, followed_users_queryset, frends_queryset).order_by("-id")
     return final_queryset
 
-def get_timeline_audios_for_possible_users(user):
+def get_timeline_featured_audios(user):
     possible_users = user.get_possible_friends_ids()
     empty_list_exclude = Q(players__isnull=True)
     audios_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False)
