@@ -35,7 +35,7 @@ class PhotoCommentsView(ListView):
 		return items
 
 
-class GoodCommentsListView(ListView):
+class GoodCommentsView(ListView):
 	template_name = None
 	paginate_by = 15
 
@@ -99,7 +99,7 @@ class FeaturedPhotoCommentsView(ListView):
 		return items
 
 
-class FeaturedGoodCommentsListView(View):
+class FeaturedGoodCommentsView(ListView):
 	template_name = None
 	paginate_by = 15
 
