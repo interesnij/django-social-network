@@ -12,12 +12,12 @@ class SignupView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			if request.user.is_authenticated:
-				self.template_name = "mobile/main/news_list/news/posts.html"
+				self.template_name = "mobile/main/news_list/posts/posts.html"
 			else:
 				self.template_name = "mobile/main/auth/signup.html"
 		else:
 			if request.user.is_authenticated:
-				self.template_name = "desctop/main/news_list/news/posts.html"
+				self.template_name = "desctop/main/news_list/posts/posts.html"
 			else:
 				self.template_name = "desctop/main/auth/auth.html"
 		return super(SignupView,self).get(request,*args,**kwargs)
