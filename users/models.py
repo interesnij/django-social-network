@@ -1251,6 +1251,13 @@ class User(AbstractUser):
         followings_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followings_query)
 
+    def get_friends_and_followings_ids(self):
+        my_frends = self.connections.values('target_user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        my_followings = self.followers.values('user_id')
+        my_followings_ids = [user['user_id'] for user in my_followings]
+        return my_frends_ids + my_followings_ids
+
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:

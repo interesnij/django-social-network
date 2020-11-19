@@ -8,7 +8,7 @@ from music.models import SoundList
 
 
 def get_timeline_posts(user):
-    """ лента записей, которые публикуются друзьями, источниками подписки, сообществами пользователя"""
+    """ лента записей, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     own_posts_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
     own_posts_queryset = user.post_creator.only('created').filter(own_posts_query)
 
@@ -29,7 +29,7 @@ def get_timeline_posts(user):
     return final_queryset
 
 def get_timeline_featured_posts(user):
-    """ лента записей, которые публикуются рекомендованнными для пользователя пользователями, их сообществами"""
+    """ лента записей, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     posts_query = Q(creator_id__in=possible_users, creator__user_private__is_private=False, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
     posts_queryset = Post.objects.only('created').filter(posts_query)
@@ -41,7 +41,7 @@ def get_timeline_featured_posts(user):
 
 
 def get_timeline_photos(user):
-    """ лента фотоальбомов с последними фотографиями, которые публикуются друзьями, источниками подписки, сообществами пользователя"""
+    """ лента фотоальбомов с последними фотографиями, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     own_albums_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True, photo_album__isnull=False)
     own_albums_queryset = user.photo_album_creator.only('created').filter(own_albums_query)
 
@@ -64,7 +64,7 @@ def get_timeline_photos(user):
     return final_queryset
 
 def get_timeline_featured_photos(user):
-    """ лента фотоальбомов с последними фотографиями, которые публикуются рекомендованнными для пользователя пользователями, их сообществами"""
+    """ лента фотоальбомов с последними фотографиями, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     albums_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True, photo_album__isnull=False)
     albums_queryset = Album.objects.only('created').filter(albums_query)
@@ -76,7 +76,7 @@ def get_timeline_featured_photos(user):
 
 
 def get_timeline_goods(user):
-    """ лента товаров, которые публикуются друзьями, источниками подписки, сообществами пользователя"""
+    """ лента товаров, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     own_goods_query = Q(creator_id=user.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
     own_goods_queryset = user.good_creator.only('created').filter(own_goods_query)
 
@@ -93,7 +93,7 @@ def get_timeline_goods(user):
     return final_queryset
 
 def get_timeline_featured_goods(user):
-    """ лента товаров, которые публикуются рекомендованнными для пользователя пользователями, их сообществами"""
+    """ лента товаров, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     goods_query = Q(creator_id__in=possible_users, is_deleted=False, status=Good.STATUS_PUBLISHED)
     goods_queryset = Good.objects.only('created').filter(goods_query)
@@ -101,7 +101,7 @@ def get_timeline_featured_goods(user):
 
 
 def get_timeline_videos(user):
-    """ лента видеоальбомов с последними роликами, которые публикуются друзьями, источниками подписки, сообществами пользователя"""
+    """ лента видеоальбомов с последними роликами, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     empty_list_exclude = Q(video_album__isnull=True)
     own_videos_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, is_public=True)
     own_videos_query.add(~Q(empty_list_exclude), Q.AND)
@@ -127,7 +127,7 @@ def get_timeline_videos(user):
     return final_queryset
 
 def get_timeline_featured_videos(user):
-    """ лента видеоальбомов с последними роликами, которые публикуются рекомендованнными для пользователя пользователями, их сообществами"""
+    """ лента видеоальбомов с последними роликами, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     empty_list_exclude = Q(video_album__isnull=True)
     videos_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False, is_public=True)
@@ -142,7 +142,7 @@ def get_timeline_featured_videos(user):
 
 
 def get_timeline_audios(user):
-    """ лента плейлистов с последними треками, которые публикуются друзьями, источниками подписки, сообществами пользователя"""
+    """ лента плейлистов с последними треками, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     empty_list_exclude = Q(players__isnull=True)
     own_audios_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False)
     own_audios_query.add(~Q(empty_list_exclude), Q.AND)
@@ -168,7 +168,7 @@ def get_timeline_audios(user):
     return final_queryset
 
 def get_timeline_featured_audios(user):
-    """ лента плейлистов с последними треками, которые публикуются рекомендованнными для пользователя пользователями, их сообществами"""
+    """ лента плейлистов с последними треками, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     empty_list_exclude = Q(players__isnull=True)
     audios_query = Q(creator_id__in=possible_users, community__isnull=True, is_deleted=False)

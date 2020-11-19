@@ -1,0 +1,153 @@
+{% extends "base_mobile.html" %}
+{% block title %}Оцененные видеозаписи | Рекомендации{% endblock %}
+{% block content %}
+
+<div class="container mt-3">
+{% include 'mobile/main/news_list/menu.html' %}
+          <div class="stream-update">
+            <a href=""><span class="new-videos"></span> Показать новые видеозаписи</a>
+          </div>
+
+          {% if object_list %}
+            <span class="stream news_block_paginate" id="news_video_list">
+              {% for object in object_list %}
+                {% if forloop.counter|divisibleby:"5" %}
+                  <img class="col-12" src="/static/images/r.jpg" alt="img">
+                  <br><br>
+                {% endif %}
+                {% if object.is_user_album %}
+                {% if object.community %}
+                  <div class="card mb-3">
+                    <span style="padding: 5px;">
+                      Новое видео в альбоме
+                      <a class="ajax underline" href="{% url 'community_video_list' pk=object.community.pk uuid=object.uuid %}">
+                       {{ object.title }}
+                      </a>&nbsp;
+                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
+                        сообщества {{ object.community }}
+                      </a>
+                    </span>
+                    <div album-uuid="{{ object.uuid }}">
+                      <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                      {% for video in object.get_2_videos %}
+                        <div class="col-12 col-md-6 c_video_list_detail pointer" data-pk="{{ video.community.pk }}" video-counter="{{ forloop.counter0 }}">
+                          {% if video.image %}
+                            <img class="image_fit_200" src="{{ video.image.url }}" alt="">
+                          {% else %}
+                            <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                            <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                <div class="card mb-3">
+                  <span style="padding: 5px;">
+                    Альбом
+                    <a class="ajax underline" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
+                     {{ object.title }}
+                    </a>&nbsp;
+                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
+                      {{ object.creator.get_full_name_genitive }}
+                    </a>
+                  </span>
+                  <div album-uuid="{{ object.uuid }}">
+                    <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                    {% for video in object.get_2_videos %}
+                      <div class="col-12 col-md-6 u_video_list_detail pointer" data-pk="{{ video.creator.pk }}" video-counter="{{ forloop.counter0 }}">
+                        {% if video.image %}
+                          <img class="image_fit_200" src="{{ video.image.url }}" alt="">
+                        {% else %}
+                          <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                          <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+
+                {% elif object.is_main_album %}
+                {% if object.community %}
+                  <div class="card mb-3">
+                    <span style="padding: 5px;">
+                      <a class="ajax underline" href="{% url 'community_video' pk=object.community.pk %}">
+                       Новое видео
+                      </a>&nbsp;
+                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
+                        сообщества {{ object.community }}
+                      </a>
+                    </span>
+                    <div album-uuid="{{ object.uuid }}">
+                      <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                      {% for video in object.get_2_videos %}
+                        <div class="col-12 col-md-6 c_video_list_detail pointer" data-pk="{{ video.community.pk }}" video-counter="{{ forloop.counter0 }}">
+                          {% if video.image %}
+                            <img class="image_fit_200" src="{{ video.image.url }}" alt="">
+                          {% else %}
+                            <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                          {% endif %}
+                          <div class="card-body">
+                            <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                            <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                <div class="card mb-3">
+                  <span style="padding: 5px;">
+                    <a class="ajax underline" href="{% url 'user_video' pk=object.creator.pk %}">
+                     Новое видео
+                    </a>&nbsp;
+                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
+                      {{ object.creator.get_full_name_genitive }}
+                    </a>
+                  </span>
+                  <div album-uuid="{{ object.uuid }}">
+                    <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
+                    {% for video in object.get_2_videos %}
+                      <div class="col-12 col-md-6 u_video_list_detail pointer" data-pk="{{ video.creator.pk }}" video-counter="{{ forloop.counter0 }}">
+                        {% if video.image %}
+                          <img class="image_fit_200" src="{{ video.image.url }}" alt="">
+                        {% else %}
+                          <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="text-truncate w-100">{{ video.title }}</h5>
+                          <span class="small">{{ video.get_created }} | {{ video.visits_count_ru }}</span>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% endif %}
+              {% endfor %}
+            </span>
+          {% else %}
+          <div class="card mb-3 post_empty centered">
+            <div class="card-body">
+            <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">
+                Пока ничего нет. Здесь будут отображаться видеозаписи, которые оценили Ваши друзья.
+            </h6>
+          </div>
+          {% endif %}
+
+        </div>
+
+{% endblock %}
