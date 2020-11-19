@@ -99,7 +99,7 @@ class FeaturedPhotoLikesView(ListView):
 		return items
 
 
-class FeaturedGoodLikesListView(View):
+class FeaturedGoodLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 
@@ -115,7 +115,7 @@ class FeaturedGoodLikesListView(View):
 		return items
 
 
-class FeaturedVideoLikesListView(View):
+class FeaturedVideoLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 

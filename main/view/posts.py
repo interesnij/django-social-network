@@ -8,7 +8,7 @@ class PhotosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/photos.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/photos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PhotosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -24,7 +24,7 @@ class GoodsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/goods.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -40,7 +40,7 @@ class VideosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/videos.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/videos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(VideosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -56,7 +56,7 @@ class AudiosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/audios.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/audios.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AudiosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -72,7 +72,7 @@ class FeaturedPostsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/featured/posts.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/featured_posts.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedPostsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -88,7 +88,7 @@ class FeaturedPhotosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/featured/photos.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/featured_photos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedPhotosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -104,7 +104,7 @@ class FeaturedGoodsView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/featured/goods.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/featured_goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedGoodsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -120,7 +120,7 @@ class FeaturedVideosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/featured/videos.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/featured_videos.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedVideosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -136,7 +136,7 @@ class FeaturedAudiosView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/featured/audios.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/featured_audios.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedAudiosView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
