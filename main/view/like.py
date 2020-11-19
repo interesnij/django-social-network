@@ -35,7 +35,7 @@ class PhotoLikesView(ListView):
 		return items
 
 
-class GoodLikesListView(View):
+class GoodLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 
@@ -51,7 +51,7 @@ class GoodLikesListView(View):
 		return items
 
 
-class VideoLikesListView(View):
+class VideoLikesView(ListView):
 	template_name = None
 	paginate_by = 15
 
