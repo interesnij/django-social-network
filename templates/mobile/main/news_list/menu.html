@@ -5,11 +5,11 @@
             <svg fill="currentColor" class="svg_info svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
           </button>
           <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
-              <span class="dropdown-item"><a class="ajax" href="{% url 'post_list' %}">Записи</a> | <a class="ajax" href="{% url 'post_list' %}">featured_posts_list</a></span>
-              <a class="dropdown-item ajax" href="{% url 'photos_list' %}">Фото</a>
-              <a class="dropdown-item ajax" href="{% url 'goods_list' %}">Товары</a>
-              <a class="dropdown-item ajax" href="{% url 'videos_list' %}">Видео</a>
-              <a class="dropdown-item ajax" href="{% url 'audios_list' %}">Музыка</a>
+              <span class="dropdown-item"><a class="ajax" href="{% url 'post_list' %}">Записи</a> | <a class="ajax" href="{% url 'featured_posts_list' %}">Рекомендации</a></span>
+              <span class="dropdown-item"><a class="ajax" href="{% url 'photo_list' %}">Фотографии</a> | <a class="ajax" href="{% url 'featured_photo_list' %}">Рекомендации</a></span>
+              <span class="dropdown-item"><a class="ajax" href="{% url 'good_list' %}">Товары</a> | <a class="ajax" href="{% url 'featured_good_list' %}">Рекомендации</a></span>
+              <span class="dropdown-item"><a class="ajax" href="{% url 'video_list' %}">Видеозаписи</a> | <a class="ajax" href="{% url 'featured_video_list' %}">Рекомендации</a></span>
+              <span class="dropdown-item"><a class="ajax" href="{% url 'music_list' %}">Аудиозаписи</a> | <a class="ajax" href="{% url 'featured_music_list' %}">Рекомендации</a></span>
           </div>
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:3px;">
