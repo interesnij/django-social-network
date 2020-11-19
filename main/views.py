@@ -3,7 +3,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from common.template.user import get_detect_main_template
-from common.user_progs.timelines_post import get_timeline_posts_for_user
+from common.user_progs.timelines_post import get_timeline_posts
 
 
 class SignupView(TemplateView):
@@ -41,7 +41,7 @@ class PostsListView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_posts_for_user(self.request.user).order_by('-created')
+			items = get_timeline_posts(self.request.user).order_by('-created')
 		else:
 			items = []
 		return items
