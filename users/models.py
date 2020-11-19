@@ -1256,7 +1256,7 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         my_followings = self.followers.values('user_id')
         my_followings_ids = [user['user_id'] for user in my_followings]
-        return my_frends_ids + my_followings_ids
+        return my_frends_ids + my_followings_ids 
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)

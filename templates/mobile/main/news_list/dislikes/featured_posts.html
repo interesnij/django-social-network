@@ -1,0 +1,61 @@
+{% extends "base_mobile.html" %}
+{% block title %}Не оцененные записи | Рекомендации{% endblock %}
+{% block content %}
+
+<div class="container mt-3">
+  {% include 'mobile/main/news_list/menu.html' %}
+
+          <div class="stream-update">
+            <a href=""><span class="new-posts"></span> Показать новые записи</a>
+          </div>
+
+          {% if object_list %}
+            <span class="post_stream stream news_block_paginate" id="news_post_list">
+              {% for object in object_list %}
+
+                {% if object.parent %}
+                  {% if object.parent.community %}
+                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
+                      {% include object.get_c_news_parent %}
+
+                      {% include 'mobile/posts/post_community/info.html' %}
+                    </div>
+                  {% else %}
+                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
+                      {% include object.get_u_news_parent %}
+
+                      {% include 'mobile/posts/post_user/info.html' %}
+                    </div>
+                  {% endif %}
+                {% else %}
+                  {% if object.community %}
+                    {% if object.community in request.user.get_staffed_communities %}
+                      {% include 'mobile/main/c_posts/admin_post.html' %}
+                    {% else %}
+                      {% include 'mobile/main/c_posts/post.html' %}
+                    {% endif %}
+                  {% else %}
+                    {% if object.creator == request.user %}
+                      {% include 'mobile/main/u_posts/my_post.html' %}
+                    {% else %}
+                      {% include 'mobile/main/u_posts/post.html' %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+
+              {% endfor %}
+            </span>
+          {% else %}
+          <div class="card mb-3 post_empty centered">
+            <div class="card-body">
+            <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">
+                Пока ничего нет. Здесь будут отображаться записи, которые не оценили Ваши друзья и те пользователи, на кого Вы подписаны.
+            </h6>
+          </div>
+          {% endif %}
+
+</div>
+
+{% endblock %}
