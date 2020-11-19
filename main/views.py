@@ -36,7 +36,7 @@ class PostsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/news/posts.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_detect_main_template("main/news_list/posts/posts.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
