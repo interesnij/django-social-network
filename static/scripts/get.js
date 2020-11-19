@@ -32,7 +32,11 @@ on('body', 'click', '.clean_panel', function(event) {
   close_fullscreen()
 })
 
-on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
+on('body', 'click', '.menu_drop', function() {
+  var block = this.nextElementSibling;
+  
+  block.classList.toggle("show");
+});
 
 
 on('body', 'click', '.ajax', function(event) {
