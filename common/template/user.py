@@ -106,17 +106,21 @@ def render_for_platform(request, template, data):
     else:
         return render(request, "mobile/" + template, data)
 
-
 def get_detect_main_template(template, request_user, user_agent):
 	""" получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
-	if MOBILE_AGENT_RE.match(user_agent):
-		if request_user.is_authenticated:
-			template_name = "mobile/" + template
-		else:
-			template_name = "mobile/main/auth/auth.html"
-	else:
-		if request_user.is_authenticated:
-			template_name = "mobile/" + template
-		else:
-			template_name = "mobile/main/auth/auth.html"
-	return template_name
+    if request_user.is_authenticated:
+        if request_user.is_no_phone_verified():
+            template_name = "main/phone_verification.html"
+        elif request_user.is_suspended():
+            template_name = "generic/u_template/you_suspended.html"
+        elif request_user.is_blocked():
+            template_name = "generic/u_template/you_global_block.html"
+        else:
+            template_name = template
+    elif request_user.is_anonimous:
+        template_name = "main/auth/auth.html"
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template
+    else:
+        template_name = "mobile/" + template
+    return template_name
