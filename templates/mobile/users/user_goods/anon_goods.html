@@ -16,7 +16,7 @@
                 Подборки
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in user.get_good_albums %} 
+              {% for object in user.get_good_albums %}
                 <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
               {% endfor %}
             </div>
@@ -59,7 +59,7 @@
 
         <div class="card mb-2">
             <div class="card-body">
-            <div class="row profile_block_paginate" id="user_goods_container">
+            <div class="row is_paginate">
               {% if object_list %}
 
               {% for object in object_list %}

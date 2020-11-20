@@ -24,7 +24,7 @@
 
               {% if object_list %}
 
-              <div class="moderation_block_paginate" id="moderation_post_comment_container">
+              <div class="is_paginate">
                   {% for object in object_list %}
                   <div class="list-group-item pag {% if forloop.last %}last{% endif %} border" data-pk="{{ object.comment.pk }}">
                       <div class="media">

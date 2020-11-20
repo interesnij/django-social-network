@@ -73,7 +73,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 <div class="video_playlist" id="movies_container">
-                  <div class="row community_block_paginate" id="community_video_container" data-list="/communities/{{ community.pk }}/video">
+                  <div class="row is_paginate" data-list="/communities/{{ community.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
                         {% include 'mobile/communities/video/video.html' %}

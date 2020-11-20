@@ -26,7 +26,7 @@
               <div class="card-body">
                 {% if object_list %}
                 <div class="tag_playlist" data-pk="{{ tag.pk }}">
-                    <ul id="tag_container" class="music_block_paginate">
+                    <ul class="is_paginate">
                       {% for object in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                           <div class="media" music-counter="{{ forloop.counter0 }}">

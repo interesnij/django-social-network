@@ -145,36 +145,16 @@ function minus_new_followers() {
 }
 
 function if_list(block) {
-    if (block.querySelector('#lenta_load')) {
-        lenta_load = block.querySelector('#lenta_load');
-        link = lenta_load.getAttribute("data-link");
-        list_load(lenta_load, link);
-        scrolled(link, '#lenta_load', target = 1)
-    } else if (block.querySelector('#lenta_community')) {
-        lenta_community = block.querySelector('#lenta_community');
-        link = lenta_community.getAttribute("data-link");
-        list_load(block.querySelector("#lenta_community"), link);
-        scrolled(link, '#lenta_community', target = 1)
-    } else if (block.querySelector('#photo_load')) {
-        photo_load = block.querySelector('#photo_load');
-        link = photo_load.getAttribute("data-link");
-        list_load(block.querySelector("#photo_load"), link);
-        scrolled(link, '#photo_load', target = 0)
-    } else if (block.querySelector('#c_photo_load')) {
-        photo_load = block.querySelector('#c_photo_load');
-        link = photo_load.getAttribute("data-link");
-        list_load(block.querySelector("#c_photo_load"), link);
-        scrolled(link, '#c_photo_load', target = 0)
-    } else if (block.querySelector('#album_photo_load')) {
-        album_photo_load = block.querySelector('#album_photo_load');
-        link = album_photo_load.getAttribute("data-link");
-        list_load(block.querySelector("#album_photo_load"), link);
-        scrolled(link, '#album_photo_load', target = 0)
-    } else if (block.querySelector('#c_album_photo_load')) {
-        album_photo_load = block.querySelector('#c_album_photo_load');
-        link = album_photo_load.getAttribute("data-link");
-        list_load(block.querySelector("#c_album_photo_load"), link);
-        scrolled(link, '#c_album_photo_load', target = 0)
+    if (block.querySelector('.is_block_post_paginate')) {
+        lenta = block.querySelector('.is_block_post_paginate');
+        link = lenta.getAttribute("data-link");
+        list_load(lenta, link);
+        scrolled(link, '.post_stream', target = 1)
+    } else if (block.querySelector('.is_block_paginate')) {
+        lenta = block.querySelector('.is_block_paginate');
+        link = lenta.getAttribute("data-link");
+        list_load(block.querySelector(".is_block_paginate"), link);
+        scrolled(link, '.post_stream', target = 0)
     }
 }
 

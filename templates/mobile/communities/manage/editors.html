@@ -24,7 +24,7 @@
                     </h5>
                 </div>
               {% if object_list %}
-                <ul class="list-group staff_community_block_paginate" id="community_editors_container">
+                <ul class="list-group is_paginate">
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }} pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">

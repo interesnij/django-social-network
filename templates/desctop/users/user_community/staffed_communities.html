@@ -38,7 +38,7 @@
 
                                       {% if object_list %}
 
-                                      <ul class="list-group profile_block_paginate" id="communities_container">
+                                      <ul class="list-group is_paginate">
                                           {% for object in object_list %}
                                           <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
                                               <div class="media">
@@ -126,7 +126,7 @@
                   </div>
               </div>
               <div class="card-body px-0 py-0">
-                  <ul class="list-group profile_block_paginate" id="staff_communities_container">
+                  <ul class="list-group is_paginate">
                       {% for object in user.get_visited_communities %}
                       <li class="list-group-item">
                           <div class="media">

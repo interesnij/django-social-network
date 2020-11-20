@@ -22,7 +22,7 @@
 
               {% if object_list %}
 
-              <ul class="list-group moderation_block_paginate" id="penalty_users_container">
+              <ul class="list-group is_paginate">
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}" user-pk="{{ object.user.pk }}" data-pk="{{ object.moderated_object.pk }}">
                       <div class="media">

@@ -1,5 +1,4 @@
 
-<div class="infinite-container">
   {% if object %}
     {% include 'desctop/communities/lenta/admin_fixed_post.html' %}
   {% endif %}
@@ -13,7 +12,6 @@
         {% include 'desctop/posts/post_community/admin_post.html' %}
       {% endfor %}
   </span>
-</div>
 
 {% if not object and not object_list %}
 <div class="card mb-3 post_empty centered">

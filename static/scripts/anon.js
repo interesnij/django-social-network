@@ -559,43 +559,15 @@ function paginate(link, block_id) {
     }
 }
 
-function create_pagination(block){
-	// подключаем подгрузкку списков всех страниц с содержимым. Прозванивать придется все страницы со списками.
-
-	if(block.querySelector('.profile_block_paginate')){
-		if(block.querySelector('#user_tracks_container')){scrolled(window.location.href,'#user_tracks_container',target=0)}
-		else if(block.querySelector('#user_tracks_list_container')){scrolled(window.location.href, '#user_tracks_list_container', target=0)}
-		else if(block.querySelector('#user_video_container')){scrolled(window.location.href, '#user_video_container', target=0)}
-		else if(block.querySelector('#friends_container')){scrolled(window.location.href, '#friends_container', target=0)}
-		else if(block.querySelector('#follows_container')){scrolled(window.location.href, '#follows_container', target=0)}
-		else if(block.querySelector('#online_friends_container')){scrolled(window.location.href, '#online_friends_container', target=0)}
-		else if(block.querySelector('#common_friends_container')){scrolled(window.location.href, '#common_friends_container', target=0)}
-		else if(block.querySelector('#user_goods_container')){scrolled(window.location.href, '#user_goods_container', target=0)}
-		else if(block.querySelector('#communities_container')){scrolled(window.location.href, '#communities_container', target=0)}
-		else if(block.querySelector('#staff_communities_container')){scrolled(window.location.href, '#staff_communities_container', target=0)}
-    else if(block.querySelector('#user_docs_container')){scrolled(window.location.href, '#user_docs_container', target=0)}
-    else if(block.querySelector('#user_list_docs_container')){scrolled(window.location.href, '#user_list_docs_container', target=0)}
-
-	}
-	else if(block.querySelector('.community_block_paginate')){
-		if(block.querySelector('#community_members_container')){scrolled(window.location.href, '#community_members_container', target=0)}
-		else if(block.querySelector('#community_goods_container')){scrolled(window.location.href, '#community_goods_container', target=0)}
-    else if(block.querySelector('#community_docs_container')){scrolled(window.location.href, '#community_docs_container', target=0)}
-    else if(block.querySelector('#community_list_docs_container')){scrolled(window.location.href, '#community_list_docs_container', target=0)}
-
+function create_pagination(block) {
+  if (block.querySelector('.is_paginate')) {
+    scrolled(window.location.href, '.is_paginate', target = 0)
   }
-	else if(block.querySelector('.music_block_paginate')){
-		if(block.querySelector('#genre_container')){scrolled(window.location.href, '#genre_container', target=0)}
-		else if(block.querySelector('#music_tags_container')){scrolled(window.location.href, '#music_tags_container', target=0)}
-		else if(block.querySelector('#tag_container')){scrolled(window.location.href, '#tag_container', target=0)}
-	}
-	else if(block.querySelector('.list_block_paginate')){
-		if(block.querySelector('#all_communities_container')){scrolled(window.location.href, '#all_communities_container', target=0)}
-		else if(block.querySelector('#all_users_container')){scrolled(window.location.href, '#all_users_container'), target=0}
-		else if(block.querySelector('#quan_container')){scrolled(window.location.href, '#quan_container'), target=0}
-		else if(block.querySelector('#cat_communities_container')){scrolled(window.location.href, '#cat_communities_container', target=0)}
-	}
+  else if (block.querySelector('.is_post_paginate')) {
+    scrolled(window.location.href, '.is_post_paginate', target = 1)
+  }
 }
+
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";

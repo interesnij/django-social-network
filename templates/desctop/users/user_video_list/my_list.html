@@ -37,7 +37,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 <div class="video_playlist" id="movies_container">
-                  <div class="row profile_block_paginate" id="user_video_container" data-list="/users/{{ user.pk }}/video">
+                  <div class="row is_paginate" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
                         {% include 'desctop/users/user_video/video.html' %}

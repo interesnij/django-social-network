@@ -35,7 +35,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul id="user_tracks_container" data-pk="{{ playlist.pk }}" class="profile_block_paginate">
+                    <ul data-pk="{{ playlist.pk }}" class="is_paginate">
                       {% for object in object_list %}
                       <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" music-counter="{{ forloop.counter0|add:page_obj.start_index }}" style="align-items: unset;position: relative;">
