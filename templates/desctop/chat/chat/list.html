@@ -17,7 +17,7 @@
             <div class="card-body px-0 py-0">
               {% if object_list %}
 
-              <ul class="list-group profile_block_paginate" id="messages_container">
+              <ul class="list-group is_paginate">
                 {% for object in object_list %}
                   {% if not object.is_not_empty %}
                     {% include 'desctop/chat/message/empty_message.html' %}
