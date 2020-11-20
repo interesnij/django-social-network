@@ -156,7 +156,7 @@ function if_list(block) {
         list_load(block.querySelector(".is_block_paginate"), link);
         scrolled(link, '.post_stream', target = 0)
     }
-}
+} 
 
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
