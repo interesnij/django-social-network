@@ -5,14 +5,17 @@
 <div class="container mt-3">
   <div class="card text-center">
     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary">{{ request.user.get_full_name }}!</h1>
-    <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
-    <div class="">
+    <p>
+      Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
+      в качестве логина к профилю соцсети трезвый.рус
+    </p>
+    <div style="display: flex;margin: 5px;" class="mt-2">
       <div class="input-group-prepend">
         <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
       </div>
       <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
     </div>
-    <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
+    <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient" style="margin: 5px;">Получить код</button>
     <div id='jsondata' style="margin-top:50px"></div>
 
     <div id='jsondata2' style="margin-top:50px"></div>
