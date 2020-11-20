@@ -12,6 +12,9 @@ from common.check.message import check_can_send_message
 
 
 class SendPageMessage(TemplateView):
+	""" Пишем сообщения со страниц пользователей или разных списков. Если у пользователя есть друзья,
+	    то add_friend_message.html (возможность добавлять друзей), иначе add_message.html
+	"""
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
@@ -68,7 +71,7 @@ class SendMessage(View):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text)
 			get_message_attach(request, message)
-			return render_for_platform(request, 'chat/chat/message/message.html', {'object': message})
+			return render_for_platform(request, 'chat/message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
 

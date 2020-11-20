@@ -13,7 +13,7 @@ class ChatMembers(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("chat/message/members.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatMembers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

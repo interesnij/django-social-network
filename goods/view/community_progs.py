@@ -187,7 +187,7 @@ class GoodCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.form = GoodForm(initial={"creator":request.user})
-        self.template_name = get_community_manage_template("good/c_good/add.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -225,7 +225,7 @@ class GoodAlbumCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form = GoodAlbumForm()
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("good/good_base/c_add_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/good_base/c_add_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -255,7 +255,7 @@ class CommunityGoodAlbumEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("good/good_base/c_edit_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/good_base/c_edit_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

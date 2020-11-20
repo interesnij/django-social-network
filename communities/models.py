@@ -295,7 +295,7 @@ class Community(models.Model):
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
-    def get_goods_count(self):
+    def get_goods_count(self): 
         count = 0
         for list in self.get_all_good_albums():
             count += list.count_goods()

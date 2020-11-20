@@ -67,7 +67,7 @@ class UserCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class UserCreateDocWindow(TemplateView):
@@ -75,7 +75,7 @@ class UserCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -127,7 +127,7 @@ class UserDocCreate(View):
             new_doc.save()
             for _list in lists:
                 _list.doc_list.add(new_doc)
-            return render_for_platform(request, 'users/docs/doc_create/new_user_doc.html',{'object': new_doc})
+            return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 

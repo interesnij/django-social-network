@@ -10,9 +10,11 @@ from common.check.message import check_can_change_chat
 
 
 class CreateChat(TemplateView):
+	""" если у инициатора нет друзей, показываем форму пустого чата. Если есть, то с возможностью добавлять друзей в чат.
+	    Третий и четвертый варианты - пока не понятны, но зачем то я их задумал. Пока не ясно, что я хотел этим сказать
+	"""
 	template_name = None
 	member = None
-	friends = False
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -25,17 +27,14 @@ class CreateChat(TemplateView):
 			self.template_name = get_settings_template("chat/chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and not request.user.get_6_friends():
 			self.template_name = get_settings_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
-			self.friends = True
 		elif self.user != request.user and request.user.get_6_friends():
 			self.template_name = get_settings_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
-			self.friends = True
 		return super(CreateChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CreateChat,self).get_context_data(**kwargs)
 		context["form"] = ChatForm()
 		context["member"] = self.user
-		context["friends"] = self.friends
 		return context
 
 	def post(self,request,*args,**kwargs):

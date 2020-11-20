@@ -240,7 +240,7 @@ class UserGoodAlbumPreview(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.album = GoodAlbum.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("user_goods/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/user_goods/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodAlbumPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -258,7 +258,7 @@ class UserGoodAlbumEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("good_base/u_edit_album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("goods/good_base/u_edit_album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoodAlbumEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

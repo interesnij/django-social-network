@@ -69,7 +69,7 @@ class CommunityCreateDoclistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("doc_create/c_create_doc_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class CommunityCreateDocWindow(TemplateView):
@@ -77,7 +77,7 @@ class CommunityCreateDocWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("doc_create/c_create_doc.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
