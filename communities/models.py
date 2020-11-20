@@ -288,6 +288,18 @@ class Community(models.Model):
         albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
+    def get_all_good_albums(self):
+        from goods.models import GoodAlbum
+
+        albums_query = Q(community_id=self.id, is_deleted=False)
+        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
+        return albums
+
+    def get_goods_count(self):
+        count = 0
+        for list in self.get_all_good_albums():
+            count =+ list.count_goods()
+        return count
 
     def get_or_create_good_album(self):
         from goods.models import GoodAlbum
