@@ -8,6 +8,13 @@
 
         <div class="card mb-2">
             <div class="card-header" style="padding-bottom: 0em;">
+              <div class="media">
+                  <h5 class="mt-1">Администраторы -
+                      <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
+                          {{ community.name }}
+                      </a>
+                  </h5>
+              </div> 
               <div class="input-group mb-3" style="display:flex">
                 <input type="text" class="form-control" placeholder="Поиск админов">
                 <div class="input-group-append">
@@ -17,13 +24,6 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <div class="media">
-                    <h5 class="mt-1">Администраторы -
-                        <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                            {{ community.name }}
-                        </a>
-                    </h5>
-                </div>
                 <ul class="list-group is_paginate">
                     {% for object in object_list %}
                     <li class="list-group-item pag {% if forloop.last %}last{% endif %} li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
