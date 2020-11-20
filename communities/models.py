@@ -298,7 +298,7 @@ class Community(models.Model):
     def get_goods_count(self):
         count = 0
         for list in self.get_all_good_albums():
-            count =+ list.count_goods()
+            count += list.count_goods()
         return count
 
     def get_or_create_good_album(self):
