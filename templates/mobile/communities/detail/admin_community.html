@@ -59,10 +59,6 @@
 
   {% include 'mobile/communities/detail_sections/membersheeps.html' %}
 
-  {% if community.is_good_open %}
-    {% include 'mobile/communities/detail_sections/admin_goods.html' %}
-  {% endif %}
-
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
   {% if community.id_draft_posts_exists %}

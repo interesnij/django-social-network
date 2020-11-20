@@ -49,7 +49,7 @@
   </div>
   <div class="row no-gutters">
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-      <span class="btn btn-sm btn-warning warning-gradient user_send_page_message" data-pk="{{ user.pk }}" style="width: -webkit-fill-available">Сообщение</span>
+      <span class="btn btn-sm custom_color border user_send_page_message" data-pk="{{ user.pk }}" style="width: -webkit-fill-available">Сообщение</span>
     </div>
     <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
       {% include get_buttons_block %}
@@ -62,7 +62,7 @@
 
   {% include 'mobile/users/profile/gallery.html' %}
 
-  <div class="is_block_post_paginate" data-link="/users/detail/list/{{ user.pk }}/"></div> 
+  <div class="is_block_post_paginate" data-link="/users/detail/list/{{ user.pk }}/"></div>
 </div>
 </div>
 
