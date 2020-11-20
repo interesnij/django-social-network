@@ -1,27 +1,25 @@
 {% extends "base_mobile.html" %}
 {% block title %}Подтверждение профиля{% endblock %}
 {% block content %}
+
+<div class="container mt-3">
+  <div class="card text-center">
     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">{{ request.user.get_full_name }}!</h1>
     <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4 col-offset-1" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
+
           <div class="input-group-prepend">
             <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
           </div>
           <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
           <hr class="my-0">
-        </div>
-        <div class="col-md-4" style="margin-top: 12px;">
+
           <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
+
     <div id='jsondata' style="margin-top:50px"></div>
 
     <div id='jsondata2' style="margin-top:50px"></div>
-
-
+</div>
+</div>
 
      <script type="text/javascript">
      function phone_check() {
