@@ -57,7 +57,7 @@ class RegisterSerializer(serializers.Serializer):
 
         birthday = str(self.date_day) + "/" + str(self.date_month) + "/" + str(self.date_year)
 
-        birthday = datetime.strptime(birthday, '%m/%d/%Y')
+        birthday = datetime.strptime(birthday, '%d/%m/%Y')
         if timezone.now() < birthday:
             raise serializers.ValidationError("tttrrrrtttrrr")
         user.birthday = birthday
