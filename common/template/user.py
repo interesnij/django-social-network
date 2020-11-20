@@ -107,7 +107,7 @@ def render_for_platform(request, template, data):
         return render(request, "mobile/" + template, data)
 
 def get_detect_main_template(template, request_user, user_agent):
-	""" получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
+    """ получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
