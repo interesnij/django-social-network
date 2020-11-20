@@ -120,7 +120,7 @@ def get_detect_main_template(template, request_user, user_agent):
     elif request_user.is_anonimous:
         template_name = "main/auth/auth.html"
     if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template
+        template_name = "mobile/" + template_name
     else:
-        template_name = "mobile/" + template
+        template_name = "mobile/" + template_name
     return template_name
