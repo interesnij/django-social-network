@@ -326,7 +326,7 @@ class Message(models.Model):
         'creator_id': str(new_message.creator.pk),
         'reseiver_ids': str(new_message.get_reseiver_ids()),
         }
-        async_to_sync(channel_layer.group_send)(payload)
+        async_to_sync(channel_layer.group_send)('message', payload)
         return new_message
 
     def create_chat_append_members_and_send_message(creator, users_ids, text):
@@ -347,7 +347,7 @@ class Message(models.Model):
         'creator_id': str(new_message.creator.pk),
         'reseiver_ids': str(new_message.get_reseiver_ids()),
         }
-        async_to_sync(channel_layer.group_send)(payload)
+        async_to_sync(channel_layer.group_send)('message', payload)
         return new_message
 
     def send_message(chat, creator, repost, parent, text):
@@ -364,7 +364,7 @@ class Message(models.Model):
         'creator_id': str(new_message.creator.pk),
         'reseiver_ids': str(new_message.get_reseiver_ids()),
         }
-        async_to_sync(channel_layer.group_send)(payload)
+        async_to_sync(channel_layer.group_send)('message', payload)
         return new_message
 
     def get_created(self):
