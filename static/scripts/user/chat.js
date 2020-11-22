@@ -1,4 +1,4 @@
-request_user_username = document.body.querySelector(".userpic").getAttribute("data-username");
+request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
@@ -24,6 +24,14 @@ webSocket.listen(function (event) {
       if (event.actor_name !== currentUser) {
         $(".stream-update").show();
       }
+      break;
+
+    case "message":
+      if (event.creator_id === request_user_id) {
+        console.log("Вы создатель сообщения")
+      };
+      console.log(event.reseiver_ids);
+      console.log(event.message_id);
       break;
 
     default:
@@ -133,7 +141,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector("#reload_block");
+        ajax = elem_.querySelector(".chat_load_container");
         rtr = document.querySelector('.chat_load_container');
         rtr.innerHTML = ajax.innerHTML;
         scrollToBottom ("#scrolled");

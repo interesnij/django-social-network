@@ -1,5 +1,5 @@
 <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
-  <a class="ajax" href="{% url 'chat_detali' pk=object.pk %}">
+  <a class="ajax" href="{% url 'chat_detail' pk=object.pk %}">
   <div class="media">
     <figure>
       {% if object.creator.get_avatar %}

@@ -12,6 +12,7 @@ from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
 from users.helpers import upload_to_user_directory
 from imagekit.models import ProcessedImageField
+from common.processing.message import get_message_processing
 
 
 class Chat(models.Model):
@@ -293,10 +294,15 @@ class Message(models.Model):
     def get_creator(self):
         return self.creator.user
 
+    def get_reseiver_ids(self):
+        chat = self.chat
+        members_ids = chat.get_members_ids()
+        reseiver_ids = del members_ids[self.creator.pk]
+        return reseiver_ids
+
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
-        from common.processing.post import get_post_message_processing
 
         chat_list = creator.get_all_chats()
         current_chat = None
@@ -310,15 +316,21 @@ class Message(models.Model):
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
         new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, status=Message.STATUS_PROCESSING)
-        get_post_message_processing(new_message)
+        get_message_processing(new_message)
+
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': user}
-        async_to_sync(channel_layer.group_send)(user.username, payload)
+        payload = {
+        'type': 'receive',
+        'key': 'message',
+        'message_id': str(new_message.uuid),
+        'creator_id': str(new_message.creator.pk),
+        'reseiver_ids': str(new_message.get_reseiver_ids()),
+        }
+        async_to_sync(channel_layer.group_send)(payload)
         return new_message
 
     def create_chat_append_members_and_send_message(creator, users_ids, text):
         # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
-        from common.processing.post import get_post_message_processing
 
         chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
         sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
@@ -326,22 +338,33 @@ class Message(models.Model):
             ChatUsers.objects.create(user_id=user_id, chat=chat)
 
         new_message = Message.objects.create(chat=chat, creator=sender, text=text, status=Message.STATUS_PROCESSING)
-        get_post_message_processing(new_message)
+        get_message_processing(new_message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator, 'user': creator}
-        async_to_sync(channel_layer.group_send)(creator.username, payload)
+        payload = {
+        'type': 'receive',
+        'key': 'message',
+        'message_id': str(new_message.uuid),
+        'creator_id': str(new_message.creator.pk),
+        'reseiver_ids': str(new_message.get_reseiver_ids()),
+        }
+        async_to_sync(channel_layer.group_send)(payload)
         return new_message
 
     def send_message(chat, creator, repost, parent, text):
         # программа для отсылки сообщения, когда чат известен
-        from common.processing.post import get_post_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Message.STATUS_PROCESSING)
-        get_post_message_processing(new_message)
+        get_message_processing(new_message)
         channel_layer = get_channel_layer()
-        payload = {'type': 'receive', 'key': 'text', 'message_id': new_message.uuid, 'creator': creator}
-        async_to_sync(channel_layer.group_send)(creator.username, payload)
+        payload = {
+        'type': 'receive',
+        'key': 'message',
+        'message_id': str(new_message.uuid),
+        'creator_id': str(new_message.creator.pk),
+        'reseiver_ids': str(new_message.get_reseiver_ids()),
+        }
+        async_to_sync(channel_layer.group_send)(payload)
         return new_message
 
     def get_created(self):
@@ -663,7 +686,7 @@ class Message(models.Model):
 
 class MessageFavorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
-    message = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Члены сообщества")
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
 
     class Meta:
         unique_together = (('user', 'message'),)

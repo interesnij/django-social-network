@@ -12,7 +12,7 @@
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
       <a class="btn btn-sm custom_color border pointer user_create_chat" style="width: -webkit-fill-available;" data-pk="{{ user.pk }}">
-        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
       </a>
     </div>
   </div>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="card mb-2">
+        <div class="card mb-2"> 
             <div class="card-body px-0 py-0">
               {% if object_list %}
 
@@ -33,7 +33,7 @@
                     {% include 'mobile/chat/message/empty_message.html' %}
                   {% else %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}">
-                    <a class="chat_ajax" href="{% url 'chat_detali' pk=object.pk %}">
+                    <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
                       {{ object|get_preview_message:request.user.pk|safe }}
                     </a>
                   </li>
