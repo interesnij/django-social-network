@@ -4943,6 +4943,7 @@ cursor: pointer;
   .photo_fullscreen{left: 10%;width: 80%;padding-left: 5%;padding-right: 5%;}
 }
 
+
 @media screen and (min-width: 621px) {
     .video_fullscreen{left: 7%;width: 90%;padding-left: 5%;padding-right: 5%;}
 }
