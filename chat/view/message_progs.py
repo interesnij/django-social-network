@@ -7,7 +7,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.attach.message_attacher import get_message_attach
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 from common.check.message import check_can_send_message
 
 

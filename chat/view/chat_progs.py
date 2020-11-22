@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from chat.forms import ChatForm
 from users.models import User
 from django.http import Http404
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, render_for_platform
 from common.check.message import check_can_change_chat
 
 
