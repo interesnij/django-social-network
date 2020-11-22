@@ -33,8 +33,10 @@ on('body', 'click', '.clean_panel', function(event) {
 })
 
 on('body', 'click', '.menu_drop', function() {
-  var block = this.nextElementSibling;
-  
+  block = this.nextElementSibling;
+  all_drops = document.body.querySelectorAll(".dropdown-menu")
+  for(var i=0;i<all_drops.length;i++)
+  {all_drops[i].classList.remove("show")}
   block.classList.toggle("show");
 });
 
