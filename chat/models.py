@@ -297,8 +297,8 @@ class Message(models.Model):
     def get_reseiver_ids(self):
         chat = self.chat
         members_ids = chat.get_members_ids()
-        reseiver_ids = members_ids.remove(self.creator.pk)
-        return reseiver_ids
+        #reseiver_ids = members_ids.remove(self.creator.pk)
+        return members_ids
 
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.

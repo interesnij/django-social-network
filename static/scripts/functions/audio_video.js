@@ -268,7 +268,7 @@ function get_normal_screen(){
     		mainFolderPath:"/static/images/",
     		skinPath:"audio_white",
     		showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
-    		showMainBackground:"yes",  						// показать общий фон
+    		showMainBackground:"no",  						// показать общий фон
     		verticalPosition:"bottom",                    // расположение плеера
     		rightClickContextMenu:"developer",
     		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
