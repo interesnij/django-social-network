@@ -297,7 +297,7 @@ class Message(models.Model):
     def get_reseiver_ids(self):
         chat = self.chat
         members_ids = chat.get_members_ids()
-        reseiver_ids = del members_ids[self.creator.pk]
+        reseiver_ids = members_ids.remove(self.creator.pk)
         return reseiver_ids
 
     def get_or_create_chat_and_send_message(creator, user, repost, text):
