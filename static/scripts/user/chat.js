@@ -20,7 +20,7 @@ webSocket.listen(function (event) {
         notify_count = notify_count * 1;
         notify_count += 1;
         notify.innerHTML = notify_count;
-        notify.classList.add("badge", "badge-danger")
+        notify.classList.add("tab_badge", "badge-danger")
       }
       break;
 

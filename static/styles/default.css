@@ -1,3 +1,18 @@
+.tab_badge {
+  display: inline-block;
+    padding: .25em .4em;
+    font-size: 35%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    float: right;
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
 .text-center {
   text-align: center !important;
 }
