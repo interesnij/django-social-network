@@ -686,10 +686,9 @@ class Message(models.Model):
 
 class MessageFavorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
+    #message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
 
     class Meta:
-        unique_together = (('user', 'message'),)
         verbose_name = 'Избранное сообщение'
         verbose_name_plural = 'Избранные сообщения'
 
