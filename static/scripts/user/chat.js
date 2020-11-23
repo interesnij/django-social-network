@@ -15,8 +15,8 @@ function plus_notify(){
   notify.innerHTML = notify_count;
   notify.classList.add("badge", "badge-danger");
   console.log(notify);
-
 }
+plus_notify()
 
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
