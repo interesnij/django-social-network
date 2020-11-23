@@ -1,4 +1,5 @@
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
+notify = document.body.querySelector(".new_unread_notify");
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
@@ -14,7 +15,6 @@ webSocket.listen(function (event) {
     if (event.creator_id === request_user_id) {
       console.log("Вы инициатор события!")
     } else if (event.recipient_id === request_user_id)
-      notify = document.querySelector(".new_unread_notify");
       console.log(notify);
       count = notify.innerHTML;
       count * 1;
