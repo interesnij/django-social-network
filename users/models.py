@@ -1540,6 +1540,7 @@ class User(AbstractUser):
                 notify_cats += [PostCommunityNotify.objects.get(community_id=id)]
                 notify_cats += [UserCommunityNotify.objects.get(community_id=id)]
                 notify_cats += [VideoCommunityNotify.objects.get(community_id=id)]
+        return notify_cats
 
     def get_unread_notify(self):
         count = 0
