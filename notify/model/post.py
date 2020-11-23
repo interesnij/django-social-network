@@ -71,8 +71,8 @@ class PostNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects =  PostNotificationQS.as_manager()
-    #post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
-    #comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
+    post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:

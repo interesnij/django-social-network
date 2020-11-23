@@ -82,12 +82,12 @@ class Doc2(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     is_community = models.BooleanField(default=False, verbose_name="Пренадлежит к сообществу")
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
-    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
-    #photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_doc')
-    #good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_doc')
-    #video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_doc')
-    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doc')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
+    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
+    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_doc')
+    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_doc')
+    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_doc')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doc')
 
     class Meta:
         ordering = ["-created"]
