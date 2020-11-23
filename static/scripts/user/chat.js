@@ -24,7 +24,7 @@ webSocket.listen(function (event) {
       break;
 
     case "social_update":
-      document.body.querySelector("#notification").classList.add("btn-danger");
+      document.body.querySelector("#notification").classList.add("badge", "badge-danger");
       update_social_activity(event.id_value);
       break;
 
