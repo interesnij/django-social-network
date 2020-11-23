@@ -8,11 +8,6 @@ webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
 };
 
-webSocket.socket.onopen = function(e) {
-  alert("[open] Соединение установлено");
-  webSocket.send("Меня зовут Джон");
-};
-
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
@@ -20,6 +15,7 @@ webSocket.listen(function (event) {
       console.log("Вы инициатор события!")
     } else if (event.recipient_id === request_user_id)
       notify = document.querySelector(".new_unread_notify");
+      console.log(notify);
       count = notify.innerHTML;
       count * 1;
       count += 1;
