@@ -119,22 +119,21 @@ class UserCommunityNotify(models.Model):
 def notification_handler(creator, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     UserNotify.objects.create(creator=creator, recipient=recipient, verb=verb)
-    user_notification_broadcast(creator.pk, key, recipient.pk)
+    user_notification_broadcast(key, recipient.pk)
 
-def community_notification_handler(creator, community, recipient, verb, **kwargs):
+def community_notification_handler(community, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
         UserCommunityNotify.objects.create(creator=creator, community=community, recipient=user, verb=verb)
-    user_notification_broadcast(creator.pk, key, recipient.pk)
+        user_notification_broadcast(key, recipient.pk)
 
 
-def user_notification_broadcast(creator_pk, key, recipient_pk, **kwargs):
+def user_notification_broadcast(key, recipient_pk, **kwargs):
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': key,
-            'creator_id': creator_pk,
             'recipient_id': recipient_pk,
         }
     async_to_sync(channel_layer.group_send)('notifications', payload)
