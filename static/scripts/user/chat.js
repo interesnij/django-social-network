@@ -8,6 +8,14 @@ ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
+function plus_notify(){
+  notify = document.body.querySelector(".new_unread_notify");
+  notify.innerHTML ? (notify_count = notify.innerHTML, notify_count*1) : notify_count = 0;
+  notify_count += 1;
+  notify.innerHTML = notify_count;
+  notify.classList.add("badge", "badge-danger");
+}
+
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
 };
@@ -18,9 +26,7 @@ webSocket.listen(function (event) {
     if (event.creator_id === request_user_id) {
       null
     } else if (event.recipient_id === request_user_id)
-      notify_count += 1;
-      notify.innerHTML = notify_count;
-      notify.classList.add("badge", "badge-danger");
+      plus_notify();
       break;
 
     case "social_update":
