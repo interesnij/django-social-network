@@ -13,7 +13,14 @@ webSocket.socket.onclose = function () {
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
-      document.body.querySelector("#notification").classList.add("btn-danger");
+    if (event.creator_id === request_user_id) {
+      console.log("Вы инициатор события!")
+    } else if (event.recipient_id === request_user_id)
+      notify = document.body.querySelector("#notification");
+      count = notify.innerHTML;
+      count * 1;
+      count += 1;
+      notify.innerHTML = count;
       break;
 
     case "social_update":

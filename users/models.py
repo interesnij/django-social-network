@@ -1256,7 +1256,7 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         my_followings = self.followers.values('user_id')
         my_followings_ids = [user['user_id'] for user in my_followings]
-        return my_frends_ids + my_followings_ids 
+        return my_frends_ids + my_followings_ids
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
@@ -1512,6 +1512,32 @@ class User(AbstractUser):
         for chat in chats:
             if chat.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=self.pk).exists():
                 count += 1
+        if count > 0:
+            return count
+        else:
+            return ''
+
+    def get_unread_notify(self):
+        notify_cats = []
+        count = 0
+
+        notify_cats += [GoodNotify.objects.get(recipient_id=self.pk)]
+        notify_cats += [PhotoNotify.objects.get(recipient_id=self.pk)]
+        notify_cats += [PostNotify.objects.get(recipient_id=self.pk)]
+        notify_cats += [UserNotify.objects.get(recipient_id=self.pk)]
+        notify_cats += [VideoNotify.objects.get(recipient_id=self.pk)]
+        if self.is_staffed_user():
+            communities = get_staffed_communities().values("pk")
+            communities_ids = [com['pk'] for com in communities]
+            for id in communities_ids:
+                notify_cats += [GoodCommunityNotify.objects.get(community_id=id)]
+                notify_cats += [PhotoCommunityNotify.objects.get(community_id=id)]
+                notify_cats += [PostCommunityNotify.objects.get(community_id=id)]
+                notify_cats += [UserCommunityNotify.objects.get(community_id=id)]
+                notify_cats += [VideoCommunityNotify.objects.get(community_id=id)]
+
+        for cats in notify_cats:
+            count += cats.objects.filter(unread=True).values("pk").count()
         if count > 0:
             return count
         else:
