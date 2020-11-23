@@ -10,6 +10,12 @@ webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
 };
 
+webSocket.socket.onopen = function(e) {
+  alert("[open] Соединение установлено");
+  alert("Отправляем данные на сервер");
+  socket.send("Меня зовут Джон");
+};
+
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
