@@ -17,8 +17,7 @@ webSocket.listen(function (event) {
     } else if (event.recipient_id === request_user_id)
       console.log(notify);
       count = notify.innerHTML.replace(/\s+/g, '');
-      count * 1;
-      count += 1;
+      int(count) += 1;
       notify.innerHTML = count;
       notify.classList.add("badge", "badge-danger");
       break;
