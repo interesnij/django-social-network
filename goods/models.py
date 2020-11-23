@@ -50,7 +50,7 @@ class GoodAlbum(models.Model):
         (ALBUM, 'Пользовательский альбом'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
@@ -129,12 +129,12 @@ class Good(models.Model):
 	image5 = ProcessedImageField(verbose_name='изображение 5', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to=upload_to_good_directory)
 	status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=2, verbose_name="Статус")
 
-	post = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
-	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
-	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
-	good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
-	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good')
-	message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good')
+	#post = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
+	#item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
+	#photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
+	#good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
+	#video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good')
+	#message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good')
 
 	def __str__(self):
 		return self.title

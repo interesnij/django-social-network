@@ -41,7 +41,7 @@ class VideoAlbum(models.Model):
         (MAIN, 'Основной видеоальбом'),
         (ALBUM, 'Пользовательский видеоальбом'),
     )
-    community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
@@ -118,12 +118,12 @@ class Video(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
     id = models.BigAutoField(primary_key=True)
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
-    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_video')
-    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_video')
-    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_video')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_video')
+    #post = models.ManyToManyField("posts.Post", blank=True, related_name='item_video')
+    #item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_video')
+    #photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_video')
+    #good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_video')
+    #video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_video')
+    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_video')
 
     class Meta:
         verbose_name = "Видео-ролики"

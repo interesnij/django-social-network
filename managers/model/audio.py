@@ -17,7 +17,7 @@ class ModeratedAudio(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    music = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, related_name='moderated_audio', blank=True, verbose_name="Товар")
+    #music = models.ForeignKey('music.SoundcloudParsing', on_delete=models.CASCADE, related_name='moderated_audio', blank=True, verbose_name="Товар")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod

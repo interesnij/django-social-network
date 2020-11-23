@@ -17,6 +17,6 @@ from users.models import User
 from music.models import SoundList
 from video.models import VideoAlbum
 from docs.models import Doc2
-from chat.models import Message
+from chat.models import Message,
 
 Doc2.objects.all().delete()

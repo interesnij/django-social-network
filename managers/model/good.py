@@ -17,7 +17,7 @@ class ModeratedGood(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE, related_name='moderated_good', blank=True, verbose_name="Товар")
+    #good = models.ForeignKey('goods.Good', on_delete=models.CASCADE, related_name='moderated_good', blank=True, verbose_name="Товар")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
@@ -97,7 +97,7 @@ class ModeratedGoodComment(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, related_name='moderated_good_comment', blank=True, verbose_name="Комментарий к товару")
+    #comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, related_name='moderated_good_comment', blank=True, verbose_name="Комментарий к товару")
     id = models.BigAutoField(primary_key=True)
 
     @classmethod
