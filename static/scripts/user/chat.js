@@ -2,6 +2,7 @@ request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk"
 notify = document.body.querySelector(".new_unread_notify");
 notify.innerHTML ? (notify_count = notify.innerHTML) : notify_count = 0;
 
+
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
@@ -27,10 +28,9 @@ webSocket.listen(function (event) {
     if (event.creator_id === request_user_id) {
       console.log("Вы инициатор события!")
     } else if (event.recipient_id === request_user_id)
-      count = notify.innerHTML;
-      count = count * 1;
-      count += 1;
-      notify.innerHTML = count;
+      notify_count = notify_count * 1;
+      notify_count += 1;
+      notify.innerHTML = notify_count;
       notify.classList.add("badge", "badge-danger");
       break;
 
