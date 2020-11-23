@@ -10,6 +10,8 @@ webSocket.connect(ws_path);
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
 };
+tab_span = document.createElement("span");
+tab_span.classList.add("tab_badge", "badge-danger")
 
 webSocket.listen(function (event) {
   switch (event.key) {
@@ -17,8 +19,8 @@ webSocket.listen(function (event) {
       if (event.recipient_id == request_user_id){
         notify_count = notify_count * 1;
         notify_count += 1;
-        notify.innerHTML = notify_count;
-        notify.classList.add("tab_badge", "badge-danger")
+        tab_span.innerHTML = notify_count;
+        notify.innerHTML = tab_span;
       }
       break;
 
