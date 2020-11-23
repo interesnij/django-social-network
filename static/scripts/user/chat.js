@@ -7,8 +7,9 @@ webSocket.connect(ws_path);
 
 function plus_notify(){
   notify = document.body.querySelector(".new_unread_notify");
-  notify.innerHTML ? (notify_count = notify.innerHTML.replace(/\s+/g, '')) : notify_count = 0;
-  notify.innerHTML = int(notify_count) += 1;
+  notify.innerHTML ? (notify_count = notify.innerHTML) : notify_count = 0;
+  notify_count = int(notify_count) += 1;
+  notify.innerHTML = notify_count;
   notify.classList.add("badge", "badge-danger");
 }
 
@@ -19,11 +20,9 @@ webSocket.socket.onclose = function () {
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
-    if (event.creator_id === request_user_id) {
-      null
-    } else if (event.recipient_id === request_user_id) {
-      plus_notify()
-    }
+      if (event.recipient_id === request_user_id) {
+        plus_notify()
+      }
       break;
 
     case "social_update":
