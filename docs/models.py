@@ -13,7 +13,7 @@ class DocList(models.Model):
         (LIST, 'Пользовательский список'),
     )
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_doclist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
@@ -21,8 +21,8 @@ class DocList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_doclist')
-    #message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doclist')
+    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_doclist')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doclist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()

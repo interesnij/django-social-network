@@ -120,15 +120,15 @@ class GoodCommunityNotify(models.Model):
         (REPOST, 'поделился товаром сообщества'),
     )
 
-    #community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     objects = GoodNotificationQS.as_manager()
-    #good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
-    #comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
+    good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
