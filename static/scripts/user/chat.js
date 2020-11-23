@@ -1,7 +1,4 @@
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
-notify = document.body.querySelector(".new_unread_notify");
-notify.innerHTML ? (notify_count = notify.innerHTML, notify_count*1) : notify_count = 0;
-//count = notify.innerHTML.replace(/\s+/g, '');
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
@@ -24,8 +21,9 @@ webSocket.listen(function (event) {
     case "notification":
     if (event.creator_id === request_user_id) {
       null
-    } else if (event.recipient_id === request_user_id)
-      plus_notify();
+    } else if (event.recipient_id === request_user_id) {
+      plus_notify()
+    }
       break;
 
     case "social_update":
