@@ -1518,6 +1518,12 @@ class User(AbstractUser):
             return ''
 
     def get_unread_notify(self):
+        from notify.model.good import GoodNotify, GoodCommunityNotify
+        from notify.model.photo import PhotoNotify, PhotoCommunityNotify
+        from notify.model.post import PostNotify, PostCommunityNotify
+        from notify.model.user import UserNotify, UserCommunityNotify
+        from notify.model.video import VideoNotify, VideoCommunityNotify
+
         notify_cats = []
         count = 0
 
