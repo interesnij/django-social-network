@@ -1525,12 +1525,21 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify, VideoCommunityNotify
 
         notify = []
-
-        notify += [GoodNotify.objects.filter(recipient_id=self.pk, unread=True)]
-        notify += [PhotoNotify.objects.filter(recipient_id=self.pk, unread=True)]
-        notify += [PostNotify.objects.filter(recipient_id=self.pk, unread=True)]
-        notify += [UserNotify.objects.filter(recipient_id=self.pk, unread=True)]
-        notify += [VideoNotify.objects.filter(recipient_id=self.pk, unread=True)]
+        if GoodNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in GoodNotify.objects.filter(recipient_id=self.pk, unread=True):
+                notify += [_not]
+        if PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in PhotoNotify.objects.filter(recipient_id=self.pk, unread=True):
+                notify += [_not]
+        if PostNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in PostNotify.objects.filter(recipient_id=self.pk, unread=True):
+                notify += [_not]
+        if UserNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in UserNotify.objects.filter(recipient_id=self.pk, unread=True):
+                notify += [_not]
+        if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in VideoNotify.objects.filter(recipient_id=self.pk, unread=True):
+                notify += [_not]
         if self.is_staffed_user():
             communities = self.get_staffed_communities().values("pk")
             communities_ids = [com['pk'] for com in communities]
