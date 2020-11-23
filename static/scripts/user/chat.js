@@ -16,7 +16,7 @@ webSocket.listen(function (event) {
     if (event.creator_id === request_user_id) {
       console.log("Вы инициатор события!")
     } else if (event.recipient_id === request_user_id)
-      notify = document.body.querySelector("#notification");
+      notify = document.querySelector(".new_unread_notify");
       count = notify.innerHTML;
       count * 1;
       count += 1;
