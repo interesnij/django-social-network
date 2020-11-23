@@ -1544,7 +1544,7 @@ class User(AbstractUser):
 
     def unread_notify_count(self):
         #count = self.get_unread_notify().count()
-        count = self.get_unread_notify().count()
+        count = 0
         if count == 0:
             return ''
         else:
