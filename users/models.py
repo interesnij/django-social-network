@@ -1527,43 +1527,43 @@ class User(AbstractUser):
         notify = []
         if GoodNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in GoodNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not]
+                notify += [_not.pk]
         if PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in PhotoNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not]
+                notify += [_not.pk]
         if PostNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in PostNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not]
+                notify += [_not.pk]
         if UserNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in UserNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not]
+                notify += [_not.pk]
         if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in VideoNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not]
+                notify += [_not.pk]
         if self.is_staffed_user():
             communities = self.get_staffed_communities().values("pk")
             communities_ids = [com['pk'] for com in communities]
             for id in communities_ids:
                 if GoodCommunityNotify.objects.filter(community_id=id, unread=True).exists():
                     for _not in GoodCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not]
+                        notify += [_not.pk]
                 if PhotoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
                     for _not in PhotoCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not]
+                        notify += [_not.pk]
                 if PostCommunityNotify.objects.filter(community_id=id, unread=True).exists():
                     for _not in PostCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not]
+                        notify += [_not.pk]
                 if UserCommunityNotify.objects.filter(community_id=id, unread=True).exists():
                     for _not in UserCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not]
+                        notify += [_not.pk]
                 if VideoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
                     for _not in VideoCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not]
+                        notify += [_not.pk]
         return notify
 
     def unread_notify_count(self):
         count = self.get_unread_notify().count()
-        if self.get_unread_notify() == []:
+        if not self.get_unread_notify():
             return ''
         else:
             return self.get_unread_notify().count()
