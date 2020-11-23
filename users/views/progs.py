@@ -98,7 +98,7 @@ class PhoneVerify(View):
         _phone = self.kwargs["phone"]
         phone = request.user.get_last_location().phone + _phone
         try:
-            obj = PhoneCodes.objects.get(code=code, phone=phone)
+            obj = PhoneCodes.objects.get(phone=phone)
         except:
             obj = None
         if obj:
