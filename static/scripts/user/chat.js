@@ -10,7 +10,7 @@ webSocket.connect(ws_path);
 
 function plus_notify(){
   notify = document.body.querySelector(".new_unread_notify");
-  notify.innerHTML ? (notify_count = notify.innerHTML, notify_count*1) : notify_count = 0;
+  notify.innerHTML ? (notify_count = notify.innerHTML.replace(/\s+/g, ''), notify_count*1) : notify_count = 0;
   notify_count += 1;
   notify.innerHTML = notify_count;
   notify.classList.add("badge", "badge-danger");
