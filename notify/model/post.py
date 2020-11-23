@@ -66,7 +66,7 @@ class PostNotify(models.Model):
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -82,7 +82,7 @@ class PostNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return '{} {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.creator, self.get_verb_display())
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -121,7 +121,7 @@ class PostCommunityNotify(models.Model):
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_post_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
@@ -139,9 +139,9 @@ class PostCommunityNotify(models.Model):
 
     def __str__(self):
         if self.post and not self.comment:
-            return '{} {}'.format(self.actor, self.get_verb_display(), self.post)
+            return '{} {}'.format(self.creator, self.get_verb_display(), self.post)
         else:
-            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.post)
+            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.comment, self.post)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -153,15 +153,15 @@ class PostCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def post_notification_handler(actor, recipient, verb, post, comment, **kwargs):
+def post_notification_handler(creator, recipient, verb, post, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PostNotify.objects.create(actor=actor, recipient=recipient, verb=verb, post=post, comment=comment)
-    post_notification_broadcast(actor, key, recipient=recipient.username)
+    PostNotify.objects.create(creator=creator, recipient=recipient, verb=verb, post=post, comment=comment)
+    post_notification_broadcast(creator, key, recipient=recipient.username)
 
 
-def post_community_notification_handler(actor, community, recipient, post, verb, comment, **kwargs):
+def post_community_notification_handler(creator, community, recipient, post, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:

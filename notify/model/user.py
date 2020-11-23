@@ -52,7 +52,7 @@ class UserNotify(models.Model):
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -66,7 +66,7 @@ class UserNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return '{} {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.creator, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -91,7 +91,7 @@ class UserCommunityNotify(models.Model):
 
     community = models.ForeignKey('communities.Community', related_name='community_users_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_user_recipient', on_delete=models.CASCADE, verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -105,7 +105,7 @@ class UserCommunityNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return '{} {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.creator, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -116,25 +116,25 @@ class UserCommunityNotify(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
-def notification_handler(actor, recipient, verb, **kwargs):
+def notification_handler(creator, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-    UserNotify.objects.create(actor=actor, recipient=recipient, verb=verb)
-    user_notification_broadcast(actor.pk, key, recipient.pk)
+    UserNotify.objects.create(creator=creator, recipient=recipient, verb=verb)
+    user_notification_broadcast(creator.pk, key, recipient.pk)
 
-def community_notification_handler(actor, community, recipient, verb, **kwargs):
+def community_notification_handler(creator, community, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        UserCommunityNotify.objects.create(actor=actor, community=community, recipient=user, verb=verb)
-    user_notification_broadcast(actor.pk, key, recipient.pk)
+        UserCommunityNotify.objects.create(creator=creator, community=community, recipient=user, verb=verb)
+    user_notification_broadcast(creator.pk, key, recipient.pk)
 
 
-def user_notification_broadcast(actor_pk, key, recipient_pk, **kwargs):
+def user_notification_broadcast(creator_pk, key, recipient_pk, **kwargs):
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': key,
-            'actor_id': actor_pk,
+            'creator_id': creator_pk,
             'recipient_id': recipient_pk,
         }
     async_to_sync(channel_layer.group_send)('notifications', payload)

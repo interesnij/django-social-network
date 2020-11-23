@@ -65,7 +65,7 @@ class VideoNotify(models.Model):
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_notifications', verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -82,9 +82,9 @@ class VideoNotify(models.Model):
 
     def __str__(self):
         if self.video and not self.comment:
-            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.video)
+            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.video)
         else:
-            return '{} {} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.video)
+            return '{} {} {} {}'.format(self.creator, self.get_verb_display(), self.comment, self.video)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -123,7 +123,7 @@ class VideoCommunityNotify(models.Model):
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
@@ -141,9 +141,9 @@ class VideoCommunityNotify(models.Model):
 
     def __str__(self):
         if self.video and not self.comment:
-            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.video)
+            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.video)
         else:
-            return '{} {} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.video)
+            return '{} {} {} {}'.format(self.creator, self.get_verb_display(), self.comment, self.video)
 
     def mark_as_unread(self):
         if not self.unread:

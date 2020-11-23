@@ -66,7 +66,7 @@ class GoodNotify(models.Model):
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_notifications', verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -86,7 +86,7 @@ class GoodNotify(models.Model):
         return naturaltime(self.created)
 
     def __str__(self):
-        return '{} {} {}'.format(self.actor, self.get_verb_display(), self.good)
+        return '{} {} {}'.format(self.creator, self.get_verb_display(), self.good)
 
     def mark_as_unread(self):
         if not self.unread:
@@ -122,7 +122,7 @@ class GoodCommunityNotify(models.Model):
 
     community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
@@ -138,7 +138,7 @@ class GoodCommunityNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} - {}'.format(self.creator, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -150,25 +150,25 @@ class GoodCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def good_notification_handler(actor, recipient, verb, good, comment, **kwargs):
+def good_notification_handler(creator, recipient, verb, good, comment, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PhotoNotify.objects.create(actor=actor, recipient=recipient, verb=verb, good=good, comment=comment)
-    photo_notification_broadcast(actor, key, recipient=recipient.username)
+    PhotoNotify.objects.create(creator=creator, recipient=recipient, verb=verb, good=good, comment=comment)
+    photo_notification_broadcast(creator, key, recipient=recipient.username)
 
-def good_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
+def good_community_notification_handler(creator, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotify.objects.create(actor=actor, community=community, good=good, comment=comment, recipient=user, verb=verb)
-    good_notification_broadcast(actor, key)
+        PhotoCommunityNotify.objects.create(creator=creator, community=community, good=good, comment=comment, recipient=user, verb=verb)
+    good_notification_broadcast(creator, key)
 
 
-def good_notification_broadcast(actor, key, **kwargs):
+def good_notification_broadcast(creator, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
-    payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}
+    payload = {'type': 'receive','key': key,'creator_name': creator.get_full_name(),'recipient': recipient}
     async_to_sync(channel_layer.group_send)('notifications', payload)
 
     async_to_sync(channel_layer.group_send)('notifications', payload)
