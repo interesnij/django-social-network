@@ -20,6 +20,7 @@ webSocket.listen(function (event) {
         notify_count = notify_count * 1;
         notify_count += 1;
         tab_span.innerHTML = notify_count;
+        notify.innerHTML = "";
         notify.append(tab_span);
       }
       break;
