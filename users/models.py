@@ -1544,11 +1544,21 @@ class User(AbstractUser):
             communities = self.get_staffed_communities().values("pk")
             communities_ids = [com['pk'] for com in communities]
             for id in communities_ids:
-                notify += [GoodCommunityNotify.objects.filter(community_id=id, unread=True)]
-                notify += [PhotoCommunityNotify.objects.filter(community_id=id, unread=True)]
-                notify += [PostCommunityNotify.objects.filter(community_id=id, unread=True)]
-                notify += [UserCommunityNotify.objects.filter(community_id=id, unread=True)]
-                notify += [VideoCommunityNotify.objects.filter(community_id=id, unread=True)]
+                if GoodCommunityNotify.objects.filter(community_id=id, unread=True).exists():
+                    for _not in GoodCommunityNotify.objects.filter(community_id=id, unread=True):
+                        notify += [_not]
+                if PhotoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
+                    for _not in PhotoCommunityNotify.objects.filter(community_id=id, unread=True):
+                        notify += [_not]
+                if PostCommunityNotify.objects.filter(community_id=id, unread=True).exists():
+                    for _not in PostCommunityNotify.objects.filter(community_id=id, unread=True):
+                        notify += [_not]
+                if UserCommunityNotify.objects.filter(community_id=id, unread=True).exists():
+                    for _not in UserCommunityNotify.objects.filter(community_id=id, unread=True):
+                        notify += [_not]
+                if VideoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
+                    for _not in VideoCommunityNotify.objects.filter(community_id=id, unread=True):
+                        notify += [_not]
         return notify
 
     def unread_notify_count(self):
