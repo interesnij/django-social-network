@@ -27,6 +27,7 @@ webSocket.listen(function (event) {
     case "notification":
       if (event.recipient_id === request_user_id) {
         plus_notify()
+        qqqqqqqq
       }
       break;
 
