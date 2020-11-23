@@ -69,7 +69,7 @@
        request.send( null );
      });
 
-     on('#ajax', 'click', '#code_send', function(e) {
+     document.getElementById("code_send").addEventListener("click", (e) => {
      var phone = document.getElementById('phone').value;
      var code = document.getElementById('code').value;
      var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
