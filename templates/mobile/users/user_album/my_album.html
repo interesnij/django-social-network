@@ -24,7 +24,7 @@
     <span>Фото: {{ album.count_photo }}</span>
   </div>
 
-<div class="row is_block_paginate no-gutters" data-link="/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/"></div>
+<div class="row is_block_paginate no-gutters" id="u_album_photos_container" data-link="/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/"></div>
 </div>
 
 {% endblock %}
