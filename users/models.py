@@ -1517,37 +1517,30 @@ class User(AbstractUser):
         else:
             return ''
 
-    def get_notify_cats(self):
+    def get_unread_notify(self):
         from notify.model.good import GoodNotify, GoodCommunityNotify
         from notify.model.photo import PhotoNotify, PhotoCommunityNotify
         from notify.model.post import PostNotify, PostCommunityNotify
         from notify.model.user import UserNotify, UserCommunityNotify
         from notify.model.video import VideoNotify, VideoCommunityNotify
 
-        notify_cats = []
+        notify = []
 
-        notify_cats += [GoodNotify.objects.get(recipient_id=self.pk)]
-        notify_cats += [PhotoNotify.objects.get(recipient_id=self.pk)]
-        notify_cats += [PostNotify.objects.get(recipient_id=self.pk)]
-        notify_cats += [UserNotify.objects.get(recipient_id=self.pk)]
-        notify_cats += [VideoNotify.objects.get(recipient_id=self.pk)]
+        notify += [GoodNotify.objects.filter(recipient_id=self.pk, unread=True)]
+        notify += [PhotoNotify.objects.filter(recipient_id=self.pk, unread=True)]
+        notify += [PostNotify.objects.filter(recipient_id=self.pk, unread=True)]
+        notify += [UserNotify.objects.filter(recipient_id=self.pk, unread=True)]
+        notify += [VideoNotify.objects.filter(recipient_id=self.pk, unread=True)]
         if self.is_staffed_user():
             communities = self.get_staffed_communities().values("pk")
             communities_ids = [com['pk'] for com in communities]
             for id in communities_ids:
-                notify_cats += [GoodCommunityNotify.objects.get(community_id=id)]
-                notify_cats += [PhotoCommunityNotify.objects.get(community_id=id)]
-                notify_cats += [PostCommunityNotify.objects.get(community_id=id)]
-                notify_cats += [UserCommunityNotify.objects.get(community_id=id)]
-                notify_cats += [VideoCommunityNotify.objects.get(community_id=id)]
-        return notify_cats
+                notify += [GoodCommunityNotify.objects.filter(community_id=id, unread=True)]
+                notify += [PhotoCommunityNotify.objects.filter(community_id=id, unread=True)]
+                notify += [PostCommunityNotify.objects.filter(community_id=id, unread=True)]
+                notify += [UserCommunityNotify.objects.filter(community_id=id, unread=True)]
+                notify += [VideoCommunityNotify.objects.filter(community_id=id, unread=True)]
+        return notify
 
-    def get_unread_notify(self):
-        count = 0
-
-        for cats in self.get_notify_cats():
-            count += cats.objects.filter(unread=True).values("pk").count()
-        if count > 0:
-            return count
-        else:
-            return ''
+    def unread_notify_count(self):
+        count = self.get_notify().values("pk").count()
