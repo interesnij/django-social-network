@@ -1532,7 +1532,7 @@ class User(AbstractUser):
         notify_cats += [UserNotify.objects.get(recipient_id=self.pk)]
         notify_cats += [VideoNotify.objects.get(recipient_id=self.pk)]
         if self.is_staffed_user():
-            communities = get_staffed_communities().values("pk")
+            communities = self.get_staffed_communities().values("pk")
             communities_ids = [com['pk'] for com in communities]
             for id in communities_ids:
                 notify_cats += [GoodCommunityNotify.objects.get(community_id=id)]
