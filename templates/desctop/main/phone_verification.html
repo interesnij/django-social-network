@@ -111,6 +111,24 @@
   </div>
 
     <script type="text/javascript">
+    function on(elSelector, eventName, selector, fn) {
+        var element = document.querySelector(elSelector);
+        element.addEventListener(eventName, function(event) {
+            var possibleTargets = element.querySelectorAll(selector);
+            var target = event.target;
+            for (var i = 0, l = possibleTargets.length; i < l; i++) {
+                var el = target;
+                var p = possibleTargets[i];
+                while (el && el !== element) {
+                    if (el === p) {
+                        return fn.call(p, event);
+                    }
+                    el = el.parentNode;
+                }
+            }
+        });
+    };
+
             function phone_check() {
                 if (document.getElementById('phone').value.length > 9)
                     document.getElementById("phone_send").removeAttribute('disabled');
@@ -140,7 +158,7 @@
                 };
                 request.send(null);
             });
-            document.getElementById("code_send").addEventListener("click", (e) => {
+            on('#ajax', 'click', '#code_send', function() {
                 var phone = document.getElementById('phone').value;
                 var code = document.getElementById('code').value;
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
