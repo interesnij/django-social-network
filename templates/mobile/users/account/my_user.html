@@ -8,6 +8,8 @@
 {% endblock %}
 {% block content %}
 
+{{ user.get_notify_cats }}
+
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
@@ -56,7 +58,7 @@
 
   {% include 'mobile/users/profile/new_post.html' %}
 
-  <div class="is_block_post_paginate" data-link="/users/detail/list/{{ user.pk }}/"></div> 
+  <div class="is_block_post_paginate" data-link="/users/detail/list/{{ user.pk }}/"></div>
 </div>
 </div>
 

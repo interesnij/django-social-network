@@ -1517,7 +1517,7 @@ class User(AbstractUser):
         else:
             return ''
 
-    def get_unread_notify(self):
+    def get_notify_cats(self):
         from notify.model.good import GoodNotify, GoodCommunityNotify
         from notify.model.photo import PhotoNotify, PhotoCommunityNotify
         from notify.model.post import PostNotify, PostCommunityNotify
@@ -1525,7 +1525,6 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify, VideoCommunityNotify
 
         notify_cats = []
-        count = 0
 
         notify_cats += [GoodNotify.objects.get(recipient_id=self.pk)]
         notify_cats += [PhotoNotify.objects.get(recipient_id=self.pk)]
@@ -1542,7 +1541,10 @@ class User(AbstractUser):
                 notify_cats += [UserCommunityNotify.objects.get(community_id=id)]
                 notify_cats += [VideoCommunityNotify.objects.get(community_id=id)]
 
-        for cats in notify_cats:
+    def get_unread_notify(self):
+        count = 0
+
+        for cats in self.get_notify_cats():
             count += cats.objects.filter(unread=True).values("pk").count()
         if count > 0:
             return count
