@@ -21,10 +21,11 @@ webSocket.listen(function (event) {
       count * 1;
       count += 1;
       notify.innerHTML = count;
+      notify.classList.add("badge", "badge-danger");
       break;
 
     case "social_update":
-      document.body.querySelector("#notification").classList.add("badge", "badge-danger");
+      //document.body.querySelector("#notification").classList.add("badge", "badge-danger");
       update_social_activity(event.id_value);
       break;
 
