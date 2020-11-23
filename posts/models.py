@@ -86,7 +86,7 @@ class Post(models.Model):
         payload = {
             "type": "receive",
             "key": "additional_post",
-            "actor_name": post.creator.get_full_name()
+            "creator_id": post.creator.pk
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return post

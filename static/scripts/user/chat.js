@@ -4,6 +4,7 @@ ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
+console.log(request_user_id);
 
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
@@ -21,7 +22,7 @@ webSocket.listen(function (event) {
       break;
 
     case "additional_news":
-      if (event.actor_name !== currentUser) {
+      if (event.creator_id === request_user_id) {
         $(".stream-update").show();
       }
       break;
