@@ -7,16 +7,6 @@ ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
-function plus_notify(){
-  notify.innerHTML ? (notify_count = notify.innerHTML) : notify_count = 0;
-  console.log(notify_count);
-  notify_count = notify_count*1; notify_count += 1;
-  console.log(notify_count);
-  notify.innerHTML = notify_count;
-  notify.classList.add("badge", "badge-danger");
-  console.log(notify);
-}
-
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
 };
