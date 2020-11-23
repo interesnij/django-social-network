@@ -1,4 +1,6 @@
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
+notify = document.body.querySelector(".new_unread_notify");
+notify.innerHTML ? (notify_count = notify.innerHTML) : notify_count = 0;
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/post/";
@@ -6,8 +8,6 @@ webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
 function plus_notify(){
-  notify = document.body.querySelector(".new_unread_notify");
-  console.log(notify);
   notify.innerHTML ? (notify_count = notify.innerHTML) : notify_count = 0;
   console.log(notify_count);
   notify_count = notify_count*1; notify_count += 1;
@@ -16,7 +16,6 @@ function plus_notify(){
   notify.classList.add("badge", "badge-danger");
   console.log(notify);
 }
-plus_notify()
 
 webSocket.socket.onclose = function () {
   console.log("Disconnected from inbox stream");
@@ -26,8 +25,9 @@ webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
       if (event.recipient_id === request_user_id) {
-        plus_notify()
-        qqqqqqqq
+        notify_count = notify_count*1; notify_count += 1;
+        notify.innerHTML = notify_count;
+        notify.classList.add("badge", "badge-danger");
       }
       break;
 
