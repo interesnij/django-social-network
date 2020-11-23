@@ -117,7 +117,7 @@ def get_detect_main_template(template, request_user, user_agent):
             template_name = "generic/u_template/you_global_block.html"
         else:
             template_name = template
-    elif request_user.is_anonimous:
+    elif request_user.is_anonymous:
         template_name = "main/auth/auth.html"
     if MOBILE_AGENT_RE.match(user_agent):
         template_name = "mobile/" + template_name
