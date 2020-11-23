@@ -1,6 +1,6 @@
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
 notify = document.body.querySelector(".new_unread_notify");
-notify.innerHTML ? (notify_count = notify.innerHTML, count*1) : notify_count = 0;
+notify.innerHTML ? (notify_count = notify.innerHTML, notify_count*1) : notify_count = 0;
 //count = notify.innerHTML.replace(/\s+/g, '');
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
