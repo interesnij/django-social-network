@@ -24,11 +24,14 @@ webSocket.socket.onclose = function () {
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
-      if (event.recipient_id === request_user_id) {
-        notify_count = notify_count*1; notify_count += 1;
-        notify.innerHTML = notify_count;
-        notify.classList.add("badge", "badge-danger");
-      }
+    if (event.creator_id === request_user_id) {
+      console.log("Вы инициатор события!")
+    } else if (event.recipient_id === request_user_id)
+      count = notify.innerHTML;
+      count = count * 1;
+      count += 1;
+      notify.innerHTML = count;
+      notify.classList.add("badge", "badge-danger");
       break;
 
     case "social_update":
