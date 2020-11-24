@@ -31,6 +31,9 @@ class UserNotify(models.Model):
         ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
+    def __str__(self):
+        return '{} {}'.format(self.creator, self.get_verb_display())
+
     @classmethod
     def notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
