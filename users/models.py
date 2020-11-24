@@ -167,7 +167,7 @@ class User(AbstractUser):
         return first_name + " " + last_name
 
     def notification_follow(self, user):
-        notification_handler(self, user, UserNotify.CONNECTION_REQUEST, key='notification')
+        notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_REQUEST, key='notification')
     def notification_connect(self, user):
         notification_handler(self, user, UserNotify.CONNECTION_CONFIRMED, key='notification')
 
