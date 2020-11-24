@@ -169,7 +169,7 @@ class User(AbstractUser):
     def notification_follow(self, user):
         notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_REQUEST, key='notification')
     def notification_connect(self, user):
-        notification_handler(self, user, UserNotify.CONNECTION_CONFIRMED, key='notification')
+        notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_CONFIRMED, key='notification')
 
     def create_s_avatar(self, photo_input):
         from users.model.profile import UserProfile
