@@ -2,12 +2,14 @@
 {% block title %}Уведомления{% endblock %}
 {% block content %}
 
-<div class="container mt-3 user_notify_container">
+<div class="container mt-3">
   {% if user.is_staffed_user %}
+  <span class="block_notify_container">
     {% include 'mobile/notify/notify_blocks.html' %}
+  </span>
   {% elif object_list %}
 
-            <span class="is_post_paginate">
+            <span class="is_paginate user_all_notify_container">
               {% for object in object_list %}
                   {% if object.post %}
                     {% include 'mobile/notify/items/post.html' %}

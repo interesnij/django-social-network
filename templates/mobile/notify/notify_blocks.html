@@ -1,0 +1,35 @@
+<div class="col-12">
+  <div class="card mb-3">
+      <div class="card-body">
+          <div class="media">
+              <div class="media-body">
+                  <p class="mb-0">Профиль, записи, фото...</p>
+                  <h4 class="mb-0">
+                    <a class="ajax" href="{% url 'user_notify' %}">
+                       Мои уведомления
+                    </a>
+                  </h4>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% for object in user.get_staffed_communities %}
+<div class="col-12">
+  <div class="card mb-3">
+      <div class="card-body">
+          <div class="media">
+              <div class="media-body">
+                  <p class="mb-0">Записи, фото, товары...</p>
+                  <h4 class="mb-0">
+                    <a class="ajax" href="{% url 'community_notify' pk=community.pk %}">
+                       {{ object.name }}
+                    </a>
+                  </h4>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
