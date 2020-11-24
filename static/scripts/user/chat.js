@@ -22,7 +22,7 @@ webSocket.listen(function (event) {
         tab_span.innerHTML = notify_count;
         notify.innerHTML = "";
         notify.append(tab_span);
-        console.log(event.object)
+        console.log(event.object_type) 
       }
       break;
 

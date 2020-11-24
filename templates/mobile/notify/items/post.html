@@ -1,6 +1,9 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
   <div class="fullscreen pointer">
-    {{ object.text|linebreaks }}
+    <p style="padding: 5px;">
+      {{ object.post.get_created }}
+    </p>
+    {{ object.post.text|linebreaks }}
   </div>
 
   <span class="post_attach_panel">

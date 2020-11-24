@@ -129,7 +129,7 @@ def post_notification_handler(creator, recipient, post, verb, **kwargs):
             'key': key,
             'recipient_id': recipient.pk,
             'post_id': post.pk,
-            'object': "post_notify",
+            'object_type': "post_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
