@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
@@ -32,23 +31,6 @@ class PostCommunityNotificationListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         notify = PostCommunityNotify.objects.filter(community__creator=self.request.user)
         return notify
-
-
-@login_required
-def post_user_all_read(request):
-    request.user.post_notifications.mark_all_as_read()
-    _next = request.GET.get('next')
-    if _next:
-        return redirect(_next)
-    return redirect('post_user_all_read')
-
-@login_required
-def post_community_all_read(request):
-    request.user.post_community_notifications.mark_all_as_read()
-    _next = request.GET.get('next')
-    if _next:
-        return redirect(_next)
-    return redirect('post_community_all_read')
 
 
 class PostLastNotify(ListView):

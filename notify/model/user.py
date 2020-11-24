@@ -7,39 +7,6 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
 
-class UserNotificationQS(models.query.QuerySet):
-    def unread(self):
-        return self.filter(unread=True)
-
-    def read(self):
-        return self.filter(unread=False)
-
-    def mark_all_as_read(self, recipient=None):
-        qs = self.unread()
-        if recipient:
-            qs = qs.filter(recipient=recipient)
-        return qs.update(unread=False)
-
-    def mark_all_as_unread(self, recipient=None):
-        qs = self.read()
-        if recipient:
-            qs = qs.filter(recipient=recipient)
-        return qs.update(unread=True)
-
-    def serialize_latest_notifications(self, recipient=None):
-        qs = self.unread()[:5]
-        if recipient:
-            qs = qs.filter(recipient=recipient)[:5]
-        notification_dic = serializers.serialize("json", qs)
-        return notification_dic
-
-    def get_most_recent(self, recipient=None):
-        qs = self.unread()[:5]
-        if recipient:
-            qs = qs.filter(recipient=recipient)[:5]
-        return qs
-
-
 class UserNotify(models.Model):
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
@@ -56,7 +23,6 @@ class UserNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects = UserNotificationQS.as_manager()
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -95,7 +61,6 @@ class UserCommunityNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects = UserNotificationQS.as_manager()
     id = models.BigAutoField(primary_key=True)
 
     class Meta:

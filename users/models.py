@@ -1517,6 +1517,31 @@ class User(AbstractUser):
         else:
             return ''
 
+    def get_all_user_notify(self):
+        from notify.model.good import GoodNotify
+        from notify.model.photo import PhotoNotify
+        from notify.model.post import PostNotify
+        from notify.model.user import UserNotify
+        from notify.model.video import VideoNotify
+
+        notify = []
+        if GoodNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in GoodNotify.objects.filter(recipient_id=self.pk):
+                notify += [_not]
+        if PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in PhotoNotify.objects.filter(recipient_id=self.pk):
+                notify += [_not]
+        if PostNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in PostNotify.objects.filter(recipient_id=self.pk):
+                notify += [_not]
+        if UserNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in UserNotify.objects.filter(recipient_id=self.pk):
+                notify += [_not]
+        if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+            for _not in VideoNotify.objects.filter(recipient_id=self.pk):
+                notify += [_not]
+
+
     def get_unread_notify(self):
         from notify.model.good import GoodNotify, GoodCommunityNotify
         from notify.model.photo import PhotoNotify, PhotoCommunityNotify

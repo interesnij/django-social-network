@@ -295,7 +295,7 @@ class Community(models.Model):
         albums = GoodAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
-    def get_goods_count(self): 
+    def get_goods_count(self):
         count = 0
         for list in self.get_all_good_albums():
             count += list.count_goods()
@@ -779,6 +779,30 @@ class Community(models.Model):
         ids = [use['user'] for use in v_s]
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
+
+    def get_all_community_notify(self):
+        from notify.model.good import GoodCommunityNotify
+        from notify.model.photo import PhotoCommunityNotify
+        from notify.model.post import PostCommunityNotify
+        from notify.model.user import UserCommunityNotify
+        from notify.model.video import VideoCommunityNotify
+
+        notify = []
+        if GoodCommunityNotify.objects.filter(community_id=self.pk).exists():
+            for _not in GoodCommunityNotify.objects.filter(community_id=self.pk):
+                notify += [_not]
+        if PhotoCommunityNotify.objects.filter(community_id=self.pk).exists():
+            for _not in PhotoCommunityNotify.objects.filter(community_id=self.pk):
+                notify += [_not]
+        if PostCommunityNotify.objects.filter(community_id=self.pk).exists():
+            for _not in PostCommunityNotify.objects.filter(community_id=self.pk):
+                notify += [_not]
+        if UserCommunityNotify.objects.filter(community_id=self.pk).exists():
+            for _not in UserCommunityNotify.objects.filter(community_id=self.pk):
+                notify += [_not]
+        if VideoCommunityNotify.objects.filter(community_id=self.pk).exists():
+            for _not in VideoCommunityNotify.objects.filter(community_id=self.pk):
+                notify += [_not]
 
 
     ''''' модерация '''''

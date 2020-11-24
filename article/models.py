@@ -34,7 +34,7 @@ class Article(models.Model):
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='attached_item')
     comment_attach = models.ManyToManyField("posts.PostComment", blank=True, related_name='attached_comment')
-    #message = models.ManyToManyField('chat.Message', blank=True, related_name='attached_message')
+    message = models.ManyToManyField('chat.Message', blank=True, related_name='attached_message')
 
     @classmethod
     def create_article(cls, creator, title, community, g_image, content, created, status ):

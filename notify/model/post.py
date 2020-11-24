@@ -7,37 +7,6 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
 
-class PostNotificationQS(models.query.QuerySet):
-    def unread(self):
-        return self.filter(unread=True)
-    def read(self):
-        return self.filter(unread=False)
-    def mark_all_as_read(self, recipient=None):
-        qs = self.unread()
-        if recipient:
-            qs = qs.filter(recipient=recipient)
-        return qs.update(unread=False)
-
-    def mark_all_as_unread(self, recipient=None):
-        qs = self.read()
-        if recipient:
-            qs = qs.filter(recipient=recipient)
-        return qs.update(unread=True)
-
-    def serialize_latest_notifications(self, recipient=None):
-        qs = self.unread()[:5]
-        if recipient:
-            qs = qs.filter(recipient=recipient)[:5]
-        notification_dic = serializers.serialize("json", qs)
-        return notification_dic
-
-    def get_most_recent(self, recipient=None):
-        qs = self.unread()[:5]
-        if recipient:
-            qs = qs.filter(recipient=recipient)[:5]
-        return qs
-
-
 class PostNotify(models.Model):
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
@@ -70,7 +39,6 @@ class PostNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects =  PostNotificationQS.as_manager()
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
@@ -126,7 +94,6 @@ class PostCommunityNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    objects = PostNotificationQS.as_manager()
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
