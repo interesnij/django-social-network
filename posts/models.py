@@ -636,16 +636,16 @@ class Post(models.Model):
 
     def notification_user_repost(self, user):
 	    post_notification_handler(user, self.creator, post=self, verb=PostNotify.REPOST, key='social_update')
-	def notification_user_like(self, user):
+    def notification_user_like(self, user):
 	    post_notification_handler(user, self.creator, post=self, verb=PostNotify.LIKE, key='social_update')
-	def notification_user_dislike(self, user):
+    def notification_user_dislike(self, user):
 	    post_notification_handler(user, self.creator, post=self, verb=PostNotify.DISLIKE, key='social_update')
 
-	def notification_community_repost(self, user, community):
+    def notification_community_repost(self, user, community):
 	    post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.REPOST, key='social_update')
-	def notification_community_like(self, user, community):
+    def notification_community_like(self, user, community):
 	    post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.LIKE, key='social_update')
-	def notification_community_dislike(self, user, community):
+    def notification_community_dislike(self, user, community):
 	    post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.DISLIKE, key='social_update')
 
     def get_comments(self):
