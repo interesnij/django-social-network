@@ -803,6 +803,7 @@ class Community(models.Model):
         if VideoCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in VideoCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+        return notify
 
 
     ''''' модерация '''''

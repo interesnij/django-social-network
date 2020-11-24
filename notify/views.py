@@ -57,7 +57,7 @@ class CommunityNotifyView(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.user = request.user
         self.template_name = get_community_moders_template("notify/community_notify.html", self.user, self.community.pk, request.META['HTTP_USER_AGENT'])
-        self.all_notify = self.user.get_all_user_notify()
+        self.all_notify = self.community.get_all_community_notify()
         self.all_notify.update(unread=False)
         return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 

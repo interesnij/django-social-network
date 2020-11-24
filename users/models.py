@@ -1540,6 +1540,7 @@ class User(AbstractUser):
         if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
             for _not in VideoNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
+        return notify
 
 
     def get_unread_notify(self):
