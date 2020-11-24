@@ -1,7 +1,7 @@
 {% extends "base_mobile.html" %}
 {% block title %}Уведомления{% endblock %}
 {% block content %}
-{{ user.get_all_user_notify }}
+{{ object_list }}
 <div class="container mt-3 user_notify_container">
   {% if user.is_staffed_user %}
     {% include 'mobile/notify/notify_blocks.html' %}
