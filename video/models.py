@@ -176,12 +176,12 @@ class Video(models.Model):
     def notification_user_dislike(self, user):
         video_notification_handler(user, self.creator, video=self, verb=VideoNotify.DISLIKE, key='social_update')
 
-	def notification_community_repost(self, user, community):
-		video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.REPOST, key='social_update')
-	def notification_community_like(self, user, community):
-		video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.LIKE, key='social_update')
-	def notification_community_dislike(self, user, community):
-		video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.DISLIKE, key='social_update')
+    def notification_community_repost(self, user, community):
+        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.REPOST, key='social_update')
+    def notification_community_like(self, user, community):
+        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.LIKE, key='social_update')
+    def notification_community_dislike(self, user, community):
+        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.DISLIKE, key='social_update')
 
     def likes_count(self):
         likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
