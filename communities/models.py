@@ -791,18 +791,23 @@ class Community(models.Model):
         if GoodCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in GoodCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+            GoodCommunityNotify.notify_unread(self.pk)
         if PhotoCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in PhotoCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+            PhotoCommunityNotify.notify_unread(self.pk)
         if PostCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in PostCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+            PostCommunityNotify.notify_unread(self.pk)
         if UserCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in UserCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+            UserCommunityNotify.notify_unread(self.pk)
         if VideoCommunityNotify.objects.filter(community_id=self.pk).exists():
             for _not in VideoCommunityNotify.objects.filter(community_id=self.pk):
                 notify += [_not]
+            VideoCommunityNotify.notify_unread(self.pk)
         return notify
 
 

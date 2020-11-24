@@ -1525,23 +1525,23 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
 
         notify = []
-        if GoodNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+        if GoodNotify.objects.filter(recipient_id=self.pk).exists():
             for _not in GoodNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
             GoodNotify.notify_unread(self.pk)
-        if PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+        if PhotoNotify.objects.filter(recipient_id=self.pk).exists():
             for _not in PhotoNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
             PhotoNotify.notify_unread(self.pk)
-        if PostNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+        if PostNotify.objects.filter(recipient_id=self.pk).exists():
             for _not in PostNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
             PostNotify.notify_unread(self.pk)
-        if UserNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+        if UserNotify.objects.filter(recipient_id=self.pk).exists():
             for _not in UserNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
             UserNotify.notify_unread(self.pk)
-        if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
+        if VideoNotify.objects.filter(recipient_id=self.pk).exists():
             for _not in VideoNotify.objects.filter(recipient_id=self.pk):
                 notify += [_not]
             VideoNotify.notify_unread(self.pk)

@@ -111,10 +111,9 @@ class VideoCommunityNotify(models.Model):
         else:
             return '{} {} {} {}'.format(self.creator, self.get_verb_display(), self.comment, self.video)
 
-    def mark_as_unread(self):
-        if not self.unread:
-            self.unread = True
-            self.save()
+    @classmethod
+    def notify_unread(cls, user_pk):
+        cls.objects.filter(community_id=user_pk, unread=True).update(unread=False)
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
