@@ -40,7 +40,7 @@ class GoodNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
+    good_comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -94,7 +94,7 @@ class GoodCommunityNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
+    good_comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:

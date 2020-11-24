@@ -39,7 +39,7 @@ class VideoNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
+    video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -96,7 +96,7 @@ class VideoCommunityNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
+    video_comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
