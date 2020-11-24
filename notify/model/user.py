@@ -79,24 +79,30 @@ class UserCommunityNotify(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
+
 def notification_handler(creator, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     UserNotify.objects.create(creator=creator, recipient=recipient, verb=verb)
-    user_notification_broadcast(key, recipient.pk)
-
-def community_notification_handler(community, recipient, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
-    persons = community.get_staff_members()
-    for user in persons:
-        UserCommunityNotify.objects.create(creator=creator, community=community, recipient=user, verb=verb)
-        user_notification_broadcast(key, recipient.pk)
-
-
-def user_notification_broadcast(key, recipient_pk, **kwargs):
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': key,
-            'recipient_id': recipient_pk,
+            'recipient_id': recipient.pk,
+            'object': "user_notify",
         }
-    async_to_sync(channel_layer.group_send)('notifications', payload)
+    async_to_sync(channel_layer.group_send)('notification', payload)
+
+def community_notification_handler(creator, community, verb, **kwargs):
+    key = kwargs.pop('key', 'notification')
+    persons = community.get_staff_members()
+    for user in persons:
+        UserCommunityNotify.objects.create(creator=creator, community=community, recipient=user, verb=verb)
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'community_id': community.pk,
+            'object': "community_notify",
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)

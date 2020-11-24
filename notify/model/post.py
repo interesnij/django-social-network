@@ -104,10 +104,10 @@ class PostCommunityNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        if self.post and not self.comment:
+        if self.post and not self.post_comment:
             return '{} {}'.format(self.creator, self.get_verb_display(), self.post)
         else:
-            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.comment, self.post)
+            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.post_comment, self.post)
 
     @classmethod
     def notify_unread(cls, user_pk):
@@ -118,24 +118,97 @@ class PostCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def post_notification_handler(creator, recipient, verb, post, comment, **kwargs):
+def post_notification_handler(creator, recipient, post, verb, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
-    PostNotify.objects.create(creator=creator, recipient=recipient, verb=verb, post=post, comment=comment)
-    post_notification_broadcast(creator, key, recipient=recipient.username)
+    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
+    channel_layer = get_channel_layer()
+    payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'post_id': post.pk,
+            'object': "post_notify",
+        }
+    async_to_sync(channel_layer.group_send)('notification', payload)
+
+def post_comment_notification_handler(creator, recipient, comment, verb, **kwargs):
+    from users.models import User
+
+    key = kwargs.pop('key', 'notification')
+    PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=comment, verb=verb)
+    channel_layer = get_channel_layer()
+    payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'comment_id': comment.pk,
+            'object': "post_comment_notify",
+        }
+    async_to_sync(channel_layer.group_send)('notification', payload)
+
+def post_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
+    from users.models import User
+
+    key = kwargs.pop('key', 'notification')
+    PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=reply, verb=verb)
+    channel_layer = get_channel_layer()
+    payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'reply_id': reply.pk,
+            'object': "post_reply_notify",
+        }
+    async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_community_notification_handler(creator, community, recipient, post, verb, comment, **kwargs):
+def post_community_notification_handler(creator, community, post, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PostCommunityNotify.objects.create(actor=actor, community=community, post=post, comment=comment, recipient=user, verb=verb)
-    post_notification_broadcast(actor, key)
+        PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'community_id': community.pk,
+            'post_id': post.pk,
+            'object': "community_post_notify",
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_notification_broadcast(actor, key, **kwargs):
-    channel_layer = get_channel_layer()
-    recipient = kwargs.pop('recipient', None)
-    payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}
-    async_to_sync(channel_layer.group_send)('notifications', payload)
+def post_comment_community_notification_handler(creator, community, comment, verb, **kwargs):
+    key = kwargs.pop('key', 'notification')
+    persons = community.get_staff_members()
+    for user in persons:
+        PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=comment, recipient=user, verb=verb)
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'community_id': community.pk,
+            'comment_id': comment.pk,
+            'object': "community_post_comment_notify",
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
+
+def post_reply_community_notification_handler(creator, community, reply, verb, **kwargs):
+    key = kwargs.pop('key', 'notification')
+    persons = community.get_staff_members()
+    for user in persons:
+        PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=reply, recipient=user, verb=verb)
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': key,
+            'recipient_id': recipient.pk,
+            'community_id': community.pk,
+            'reply_id': reply.pk,
+            'object': "community_post_reply_notify",
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
