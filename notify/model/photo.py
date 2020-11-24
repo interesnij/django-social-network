@@ -54,10 +54,9 @@ class PhotoNotify(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
-    def mark_as_unread(self):
-        if not self.unread:
-            self.unread = True
-            self.save()
+    @classmethod
+    def notify_unread(cls, user_pk):
+        cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
 
 class PhotoCommunityNotify(models.Model):

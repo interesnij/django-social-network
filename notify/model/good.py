@@ -49,17 +49,16 @@ class GoodNotify(models.Model):
         ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
+    def __str__(self):
+        return '{} {} {}'.format(self.creator, self.get_verb_display(), self.good)
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
-    def __str__(self):
-        return '{} {} {}'.format(self.creator, self.get_verb_display(), self.good)
-
-    def mark_as_unread(self):
-        if not self.unread:
-            self.unread = True
-            self.save()
+    @classmethod
+    def notify_unread(cls, user_pk):
+        cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
 
 class GoodCommunityNotify(models.Model):
