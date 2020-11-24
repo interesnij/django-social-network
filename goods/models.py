@@ -278,7 +278,7 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def notification_user_comment(self, user):
-		good_comment_notification_handler(creator=user, recipient=self.commenter, comment=self, verb=GoodNotify.POST_COMMENT, key=''social_update')
+		good_comment_notification_handler(creator=user, recipient=self.commenter, comment=self, verb=GoodNotify.POST_COMMENT, key='social_update')
 	def notification_user_comment_like(self, user):
 		good_comment_notification_handler(creator=user, recipient=self.commenter, comment=self, verb=GoodNotify.LIKE_COMMENT, key='social_update')
 	def notification_user_comment_dislike(self, user):
