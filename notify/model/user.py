@@ -88,7 +88,7 @@ def notification_handler(creator, recipient, verb, **kwargs):
             'type': 'receive',
             'key': key,
             'recipient_id': recipient.pk,
-            'object': "user_notify",
+            'object_type': "user_notify",  
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
