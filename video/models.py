@@ -170,11 +170,11 @@ class Video(models.Model):
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
     def notification_user_repost(self, user):
-		video_notification_handler(user, self.creator, video=self, verb=VideoNotify.REPOST, key='social_update')
-	def notification_user_like(self, user):
-		video_notification_handler(user, self.creator, video=self, verb=VideoNotify.LIKE, key='social_update')
-	def notification_user_dislike(self, user):
-		video_notification_handler(user, self.creator, video=self, verb=VideoNotify.DISLIKE, key='social_update')
+        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.REPOST, key='social_update')
+    def notification_user_like(self, user):
+        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.LIKE, key='social_update')
+    def notification_user_dislike(self, user):
+        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.DISLIKE, key='social_update')
 
 	def notification_community_repost(self, user, community):
 		video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.REPOST, key='social_update')
