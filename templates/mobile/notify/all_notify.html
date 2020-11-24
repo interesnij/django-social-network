@@ -1,7 +1,7 @@
 {% extends "base_mobile.html" %}
 {% block title %}Уведомления{% endblock %}
 {% block content %}
-
+{{ user.get_all_user_notify }}
 <div class="container mt-3 user_notify_container">
   {% if user.is_staffed_user %}
     {% include 'mobile/notify/notify_blocks.html' %}
@@ -9,7 +9,7 @@
 
           {% if object_list %}
             <span class="is_post_paginate">
-                {{ object }} 
+                {{ object }}
               {% for object in object_list %}
                   {% if object.post %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
