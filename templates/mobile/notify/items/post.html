@@ -1,3 +1,18 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
+  <div class="fullscreen pointer">
+    {{ object.text|linebreaks }}
+  </div>
 
+  <span class="post_attach_panel">
+    {% include object.post.get_u_attach_items_mobile %}
+  </span>
+  {% if object.post.parent %}
+    <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+      {% if object.post.parent.community %}
+        {% include object.post.get_c_post_parent_items_mobile %}
+      {% else %}
+        {% include object.post.get_u_post_parent_items_mobile %}
+      {% endif %}
+    </span>
+  {% endif %}
 </div>
