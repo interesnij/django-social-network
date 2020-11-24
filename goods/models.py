@@ -171,11 +171,11 @@ class Good(models.Model):
 		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.DISLIKE, key='social_update')
 
 	def notification_community_repost(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodNotify.REPOST, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.REPOST, key='social_update')
 	def notification_community_like(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodNotify.LIKE, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.LIKE, key='social_update')
 	def notification_community_dislike(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodNotify.DISLIKE, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.DISLIKE, key='social_update')
 
 	def likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)

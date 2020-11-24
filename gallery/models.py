@@ -132,22 +132,18 @@ class Photo(models.Model):
         return self.photo_album.filter(creator=self.creator).exists()
 
     def notification_user_repost(self, user):
-        photo_notification_handler(user, self.creator, verb=PhotoNotify.REPOST, key='social_update', photo=self, comment=None)
+		photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.REPOST, key='social_update')
+	def notification_user_like(self, user):
+		photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.LIKE, key='social_update')
+	def notification_user_dislike(self, user):
+		photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.DISLIKE, key='social_update')
 
-    def notification_user_like(self, user):
-        photo_notification_handler(user, self.creator, verb=PhotoNotify.LIKE, key='social_update', photo=self, comment=None)
-
-    def notification_user_dislike(self, user):
-        photo_notification_handler(user, self.creator, verb=PhotoNotify.DISLIKE, key='social_update', photo=self, comment=None)
-
-    def notification_community_repost(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoNotify.REPOST, key='social_update', community=self.community, photo=self, comment=None)
-
-    def notification_community_like(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoNotify.LIKE, key='social_update', community=community, photo=self, comment=None)
-
-    def notification_community_dislike(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, verb=PhotoNotify.DISLIKE, key='social_update', community=community, photo=self, comment=None)
+	def notification_community_repost(self, user, community):
+		photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.REPOST, key='social_update')
+	def notification_community_like(self, user, community):
+		photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.LIKE, key='social_update')
+	def notification_community_dislike(self, user, community):
+		photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.DISLIKE, key='social_update')
 
     def get_comments(self):
         comments_query = Q(photo_comment_id=self.pk)

@@ -635,22 +635,18 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     def notification_user_repost(self, user):
-        post_notification_handler(user, self.creator, verb=PostNotify.REPOST, key='social_update', post=self, comment=None)
+		post_notification_handler(user, self.creator, post=self, verb=PostNotify.REPOST, key='social_update')
+	def notification_user_like(self, user):
+		post_notification_handler(user, self.creator, post=self, verb=PostNotify.LIKE, key='social_update')
+	def notification_user_dislike(self, user):
+		post_notification_handler(user, self.creator, post=self, verb=PostNotify.DISLIKE, key='social_update')
 
-    def notification_user_like(self, user):
-        post_notification_handler(user, self.creator, verb=PostNotify.LIKE, key='social_update', post=self, comment=None)
-
-    def notification_user_dislike(self, user):
-        post_notification_handler(user, self.creator, verb=PostNotify.DISLIKE, key='social_update', post=self, comment=None)
-
-    def notification_community_repost(self, user):
-        post_community_notification_handler(actor=user, recipient=None, verb=PostCommunityNotify.REPOST, key='social_update', community=self.community, post=self, comment=None)
-
-    def notification_community_like(self, user):
-        post_community_notification_handler(actor=user, recipient=None, verb=PostCommunityNotify.LIKE, key='social_update', community=self.community, post=self, comment=None)
-
-    def notification_community_dislike(self, user):
-        post_community_notification_handler(actor=user, recipient=None, verb=PostCommunityNotify.DISLIKE, key='social_update', community=self.community, post=self, comment=None)
+	def notification_community_repost(self, user, community):
+		post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.REPOST, key='social_update')
+	def notification_community_like(self, user, community):
+		post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.LIKE, key='social_update')
+	def notification_community_dislike(self, user, community):
+		post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.DISLIKE, key='social_update')
 
     def get_comments(self):
         comments_query = Q(post_id=self.pk)
