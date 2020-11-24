@@ -145,7 +145,7 @@ def good_comment_notification_handler(creator, recipient, comment, verb, **kwarg
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def good_reply_notification_handler(creator, recipient=recipient, reply, verb, **kwargs):
+def good_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
     from users.models import User
 
     key = kwargs.pop('key', 'notification')
