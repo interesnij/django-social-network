@@ -24,16 +24,6 @@ tab_span.classList.add("tab_badge", "badge-danger");
 
 webSocket.listen(function (event) {
   switch (event.key) {
-    case "notification":
-      if (event.recipient_id == request_user_id){
-        notify_count = notify_count * 1;
-        notify_count += 1;
-        tab_span.innerHTML = notify_count;
-        notify.innerHTML = "";
-        notify.append(tab_span);
-        //console.log(event.name);
-      }
-      break;
       case "user_notification":
         console.log(event.recipient_id);
         if (event.recipient_id == request_user_id){
