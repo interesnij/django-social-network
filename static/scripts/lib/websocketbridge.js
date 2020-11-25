@@ -8,7 +8,7 @@ ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
-message.reply_channel.send({"accept": True})
+
 webSocketBridge.send({prop1: 'value1', prop2: 'value1', "accept": True});
 
 webSocket.socket.onclose = function () {
