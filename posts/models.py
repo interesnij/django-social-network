@@ -691,11 +691,11 @@ class Post(models.Model):
 		    return ''
 
     def dislikes_count(self):
-		dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-		if dislikes > 0:
-			return count
-		else:
-			return ''
+	    dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+	    if dislikes > 0:
+		    return count
+	    else:
+		    return ''
 
     def window_likes(self):
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)
