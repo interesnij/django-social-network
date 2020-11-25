@@ -25,7 +25,7 @@ tab_span.classList.add("tab_badge", "badge-danger");
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
-      console.log("case: notification")
+      console.log("case: notification");
       if (event.recipient_id == request_user_id){
         notify_count = notify_count * 1;
         notify_count += 1;
