@@ -10,7 +10,10 @@ webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
 webSocket.socket.onclose = function () {
-  console.log("Disconnected from inbox stream");
+        console.log("Соединение установлено!");
+};
+webSocket.socket.onclose = function () {
+  console.log("Соединение прервано...");
 };
 tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger")
