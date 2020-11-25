@@ -49,6 +49,7 @@ class PostLoadView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_user_post(self.user, "posts/post_user/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostLoadView,self).get(request,*args,**kwargs)
 

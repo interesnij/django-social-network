@@ -624,7 +624,7 @@ function post_update_votes(post, uuid) {
 function case_post_create(request_user_id, uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('GET', "/posts/user/load_post/" + uuid + "/", true);
+  link_.open('GET', "/posts/user/load_post/" + uuid + "/" + request_user_id + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
