@@ -13,7 +13,7 @@ application = ProtocolTypeRouter({
         AuthMiddlewareStack(
             URLRouter([
                 url("ws://xn--80aa0cf.xn--p1acf:8002/notify/", NotificationsConsumer),
-                url('ws://раса.рус/(?P<username>[^/]+)/$', MessagerConsumer),
+                #url('ws://раса.рус/(?P<username>[^/]+)/$', MessagerConsumer),
             ])
         ),
     ),
