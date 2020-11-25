@@ -1525,17 +1525,6 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        DATE_FIELD_MAPPING = {
-            GoodNotify: '-created',
-            PhotoNotify: '-created',
-            PostNotify: '-created',
-            UserNotify: '-created',
-            VideoNotify: '-created',
-        }
-
-        def my_key_func(obj):
-            return getattr(obj, DATE_FIELD_MAPPING[type(obj)])
-
         notify = []
         good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
         GoodNotify.notify_unread(self.pk)
@@ -1548,7 +1537,7 @@ class User(AbstractUser):
         video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
         VideoNotify.notify_unread(self.pk)
 
-        result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=my_key_func)
+        result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=key=attrgetter('created'), reverse=True)
         return result_list
 
 
