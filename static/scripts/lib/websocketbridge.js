@@ -53,7 +53,7 @@ webSocket.listen(function (event) {
           if (event.name == "post_create"){
             case_post_create(request_user_id, event.post_id)
           }
-          else if {
+          else {
             console.log("not post_create")
           }
         }
