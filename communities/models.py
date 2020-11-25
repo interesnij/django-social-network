@@ -786,29 +786,22 @@ class Community(models.Model):
         from notify.model.post import PostCommunityNotify
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
+        from itertools import chain
 
         notify = []
-        if GoodCommunityNotify.objects.filter(community_id=self.pk).exists():
-            for _not in GoodCommunityNotify.objects.filter(community_id=self.pk):
-                notify += [_not]
-            GoodCommunityNotify.notify_unread(self.pk)
-        if PhotoCommunityNotify.objects.filter(community_id=self.pk).exists():
-            for _not in PhotoCommunityNotify.objects.filter(community_id=self.pk):
-                notify += [_not]
-            PhotoCommunityNotify.notify_unread(self.pk)
-        if PostCommunityNotify.objects.filter(community_id=self.pk).exists():
-            for _not in PostCommunityNotify.objects.filter(community_id=self.pk):
-                notify += [_not]
-            PostCommunityNotify.notify_unread(self.pk)
-        if UserCommunityNotify.objects.filter(community_id=self.pk).exists():
-            for _not in UserCommunityNotify.objects.filter(community_id=self.pk):
-                notify += [_not]
-            UserCommunityNotify.notify_unread(self.pk)
-        if VideoCommunityNotify.objects.filter(community_id=self.pk).exists():
-            for _not in VideoCommunityNotify.objects.filter(community_id=self.pk):
-                notify += [_not]
-            VideoCommunityNotify.notify_unread(self.pk)
-        return notify
+        good_notify = GoodCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
+        GoodCommunityNotify.notify_unread(self.pk)
+        photo_notify = PhotoNotify.objects.only('created').filter(recipient_id=self.pk)
+        PhotoCommunityNotify.notify_unread(self.pk)
+        post_notify = PostCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
+        PostCommunityNotify.notify_unread(self.pk)
+        community_notify = UserCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
+        UserCommunityNotify.notify_unread(self.pk)
+        video_notify = VideoCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
+        VideoCommunityNotify.notify_unread(self.pk)
+
+        result_list = sorted(chain(community_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse=True)
+        return result_list
 
 
     ''''' модерация '''''

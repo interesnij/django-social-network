@@ -25,13 +25,10 @@ function case_user_notify() {
   console.log('case_user_notify')
 }
 function case_post_notify(uuid) {
-  if (document.body.querySelector(".post_stream")){
-    post_stream = document.body.querySelector(".post_stream");
-    if (post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
-      post = post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
-       post_update_votes(post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid)
+    if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid)
     }
-  }
 }
 
 webSocket.listen(function (event) {

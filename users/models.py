@@ -1527,18 +1527,26 @@ class User(AbstractUser):
 
         notify = []
         good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
-        GoodNotify.notify_unread(self.pk)
         photo_notify = PhotoNotify.objects.only('created').filter(recipient_id=self.pk)
-        PhotoNotify.notify_unread(self.pk)
         post_notify = PostNotify.objects.only('created').filter(recipient_id=self.pk)
-        PostNotify.notify_unread(self.pk)
         user_notify = UserNotify.objects.only('created').filter(recipient_id=self.pk)
-        UserNotify.notify_unread(self.pk)
         video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
-        VideoNotify.notify_unread(self.pk)
 
         result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse=True)
         return result_list
+
+    def read_user_notify(self):
+        from notify.model.good import GoodNotify
+        from notify.model.photo import PhotoNotify
+        from notify.model.post import PostNotify
+        from notify.model.user import UserNotify
+        from notify.model.video import VideoNotify
+
+        GoodNotify.notify_unread(self.pk)
+        PhotoNotify.notify_unread(self.pk)
+        PostNotify.notify_unread(self.pk)
+        UserNotify.notify_unread(self.pk)
+        VideoNotify.notify_unread(self.pk)
 
 
     def get_unread_notify(self):
