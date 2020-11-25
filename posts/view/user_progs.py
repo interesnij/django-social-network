@@ -266,5 +266,5 @@ class UserOffVotesPost(View):
 class PostGetVotes(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        data = {'like_count': post.count_likes(), 'dislike_count': post.count_dislikes()}
+        data = {'like_count': post.likes_count(), 'dislike_count': post.dislikes_count()}
         return JsonResponse(data)
