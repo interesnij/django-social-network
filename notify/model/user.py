@@ -84,7 +84,7 @@ def notification_handler(creator, recipient, verb):
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': 'notification'),  
+            'key': 'notification',  
             'recipient_id': recipient.pk,
             'name': 'user_notify',
         }
