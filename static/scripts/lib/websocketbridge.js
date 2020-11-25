@@ -66,7 +66,6 @@ webSocket.listen(function (event) {
 
     default:
       console.log('error: ', event);
-      console.log(typeof (event))
       break;
   }
 })
