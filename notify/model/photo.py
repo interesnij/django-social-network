@@ -124,7 +124,7 @@ def photo_notification_handler(creator, recipient, photo, verb, **kwargs):
             'key': key,
             'recipient_id': recipient.pk,
             'photo_id': photo.pk,
-            'object': "photo_notify",
+            'name': "photo_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -139,7 +139,7 @@ def photo_comment_notification_handler(creator, recipient, comment, verb, **kwar
             'key': key,
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
-            'object': "photo_comment_notify",
+            'name': "photo_comment_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -154,7 +154,7 @@ def photo_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
             'key': key,
             'recipient_id': recipient.pk,
             'reply_id': reply.pk,
-            'object': "photo_reply_notify",
+            'name': "photo_reply_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -171,7 +171,7 @@ def photo_community_notification_handler(creator, community, photo, verb, **kwar
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'photo_id': photo.pk,
-            'object': "community_photo_notify",
+            'name': "community_photo_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -188,7 +188,7 @@ def photo_comment_community_notification_handler(creator, community, comment, ve
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
-            'object': "community_photo_comment_notify",
+            'name': "community_photo_comment_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -204,6 +204,6 @@ def photo_reply_community_notification_handler(creator, community, reply, verb, 
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,
-            'object': "community_photo_reply_notify",
+            'name': "community_photo_reply_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)

@@ -126,7 +126,7 @@ def good_notification_handler(creator, recipient, good, verb, **kwargs):
             'key': key,
             'recipient_id': recipient.pk,
             'good_id': good.pk,
-            'object': "good_notify",
+            'name': "good_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -141,7 +141,7 @@ def good_comment_notification_handler(creator, recipient, comment, verb, **kwarg
             'key': key,
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
-            'object': "good_comment_notify",
+            'name': "good_comment_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -156,7 +156,7 @@ def good_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
             'key': key,
             'recipient_id': recipient.pk,
             'reply_id': reply.pk,
-            'object': "good_reply_notify",
+            'name': "good_reply_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -173,7 +173,7 @@ def good_community_notification_handler(creator, community, good, verb, **kwargs
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'good_id': good.pk,
-            'object': "community_good_notify",
+            'name': "community_good_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -190,7 +190,7 @@ def good_comment_community_notification_handler(creator, community, comment, ver
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
-            'object': "community_good_comment_notify",
+            'name': "community_good_comment_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -206,6 +206,6 @@ def good_reply_community_notification_handler(creator, community, reply, verb, *
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,
-            'object': "community_good_reply_notify",
+            'name': "community_good_reply_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)

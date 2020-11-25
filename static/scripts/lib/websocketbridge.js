@@ -34,17 +34,6 @@ webSocket.listen(function (event) {
       }
       break;
 
-      case "test_notification":
-        console.log("case: notification");
-        if (event.recipient_id == request_user_id){
-          notify_count = notify_count * 1;
-          notify_count += 1;
-          tab_span.innerHTML = notify_count;
-          notify.innerHTML = "";
-          notify.append(tab_span);
-        }
-        break;
-
     case "social_update":
       //document.body.querySelector("#notification").classList.add("badge", "badge-danger");
       update_social_activity(event.id_value);
