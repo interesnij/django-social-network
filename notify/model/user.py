@@ -88,7 +88,7 @@ def user_notification_broadcast(key, recipient_pk, **kwargs):
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient_pk,
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
