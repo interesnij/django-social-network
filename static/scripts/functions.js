@@ -616,7 +616,7 @@ function post_update_votes(post, uuid) {
           jsonResponse = JSON.parse(link_.responseText);
           post.querySelector(".likes_count").innerHTML = jsonResponse.like_count;
           post.querySelector(".dislikes_count").innerHTML = jsonResponse.dislike_count;
-      }
+      } 
   };
 
   link_.send();
