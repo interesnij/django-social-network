@@ -48,8 +48,9 @@ webSocket.listen(function (event) {
         break;
 
       case "create_item":
+        console.log("create_item");
         if (event.creator_id != request_user_id){
-          if (event.name == "post_create"){ case_post_create(request_user_id, event.post_id) }
+          if (event.name == "post_create"){ case_post_create(request_user_id, event.post_id) } else if {console.log("not post_create");}
         }
         break;
 
