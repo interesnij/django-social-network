@@ -31,6 +31,7 @@ webSocket.listen(function (event) {
         tab_span.innerHTML = notify_count;
         notify.innerHTML = "";
         notify.append(tab_span);
+        //console.log(event.name);
       }
       break;
 
