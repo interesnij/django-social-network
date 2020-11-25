@@ -1538,7 +1538,7 @@ class User(AbstractUser):
         VideoNotify.notify_unread(self.pk)
 
         #result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse = True)
-        result_list = chain(user_notify, post_notify, photo_notify, good_notify, video_notify)
+        result_list = list(chain(user_notify, post_notify, photo_notify, good_notify, video_notify))
 
         return result_list
 
