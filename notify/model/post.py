@@ -127,7 +127,7 @@ def post_notification_handler(creator, recipient, post, verb):
             'type': 'receive',
             'key': 'notification',
             'recipient_id': recipient.pk,
-            'post_id': post.uuid,
+            'post_id': str(post.uuid),
             'name': "post_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
