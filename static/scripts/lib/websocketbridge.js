@@ -14,10 +14,12 @@ class Ws extends Object {
                       )
   }
   get clientPromise(){
-    var stompClientPromise = this.stompClientPromise
-    if (!stompClientPromise)
+    var stompClientPromise = this.stompClientPromise;
+    if (!stompClientPromise){
       stompClientPromise = this.newClientPromise
     this.stompClientPromise = stompClientPromise
+    }
+    console.log(stompClientPromise);
     return stompClientPromise;
   }
 }
@@ -25,4 +27,4 @@ class Ws extends Object {
 window.wsSingleton = new Ws()
 window.wsSingleton.clientPromise
   .then( wsClient =>{wsClient.send('data'); console.log('sended')})
-  .catch( error => alert(error) )
+  .catch( error => console.log(error) )
