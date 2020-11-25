@@ -7,7 +7,7 @@ notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
 webSocket = new channels.WebSocketBridge();
-webSocket.connect(ws_path);
+webSocket.connect(ws_path); 
 
 
 webSocket.socket.onmessage = function(e){ console.log(e.data); };
