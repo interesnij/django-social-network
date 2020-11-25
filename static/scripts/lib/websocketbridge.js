@@ -5,8 +5,8 @@ notify = document.body.querySelector(".new_unread_notify");
 notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), notify_count = notify_count*1) : notify_count = 0;
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-ws_path = ws_scheme + '://' + "раса.рус:8001" + "/notify/";
-webSocket = new channels.WebSocketBridge(); 
+ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
+webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
 webSocket.socket.onclose = function () {
