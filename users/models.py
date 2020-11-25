@@ -1537,10 +1537,9 @@ class User(AbstractUser):
         video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
         VideoNotify.notify_unread(self.pk)
 
-        return list(chain(good_notify, photo_notify, post_notify, user_notify, video_notify))
+        list = list(chain(good_notify, photo_notify, post_notify, user_notify, video_notify))
 
-        final = good_notify.union(photo_notify, post_notify, user_notify, video_notify)
-        return final
+        return sorted(list, key=lambda x: (x.created))
 
 
     def get_unread_notify(self):
