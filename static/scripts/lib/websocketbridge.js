@@ -7,7 +7,7 @@ notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
 webSocket = new channels.WebSocketBridge();
-webSocket.connect(ws_path); 
+webSocket.connect(ws_path);
 
 
 webSocket.socket.onmessage = function(e){ console.log(e.data); };
@@ -25,7 +25,6 @@ tab_span.classList.add("tab_badge", "badge-danger");
 webSocket.listen(function (event) {
   switch (event.key) {
     case "notification":
-      console.log("case: notification");
       if (event.recipient_id == request_user_id){
         notify_count = notify_count * 1;
         notify_count += 1;
@@ -34,6 +33,17 @@ webSocket.listen(function (event) {
         notify.append(tab_span);
       }
       break;
+
+      case "test_notification":
+        console.log("case: notification");
+        if (event.recipient_id == request_user_id){
+          notify_count = notify_count * 1;
+          notify_count += 1;
+          tab_span.innerHTML = notify_count;
+          notify.innerHTML = "";
+          notify.append(tab_span);
+        }
+        break;
 
     case "social_update":
       //document.body.querySelector("#notification").classList.add("badge", "badge-danger");
