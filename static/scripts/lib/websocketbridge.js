@@ -22,9 +22,7 @@ class Ws extends Object {
   }
 }
 
-const webSocketBridge = new channels.WebSocketBridge();
-webSocketBridge.connect('/ws/');
-webSocketBridge.listen(function(action, stream) {
-  console.log(action, stream);
-});
-webSocketBridge.send({prop1: 'value1', prop2: 'value1'});
+window.wsSingleton = new Ws()
+window.wsSingleton.clientPromise
+  .then( wsClient =>{wsClient.send('data'); console.log('sended')})
+  .catch( error => alert(error) )
