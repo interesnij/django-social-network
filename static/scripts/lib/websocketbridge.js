@@ -3,7 +3,7 @@
 class Ws extends Object {
   get newClientPromise(){
     return new Promise((resolve, reject)=> {
-      let wsClient = new WebSocket("ws://xn--80aa0cf.xn--p1acf:8002/notify/");
+      let wsClient = new WebSocket("ws://раса.рус:8002/notify/");
       console.log(wsClient)
       wsClient.onopen = () => {
         console.log("connected");
