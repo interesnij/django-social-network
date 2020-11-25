@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^add_post/(?P<pk>\d+)/$', login_required(PostUserCreate.as_view())),
 	url(r'^post_view/(?P<uuid>[0-9a-f-]+)/$', UserPostView.as_view()),
 	url(r'^post_market_view/(?P<uuid>[0-9a-f-]+)/$', UserAdPostView.as_view()),
+	url(r'^update_votes/(?P<uuid>[0-9a-f-]+)/$', PostGetVotes.as_view()),
 
 	url(r'^post-comment/$', login_required(PostCommentUserCreate.as_view())),
     url(r'^reply-comment/$', login_required(PostReplyUserCreate.as_view())),

@@ -24,6 +24,15 @@ tab_span.classList.add("tab_badge", "badge-danger");
 function case_user_notify() {
   console.log('case_user_notify')
 }
+function case_post_notify(uuid) {
+  if (document.body.querySelector(".post_stream")){
+    post_stream = document.body.querySelector(".post_stream");
+    if (post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      post = post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+       post_update_votes(post_stream.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid)
+    }
+  }
+}
 
 webSocket.listen(function (event) {
   switch (event.key) {
@@ -31,7 +40,8 @@ webSocket.listen(function (event) {
         if (event.recipient_id == request_user_id){
 
           if (event.name == "user_notify"){ case_user_notify() }
-          
+          else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
+
           notify_count = notify_count * 1;
           notify_count += 1;
           tab_span.innerHTML = notify_count;

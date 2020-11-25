@@ -262,8 +262,9 @@ class UserOffVotesPost(View):
         else:
             raise Http404
 
-def post_update_interactions(request):
-    data_point = request.POST['id_value']
-    item = Post.objects.get(uuid=data_point)
-    data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
-    return JsonResponse(data)
+
+class PostGetVotes(View):
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        data = {'like_count': post.count_likes(), 'dislike_count': post.count_dislikes()}
+        return JsonResponse(data)

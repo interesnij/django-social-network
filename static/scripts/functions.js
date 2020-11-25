@@ -606,6 +606,22 @@ function open_load_fullscreen(link, block) {
     link_.send();
 }
 
+function post_update_votes(post, uuid) {
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('GET', "/posts/user_progs/update_votes/" + uuid + "/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          jsonResponse = JSON.parse(link_.responseText);
+          post.querySelector(".likes_count").innerHTML = jsonResponse.like_count;
+          post.querySelector(".dislikes_count").innerHTML = jsonResponse.dislike_count;
+      }
+  };
+
+  link_.send();
+}
+
 function send_like(item, link) {
     like = item.querySelector(".like");
     dislike = item.querySelector(".dislike");
