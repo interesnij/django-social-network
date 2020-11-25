@@ -34,6 +34,7 @@ function case_post_notify(uuid) {
 webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
+        console.log("notification");
         if (event.recipient_id == request_user_id){
 
           if (event.name == "user_notify"){ case_user_notify() }
