@@ -9,11 +9,10 @@ ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
-webSocket.send({prop1: 'value1', prop2: 'value1', "accept": "True"});
 
-webSocket.socket.onclose = function () {
-        console.log("Соединение установлено!");
-};
+webSocket.socket.onmessage = function(e){ console.log(e.data); };
+webSocket.socket.onopen = () => conn.send('hello');
+
 webSocket.socket.onclose = function () {
   console.log("Соединение прервано...");
 };
