@@ -21,18 +21,21 @@ webSocket.socket.onclose = function () {
 tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger");
 
+function case_user_notify() {
+  console.log('case_user_notify')
+}
 
 webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
-        console.log(event.name);
         if (event.recipient_id == request_user_id){
+
+          if (event.name == "user_notify"){ case_user_notify() }
           notify_count = notify_count * 1;
           notify_count += 1;
           tab_span.innerHTML = notify_count;
           notify.innerHTML = "";
           notify.append(tab_span);
-          //console.log(event.name);
         }
         break;
 
