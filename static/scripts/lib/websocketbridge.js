@@ -26,5 +26,5 @@ class Ws extends Object {
 
 window.wsSingleton = new Ws()
 window.wsSingleton.clientPromise
-  .then( wsClient =>{wsClient.send('data'); console.log('sended')})
+  .then( wsClient =>{wsClient.send("{prop1: 'value1', prop2: 'value1'}"); console.log('sended')})
   .catch( error => console.log(error) )
