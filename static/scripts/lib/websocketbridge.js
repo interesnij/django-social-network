@@ -21,3 +21,10 @@ class Ws extends Object {
     return stompClientPromise;
   }
 }
+
+const webSocketBridge = new channels.WebSocketBridge();
+webSocketBridge.connect('/ws/');
+webSocketBridge.listen(function(action, stream) {
+  console.log(action, stream);
+});
+webSocketBridge.send({prop1: 'value1', prop2: 'value1'});
