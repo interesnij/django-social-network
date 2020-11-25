@@ -34,7 +34,7 @@ webSocket.listen(function (event) {
         //console.log(event.name);
       }
       break;
-      case "test_notification":
+      case "user_notification":
         console.log(event.recipient_id);
         if (event.recipient_id == request_user_id){
           notify_count = notify_count * 1;
