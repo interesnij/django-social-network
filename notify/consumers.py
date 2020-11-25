@@ -9,12 +9,12 @@ class NotificationsConsumer(AsyncWebsocketConsumer):
 
         else:
             await self.channel_layer.group_add(
-                'test_notification', self.channel_name)
+                'notification', self.channel_name)
             await self.accept()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
-           'test_notification', self.channel_name)
+           'notification', self.channel_name)
 
     async def receive(self, text_data):
         await self.send(text_data=json.dumps(text_data))
