@@ -1,6 +1,6 @@
 from users.models import User
 from posts.models import Post, PostComment
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 from posts.forms import PostForm, CommentForm
 from common.attach.post_attacher import get_post_attach
@@ -8,6 +8,7 @@ from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from django.http import Http404
 from common.template.user import render_for_platform
+
 
 
 class PostUserCreate(View):
