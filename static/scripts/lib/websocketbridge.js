@@ -11,7 +11,7 @@ webSocket.connect(ws_path);
 
 
 webSocket.socket.onmessage = function(e){ console.log(e.data); };
-webSocket.socket.onopen = () => webSocket.socket.send('hello');
+webSocket.socket.onopen = () => webSocket.socket.send('1');
 
 webSocket.socket.onclose = function () {
   console.log("Соединение прервано...");
@@ -19,7 +19,6 @@ webSocket.socket.onclose = function () {
 tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger");
 
-console.log(event);
 
 webSocket.listen(function (event) {
   switch (event.key) {
