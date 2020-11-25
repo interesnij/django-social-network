@@ -1524,6 +1524,7 @@ class User(AbstractUser):
         from notify.model.user import UserNotify
         from notify.model.video import VideoNotify
         from itertools import chain
+        from operator import attrgetter
 
         notify = []
         good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
@@ -1537,7 +1538,7 @@ class User(AbstractUser):
         video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
         VideoNotify.notify_unread(self.pk)
 
-        result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify),key=lambda instance: -instance.created)
+        result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=attrgetter('-created'))
 
         return result_list
 
