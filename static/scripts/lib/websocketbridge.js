@@ -11,7 +11,7 @@ webSocket.connect(ws_path);
 
 
 webSocket.socket.onmessage = function(e){ console.log(e.data); };
-webSocket.socket.onopen = () => webSocket.socket.send('1');
+webSocket.socket.onopen = () => webSocket.send('1');
 
 webSocket.socket.onclose = function () {
   console.log("Соединение прервано...");
