@@ -616,10 +616,30 @@ function post_update_votes(post, uuid) {
           jsonResponse = JSON.parse(link_.responseText);
           post.querySelector(".likes_count").innerHTML = jsonResponse.like_count;
           post.querySelector(".dislikes_count").innerHTML = jsonResponse.dislike_count;
-      } 
+      }
   };
 
   link_.send();
+}
+function case_post_create(request_user_id, uuid) {
+  if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('GET', "/posts/user/load_post/" + uuid + "/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          lenta = document.body.querySelector('.post_stream');
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          lenta.prepend(new_post);
+          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
+      }
+  };
+
+  link_.send()
+}
 }
 
 function send_like(item, link) {

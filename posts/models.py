@@ -85,21 +85,17 @@ class Post(models.Model):
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
-            "key": "additional_post",
-            "creator_id": post.creator.pk
+            "key": "create_item",
+			'creator_id': post.creator.pk,
+			'post_id': str(post.uuid),
+			'name': "post_create",
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return post
+
     @classmethod
     def create_parent_post(cls, creator, community, status):
         post = cls.objects.create(creator=creator, community=community, status=status, )
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "additional_post",
-            "actor_name": post.creator.get_full_name()
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
         return post
 
     class Meta:
@@ -688,12 +684,18 @@ class Post(models.Model):
         return dislikes
 
     def likes_count(self):
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-        return likes.count()
+        count = PostVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+		if count > 0:
+			return count
+		else:
+			return ''
 
     def dislikes_count(self):
-        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+		if dislikes > 0:
+			return count
+		else:
+			return ''
 
     def window_likes(self):
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)

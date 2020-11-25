@@ -42,3 +42,17 @@ class PostUserDetail(TemplateView):
         context = super(PostUserDetail,self).get_context_data(**kwargs)
         context["object"] = self.item
         return context
+
+
+class PostLoadView(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_permission_user_post(self.user, "posts/post_user/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(PostLoadView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(PostLoadView,self).get_context_data(**kwargs)
+        context["object"] = self.item
+        return context

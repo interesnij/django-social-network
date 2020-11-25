@@ -47,15 +47,11 @@ webSocket.listen(function (event) {
         }
         break;
 
-    case "social_update":
-      update_social_activity(event.id_value);
-      break;
-
-    case "additional_news":
-      if (event.creator_id === request_user_id) {
-        $(".stream-update").show();
-      }
-      break;
+      case "create_item":
+        if (event.creator_id != request_user_id){
+          if (event.name == "post_create"){ case_post_create(request_user_id, event.post_id) }
+        }
+        break;
 
     case "message":
       if (event.creator_id === request_user_id) {
