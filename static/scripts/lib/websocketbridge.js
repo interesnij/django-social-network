@@ -31,6 +31,7 @@ webSocket.listen(function (event) {
         if (event.recipient_id == request_user_id){
 
           if (event.name == "user_notify"){ case_user_notify() }
+          
           notify_count = notify_count * 1;
           notify_count += 1;
           tab_span.innerHTML = notify_count;
@@ -40,7 +41,6 @@ webSocket.listen(function (event) {
         break;
 
     case "social_update":
-      //document.body.querySelector("#notification").classList.add("badge", "badge-danger");
       update_social_activity(event.id_value);
       break;
 

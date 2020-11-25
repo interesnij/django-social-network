@@ -120,10 +120,9 @@ class VideoCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def video_notification_handler(creator, recipient, video, verb, **kwargs):
+def video_notification_handler(creator, recipient, video, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     VideoNotify.objects.create(creator=creator, recipient=recipient, video=video, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -135,30 +134,28 @@ def video_notification_handler(creator, recipient, video, verb, **kwargs):
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def video_comment_notification_handler(creator, recipient, comment, verb, **kwargs):
+def video_comment_notification_handler(creator, recipient, comment, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     VideoNotify.objects.create(creator=creator, recipient=recipient, video_comment=comment, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
             'name': "video_comment_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def video_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
+def video_reply_notification_handler(creator, recipient, reply, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     VideoNotify.objects.create(creator=creator, recipient=recipient, video_comment=reply, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'reply_id': reply.pk,
             'name': "video_reply_notify",
@@ -166,15 +163,14 @@ def video_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def video_community_notification_handler(creator, community, video, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def video_community_notification_handler(creator, community, video, verb):
     persons = community.get_staff_members()
     for user in persons:
         VideoCommunityNotify.objects.create(creator=creator, community=community, video=video, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'video_id': video.pk,
@@ -183,15 +179,14 @@ def video_community_notification_handler(creator, community, video, verb, **kwar
         async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def video_comment_community_notification_handler(creator, community, comment, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def video_comment_community_notification_handler(creator, community, comment, verb):
     persons = community.get_staff_members()
     for user in persons:
         VideoCommunityNotify.objects.create(creator=creator, community=community, video_comment=comment, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
@@ -199,15 +194,14 @@ def video_comment_community_notification_handler(creator, community, comment, ve
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
-def video_reply_community_notification_handler(creator, community, reply, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def video_reply_community_notification_handler(creator, community, reply, verb):
     persons = community.get_staff_members()
     for user in persons:
         VideoCommunityNotify.objects.create(creator=creator, community=community, video_comment=reply, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,

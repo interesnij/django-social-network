@@ -115,45 +115,42 @@ class GoodCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def good_notification_handler(creator, recipient, good, verb, **kwargs):
+def good_notification_handler(creator, recipient, good, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     GoodNotify.objects.create(creator=creator, recipient=recipient, good=good, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'good_id': good.pk,
             'name': "good_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def good_comment_notification_handler(creator, recipient, comment, verb, **kwargs):
+def good_comment_notification_handler(creator, recipient, comment, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     GoodNotify.objects.create(creator=creator, recipient=recipient, good_comment=comment, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
             'name': "good_comment_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def good_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
+def good_reply_notification_handler(creator, recipient, reply, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     GoodNotify.objects.create(creator=creator, recipient=recipient, good_comment=reply, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'reply_id': reply.pk,
             'name': "good_reply_notify",
@@ -161,15 +158,14 @@ def good_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def good_community_notification_handler(creator, community, good, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def good_community_notification_handler(creator, community, good, verb):
     persons = community.get_staff_members()
     for user in persons:
         GoodCommunityNotify.objects.create(creator=creator, community=community, good=good, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'good_id': good.pk,
@@ -178,15 +174,14 @@ def good_community_notification_handler(creator, community, good, verb, **kwargs
         async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def good_comment_community_notification_handler(creator, community, comment, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def good_comment_community_notification_handler(creator, community, comment, verb):
     persons = community.get_staff_members()
     for user in persons:
         GoodCommunityNotify.objects.create(creator=creator, community=community, good_comment=comment, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
@@ -194,15 +189,14 @@ def good_comment_community_notification_handler(creator, community, comment, ver
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
-def good_reply_community_notification_handler(creator, community, reply, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def good_reply_community_notification_handler(creator, community, reply, verb):
     persons = community.get_staff_members()
     for user in persons:
         GoodCommunityNotify.objects.create(creator=creator, community=community, good_comment=reply, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,

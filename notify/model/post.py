@@ -118,25 +118,23 @@ class PostCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def post_notification_handler(creator, recipient, post, verb, **kwargs):
+def post_notification_handler(creator, recipient, post, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'post_id': post.pk,
             'name': "post_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_comment_notification_handler(creator, recipient, comment, verb, **kwargs):
+def post_comment_notification_handler(creator, recipient, comment, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=comment, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -148,10 +146,9 @@ def post_comment_notification_handler(creator, recipient, comment, verb, **kwarg
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
+def post_reply_notification_handler(creator, recipient, reply, verb):
     from users.models import User
 
-    key = kwargs.pop('key', 'notification')
     PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=reply, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -164,15 +161,14 @@ def post_reply_notification_handler(creator, recipient, reply, verb, **kwargs):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_community_notification_handler(creator, community, post, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def post_community_notification_handler(creator, community, post, verb):
     persons = community.get_staff_members()
     for user in persons:
         PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'post_id': post.pk,
@@ -181,15 +177,14 @@ def post_community_notification_handler(creator, community, post, verb, **kwargs
         async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_comment_community_notification_handler(creator, community, comment, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def post_comment_community_notification_handler(creator, community, comment, verb):
     persons = community.get_staff_members()
     for user in persons:
         PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=comment, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
@@ -197,15 +192,14 @@ def post_comment_community_notification_handler(creator, community, comment, ver
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_reply_community_notification_handler(creator, community, reply, verb, **kwargs):
-    key = kwargs.pop('key', 'notification')
+def post_reply_community_notification_handler(creator, community, reply, verb):
     persons = community.get_staff_members()
     for user in persons:
         PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=reply, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,

@@ -164,18 +164,18 @@ class Good(models.Model):
 		ordering = ["-created"]
 
 	def notification_user_repost(self, user):
-		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.REPOST, key='social_update')
+		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.REPOST)
 	def notification_user_like(self, user):
-		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.LIKE, key='social_update')
+		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.LIKE)
 	def notification_user_dislike(self, user):
-		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.DISLIKE, key='social_update')
+		good_notification_handler(user, self.creator, good=self, verb=GoodNotify.DISLIKE)
 
 	def notification_community_repost(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.REPOST, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.REPOST)
 	def notification_community_like(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.LIKE, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.LIKE)
 	def notification_community_dislike(self, user, community):
-		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.DISLIKE, key='social_update')
+		good_community_notification_handler(creator=user, community=self.community, good=self, verb=GoodCommunityNotify.DISLIKE)
 
 	def likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
