@@ -1523,6 +1523,7 @@ class User(AbstractUser):
         from notify.model.post import PostNotify
         from notify.model.user import UserNotify
         from notify.model.video import VideoNotify
+        from itertools import chain
 
         notify = []
         good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
@@ -1535,6 +1536,8 @@ class User(AbstractUser):
         UserNotify.notify_unread(self.pk)
         video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
         VideoNotify.notify_unread(self.pk)
+
+        return list(chain(good_notify, photo_notify, post_notify, user_notify, video_notify))
 
         final = good_notify.union(photo_notify, post_notify, user_notify, video_notify)
         return final
