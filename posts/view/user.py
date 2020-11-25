@@ -55,5 +55,5 @@ class PostLoadView(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(PostLoadView,self).get_context_data(**kwargs)
-        context["object"] = self.item
+        context["object"] = self.post
         return context
