@@ -1,7 +1,7 @@
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
-  <div class="fullscreen pointer">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
+  <div class="fullscreen pointer">{% if object.unread %}новое{% endif %}
     <p style="padding: 5px;">
-      {{ object.get_created }} 
+      {{ object.get_created }}
     </p>
     {{ object.post.text|linebreaks }}
   </div>
