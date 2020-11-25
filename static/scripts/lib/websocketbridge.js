@@ -17,7 +17,9 @@ webSocket.socket.onclose = function () {
   console.log("Соединение прервано...");
 };
 tab_span = document.createElement("span");
-tab_span.classList.add("tab_badge", "badge-danger")
+tab_span.classList.add("tab_badge", "badge-danger");
+
+console.log(event);
 
 webSocket.listen(function (event) {
   switch (event.key) {
