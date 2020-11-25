@@ -1534,12 +1534,12 @@ class User(AbstractUser):
         PostNotify.notify_unread(self.pk)
         user_notify = UserNotify.objects.only('created').filter(recipient_id=self.pk)
         UserNotify.notify_unread(self.pk)
-        video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
+        video_notify = VideoNotify.objects.only(created).filter(recipient_id=self.pk)
         VideoNotify.notify_unread(self.pk)
 
-        list = list(chain(good_notify, photo_notify, post_notify, user_notify, video_notify))
+        list = user_notify.union(good_notify, photo_notify, post_notify, video_notify)
 
-        return sorted(list, key=lambda x: x[0])
+        return list.order_by("-created")
 
 
     def get_unread_notify(self):
