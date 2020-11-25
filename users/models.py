@@ -1539,7 +1539,7 @@ class User(AbstractUser):
 
         list = list(chain(good_notify, photo_notify, post_notify, user_notify, video_notify))
 
-        return sorted(list, key=lambda x: x[created])
+        return sorted(list, key=lambda x: x[0])
 
 
     def get_unread_notify(self):
