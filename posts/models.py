@@ -90,7 +90,7 @@ class Post(models.Model):
 			'post_id': str(post.uuid),
 			'name': "post_create",
             }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+        async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
     @classmethod
