@@ -34,6 +34,7 @@ function case_post_notify(uuid) {
 }
 function beep_notify(src) {
   audio = new Audio(src);
+  audio.setAttribute("muted", "muted");
   var playPromise = audio.play();
 }
 
