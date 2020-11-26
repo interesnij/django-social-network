@@ -44,7 +44,8 @@ function case_message_create(request_user_id, chat_id, message_uuid) {
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post)
           : lenta.prepend(new_post);
           new Audio('/static/audio/apple/message.mp3').play();
-          document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}} link_.send()
+          document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
+  link_.send()
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') != chat_id) {
     link_.open('GET', "/chat/message_progs/load_chat_message/" + uuid + "/", true);
@@ -57,8 +58,9 @@ function case_message_create(request_user_id, chat_id, message_uuid) {
         new_post = document.createElement("span");
         new_post.innerHTML = elem;
         lenta.prepend(new_post);
-        document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}} link_.send()
-  } else {
+        document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
+  link_.send()
+} else {
       chats = document.body.querySelector(".new_unread_chats");
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
