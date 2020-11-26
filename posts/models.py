@@ -691,8 +691,8 @@ class Post(models.Model):
 		    return ''
 
     def dislikes_count(self):
-	    dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-	    if dislikes > 0:
+	    count = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+	    if count > 0:
 		    return count
 	    else:
 		    return ''
