@@ -28,7 +28,8 @@ function case_user_notify() {
 function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
-       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid)
+       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
+       beep_notify('http://freewavesamples.com/files/Yamaha-TG100-Ocarina-C5.wav')
     }
 }
 function beep_notify(src) {
