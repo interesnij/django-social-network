@@ -85,7 +85,7 @@ class LoadUserMessage(TemplateView):
 		count = self.chat.get_members_count()
         first_message = self.chat.get_first_message()
         creator_figure = ''
-		user_id = request.user.pk
+	    user_id = request.user.pk
         if count == 1:
             if self.chat.image:
                 figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
