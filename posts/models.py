@@ -537,81 +537,81 @@ class Post(models.Model):
 		# FOR MOBILE PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "mobile/posts/u_posts/photo_repost.html"
+            return "mobile/main/u_posts/photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "mobile/posts/u_posts/photo_album_repost.html"
+            return "mobile/main/u_posts/photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "mobile/generic/parent_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "mobile/posts/u_posts/good_repost.html"
+            return "mobile/main/u_posts/good_repost.html"
         elif parent.is_good_list_repost():
-            return "mobile/posts/u_posts/good_list_repost.html"
+            return "mobile/main/u_posts/good_list_repost.html"
         elif parent.is_good_list_attached():
             return "mobile/generic/parent_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
-            return "mobile/posts/u_posts/music_repost.html"
+            return "mobile/main/u_posts/music_repost.html"
         elif parent.is_music_list_repost():
-            return "mobile/posts/u_posts/music_list_repost.html"
+            return "mobile/main/u_posts/music_list_repost.html"
         elif parent.is_playlist_attached():
             return "mobile/generic/parent_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
-            return "mobile/posts/u_posts/video_repost.html"
+            return "mobile/main/u_posts/video_repost.html"
         elif parent.is_video_list_repost():
-            return "mobile/posts/u_posts/video_list_repost.html"
+            return "mobile/main/u_posts/video_list_repost.html"
         elif parent.is_video_list_attached():
             return "mobile/generic/parent_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "mobile/posts/u_posts/doc_repost.html"
+            return "mobile/main/u_posts/doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "mobile/posts/u_posts/doc_list_repost.html"
+            return "mobile/main/u_posts/doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "mobile/generic/parent_attach/u_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "mobile/posts/u_posts/user_repost.html"
+            return "mobile/main/u_posts/user_repost.html"
         elif parent.is_community_repost():
-            return "mobile/posts/u_posts/community_repost.html"
+            return "mobile/main/u_posts/community_repost.html"
         else:
-            return "mobile/posts/u_posts/parent_user.html"
+            return "mobile/main/u_posts/parent_user.html"
 
     def get_c_news_parent_mobile(self):
 		# FOR MOBILE PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "mobile/posts/c_posts/photo_repost.html"
+            return "mobile/main/c_posts/photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "mobile/posts/c_posts/photo_album_repost.html"
+            return "mobile/main/c_posts/photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "mobile/generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "mobile/posts/c_posts/good_repost.html"
+            return "mobile/main/c_posts/good_repost.html"
         elif parent.is_good_list_repost():
-            return "mobile/posts/c_posts/good_list_repost.html"
+            return "mobile/main/c_posts/good_list_repost.html"
         elif parent.is_good_list_attached():
             return "mobile/generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
-            return "mobile/posts/c_posts/music_repost.html"
+            return "mobile/main/c_posts/music_repost.html"
         elif parent.is_music_list_repost():
-            return "mobile/posts/c_posts/music_list_repost.html"
+            return "mobile/main/c_posts/music_list_repost.html"
         elif parent.is_playlist_attached():
             return "mobile/generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
-            return "mobile/posts/c_posts/video_repost.html"
+            return "mobile/main/c_posts/video_repost.html"
         elif parent.is_video_list_repost():
-            return "mobile/posts/c_posts/video_list_repost.html"
+            return "mobile/main/c_posts/video_list_repost.html"
         elif parent.is_video_list_attached():
             return "mobile/generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "mobile/posts/c_posts/doc_repost.html"
+            return "mobile/main/c_posts/doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "mobile/posts/c_posts/doc_list_repost.html"
+            return "mobile/main/c_posts/doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "mobile/generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "mobile/posts/c_posts/user_repost.html"
+            return "mobile/main/c_posts/user_repost.html"
         elif parent.is_community_repost():
-            return "mobile/posts/c_posts/community_repost.html"
+            return "mobile/main/c_posts/community_repost.html"
         else:
-            return "mobile/posts/c_posts/parent_community.html"
+            return "mobile/main/c_posts/parent_community.html"
 
 
     def get_created(self):
