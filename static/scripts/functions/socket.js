@@ -32,7 +32,7 @@ function case_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container") && document.body.querySelector(".chat_list_container").getAttribute('data-pk') !=request_user_id) {
-  link_.open('GET', "/chat/message_progs/load_message/" + uuid + "/", true);
+  link_.open('GET', "/chat/message_progs/load_message/" + message_uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
@@ -48,7 +48,7 @@ function case_message_create(request_user_id, chat_id, message_uuid) {
   link_.send()
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') != chat_id) {
-    link_.open('GET', "/chat/message_progs/load_chat_message/" + uuid + "/", true);
+    link_.open('GET', "/chat/message_progs/load_chat_message/" + message_uuid + "/", true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
     link_.onreadystatechange = function() {
@@ -108,7 +108,7 @@ webSocket.listen(function (event) {
         break;
 
     case "message":
-      console.log("уведомления мообщений, звуки, отрисовка созданных элементов для участников чата");
+      console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
       if (event.creator_id != request_user_id){
         if (event.name == "message_create"){case_message_create(request_user_id, event.chat_id, event.message_id);}
       }

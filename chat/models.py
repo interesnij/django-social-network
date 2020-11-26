@@ -306,7 +306,7 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'message_id': str(self.uuid),
-            'creator_id': self.creator.pk,
+            'creator_id': self.creator.user.pk,
             'chat_id': self.chat.pk,
             'reseiver_ids': self.get_reseiver_ids(),
             'name': "message_create",
