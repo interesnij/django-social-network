@@ -85,7 +85,7 @@ class LoadUserMessage(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(LoadUserMessage,self).get_context_data(**kwargs)
-		context["object"] = self.message
+		context["chat"] = self.message.chat
 		return context
 
 
