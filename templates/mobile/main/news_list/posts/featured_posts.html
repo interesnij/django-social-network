@@ -16,13 +16,13 @@
                 {% if object.parent %}
                   {% if object.parent.community %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
-                      {% include object.get_c_news_parent %}
+                      {% include object.get_c_news_parent_mobile %}
 
                       {% include 'mobile/posts/post_community/info.html' %}
                     </div>
                   {% else %}
                     <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
-                      {% include object.get_u_news_parent %}
+                      {% include object.get_u_news_parent_mobile %}
 
                       {% include 'mobile/posts/post_user/info.html' %}
                     </div>
