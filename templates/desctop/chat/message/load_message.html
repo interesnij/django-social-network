@@ -1,5 +1,4 @@
-{% load messager %}
 
 <a class="chat_ajax" href="{% url 'chat_detail' pk=chat.pk %}">
-  {{ chat|get_preview_message:request.user.pk|safe }}
+  {{ block }}
 </a>
