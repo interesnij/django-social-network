@@ -21,6 +21,37 @@ webSocket.socket.onclose = function () {
 tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger");
 
+const context = new window.AudioContext();
+function playSuccess() {
+    const successNoise = context.createOscillator();
+    successNoise.frequency = "600";
+    successNoise.type = "sine";
+    successNoise.frequency.exponentialRampToValueAtTime(
+        800,
+        context.currentTime + 0.05
+    );
+    successNoise.frequency.exponentialRampToValueAtTime(
+        1000,
+        context.currentTime + 0.15
+    );
+
+    successGain = context.createGain();
+    successGain.gain.exponentialRampToValueAtTime(
+        0.01,
+        context.currentTime + 0.3
+    );
+
+    successFilter = context.createBiquadFilter("bandpass");
+    successFilter.Q = 0.01;
+
+    successNoise
+        .connect(successFilter)
+        .connect(successGain)
+        .connect(context.destination);
+    successNoise.start();
+    successNoise.stop(context.currentTime + 0.2);
+}
+
 function case_user_notify() {
   console.log('case_user_notify');
   audio = new Audio('/static/audio/new_event.mp3');
@@ -30,8 +61,7 @@ function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-       audio = new Audio('/static/audio/votes.mp3');
-       audio.play();
+       playSuccess();
     }
 }
 
