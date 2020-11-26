@@ -24,73 +24,91 @@ function case_post_create(request_user_id, uuid) {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           lenta.prepend(new_post);
-          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
-      }
-  };
+          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null}} link_.send()
+}}
 
-  link_.send()
+function case_message_create(request_user_id, chat_id, message_uuid) {
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+  if (document.body.querySelector(".chat_list_container") && document.body.querySelector(".chat_list_container").getAttribute('data-pk') !=request_user_id) {
+  link_.open('GET', "/chat/message_progs/load_message/" + uuid + "/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          lenta = document.body.querySelector('.is_paginate');
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post)
+          : lenta.prepend(new_post);
+          new Audio('/static/audio/apple/message.mp3').play();
+          document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}} link_.send()
 }
+  else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') != chat_id) {
+    link_.open('GET', "/chat/message_progs/load_chat_message/" + uuid + "/", true);
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        lenta = document.body.querySelector('.is_paginate');
+        elem = link_.responseText;
+        new_post = document.createElement("span");
+        new_post.innerHTML = elem;
+        lenta.prepend(new_post);
+        document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}} link_.send()
+  } else {
+      chats = document.body.querySelector(".new_unread_chats");
+      chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+      tab_span = document.createElement("span");
+      tab_span.classList.add("tab_badge", "badge-success");
+      new Audio('/static/audio/apple/message.mp3').play()
+  }
 }
 
 
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
 notify = document.body.querySelector(".new_unread_notify");
 notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), notify_count = notify_count*1) : notify_count = 0;
+tab_span = document.createElement("span");
+tab_span.classList.add("tab_badge", "badge-success");
+
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 ws_path = ws_scheme + '://' + "раса.рус:8002" + "/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
-
 webSocket.socket.onmessage = function(e){ console.log(e.data); };
-webSocket.socket.onopen = function () {
-  console.log("Соединение установлено!");
-};
-
-webSocket.socket.onclose = function () {
-  console.log("Соединение прервано...");
-};
-tab_span = document.createElement("span");
-tab_span.classList.add("tab_badge", "badge-danger");
-
+webSocket.socket.onopen = function () {console.log("Соединение установлено!")};
+webSocket.socket.onclose = function () {console.log("Соединение прервано...")};
 
 
 webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
-        console.log("notification");
+        console.log("уведомления, счетчики, и звуки");
         if (event.recipient_id == request_user_id){
-
           if (event.name == "user_notify"){ case_user_notify() }
           else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
-
-          notify_count = notify_count * 1;
-          notify_count += 1;
-          tab_span.innerHTML = notify_count;
-          notify.innerHTML = "";
-          notify.append(tab_span);
+          notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
         }
         break;
 
       case "create_item":
-        console.log("create_item");
+        console.log("отрисовка созданных элементов для пользователей на странице");
         if (event.creator_id != request_user_id){
           if (event.name == "post_create"){
             case_post_create(request_user_id, event.post_id)
-          }
-          else {
-            console.log("not post_create")
           }
         }
         break;
 
     case "message":
-      if (event.creator_id === request_user_id) {
-        console.log("Вы создатель сообщения")
-      };
-      console.log(event.reseiver_ids);
-      console.log(event.message_id);
+      console.log("уведомления мообщений, звуки, отрисовка созданных элементов для участников чата");
+      if (event.creator_id != request_user_id){
+        if (event.name == "message_create"){case_message_create(request_user_id, event.chat_id, event.message_id);}
+      }
       break;
 
     default:

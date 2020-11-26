@@ -3,7 +3,7 @@
 {% load messager %}
 {% block content %}
 
-<div class="px-0 card no-shadow pk_saver chat_load_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}"> 
+<div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
           {{ chat|get_chat_header:request.user.pk|safe }}
@@ -23,7 +23,6 @@
     <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 530px;">
         <ul class="chatlist app">
           {% if object_list %}
-          <input type="hidden" id="scrolled">
           {% for object in object_list %}
             {% include 'mobile/chat/message/message.html' %}
           {% endfor %}

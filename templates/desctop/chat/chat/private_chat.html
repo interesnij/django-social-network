@@ -5,8 +5,8 @@
 
 <div class="container main-container">
 <div class="row">
-    <div class="col-md-8 mt-3 chat_load_container">
-<div class="px-0 card no-shadow pk_saver" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+    <div class="col-md-8 mt-3">
+<div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
           {{ chat|get_chat_header:request.user.pk|safe }}

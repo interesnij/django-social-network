@@ -300,6 +300,19 @@ class Message(models.Model):
         #reseiver_ids = members_ids.remove(self.creator.pk)
         return members_ids
 
+    def create_socket(self):
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': 'message_create',
+            'message_id': str(self.uuid),
+            'creator_id': self.creator.pk,
+            'chat_id': self.chat.pk,
+            'reseiver_ids': self.get_reseiver_ids(),
+        }
+        async_to_sync(channel_layer.group_send)('message', payload)
+
+
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
@@ -317,16 +330,7 @@ class Message(models.Model):
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
         new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
-
-        channel_layer = get_channel_layer()
-        payload = {
-        'type': 'receive',
-        'key': 'message',
-        'message_id': str(new_message.uuid),
-        'creator_id': str(new_message.creator.pk),
-        'reseiver_ids': str(new_message.get_reseiver_ids()),
-        }
-        async_to_sync(channel_layer.group_send)('message', payload)
+        new_message.create_socket()
         return new_message
 
     def create_chat_append_members_and_send_message(creator, users_ids, text):
@@ -339,15 +343,7 @@ class Message(models.Model):
 
         new_message = Message.objects.create(chat=chat, creator=sender, text=text, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
-        channel_layer = get_channel_layer()
-        payload = {
-        'type': 'receive',
-        'key': 'message',
-        'message_id': str(new_message.uuid),
-        'creator_id': str(new_message.creator.pk),
-        'reseiver_ids': str(new_message.get_reseiver_ids()),
-        }
-        async_to_sync(channel_layer.group_send)('message', payload)
+        new_message.create_socket()
         return new_message
 
     def send_message(chat, creator, repost, parent, text):
@@ -356,15 +352,7 @@ class Message(models.Model):
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
-        channel_layer = get_channel_layer()
-        payload = {
-        'type': 'receive',
-        'key': 'message',
-        'message_id': str(new_message.uuid),
-        'creator_id': str(new_message.creator.pk),
-        'reseiver_ids': str(new_message.get_reseiver_ids()),
-        }
-        async_to_sync(channel_layer.group_send)('message', payload)
+        new_message.create_socket()
         return new_message
 
     def get_created(self):

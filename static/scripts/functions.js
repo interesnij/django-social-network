@@ -3,6 +3,7 @@ loadScripts('/static/scripts/functions/comment_attach.js')
 loadScripts('/static/scripts/functions/post_attach.js')
 loadScripts('/static/scripts/functions/message_attach.js')
 loadScripts('/static/scripts/functions/reload.js')
+loadScripts('/static/scripts/functions/socket.js')
 
 function checkNotifications() {
     emptyMessage = 'data-empty="true"';

@@ -11,7 +11,7 @@
       <span id="notification" class="new_unread_notify">
         {% if request.user.unread_notify_count %}
           <span class="tab_badge badge-danger">{{ request.user.unread_notify_count }}</span>
-        {% endif %}
+        {% endif %} 
       </span>
     </button>
     <button href="{% url 'messages_list' %}" class="icon border ajax">

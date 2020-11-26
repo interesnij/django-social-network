@@ -7,7 +7,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.attach.message_attacher import get_message_attach
-from common.template.user import get_settings_template, render_for_platform
+from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
 from common.check.message import check_can_send_message
 
 
@@ -55,6 +55,39 @@ class SendPageMessage(TemplateView):
 				return HttpResponse()
 			else:
 				return HttpResponseBadRequest()
+
+
+class LoadUserChatMessage(TemplateView):
+	""" Отрисовываем новое сообщение для всех участников чата, кроме текущего (это фильтруем в socket.js) - он его и так увидит сразу.
+		Отрисовываем на странице чата.
+	"""
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.message = Message.objects.get(uuid=self.kwargs["uuid"]) 
+        self.template_name = get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(LoadUserChatMessage,self).get_context_data(**kwargs)
+        context["object"] = self.message
+        return context
+
+class LoadUserMessage(TemplateView):
+	""" Отрисовываем новое сообщение для всех участников чата, кроме текущего (это фильтруем в socket.js) - он его и так увидит сразу.
+		Отрисовываем на странице чата.
+	"""
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.message = Message.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(LoadUserMessage,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(LoadUserMessage,self).get_context_data(**kwargs)
+        context["object"] = self.message
+        return context
 
 
 class SendMessage(View):
