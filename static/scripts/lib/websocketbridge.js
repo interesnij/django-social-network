@@ -33,16 +33,8 @@ function case_post_notify(uuid) {
     }
 }
 function beep_notify(src) {
-  audio = new Audio();
-  audio.src = src;
-  var promise = audio.play();
-  if (promise !== undefined) {
-  promise.then(_ => {
-    // Autoplay started!
-  }).catch(error => {
-    audio.play()
-  });
-}
+  audio = new Audio(src);
+  var playPromise = audio.play();
 }
 
 webSocket.listen(function (event) {
