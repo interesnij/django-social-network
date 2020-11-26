@@ -71,7 +71,7 @@ class Chat(models.Model):
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
         if count:
-            return '<span class="tab_badge badge-success">' + str(count) + '</span>'
+            return '<span style="font-size: 80%;" class="tab_badge badge-success">' + str(count) + '</span>'
         else:
             return ""
 
