@@ -22,13 +22,19 @@ tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger");
 
 function case_user_notify() {
-  console.log('case_user_notify')
+  console.log('case_user_notify');
+  beep_notify('http://freewavesamples.com/files/Yamaha-TG100-Ocarina-C5.wav')
 }
 function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid)
     }
+}
+function beep_notify(src) {
+  audio = new Audio();
+  audio.src = src;
+  audio.play();
 }
 
 webSocket.listen(function (event) {
