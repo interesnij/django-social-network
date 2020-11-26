@@ -23,7 +23,7 @@ tab_span.classList.add("tab_badge", "badge-danger");
 
 function case_user_notify() {
   console.log('case_user_notify');
-  beep_notify('/static/audio/new_event.mp3')
+  beep_notify('/static/audio/new_event.vav')
 }
 function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
