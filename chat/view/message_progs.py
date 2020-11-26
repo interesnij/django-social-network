@@ -117,11 +117,8 @@ class LoadUserMessage(TemplateView):
 				status = ''
 			if first_message.creator.user_id == user_id:
 				creator_figure = '<span class="underline">Вы:</span> '
-			media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + status + '<small class="float-right text-muted">' + \
-			first_message.get_created() + '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + \
-			first_message.get_preview_text() + '</p></div>'
 			media_body = '<div class="media-body"><h5 class="time-title mb-0">{}{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, status, first_message.get_created(),creator_figure,first_message.get_preview_text())
-			self.block = '<div class="media">' + figure + media_body + self.chat.get_unread_count_message(user_id) + '</div>'
+			self.block = '<div class="media">{}{}{}</div>'.format(figure, media_body, self.chat.get_unread_count_message(user_id))
 		elif count > 2:
 			if self.chat.image:
 				figure = '<figure><img src="' + self.chat.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
