@@ -22,7 +22,7 @@
     <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 530px;">
         <ul class="chatlist app is_paginate">
           {% if object_list %}
-          <input type="hidden" id="scrolled">
+
           {% for object in object_list %}
             {% include 'mobile/chat/message/message.html' %}
           {% endfor %}
