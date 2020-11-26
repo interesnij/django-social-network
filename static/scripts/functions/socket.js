@@ -31,7 +31,7 @@ function case_post_create(request_user_id, uuid) {
 function case_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
-  if (document.body.querySelector(".chat_list_container") && document.body.querySelector(".chat_list_container").getAttribute('data-pk') !=request_user_id) {
+  if (document.body.querySelector(".chat_list_container")) {
   link_.open('GET', "/chat/message_progs/load_message/" + message_uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -64,7 +64,8 @@ function case_message_create(request_user_id, chat_id, message_uuid) {
       chats = document.body.querySelector(".new_unread_chats");
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
-      tab_span.classList.add("tab_badge", "badge-success");
+      chats.classList.add("tab_badge", "badge-success");
+      chats.innerHTML = "";tab_span.append(tab_span);
       new Audio('/static/audio/apple/message.mp3').play()
   }
 }
