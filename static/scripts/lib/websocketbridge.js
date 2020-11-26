@@ -24,13 +24,13 @@ tab_span.classList.add("tab_badge", "badge-danger");
 
 function case_user_notify() {
   console.log('case_user_notify');
-  new Audio('/static/audio/new_event.mp3').play();
+  new Audio('/static/audio/event.mp3').play();
 }
 function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-       new Audio('/static/audio/votes.mp3').play();
+       new Audio('/static/audio/new_event.mp3').play();
     }
 }
 
