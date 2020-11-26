@@ -61,33 +61,32 @@ class LoadUserChatMessage(TemplateView):
 	""" Отрисовываем новое сообщение для всех участников чата, кроме текущего (это фильтруем в socket.js) - он его и так увидит сразу.
 		Отрисовываем на странице чата.
 	"""
-    template_name = None
+	template_name = None
+	def get(self,request,*args,**kwargs):
+		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
 
-    def get(self,request,*args,**kwargs):
-        self.message = Message.objects.get(uuid=self.kwargs["uuid"]) 
-        self.template_name = get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(LoadUserChatMessage,self).get_context_data(**kwargs)
-        context["object"] = self.message
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(LoadUserChatMessage,self).get_context_data(**kwargs)
+		context["object"] = self.message
+		return context
 
 class LoadUserMessage(TemplateView):
 	""" Отрисовываем новое сообщение для всех участников чата, кроме текущего (это фильтруем в socket.js) - он его и так увидит сразу.
 		Отрисовываем на странице чата.
 	"""
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(LoadUserMessage,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadUserMessage,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(LoadUserMessage,self).get_context_data(**kwargs)
-        context["object"] = self.message
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(LoadUserMessage,self).get_context_data(**kwargs)
+		context["object"] = self.message
+		return context
 
 
 class SendMessage(View):
