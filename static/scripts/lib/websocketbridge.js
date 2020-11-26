@@ -30,7 +30,7 @@ function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-       soundPlayer.play('/static/audio/new_event.mp3')
+
        var audioElement;
        if(!audioElement) {
          audioElement = document.createElement('audio');
