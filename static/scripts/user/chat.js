@@ -99,9 +99,9 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
       if ( this.readyState == 4 && this.status == 200 ) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector(".chat_load_container");
-        rtr = document.querySelector('.chat_load_container');
-        rtr.innerHTML = ajax.innerHTML;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.getElementById('ajax');
+        rtr.innerHTML = ajax.innerHTML; 
         scrollToBottom ("#scrolled");
         window.history.pushState(null, "vfgffgfgf", url);
 				page = 2;
