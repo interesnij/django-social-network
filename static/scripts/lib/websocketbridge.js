@@ -22,6 +22,41 @@ tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-danger");
 
 
+var soundPlayer = {
+  audio: null,
+  muted: false,
+  playing: false,
+  _ppromis: null,
+  puse: function () {
+      this.audio.pause();
+  },
+  play: function (file) {
+      if (this.muted) {
+          return false;
+      }
+      if (!this.audio && this.playing === false) {
+          this.audio = new Audio(file);
+          this._ppromis = this.audio.play();
+          this.playing = true;
+
+          if (this._ppromis !== undefined) {
+              this._ppromis.then(function () {
+                  soundPlayer.playing = false;
+              });
+          }
+
+      } else if (!this.playing) {
+
+          this.playing = true;
+          this.audio.src = file;
+          this._ppromis = soundPlayer.audio.play();
+          this._ppromis.then(function () {
+              soundPlayer.playing = false;
+          });
+      }
+  }
+};
+
 function case_user_notify() {
   console.log('case_user_notify');
   new Audio('/static/audio/new_event.mp3').play();
@@ -30,7 +65,7 @@ function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-       setTimeout(() => {new Audio('/static/audio/new_event.mp3').play()}, 500)
+       soundPlayer.play('/static/audio/new_event.mp3')
     }
 }
 
