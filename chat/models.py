@@ -304,13 +304,14 @@ class Message(models.Model):
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': 'message_create',
+            'key': 'message',
             'message_id': str(self.uuid),
             'creator_id': self.creator.pk,
             'chat_id': self.chat.pk,
             'reseiver_ids': self.get_reseiver_ids(),
+            'name': "message_create",
         }
-        async_to_sync(channel_layer.group_send)('message', payload)
+        async_to_sync(channel_layer.group_send)('notification', payload)
 
 
     def get_or_create_chat_and_send_message(creator, user, repost, text):
