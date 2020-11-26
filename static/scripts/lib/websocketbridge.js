@@ -23,20 +23,18 @@ tab_span.classList.add("tab_badge", "badge-danger");
 
 function case_user_notify() {
   console.log('case_user_notify');
-  beep_notify('/static/audio/new_event.wav')
+  audio = new Audio('/static/audio/new_event.mp3');
+  audio.play();
 }
 function case_post_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
        post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-       beep_notify('/static/audio/votes.mp3')
+       audio = new Audio('/static/audio/votes.mp3');
+       audio.play();
     }
 }
-function beep_notify(src) {
-  audio = new Audio(src);
-  audio.setAttribute("muted", "muted");
-  var playPromise = audio.play();
-}
+
 
 webSocket.listen(function (event) {
   switch (event.key) {
