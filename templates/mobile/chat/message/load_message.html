@@ -1,3 +1,5 @@
+<li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.pk }}">
 <a class="chat_ajax" href="{% url 'chat_detail' pk=chat.pk %}">
   {{ block|safe }}
 </a>
+</li>
