@@ -24,7 +24,8 @@ function case_post_create(request_user_id, uuid) {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           lenta.prepend(new_post);
-          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null}} link_.send()
+          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null}}
+  link_.send()
 }}
 
 function case_message_create(request_user_id, chat_id, message_uuid) {
