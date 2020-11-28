@@ -91,14 +91,11 @@ webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
         console.log("уведомления, счетчики, и звуки");
-        //if (event.recipient_id == request_user_id){
-        //  if (event.name == "user_notify"){ case_user_notify() }
-        //  else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
-        //  notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
-        //}
-        if (event.name == "user_notify"){ case_user_notify() }
-        else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
-        notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
+        if (event.recipient_id == request_user_id){
+          if (event.name == "user_notify"){ case_user_notify() }
+          else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
+          notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
+        }
         break;
 
       case "create_item":
