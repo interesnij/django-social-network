@@ -6,6 +6,8 @@ from common.check.community import check_can_get_lists
 
 
 def add_item_vote(user, request_user, item):
+    if user != request.user:
+        check_user_can_get_list(request.user, user)
     try:
         likedislike = PostVotes.objects.get(parent=item, user=request_user)
         if likedislike.vote is not PostVotes.LIKE:
@@ -20,4 +22,4 @@ def add_item_vote(user, request_user, item):
         result = True
     likes = item.likes_count()
     dislikes = item.dislikes_count()
-    return HttpResponse(json.dumps({"result": result, "like_count": str(like_count), "dislike_count": str(dislike_count)}), content_type="application/json")
+    return HttpResponse(json.dumps({"result": result, "like_count": str(likes), "dislike_count": str(dislikes)}), content_type="application/json")
