@@ -7,6 +7,7 @@ from django.views import View
 from common.model.votes import PostVotes, PostCommentVotes
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
+from common.user_progs.votes import *
 from django.http import Http404
 
 
@@ -17,33 +18,9 @@ class PostUserLikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PostVotes.LIKE:
-                likedislike.vote = PostVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostVotes.DoesNotExist:
-            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
-            if user != request.user:
-                item.notification_user_like(request.user)
-            result = True
-        likes = item.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
-        dislikes = item.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        func = add_item_vote(user, request.user, item)
+        item.notification_user_like(request.user)
+        return func
 
 
 class PostCommentUserLikeCreate(View):
