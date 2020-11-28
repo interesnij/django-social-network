@@ -1,30 +1,7 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
-  <div class="card-header">
     <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
       {{ object.creator.get_full_name_datv }}
     </a>
     {{ object.get_verb_display }}
-    <p class="mb-0 small">{{ object.get_created }}</p>
-  </div>
-  <div class="card-body">
-    <div class="fullscreen pointer">{% if object.unread %}новое{% endif %}
-      <p style="padding: 5px;">
-        {{ object.post.get_created }}
-      </p>
-      {{ object.post.text|linebreaks }}
-    </div>
-
-  <span class="post_attach_panel">
-    {% include object.post.get_u_attach_items_mobile %}
-  </span>
-  {% if object.post.parent %}
-    <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-      {% if object.post.parent.community %}
-        {% include object.post.get_c_post_parent_items_mobile %}
-      {% else %}
-        {% include object.post.get_u_post_parent_items_mobile %}
-      {% endif %}
-    </span>
-  {% endif %}
-</div>
+    от <span class="fullscreen pointer underline">{{ object.created }}<span>
 </div>
