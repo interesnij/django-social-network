@@ -5,7 +5,28 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 
 
-def add_item_like(user, request_user, item):
+def add_item_like(user, request_user, item, model):
+    if user != request_user:
+        check_user_can_get_list(request_user, user)
+    try:
+        likedislike = model.objects.get(parent=item, user=request_user)
+        if likedislike.vote is not model.LIKE:
+            likedislike.vote = model.LIKE
+            likedislike.save(update_fields=['vote'])
+            result = True
+        else:
+            likedislike.delete()
+            result = False
+    except model.DoesNotExist:
+        model.objects.create(parent=item, user=request_user, vote=model.LIKE)
+        result = True
+        if request_user.pk != user.pk:
+            item.notification_user_like(request_user)
+    likes = item.likes_count()
+    dislikes = item.dislikes_count()
+    return HttpResponse(json.dumps({"result": result, "like_count": str(likes), "dislike_count": str(dislikes)}), content_type="application/json")
+
+def add_item_dislike(user, request_user, item):
     if user != request_user:
         check_user_can_get_list(request_user, user)
     try:
@@ -25,7 +46,6 @@ def add_item_like(user, request_user, item):
     likes = item.likes_count()
     dislikes = item.dislikes_count()
     return HttpResponse(json.dumps({"result": result, "like_count": str(likes), "dislike_count": str(dislikes)}), content_type="application/json")
-
 
 def add_item_comment_like(user, request_user, comment):
     if user != request_user:

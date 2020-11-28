@@ -18,7 +18,7 @@ class PostUserLikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
-        func = add_item_like(user, request.user, item)
+        func = add_item_like(user, request.user, item, PostVotes())
         return func
 
 
