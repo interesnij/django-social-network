@@ -6,8 +6,8 @@ from common.check.community import check_can_get_lists
 
 
 def add_item_vote(user, request_user, item):
-    if user != request.user:
-        check_user_can_get_list(request.user, user)
+    if user != request_user:
+        check_user_can_get_list(request_user, user)
     try:
         likedislike = PostVotes.objects.get(parent=item, user=request_user)
         if likedislike.vote is not PostVotes.LIKE:
