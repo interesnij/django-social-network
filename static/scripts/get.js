@@ -48,11 +48,11 @@ on('body', 'click', '.ajax', function(event) {
 })
 on('body', 'click', '.notify_ajax', function(event) {
   event.preventDefault();
-  document.body.querySelector(".new_unread_notify").innerHTML = "";
   var url = this.getAttribute('href');
   if (url != window.location.pathname){
     ajax_get_reload(url);
   } else {toast_info("Вы уже на этой странице")}
+  document.body.querySelector(".new_unread_notify").innerHTML = "";
 })
 
 window.addEventListener('popstate', function (e) {

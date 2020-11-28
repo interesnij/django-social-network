@@ -10,6 +10,7 @@ from common.check.community import check_can_get_lists
 from django.http import Http404
 
 
+
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -29,9 +30,9 @@ class PostUserLikeCreate(View):
                 result = False
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
+            if user != request.user:
+                item.notification_user_like(request.user)
             result = True
-        if user != request.user:
-            item.notification_user_like(request.user)
         likes = item.likes_count()
         if likes != 0:
             like_count = likes
