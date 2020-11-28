@@ -5,7 +5,9 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 
 
-def add_item_like(user, request_user, item, model):
+def add_item_like(user, request_user, item, _model):
+    if _model == "post_votes":
+        model = PostVotes()
     if user != request_user:
         check_user_can_get_list(request_user, user)
     try:
