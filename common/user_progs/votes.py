@@ -20,7 +20,8 @@ def add_item_like(user, request_user, item):
     except PostVotes.DoesNotExist:
         PostVotes.objects.create(parent=item, user=request_user, vote=PostVotes.LIKE)
         result = True
-        item.notification_user_like(request_user)
+        if request_user.pk != user.pk:
+            item.notification_user_like(request_user)
     likes = item.likes_count()
     dislikes = item.dislikes_count()
     return HttpResponse(json.dumps({"result": result, "like_count": str(likes), "dislike_count": str(dislikes)}), content_type="application/json")
@@ -41,7 +42,8 @@ def add_item_comment_like(user, request_user, comment):
     except PostCommentVotes.DoesNotExist:
         PostCommentVotes.objects.create(item=comment, user=request_user, vote=PostCommentVotes.LIKE)
         result = True
-        comment.notification_user_comment_like(request_user)
+        if request_user.pk != user.pk:
+            comment.notification_user_comment_like(request_user)
     likes = comment.likes_count()
     dislikes = comment.dislikes_count()
     return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
