@@ -88,7 +88,7 @@ class Post(models.Model):
             "key": "create_item",
 			'creator_id': post.creator.pk,
 			'post_id': str(post.uuid),
-			'name': "post_create",
+			'name': "u_post_create",
             }
         async_to_sync(channel_layer.group_send)('notification', payload)
         return post

@@ -128,7 +128,7 @@ def post_notification_handler(creator, recipient, post, verb):
             'key': 'notification',
             'recipient_id': recipient.pk,
             'post_id': str(post.uuid),
-            'name': "post_notify",
+            'name': "u_post_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -142,7 +142,7 @@ def post_comment_notification_handler(creator, recipient, comment, verb):
             'key': key,
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
-            'name': "post_comment_notify",
+            'name': "u_post_comment_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -156,7 +156,7 @@ def post_reply_notification_handler(creator, recipient, reply, verb):
             'key': key,
             'recipient_id': recipient.pk,
             'reply_id': reply.pk,
-            'name': "post_reply_notify",
+            'name': "u_post_reply_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -168,11 +168,11 @@ def post_community_notification_handler(creator, community, post, verb):
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': 'notification',
+            'key': 'c_notification',
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'post_id': post.pk,
-            'name': "community_post_notify",
+            'name': "c_post_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -188,7 +188,7 @@ def post_comment_community_notification_handler(creator, community, comment, ver
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'comment_id': comment.pk,
-            'name': "community_post_comment_notify",
+            'name': "c_post_comment_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -203,6 +203,6 @@ def post_reply_community_notification_handler(creator, community, reply, verb):
             'recipient_id': recipient.pk,
             'community_id': community.pk,
             'reply_id': reply.pk,
-            'name': "community_post_reply_notify",
+            'name': "c_post_reply_notify",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)

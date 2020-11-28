@@ -2,7 +2,7 @@ function case_user_notify() {
   console.log('заявки, дружба, приглашения...');
   new Audio('/static/audio/apple/stargaze.mp3').play();
 }
-function case_post_notify(uuid) {
+function case_u_post_notify(uuid) {
     console.log('Реакции, репосты на записи');
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
@@ -10,7 +10,7 @@ function case_post_notify(uuid) {
     }
 }
 
-function case_post_create(request_user_id, uuid) {
+function case_u_post_create(request_user_id, uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('GET', "/posts/user/load_post/" + uuid + "/" + request_user_id + "/", true);
@@ -27,7 +27,7 @@ function case_post_create(request_user_id, uuid) {
   link_.send()
 }}
 
-function case_message_create(request_user_id, chat_id, message_uuid) {
+function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container")) {
@@ -90,27 +90,35 @@ webSocket.socket.onclose = function () {console.log("Соединение пре
 webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
-        console.log("уведомления, счетчики, и звуки");
         if (event.recipient_id == request_user_id){
+          console.log("пользователи: уведомления, счетчики, и звуки");
           if (event.name == "user_notify"){ case_user_notify() }
-          else if (event.name == "post_notify"){ case_post_notify(event.post_id) }
+          else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
+          notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
+        }
+        break;
+
+      case "c_notification":
+        if (event.recipient_id == request_user_id){
+          console.log("сообщества: уведомления, счетчики, и звуки");
+          console.log(event.community_id);
+          if (event.name == "user_notify"){ case_user_notify() }
+          else if (event.name == "c_post_notify"){ console.log("c_post_notify"); }
           notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
         }
         break;
 
       case "create_item":
-        console.log("отрисовка созданных элементов для пользователей на странице");
         if (event.creator_id != request_user_id){
-          if (event.name == "post_create"){
-            case_post_create(request_user_id, event.post_id)
-          }
+          console.log("отрисовка созданных элементов для пользователей на странице");
+          if (event.name == "u_post_create"){case_u_post_create(request_user_id, event.post_id)}
         }
         break;
 
     case "message":
-      console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
       if (event.creator_id != request_user_id){
-        if (event.name == "message_create"){case_message_create(request_user_id, event.chat_id, event.message_id);}
+        console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
+        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id);}
       }
       break;
 

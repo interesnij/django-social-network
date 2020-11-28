@@ -309,7 +309,7 @@ class Message(models.Model):
             'creator_id': self.creator.user.pk,
             'chat_id': self.chat.pk,
             'reseiver_ids': self.get_reseiver_ids(),
-            'name': "message_create",
+            'name': "u_message_create",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
