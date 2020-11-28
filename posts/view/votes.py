@@ -18,8 +18,7 @@ class PostUserLikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
-        func = add_item_vote(user, request.user, item)
-        item.notification_user_like(request.user)
+        func = add_item_like(user, request.user, item)
         return func
 
 
@@ -29,33 +28,8 @@ class PostCommentUserLikeCreate(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PostCommentVotes.LIKE:
-                likedislike.vote = PostCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
-            result = True
-        if user != request.user:
-            comment.notification_user_comment_like(request.user)
-        likes = comment.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
-        dislikes = comment.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        func = add_item_comment_like(user, request.user, comment)
+        return func
 
 
 class PostUserDislikeCreate(View):
