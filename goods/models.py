@@ -188,8 +188,11 @@ class Good(models.Model):
 			return False
 
 	def likes_count(self):
-		likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-		return likes.count()
+		likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+		if likes > 0:
+			return likes
+		else:
+			return ''
 
 	def window_likes(self):
 		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
@@ -200,8 +203,11 @@ class Good(models.Model):
 		return dislikes
 
 	def dislikes_count(self):
-		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-		return dislikes.count()
+		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+		if dislikes > 0:
+			return dislikes
+		else:
+			return ''
 
 	def window_dislikes(self):
 		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
@@ -329,12 +335,18 @@ class GoodComment(models.Model):
 		return dislikes[0:6]
 
 	def likes_count(self):
-		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk")
-		return likes.count()
+		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk").count()
+		if likes > 0:
+			return likes
+		else:
+			return ''
 
 	def dislikes_count(self):
-		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk")
-		return dislikes.count()
+		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk").count()
+		if dislikes > 0:
+			return dislikes
+		else:
+			return ''
 
 	@classmethod
 	def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):

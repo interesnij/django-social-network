@@ -174,8 +174,11 @@ class Photo(models.Model):
         return likes
 
     def likes_count(self):
-        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-        return likes.count()
+        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        if likes > 0:
+            return likes
+        else:
+            return ''
 
     def window_likes(self):
         likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
@@ -186,8 +189,11 @@ class Photo(models.Model):
         return dislikes
 
     def dislikes_count(self):
-        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        if dislikes > 0:
+            return dislikes
+        else:
+            return ''
 
     def window_dislikes(self):
         dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
@@ -279,12 +285,18 @@ class PhotoComment(models.Model):
         return self.text
 
     def likes_count(self):
-        likes = PhotoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
-        return likes.count()
+        likes = PhotoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
+        if likes > 0:
+            return likes
+        else:
+            return ''
 
     def dislikes_count(self):
-        dislikes = PhotoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        dislikes = PhotoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
+        if dislikes > 0:
+            return dislikes
+        else:
+            return ''
 
     @classmethod
     def create_comment(cls, commenter, photo_comment, parent_comment, text):

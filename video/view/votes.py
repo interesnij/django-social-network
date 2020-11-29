@@ -30,19 +30,11 @@ class VideoUserLikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.LIKE)
             result = True
-        if user != request.user:
-            video.notification_user_like(request.user)
+            if user != request.user:
+                video.notification_user_like(request.user)
         likes = video.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = video.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommentUserLikeCreate(View):
@@ -65,19 +57,11 @@ class VideoCommentUserLikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.LIKE)
             result = True
-        if user != request.user:
-            comment.notification_user_comment_like(request.user)
+            if user != request.user:
+                comment.notification_user_comment_like(request.user)
         likes = comment.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = comment.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoUserDislikeCreate(View):
@@ -100,19 +84,11 @@ class VideoUserDislikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
             result = True
-        if user != request.user:
-            video.notification_user_dislike(request.user)
+            if user != request.user:
+                video.notification_user_dislike(request.user)
         likes = item.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = video.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommentUserDislikeCreate(View):
@@ -135,19 +111,11 @@ class VideoCommentUserDislikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.DISLIKE)
             result = True
-        if user != request.user:
-            comment.notification_user_comment_dislike(request.user)
+            if user != request.user:
+                comment.notification_user_comment_dislike(request.user)
         likes = comment.likes_count()
-        if likes:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = comment.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommunityLikeCreate(View):
@@ -169,19 +137,11 @@ class VideoCommunityLikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community(community.pk):
-            video.notification_community_like(request.user)
+            if not request.user.is_staff_of_community(community.pk):
+                video.notification_community_like(request.user)
         likes = video.likes_count()
-        if likes:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = video.dislikes_count()
-        if dislikes:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommunityDislikeCreate(View):
@@ -203,19 +163,11 @@ class VideoCommunityDislikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community(community.pk):
-            video.notification_community_dislike(request.user)
+            if not request.user.is_staff_of_community(community.pk):
+                video.notification_community_dislike(request.user)
         likes = video.likes_count()
-        if likes != 0:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = item.dislikes_count()
-        if dislikes != 0:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommentCommunityLikeCreate(View):
@@ -237,19 +189,11 @@ class VideoCommentCommunityLikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.LIKE)
             result = True
-        if not request.user.is_staff_of_community(community.pk):
-            comment.notification_community_comment_like(request.user, community)
+            if not request.user.is_staff_of_community(community.pk):
+                comment.notification_community_comment_like(request.user, community)
         likes = comment.likes_count()
-        if likes:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = comment.dislikes_count()
-        if dislikes:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class VideoCommentCommunityDislikeCreate(View):
@@ -271,16 +215,8 @@ class VideoCommentCommunityDislikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.DISLIKE)
             result = True
-        if not request.user.is_staff_of_community(community.pk):
-            comment.notification_community_comment_dislike(request.user, community)
+            if not request.user.is_staff_of_community(community.pk):
+                comment.notification_community_comment_dislike(request.user, community)
         likes = comment.likes_count()
-        if likes:
-            like_count = likes
-        else:
-            like_count = ""
         dislikes = comment.dislikes_count()
-        if dislikes:
-            dislike_count = dislikes
-        else:
-            dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

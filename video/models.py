@@ -184,12 +184,18 @@ class Video(models.Model):
         video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.DISLIKE)
 
     def likes_count(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-        return likes.count()
+        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        if likes > 0:
+            return likes
+        else:
+            return ''
 
     def dislikes_count(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        if dislikes > 0:
+            return dislikes
+        else:
+            return ''
 
     def count_comments(self):
         parent_comments = VideoComment.objects.filter(video_comment_id=self.pk)
@@ -251,12 +257,18 @@ class VideoComment(models.Model):
         return likes
 
     def likes_count(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk")
-        return likes.count()
+        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        if likes > 0:
+            return likes
+        else:
+            return ''
 
     def dislikes_count(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        if dislikes > 0:
+            return dislikes
+        else:
+            return ''
 
     def window_likes(self):
         likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
