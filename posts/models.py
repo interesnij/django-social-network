@@ -789,18 +789,18 @@ class PostComment(models.Model):
         return dislikes
 
     def likes_count(self):
-		likes = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
-		if likes > 0:
-			return likes
-		else:
-			return ''
+	    likes = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
+	    if likes > 0:
+		    return likes
+	    else:
+		    return ''
 
     def dislikes_count(self):
-		dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
-		if dislikes >0:
-			return dislikes
-		else:
-			return ''
+	    dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
+	    if dislikes >0:
+		    return dislikes
+	    else:
+		    return ''
 
     def window_dislikes(self):
         dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
