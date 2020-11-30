@@ -812,7 +812,7 @@ class Community(models.Model):
         return good_notify + photo_notify + post_notify + community_notify + video_notify
 
     def count_unread_notify(self, user_pk):
-        count = count_community_unread_notify(self, user_pk)
+        count = self.count_community_unread_notify(self, user_pk)
         if count > 0:
             return '<span class="tab_badge badge-success" style="font-size: 60%;">' + count + '</span>'
         else:
