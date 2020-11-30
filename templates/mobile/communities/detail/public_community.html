@@ -1,5 +1,5 @@
 {% extends "base_mobile.html" %}
-{% load liked_user %}
+{% load exists %}
 {% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
@@ -36,7 +36,7 @@
     </div>
     <span class="row no-gutters">
       <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm ajax custom_color border pointer" style="width: -webkit-fill-available;">Сообщение</a>
+        <a class="btn btn-sm custom_color border pointer" style="width: -webkit-fill-available;">Сообщение</a>
       </span>
       <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
         <a class="btn btn-sm member_delete pointer custom_color border member_create" style="width: -webkit-fill-available;">Подписаться</a>
@@ -60,20 +60,22 @@
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
-  {% if community.id_draft_posts_exists %}
+  <span class="draft_post_container">
+  {% if request.user|is_community_draft_exists:community.pk %}
   <div class="card mt-3 user_draft_list">
     <div class="card-header">
-      <a href="{% url 'community_draft_list' pk=community.pk %}" class="ajax">
+      <a href="{% url 'community_user_draft_list' pk=community.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Предложенные записи</h4>
             </div>
-            <span class="user_draft_count">{{ community.get_count_draft_posts }}</span>
+            <span class="user_draft_count">{{ community|count_draft_posts_for_user:request.user.pk }}</span>
         </div>
       </a>
     </div>
   </div>
   {% endif %}
+  </span>
 
   {% if community.is_all_can_post %}
     {% include 'mobile/communities/detail_sections/create_post.html' %}
