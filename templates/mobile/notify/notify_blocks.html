@@ -40,7 +40,7 @@
                   <p class="mb-0">Уведомления сообщества</p>
                   <h4 class="mb-0">
                     <a class="ajax" href="{% url 'community_notify' pk=object.pk %}">
-                       {{ object.name }} <span class="tab_badge badge-success">{{ object.name|community_notify_count:user.pk }}</span>
+                       {{ object.name }} <span class="tab_badge badge-success">{{ object|community_notify_count:user.pk }}</span>
                     </a>
                   </h4>
               </div>
