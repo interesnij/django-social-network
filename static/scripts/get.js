@@ -57,7 +57,7 @@ on('body', 'click', '.notify_ajax', function(event) {
 
           // если есть блок с классом "user_notify_block", то пользователь на странице видит блоки уведомлений.
           // и, если есть у блока ()в который переходит пользователь) непрочитанные уведомления, нужно убавить общий счетчик уведомлений на число этого блока
-          if (document.body.querySelector("user_notify_block")){
+          if (document.body.querySelector(".user_notify_block")){
             user_notify_block = document.body.querySelector(".user_notify_block");
             user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                                              _count = _count*1,

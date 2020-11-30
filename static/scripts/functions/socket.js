@@ -6,8 +6,8 @@ function case_u_post_notify(uuid) {
     console.log('Реакции, репосты на записи');
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-      new Audio('/static/audio/apple/nota.mp3').play();
-    }
+    };
+    new Audio('/static/audio/apple/nota.mp3').play();
 }
 
 function case_u_post_create(request_user_id, uuid) {
