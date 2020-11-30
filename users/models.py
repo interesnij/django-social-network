@@ -1525,7 +1525,6 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        notify = []
         good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
         photo_notify = PhotoNotify.objects.only('created').filter(recipient_id=self.pk)
         post_notify = PostNotify.objects.only('created').filter(recipient_id=self.pk)
@@ -1575,10 +1574,6 @@ class User(AbstractUser):
 
     def unread_profile_notify_count(self):
         count = self.count_user_unread_notify()
-        if self.is_staffed_user():
-            communities = self.get_staffed_communities()
-            for community in communities:
-                count += community.count_community_unread_notify(self.pk)
         if count > 0:
             return '<span class="tab_badge badge-success" style="font-size: 60%;">' + str(count) + '</span>'
         else:
