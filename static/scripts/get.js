@@ -49,10 +49,29 @@ on('body', 'click', '.ajax', function(event) {
 on('body', 'click', '.notify_ajax', function(event) {
   event.preventDefault();
   var url = this.getAttribute('href');
-  if (url != window.location.pathname){
-    ajax_get_reload(url);
-  } else {toast_info("Вы уже на этой странице")}
-  document.body.querySelector(".new_unread_notify").innerHTML = "";
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('GET', url, true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+          ajax = elem_.querySelector("#reload_block");
+          rtr = document.getElementById('ajax');
+          rtr.innerHTML = ajax.innerHTML;
+          window.scrollTo(0, 0);
+          title = elem_.querySelector('title').innerHTML;
+          window.history.pushState(null, "vfgffgfgf", url);
+          document.title = title;
+          page = 2;
+          loaded = false;
+          create_pagination(rtr);
+          if elem_.querySelector(".user_all_notify_container") {
+            document.body.querySelector(".new_unread_notify").innerHTML = "";
+          }
+      }
+  }
+  ajax_link.send()
 })
 
 window.addEventListener('popstate', function (e) {
