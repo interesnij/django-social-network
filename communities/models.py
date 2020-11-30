@@ -803,6 +803,7 @@ class Community(models.Model):
         from notify.model.post import PostCommunityNotify
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
+        
         good_notify = GoodCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         photo_notify = PhotoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         post_notify = PostCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
