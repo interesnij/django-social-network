@@ -4,6 +4,7 @@
   <div class="card mb-3">
       <div class="card-body">
           <div class="media">
+            <a class="notify_ajax" href="{% url 'user_notify' %}">
             <figure style="width:50px;">
               {% if request.user.get_avatar %}
                 <img src="{{ request.user.get_avatar }}" style="border-radius:50px" alt="image">
@@ -14,11 +15,10 @@
               <div class="media-body">
                   <p class="mb-0">Уведомления профиля</p>
                   <h4 class="mb-0">
-                    <a class="notify_ajax" href="{% url 'user_notify' %}">
                        Профиль <span class="user_notify_counter">{{ request.user.unread_profile_notify_count|safe }}</span>
-                    </a>
                   </h4>
               </div>
+              </a>
           </div>
       </div>
   </div>

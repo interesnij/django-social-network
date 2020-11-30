@@ -48,18 +48,18 @@ on('body', 'click', '.ajax', function(event) {
 })
 on('body', 'click', '.notify_ajax', function(event) {
   event.preventDefault();
-  var url = this.getAttribute('href');
+  _this = this;
+  var url = _this.getAttribute('href');
+
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', url, true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-
           // если есть блок с классом "user_notify_block", то пользователь на странице видит блоки уведомлений.
-          // и, если есть у блока ()в который переходит пользователь) непрочитанные уведомления, нужно убавить общий счетчик уведомлений на число этого блока
+          // и, если есть у блока (в который переходит пользователь) непрочитанные уведомления, нужно убавить общий счетчик уведомлений на число этого блока
           if (document.body.querySelector(".user_notify_block")){
-            user_notify_block = document.body.querySelector(".user_notify_block");
-            user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
+            _this.querySelector(".tab_badge") ? (_count = _this.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                                              _count = _count*1,
                                                              notify = document.body.querySelector(".new_unread_notify"),
                                                              all_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
