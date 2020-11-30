@@ -170,6 +170,7 @@ def post_community_notification_handler(creator, community, post, verb):
             'type': 'receive',
             'key': 'notification',
             'recipient_id': user.pk,
+            'community_id': community.pk,
             'post_id': post.pk,
             'name': "c_post_notify",
         }
