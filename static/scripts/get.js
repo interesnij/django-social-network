@@ -46,10 +46,10 @@ on('body', 'click', '.ajax', function(event) {
     ajax_get_reload(url);
   } else {toast_info("Вы уже на этой странице")}
 })
-on('body', 'click', '.notify_ajax', function() {
-  var url = this.getAttribute('href');
+on('body', 'click', '.notify_ajax', function(event) {
+  event.preventDefault();
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  ajax_link.open('GET', url, true);
+  ajax_link.open('GET', this.getAttribute('href'), true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
