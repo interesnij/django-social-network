@@ -791,7 +791,7 @@ class Community(models.Model):
         notify = []
         good_notify = GoodCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
         GoodCommunityNotify.notify_unread(self.pk)
-        photo_notify = PhotoNotify.objects.only('created').filter(recipient_id=self.pk)
+        photo_notify = PhotoCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
         PhotoCommunityNotify.notify_unread(self.pk)
         post_notify = PostCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
         PostCommunityNotify.notify_unread(self.pk)
