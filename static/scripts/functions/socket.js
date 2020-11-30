@@ -91,7 +91,7 @@ webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
         if (event.recipient_id == request_user_id){
-          if (event.name == "user_notify"){ case_user_notify() } 
+          if (event.name == "user_notify"){ case_user_notify() }
           else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
 
           // добавляем единичку к общему счетчику уведомлений
@@ -104,7 +104,7 @@ webSocket.listen(function (event) {
           if (document.body.querySelector(".user_notify_block")){
             user_notify_block = document.body.querySelector(".user_notify_block");
             user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), _count = _count*1, count += 1,user_notify_block.querySelector(".tab_badge").innerHTML = _count)
-            : document.body.querySelector(".user_notify_counter").innerHTML = "1"
+            : document.body.querySelector(".user_notify_counter").innerHTML = "<span class='tab_badge badge-success' style='font-size: 60%;'>1</span>"
           }
 
         }
