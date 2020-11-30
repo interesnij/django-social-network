@@ -780,7 +780,7 @@ class Community(models.Model):
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
 
-    def get_all_community_notify(self):
+    def get_community_notify(self):
         from notify.model.good import GoodCommunityNotify
         from notify.model.photo import PhotoCommunityNotify
         from notify.model.post import PostCommunityNotify
@@ -788,20 +788,35 @@ class Community(models.Model):
         from notify.model.video import VideoCommunityNotify
         from itertools import chain
 
-        notify = []
         good_notify = GoodCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
-        GoodCommunityNotify.notify_unread(self.pk)
         photo_notify = PhotoCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
-        PhotoCommunityNotify.notify_unread(self.pk)
         post_notify = PostCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
-        PostCommunityNotify.notify_unread(self.pk)
         community_notify = UserCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
-        UserCommunityNotify.notify_unread(self.pk)
         video_notify = VideoCommunityNotify.objects.only('created').filter(recipient_id=self.pk)
-        VideoCommunityNotify.notify_unread(self.pk)
 
         result_list = sorted(chain(community_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse=True)
         return result_list
+
+    def count_community_notify(self, user_pk):
+        good_notify = GoodCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
+        photo_notify = PhotoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
+        post_notify = PostCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
+        community_notify = UserCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
+        video_notify = VideoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
+        return good_notify + photo_notify + post_notify + community_notify + video_notify
+
+    def read_user_notify(self):
+        from notify.model.good import GoodCommunityNotify
+        from notify.model.photo import PhotoCommunityNotify
+        from notify.model.post import PostCommunityNotify
+        from notify.model.user import UserCommunityNotify
+        from notify.model.video import VideoCommunityNotify
+
+        GoodCommunityNotify.notify_unread(self.pk)
+        PhotoCommunityNotify.notify_unread(self.pk)
+        PostCommunityNotify.notify_unread(self.pk)
+        UserCommunityNotify.notify_unread(self.pk)
+        VideoCommunityNotify.notify_unread(self.pk)
 
 
     ''''' модерация '''''

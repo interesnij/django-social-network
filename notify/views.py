@@ -13,7 +13,7 @@ class AllNotifyView(ListView):
     def get(self,request,*args,**kwargs):
         self.user = request.user
         self.template_name = get_settings_template("notify/all_notify.html", self.user, request.META['HTTP_USER_AGENT'])
-        self.all_notify = self.user.get_all_user_notify()
+        self.all_notify = self.user.get_user_notify()
         self.user.read_user_notify()
         return super(AllNotifyView,self).get(request,*args,**kwargs)
 
@@ -34,7 +34,7 @@ class UserNotifyView(ListView):
     def get(self,request,*args,**kwargs):
         self.user = request.user
         self.template_name = get_settings_template("notify/user_notify.html", self.user, request.META['HTTP_USER_AGENT'])
-        self.all_notify = self.user.get_all_user_notify()
+        self.all_notify = self.user.get_user_notify()
         return super(UserNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -56,7 +56,7 @@ class CommunityNotifyView(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.user = request.user
         self.template_name = get_community_moders_template("notify/community_notify.html", self.user, self.community.pk, request.META['HTTP_USER_AGENT'])
-        self.all_notify = self.community.get_all_community_notify()
+        self.all_notify = self.community.get_community_notify()
         return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

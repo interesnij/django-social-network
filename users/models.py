@@ -1517,7 +1517,7 @@ class User(AbstractUser):
         else:
             return ''
 
-    def get_all_user_notify(self):
+    def get_user_notify(self):
         from notify.model.good import GoodNotify
         from notify.model.photo import PhotoNotify
         from notify.model.post import PostNotify
