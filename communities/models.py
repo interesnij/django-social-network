@@ -797,19 +797,26 @@ class Community(models.Model):
         result_list = sorted(chain(community_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse=True)
         return result_list
 
-    def count_community_notify(self, user_pk):
+    def count_community_unread_notify(self, user_pk):
         from notify.model.good import GoodCommunityNotify
         from notify.model.photo import PhotoCommunityNotify
         from notify.model.post import PostCommunityNotify
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
-        
+
         good_notify = GoodCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         photo_notify = PhotoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         post_notify = PostCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         community_notify = UserCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         video_notify = VideoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
         return good_notify + photo_notify + post_notify + community_notify + video_notify
+
+    def count_unread_notify(self, user_pk):
+        count = count_community_unread_notify(self, user_pk)
+        if count > 0:
+            return '<span class="tab_badge badge-success" style="font-size: 60%;">' + count + '</span>'
+        else:
+            return ''
 
     def read_user_notify(self):
         from notify.model.good import GoodCommunityNotify

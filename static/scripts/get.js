@@ -68,7 +68,7 @@ on('body', 'click', '.notify_ajax', function(event) {
           create_pagination(rtr);
           if elem_.querySelector(".user_all_notify_container") {
             document.body.querySelector(".new_unread_notify").innerHTML = "";
-          }
+          } 
       }
   }
   ajax_link.send()

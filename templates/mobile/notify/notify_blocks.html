@@ -15,7 +15,7 @@
                   <p class="mb-0">Уведомления профиля</p>
                   <h4 class="mb-0">
                     <a class="ajax" href="{% url 'user_notify' %}">
-                       Профиль
+                       Профиль {{ user.unread_profile_notify_count }}
                     </a>
                   </h4>
               </div>
@@ -40,7 +40,7 @@
                   <p class="mb-0">Уведомления сообщества</p>
                   <h4 class="mb-0">
                     <a class="ajax" href="{% url 'community_notify' pk=object.pk %}">
-                       {{ object.name }} <span class="tab_badge badge-success">{{ object|community_notify_count:user.pk }}</span>
+                       {{ object.name }} {{ object|community_notify_count:user.pk }}
                     </a>
                   </h4>
               </div>

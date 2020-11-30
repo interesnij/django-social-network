@@ -1548,54 +1548,38 @@ class User(AbstractUser):
         UserNotify.notify_unread(self.pk)
         VideoNotify.notify_unread(self.pk)
 
+    def count_user_unread_notify(self):
+        from notify.model.good import GoodNotify
+        from notify.model.photo import PhotoNotify
+        from notify.model.post import PostNotify
+        from notify.model.user import UserNotify
+        from notify.model.video import VideoNotify
 
-    def get_unread_notify(self):
-        from notify.model.good import GoodNotify, GoodCommunityNotify
-        from notify.model.photo import PhotoNotify, PhotoCommunityNotify
-        from notify.model.post import PostNotify, PostCommunityNotify
-        from notify.model.user import UserNotify, UserCommunityNotify
-        from notify.model.video import VideoNotify, VideoCommunityNotify
-
-        notify = []
-        if GoodNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
-            for _not in GoodNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not.pk]
-        if PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
-            for _not in PhotoNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not.pk]
-        if PostNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
-            for _not in PostNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not.pk]
-        if UserNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
-            for _not in UserNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not.pk]
-        if VideoNotify.objects.filter(recipient_id=self.pk, unread=True).exists():
-            for _not in VideoNotify.objects.filter(recipient_id=self.pk, unread=True):
-                notify += [_not.pk]
-        if self.is_staffed_user():
-            communities = self.get_staffed_communities().values("pk")
-            communities_ids = [com['pk'] for com in communities]
-            for id in communities_ids:
-                if GoodCommunityNotify.objects.filter(community_id=id, unread=True).exists():
-                    for _not in GoodCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not.pk]
-                if PhotoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
-                    for _not in PhotoCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not.pk]
-                if PostCommunityNotify.objects.filter(community_id=id, unread=True).exists():
-                    for _not in PostCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not.pk]
-                if UserCommunityNotify.objects.filter(community_id=id, unread=True).exists():
-                    for _not in UserCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not.pk]
-                if VideoCommunityNotify.objects.filter(community_id=id, unread=True).exists():
-                    for _not in VideoCommunityNotify.objects.filter(community_id=id, unread=True):
-                        notify += [_not.pk]
-        return notify
+        good_notify = GoodNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
+        photo_notify = PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
+        post_notify = PostNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
+        community_notify = UserNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
+        video_notify = VideoNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
+        return good_notify + photo_notify + post_notify + community_notify + video_notify
 
     def unread_notify_count(self):
-        count = len(self.get_unread_notify())
-        if count == 0:
-            return ''
-        else:
+        count = self.count_user_unread_notify()
+        if self.is_staffed_user():
+            communities = self.get_staffed_communities()
+            for community in communities:
+                count += community.count_community_unread_notify(self.pk)
+        if count > 0:
             return count
+        else:
+            return ''
+
+    def unread_profile_notify_count(self):
+        count = self.count_user_unread_notify()
+        if self.is_staffed_user():
+            communities = self.get_staffed_communities()
+            for community in communities:
+                count += community.count_community_unread_notify(self.pk)
+        if count > 0:
+            return '<span class="tab_badge badge-success" style="font-size: 60%;">' + count + '</span>'
+        else:
+            return ''
