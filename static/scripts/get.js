@@ -47,8 +47,7 @@ on('body', 'click', '.ajax', function(event) {
   } else {toast_info("Вы уже на этой странице")}
 })
 on('body', 'click', '.notify_ajax', function() {
-  _this = this;
-  var url = _this.getAttribute('href');
+  var url = this.getAttribute('href');
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', url, true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -57,7 +56,7 @@ on('body', 'click', '.notify_ajax', function() {
 
           // если есть блок с классом "user_notify_block", то пользователь на странице видит блоки уведомлений.
           // и, если есть у блока непрочитанные уведомления, нужно убавить общий счетчик уведомлений на число этого блока
-          if (_this.classList.contains("user_notify_block")){
+          if (document.body.querySelector("user_notify_block")){
             user_notify_block = document.body.querySelector(".user_notify_block");
             user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                                              _count = _count*1,
