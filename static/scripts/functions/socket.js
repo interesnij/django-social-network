@@ -91,10 +91,22 @@ webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
         if (event.recipient_id == request_user_id){
-          console.log("пользователи: уведомления, счетчики, и звуки");
           if (event.name == "user_notify"){ case_user_notify() }
           else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
-          notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
+
+          // добавляем единичку к общему счетчику уведомлений
+          notify_count += 1;
+          tab_span.innerHTML = notify_count;
+          notify.innerHTML = "";
+          notify.append(tab_span);
+
+          // если мы на странице блоков уведомлений, то добавляем единичку к блоку "уведомления пользователя"
+          if (document.body.querySelector(".user_notify_block")){
+            user_notify_block = document.body.querySelector(".user_notify_block");
+            user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), _count = _count*1, count += 1,user_notify_block.querySelector(".tab_badge").innerHTML = _count)
+            : document.body.querySelector(".user_notify_counter").innerHTML = "1"
+          }
+
         }
         break;
 
