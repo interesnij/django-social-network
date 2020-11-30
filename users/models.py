@@ -1582,4 +1582,4 @@ class User(AbstractUser):
         if count > 0:
             return '<span class="tab_badge badge-success" style="font-size: 60%;">' + count + '</span>'
         else:
-            return ''
+            return 0
