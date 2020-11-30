@@ -54,6 +54,9 @@ on('body', 'click', '.notify_ajax', function() {
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+
+          // если есть блок с классом "user_notify_block", то пользователь на странице видит блоки уведомлений.
+          // и, если есть у блока непрочитанные уведомления, нужно убавить общий счетчик уведомлений на число этого блока
           if (_this.classList.contains("user_notify_block")){
             user_notify_block = document.body.querySelector(".user_notify_block");
             user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
