@@ -28,6 +28,7 @@
 <div class="col-12 community_notify_block" data-pk="{{ object.pk }}">
   <div class="card mb-3">
       <div class="card-body">
+        <a class="notify_ajax" href="{% url 'community_notify' pk=object.pk %}">
           <div class="media">
             <figure style="width:50px;">
               {% if object.get_avatar %}
@@ -39,12 +40,11 @@
               <div class="media-body">
                   <p class="mb-0">Уведомления сообщества</p>
                   <h4 class="mb-0">
-                    <a class="notify_ajax" href="{% url 'community_notify' pk=object.pk %}">
                        {{ object.name }} <span class="community_notify_counter">{{ object|community_notify_count:user.pk|safe }}</span>
-                    </a>
                   </h4>
               </div>
           </div>
+          </a>
       </div>
   </div>
 </div>
