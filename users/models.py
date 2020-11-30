@@ -1580,6 +1580,6 @@ class User(AbstractUser):
             for community in communities:
                 count += community.count_community_unread_notify(self.pk)
         if count > 0:
-            return '<span class="tab_badge badge-success" style="font-size: 60%;">' + count + '</span>'
+            return '<span class="tab_badge badge-success" style="font-size: 60%;">' + str(count) + '</span>'
         else:
-            return 0
+            return ''
