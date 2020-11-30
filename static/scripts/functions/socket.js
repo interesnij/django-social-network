@@ -9,6 +9,13 @@ function case_u_post_notify(uuid) {
     };
     new Audio('/static/audio/apple/nota.mp3').play();
 }
+function case_c_post_notify(uuid) {
+    console.log('Реакции, репосты на записи сообщества');
+    if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
+    };
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
 
 function case_u_post_create(request_user_id, uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
@@ -93,6 +100,7 @@ webSocket.listen(function (event) {
         if (event.recipient_id == request_user_id){
           if (event.name == "user_notify"){ case_user_notify() }
           else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
+          else if (event.name == "c_post_notify"){ case_c_post_notify(event.post_id) } 
 
           // добавляем единичку к общему счетчику уведомлений
           notify_count += 1;
@@ -112,16 +120,6 @@ webSocket.listen(function (event) {
             : document.body.querySelector(".user_notify_counter").innerHTML = "<span class='tab_badge badge-success' style='font-size: 60%;'>1</span>"
           }
 
-        }
-        break;
-
-      case "c_notification":
-        if (event.recipient_id == request_user_id){
-          console.log("сообщества: уведомления, счетчики, и звуки");
-          console.log(event.community_id);
-          if (event.name == "user_notify"){ case_user_notify() }
-          else if (event.name == "c_post_notify"){ console.log("c_post_notify"); }
-          notify_count = notify_count * 1;notify_count += 1;tab_span.innerHTML = notify_count;notify.innerHTML = "";notify.append(tab_span);
         }
         break;
 

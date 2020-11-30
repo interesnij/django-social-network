@@ -106,7 +106,7 @@ class PostCommunityLikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                item.notification_community_like(request.user)
+                item.notification_community_like(request.user, community)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -132,7 +132,7 @@ class PostCommunityDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                item.notification_community_dislike(request.user)
+                item.notification_community_dislike(request.user, community)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

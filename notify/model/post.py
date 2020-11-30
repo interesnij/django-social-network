@@ -168,9 +168,8 @@ def post_community_notification_handler(creator, community, post, verb):
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
-            'key': 'c_notification',
+            'key': 'notification',
             'recipient_id': recipient.pk,
-            'community_id': community.pk,
             'post_id': post.pk,
             'name': "c_post_notify",
         }
