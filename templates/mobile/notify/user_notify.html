@@ -7,23 +7,16 @@
             <span class="is_post_paginate">
               {% for object in object_list %}
                   {% if object.post %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
-                      post
-                    </div>
+                    {% include 'mobile/notify/items/post.html' %}
                   {% elif object.photo %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
-                      photo
-                    </div>
+                    {% include 'mobile/notify/items/photo.html' %}
                   {% elif object.good %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
-                      good
-                    </div>
+                    {% include 'mobile/notify/items/good.html' %}
                   {% elif object.video %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
-                      video
-                    </div>
+                    {% include 'mobile/notify/items/video.html' %}
+                  {% else %}
+                    {% include 'mobile/notify/items/user.html' %}
                   {% endif %}
-
               {% endfor %}
             </span>
           {% else %}
