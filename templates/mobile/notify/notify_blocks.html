@@ -3,8 +3,8 @@
 <div class="col-12 user_notify_block">
   <div class="card mb-3">
       <div class="card-body">
+        <a class="notify_ajax" href="{% url 'user_notify' %}">
           <div class="media">
-            <a class="notify_ajax" href="{% url 'user_notify' %}">
             <figure style="width:50px;">
               {% if request.user.get_avatar %}
                 <img src="{{ request.user.get_avatar }}" style="border-radius:50px" alt="image">
@@ -18,8 +18,8 @@
                        Профиль <span class="user_notify_counter">{{ request.user.unread_profile_notify_count|safe }}</span>
                   </h4>
               </div>
-              </a>
           </div>
+          </a>
       </div>
   </div>
 </div>
