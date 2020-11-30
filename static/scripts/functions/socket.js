@@ -122,6 +122,7 @@ webSocket.listen(function (event) {
                                                             _count += 1,
                                                             community_notify_block.querySelector(".tab_badge").innerHTML = _count
                                                            )
+           : community_notify_block.querySelector(".community_notify_counter").innerHTML = "<span class='tab_badge badge-success' style='font-size: 60%;'>1</span>"
           }
 
         }
