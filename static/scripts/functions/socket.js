@@ -91,7 +91,7 @@ webSocket.listen(function (event) {
   switch (event.key) {
       case "notification":
         if (event.recipient_id == request_user_id){
-          if (event.name == "user_notify"){ case_user_notify() }
+          if (event.name == "user_notify"){ case_user_notify() } 
           else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
 
           // добавляем единичку к общему счетчику уведомлений

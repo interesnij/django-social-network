@@ -25,7 +25,7 @@
 </div>
 
 {% for object in user.get_staffed_communities %}
-<div class="col-12">
+<div class="col-12 community_notify_block" data-pk="{{ object.pk }}">
   <div class="card mb-3">
       <div class="card-body">
           <div class="media">
