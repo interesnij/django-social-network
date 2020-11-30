@@ -46,14 +46,25 @@ on('body', 'click', '.ajax', function(event) {
     ajax_get_reload(url);
   } else {toast_info("Вы уже на этой странице")}
 })
-on('body', 'click', '.notify_ajax', function(event) {
-  event.preventDefault();
-  var url = this.getAttribute('href');
+on('body', 'click', '.notify_ajax', function() {
+  _this = this;
+  var url = _this.getAttribute('href');
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', url, true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+          if (_this.classList.contains("user_notify_block")){
+            user_notify_block = document.body.querySelector(".user_notify_block");
+            user_notify_block.querySelector(".tab_badge") ? (_count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
+                                                             _count = _count*1,
+                                                             notify = document.body.querySelector(".new_unread_notify"),
+                                                             all_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
+                                                             all_count = all_count*1,
+                                                             result = all_count - _count,
+                                                             result > 0 ? notify.querySelector(".tab_badge").innerHTML = result : notify.innerHTML = ''
+                                                           ) : null;
+          }
           elem_ = document.createElement('span');
           elem_.innerHTML = ajax_link.responseText;
           ajax = elem_.querySelector("#reload_block");
@@ -66,7 +77,7 @@ on('body', 'click', '.notify_ajax', function(event) {
           page = 2;
           loaded = false;
           create_pagination(rtr);
-          if (!elem_.querySelector(".block_notify_container")) { 
+          if (!elem_.querySelector(".block_notify_container")) {
             document.body.querySelector(".new_unread_notify").innerHTML = "";
           }
       }

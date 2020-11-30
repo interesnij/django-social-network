@@ -14,6 +14,8 @@ class AllNotifyView(ListView):
         self.user = request.user
         self.template_name = get_settings_template("notify/all_notify.html", self.user, request.META['HTTP_USER_AGENT'])
         self.all_notify = self.user.get_user_notify()
+        if not self.user.is_staffed_user():
+            self.user.read_user_notify()
         return super(AllNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -34,6 +36,7 @@ class UserNotifyView(ListView):
         self.user = request.user
         self.template_name = get_settings_template("notify/user_notify.html", self.user, request.META['HTTP_USER_AGENT'])
         self.all_notify = self.user.get_user_notify()
+        self.user.read_user_notify()
         return super(UserNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
