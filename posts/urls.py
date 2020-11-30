@@ -1,4 +1,3 @@
-from posts.views import *
 from django.conf.urls import url, include
 
 
