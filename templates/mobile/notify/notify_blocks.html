@@ -15,7 +15,7 @@
                   <p class="mb-0">Уведомления профиля</p>
                   <h4 class="mb-0">
                     <a class="ajax" href="{% url 'user_notify' %}">
-                       Профиль <span class="user_notify_counter">{{ user.unread_profile_notify_count }}</span>
+                       Профиль <span class="user_notify_counter">{{ request.user.unread_profile_notify_count }}</span>
                     </a>
                   </h4>
               </div>
