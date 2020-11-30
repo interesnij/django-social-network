@@ -169,7 +169,7 @@ def post_community_notification_handler(creator, community, post, verb):
         payload = {
             'type': 'receive',
             'key': 'notification',
-            'recipient_id': recipient.pk,
+            'recipient_id': user.pk,
             'post_id': post.pk,
             'name': "c_post_notify",
         }
