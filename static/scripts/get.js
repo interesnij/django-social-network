@@ -80,8 +80,9 @@ on('body', 'click', '.notify_ajax', function(event) {
           page = 2;
           loaded = false;
           create_pagination(rtr);
-          if (rtr.querySelector(".user_all_notify_container")) { 
+          if (rtr.querySelector(".user_all_notify_container")) {
             document.body.querySelector(".new_unread_notify").innerHTML = "";
+            console.log("Обнуляем основной счетчик")
           }
       }
   }
