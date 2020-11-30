@@ -65,7 +65,8 @@ on('body', 'click', '.notify_ajax', function(event) {
                                                              all_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                                              all_count = all_count*1,
                                                              result = all_count - _count,
-                                                             result > 0 ? notify.querySelector(".tab_badge").innerHTML = result : notify.innerHTML = ''
+                                                             result > 0 ? notify.querySelector(".tab_badge").innerHTML = result : notify.innerHTML = '',
+                                                             console.log("Вычитаем основной счетчик")
                                                            ) : null;
           }
           elem_ = document.createElement('span');

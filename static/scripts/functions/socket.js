@@ -107,8 +107,7 @@ webSocket.listen(function (event) {
                                                             _count = user_notify_block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                                             _count = _count*1,
                                                             _count += 1,
-                                                            user_notify_block.querySelector(".tab_badge").innerHTML = _count,
-                                                            console.log("Вычитаем основной счетчик")
+                                                            user_notify_block.querySelector(".tab_badge").innerHTML = _count
                                                            )
             : document.body.querySelector(".user_notify_counter").innerHTML = "<span class='tab_badge badge-success' style='font-size: 60%;'>1</span>"
           }
