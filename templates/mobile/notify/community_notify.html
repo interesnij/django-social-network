@@ -7,15 +7,15 @@
             <span class="is_post_paginate">
               {% for object in object_list %}
                   {% if object.post %}
-                    {% include 'mobile/notify/items/post.html' %}
+                    {% include 'mobile/notify/items/c_post.html' %}
                   {% elif object.photo %}
-                    {% include 'mobile/notify/items/photo.html' %}
+                    {% include 'mobile/notify/items/c_photo.html' %}
                   {% elif object.good %}
-                    {% include 'mobile/notify/items/good.html' %}
+                    {% include 'mobile/notify/items/c_good.html' %}
                   {% elif object.video %}
-                    {% include 'mobile/notify/items/video.html' %}
+                    {% include 'mobile/notify/items/c_video.html' %}
                   {% else %}
-                    {% include 'mobile/notify/items/user.html' %}
+                    {% include 'mobile/notify/items/c_user.html' %}
                   {% endif %}
               {% endfor %}
             </span>
