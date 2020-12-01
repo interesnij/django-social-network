@@ -742,7 +742,7 @@ class Post(models.Model):
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
 
-	def notification_user_like(self, user, community):
+    def notification_user_like(self, user, community):
 		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
 	def notification_user_dislike(self, user, community):
 		post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
@@ -750,7 +750,7 @@ class Post(models.Model):
 		post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
 	def notification_community_user_repost(self, user, community):
 		post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
-		
+
 
 class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
