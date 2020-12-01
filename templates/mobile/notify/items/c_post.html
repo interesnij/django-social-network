@@ -1,6 +1,24 @@
-<div class="card mb-3 pag media-body {% if forloop.last %}last{% endif %}">
-  <p style="padding:7px" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.community.pk }}">
-    <a href="{% url 'user' pk=object.creator.pk %}" class="ajax" style="text-decoration: underline">{{ object.creator.get_full_name_datv }}</a>
-    {{ object.get_verb_display }} от<a class="c_fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
-  </p>
+
+<div class="card mb-3 pag border{% if forloop.last %}last{% endif %}">
+  <div class="card-header" style="padding-bottom: 0;">
+      <div class="media">
+        <figure>
+          <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+          {% if object.community.get_avatar %}
+            <img src="{{ object.community.get_avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
+          {% else %}
+            <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg>
+          {% endif %}
+          </a>
+        </figure>
+          <div class="media-body">
+              <p class="mb-0" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.creator.pk }}">
+                <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax" style="font-weight: bold;">{{ object.community.name }}</a>
+                {{ object.get_verb_display }} от<a class="fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
+              </p>
+              <p class="mb-0 small">{{ object.get_created }}</p>
+          </div>
+      </div>
+  </div>
+  {{ object.get_svg|safe }}
 </div>
