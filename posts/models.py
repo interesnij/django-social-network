@@ -743,12 +743,12 @@ class Post(models.Model):
         return self.post_visits_count() + self.post_ad_visits_count()
 
     def notification_user_like(self, user, community):
-		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
-	def notification_user_dislike(self, user, community):
-		post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
-	def notification_user_user_repost(self, user, community):
-		post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
-	def notification_community_user_repost(self, user, community):
+	    post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
+    def notification_user_dislike(self, user, community):
+        post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
+    def notification_user_user_repost(self, user, community):
+	    post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
+    def notification_community_user_repost(self, user, community):
 		post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
 
 
