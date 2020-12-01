@@ -1,5 +1,5 @@
 
-<div class="card mb-3 pag small {% if forloop.last %}last{% endif %}">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
   <div class="card-header border-bottom">
       <div class="media">
         <figure>
@@ -16,7 +16,7 @@
                 <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">{{ object.creator.get_full_name }}</a>
                 {{ object.get_verb_display }} от<a class="fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
               </p>
-              <p class="mb-0">{{ object.get_created }}</p>
+              <p class="mb-0 small">{{ object.get_created }}</p>
           </div>
       </div>
   </div>
