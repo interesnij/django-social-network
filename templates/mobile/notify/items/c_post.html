@@ -1,0 +1,8 @@
+<div class="card mb-3 pag media-body {% if forloop.last %}last{% endif %}">
+  <p style="padding:7px" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.community.pk }}">
+    <a href="{% url 'user' pk=object.creator.pk %}" class="ajax underline">
+      {{ object.creator.get_full_name_datv }}
+    </a>
+    {{ object.get_verb_display }} от <a class="c_fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
+  </p>
+</div>

@@ -825,7 +825,7 @@ class Community(models.Model):
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
 
-        GoodCommunityNotify.notify_unread(self.pk, user_pk) 
+        GoodCommunityNotify.notify_unread(self.pk, user_pk)  
         PhotoCommunityNotify.notify_unread(self.pk, user_pk)
         PostCommunityNotify.notify_unread(self.pk, user_pk)
         UserCommunityNotify.notify_unread(self.pk, user_pk)
