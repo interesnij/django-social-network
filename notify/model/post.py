@@ -13,6 +13,7 @@ class PostNotify(models.Model):
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
     REPOST = 'R'
+    COMMUNITY_REPOST = 'CR'
     LIKE = 'L'
     DISLIKE = 'D'
     LIKE_REPLY_COMMENT = 'LRC'
@@ -32,6 +33,7 @@ class PostNotify(models.Model):
         (LIKE_REPLY_COMMENT, 'оценил Ваш ответ на комментарий  к записи'),
         (DISLIKE_REPLY_COMMENT, 'не оценил Ваш ответ к комментарий к записи'),
         (REPOST, 'поделился Вашей записью'),
+        (COMMUNITY_REPOST, 'поделилось Вашей записью'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
@@ -42,6 +44,7 @@ class PostNotify(models.Model):
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     post_comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -50,7 +53,10 @@ class PostNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        return '{} {}'.format(self.creator, self.get_verb_display())
+        if self.community:
+            return '{} {}'.format(self.community, self.get_verb_display())
+        else:
+            return '{} {}'.format(self.creator, self.get_verb_display())
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -80,6 +86,7 @@ class PostCommunityNotify(models.Model):
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
     REPOST = 'R'
+    USER_REPOST = 'UR'
     LIKE = 'L'
     DISLIKE = 'D'
     LIKE_REPLY_COMMENT = 'LRC'
@@ -96,7 +103,8 @@ class PostCommunityNotify(models.Model):
         (DISLIKE, 'не понравилась запись сообщества'),
         (LIKE_COMMENT, 'понравился комментарий в сообществе'),
         (DISLIKE_COMMENT, 'не понравился комментарий в сообществе'),
-        (REPOST, 'поделился записью сообщества'),
+        (REPOST, 'поделилось записью сообщества'),
+        (USER_REPOST, 'поделилось записью'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
@@ -130,10 +138,10 @@ class PostCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def post_notification_handler(creator, recipient, post, verb):
+def post_notification_handler(creator, recipient, community, post, verb):
     from users.models import User
 
-    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
+    PostNotify.objects.create(creator=creator, recipient=recipient, community=community, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',

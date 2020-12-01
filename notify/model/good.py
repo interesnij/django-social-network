@@ -68,6 +68,7 @@ class GoodCommunityNotify(models.Model):
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
     REPOST = 'R'
+    USER_REPOST = 'UR'
     LIKE = 'L'
     DISLIKE = 'D'
     LIKE_REPLY_COMMENT = 'LRC'
