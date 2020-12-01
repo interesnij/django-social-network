@@ -276,6 +276,15 @@ class Post(models.Model):
         return try_except(self.status == Post.USER_REPOST)
     def is_community_repost(self):
         return try_except(self.status == Post.COMMUNITY_REPOST)
+		
+	def notification_user_like(self, user, community):
+		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
+	def notification_user_dislike(self, user, community):
+		post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
+	def notification_user_user_repost(self, user, community):
+		post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
+	def notification_community_user_repost(self, user, community):
+		post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
 
     def get_c_post_parent_items_desctop(self):
         # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.
@@ -629,14 +638,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.creator.get_full_name()
-	def notification_user_like(self, user, community):
-		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
-    def notification_user_dislike(self, user, community):
-	    post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
-    def notification_user_user_repost(self, user, community):
-        post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
-    def notification_community_user_repost(self, user, community):
-	    post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
 
     def notification_community_user_repost(self, user, community):
 	    post_community_notification_handler(creator=user, community=self.community, post=self, verb=PostCommunityNotify.REPOST)
