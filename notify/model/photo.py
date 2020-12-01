@@ -105,8 +105,8 @@ class PhotoCommunityNotify(models.Model):
         return '{} {}'.format(self.creator, self.get_verb_display())
 
     @classmethod
-    def notify_unread(cls, user_pk):
-        cls.objects.filter(community_id=user_pk, unread=True).update(unread=False)
+    def notify_unread(cls, community_pk, user_pk):
+        cls.objects.filter(community_id=community_pk, recipient_id=user_pk, unread=True).update(unread=False)
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
