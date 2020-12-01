@@ -12,15 +12,11 @@
           </a>
         </figure>
           <div class="media-body">
-              <h6 class="mb-0">
-                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-                  {{ object.creator.get_full_name }}
-                </a>
-              </h6>
-              <p class="mb-0 small">{{ object.get_created }}</p>
               <p class="mb-0">
+                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">{{ object.creator.get_full_name }}</a>
                 {{ object.get_verb_display }} от<a class="fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
               </p>
+              <p class="mb-0 small">{{ object.get_created }}</p>
           </div>
       </div>
   </div>
