@@ -631,7 +631,7 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     def notification_user_like(self, user, community):
-	    post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
+		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
     def notification_user_dislike(self, user, community):
 	    post_notification_handler(creator=user, self.creator, None, self, PostNotify.DISLIKE)
     def notification_user_user_repost(self, user, community):
