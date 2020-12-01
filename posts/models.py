@@ -276,7 +276,7 @@ class Post(models.Model):
         return try_except(self.status == Post.USER_REPOST)
     def is_community_repost(self):
         return try_except(self.status == Post.COMMUNITY_REPOST)
-		
+
 	def notification_user_like(self, user, community):
 		post_notification_handler(creator=user, self.creator, None, self, PostNotify.LIKE)
 	def notification_user_dislike(self, user, community):
