@@ -749,7 +749,7 @@ class Post(models.Model):
     def notification_user_user_repost(self, user, community):
 	    post_notification_handler(user, self.creator, None, self, PostNotify.REPOST)
     def notification_community_user_repost(self, user, community):
-		post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
+        post_notification_handler(user, self.creator, community, self, PostNotify.COMMUNITY_REPOST)
 
 
 class PostComment(models.Model):
