@@ -23,13 +23,13 @@ class PhotoNotify(models.Model):
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий к изображению'),
         (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к изображению'),
-        (LIKE, 'понравилось Ваше изображение'),
-        (DISLIKE, 'не понравилось Ваше изображение'),
-        (LIKE_COMMENT, 'понравился Ваш комментарий к изображению'),
-        (DISLIKE_COMMENT, 'не понравился Ваш комментарий к изображению'),
-        (LIKE_REPLY_COMMENT, 'понравился Ваш ответ на комментарий к изображению'),
-        (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарий к изображению'),
-        (REPOST, 'поделился Вашим изображением'),
+        (LIKE, 'оценил Ваше фото'),
+        (DISLIKE, 'не оценил Ваше фото'),
+        (LIKE_COMMENT, 'оценил Ваш комментарий к фото'),
+        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к фото'),
+        (LIKE_REPLY_COMMENT, 'оценил Ваш ответ на комментарий к фото'),
+        (DISLIKE_REPLY_COMMENT, 'не оценил Ваш ответ к комментарий к фото'),
+        (REPOST, 'поделился Вашим фото'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_notifications', verbose_name="Получатель")
