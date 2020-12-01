@@ -1,6 +1,7 @@
 import json
 from users.models import User
 from posts.models import Post, PostComment
+from notify.model.post import *
 from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
@@ -11,15 +12,31 @@ from common.user_progs.votes import *
 from django.http import Http404
 
 
-
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
-        func = add_item_like(user, request.user, item)
-        return func
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+        try:
+            likedislike = PostVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not PostVotes.LIKE:
+                likedislike.vote = PostVotes.LIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+            else:
+                likedislike.delete()
+                result = False
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
+            result = True
+            if user != request.user:
+                post_notification_handler(request.user, item.creator, None, item, PostNotify.LIKE)
+        likes = item.likes_count()
+        dislikes = item.dislikes_count()
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class PostCommentUserLikeCreate(View):
@@ -53,7 +70,7 @@ class PostUserDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             if user != request.user:
-                item.notification_user_dislike(request.user)
+                post_notification_handler(request.user, item.creator, None, item, PostNotify.DISLIKE)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
