@@ -59,6 +59,7 @@ class CommunityNotifyView(ListView):
         self.user = request.user
         self.template_name = get_community_moders_template("notify/community_notify.html", self.user, self.community.pk, request.META['HTTP_USER_AGENT'])
         self.all_notify = self.community.get_community_notify()
+        self.community.read_community_notify(self.user.pk)
         return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

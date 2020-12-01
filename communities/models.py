@@ -818,18 +818,18 @@ class Community(models.Model):
         else:
             return ''
 
-    def read_user_notify(self):
+    def read_community_notify(self, user_pk):
         from notify.model.good import GoodCommunityNotify
         from notify.model.photo import PhotoCommunityNotify
         from notify.model.post import PostCommunityNotify
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
 
-        GoodCommunityNotify.notify_unread(self.pk)
-        PhotoCommunityNotify.notify_unread(self.pk)
-        PostCommunityNotify.notify_unread(self.pk)
-        UserCommunityNotify.notify_unread(self.pk)
-        VideoCommunityNotify.notify_unread(self.pk)
+        GoodCommunityNotify.notify_unread(self.pk, user_pk)
+        PhotoCommunityNotify.notify_unread(self.pk, user_pk)
+        PostCommunityNotify.notify_unread(self.pk, user_pk)
+        UserCommunityNotify.notify_unread(self.pk, user_pk)
+        VideoCommunityNotify.notify_unread(self.pk, user_pk)
 
 
     ''''' модерация '''''
