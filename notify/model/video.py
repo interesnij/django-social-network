@@ -41,6 +41,7 @@ class VideoNotify(models.Model):
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
     video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - ролики пользователя"

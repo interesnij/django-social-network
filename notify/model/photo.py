@@ -40,6 +40,7 @@ class PhotoNotify(models.Model):
     photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
     photo_comment = models.ForeignKey('gallery.PhotoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"

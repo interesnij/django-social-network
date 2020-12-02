@@ -42,6 +42,7 @@ class GoodNotify(models.Model):
     good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
     good_comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
