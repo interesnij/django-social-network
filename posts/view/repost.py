@@ -99,6 +99,8 @@ class CUPostRepost(View):
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent = parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
+            if not request.user_is_staff_of_community(community.pk):
+                post_community_notification_handler(request.user, community, None, parent, PostCommunityNotify.REPOST)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -159,6 +161,8 @@ class CCPostRepost(View):
                     new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=post.comments_enabled, parent = parent, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
+                    if not request.user_is_staff_of_community(community.pk):
+                        post_community_notification_handler(request.user, community, None, _community, PostCommunityNotify.COMMUNITY_REPOST) 
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

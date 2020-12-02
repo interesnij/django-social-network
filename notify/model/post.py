@@ -95,16 +95,16 @@ class PostCommunityNotify(models.Model):
     DISLIKE_COMMENT =  'DC'
 
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к записи сообщества'),
-        (POST_COMMENT_REPLY, 'ответил на комментарий к записи сообщества'),
+        (POST_COMMENT, 'оставил комментарий к записи'),
+        (POST_COMMENT_REPLY, 'ответил на комментарий к записи'),
         (POST_USER_MENTION, 'упомянул сообщество в записи'),
         (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
-        (LIKE, 'понравилась запись сообщества'),
-        (DISLIKE, 'не понравилась запись сообщества'),
-        (LIKE_COMMENT, 'понравился комментарий в сообществе'),
-        (DISLIKE_COMMENT, 'не понравился комментарий в сообществе'),
-        (REPOST, 'поделилось записью сообщества'),
-        (USER_REPOST, 'поделилось записью'),
+        (LIKE, 'понравилась запись'),
+        (DISLIKE, 'не понравилась запись'),
+        (LIKE_COMMENT, 'понравился комментарий'),
+        (DISLIKE_COMMENT, 'не понравился комментарий'),
+        (REPOST, 'поделился записью'),
+        (COMMUNITY_REPOST, 'поделилось записью'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
@@ -116,6 +116,7 @@ class PostCommunityNotify(models.Model):
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
     post_comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
@@ -124,10 +125,10 @@ class PostCommunityNotify(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
-        if self.post and not self.post_comment:
-            return '{} {}'.format(self.creator, self.get_verb_display(), self.post)
+        if self.community_creator:
+            return '{} {}'.format(self.community_creator, self.get_verb_display())
         else:
-            return '{} {} {}'.format(self.creator, self.get_verb_display(), self.post_comment, self.post)
+            return '{} {}'.format(self.creator, self.get_verb_display())
 
     @classmethod
     def notify_unread(cls, community_pk, user_pk):
@@ -181,10 +182,10 @@ def post_reply_notification_handler(creator, recipient, reply, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_community_notification_handler(creator, community, post, verb):
+def post_community_notification_handler(creator, community, community_creator, post, verb):
     persons = community.get_staff_members()
     for user in persons:
-        PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
+        PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
