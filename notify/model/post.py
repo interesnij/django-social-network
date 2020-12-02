@@ -95,14 +95,14 @@ class PostCommunityNotify(models.Model):
     DISLIKE_COMMENT =  'DC'
 
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к записи'),
+        (POST_COMMENT, 'написал комментарий к записи'),
         (POST_COMMENT_REPLY, 'ответил на комментарий к записи'),
         (POST_USER_MENTION, 'упомянул сообщество в записи'),
         (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
-        (LIKE, 'понравилась запись'),
-        (DISLIKE, 'не понравилась запись'),
-        (LIKE_COMMENT, 'понравился комментарий'),
-        (DISLIKE_COMMENT, 'не понравился комментарий'),
+        (LIKE, 'оценил запись'),
+        (DISLIKE, 'не оценил запись'),
+        (LIKE_COMMENT, 'оценил комментарий'),
+        (DISLIKE_COMMENT, 'не оценил комментарий'),
         (REPOST, 'поделился записью'),
         (COMMUNITY_REPOST, 'поделилось записью'),
     )
