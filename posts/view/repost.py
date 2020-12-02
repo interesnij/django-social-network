@@ -12,6 +12,7 @@ from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.attach.message_attacher import get_message_attach
 from common.template.user import get_detect_platform_template
+from notify.model.post import *
 
 
 class UUCMPostWindow(TemplateView):
