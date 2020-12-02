@@ -197,17 +197,18 @@ def post_reply_notification_handler(creator, recipient, reply, verb):
 def post_community_notification_handler(creator, community, community_creator, post, verb):
     persons = community.get_staff_members()
     for user in persons:
-        PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': user.pk,
-            'community_id': community.pk,
-            'post_id': post.pk,
-            'name': "c_post_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
+        if creator.pk != user.pk:
+            PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'post_id': post.pk,
+                'name': "c_post_notify",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
 
 
 def post_comment_community_notification_handler(creator, community, comment, verb):
