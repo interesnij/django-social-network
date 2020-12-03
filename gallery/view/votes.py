@@ -2,6 +2,7 @@ import json
 from users.models import User
 from gallery.models import Photo, PhotoComment
 from communities.models import Community
+from notify.model.photo import *
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PhotoVotes, PhotoCommentVotes
@@ -29,7 +30,7 @@ class PhotoUserLikeCreate(View):
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
             if user != request.user:
-                item.notification_user_like(request.user)
+                photo_notification_handler(request.user, item.creator, None, item, PhotoNotify.LIKE)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -54,7 +55,7 @@ class PhotoUserDislikeCreate(View):
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
             if user != request.user:
-                item.notification_user_dislike(request.user)
+                photo_notification_handler(request.user, item.creator, None, item, PhotoNotify.DISLIKE)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

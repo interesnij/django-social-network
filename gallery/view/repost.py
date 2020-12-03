@@ -6,6 +6,7 @@ from posts.forms import PostForm
 from posts.models import Post
 from gallery.models import Photo, Album
 from users.models import User
+from notify.model.photo import *
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach

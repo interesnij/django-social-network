@@ -8,30 +8,32 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class PostNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
-    COMMUNITY_REPOST = 'CR'
+    COMMENT = 'C'
+    REPLY = 'R'
+    USER_MENTION = 'PUM'
+    COMMENT_USER_MENTION = 'PCUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LR'
+    DISLIKE_REPLY = 'DR'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    COMMUNITY_REPOST = 'CR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к записи'),
-        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к записи'),
-        (POST_USER_MENTION, 'упомянул Вас в записи'),
-        (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
+        (COMMENT, 'оставил комментарий к записи'),
+        (REPLY, 'ответил на Ваш комментарий к записи'),
+        (USER_MENTION, 'упомянул Вас в записи'),
+        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
         (LIKE, 'оценил Вашу запись'),
         (DISLIKE, 'не оценил Вашу запись'),
         (LIKE_COMMENT, 'оценил Ваш комментарий к записи'),
         (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'),
-        (LIKE_REPLY_COMMENT, 'оценил Ваш ответ на комментарий  к записи'),
-        (DISLIKE_REPLY_COMMENT, 'не оценил Ваш ответ к комментарий к записи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'),
+
         (REPOST, 'поделился Вашей записью'),
         (COMMUNITY_REPOST, 'поделилось Вашей записью'),
     )
@@ -80,29 +82,32 @@ class PostNotify(models.Model):
 
 
 class PostCommunityNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    COMMUNITY_INVITE = 'CI'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
-    COMMUNITY_REPOST = 'CR'
+    COMMENT = 'C'
+    COMMENT_REPLY = 'R'
+    USER_MENTION = 'UM'
+    COMMENT_USER_MENTION = 'CUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LR'
+    DISLIKE_REPLY = 'DR'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    COMMUNITY_REPOST = 'CR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'написал комментарий к записи'),
-        (POST_COMMENT_REPLY, 'ответил на комментарий к записи'),
-        (POST_USER_MENTION, 'упомянул сообщество в записи'),
-        (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
+        (COMMENT, 'написал комментарий к записи'),
+        (REPLY, 'ответил на комментарий к записи'),
+        (USER_MENTION, 'упомянул сообщество в записи'),
+        (COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
         (LIKE, 'оценил запись'),
         (DISLIKE, 'не оценил запись'),
-        (LIKE_COMMENT, 'оценил комментарий'),
-        (DISLIKE_COMMENT, 'не оценил комментарий'),
+        (LIKE_COMMENT, 'оценил комментарий к записи'),
+        (DISLIKE_COMMENT, 'не оценил комментарий к записи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'),
+
         (REPOST, 'поделился записью'),
         (COMMUNITY_REPOST, 'поделилось записью'),
     )
@@ -152,8 +157,6 @@ class PostCommunityNotify(models.Model):
 
 
 def post_notification_handler(creator, recipient, community, post, verb):
-    from users.models import User
-
     PostNotify.objects.create(creator=creator, recipient=recipient, community=community, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -166,8 +169,6 @@ def post_notification_handler(creator, recipient, community, post, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 def post_comment_notification_handler(creator, recipient, comment, verb):
-    from users.models import User
-
     PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=comment, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -180,8 +181,6 @@ def post_comment_notification_handler(creator, recipient, comment, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 def post_reply_notification_handler(creator, recipient, reply, verb):
-    from users.models import User
-
     PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=reply, verb=verb)
     channel_layer = get_channel_layer()
     payload = {

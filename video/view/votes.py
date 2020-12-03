@@ -2,6 +2,7 @@ import json
 from users.models import User
 from video.models import Video, VideoComment
 from communities.models import Community
+from notify.model.video import *
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import VideoVotes, VideoCommentVotes
@@ -31,8 +32,35 @@ class VideoUserLikeCreate(View):
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.LIKE)
             result = True
             if user != request.user:
-                video.notification_user_like(request.user)
+                video_notification_handler(request.user, item.creator, None, item, VideoNotify.LIKE)
         likes = video.likes_count()
+        dislikes = video.dislikes_count()
+        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+
+
+class VideoUserDislikeCreate(View):
+    def get(self, request, **kwargs):
+        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax() and not video.votes_on:
+            raise Http404
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+        try:
+            likedislike = VideoVotes.objects.get(parent=video, user=request.user)
+            if likedislike.vote is not VideoVotes.DISLIKE:
+                likedislike.vote = VideoVotes.DISLIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+            else:
+                likedislike.delete()
+                result = False
+        except VideoVotes.DoesNotExist:
+            VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
+            result = True
+            if user != request.user:
+                video_notification_handler(request.user, item.creator, None, item, VideoNotify.DISLIKE)
+        likes = item.likes_count()
         dislikes = video.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
@@ -61,33 +89,6 @@ class VideoCommentUserLikeCreate(View):
                 comment.notification_user_comment_like(request.user)
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
-
-
-class VideoUserDislikeCreate(View):
-    def get(self, request, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not video.votes_on:
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        try:
-            likedislike = VideoVotes.objects.get(parent=video, user=request.user)
-            if likedislike.vote is not VideoVotes.DISLIKE:
-                likedislike.vote = VideoVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except VideoVotes.DoesNotExist:
-            VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
-            result = True
-            if user != request.user:
-                video.notification_user_dislike(request.user)
-        likes = item.likes_count()
-        dislikes = video.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 

@@ -9,28 +9,38 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class VideoNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
+    COMMENT = 'C'
+    REPLY = 'R'
+    USER_MENTION = 'PUM'
+    COMMENT_USER_MENTION = 'PCUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LR'
+    DISLIKE_REPLY = 'DR'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    ALBUM_REPOST = 'ARE'
+    COMMUNITY_REPOST = 'CR'
+    ALBUM_COMMUNITY_REPOST = 'ACR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к ролику'),
-        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к ролику'),
-        (LIKE, 'оценил Ваш ролик'),
-        (DISLIKE, 'не оценил Ваш ролик'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к ролику'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к ролику'),
-        (LIKE_REPLY_COMMENT, 'оценил Ваш ответ на комментарий  к ролику'),
-        (DISLIKE_REPLY_COMMENT, 'не оценил Ваш ответ к комментарий к ролику'),
-        (REPOST, 'поделился Вашим роликом'),
+        (COMMENT, 'оставил комментарий к видеозаписи'),
+        (REPLY, 'ответил на Ваш комментарий к видеозаписи'),
+        (USER_MENTION, 'упомянул Вас в видеозаписи'),
+        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к видеозаписи'),
+        (LIKE, 'оценил Вашу видеозапись'),
+        (DISLIKE, 'не оценил Вашу видеозапись'),
+        (LIKE_COMMENT, 'оценил Ваш комментарий к видеозаписи'),
+        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к видеозаписи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к видеозаписи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к видеозаписи'),
+
+        (REPOST, 'поделился Вашей видеозаписью'),
+        (COMMUNITY_REPOST, 'поделилось Вашей видеозаписью'),
+        (ALBUM_REPOST, 'поделился Вашим видеоальбомом'),
+        (ALBUM_COMMUNITY_REPOST, 'поделилось Вашим видеоальбомом'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_notifications', verbose_name="Получатель")
@@ -39,6 +49,7 @@ class VideoNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
     video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
@@ -65,30 +76,38 @@ class VideoNotify(models.Model):
 
 
 class VideoCommunityNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    COMMUNITY_INVITE = 'CI'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
-    USER_REPOST = 'UR'
+    COMMENT = 'C'
+    REPLY = 'R'
+    USER_MENTION = 'UM'
+    COMMENT_USER_MENTION = 'CUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LR'
+    DISLIKE_REPLY = 'DR'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    ALBUM_REPOST = 'ARE'
+    COMMUNITY_REPOST = 'CR'
+    ALBUM_COMMUNITY_REPOST = 'ACR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к записи сообщества'),
-        (POST_COMMENT_REPLY, 'ответил на комментарий к записи сообщества'),
-        (POST_USER_MENTION, 'упомянул сообщество в записи'),
-        (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
-        (LIKE, 'понравилась запись сообщества'),
-        (DISLIKE, 'не понравилась запись сообщества'),
-        (LIKE_COMMENT, 'понравился комментарий в сообществе'),
-        (DISLIKE_COMMENT, 'не понравился комментарий в сообществе'),
-        (REPOST, 'поделился записью сообщества'),
+        (COMMENT, 'написал комментарий к видеозаписи'),
+        (REPLY, 'ответил на комментарий к видеозаписи'),
+        (USER_MENTION, 'упомянул сообщество в видеозаписи'),
+        (COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к видеозаписи'),
+        (LIKE, 'оценил видеозапись'),
+        (DISLIKE, 'не оценил видеозапись'),
+        (LIKE_COMMENT, 'оценил комментарий к видеозаписи'),
+        (DISLIKE_COMMENT, 'не оценил комментарий к видеозаписи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к видеозаписи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к видеозаписи'),
+
+        (REPOST, 'поделился видеозаписью'),
+        (COMMUNITY_REPOST, 'поделилось видеозаписью'),
+        (ALBUM_REPOST, 'поделился фотоальбомом'),
+        (ALBUM_COMMUNITY_REPOST, 'поделилось фотоальбомом'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
@@ -98,8 +117,10 @@ class VideoCommunityNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
     video_comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - ролики сообщества"
@@ -122,17 +143,15 @@ class VideoCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def video_notification_handler(creator, recipient, video, verb):
-    from users.models import User
-
-    VideoNotify.objects.create(creator=creator, recipient=recipient, video=video, verb=verb)
+def video_notification_handler(creator, recipient, community, video, album, verb):
+    VideoNotify.objects.create(creator=creator, recipient=recipient, community=community, video=video, album=album, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
             'video_id': video.pk,
-            'name': "video_notify",
+            'name': "u_video_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -165,20 +184,29 @@ def video_reply_notification_handler(creator, recipient, reply, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def video_community_notification_handler(creator, community, video, verb):
+def video_community_notification_handler(creator, community, community_creator, video, album, verb):
     persons = community.get_staff_members()
     for user in persons:
-        VideoCommunityNotify.objects.create(creator=creator, community=community, video=video, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'video_id': video.pk,
-            'name': "community_video_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
+        if creator.pk != user.pk:
+            VideoCommunityNotify.objects.create(
+                                                creator=creator,
+                                                community=community,
+                                                community_creator=community_creator,
+                                                video=video,
+                                                album=album,
+                                                recipient=user,
+                                                verb=verb
+                                                )
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'video_id': video.pk,
+                'name': "c_video_notify",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
 
 
 def video_comment_community_notification_handler(creator, community, comment, verb):

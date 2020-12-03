@@ -8,28 +8,38 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class PhotoNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
+    COMMENT = 'C'
+    REPLY = 'R'
+    USER_MENTION = 'UM'
+    COMMENT_USER_MENTION = 'CUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LR'
+    DISLIKE_REPLY = 'DR'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    ALBUM_REPOST = 'ARE'
+    COMMUNITY_REPOST = 'CR'
+    ALBUM_COMMUNITY_REPOST = 'ACR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к изображению'),
-        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к изображению'),
+        (COMMENT, 'оставил комментарий к фото'),
+        (REPLY, 'ответил на Ваш комментарий к фото'),
+        (USER_MENTION, 'упомянул Вас в фото'),
+        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к фото'),
         (LIKE, 'оценил Ваше фото'),
         (DISLIKE, 'не оценил Ваше фото'),
         (LIKE_COMMENT, 'оценил Ваш комментарий к фото'),
         (DISLIKE_COMMENT, 'не оценил Ваш комментарий к фото'),
-        (LIKE_REPLY_COMMENT, 'оценил Ваш ответ на комментарий к фото'),
-        (DISLIKE_REPLY_COMMENT, 'не оценил Ваш ответ к комментарий к фото'),
-        (REPOST, 'поделился Вашим фото'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к фото'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к фото'),
+
+        (REPOST, 'поделился Вашей фотографией'),
+        (COMMUNITY_REPOST, 'поделилось Вашей фотографией'),
+        (ALBUM_REPOST, 'поделился Вашим фотоальбомом'),
+        (ALBUM_COMMUNITY_REPOST, 'поделилось Вашим фотоальбомом'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_notifications', verbose_name="Получатель")
@@ -38,6 +48,7 @@ class PhotoNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
     photo_comment = models.ForeignKey('gallery.PhotoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
@@ -61,30 +72,36 @@ class PhotoNotify(models.Model):
 
 
 class PhotoCommunityNotify(models.Model):
-    POST_COMMENT = 'PC'
-    POST_COMMENT_REPLY = 'PCR'
-    COMMUNITY_INVITE = 'CI'
-    POST_USER_MENTION = 'PUM'
-    POST_COMMENT_USER_MENTION = 'PCUM'
-    REPOST = 'R'
-    USER_REPOST = 'UR'
+    COMMENT = 'C'
+    REPLY = 'R'
+    USER_MENTION = 'UM'
+    COMMENT_USER_MENTION = 'CUM'
     LIKE = 'L'
     DISLIKE = 'D'
-    LIKE_REPLY_COMMENT = 'LRC'
-    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_REPLY = 'LRC'
+    DISLIKE_REPLY = 'DRC'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
+    REPOST = 'RE'
+    ALBUM_REPOST = 'ARE'
+    COMMUNITY_REPOST = 'CR'
+    ALBUM_COMMUNITY_REPOST = 'ACR'
+
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий к изображению сообщества'),
-        (POST_COMMENT_REPLY, 'ответил на комментарий к изображению сообщества'),
+        (COMMENT, 'оставил комментарий к изображению сообщества'),
+        (REPLY, 'ответил на комментарий к изображению сообщества'),
         (LIKE, 'понравилось изображение сообщества'),
         (DISLIKE, 'не понравилось изображение сообщества'),
         (LIKE_COMMENT, 'понравился комментарий к изображению сообщества'),
         (DISLIKE_COMMENT, 'не понравился комментарий к изображению сообщества'),
-        (LIKE_REPLY_COMMENT, 'понравился ответ на комментарий к изображению сообщества'),
-        (DISLIKE_REPLY_COMMENT, 'не понравился ответ к комментарий к изображению сообщества'),
-        (REPOST, 'поделился изображением сообщества'),
+        (LIKE_REPLY, 'понравился ответ на комментарий к изображению сообщества'),
+        (DISLIKE_REPLY, 'не понравился ответ к комментарий к изображению сообщества'),
+
+        (REPOST, 'поделился фотографией'),
+        (COMMUNITY_REPOST, 'поделилось фотографией'),
+        (ALBUM_REPOST, 'поделился фотоальбомом'),
+        (ALBUM_COMMUNITY_REPOST, 'поделилось фотоальбомом'),
     )
 
     community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
@@ -94,8 +111,10 @@ class PhotoCommunityNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
     photo_comment = models.ForeignKey('gallery.PhotoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
+    community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"
@@ -115,23 +134,20 @@ class PhotoCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def photo_notification_handler(creator, recipient, photo, verb):
-    from users.models import User
-
-    PhotoNotify.objects.create(creator=creator, recipient=recipient, photo=photo, verb=verb)
+def photo_notification_handler(creator, recipient, community, photo, album, verb):
+    PhotoNotify.objects.create(creator=creator, recipient=recipient, community=community, photo=photo, album=album, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': 'notification',
             'recipient_id': recipient.pk,
             'photo_id': photo.pk,
-            'name': "photo_notify",
+            'name': "u_photo_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def photo_comment_notification_handler(creator, recipient, comment, verb):
-    from users.models import User
 
+def photo_comment_notification_handler(creator, recipient, comment, verb):
     PhotoNotify.objects.create(creator=creator, recipient=recipient, photo_comment=comment, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -144,8 +160,6 @@ def photo_comment_notification_handler(creator, recipient, comment, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 def photo_reply_notification_handler(creator, recipient, reply, verb):
-    from users.models import User
-
     PhotoNotify.objects.create(creator=creator, recipient=recipient, photo_comment=reply, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
@@ -158,24 +172,32 @@ def photo_reply_notification_handler(creator, recipient, reply, verb):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def photo_community_notification_handler(creator, community, photo, verb):
+def photo_community_notification_handler(creator, community, community_creator, photo, album, verb):
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotify.objects.create(creator=creator, community=community, photo=photo, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'photo_id': photo.pk,
-            'name': "community_photo_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
+        if creator.pk != user.pk:
+            PhotoCommunityNotify.objects.create(
+                                                creator=creator,
+                                                community=community,
+                                                community_creator=community_creator,
+                                                photo=photo,
+                                                album=album,
+                                                recipient=user,
+                                                verb=verb
+                                                )
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'photo_id': photo.pk,
+                'name': "c_photo_notify",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
 
 
 def photo_comment_community_notification_handler(creator, community, comment, verb):
-
     persons = community.get_staff_members()
     for user in persons:
         PhotoCommunityNotify.objects.create(creator=creator, community=community, photo_comment=comment, recipient=user, verb=verb)

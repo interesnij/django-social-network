@@ -6,6 +6,7 @@ from posts.forms import PostForm
 from posts.models import Post
 from video.models import Video, VideoAlbum
 from users.models import User
+from notify.model.video import *
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
