@@ -1,7 +1,7 @@
 {% load notifier %}
 
-<div class="col-12 user_notify_block border">
-  <div class="card mb-3">
+<div class="col-12 user_notify_block">
+  <div class="card mb-3 border">
       <div class="card-body">
         <a class="notify_ajax" href="{% url 'user_notify' %}">
           <div class="media">
@@ -25,8 +25,8 @@
 </div>
 
 {% for object in user.get_staffed_communities %}
-<div class="col-12 community_notify_block border" data-pk="{{ object.pk }}">
-  <div class="card mb-3">
+<div class="col-12 community_notify_block" data-pk="{{ object.pk }}">
+  <div class="card mb-3 border">
       <div class="card-body">
         <a class="notify_ajax" href="{% url 'community_notify' pk=object.pk %}">
           <div class="media">
