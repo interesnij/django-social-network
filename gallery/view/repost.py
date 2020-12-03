@@ -167,7 +167,7 @@ class UCPhotoRepost(View):
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if photo.creator.pk != request.user.pk:
-                        photo_repost_notification_handler(request.user, photo.creator, None, None, photo, PostNotify.COMMUNITY_REPOST)
+                        photo_repost_notification_handler(request.user, photo.creator, None, None, photo, PhotoNotify.COMMUNITY_REPOST)
         return HttpResponse()
 
 
@@ -291,7 +291,7 @@ class UCPhotoAlbumRepost(View):
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if album.creator.pk != request.user.pk:
-                        photo_repost_notification_handler(request.user, photo.creator, community, album, None, PostNotify.ALBUM_COMMUNITY_REPOST)
+                        photo_repost_notification_handler(request.user, photo.creator, community, album, None, PhotoNotify.ALBUM_COMMUNITY_REPOST)
         return HttpResponse()
 
 
