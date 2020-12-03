@@ -247,6 +247,6 @@ def post_repost_community_notification_handler(creator, community, post, verb):
                 'recipient_id': user.pk,
                 'community_id': community.pk,
                 'post_id':  str(post.uuid),
-                'name': "c_post_repost_notify",
+                'name': "c_post_repost_notify", 
             }
             async_to_sync(channel_layer.group_send)('notification', payload)
