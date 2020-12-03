@@ -4,38 +4,42 @@ function case_user_notify() {
 }
 function case_u_post_notify(uuid) {
     console.log('Реакции на записи');
+    try{
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-    };
+    }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 function case_c_post_notify(uuid) {
     console.log('Реакции на записи сообщества');
+    try{
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
-    };
+    }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 function case_u_post_repost_notify(uuid) {
     console.log('Репосты на записи');
+    try{
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
       block = post.querySelector(".repost_count");
       block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       count += 1;
       block.innerHTML = count;
-    };
+    }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 function case_c_post_repost_notify(uuid) {
     console.log('Репосты на записи сообщества');
+    try{
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
       block = post.querySelector(".repost_count");
       block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       count += 1;
       block.innerHTML = count;
-    };
+    }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 
