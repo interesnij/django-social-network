@@ -134,8 +134,8 @@ class PhotoCommunityNotify(models.Model):
         return naturaltime(self.created)
 
 
-def photo_notification_handler(creator, recipient, community, photo, album, verb):
-    PhotoNotify.objects.create(creator=creator, recipient=recipient, community=community, photo=photo, album=album, verb=verb)
+def photo_notification_handler(creator, recipient, photo, verb):
+    PostNotify.objects.create(creator=creator, recipient=recipient, photo=photo, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
@@ -146,33 +146,74 @@ def photo_notification_handler(creator, recipient, community, photo, album, verb
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-
-def photo_comment_notification_handler(creator, recipient, comment, verb):
-    PhotoNotify.objects.create(creator=creator, recipient=recipient, photo_comment=comment, verb=verb)
+def photo_comment_notification_handler(creator, comment, verb, name):
+    PhotoNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
+    if comment.parent_comment:
+        photo_pk = comment.parent_comment.photo.pk
+    else:
+        photo_pk = comment.photo.pk
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': 'notification',
+            'key': key,
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
-            'name': "photo_comment_notify",
+            'photo_id': photo.pk,
+            'name': name,
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def photo_reply_notification_handler(creator, recipient, reply, verb):
-    PhotoNotify.objects.create(creator=creator, recipient=recipient, photo_comment=reply, verb=verb)
+def photo_repost_notification_handler(creator, recipient, community, album, photo, verb):
+    PhotoNotify.objects.create(creator=creator, recipient=recipient, community=community, album=album, photo=photo, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': 'notification',
             'recipient_id': recipient.pk,
-            'reply_id': reply.pk,
-            'name': "photo_reply_notify",
+            'photo_id': photo.pk,
+            'name': "u_photo_repost_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def photo_community_notification_handler(creator, community, community_creator, photo, album, verb):
+
+def photo_community_notification_handler(creator, community, photo, verb):
+    persons = community.get_staff_members()
+    for user in persons:
+        if creator.pk != user.pk:
+            PhotoCommunityNotify.objects.create(creator=creator, community=community, photo=photo, recipient=user, verb=verb)
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'photo_id':  photo.pk,
+                'name': "c_photo_notify",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
+
+def photo_community_comment_notification_handler(creator, community, comment, verb, name):
+    persons = community.get_staff_members()
+    if comment.parent_comment:
+        photo_pk = comment.parent_comment.photo.pk
+    else:
+        photo_pk = comment.photo.pk
+    for user in persons:
+        if creator.pk != user.pk:
+            PhotoCommunityNotify.objects.create(creator=creator, community=community, comment=comment, recipient=user, verb=verb)
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'photo_id': photo_pk,
+                'name': name,
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
+
+def photo_repost_community_notification_handler(creator, community, community_creator, album, photo, verb):
     persons = community.get_staff_members()
     for user in persons:
         if creator.pk != user.pk:
@@ -180,8 +221,8 @@ def photo_community_notification_handler(creator, community, community_creator, 
                                                 creator=creator,
                                                 community=community,
                                                 community_creator=community_creator,
-                                                photo=photo,
                                                 album=album,
+                                                photo=photo,
                                                 recipient=user,
                                                 verb=verb
                                                 )
@@ -191,38 +232,7 @@ def photo_community_notification_handler(creator, community, community_creator, 
                 'key': 'notification',
                 'recipient_id': user.pk,
                 'community_id': community.pk,
-                'photo_id': photo.pk,
-                'name': "c_photo_notify",
+                'photo_id':  photo.pk,
+                'name': "c_photo_repost_notify",
             }
             async_to_sync(channel_layer.group_send)('notification', payload)
-
-
-def photo_comment_community_notification_handler(creator, community, comment, verb):
-    persons = community.get_staff_members()
-    for user in persons:
-        PhotoCommunityNotify.objects.create(creator=creator, community=community, photo_comment=comment, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'comment_id': comment.pk,
-            'name': "community_photo_comment_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
-
-def photo_reply_community_notification_handler(creator, community, reply, verb):
-    persons = community.get_staff_members()
-    for user in persons:
-        PhotoCommunityNotify.objects.create(creator=creator, community=community, photo_comment=reply, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'reply_id': reply.pk,
-            'name': "community_photo_reply_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)

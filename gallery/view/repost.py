@@ -115,6 +115,8 @@ class UUPhotoRepost(View):
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
+            if parent.creator.pk != request.user.pk:
+                photo_repost_notification_handler(request.user, photo.creator, None, None, photo, PhotoNotify.REPOST)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -135,6 +137,7 @@ class CUPhotoRepost(View):
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
+            photo_repost_community_notification_handler(request.user, community, None, None, photo, PhotoCommunityNotify.REPOST)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -149,7 +152,22 @@ class UCPhotoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(photo, Post.PHOTO_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=photo.creator, status=Post.PHOTO_REPOST)
+            photo.post.add(parent)
+            for community_id in communities:
+                community = Community.objects.get(pk=community_id)
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_processing(new_post)
+                    if photo.creator.pk != request.user.pk:
+                        photo_repost_notification_handler(request.user, photo.creator, None, None, photo, PostNotify.COMMUNITY_REPOST)
         return HttpResponse()
 
 
@@ -161,7 +179,21 @@ class CCPhotoRepost(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_community_send(photo, Post.PHOTO_REPOST, community, request)
+        communities = request.POST.getlist("communities")
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=photo.creator, community=community, status=Post.PHOTO_REPOST)
+            photo.post.add(parent)
+            for community_id in communities:
+                community = Community.objects.get(pk=community_id)
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_processing(new_post)
+                    photo_repost_community_notification_handler(request.user, community, _community, None, photo, PhotoCommunityNotify.COMMUNITY_REPOST)
         return HttpResponse()
 
 
@@ -207,6 +239,8 @@ class UUPhotoAlbumRepost(View):
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
+            if album.creator.pk != request.user.pk:
+                photo_repost_notification_handler(request.user, photo.creator, None, album, None, PhotoNotify.ALBUM_REPOST)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -227,6 +261,7 @@ class CUPhotoAlbumRepost(View):
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
+            photo_repost_community_notification_handler(request.user, community, None, album, None, PhotoCommunityNotify.ALBUM_REPOST)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -241,7 +276,22 @@ class UCPhotoAlbumRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(album, Post.PHOTO_ALBUM_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, status=Post.PHOTO_ALBUM_REPOST)
+            album.post.add(parent)
+            for community_id in communities:
+                community = Community.objects.get(pk=community_id)
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_processing(new_post)
+                    if album.creator.pk != request.user.pk:
+                        photo_repost_notification_handler(request.user, photo.creator, community, album, None, PostNotify.ALBUM_COMMUNITY_REPOST)
         return HttpResponse()
 
 
@@ -253,6 +303,22 @@ class CCPhotoAlbumRepost(View):
         album = Album.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
+        communities = request.POST.getlist("communities")
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, status=Post.PHOTO_ALBUM_REPOST)
+            album.post.add(parent)
+            for community_id in communities:
+                _community = Community.objects.get(pk=community_id)
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=_community, comments_enabled=False, parent=parent, status="PG")
+                    get_post_attach(request, new_post)
+                    get_post_processing(new_post)
+                    if album.creator.pk != request.user.pk:
+                        photo_repost_community_notification_handler(request.user, community, _community, album, None, PhotoCommunityNotify.ALBUM_COMMUNITY_REPOST)
         repost_community_send(album, Post.PHOTO_ALBUM_REPOST, community, request)
         return HttpResponse()
 

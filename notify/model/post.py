@@ -185,8 +185,8 @@ def post_comment_notification_handler(creator, comment, verb, name):
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_repost_notification_handler(creator, recipient, post, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
+def post_repost_notification_handler(creator, recipient, community, post, verb):
+    PostNotify.objects.create(creator=creator, recipient=recipient, community=community, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
