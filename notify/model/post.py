@@ -156,8 +156,8 @@ class PostCommunityNotify(models.Model):
             return ''
 
 
-def post_notification_handler(creator, recipient, community, post, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, community=community, post=post, verb=verb)
+def post_notification_handler(creator, recipient, post, verb):
+    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
@@ -168,74 +168,85 @@ def post_notification_handler(creator, recipient, community, post, verb):
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_comment_notification_handler(creator, recipient, comment, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=comment, verb=verb)
+def post_comment_notification_handler(creator, comment, verb, name):
+    PostNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
+    if comment.parent_comment:
+        post_uuid = comment.parent_comment.post.uuid
+    else:
+        post_uuid = comment.post.uuid
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': key,
             'recipient_id': recipient.pk,
             'comment_id': comment.pk,
-            'name': "u_post_comment_notify",
+            'post_id': str(post_uuid),
+            'name': name,
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_reply_notification_handler(creator, recipient, reply, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, post_comment=reply, verb=verb)
+def post_repost_notification_handler(creator, recipient, post, verb):
+    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
-            'key': key,
+            'key': 'notification',
             'recipient_id': recipient.pk,
-            'reply_id': reply.pk,
-            'name': "u_post_reply_notify",
+            'post_id': str(post.uuid),
+            'name': "u_post_repost_notify",
         }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-def post_community_notification_handler(creator, community, community_creator, post, verb):
+
+def post_community_notification_handler(creator, community, post, verb):
     persons = community.get_staff_members()
     for user in persons:
         if creator.pk != user.pk:
-            PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
+            PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
             channel_layer = get_channel_layer()
             payload = {
                 'type': 'receive',
                 'key': 'notification',
                 'recipient_id': user.pk,
                 'community_id': community.pk,
-                'post_id': post.pk,
+                'post_id':  str(post.uuid),
                 'name': "c_post_notify",
             }
             async_to_sync(channel_layer.group_send)('notification', payload)
 
+def post_community_comment_notification_handler(creator, community, comment, verb, name):
+    persons = community.get_staff_members()
+    if comment.parent_comment:
+        post_uuid = comment.parent_comment.post.uuid
+    else:
+        post_uuid = comment.post.uuid
+    for user in persons:
+        if creator.pk != user.pk:
+            PostCommunityNotify.objects.create(creator=creator, community=community, comment=comment, recipient=user, verb=verb)
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'post_id': str(post_uuid),
+                'name': name,
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_comment_community_notification_handler(creator, community, comment, verb):
+def post_repost_community_notification_handler(creator, community, post, verb):
     persons = community.get_staff_members()
     for user in persons:
-        PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=comment, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'comment_id': comment.pk,
-            'name': "c_post_comment_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
-
-def post_reply_community_notification_handler(creator, community, reply, verb):
-    persons = community.get_staff_members()
-    for user in persons:
-        PostCommunityNotify.objects.create(creator=creator, community=community, post_comment=reply, recipient=user, verb=verb)
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'community_id': community.pk,
-            'reply_id': reply.pk,
-            'name': "c_post_reply_notify",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
+        if creator.pk != user.pk:
+            PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'recipient_id': user.pk,
+                'community_id': community.pk,
+                'post_id':  str(post.uuid),
+                'name': "c_post_repost_notify",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)

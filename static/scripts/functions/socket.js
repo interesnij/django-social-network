@@ -3,16 +3,38 @@ function case_user_notify() {
   new Audio('/static/audio/apple/stargaze.mp3').play();
 }
 function case_u_post_notify(uuid) {
-    console.log('Реакции, репосты на записи');
+    console.log('Реакции на записи');
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
     };
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 function case_c_post_notify(uuid) {
-    console.log('Реакции, репосты на записи сообщества');
+    console.log('Реакции на записи сообщества');
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
+    };
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+function case_u_post_repost_notify(uuid) {
+    console.log('Репосты на записи');
+    if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+      block = post.querySelector(".repost_count");
+      block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+      count += 1;
+      block.innerHTML = count;
+    };
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+function case_c_post_repost_notify(uuid) {
+    console.log('Репосты на записи сообщества');
+    if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
+      post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+      block = post.querySelector(".repost_count");
+      block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+      count += 1;
+      block.innerHTML = count;
     };
     new Audio('/static/audio/apple/nota.mp3').play();
 }
@@ -100,7 +122,9 @@ webSocket.listen(function (event) {
         if (event.recipient_id == request_user_id){
           if (event.name == "user_notify"){ case_user_notify() }
           else if (event.name == "u_post_notify"){ case_u_post_notify(event.post_id) }
+          else if (event.name == "u_post_repost_notify"){ case_u_post_repost_notify(event.post_id) }
           else if (event.name == "c_post_notify"){ case_c_post_notify(event.post_id) }
+          else if (event.name == "c_post_repost_notify"){ case_c_post_repost_notify(event.post_id) }
 
           // добавляем единичку к общему счетчику уведомлений
           notify_count += 1;
