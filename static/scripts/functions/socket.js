@@ -24,7 +24,7 @@ function case_u_post_repost_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
       block = post.querySelector(".repost_count");
-      block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+      block.innerHTML ? (count = block.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       count += 1;
       block.innerHTML = count;
     }//}catch{null};
@@ -36,7 +36,7 @@ function case_c_post_repost_notify(uuid) {
     if (document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
       post = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
       block = post.querySelector(".repost_count");
-      block.innerHTML ? (count = block.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+      block.innerHTML ? (count = block.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       count += 1;
       block.innerHTML = count;
     }}catch{null};
