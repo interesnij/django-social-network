@@ -235,11 +235,11 @@ def post_community_comment_notification_handler(creator, community, comment, ver
             }
             async_to_sync(channel_layer.group_send)('notification', payload)
 
-def post_repost_community_notification_handler(creator, community, post, verb):
+def post_repost_community_notification_handler(creator, community, community_creator, post, verb):
     persons = community.get_staff_members()
     for user in persons:
         if creator.pk != user.pk:
-            PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
+            PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
             channel_layer = get_channel_layer()
             payload = {
                 'type': 'receive',
@@ -247,6 +247,6 @@ def post_repost_community_notification_handler(creator, community, post, verb):
                 'recipient_id': user.pk,
                 'community_id': community.pk,
                 'post_id':  str(post.uuid),
-                'name': "c_post_repost_notify", 
+                'name': "c_post_repost_notify",
             }
             async_to_sync(channel_layer.group_send)('notification', payload)
