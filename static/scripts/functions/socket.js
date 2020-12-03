@@ -43,6 +43,23 @@ function case_c_post_repost_notify(uuid) {
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 
+function case_u_photo_notify(uuid) {
+    console.log('Реакции на фото');
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+function case_c_photo_notify(uuid) {
+    console.log('Реакции на фото сообщества');
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+function case_u_photo_repost_notify(uuid) {
+    console.log('Репосты записи');
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+function case_c_photo_repost_notify(uuid) {
+    console.log('Репосты записи сообщества');
+    new Audio('/static/audio/apple/nota.mp3').play();
+}
+
 function case_u_post_create(request_user_id, uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -129,6 +146,11 @@ webSocket.listen(function (event) {
           else if (event.name == "u_post_repost_notify"){ case_u_post_repost_notify(event.post_id) }
           else if (event.name == "c_post_notify"){ case_c_post_notify(event.post_id) }
           else if (event.name == "c_post_repost_notify"){ case_c_post_repost_notify(event.post_id) }
+
+          else if (event.name == "u_photo_notify"){ case_u_photo_notify(event.photo_id) }
+          else if (event.name == "u_photo_repost_notify"){ case_u_photo_repost_notify(event.photo_id) }
+          else if (event.name == "c_photo_notify"){ case_c_photo_notify(event.photo_id) }
+          else if (event.name == "c_photo_repost_notify"){ case_c_photo_repost_notify(event.photo_id) }
 
           // добавляем единичку к общему счетчику уведомлений
           notify_count += 1;
