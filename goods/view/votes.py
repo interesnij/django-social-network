@@ -34,7 +34,7 @@ class GoodUserLikeCreate(View):
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
             result = True
             if user != request.user:
-                good_notification_handler(request.user, item.creator, None, item, GoodNotify.LIKE)
+                good_notification_handler(request.user, item.creator, item, GoodNotify.LIKE)
         likes = good.likes_count()
         dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -61,7 +61,7 @@ class GoodUserDislikeCreate(View):
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
             result = True
             if user != request.user:
-                good_notification_handler(request.user, item.creator, None, item, PhotoNotify.DISLIKE)
+                good_notification_handler(request.user, item.creator, item, PhotoNotify.DISLIKE)
         likes = good.likes_count()
         dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -88,7 +88,10 @@ class GoodCommentUserLikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
             if user != request.user:
-                comment.notification_user_comment_like(request.user)
+                if comment.parent_comment:
+                    good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_REPLY, "u_good_reply_notify")
+                else:
+                    good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_COMMENT, "u_good_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -115,7 +118,10 @@ class GoodCommentUserDislikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
             if user != request.user:
-                comment.notification_user_comment_dislike(request.user)
+                if comment.parent_comment:
+                    good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_REPLY, "u_good_reply_notify")
+                else:
+                    good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_COMMENT, "u_good_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -141,7 +147,7 @@ class GoodCommunityLikeCreate(View):
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                good.notification_community_like(request.user, community)
+                good_community_notification_handler(request.user, community, item, GoodCommunityNotify.LIKE)
         likes = good.likes_count()
         dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -167,7 +173,7 @@ class GoodCommunityDislikeCreate(View):
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                good.notification_community_dislike(request.user, community)
+                good_community_notification_handler(request.user, community, item, GoodCommunityNotify.DISLIKE)
         likes = good.likes_count()
         dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -192,8 +198,10 @@ class GoodCommentCommunityLikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                comment.notification_community_comment_like(request.user, community)
+            if comment.parent_comment:
+                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_REPLY, "c_good_reply_notify")
+            else:
+                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_COMMENT, "c_good_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -218,8 +226,10 @@ class GoodCommentCommunityDislikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                comment.notification_community_comment_dislike(request.user, community)
+            if comment.parent_comment:
+                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_REPLY, "c_good_reply_notify")
+            else:
+                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_COMMENT, "c_good_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
