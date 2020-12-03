@@ -117,7 +117,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
       chats.innerHTML = "";tab_span.append(tab_span);
       new Audio('/static/audio/apple/message.mp3').play()
   }
-}
+} 
 
 
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
