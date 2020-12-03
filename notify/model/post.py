@@ -83,7 +83,7 @@ class PostNotify(models.Model):
 
 class PostCommunityNotify(models.Model):
     COMMENT = 'C'
-    COMMENT_REPLY = 'R'
+    REPLY = 'R'
     USER_MENTION = 'UM'
     COMMENT_USER_MENTION = 'CUM'
     LIKE = 'L'
