@@ -135,7 +135,7 @@ class PhotoCommunityNotify(models.Model):
 
 
 def photo_notification_handler(creator, recipient, photo, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, photo=photo, verb=verb)
+    PhotoNotify.objects.create(creator=creator, recipient=recipient, photo=photo, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
