@@ -88,9 +88,9 @@ class PostCommentUserLikeCreate(View):
             result = True
             if user != request.user:
                 if comment.parent_comment:
-                    post_comment_notification_handler(request.user, comment, vote=PostNotify.LIKE_REPLY, "u_post_reply_notify")
+                    post_comment_notification_handler(request.user, comment, PostNotify.LIKE_REPLY, "u_post_reply_notify")
                 else:
-                    post_comment_notification_handler(request.user, comment, vote=PostNotify.LIKE_COMMENT, "u_post_comment_notify")
+                    post_comment_notification_handler(request.user, comment, PostNotify.LIKE_COMMENT, "u_post_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -117,9 +117,9 @@ class PostCommentUserDislikeCreate(View):
             result = True
             if user != request.user:
                 if comment.parent_comment:
-                    post_comment_notification_handler(request.user, comment, vote=PostNotify.DISLIKE_REPLY, "u_post_reply_notify")
+                    post_comment_notification_handler(request.user, comment, PostNotify.DISLIKE_REPLY, "u_post_reply_notify")
                 else:
-                    post_comment_notification_handler(request.user, comment, vote=PostNotify.DISLIKE_COMMENT, "u_post_comment_notify")
+                    post_comment_notification_handler(request.user, comment, PostNotify.DISLIKE_COMMENT, "u_post_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -197,9 +197,9 @@ class PostCommentCommunityLikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             if comment.parent_comment:
-                post_community_comment_notification_handler(request.user, community, comment, vote=PostCommunityNotify.LIKE_REPLY, "c_post_reply_notify")
+                post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.LIKE_REPLY, "c_post_reply_notify")
             else:
-                post_community_comment_notification_handler(request.user, community, comment, vote=PostCommunityNotify.LIKE_COMMENT, "c_post_comment_notify")
+                post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.LIKE_COMMENT, "c_post_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -225,9 +225,9 @@ class PostCommentCommunityDislikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             if comment.parent_comment:
-                post_community_comment_notification_handler(request.user, community, comment, vote=PostCommunityNotify.DISLIKE_REPLY, "c_post_reply_notify")
+                post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.DISLIKE_REPLY, "c_post_reply_notify")
             else:
-                post_community_comment_notification_handler(request.user, community, comment, vote=PostCommunityNotify.DISLIKE_COMMENT, "c_post_comment_notify")
+                post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.DISLIKE_COMMENT, "c_post_comment_notify")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
