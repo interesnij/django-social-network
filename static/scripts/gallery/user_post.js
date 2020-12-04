@@ -294,3 +294,15 @@ on('#ajax', 'click', '.mob_u_photo_on_votes', function() {
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 })
+on('#ajax', 'click', '.mob_user_photo_remove', function() {
+  mob_send_change(this, "/gallery/user_progs/delete/", "mob_user_photo_abort_remove", "Отмена");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".content_block").style.display = "none";
+  post.querySelector(".image_card").style.opacity = "0.5";
+})
+on('#ajax', 'click', '.mob_user_photo_abort_remove', function() {
+  mob_send_change(this, "/gallery/user_progs/abort_delete/", "mob_user_photo_remove", "Удалить");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".content_block").style.display = "unset";
+  post.querySelector(".image_card").style.opacity = "1";
+})
