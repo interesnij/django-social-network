@@ -6,8 +6,8 @@ on('#ajax', 'click', '.u_photo_detail', function() {
 });
 
 on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
+  this.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.innerHTML = "";
-  this.parentElement.parentElement.parentElement.style.display = "none";
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
