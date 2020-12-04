@@ -8,6 +8,28 @@
       </a>
     </div>
     {% endif %}
+
+    {% if request.user.user_photo_album_exists %}
+    <div class="col" style="padding:5px;">
+      <button type="button" class="btn btn-sm custom_color border menu_drop">
+          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        {% for album in request.user.get_my_albums %}
+          <span data-uuid="{{ album.uuid }}">
+            {% if album|photo_in_album:object.id %}
+              <span class="dropdown-item u_remove_photo_in_album">
+                <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                {{ list.name }}
+              </span>
+            {% else %}
+              <span class="dropdown-item u_add_photo_in_album" style="padding-left: 30px;">{{ album.title }}</span>
+            {% endif %}
+          </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
     <div class="col" style="padding:5px;">
       <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
           Опции

@@ -1040,6 +1040,8 @@ class User(AbstractUser):
         albums = VideoAlbum.objects.filter(albums_query).order_by("order")
         return albums
 
+    def user_photo_album_exists(self):
+        return self.photo_album_creator.filter(creator_id=self.id, community=None, is_deleted=False).exists()
     def user_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community=None, is_deleted=False, type="AL").exists()
     def is_video_album_exists(self):
