@@ -88,10 +88,10 @@ class VideoAlbum(models.Model):
         return self.type == self.ALBUM
 
     def get_2_videos(self):
-        return self.video_album.filter(is_deleted=False)[:2]
+        return self.video_album.filter(is_deleted=False, is_public=True)[:2]
 
     def get_9_videos(self):
-        return self.video_album.filter(is_deleted=False)[:9]
+        return self.video_album.filter(is_deleted=False, is_public=True)[:9]
 
     def is_not_empty(self):
         return self.video_album.filter(album=self).values("pk").exists()

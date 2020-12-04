@@ -63,13 +63,13 @@ class Album(models.Model):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return self.photo_album.filter(is_deleted=False).first()
+            return self.photo_album.filter(is_deleted=False,is_public=True).first()
 
     def get_first_photo(self):
         return self.photo_album.filter(is_deleted=False).first()
 
     def get_6_photos(self):
-        return self.photo_album.filter(is_deleted=False)[:5]
+        return self.photo_album.filter(is_deleted=False,is_public=True)[:5]
 
     def count_photo(self):
         try:
