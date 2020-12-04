@@ -1017,7 +1017,7 @@ class User(AbstractUser):
         articles = Article.objects.filter(articles_query)
         return articles
 
-    def get_albums(self):
+    def get_all_albums(self):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
@@ -1025,11 +1025,25 @@ class User(AbstractUser):
         albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
-    def get_my_albums(self):
+    def get_albums(self):
+        from gallery.models import Album
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None, type="AL")
+        albums = Album.objects.filter(albums_query).order_by("order")
+        return albums
+
+    def get_my_all_albums(self):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        albums = Album.objects.filter(albums_query).order_by("order")
+        return albums
+
+    def get_my_albums(self):
+        from gallery.models import Album
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type="AL")
         albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
@@ -1041,7 +1055,7 @@ class User(AbstractUser):
         return albums
 
     def user_photo_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.id, community=None, is_deleted=False).exists()
+        return self.photo_album_creator.filter(creator_id=self.id, community=None, is_deleted=False, type="AL").exists()
     def user_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community=None, is_deleted=False, type="AL").exists()
     def is_video_album_exists(self):
