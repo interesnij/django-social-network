@@ -1,5 +1,6 @@
 
 <div class="data_display" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
+  <span>
   <div class="row no-gutters">
     {% if prev %}
     <div class="col" style="padding:5px;">
@@ -13,27 +14,35 @@
           Опции
       </button>
       <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-          <a class="dropdown-item user_photo_remove pointer">Удалить</a>
+          <a class="dropdown-item mob_user_photo_remove pointer">Удалить</a>
+          <span>
           {% if avatar %}
-            <a class="dropdown-item u_unset_avatar pointer">Убрать аватар</a>
+            <a class="dropdown-item mob_u_unset_avatar pointer">Убрать аватар</a>
           {% else %}
-            <a class="dropdown-item u_set_avatar pointer">Сделать аватаром</a>
+            <a class="dropdown-item mob_u_set_avatar pointer">Сделать аватаром</a>
           {% endif %}
+          </span>
+          <span>
           {% if object.is_public %}
-            <a class="dropdown-item u_photo_on_private pointer">Вкл. приватность</a>
+            <a class="dropdown-item mob_u_photo_on_private pointer">Вкл. приватность</a>
           {% else %}
-            <a class="dropdown-item u_photo_off_private pointer">Выкл. приватность</a>
+            <a class="dropdown-item mob_u_photo_off_private pointer">Выкл. приватность</a>
           {% endif %}
+          </span>
+          <span>
           {% if object.comments_enabled %}
-            <a class="dropdown-item u_photo_off_comment pointer">Выкл. комментарии</a>
+            <a class="dropdown-item mob_u_photo_off_comment pointer">Выкл. комментарии</a>
           {% else %}
-            <a class="dropdown-item u_photo_on_comment pointer">Вкл. комментарии</a>
+            <a class="dropdown-item mob_u_photo_on_comment pointer">Вкл. комментарии</a>
           {% endif %}
+          </span>
+          <span>
           {% if object.votes_enabled %}
-            <a class="dropdown-item u_photo_off_votes pointer">Выкл. реакции</a>
+            <a class="dropdown-item mob_u_photo_off_votes pointer">Выкл. реакции</a>
           {% else %}
-            <a class="dropdown-item u_photo_on_votes pointer">Вкл. реакции</a>
+            <a class="dropdown-item mob_u_photo_on_votes pointer">Вкл. реакции</a>
           {% endif %}
+          </span>
       </div>
     </div>
     <div class="col" style="padding:5px;">
@@ -49,6 +58,7 @@
       </div>
     {% endif %}
   </div>
+  </span>
   <div class="row">
     <div class="col-lg-8 col-md-7 col-sm-12 order-1">
       <div class="card rounded-0 border-0 mb-3">
