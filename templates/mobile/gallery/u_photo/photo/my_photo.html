@@ -1,18 +1,54 @@
 
-<span class="text-hide-xs">
+<div class="row no-gutters">
   {% if prev %}
-    <a class="prev_photo btn_default" href="{% url 'user_photo' uuid=album.uuid pk=prev.pk %}">
-      <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm custom_color border ajax" href="{% url 'user_photo' uuid=album.uuid pk=prev.pk %}" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
     </a>
+  </div>
   {% endif %}
+  <div class="col" style="padding:5px;">
+    <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
+        Опции
+    </button>
+    <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+        <a class="dropdown-item user_photo_remove pointer">Удалить</a>
+        {% if avatar %}
+          <a class="dropdown-item u_unset_avatar pointer">Убрать аватар</a>
+        {% else %}
+          <a class="dropdown-item u_set_avatar pointer">Сделать аватаром</a>
+        {% endif %}
+        {% if object.is_public %}
+          <a class="dropdown-item u_photo_on_private pointer">Вкл. приватность</a>
+        {% else %}
+          <a class="dropdown-item u_photo_off_private pointer">Выкл. приватность</a>
+        {% endif %}
+        {% if object.comments_enabled %}
+          <a class="dropdown-item u_photo_off_comment pointer">Выкл. комментарии</a>
+        {% else %}
+          <a class="dropdown-item u_photo_on_comment pointer">Вкл. комментарии</a>
+        {% endif %}
+        {% if object.votes_enabled %}
+          <a class="dropdown-item u_photo_off_votes pointer">Выкл. реакции</a>
+        {% else %}
+          <a class="dropdown-item u_photo_on_votes pointer">Вкл. реакции</a>
+        {% endif %}
+    </div>
+  </div>
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm custom_color border pointer photo_fullscreen_hide_2" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </a>
+  </div>
   {% if next %}
-    <a class="next_photo btn_default" href="{% url 'user_photo' uuid=album.uuid pk=next.pk %}">
-      <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
-    </a>
+    <div class="col" style="padding:5px;">
+      <a class="btn btn-sm custom_color border ajax" href="{% url 'user_photo' uuid=album.uuid pk=prev.pk %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
+      </a>
+    </div>
   {% endif %}
-</span>
-
-<div class="mb-3 data_display" data-uuid="{{ object.uuid }}" data-pk="{{ user.pk }}">
+</div>
+<div class="data_display" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
   <div class="row">
     <div class="col-lg-8 col-md-7 col-sm-12 order-1">
       <div class="card rounded-0 border-0 mb-3">
@@ -22,49 +58,8 @@
           <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
     </div>
-<span class="btn_settings_photo">
-    <span>
-      <span>
-        <a class="user_photo_remove">Удалить</a>
-      </span>
-    </span>
-    &nbsp;
-      <span id="btn_console">
-        <span>
-          {% if avatar %}
-            Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
-          {% else %}
-            <a class="u_set_avatar">Сделать аватаром</a>
-          {% endif %}
-        </span>
-        &nbsp;
-          <span>
-            {% if object.is_public %}
-            <a class="u_photo_on_private">Вкл. приватность</a>
-            {% else %}
-            <a class="u_photo_off_private">Откл. приватность</a>
-            {% endif %}
-          </span>
-          &nbsp;
-          <span>
-            {% if object.comments_enabled %}
-              <a class="u_photo_off_comment">Выкл. комментарии</a>
-            {% else %}
-              <a class="u_photo_on_comment">Вкл. комментарии</a>
-            {% endif %}
-          </span>
-          &nbsp;
-          <span>
-            {% if object.votes_on %}
-              <a class="u_photo_off_votes">Выкл. реакции</a>
-            {% else %}
-              <a class="u_photo_on_votes">Вкл. реакции</a>
-            {% endif %}
-          </span>
-      </span>
-</span>
     </div>
-    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2">
 
       <div class="card-header">
           <div class="media">

@@ -5,6 +5,11 @@ on('#ajax', 'click', '.u_photo_detail', function() {
   open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
+  this.parentElement.parentElement.parentElement.innerHTML = "";
+  this.parentElement.parentElement.parentElement.style.display = "none";
+});
+
 on('#ajax', 'click', '.u_all_photo_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");

@@ -29,7 +29,7 @@ class PhotoUserLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-            if user != request.user:
+            if user.pk != request.user.pk:
                 photo_notification_handler(request.user, item.creator, item, PhotoNotify.LIKE)
         likes = item.likes_count()
         dislikes = item.dislikes_count()
