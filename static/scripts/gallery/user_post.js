@@ -292,7 +292,7 @@ on('#ajax', 'click', '.u_remove_photo_in_album', function() {
   uuid = parent.getAttribute("data-uuid");
   pk = parent.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/gallery/user_progs/add_photo_in_album/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/gallery/user_progs/remove_photo_in_album/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
