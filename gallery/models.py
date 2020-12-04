@@ -86,6 +86,9 @@ class Album(models.Model):
     def is_not_empty(self):
         return self.photo_album.filter(album=self).values("pk").exists()
 
+    def is_photo_in_album(self, photo_id):
+        return self.photo_album.filter(pk=photo_id).values("pk").exists()
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
