@@ -17,6 +17,7 @@
               </p>
               <p class="mb-0 small">{{ object.get_created }}</p>
           </div>
+          <img src="{{ object.photo.file.url }}" class="image_fit_70" alt="image">
       </div>
   </div>
   {{ object.get_svg|safe }}
