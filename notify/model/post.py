@@ -5,6 +5,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from django.utils.formats import localize
 
 
 class PostNotify(models.Model):
@@ -68,7 +69,7 @@ class PostNotify(models.Model):
         if self.post.text:
             return self.post.text
         else:
-            return "от " + str(self.post.created)
+            return "от " + str(localize(self.post.created))
 
     def get_svg(self):
         if self.verb == "L" or self.verb == "LC" or self.verb == "LRC":
