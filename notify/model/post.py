@@ -65,10 +65,10 @@ class PostNotify(models.Model):
         return naturaltime(self.created)
 
     def get_info(self):
-        if object.post.text:
-            return object.post.text
+        if self.post.text:
+            return self.post.text
         else:
-            return "от " + object.post.created
+            return "от " + self.post.created
 
     def get_svg(self):
         if self.verb == "L" or self.verb == "LC" or self.verb == "LRC":
