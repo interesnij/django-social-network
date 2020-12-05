@@ -5,6 +5,12 @@ on('#ajax', 'click', '.c_photo_detail', function() {
   open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.c_photo_priview', function() {
+  pk = this.getAttribute('photo-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/community/preview_photo/" + pk + "/", loader)
+});
+
 on('#ajax', 'click', '.c_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");

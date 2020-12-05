@@ -215,3 +215,24 @@ class CommunityWallPhoto(TemplateView):
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["album"] = self.album
         return context
+
+
+class GetCommunityPhoto(TemplateView):
+    """
+    страница отдельного фото. Для уведомлений и тому подобное
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax():
+            self.template_name = get_detect_platform_template("gallery/c_photo/admin_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(GetCommunityPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GetCommunityPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context

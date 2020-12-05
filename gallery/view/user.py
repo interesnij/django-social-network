@@ -9,6 +9,7 @@ from django.views import View
 from common.template.photo import get_template_user_photo, get_permission_user_photo, get_permission_user_photo_detail
 from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
+from common.template.user import get_detect_platform_template
 
 
 class UserPhotosList(ListView):
@@ -210,4 +211,25 @@ class UserFirstAvatar(TemplateView):
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["album"] = self.album
         context["user"] = self.user
+        return context
+
+
+class GetUserPhoto(TemplateView):
+    """
+    страница отдельного фото. Для уведомлений и тому подобное
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax():
+            self.template_name = get_detect_platform_template("gallery/u_photo/my_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(GetUserPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GetUserPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
