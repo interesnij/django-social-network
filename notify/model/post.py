@@ -68,7 +68,7 @@ class PostNotify(models.Model):
         if self.post.text:
             return self.post.text
         else:
-            return "от " + self.post.created
+            return "от " + str(self.post.created)
 
     def get_svg(self):
         if self.verb == "L" or self.verb == "LC" or self.verb == "LRC":
