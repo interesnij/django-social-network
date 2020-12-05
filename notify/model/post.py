@@ -67,7 +67,7 @@ class PostNotify(models.Model):
 
     def get_info(self):
         if self.post.text:
-            return self.post.text
+            return self.post.text[:50]
         else:
             return "от " + str(localize(self.post.created))
 
