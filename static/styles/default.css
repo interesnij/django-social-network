@@ -1,3 +1,7 @@
+.tab_active {
+  border-bottom: 3px solid #e625ea;
+}
+
 .tab_badge {
   display: inline-block;
     padding: .25em .4em;

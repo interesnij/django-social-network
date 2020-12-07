@@ -1,3 +1,37 @@
+on('#ajax', 'click', '.u_add_post_list', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/posts/user_progs/add_list/" + pk + "/", loader)
+});
+
+on('#ajax', 'click', '.u_post_list_change', function() {
+  if (!this.classList.contains("tab_active")){
+    parent = this.parentElement;
+    list = parent.querySelectorAll(".list");
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("tab_active");
+      list[i].classList.add("pointer", "u_post_list_change");
+    };
+    block = parent.parentElement.nextElementSibling;
+    list_load(block, "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    this.classList.remove("pointer", "u_post_list_change");
+    parent.querySelector(".main_list").add("pointer", "u_posts_change");
+    parent.querySelector(".main_list").remove("tab_active");
+  }
+});
+on('#ajax', 'click', '.u_posts_change', function() {
+  if (!this.classList.contains("tab_active")){
+    list = this.parentElement.querySelectorAll(".list");
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("tab_active");
+      list[i].classList.add("pointer", "u_post_list_change");
+    };
+    block = this.parentElement.parentElement.nextElementSibling;
+    list_load(block, "/users/detail/posts/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/");
+    this.classList.remove("pointer", "u_posts_change")
+  }
+});
+
 on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
   get_image_priview(this, img);

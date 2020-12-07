@@ -1,8 +1,8 @@
 from users.models import User
-from posts.models import Post, PostComment
+from posts.models import *
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
-from posts.forms import PostForm, CommentForm
+from posts.forms import *
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
@@ -269,3 +269,82 @@ class PostGetVotes(View):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         data = {'like_count': post.likes_count(), 'dislike_count': post.dislikes_count()}
         return JsonResponse(data)
+
+
+class UserPostListCreate(TemplateView):
+    """
+    создание списка записей пользователя
+    """
+    template_name, form = None, None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserPostListCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPostListCreate,self).get_context_data(**kwargs)
+        context["form"] = PostListForm()
+        context["user"] = self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = PostListForm(request.POST)
+        if request.is_ajax() and self.form.is_valid():
+            list = self.form.save(commit=False)
+            new_list = PostList.objects.create(name=list.name, type=PostList.LIST, order=list.order, creator=request.user, community=None)
+            return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
+        else:
+            return HttpResponseBadRequest()
+        return super(UserPostListCreate,self).get(request,*args,**kwargs)
+
+
+class UserPostListEdit(TemplateView):
+    """
+    изменение списка записей пользователя
+    """
+    template_name, form = None, None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserPostListEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPostListEdit,self).get_context_data(**kwargs)
+        context["list"] = PostList.objects.get(pk=self.kwargs["list_pk"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        self.form = PostListForm(request.POST,instance=self.list)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(UserPostListEdit,self).get(request,*args,**kwargs)
+
+
+class UserPostListDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and user == request.user and list.type == PostList.LIST:
+            list.type = PostList.DELETED
+            list.save(update_fields=['type'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class UserPostListAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and user == request.user:
+            list.type = PostList.LIST
+            list.save(update_fields=['type'])
+            return HttpResponse()
+        else:
+            raise Http404

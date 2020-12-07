@@ -4,10 +4,28 @@
   {% if object %}
     {% include 'mobile/users/lenta/fixed_post.html' %}
   {% endif %}
-
-    <div class="stream-update">
-        <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
+  <div class="row overflow-x-auto no-gutters">
+    <div class="col-12">
+    <ul class="date-list" style="width:max-content">
+      <li class="date tab_active">
+        <div class="media">
+          <div class="media-body">
+              <h6 class="mb-0 u_posts_change">Записи</h6>
+          </div>
+        </div>
+      </li>
+      {% for object in user.get_post_lists %}
+          <li class="date pointer">
+            <div class="media">
+              <div class="media-body">
+                <h6 class="mb-0 pointer u_post_list_change" list-pk="{{ object.pk }}">{{ object.name }}</h6>
+              </div>
+            </div>
+          </li>
+      {% endfor %}
+    </ul>
     </div>
+  </div>
     <span class="post_stream stream post_container">
       {% for object in object_list %}
         {% include 'mobile/posts/post_user/post.html' %}
