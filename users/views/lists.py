@@ -180,7 +180,7 @@ class UserPostsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.list=PostList.objects.get(pk=self.kwargs["list_pk"])
-		if self.user.pk != request.user.pk and self.list.is_private_list() and not request.is_ajax():
+		if (self.user.pk != request.user.pk and self.list.is_private_list()) or not request.is_ajax():
 			raise Http404
 		else:
 			self.posts_list = self.list.get_posts()
