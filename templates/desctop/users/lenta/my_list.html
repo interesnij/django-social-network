@@ -1,13 +1,9 @@
 
 <div id="lenta_container">
-
   {% if object %}
     {% include 'desctop/users/lenta/my_fixed_post.html' %}
   {% endif %}
 
-    <div class="stream-update">
-        <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
-    </div>
     <span class="post_stream stream post_container">
       {% for object in object_list %}
         {% include 'desctop/posts/post_user/my_post.html' %}

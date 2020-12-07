@@ -9,40 +9,28 @@
     <div class="col-12">
     <ul class="date-list" style="width:max-content">
       <li class="date">
-        <div class="card rounded-0 border-0 mb-3">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h6 class="mb-0 pointer u_posts_change">Основной список</h6>
-                    </div>
-                </div>
-            </div>
+        <div class="media">
+          <div class="media-body">
+              <h6 class="mb-0 pointer u_posts_change">Основной список</h6>
+          </div>
         </div>
       </li>
       {% for object in user.get_my_post_lists %}
-          <li class="date"> 
+          <li class="date">
             <div style="padding:5px;">
-                <div class="card rounded-0 border-0 mb-3">
-                    <div class="card-header">
-                        <div class="media">
-                            <div class="media-body">
-                                <h6 class="mb-0 pointer u_post_list_change" list-pk="{{ object.pk }}">{{ object.name }}</h6>
-                            </div>
-                        </div>
-                    </div>
+                <div class="media">
+                  <div class="media-body">
+                    <h6 class="mb-0 pointer u_post_list_change" list-pk="{{ object.pk }}">{{ object.name }}</h6>
+                  </div>
                 </div>
             </div>
           </li>
       {% endfor %}
           <li class="date">
-            <div class="card rounded-0 border-0 mb-3">
-                <div class="card-header">
-                    <div class="media">
-                        <div class="media-body">
-                            <h6 class="mb-0">Новый список</h6>
-                        </div>
-                    </div>
-                </div>
+            <div class="media">
+              <div class="media-body">
+                <h6 class="mb-0">Новый список</h6>
+              </div>
             </div>
           </li>
     </ul>
