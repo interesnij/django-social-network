@@ -1,15 +1,5 @@
-from users.model.settings import *
-from users.model.list import *
-from users.model.profile import *
+from posts.models import PostList
 
 
 def create_user_models(user):
-
-    try:
-        UserProfileFamily.objects.get(user=user)
-    except:
-        UserProfileFamily.objects.create(user=user)
-    try:
-        UserProfileAnketa.objects.get(user=user)
-    except:
-        UserProfileAnketa.objects.create(user=user)
+    PostList.objects.create(creator=user, type=PostList.MAIN, name="Основной список", order=1)

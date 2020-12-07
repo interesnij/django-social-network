@@ -12,6 +12,58 @@ from common.model.votes import PostVotes, PostCommentVotes
 from common.utils import try_except
 
 
+class PostList(models.Model):
+    MAIN, LIST, PRIVATE, DELETED = 'MA', 'LI', 'PR', 'DE'
+    TYPE = (
+        (MAIN, 'Основной список'),
+        (LIST, 'Пользовательский список'),
+		(PRIVATE, 'Приватный список'),
+		(DELETED, 'Удаленный список'),
+    )
+    name = models.CharField(max_length=255)
+    community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    creator = models.ForeignKey(settings.AUTH_USER_MODE, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
+    type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name + " - " + self.creator.get_full_name()
+
+    def is_post_in_list(self, post_id):
+        return self.post_list.filter(pk=post_id).values("pk").exists()
+
+    def is_not_empty(self):
+        return self.post_list.filter(list=self).values("pk").exists()
+
+    def get_posts(self):
+        queryset = self.post_list.only("pk")
+        return queryset
+
+    def list_30(self):
+        queryset = self.post_list.only("pk")[:30]
+        return queryset
+    def list_6(self):
+        queryset = self.post_list.only("pk")[:6]
+        return queryset
+
+    def count_posts(self):
+        return self.post_list.all().values("pk").count()
+
+    def is_main_list(self):
+        return self.type == self.MAIN
+    def is_user_list(self):
+        return self.type == self.LIST
+	def is_deleted_list(self):
+        return self.type == self.DELETED
+	def is_private_list(self):
+        return self.type == self.PRIVATE
+
+    class Meta:
+        verbose_name = "список записей"
+        verbose_name_plural = "списки записей"
+        ordering = ['order']
+
+
 class PostCategory(models.Model):
 	name = models.CharField(max_length=100, verbose_name="Тематика")
 	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
@@ -25,56 +77,31 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    STATUS_DRAFT = 'D'
-    STATUS_PROCESSING = 'PG'
-    STATUS_MESSAGE_PUBLISHED = 'MP'
-    STATUS_PUBLISHED = 'P'
-    STATUS_ARHIVED = 'A'
-
-    PHOTO_REPOST = 'C'
-    PHOTO_ALBUM_REPOST = 'PAR'
-    GOOD_REPOST = 'GR'
-    GOOD_LIST_REPOST = 'GLR'
-    MUSIC_REPOST = 'MR'
-    MUSIC_LIST_REPOST = 'MLR'
-    DOC_REPOST = 'DR'
-    DOC_LIST_REPOST = 'DLR'
-    VIDEO_REPOST = 'VR'
-    VIDEO_LIST_REPOST = 'VLR'
-    USER_REPOST = 'UR'
-    COMMUNITY_REPOST = 'CR'
+    STATUS_DRAFT, STATUS_PROCESSING, STATUS_MESSAGE_PUBLISHED, STATUS_PUBLISHED = 'D', 'PG', 'MP', 'P'
+    PHOTO_REPOST, PHOTO_ALBUM_REPOST, GOOD_REPOST, GOOD_LIST_REPOST, MUSIC_REPOST, MUSIC_LIST_REPOST, DOC_REPOST, DOC_LIST_REPOST, VIDEO_REPOST, VIDEO_LIST_REPOST, USER_REPOST, COMMUNITY_REPOST = 'PR', 'PAR', 'GR', 'GLR', 'MR', 'MLR', 'DR', 'DLR', 'VR', 'VLR', 'UR', 'CR'
     STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликована'),
-        (STATUS_MESSAGE_PUBLISHED, 'Репост в сообщения'),
-        (STATUS_ARHIVED, 'Архивирована'),
-
-        (PHOTO_REPOST, 'Репост фотографии'),
-        (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
-        (GOOD_REPOST, 'Репост товара'),
-        (GOOD_LIST_REPOST, 'Репост списка товаров'),
-        (MUSIC_REPOST, 'Репост аудиозаписи'),
-        (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
-        (DOC_REPOST, 'Репост документа'),
-        (DOC_LIST_REPOST, 'Репост списка документов'),
-        (VIDEO_REPOST, 'Репост видеозаписи'),
-        (VIDEO_LIST_REPOST, 'Репост списка видеозаписей'),
-        (USER_REPOST, 'Репост пользователя'),
-        (COMMUNITY_REPOST, 'Репост сообщества'),
+        (STATUS_DRAFT,'Черновик'),(STATUS_PROCESSING,'Обработка'),(STATUS_PUBLISHED,'Опубликована'),(STATUS_MESSAGE_PUBLISHED,'Репост в сообщения'),
+        (PHOTO_REPOST, 'Репост фотографии'), (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
+        (GOOD_REPOST, 'Репост товара'), (GOOD_LIST_REPOST, 'Репост списка товаров'),
+        (MUSIC_REPOST, 'Репост аудиозаписи'), (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
+        (DOC_REPOST, 'Репост документа'), (DOC_LIST_REPOST, 'Репост списка документов'),
+        (VIDEO_REPOST, 'Репост видеозаписи'), (VIDEO_LIST_REPOST, 'Репост списка видеозаписей'),
+        (USER_REPOST, 'Репост пользователя'), (COMMUNITY_REPOST, 'Репост сообщества'),
     )
-    id = models.BigAutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
+	id = models.BigAutoField(primary_key=True)
+
     community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
+	category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
+	list = models.ManyToManyField(PostList, related_name='post_list')
+
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
-    category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
 
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")

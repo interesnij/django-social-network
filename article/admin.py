@@ -4,7 +4,7 @@ from article.models import Article
 
 class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('name',)
-    list_display = ['creator','created', 'is_deleted']
-    list_filter = ['is_deleted', 'created',]
+    list_display = ['creator','created',]
+    list_filter = ['created',]
 
 admin.site.register(Article, ArticleAdmin)

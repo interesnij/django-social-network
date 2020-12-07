@@ -11,6 +11,15 @@ from django.utils import timezone
 
 
 class Article(models.Model):
+    STATUS_DRAFT = 'D'
+    STATUS_PROCESSING = 'PG'
+    STATUS_PUBLISHED = 'P'
+    STATUSES = (
+        (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PROCESSING, 'Обработка'),
+        (STATUS_PUBLISHED, 'Опубликована'),
+    )
+    
     id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
@@ -19,18 +28,8 @@ class Article(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    STATUS_DRAFT = 'D'
-    STATUS_PROCESSING = 'PG'
-    STATUS_PUBLISHED = 'P'
-    STATUS_ARHIVED = 'A'
-    STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликована'),
-        (STATUS_ARHIVED, 'Архивирована'),
-    )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
+    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='attached_item')
     comment_attach = models.ManyToManyField("posts.PostComment", blank=True, related_name='attached_comment')

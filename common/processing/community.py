@@ -2,6 +2,7 @@ from communities.model.settings import *
 from music.models import SoundList
 from video.models import VideoAlbum
 from gallery.models import Album
+from posts.models import PostList
 
 def create_community_models(community):
     CommunityPrivatePost.objects.create(community=community)
@@ -16,3 +17,5 @@ def create_community_models(community):
     CommunityNotificationsPhoto.objects.create(community=community)
     CommunityNotificationsGood.objects.create(community=community)
     CommunityNotificationsVideo.objects.create(community=community)
+
+    PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=1, creator=community.creator)

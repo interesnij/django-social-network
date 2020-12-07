@@ -10,7 +10,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from notify.model.user import UserNotify, notification_handler
 from datetime import date
-from posts.models import Post
+from posts.models import Post, PostList
 from common.check.user import *
 
 
@@ -984,8 +984,8 @@ class User(AbstractUser):
         return query[0:5]
 
     def get_posts(self):
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED, community=None)
-        posts = Post.objects.filter(posts_query)
+        list = PostList.objects.get(creator_id=self.id, type=PostList.MAIN, community=None)
+        posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
     def get_fixed_post(self):
@@ -1006,8 +1006,8 @@ class User(AbstractUser):
         return posts
 
     def get_archive_posts(self):
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED, community=None)
-        posts = Post.objects.filter(posts_query)
+        list = PostList.objects.get(creator_id=self.id, type=PostList.DELETED, community=None)
+        posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
     def get_articles(self):

@@ -12,6 +12,7 @@ from notify.model.user import *
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from django.contrib.postgres.indexes import BrinIndex
+from posts.models import Post, PostList
 
 
 class CommunityCategory(models.Model):
@@ -188,20 +189,14 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_posts(self):
-        from posts.models import Post
-
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_PUBLISHED)
-        posts = Post.objects.filter(posts_query)
+        list = PostList.objects.get(community_id=self.id, type=PostList.MAIN)
+        posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
     def get_draft_posts(self):
-        from posts.models import Post
-
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts(self):
-        from posts.models import Post
-
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
@@ -214,33 +209,24 @@ class Community(models.Model):
         return count_articles
 
     def id_draft_posts_exists(self):
-        from posts.models import Post
-
         posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         return Post.objects.filter(posts_query).exists()
 
     def get_draft_posts_for_user(self, user_pk):
-        from posts.models import Post
-
         posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts_for_user(self, user_pk):
-        from posts.models import Post
-
         posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
     def get_archive_posts(self):
-        from posts.models import Post
-
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_ARHIVED)
-        posts = Post.objects.filter(posts_query)
+        list = PostList.objects.get(community_id=self.id, type=PostList.DELETED)
+        posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
     def get_fixed_post(self):
-        from posts.models import Post
         try:
             post = Post.objects.get(community_id=self.pk, is_fixed=True)
             return post
@@ -825,7 +811,7 @@ class Community(models.Model):
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
 
-        GoodCommunityNotify.notify_unread(self.pk, user_pk)  
+        GoodCommunityNotify.notify_unread(self.pk, user_pk)
         PhotoCommunityNotify.notify_unread(self.pk, user_pk)
         PostCommunityNotify.notify_unread(self.pk, user_pk)
         UserCommunityNotify.notify_unread(self.pk, user_pk)
