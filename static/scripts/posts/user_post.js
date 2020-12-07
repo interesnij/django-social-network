@@ -57,7 +57,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     name = form.querySelector("#id_name").value;
-    document.body.querySelector(".u_add_post_list").prepend('<li class="date list tab_active"><div class="media"><div class="media-body"><h6 class="mb-0">' + name + '</h6></div></div></li>';
+    document.body.querySelector(".u_add_post_list").prepend('<li class="date list tab_active"><div class="media"><div class="media-body"><h6 class="mb-0">' + name + '</h6></div></div></li>');
     date_list = document.body.querySelector(".date-list");
     list = date_list.querySelectorAll(".list");
     for (var i = 0; i < list.length; i++) {

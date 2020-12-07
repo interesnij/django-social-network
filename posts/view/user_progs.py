@@ -7,7 +7,7 @@ from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing
 from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from django.http import Http404
-from common.template.user import render_for_platform
+from common.template.user import render_for_platform, get_detect_platform_template
 from django.views.generic.base import TemplateView
 
 
