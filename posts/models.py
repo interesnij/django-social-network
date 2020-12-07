@@ -89,7 +89,6 @@ class Post(models.Model):
         (USER_REPOST, 'Репост пользователя'), (COMMUNITY_REPOST, 'Репост сообщества'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-	id = models.BigAutoField(primary_key=True)
 
     community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
@@ -105,6 +104,7 @@ class Post(models.Model):
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_post(cls, creator, text, community, parent, comments_enabled, is_signature, status):
