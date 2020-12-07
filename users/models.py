@@ -983,11 +983,6 @@ class User(AbstractUser):
                 query += [frend,]
         return query[0:5]
 
-    def get_posts(self):
-        list = PostList.objects.get(creator_id=self.id, type=PostList.MAIN, community=None)
-        posts = Post.objects.filter(list=list, is_deleted=False)
-        return posts
-
     def get_fixed_post(self):
         try:
             post = Post.objects.get(creator_id=self.pk, is_fixed=True, community=None)
@@ -1003,11 +998,6 @@ class User(AbstractUser):
     def get_draft_posts_of_community_with_pk(self, community_pk):
         posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
-        return posts
-
-    def get_archive_posts(self):
-        list = PostList.objects.get(creator_id=self.id, type=PostList.DELETED, community=None)
-        posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
     def get_post_lists(self):
