@@ -105,6 +105,7 @@ class Post(models.Model):
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     id = models.BigAutoField(primary_key=True)
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False)
 
     @classmethod
     def create_post(cls, creator, text, community, parent, comments_enabled, is_signature, status):
