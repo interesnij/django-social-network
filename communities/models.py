@@ -233,6 +233,21 @@ class Community(models.Model):
         except:
             return None
 
+    def get_post_lists(self):
+        lists_query = Q(community_id=self.id, type="AL")
+        lists = PostList.objects.filter(lists_query).order_by("order")
+        return lists
+
+    def get_admin_post_lists(self):
+        lists_query = Q(community_id=self.id, type="AL")
+        lists_query.add(~Q(type="MA"), Q.AND)
+        lists = PostList.objects.filter(lists_query).order_by("order")
+        return lists
+    def post_list_exists(self):
+        return self.community_postlist.filter(community_id=self.id, type="AL").exists()
+    def admin_post_list_exists(self):
+        return self.community_postlist.filter(community_id=self.id).exclude(type="MA").exists()
+
     def get_count_photos(self):
         from gallery.models import Album
         albums = Album.objects.filter(community_id=self.id)

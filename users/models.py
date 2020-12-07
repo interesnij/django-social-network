@@ -1010,6 +1010,17 @@ class User(AbstractUser):
         posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
+    def get_post_lists(self):
+        lists_query = Q(creator_id=self.id, community=None, type="AL")
+        lists = PostList.objects.filter(lists_query).order_by("order")
+        return lists
+
+    def get_my_post_lists(self):
+        lists_query = Q(creator_id=self.id, community=None, type="AL")
+        lists_query.add(~Q(type="MA"), Q.AND)
+        lists = PostList.objects.filter(lists_query).order_by("order")
+        return lists
+
     def get_articles(self):
         from article.models import Article
 
@@ -1064,6 +1075,10 @@ class User(AbstractUser):
         return self.user_playlist.filter(creator_id=self.id, community=None, type="LI", is_deleted=False).exists()
     def is_good_album_exists(self):
         return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL", is_deleted=False).exists()
+    def post_list_exists(self):
+        return self.user_postlist.filter(creator_id=self.id, community=None, type="AL").exists()
+    def my_post_list_exists(self):
+        return self.user_postlist.filter(creator_id=self.id, community=None).exclude(type="MA").exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
