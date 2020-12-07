@@ -53,9 +53,9 @@ class PostList(models.Model):
         return self.type == self.MAIN
     def is_user_list(self):
         return self.type == self.LIST
-	def is_deleted_list(self):
+    def is_deleted_list(self):
         return self.type == self.DELETED
-	def is_private_list(self):
+    def is_private_list(self):
         return self.type == self.PRIVATE
 
     class Meta:
