@@ -10,6 +10,7 @@ from common.template.good import get_template_community_good
 from common.template.doc import get_template_community_doc
 from django.http import Http404
 from common.template.user import get_default_template
+from posts.models import PostList
 
 
 class CommunityMembersView(ListView):
