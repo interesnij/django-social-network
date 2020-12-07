@@ -10,6 +10,7 @@ from common.processing.post import get_post_processing, get_post_offer_processin
 from common.check.community import check_can_get_lists, check_private_post_exists
 from django.http import Http404
 from common.template.user import render_for_platform
+from django.views.generic.base import TemplateView
 
 
 class PostCommunityCreate(View):

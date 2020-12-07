@@ -1,4 +1,3 @@
-
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from communities.models import Community
