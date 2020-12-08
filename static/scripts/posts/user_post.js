@@ -51,7 +51,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     toast_error("Название - обязательное поле!"); return
   } else { this.disabled = true }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/user_progs/add_post/" + pk + "/", true );
+  link_.open( 'POST', "/posts/user_progs/add_list/" + pk + "/", true ); 
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
