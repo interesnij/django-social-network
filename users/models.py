@@ -1005,9 +1005,19 @@ class User(AbstractUser):
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
+    def get_post_categories(self):
+        from posts.models import PostCategory
+        return PostCategory.objects.only("pk")
+
     def get_my_post_lists(self):
         lists_query = Q(creator_id=self.id, community=None, type="LI")
         lists_query.add(~Q(type="MA"), Q.AND)
+        lists = PostList.objects.filter(lists_query).order_by("order")
+        return lists
+
+    def get_my_all_post_lists(self):
+        lists_query = Q(creator_id=self.id, community=None)
+        lists_query.add(~Q(type="DE"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
