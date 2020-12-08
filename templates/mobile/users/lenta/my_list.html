@@ -13,7 +13,7 @@
           </div>
         </div>
       </li>
-      {% for object in user.get_my_post_lists %}
+      {% for object in request.user.get_my_post_lists %} 
           <li class="date pointer u_post_list_change list" list-pk="{{ object.pk }}">
             <div class="media">
               <div class="media-body">
@@ -34,7 +34,7 @@
   </div>
 
     <span class="post_stream stream post_container">
-      <span list-pk="{{ list.pk }}">
+      <span class="list_pk" list-pk="{{ list.pk }}">
       {% for object in object_list %}
         {% include 'mobile/posts/post_user/my_post.html' %}
       {% endfor %}
