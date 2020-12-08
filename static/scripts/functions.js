@@ -5,26 +5,6 @@ loadScripts('/static/scripts/functions/message_attach.js')
 loadScripts('/static/scripts/functions/reload.js')
 loadScripts('/static/scripts/functions/socket.js')
 
-function checkNotifications() {
-    emptyMessage = 'data-empty="true"';
-
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link_.open('GET', "/notify/post/latest/", true);
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-    link_.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            elem_ = document.createElement('span');
-            elem_.innerHTML = link_.responseText;
-            if (!elem_.querySelector(emptyMessage)) {
-                document.body.querySelector("#notification").classList.add("btn-danger");
-            }
-        }
-    };
-
-    link_.send();
-};
-
 function check_photo_in_block(block, _this, pk) {
     if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
@@ -34,7 +14,6 @@ function check_photo_in_block(block, _this, pk) {
         return false
     }
 }
-
 function check_video_in_block(block, _this, pk) {
     if (block.querySelector('[video-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
@@ -44,7 +23,6 @@ function check_video_in_block(block, _this, pk) {
         return false
     }
 }
-
 function check_music_in_block(block, _this, counter) {
     if (block.querySelector('[music-counter=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
@@ -54,7 +32,6 @@ function check_music_in_block(block, _this, counter) {
         return false
     }
 }
-
 function check_doc_in_block(block, _this, pk) {
     if (block.querySelector('[doc-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Документ уже выбран");
@@ -64,7 +41,6 @@ function check_doc_in_block(block, _this, pk) {
         return false
     }
 }
-
 function check_good_in_block(block, _this, pk) {
     if (block.querySelector('[good-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
