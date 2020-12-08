@@ -292,7 +292,9 @@ class UserPostListCreate(TemplateView):
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            new_list = PostList.objects.create(name=list.name, type=PostList.LIST, order=list.order, creator=request.user, community=None)
+            list.creator = request.user
+            list.type = PostList.LIST
+            self.form.save()
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
