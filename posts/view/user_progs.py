@@ -295,7 +295,7 @@ class UserPostListCreate(TemplateView):
             new_list = PostList.objects.create(name=list.name, type=PostList.LIST, order=list.order, creator=request.user, community=None)
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse()
         return super(UserPostListCreate,self).get(request,*args,**kwargs)
 
 
