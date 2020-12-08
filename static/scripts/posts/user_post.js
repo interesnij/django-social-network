@@ -79,14 +79,14 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     li.classList.add("date", "list", "tab_active");
     li.setAttribute("list-pk", new_post.querySelector(".list_pk").getAttribute("list-pk"));
 
-    div1 = document.createElement("div");
-    div1.classList.add("media");
-    div2 = document.createElement("div");
-    div2.classList.add("media-body");
+    div = document.createElement("div");
+    div.classList.add("media");
+    _div = document.createElement("div");
+    _div.classList.add("media-body");
     h6 = document.createElement("h6");
     h6.classList.add("mb-0");
     h6.innerHTML = name;
-    div2.append(h6); div1.append(div2)
+    _div.append(h6); div.append(_div);
     document.body.querySelector(".u_add_post_list").prepend(div);
     close_create_window()
   }};
