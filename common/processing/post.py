@@ -26,6 +26,7 @@ def get_post_offer_processing(post):
 
 def repost_community_send(list, status, community, request):
     communities = request.POST.getlist("communities")
+    lists = request.POST.getlist("lists")
     if not communities:
         return HttpResponseBadRequest()
     form_post = PostForm(request.POST)
@@ -36,8 +37,7 @@ def repost_community_send(list, status, community, request):
         for community_id in communities:
             community = Community.objects.get(pk=community_id)
             if request.user.is_staff_of_community(community_id):
-                new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=community, comments_enabled=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
                 get_post_processing(new_post)
 
 def repost_message_send(list, status, community, request, text):

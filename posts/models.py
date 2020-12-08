@@ -108,8 +108,16 @@ class Post(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
 
     @classmethod
-    def create_post(cls, creator, text, community, parent, comments_enabled, is_signature, status):
-        post = Post.objects.create(creator=creator, text=text, parent=parent, community=community, is_signature=is_signature, comments_enabled=comments_enabled, status=status, )
+    def create_post(cls, creator, text, category, lists, community, parent, comments_enabled, is_signature, votes_on, status):
+        post = Post.objects.create(creator=creator,
+                                    text=text,
+                                    category=category,
+                                    community=community,
+                                    parent=parent,
+                                    comments_enabled=comments_enabled,
+                                    is_signature=is_signature,
+                                    votes_on=votes_on,
+                                    status=status, )
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
