@@ -7,24 +7,22 @@
                 <h5 class="content-color-primary mb-0">Создание списка записей</h5>
             </div>
             <div class="card-body">
-                <br>
-                <hr>
-                <div class="row ">
+                <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <div class="form-group ">
                             <label>Название</label>
                             <input type="text" name="name" id="id_name" class="form-control">
                         </div>
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>Тип открытости</label>
                             <select class="form-control">
                                 <option value="LI">Публичный</option>
                                 <option value="PR">Приватный</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Порядковый номер</label> 
+                          <input type="number" value="0" min="0" name="order" class="form-control" id="id_order">
                         </div>
                     </div>
                 </div>
