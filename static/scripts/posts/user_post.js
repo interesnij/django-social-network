@@ -80,7 +80,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     li.classList.add("date", "list", "tab_active");
     li.setAttribute("list-pk", new_post.querySelector(".list_pk").getAttribute("list-pk"));
     li.innerHTML = '<div class="media"><div class="media-body"><h6 class="mb-0">' + name + '</h6>';
-    div.append(li);
+    div.innerHTML = li;
     document.body.querySelector(".u_add_post_list").prepend(div.innerHTML);
     close_create_window()
   }};
