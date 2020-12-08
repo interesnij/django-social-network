@@ -46,12 +46,8 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form = document.body.querySelector("#post_list_form");
   form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!"); return
-  } else if (!form.querySelector("#id_order").value){
-    form.querySelector("#id_order").style.border = "1px #FF0000 solid";
-    toast_error("Выберите порядковый номер!"); return
+  if (!form.querySelector("#id_name").value){form.querySelector("#id_name").style.border = "1px #FF0000 solid";toast_error("Название - обязательное поле!"); return
+  } else if (!form.querySelector("#id_order").value){form.querySelector("#id_order").style.border = "1px #FF0000 solid";toast_error("Выберите порядковый номер!"); return
   } else { this.disabled = true }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/user_progs/add_list/" + pk + "/", true );
@@ -61,10 +57,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     date_list = document.body.querySelector(".date-list");
     list = date_list.querySelectorAll(".list");
-    for (var i = 0; i < list.length; i++) {
-      list[i].classList.remove("tab_active");
-      list[i].classList.add("pointer", "u_post_list_change");
-    };
+    for (var i = 0; i < list.length; i++) {list[i].classList.remove("tab_active");list[i].classList.add("pointer", "u_post_list_change");};
     date_list.querySelector(".main_list").classList.remove("tab_active");
     date_list.querySelector(".main_list").classList.add("pointer", "u_posts_change");
 
@@ -79,15 +72,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     li.classList.add("date", "list", "tab_active");
     li.setAttribute("list-pk", new_post.querySelector(".list_pk").getAttribute("list-pk"));
 
-    div = document.createElement("div");
-    div.classList.add("media");
-    _div = document.createElement("div");
-    _div.classList.add("media-body");
-    h6 = document.createElement("h6");
-    h6.classList.add("mb-0");
-    h6.innerHTML = name;
-    _div.append(h6); div.append(_div);
-    document.body.querySelector(".u_add_post_list").prepend(div);
+    div = document.createElement("div");div.classList.add("media");_div = document.createElement("div");_div.classList.add("media-body");h6 = document.createElement("h6");h6.classList.add("mb-0");h6.innerHTML = name;_div.append(h6); div.append(_div);document.body.querySelector(".date-list").prepend(div);
     close_create_window()
   }};
 
