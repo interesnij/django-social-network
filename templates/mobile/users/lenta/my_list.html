@@ -34,9 +34,11 @@
   </div>
 
     <span class="post_stream stream post_container">
+      <span list-pk="{{ list.pk }}">
       {% for object in object_list %}
         {% include 'mobile/posts/post_user/my_post.html' %}
       {% endfor %}
+      <span>
     </span>
 </div>
 
