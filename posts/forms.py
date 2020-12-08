@@ -18,4 +18,4 @@ class CommentForm(forms.ModelForm):
 class PostListForm(forms.ModelForm):
 	class Meta:
 		model = PostList
-		fields = ['name','type', 'order',]
+		fields = ['name', 'type', 'order',]

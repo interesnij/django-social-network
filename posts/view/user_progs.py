@@ -294,7 +294,7 @@ class UserPostListCreate(TemplateView):
             list = self.form.save(commit=False)
             list.creator = request.user
             list.type = PostList.LIST
-            self.form.save()
+            list.save() 
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
