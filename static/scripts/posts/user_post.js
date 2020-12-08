@@ -67,8 +67,8 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
       list[i].classList.remove("tab_active");
       list[i].classList.add("pointer", "u_post_list_change");
     };
-    date_list.querySelector(".main_list").remove("tab_active");
-    date_list.querySelector(".main_list").add("pointer", "u_posts_change");
+    date_list.querySelector(".main_list").classList.remove("tab_active");
+    date_list.querySelector(".main_list").classList.add("pointer", "u_posts_change");
 
     elem = link_.responseText;
     new_post = document.createElement("span");
