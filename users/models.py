@@ -1001,12 +1001,12 @@ class User(AbstractUser):
         return posts
 
     def get_post_lists(self):
-        lists_query = Q(creator_id=self.id, community=None, type="AL")
+        lists_query = Q(creator_id=self.id, community=None, type="LI")
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_my_post_lists(self):
-        lists_query = Q(creator_id=self.id, community=None, type="AL")
+        lists_query = Q(creator_id=self.id, community=None, type="LI")
         lists_query.add(~Q(type="MA"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists

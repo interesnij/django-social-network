@@ -234,12 +234,12 @@ class Community(models.Model):
             return None
 
     def get_post_lists(self):
-        lists_query = Q(community_id=self.id, type="AL")
+        lists_query = Q(community_id=self.id, type="LI")
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_admin_post_lists(self):
-        lists_query = Q(community_id=self.id, type="AL")
+        lists_query = Q(community_id=self.id, type="LI")
         lists_query.add(~Q(type="MA"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
