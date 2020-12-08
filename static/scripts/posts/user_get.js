@@ -13,7 +13,7 @@ on('#ajax', 'click', '.u_post_list_change', function() {
       list[i].classList.add("pointer", "u_post_list_change");
     };
     block = parent.parentElement.parentElement.nextElementSibling;
-    list_load(block, "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    list_block_load(block, ".post_stream", "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "u_post_list_change");
     this.classList.add("tab_active");
     parent.querySelector(".main_list").classList.add("pointer", "u_posts_change");
@@ -28,7 +28,7 @@ on('#ajax', 'click', '.u_posts_change', function() {
       list[i].classList.add("pointer", "u_post_list_change");
     };
     block = this.parentElement.parentElement.parentElement.nextElementSibling;
-    list_load(block, "/users/detail/posts/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/");
+    list_block_load(block, ".post_stream", "/users/detail/posts/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/");
     this.classList.remove("pointer", "u_posts_change");
     this.classList.add("tab_active");
   }

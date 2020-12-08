@@ -323,7 +323,7 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.open( 'POST', "/rest-auth/registration/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 201 ) {
-    window.location.href = "/phone_verify/" 
+    window.location.href = "/phone_verify/"
     }};
   reg_link.send(form_data);
 })
@@ -453,12 +453,14 @@ function if_list(block) {
     }
 }
 
-function list_load(block,link) {
+function list_load(block, link) {
+  // грузим что-то по ссылке link в блок block
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
 }
+
 function ajax_get_reload(url) {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', url, true );
