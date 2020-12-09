@@ -33,13 +33,17 @@
                   <div class="dropdown-menu" style="">
                     {% for object in user.get_my_all_post_lists %}
                       <span data-pk="{{ object.pk }}">
-                        <span class="dropdown-item post_list_select" style="padding-left: 30px;">
-                          {% if object.is_main_list %}
+                        {% if object.is_main_list %}
+                        <span class="dropdown-item post_list_select" style="">
                           <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                           <input type="hidden" class="list" name="lists" value="{{ object.pk }}">
-                          {% endif %}
                           {{ object.name }}
                         </span>
+                        {% else %}
+                        <span class="dropdown-item post_list_select" style="padding-left: 30px;">
+                          {{ object.name }}
+                        </span>
+                        {% endif %}
                       </span>
                     {% endfor %}
                   </div>
