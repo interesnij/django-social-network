@@ -31,14 +31,7 @@ on('#ajax', 'click', '.post_list_select', function() {
   list.prepend(span)
 });
 
-on('#ajax', 'click', '.post_list_unselect', function() {
-  pk = this.parentElement.getAttribute("data-pk");
-  list = this.parentElement.querySelector(".post_list_unselect");
-  list.querySelector("svg").remove();
-  list.querySelector(".list").remove();
-  list.classList.add("post_list_select");
-  list.classList.remove("post_list_unselect");
-})
+
 
 on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
