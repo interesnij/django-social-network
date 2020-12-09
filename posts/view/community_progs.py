@@ -34,7 +34,7 @@ class PostCommunityCreate(View):
                 request.POST.get('doc') or request.POST.get('user') or request.POST.get('community'):
 
                 lists = request.POST.getlist("lists")
-                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
@@ -59,7 +59,7 @@ class PostOfferCommunityCreate(View):
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 lists = request.POST.getlist("lists")
-                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_attach(request, new_post)
                 get_post_offer_processing(new_post)
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})

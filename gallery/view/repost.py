@@ -113,7 +113,7 @@ class UUPhotoRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=None, status=Post.PHOTO_REPOST)
             photo.item.add(parent)
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             if parent.creator.pk != request.user.pk:
@@ -136,7 +136,7 @@ class CUPhotoRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=community, status=Post.PHOTO_REPOST)
             photo.item.add(parent)
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             photo_repost_community_notification_handler(request.user, community, None, None, photo, PhotoCommunityNotify.REPOST)
@@ -166,7 +166,7 @@ class UCPhotoRepost(View):
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if photo.creator.pk != request.user.pk:
@@ -194,7 +194,7 @@ class CCPhotoRepost(View):
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     photo_repost_community_notification_handler(request.user, community, _community, None, photo, PhotoCommunityNotify.COMMUNITY_REPOST)
@@ -241,7 +241,7 @@ class UUPhotoAlbumRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.PHOTO_ALBUM_REPOST)
             album.post.add(parent)
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             if album.creator.pk != request.user.pk:
@@ -264,7 +264,7 @@ class CUPhotoAlbumRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.PHOTO_ALBUM_REPOST)
             album.post.add(parent)
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             photo_repost_community_notification_handler(request.user, community, None, album, None, PhotoCommunityNotify.ALBUM_REPOST)
@@ -294,7 +294,7 @@ class UCPhotoAlbumRepost(View):
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if album.creator.pk != request.user.pk:
@@ -322,7 +322,7 @@ class CCPhotoAlbumRepost(View):
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=_community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=_community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if album.creator.pk != request.user.pk:

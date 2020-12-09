@@ -73,7 +73,7 @@ class UUPostRepost(View):
             else:
                 parent = parent
             lists = request.POST.getlist("lists")
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             if parent.creator.pk != request.user.pk:
@@ -98,7 +98,7 @@ class CUPostRepost(View):
             else:
                 parent = parent
             lists = request.POST.getlist("lists")
-            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_attach(request, new_post)
             get_post_processing(new_post)
             post_repost_community_notification_handler(request.user, community, None, parent, PostCommunityNotify.REPOST)
@@ -130,7 +130,7 @@ class UCPostRepost(View):
             for community_id in communities:
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     if parent.creator.pk != request.user.pk:
@@ -161,7 +161,7 @@ class CCPostRepost(View):
             for community_id in communities:
                 _community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_attach(request, new_post)
                     get_post_processing(new_post)
                     post_repost_community_notification_handler(request.user, community, _community, parent, PostCommunityNotify.COMMUNITY_REPOST)

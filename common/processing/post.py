@@ -37,7 +37,7 @@ def repost_community_send(list, status, community, request):
         for community_id in communities:
             community = Community.objects.get(pk=community_id)
             if request.user.is_staff_of_community(community_id):
-                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
 
 def repost_message_send(list, status, community, request, text):

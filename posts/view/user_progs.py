@@ -27,7 +27,7 @@ class PostUserCreate(View):
                 request.POST.get('photo_list') or request.POST.get('doc_list') or \
                 request.POST.get('doc') or request.POST.get('user') or \
                 request.POST.get('community') or request.POST.get('good_list'):
-                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
