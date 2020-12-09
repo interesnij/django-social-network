@@ -38,7 +38,7 @@ on('body', 'click', '.menu_drop', function() {
     all_drop[i].classList.remove("show")
   }
   block = this.nextElementSibling;
-  block.classList.add("show");
+  block.classList.contains("show") ? block.classList.remove("show") : block.classList.add("show")
 });
 
 
