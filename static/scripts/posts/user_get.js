@@ -28,16 +28,7 @@ on('#ajax', 'click', '.post_list_select', function() {
   span = document.createElement("span"),
   span.innerHTML = '<input type="hidden" class="list" name="lists" value="' + pk + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ',
   list.prepend(span))
-});
-
-on('#ajax', 'click', '.post_list_unselect', function() {
-  pk = this.parentElement.getAttribute("data-pk");
-  list = this.parentElement.querySelector(".post_list_unselect");
-  list.querySelector("svg").parentElement.remove();
-  list.classList.add("post_list_select");
-  list.classList.remove("post_list_unselect");
-  list.style.paddingLeft = "30px";
-});
+}); 
 
 on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")

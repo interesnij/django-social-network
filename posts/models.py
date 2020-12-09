@@ -109,6 +109,8 @@ class Post(models.Model):
 
     @classmethod
     def create_post(cls, creator, text, category, lists, community, parent, comments_enabled, is_signature, votes_on, status):
+        if not lists:
+            raise ValidationError("Не выбран список для новой записи")
         post = Post.objects.create(creator=creator,
                                     text=text,
                                     category=category,
@@ -118,6 +120,9 @@ class Post(models.Model):
                                     is_signature=is_signature,
                                     votes_on=votes_on,
                                     status=status, )
+        for list_id in lists:
+            post_list = PostList.objects.get(pk=list_id)
+            post_list.post_list.add(post)
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",

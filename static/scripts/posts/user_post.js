@@ -27,7 +27,8 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    form_post.querySelector('.id_text').value = "";
+    !form_post.querySelector(".list").value ? toast_error("Выберите список для новой записи") : null;
+    form_post.querySelector('.id_text').value = ""; 
     clear_attach_block();
 
     elem = link_.responseText;
