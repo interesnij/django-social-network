@@ -35,7 +35,7 @@ on('#ajax', 'click', '.post_list_select', function() {
   _span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>';
   list.prepend(_span);
   list.prepend(input);
-  console.log(_span)
+  console.log(list)
 })
 
 on('#ajax', 'click', '.post_list_unselect', function() {
