@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_post_list_change', function() {
 });
 
 on('#ajax', 'click', '.post_list_select', function() {
-  pk = this.getAttribute("data-pk");
+  pk = this.parentElement.getAttribute("data-pk");
   list = this.parentElement.querySelector(".post_list_select");
   list.style.paddingLeft = "14px";
   list.classList.add("post_list_unselect");
@@ -31,7 +31,7 @@ on('#ajax', 'click', '.post_list_select', function() {
 })
 
 on('#ajax', 'click', '.post_list_unselect', function() {
-  pk = this.getAttribute("data-pk");
+  pk = this.parentElement.getAttribute("data-pk");
   list = this.parentElement.querySelector(".post_list_unselect");
   list.querySelector("svg").remove();
   list.querySelector(".list").remove();
