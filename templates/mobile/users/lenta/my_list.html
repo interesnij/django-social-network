@@ -6,14 +6,16 @@
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
     <ul class="date-list" style="width:max-content">
-      <li class="date tab_active main_list">
-        <div class="media">
-          <div class="media-body">
-              <h6 class="mb-0">Записи</h6>
+      {% for object in user.get_my_all_post_lists %}
+        {% if object.is_main_list %}
+        <li class="date tab_active list" list-pk="{{ object.pk }}">
+          <div class="media">
+            <div class="media-body">
+                <h6 class="mb-0">Записи</h6>
+            </div>
           </div>
-        </div>
-      </li>
-      {% for object in user.get_my_post_lists %}
+        </li>
+        {% else %}
           <li class="date pointer u_post_list_change list" list-pk="{{ object.pk }}">
             <div class="media">
               <div class="media-body">
@@ -21,6 +23,7 @@
               </div>
             </div>
           </li>
+        {% endif %}
       {% endfor %}
           <li class="date pointer u_add_post_list">
             <div class="media">
