@@ -32,13 +32,17 @@
                   </a>
                   <div class="dropdown-menu" style="">
                     {% for object in user.get_my_all_post_lists %}
-                      <a class="dropdown-item post_list_select" data-pk="{{ object.pk }}">
-                        {% if object.is_main_list %}
+                      {% if object.is_main_list %}
+                      <a class="dropdown-item post_list_unselect" data-pk="{{ object.pk }}">
                         <svg fill="currentColor" style="width:15px;height:15px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                         <input type="hidden" class="list" name="lists" value="{{ object.pk }}">
-                        {% endif %}
                         {{ object.name }}
                       </a>
+                      {% else %}
+                      <a class="dropdown-item post_list_select" data-pk="{{ object.pk }}">
+                        {{ object.name }}
+                      </a>
+                      {% endif %}
                     {% endfor %}
                   </div>
                   <a class="btn btn-link btn-sm pointer menu_drop">
