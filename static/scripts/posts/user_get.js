@@ -33,7 +33,7 @@ on('#ajax', 'click', '.post_list_select', function() {
 
 on('#ajax', 'click', '.post_list_unselect', function() {
   pk = this.parentElement.getAttribute("data-pk");
-  list = this.parentElement.querySelector(".post_list_select");
+  list = this.parentElement.querySelector(".post_list_unselect");
   list.querySelector("svg").parentElement.remove();
   list.classList.add("post_list_select");
   list.classList.remove("post_list_unselect");
