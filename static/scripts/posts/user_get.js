@@ -26,10 +26,10 @@ on('#ajax', 'click', '.post_list_select', function() {
   list.style.paddingLeft = "14px";
   list.classList.add("post_list_unselect");
   list.classList.remove("post_list_select");
-  span = document.createElement("span");
-  span.innerHTML = '<input type="hidden" class="list" name="lists" value="' + pk + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
-  list.prepend(span);
-  console.log(span)
+  _span = document.createElement("span");
+  _span.innerHTML = '<input type="hidden" class="list" name="lists" value="' + pk + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>';
+  list.prepend(_span);
+  console.log(_span)
 })
 
 on('#ajax', 'click', '.post_list_unselect', function() {
