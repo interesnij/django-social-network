@@ -16,8 +16,6 @@ on('#ajax', 'click', '.u_post_list_change', function() {
     list_block_load(block, ".post_stream", "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "u_post_list_change");
     this.classList.add("tab_active");
-    parent.querySelector(".main_list").classList.add("pointer", "u_posts_change");
-    parent.querySelector(".main_list").classList.remove("tab_active");
   }
 });
 on('#ajax', 'click', '.u_posts_change', function() {
