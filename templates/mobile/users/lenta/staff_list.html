@@ -5,29 +5,6 @@
     {% include 'mobile/users/lenta/staff_fixed_post.html' %}
   {% endif %}
 
-  <div class="row overflow-x-auto no-gutters">
-    <div class="col-12">
-    <ul class="date-list" style="width:max-content">
-      <li class="date tab_active main_list">
-        <div class="media">
-          <div class="media-body">
-              <h6 class="mb-0">Записи</h6>
-          </div>
-        </div>
-      </li>
-      {% for object in user.get_post_lists %}
-          <li class="date pointer u_post_list_change list" list-pk="{{ object.pk }}">
-            <div class="media">
-              <div class="media-body">
-                <h6 class="mb-0">{{ object.name }}</h6>
-              </div>
-            </div>
-          </li>
-      {% endfor %}
-    </ul>
-    </div>
-  </div>
-
     <span class="post_stream stream post_container">
       {% for object in object_list %}
         {% include 'mobile/posts/post_user/staff_post.html' %}
