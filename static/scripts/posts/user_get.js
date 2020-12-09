@@ -20,8 +20,9 @@ on('#ajax', 'click', '.u_post_list_change', function() {
 });
 
 on('#ajax', 'click', '.post_list_select', function() {
-  pk = this.parentElement.getAttribute("data-pk");
-  list = this.parentElement.querySelector(".post_list_select");
+  parent = this.parentElement;
+  pk = parent.getAttribute("data-pk");
+  list = parent.querySelector(".post_list_select");
   list.style.paddingLeft = "14px";
   list.classList.add("post_list_unselect");
   list.classList.remove("post_list_select");
