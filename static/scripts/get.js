@@ -38,7 +38,7 @@ on('body', 'click', '.menu_drop', function() {
     all_drop[i].classList.remove("show")
   }
   block = this.nextElementSibling;
-  block.classList.toggle("show");
+  block.classList.add("show");
 });
 
 
