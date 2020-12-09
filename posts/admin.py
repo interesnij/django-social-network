@@ -20,7 +20,12 @@ class PostCommentAdmin(admin.ModelAdmin):
     list_filter = ['is_deleted']
 
 
+class PostListAdmin(admin.ModelAdmin):
+    search_fields = ('creator',)
+    list_display = ['name','creator', 'order']
+
+
 admin.site.register(Post, PostAdmin)
-admin.site.register(PostList)
+admin.site.register(PostList, PostListAdmin)
 admin.site.register(PostCategory)
 admin.site.register(PostComment, PostCommentAdmin)

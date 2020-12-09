@@ -2957,6 +2957,8 @@ body.dragging * {
   border-radius: 4px;
   border: 0;
   margin-top: -1px;
+  max-height: 250px;
+  overflow: auto;
 }
 
 .dropdown-menu .dropdown-item {

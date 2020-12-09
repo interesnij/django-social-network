@@ -18,4 +18,4 @@ def create_community_models(community):
     CommunityNotificationsGood.objects.create(community=community)
     CommunityNotificationsVideo.objects.create(community=community)
 
-    PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=1, creator=community.creator)
+    PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
