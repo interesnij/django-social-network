@@ -40,7 +40,6 @@ on('body', 'click', '.menu_drop', function() {
   for(i=0; i<all_drop.length; i++) {
     all_drop[i].classList.remove("show")
   } block.classList.add("show")}
-
 });
 
 

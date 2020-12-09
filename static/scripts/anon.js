@@ -633,4 +633,12 @@ on('body', 'click', '.anon_color_change', function() {
     addStyleSheets("/static/styles/color/" + color + ".css");
 });
 
-on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
+on('body', 'click', '.menu_drop', function() {
+  block = this.nextElementSibling;
+  if (block.classList.contains("show")) { block.classList.remove("show") }
+  else {
+  all_drop = document.body.querySelectorAll(".dropdown-menu");
+  for(i=0; i<all_drop.length; i++) {
+    all_drop[i].classList.remove("show")
+  } block.classList.add("show")}
+});

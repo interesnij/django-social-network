@@ -361,31 +361,6 @@ class CommunityPostsListView(ListView):
 		return posts_list
 
 
-class CommunityPostsView(ListView):
-	template_name = None
-	paginate_by = 15
-
-	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.list=PostList.objects.get(community_id=self.community.pk, type="MA")
-		if not request.is_ajax():
-			raise Http404
-		else:
-			self.posts_list = self.list.get_posts()
-		self.template_name = get_permission_community_post(self.community, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityPostsView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(CommunityPostsView,self).get_context_data(**kwargs)
-		context['community'] = self.community
-		context['object'] = self.community.get_fixed_post()
-		return context
-
-	def get_queryset(self):
-		posts_list = self.posts_list
-		return posts_list
-
-
 class PostsDraftCommunity(ListView):
     template_name = None
     paginate_by = 15

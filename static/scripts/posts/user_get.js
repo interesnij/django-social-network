@@ -18,19 +18,26 @@ on('#ajax', 'click', '.u_post_list_change', function() {
     this.classList.add("tab_active");
   }
 });
-on('#ajax', 'click', '.u_posts_change', function() {
-  if (!this.classList.contains("tab_active")){
-    list = this.parentElement.querySelectorAll(".list");
-    for (var i = 0; i < list.length; i++) {
-      list[i].classList.remove("tab_active");
-      list[i].classList.add("pointer", "u_post_list_change");
-    };
-    block = this.parentElement.parentElement.parentElement.nextElementSibling;
-    list_block_load(block, ".post_stream", "/users/detail/posts/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/");
-    this.classList.remove("pointer", "u_posts_change");
-    this.classList.add("tab_active");
-  }
-});
+
+on('#ajax', 'click', '.post_list_select', function() {
+  pk = this.getAttribute("data-pk");
+  list = this.parentElement.querySelector(".post_list_select");
+  list.style.paddingLeft = "14px";
+  list.classList.add("post_list_unselect");
+  list.classList.remove("post_list_select");
+  span = document.createElement("span");
+  span.innerHTML = '<input type="hidden" class="list" name="lists" value="' + pk + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
+  list.prepend(span)
+})
+
+on('#ajax', 'click', '.post_list_unselect', function() {
+  pk = this.getAttribute("data-pk");
+  list = this.parentElement.querySelector(".post_list_unselect");
+  list.querySelector("svg").remove();
+  list.querySelector(".list").remove();
+  list.classList.add("post_list_select");
+  list.classList.remove("post_list_unselect");
+})
 
 on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")

@@ -198,31 +198,6 @@ class UserPostsListView(ListView):
 		return posts_list
 
 
-class UserPostsView(ListView):
-	template_name = None
-	paginate_by = 15
-
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.list=PostList.objects.get(creator_id=self.user.pk, type="MA", community=None)
-		if self.user.pk != request.user.pk and self.list.is_private_list() and not request.is_ajax():
-			raise Http404
-		else:
-			self.posts_list = self.list.get_posts()
-		self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPostsView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserPostsView,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		context['object'] = self.user.get_fixed_post()
-		return context
-
-	def get_queryset(self):
-		posts_list = self.posts_list
-		return posts_list
-
-
 class AllUsers(ListView):
 	template_name = None
 	paginate_by = 15
