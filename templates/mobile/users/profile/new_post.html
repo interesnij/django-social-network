@@ -48,7 +48,7 @@
                   </a>
                   <div class="dropdown-menu" style="">
                     {% for object in user.get_post_categories %}
-                      <a class="dropdown-item post_list_select" data-pk="{{ object.pk }}">{{ object.name }}</a>
+                      <a class="dropdown-item" data-pk="{{ object.pk }}">{{ object.name }}</a>
                     {% endfor %}
                   </div>
                 </div>
