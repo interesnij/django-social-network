@@ -1,9 +1,9 @@
 <div id="lenta_container">
-  {% if object %}
-    {% include 'mobile/users/lenta/my_fixed_post.html' %}
-  {% endif %}
 
     <span class="post_stream stream post_container">
+      {% if object %}
+        {% include 'mobile/users/lenta/my_fixed_post.html' %}
+      {% endif %}
       <span class="list_pk" list-pk="{{ list.pk }}">
       {% for object in object_list %}
         {% include 'mobile/posts/post_user/my_post.html' %}

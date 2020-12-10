@@ -16,9 +16,10 @@ on('#ajax', 'click', '#u_add_article', function() {
 });
 
 on('#ajax', 'click', '#form_post_btn', function() {
-  form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#form_post");
-  lenta_load = form_post.parentElement.nextElementSibling;
+  form_data = new FormData(form_post);
+
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -35,7 +36,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     list_pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
-    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".stream").prepend(new_post),
+    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),
                                        toast_info("Запись опубликована"),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");
