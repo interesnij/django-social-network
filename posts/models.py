@@ -777,10 +777,10 @@ class Post(models.Model):
         return self.post_visits_count() + self.post_ad_visits_count()
 
     def get_list_pk(self):
-		return self.album.all()[0].pk
+        return self.album.all()[0].pk
 
     def get_lists(self):
-		return self.album.all()
+        return self.album.all()
 
 
 class PostComment(models.Model):
