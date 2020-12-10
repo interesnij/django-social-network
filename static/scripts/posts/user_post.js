@@ -34,12 +34,14 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
     elem = link_.responseText;
     new_post = document.createElement("span");
-    new_post.innerHTML = elem; 
-    list_pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
+    new_post.innerHTML = elem;
+    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
+    list_name = list.innerHTML;
+    list_pk = list.getAttribute("list-pk");
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),
-                                       toast_info("Запись опубликована"),
+                                       toast_info("Запись опубликована в списке " + list_name),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
-                                    :  toast_error("Запись опубликована!");
+                                    :  toast_info("Запись опубликована в списке " + list_name);
   }};
 
   link_.send(form_data);

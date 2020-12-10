@@ -27,14 +27,16 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
-
+    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
+    list_name = list.innerHTML;
+    list_pk = list.getAttribute("list-pk");
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".card") ? (lenta_load.querySelector(".community_stream").prepend(new_post),
-                                       toast_info("Запись опубликована"),
+    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".community_stream").prepend(new_post),
+                                       toast_info("Запись опубликована в списке " + list_name),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
-                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+                                    :  toast_info("Запись опубликована в списке " + list_name);
   }};
 
   link_.send(form_data);
