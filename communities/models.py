@@ -235,15 +235,14 @@ class Community(models.Model):
 
     def get_post_lists(self):
         lists_query = Q(community_id=self.id, type="LI")
-        lists_query.add(Q(type="MA"), Q.AND)
-        lists = PostList.objects.filter(lists_query).order_by("order")
+        lists_query.add(Q(community_id=self.id, type="MA"), Q.AND)
+        lists = PostList.objects.filter(lists_query)
         return lists
-
     def get_admin_all_post_lists(self):
         lists_query = Q(community_id=self.id, type="LI")
-        lists_query.add(~Q(type="DE"), Q.AND)
-        lists_query.add(Q(type="MA"), Q.AND)
-        lists = PostList.objects.filter(lists_query).order_by("order")
+        lists_query.add(~Q(community_id=self.id, type="DE"), Q.AND)
+        lists_query.add(Q(community_id=self.id, type="MA"), Q.AND)
+        lists = PostList.objects.filter(lists_query)
         return lists
     def post_list_exists(self):
         return self.community_postlist.filter(community_id=self.id, type="AL").exists()
