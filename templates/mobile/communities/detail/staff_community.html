@@ -1,6 +1,6 @@
 {% extends "base_mobile.html" %}
-{% load exists %}
 {% block title %}{{ community.name }}{% endblock %}
+{% load exists %}
 {% block content %}
 
 {% if community.cover %}
@@ -31,16 +31,32 @@
               <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
             {% endif %}
           </h6>
-          {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
+          {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Нет статуса</p>{% endif %}
+          <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
       </div>
     </div>
-    <span class="row no-gutters">
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm custom_color border pointer" style="width: -webkit-fill-available;">Сообщение</a>
+    <span class="row no-gutters mb-3">
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;">
+        <a class="btn btn-sm custom_color border pointer community_send_page_message" data-pk="{{ community.pk }}" style="width: -webkit-fill-available;">Сообщение</a>
       </span>
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
-        <a class="btn btn-sm member_delete pointer custom_color border member_create" style="width: -webkit-fill-available;">Подписаться</a>
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;" class="btn_default">
+        <a class="btn btn-sm member_create pointer custom_color border" style="width: -webkit-fill-available;">Подписаться</a>
       </span>
+      <span style="flex: 0 0 20%;max-width:20%;padding:5px;" class="btn_default menu_drop">
+        <a class="btn btn-sm member_delete pointer custom_color border" style="width: -webkit-fill-available;">
+          <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+      </span>
+      <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+        <span class="dropdown-item u_community_repost">Поделиться</span>
+        <span class="dropdown-item community_blocker">Блокировать</span>
+        <span class="dropdown-item community_suspend">Остановка</span>
+        {% if community.is_have_warning_banner %}
+          <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="dropdown-item ajax">Применен баннер</a>
+        {% else %}
+          <span class="dropdown-item community_warning_banner">Повесить баннер</span>
+        {% endif %}
+      </div>
     </span>
     <div style="padding-left: 10px;">
       <ul class="list-group w-100">
@@ -48,7 +64,7 @@
               <div class="media experience">
                   <div class="media-body">
                     <h6 class="my-0 content-color-primary">Описание</h6>
-                      <p>{% if community.description %}{{ community.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
+                      <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
                   </div>
               </div>
           </li>
@@ -77,9 +93,9 @@
   {% endif %}
   </span>
 
-  {% if community.is_all_can_post %}
+  {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
     {% include 'mobile/communities/detail_sections/create_post.html' %}
-  {% elif community.is_member_post_all_can or community.is_staff_post_all_can %}
+  {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
     {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
   {% endif %}
 

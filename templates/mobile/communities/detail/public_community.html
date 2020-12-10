@@ -1,5 +1,4 @@
 {% extends "base_mobile.html" %}
-{% load exists %}
 {% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
@@ -31,15 +30,16 @@
               <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
             {% endif %}
           </h6>
-          {% if community.status %}<p class="">{{ community.status }}</p>{% endif %}
+          {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Нет описания сообщества</p>{% endif %}
+          <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
       </div>
     </div>
-    <span class="row no-gutters">
+    <span class="row no-gutters mb-3">
       <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm custom_color border pointer" style="width: -webkit-fill-available;">Сообщение</a>
+        <a class="btn btn-sm ajax custom_color border" href="{% url 'community_general_form' pk=community.pk %}" style="width: -webkit-fill-available;">Управление</a>
       </span>
       <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
-        <a class="btn btn-sm member_delete pointer custom_color border member_create" style="width: -webkit-fill-available;">Подписаться</a>
+        <a class="btn btn-sm member_create pointer custom_color border" style="width: -webkit-fill-available;">Подписаться</a>
       </span>
     </span>
     <div style="padding-left: 10px;">
@@ -59,29 +59,6 @@
   {% include 'mobile/communities/detail_sections/membersheeps.html' %}
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
-
-  <span class="draft_post_container">
-  {% if request.user|is_community_draft_exists:community.pk %}
-  <div class="card mt-3 user_draft_list">
-    <div class="card-header">
-      <a href="{% url 'community_user_draft_list' pk=community.pk %}" class="ajax">
-        <div class="media">
-            <div class="media-body">
-                <h4 class="content-color-primary mb-0">Предложенные записи</h4>
-            </div>
-            <span class="user_draft_count">{{ community|count_draft_posts_for_user:request.user.pk }}</span>
-        </div>
-      </a>
-    </div>
-  </div>
-  {% endif %}
-  </span>
-
-  {% if community.is_all_can_post %}
-    {% include 'mobile/communities/detail_sections/create_post.html' %}
-  {% elif community.is_member_post_all_can or community.is_staff_post_all_can %}
-    {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
-  {% endif %}
 
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
