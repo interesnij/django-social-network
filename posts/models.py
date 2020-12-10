@@ -776,6 +776,12 @@ class Post(models.Model):
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
 
+    def get_list_pk(self):
+		return self.album.all()[0].pk
+
+    def get_lists(self):
+		return self.album.all()
+
 
 class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")

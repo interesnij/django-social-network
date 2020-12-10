@@ -175,7 +175,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -183,7 +183,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
-    if (span1.classList.contains(uuid)){
+    if (span1.classList.contains(uuid)){ 
       container = document.body.querySelector(".profile_block_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".video_none") ? container.querySelector(".video_none").style.display = "none" : null;

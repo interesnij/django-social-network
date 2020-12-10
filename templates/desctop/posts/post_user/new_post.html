@@ -1,0 +1,18 @@
+<div class="card mb-3 pag" data-uuid="{{ object.uuid }}">
+  <span class="span1 {% for list in object.get_lists %}{{ list.pk }} {% endfor %}"></span>
+  {% include 'desctop/posts/post_user/my_card_header.html' %}
+
+  <div class="fullscreen pointer">
+    {{ object.text|linebreaks }}
+  </div>
+
+  <span class="post_attach_panel">
+    {% include object.get_u_attach_items_desctop %}
+  </span>
+
+    {% if object.parent %}
+      {% include 'desctop/posts/post_user/repost.html' %}
+    {% endif %}
+
+    {% include 'desctop/posts/post_user/info.html' %}
+</div>

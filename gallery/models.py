@@ -137,20 +137,6 @@ class Photo(models.Model):
     def is_album_exists(self):
         return self.photo_album.filter(creator=self.creator).exists()
 
-    def notification_user_repost(self, user):
-        photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.REPOST)
-    def notification_user_like(self, user):
-        photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.LIKE)
-    def notification_user_dislike(self, user):
-        photo_notification_handler(user, self.creator, photo=self, verb=PhotoNotify.DISLIKE)
-
-    def notification_community_repost(self, user, community):
-        photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.REPOST)
-    def notification_community_like(self, user, community):
-        photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.LIKE)
-    def notification_community_dislike(self, user, community):
-        photo_community_notification_handler(creator=user, community=self.community, photo=self, verb=PhotoCommunityNotify.DISLIKE)
-
     def get_comments(self):
         comments_query = Q(photo_comment_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
@@ -228,30 +214,6 @@ class PhotoComment(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
-
-    def notification_user_comment(self, user):
-        photo_notification_handler(user, self.commenter, verb=PhotoNotify.POST_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
-
-    def notification_user_reply_comment(self, user):
-        photo_notification_handler(user, self.commenter, verb=PhotoNotify.POST_COMMENT_REPLY, photo=self.parent_comment.photo_comment, comment=self.parent_comment, key='social_update')
-
-    def notification_user_comment_like(self, user):
-        photo_notification_handler(actor=user, recipient=self.commenter, verb=PhotoNotify.LIKE_COMMENT, photo=self.photo_comment, comment=self, key='social_update')
-
-    def notification_user_comment_dislike(self, user):
-        photo_notification_handler(actor=user, recipient=self.commenter, verb=PhotoNotify.DISLIKE_COMMENT, photo=self.photo_comment, comment=self, key='social_update')
-
-    def notification_community_comment(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, community=community, photo=self.photo_comment, verb=PhotoNotify.POST_COMMENT, comment=self, key='social_update')
-
-    def notification_community_reply_comment(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, community=community, photo=self.parent_comment.photo_comment, verb=PhotoNotify.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
-
-    def notification_community_comment_like(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotify.LIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
-
-    def notification_community_comment_dislike(self, user, community):
-        photo_community_notification_handler(actor=user, recipient=None, community=community, verb=PhotoNotify.DISLIKE_COMMENT, comment=self, photo=self.photo_comment, key='social_update')
 
     def get_replies(self):
         get_comments = PhotoComment.objects.filter(parent_comment=self).all()

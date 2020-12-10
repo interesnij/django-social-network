@@ -28,13 +28,14 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     !form_post.querySelector(".list").value ? toast_error("Выберите список для новой записи") : null;
-    form_post.querySelector('.id_text').value = ""; 
+    form_post.querySelector('.id_text').value = "";
     clear_attach_block();
 
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(new_post),
+    list_pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
+    new_post.querySelector('.span1').classList.contains(uuid) && new_post.querySelector(".card") ? (lenta_load.querySelector(".stream").prepend(new_post),
                                        toast_info("Запись опубликована"),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_error("Нужно написать или прикрепить что-нибудь!");

@@ -97,6 +97,8 @@ class VideoAlbum(models.Model):
         return self.video_album.filter(album=self).values("pk").exists()
 
 
+
+
 class Video(models.Model):
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
@@ -168,20 +170,6 @@ class Video(models.Model):
     def all_visits_count(self):
         from stst.models import VideoNumbers
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
-
-    def notification_user_repost(self, user):
-        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.REPOST)
-    def notification_user_like(self, user):
-        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.LIKE)
-    def notification_user_dislike(self, user):
-        video_notification_handler(user, self.creator, video=self, verb=VideoNotify.DISLIKE)
-
-    def notification_community_repost(self, user, community):
-        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.REPOST)
-    def notification_community_like(self, user, community):
-        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.LIKE)
-    def notification_community_dislike(self, user, community):
-        video_community_notification_handler(creator=user, community=self.community, video=self, verb=VideoCommunityNotify.DISLIKE)
 
     def likes_count(self):
         likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
@@ -302,24 +290,7 @@ class VideoComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
-
-    def notification_user_comment(self, user):
-        good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT, comment=self, good=self.good_comment, key='social_update')
-    def notification_user_reply_comment(self, user):
-        good_notification_handler(user, self.commenter, verb=GoodNotify.POST_COMMENT_REPLY, good=self.parent_comment.good_comment, comment=self.parent_comment, key='social_update')
-    def notification_user_comment_like(self, user):
-        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotify.LIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
-    def notification_user_comment_dislike(self, user):
-        good_notification_handler(actor=user, recipient=self.commenter, verb=GoodNotify.DISLIKE_COMMENT, good=self.good_comment, comment=self, key='social_update')
-    def notification_community_comment(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment, verb=GoodNotify.POST_COMMENT, comment=self, key='social_update')
-    def notification_community_reply_comment(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, good=self.good_comment.photo_comment, verb=GoodNotify.POST_COMMENT_REPLY, comment=self.parent_comment, key='social_update')
-    def notification_community_comment_like(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotify.LIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
-    def notification_community_comment_dislike(self, user, community):
-        good_community_notification_handler(actor=user, recipient=None, community=community, verb=GoodNotify.DISLIKE_COMMENT, comment=self, good=self.good_comment, key='social_update')
-
+        
     def count_replies_ru(self):
         count = self.video_comment_replies.count()
         a = count % 10

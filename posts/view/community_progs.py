@@ -37,7 +37,7 @@ class PostCommunityCreate(View):
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
-                return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
+                return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
