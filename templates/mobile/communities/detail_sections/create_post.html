@@ -30,7 +30,7 @@
                   список
                 </a>
                 <div class="dropdown-menu" style="">
-                  {% for object in user.get_my_all_post_lists %}
+                  {% for object in community.get_admin_all_post_lists %}
                     <span data-pk="{{ object.pk }}">
                       {% if object.is_main_list %}
                       <span class="dropdown-item post_list_select" style="">
@@ -74,7 +74,7 @@
                       </div>
                     </a>
                 </div>
-                  <button type="button" id="c_add_post" class="btn btn-sm text-uppercase pl-3"> 
+                  <button type="button" id="c_add_post" class="btn btn-sm text-uppercase pl-3">
                     <span class="text-hide-xs">Опубликовать</span>
                     <svg class="svg_default" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   </button>
