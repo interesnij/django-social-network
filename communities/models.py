@@ -242,6 +242,7 @@ class Community(models.Model):
     def get_admin_all_post_lists(self):
         lists_query = Q(community_id=self.id, type="LI")
         lists_query.add(~Q(type="DE"), Q.AND)
+        lists_query.add(Q(type="MA"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
     def post_list_exists(self):
