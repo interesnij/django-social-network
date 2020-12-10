@@ -77,8 +77,47 @@
 
   {% include 'mobile/communities/detail_sections/create_post.html' %}
 
+  <div class="row overflow-x-auto no-gutters">
+    <div class="col-12">
+    <ul class="date-list" style="width:max-content">
+      {% for object in community.get_admin_all_post_lists %}
+        {% if object.is_main_list %}
+        <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
+          <div class="media">
+            <div class="media-body">
+                <h6 class="mb-0">Записи</h6>
+            </div>
+          </div>
+        </li>
+        {% else %}
+          <li class="date pointer c_post_list_change list" list-pk="{{ object.pk }}">
+            <div class="media">
+              <div class="media-body">
+                <h6 class="mb-0">{{ object.name }}</h6>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+      {% endfor %}
+          <li class="date pointer c_add_post_list">
+            <div class="media">
+              <div class="media-body">
+                <h6 class="mb-0">Создать список</h6>
+              </div>
+            </div>
+          </li>
+    </ul>
+    </div>
+  </div>
+
   <div class="is_profile_post_paginate mt-3"></div>
 
 </div>
 
+{% load get_key %}
+<script>
+  {% if user|is_user_list:user.get_music_list_id %}
+    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
+  {% endif %}
+</script>
 {% endblock %}
