@@ -34,12 +34,12 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
     elem = link_.responseText;
     new_post = document.createElement("span");
-    new_post.innerHTML = elem;
+    new_post.innerHTML = elem; 
     list_pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),
                                        toast_info("Запись опубликована"),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
-                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+                                    :  toast_error("Запись опубликована!");
   }};
 
   link_.send(form_data);
