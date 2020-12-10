@@ -235,6 +235,7 @@ class Community(models.Model):
 
     def get_post_lists(self):
         lists_query = Q(community_id=self.id, type="LI")
+        lists_query.add(Q(type="MA"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
