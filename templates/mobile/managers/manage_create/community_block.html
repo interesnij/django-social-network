@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-2 col-md-4">
+            <div style="flex: 0 0 30%;max-width:30%;padding:5px;">
               <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
                 {% if community.get_avatar %}
                   <img style="width:100%;height:auto" src="{{ community.get_avatar }}" alt="">
@@ -16,22 +16,24 @@
                 {% endif %}
               </a>
             </div>
-            <div class="col-lg-10 col-md-8">
+            <div style="flex: 0 0 70%;max-width:70%;padding:5px;">
               <a href="{% url 'community_detail' pk=community.pk %}" class="ajax">
                   <h6 class="my-0 mt-1">{{ community.name }}</h6>
               </a>
               <p style="padding-top:10px;">Вы собираетесь применить блокировку для этого сообщества.</p>
             </div>
         </div>
-        <br>
+
         <div class="form-group">
           <textarea name="description" class="form-control bg-light-secondary border-0" rows="4" placeholder="Опишите причину блокировки"></textarea>
         </div>
-        <br>
+
     </div>
     <div class="card-footer">
+        <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
         <button type="button" class="btn btn-success float-right create_community_blocker_btn">Применить блокировку</button>
     </div>
   </div>
 </div>
 </form>
+<br><br><br>
