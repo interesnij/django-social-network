@@ -343,7 +343,7 @@ class CommunityPostsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.list=PostList.objects.get(pk=self.kwargs["list_pk"])
-		if (not request.user.is_staff_of_community(community.pk) and self.list.is_private_list()) or not request.is_ajax():
+		if (not request.user.is_staff_of_community(self.community.pk) and self.list.is_private_list()) or not request.is_ajax():
 			raise Http404
 		else:
 			self.posts_list = self.list.get_posts()
