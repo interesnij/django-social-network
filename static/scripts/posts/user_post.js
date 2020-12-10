@@ -15,7 +15,7 @@ on('#ajax', 'click', '#u_add_article', function() {
   //CKEDITOR.instances.id_content.updateElement();
 });
 
-on('#ajax', 'click', '#form_post_btn', function() {
+on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = document.querySelector("#form_post");
   form_data = new FormData(form_post);
 
