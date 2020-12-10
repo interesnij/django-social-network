@@ -30,17 +30,26 @@
               <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
             {% endif %}
           </h6>
-          {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
+          {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">НЕт статуса</p>{% endif %}
           <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
       </div>
     </div>
     <span class="row no-gutters mb-3">
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <a class="btn btn-sm ajax custom_color border" href="{% url 'community_general_form' pk=community.pk %}" style="width: -webkit-fill-available;">Управление</a>
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;">
+        <a class="btn btn-sm custom_color border community_send_page_message" data-pk="{{ community.pk }}" style="width: -webkit-fill-available;">Сообщение</a>
       </span>
-      <span style="flex: 0 0 50%;max-width:50%;padding:5px;" class="btn_default">
-        <a class="btn btn-sm member_delete pointer custom_color border" style="width: -webkit-fill-available;">Отписаться</a>
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;" class="btn_default">
+        <a class="btn btn-sm member_create pointer custom_color border" style="width: -webkit-fill-available;">Подписаться</a>
       </span>
+      <span style="flex: 0 0 20%;max-width:20%;padding:5px;" class="btn_default menu_drop">
+        <a class="btn btn-sm member_delete pointer custom_color border" style="width: -webkit-fill-available;">
+          <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+      </span>
+      <div class="dropdown-menu" style="margin-top:-50px;width:100%">
+        <span class="dropdown-item u_community_repost">Поделиться</span>
+        <span class="dropdown-item community_claim">Пожаловаться</span>
+      </div>
     </span>
     <div style="padding-left: 10px;">
       <ul class="list-group w-100">
@@ -48,7 +57,7 @@
               <div class="media experience">
                   <div class="media-body">
                     <h6 class="my-0 content-color-primary">Описание</h6>
-                      <p>{% if community.description %}{{ community.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
+                      <p>{% if community.description %}{{ community.description }}{% else %}Нет описания{% endif %}</p>
                   </div>
               </div>
           </li>
