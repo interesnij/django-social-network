@@ -34,9 +34,9 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".community_stream").prepend(new_post),
-                                       toast_info('Запись опубликована в списке "' + list_name + '"'),
+                                       toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
-                                     : toast_info('Запись опубликована в списке "' + list_name + '"');
+                                     : toast_info('Запись опубликована');
   }};
 
   link_.send(form_data);
