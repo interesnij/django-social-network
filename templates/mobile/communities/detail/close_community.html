@@ -17,7 +17,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h3 class="mb-2">{{ community.name }}</h3>
-                {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
+                {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Нет статуса</p>{% endif %}
                 <br>
 
                 {% if community.get_avatar %}
@@ -28,7 +28,7 @@
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-                    <span class="btn btn-sm custom_color border">Написать</span>
+                    <a class="btn btn-sm custom_color border community_send_page_message" data-pk="{{ community.pk }}" style="width: -webkit-fill-available;">Сообщение</a>
                   </span>
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
                     <span data-id="{{ community.pk }}" class="btn btn-sm custom_color border member_follow_delete">Отменить заявку</span>
@@ -43,18 +43,7 @@
                             </div>
                             <div class="media-body">
                               <h6 class="my-0 content-color-primary">Описание</h6>
-                                <p>{% if community.description %}{{ community.description }}{% else %}Нет описания сообщества{% endif %}</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item px-0">
-                        <div class="media experience">
-                            <div class="icon-circle icon-40 bg-light-secondary" style="margin-right:10px">
-                              <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                            </div>
-                            <div class="media-body">
-                              <h6 class="my-0 content-color-primary">Правила</h6>
-                                <p>{% if community.rules %}{{ community.rules }}{% else %}Нет правил сообщетсва{% endif %}</p>
+                                <p>{% if community.description %}{{ community.description }}{% else %}Нет описания{% endif %}</p>
                             </div>
                         </div>
                     </li>
@@ -84,7 +73,7 @@
           </div>
 
           <div class="mt-3">
-                <div class="card" style="align-items: center;justify-content:center;">
+                <div class="card centered">
                   <div class="card-body">
                   <svg class="thumb_big svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                   </div>
