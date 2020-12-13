@@ -22,7 +22,7 @@ class UUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), self.template_name = get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMGoodWindow,self).get(request,*args,**kwargs)
@@ -96,7 +96,7 @@ class UUGoodRepost(View):
     создание репоста товара пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        good, user, form_post, lists = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), form_post = PostForm(request.POST), request.POST.getlist("lists")
+        good, user, form_post, lists = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists")
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -115,7 +115,7 @@ class CUGoodRepost(View):
     создание репоста товара сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"]), form_post = PostForm(request.POST), request.POST.getlist("lists")
+        good, c, form_post, lists = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists")
         check_can_get_lists(request.user, c)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
