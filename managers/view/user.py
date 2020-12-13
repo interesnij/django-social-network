@@ -69,7 +69,7 @@ class UserEditorDelete(View):
 class UserAdvertiserCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_advertiser():
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_advertiser()):
             add_user_advertiser(user, request.user)
             return HttpResponse()
         else:
