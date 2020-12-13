@@ -1,5 +1,3 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from posts.models import Post
 from communities.models import Community, CommunityMembership
@@ -39,6 +37,8 @@ class CommunityDetail(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import CommunityNumbers
+        import re
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
         self.community, user_agent = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT']
 
@@ -80,8 +80,7 @@ class CommunityDetail(TemplateView):
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=1)
             else:
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.community.pk, platform=0)
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
-            self.common_friends_count = request.user.get_common_friends_of_community_count_ru(self.community.pk)
+            self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.community.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.community.pk)
         elif request.user.is_anonymous:
             if self.community.is_public():
                 if not self.community.is_verified():
@@ -121,11 +120,7 @@ class CommunityGallery(TemplateView):
     def get(self,request,*args,**kwargs):
         from gallery.models import Album
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
-        self.albums_list = self.community.get_albums().order_by('-created')
-
-        self.template_name = get_template_community_photo(self.community, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.album, self.albums_list, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(community_id=self.community.pk, type=Album.MAIN), self.community.get_albums().order_by('-created'), get_template_community_photo(self.community, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -141,9 +136,7 @@ class CommunityAlbum(TemplateView):
     def get(self,request,*args,**kwargs):
         from gallery.models import Album
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.community, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.album, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"]), get_template_community_photo(self.community, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -1,12 +1,9 @@
 from rest_framework.exceptions import ValidationError
-from video.models import Video
-from music.models import SoundcloudParsing
-from gallery.models import Photo
-from goods.models import Good
-from article.models import Article
+
 
 def photo_attach(value, comment, target):
     try:
+        from gallery.models import Photo
         _select_photo = Photo.objects.get(pk=value, is_public=True)
         if target == "item_comment":
             _select_photo.item_comment.add(comment)
@@ -21,6 +18,7 @@ def photo_attach(value, comment, target):
 
 def video_attach(value, comment):
     try:
+        from video.models import Video
         _select_video = Video.objects.get(pk=value, is_public=True)
         _select_video.item_comment.add(comment)
     except:
@@ -28,6 +26,7 @@ def video_attach(value, comment):
 
 def music_attach(value, comment):
     try:
+        from music.models import SoundcloudParsing
         _select_music = SoundcloudParsing.objects.get(pk=value)
         _select_music.item_comment.add(comment)
     except:
@@ -35,6 +34,7 @@ def music_attach(value, comment):
 
 def good_attach(value, comment):
     try:
+        from goods.models import Good
         _select_good = Good.objects.get(pk=value)
         _select_good.item_comment.add(comment)
     except:
@@ -42,6 +42,7 @@ def good_attach(value, comment):
 
 def article_attach(value, comment):
     try:
+        from article.models import Article
         _select_article = Article.objects.get(uuid=value)
         _select_article.comment_attach.add(comment)
     except:

@@ -1,5 +1,3 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 import uuid
 from django.conf import settings
 from django.db import models
@@ -8,11 +6,9 @@ from django.db.models import Q
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
-from notify.model.user import *
 from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from django.contrib.postgres.indexes import BrinIndex
-from posts.models import Post, PostList
 
 
 class CommunityCategory(models.Model):
@@ -73,7 +69,7 @@ class Community(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
     description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Описание" )
     cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
@@ -189,14 +185,20 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_posts(self):
+        from posts.models import Post, PostList
+
         list = PostList.objects.get(community_id=self.id, type=PostList.MAIN)
         posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
     def get_draft_posts(self):
+        from posts.models import Post, PostList
+
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts(self):
+        from posts.models import Post
+
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
@@ -209,24 +211,33 @@ class Community(models.Model):
         return count_articles
 
     def id_draft_posts_exists(self):
+        from posts.models import Post
+
         posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         return Post.objects.filter(posts_query).exists()
 
     def get_draft_posts_for_user(self, user_pk):
+        from posts.models import Post
+
         posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts_for_user(self, user_pk):
+        from posts.models import Post
+
         posts_query = Q(creator_id=user_pk, community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
     def get_archive_posts(self):
+        from posts.models import Post, PostList
+
         list = PostList.objects.get(community_id=self.id, type=PostList.DELETED)
         posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
 
     def get_fixed_post(self):
+        from posts.models import Post
         try:
             post = Post.objects.get(community_id=self.pk, is_fixed=True)
             return post
@@ -234,10 +245,12 @@ class Community(models.Model):
             return None
 
     def get_post_lists(self):
+        from posts.models import PostList
         lists_query = Q(Q(community_id=self.id, type="LI") | Q(community_id=self.id, type="MA"))
-        lists = PostList.objects.filter(lists_query) 
+        lists = PostList.objects.filter(lists_query)
         return lists
     def get_admin_all_post_lists(self):
+        from posts.models import PostList
         lists_query = Q(community_id=self.id)
         lists_query.add(~Q(community_id=self.id, type="DE"), Q.AND)
         lists = PostList.objects.filter(lists_query)
@@ -854,7 +867,7 @@ class CommunityMembership(models.Model):
     is_moderator = models.BooleanField(default=False, verbose_name="Это модератор")
     is_editor = models.BooleanField(default=False, verbose_name="Это редактор")
     is_advertiser = models.BooleanField(default=False, verbose_name="Это рекламодатель")
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -863,11 +876,6 @@ class CommunityMembership(models.Model):
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
         membership = cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
         return membership
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(CommunityMembership, self).save(*args, **kwargs)
 
     class Meta:
         #unique_together = (('user', 'community'),)
@@ -887,7 +895,7 @@ class CommunityLog(models.Model):
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
     #item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
     id = models.BigAutoField(primary_key=True)
 
     ACTION_TYPES = (
@@ -910,11 +918,6 @@ class CommunityLog(models.Model):
     def create_community_log(cls, community, action_type, source_user, target_user, item=None):
         return cls.objects.create(community=community, action_type=action_type, source_user=source_user,
                                   target_user=target_user, item=item)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(CommunityLog, self).save(*args, **kwargs)
 
 
 class CommunityInvite(models.Model):

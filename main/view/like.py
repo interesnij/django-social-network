@@ -13,7 +13,7 @@ class PostLikesView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_post_likes(self.request.user).order_by('-created')
+			items = get_timeline_post_likes(self.request.user.pk).order_by('-created')
 		else:
 			items = []
 		return items
@@ -29,7 +29,7 @@ class PhotoLikesView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_photo_likes(self.request.user)
+			items = get_timeline_photo_likes(self.request.user.pk)
 		else:
 			items = []
 		return items
@@ -45,7 +45,7 @@ class GoodLikesView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_good_likes(self.request.user)
+			items = get_timeline_good_likes(self.request.user.pk)
 		else:
 			items = []
 		return items
@@ -61,7 +61,7 @@ class VideoLikesView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_video_likes(self.request.user)
+			items = get_timeline_video_likes(self.request.user.pk)
 		else:
 			items = []
 		return items

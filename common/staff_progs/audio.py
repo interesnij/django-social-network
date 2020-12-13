@@ -9,7 +9,7 @@ def add_audio_administrator(user, request_user):
         user.audio_user_staff.level = "A"
         user.audio_user_staff.save(update_fields=['level'])
     except:
-        user_staff = AudioStaff.objects.create(user=user, level="A")
+        user_staff = AudioUserStaff.objects.create(user=user, level="A")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     AudioWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
@@ -20,7 +20,7 @@ def add_audio_moderator(user, request_user):
         user.audio_user_staff.level = "M"
         user.audio_user_staff.save(update_fields=['level'])
     except:
-        user_staff = AudioStaff.objects.create(user=user, level="M")
+        user_staff = AudioUserStaff.objects.create(user=user, level="M")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     AudioWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
@@ -31,7 +31,7 @@ def add_audio_editor(user, request_user):
         user.audio_user_staff.level = "E"
         user.audio_user_staff.save(update_fields=['level'])
     except:
-        user_staff = AudioStaff.objects.create(user=user, level="E")
+        user_staff = AudioUserStaff.objects.create(user=user, level="E")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     AudioWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)

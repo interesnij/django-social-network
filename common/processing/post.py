@@ -1,12 +1,6 @@
 from posts.models import Post
-from users.models import User
-from chat.models import Message, Chat
-from communities.models import Community
 from django.http import HttpResponse, HttpResponseBadRequest
-from common.attach.post_attacher import get_post_attach
 from posts.forms import PostForm
-from common.check.community import check_user_is_staff
-from common.attach.message_attacher import get_message_attach
 
 
 def get_post_processing(post):
@@ -25,6 +19,8 @@ def get_post_offer_processing(post):
     return post
 
 def repost_community_send(list, status, community, request):
+    from common.attach.post_attacher import get_post_attach
+
     communities = request.POST.getlist("communities")
     lists = request.POST.getlist("lists")
     if not communities:
@@ -35,12 +31,16 @@ def repost_community_send(list, status, community, request):
         parent = Post.create_parent_post(creator=list.creator, community=community, status=status)
         list.post.add(parent)
         for community_id in communities:
-            community = Community.objects.get(pk=community_id)
             if request.user.is_staff_of_community(community_id):
-                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
+                get_post_attach(new_post)
 
 def repost_message_send(list, status, community, request, text):
+    from chat.models import Message, Chat
+    from common.attach.message_attacher import get_message_attach
+    from users.models import User
+
     connections = request.POST.getlist("chat_items")
     if not connections:
         return HttpResponseBadRequest()

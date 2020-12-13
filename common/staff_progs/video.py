@@ -9,7 +9,7 @@ def add_video_administrator(user, request_user):
         user.video_user_staff.level = "A"
         user.video_user_staff.save(update_fields=['level'])
     except:
-        user_staff = VideoStaff.objects.create(user=user, level="A")
+        user_staff = VideoUserStaff.objects.create(user=user, level="A")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
@@ -20,7 +20,7 @@ def add_video_moderator(user, request_user):
         user.video_user_staff.level = "M"
         user.video_user_staff.save(update_fields=['level'])
     except:
-        user_staff = VideoStaff.objects.create(user=user, level="M")
+        user_staff = VideoUserStaff.objects.create(user=user, level="M")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
@@ -31,7 +31,7 @@ def add_video_editor(user, request_user):
         user.video_user_staff.level = "E"
         user.video_user_staff.save(update_fields=['level'])
     except:
-        user_staff = VideoStaff.objects.create(user=user, level="E")
+        user_staff = VideoUserStaff.objects.create(user=user, level="E")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)

@@ -1,16 +1,6 @@
-
 from django.views.generic import ListView
-from communities.models import Community, CommunityMembership, CommunityCategory
-from users.models import User
-from common.check.community import check_can_get_lists
-from common.template.post import get_template_community_post, get_permission_community_post
-from common.template.music import get_template_community_music
-from common.template.video import get_template_community_video
-from common.template.good import get_template_community_good
-from common.template.doc import get_template_community_doc
-from django.http import Http404
+from communities.models import Community, CommunityCategory
 from common.template.user import get_default_template
-from posts.models import PostList
 
 
 class CommunityMembersView(ListView):
@@ -110,34 +100,13 @@ class CommunityCategoryView(ListView):
 		return categories
 
 
-class CommunityMusic(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        from music.models import SoundList
-
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
-        self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityMusic,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityMusic,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['playlist'] = self.playlist
-        return context
-
-    def get_queryset(self):
-        music_list = self.community.get_music()
-        return music_list
-
 class CommunityDocs(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
+		from common.template.doc import get_template_community_doc
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		user = request.user
@@ -168,6 +137,7 @@ class CommunityDocsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
+		from common.template.doc import get_template_community_doc
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
@@ -198,6 +168,7 @@ class CommunityGoods(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
+		from common.template.good import get_template_community_good
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
@@ -227,6 +198,7 @@ class CommunityGoodsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
+		from common.template.good import get_template_community_good
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
@@ -252,12 +224,36 @@ class CommunityGoodsList(ListView):
 		return goods_list
 
 
+class CommunityMusic(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from music.models import SoundList
+		from common.template.music import get_template_community_music
+
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
+        self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommunityMusic,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityMusic,self).get_context_data(**kwargs)
+        context['community'] = self.community
+        context['playlist'] = self.playlist
+        return context
+
+    def get_queryset(self):
+        music_list = self.community.get_music()
+        return music_list
+
 class CommunityMusicList(ListView):
 	template_name = None
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
+		from common.template.music import get_template_community_music
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
@@ -284,6 +280,7 @@ class CommunityVideo(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
+		from common.template.video import get_template_community_video
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_template_community_video(self.community, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -312,6 +309,7 @@ class CommunityVideoList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
+		from common.template.video import get_template_community_video
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
@@ -341,6 +339,10 @@ class CommunityPostsListView(ListView):
 	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
+		from posts.models import PostList
+		from django.http import Http404
+		from common.template.post import get_permission_community_post
+
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.list=PostList.objects.get(pk=self.kwargs["list_pk"])
 		if (not request.user.is_staff_of_community(self.community.pk) and self.list.is_private_list()) or not request.is_ajax():

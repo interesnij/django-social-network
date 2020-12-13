@@ -1,10 +1,6 @@
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-from django.shortcuts import render
 from rest_framework.exceptions import PermissionDenied
-from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-from common.check.community import check_can_get_lists, check_anon_can_get_list
-from users.model.list import UserPopulateFriend
 
 
 def get_template_user(user, folder, template, request_user, user_agent):
@@ -101,6 +97,8 @@ def get_detect_platform_template(template, request_user, user_agent):
     return template
 
 def render_for_platform(request, template, data):
+    from django.shortcuts import render
+
     if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         return render(request, "mobile/" + template, data)
     else:

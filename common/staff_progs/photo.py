@@ -9,7 +9,7 @@ def add_photo_administrator(user, request_user):
         user.photo_user_staff.level = "A"
         user.photo_user_staff.save(update_fields=['level'])
     except:
-        user_staff = PhotoStaff.objects.create(user=user, level="A")
+        user_staff = PhotoUserStaff.objects.create(user=user, level="A")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
@@ -20,7 +20,7 @@ def add_photo_moderator(user, request_user):
         user.photo_user_staff.level = "M"
         user.photo_user_staff.save(update_fields=['level'])
     except:
-        user_staff = PhotoStaff.objects.create(user=user, level="M")
+        user_staff = PhotoUserStaff.objects.create(user=user, level="M")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
@@ -31,7 +31,7 @@ def add_photo_editor(user, request_user):
         user.photo_user_staff.level = "E"
         user.photo_user_staff.save(update_fields=['level'])
     except:
-        user_staff = PhotoStaff.objects.create(user=user, level="E")
+        user_staff = PhotoUserStaff.objects.create(user=user, level="E")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     PhotoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)

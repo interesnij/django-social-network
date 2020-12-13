@@ -1,16 +1,9 @@
 from rest_framework.exceptions import ValidationError
-from video.models import Video, VideoAlbum
-from music.models import SoundcloudParsing, SoundList
-from gallery.models import Photo, Album
-from goods.models import Good, GoodAlbum
-from article.models import Article
-from docs.models import Doc2, DocList
-from users.models import User
-from communities.models import Community
 
 
 def photo_attach(value, post):
     try:
+        from gallery.models import Photo
         _select_photo = Photo.objects.get(pk=value, is_public=True)
         _select_photo.post.add(post)
     except:
@@ -18,6 +11,7 @@ def photo_attach(value, post):
 
 def video_attach(value, post):
     try:
+        from video.models import Video
         _select_video = Video.objects.get(pk=value, is_public=True)
         _select_video.post.add(post)
     except:
@@ -25,6 +19,7 @@ def video_attach(value, post):
 
 def music_attach(value, post):
     try:
+        from music.models import SoundcloudParsing
         _select_music = SoundcloudParsing.objects.get(pk=value)
         _select_music.post.add(post)
     except:
@@ -32,6 +27,7 @@ def music_attach(value, post):
 
 def good_attach(value, post):
     try:
+        from goods.models import Good
         _select_good = Good.objects.get(pk=value)
         _select_good.post.add(post)
     except:
@@ -39,6 +35,7 @@ def good_attach(value, post):
 
 def article_attach(value, post):
     try:
+        from article.models import Article
         _select_article = Article.objects.get(uuid=value)
         _select_article.post.add(post)
     except:
@@ -46,6 +43,7 @@ def article_attach(value, post):
 
 def doc_attach(value, post):
     try:
+        from docs.models import Doc2
         _select_doc = Doc2.objects.get(pk=value)
         _select_doc.post.add(post)
     except:
@@ -53,6 +51,7 @@ def doc_attach(value, post):
 
 def playlist_attach(value, post):
     try:
+        from music.models import SoundList
         _select_playlist = SoundList.objects.get(pk=value)
         _select_playlist.post.add(post)
     except:
@@ -60,6 +59,7 @@ def playlist_attach(value, post):
 
 def doclist_attach(value, post):
     try:
+        from docs.models import DocList
         _select_doc_list = DocList.objects.get(pk=value)
         _select_doc_list.post.add(post)
     except:
@@ -67,6 +67,7 @@ def doclist_attach(value, post):
 
 def photolist_attach(value, post):
     try:
+        from gallery.models import Album
         _select_photo_list = Album.objects.get(pk=value)
         _select_photo_list.post.add(post)
     except:
@@ -74,6 +75,7 @@ def photolist_attach(value, post):
 
 def videolist_attach(value, post):
     try:
+        from video.models import VideoAlbum
         _select_video_list = VideoAlbum.objects.get(pk=value)
         _select_video_list.post.add(post)
     except:
@@ -81,6 +83,7 @@ def videolist_attach(value, post):
 
 def goodlist_attach(value, post):
     try:
+        from goods.models import GoodAlbum
         _select_good_list = GoodAlbum.objects.get(pk=value)
         _select_good_list.post.add(post)
     except:

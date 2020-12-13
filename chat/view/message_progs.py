@@ -32,10 +32,8 @@ class SendPageMessage(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.form=MessageForm(request.POST)
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.form, self.user, connections = MessageForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items")
 		check_user_can_get_list(request.user, self.user)
-		connections = request.POST.getlist("chat_items")
 
 		if request.is_ajax() and self.form.is_valid():
 			message = self.form.save(commit=False)
@@ -63,8 +61,7 @@ class LoadUserChatMessage(TemplateView):
 	"""
 	template_name = None
 	def get(self,request,*args,**kwargs):
-		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -80,12 +77,8 @@ class LoadUserMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.chat = self.message.chat
-		count = self.chat.get_members_count()
-		first_message = self.chat.get_first_message()
-		creator_figure = ''
-		user_id = request.user.pk
+		count, first_message, creator_figure, user_id, self.template_name = self.chat.get_members_count(), self.chat.get_first_message(), '', request.user.pk, get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		if count == 1:
 			if self.chat.image:
 				figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -143,8 +136,7 @@ class LoadUserMessage(TemplateView):
 
 class SendMessage(View):
 	def post(self,request,*args,**kwargs):
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		check_can_send_message(request.user, chat)
+		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		form_post = MessageForm(request.POST)
 		if request.POST.get('text') or request.POST.get('photo') or \
 			request.POST.get('video') or request.POST.get('music') or \
@@ -162,10 +154,8 @@ class SendMessage(View):
 
 class MessageParent(View):
     def post(self, request, *args, **kwargs):
-        parent = Message.objects.get(uuid=self.kwargs["uuid"])
-        chat = Chat.objects.get(pk=self.kwargs["pk"])
+        parent, chat, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
         check_can_send_message(request.user, chat)
-        form_post = MessageForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             message = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('photo') or \

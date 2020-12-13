@@ -1,9 +1,8 @@
-
 from django.views.generic.base import TemplateView
 from article.forms import ArticleForm
 from users.models import User
 from article.models import Article
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 from communities.models import Community
 from django.views import View
 from common.template.post import get_permission_community_post, get_permission_user_post
@@ -18,9 +17,7 @@ class ArticleUserDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_user_post(self.user, "article/u_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.article, self.template_name = User.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"]), get_permission_user_post(self.user, "article/u_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -33,14 +30,11 @@ class ArticleCommunityDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_permission_community_post(self.community, "article/c_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.article, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"]), get_permission_community_post(self.community, "article/c_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ArticleCommunityDetailView,self).get_context_data(**kwargs)
+        context = super(ArticleCommunityDetailView,self).get_context_data(**kwargs)
         context["object"] = self.article
         context["community"] = self.community
         return context
@@ -48,8 +42,7 @@ class ArticleCommunityDetailView(TemplateView):
 
 class ArticleUserCreate(View):
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("article/u_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("article/u_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -58,8 +51,7 @@ class ArticleUserCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = ArticleForm(request.POST,request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form, self.user = ArticleForm(request.POST,request.FILES), User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user == self.user:
             article = self.form.save(commit=False)
             new_article = article.create_article(creator=request.user, content=article.content, community=None, g_image=article.g_image, status=article.status, title=article.title,)
@@ -70,8 +62,7 @@ class ArticleUserCreate(View):
 
 class ArticleCommunityCreate(View):
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("article/c_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("article/c_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,8 +71,7 @@ class ArticleCommunityCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = ArticleForm(request.POST,request.FILES)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.form, self.community = ArticleForm(request.POST,request.FILES), Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
             article = self.form.save(commit=False)
             new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, status=article.status, title=article.title,)

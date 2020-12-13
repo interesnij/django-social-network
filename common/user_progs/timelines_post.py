@@ -6,7 +6,6 @@ from video.models import VideoAlbum
 from music.models import SoundList
 
 
-
 def get_timeline_posts(user):
     """ лента записей, которые публикуются друзьями, источниками подписки, сообществами пользователя """
     own_posts_query = Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)

@@ -1,4 +1,3 @@
-
 from communities.models import Community
 from django.views import View
 from follows.models import Follow, CommunityFollow
@@ -11,12 +10,10 @@ from common.template.user import get_settings_template
 
 
 class FollowsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -29,8 +26,7 @@ class FollowsView(ListView):
 		return friends_list
 
 class FollowingsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("follows/followings.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -47,7 +43,7 @@ class FollowCreate(View):
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
 			request.user.notification_follow(followed_user)
-			return HttpResponse("!") 
+			return HttpResponse("!")
 		else:
 			raise Http404
 
@@ -96,8 +92,7 @@ class CommunityFollowDelete(View):
 
 class CommunityFollowView(View):
 	def get(self,request,*args,**kwargs):
-		community = Community.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
 		try:
 			if request.is_ajax():
 				follow = CommunityFollow.objects.get(user=user, community=community)

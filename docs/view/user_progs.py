@@ -14,8 +14,7 @@ class UserDocAdd(View):
     Добавляем документ в свой список, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc2.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_doc_in_list(doc.pk):
             list.doc_list.add(doc)
@@ -40,9 +39,7 @@ class UserDocListAdd(View):
     Добавляем документ в любой список, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc2.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
-
+        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_doc_in_list(doc.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -54,8 +51,7 @@ class UserDocListRemove(View):
     Удаляем документ из любого списка, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc2.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk):
             list.doc_list.remove(doc)
             return HttpResponse()
@@ -66,16 +62,14 @@ class UserCreateDoclistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class UserCreateDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -93,9 +87,7 @@ class UserDoclistCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = DoclistForm(request.POST)
-        user = User.objects.get(pk=self.kwargs["pk"])
-
+        form_post, user = DoclistForm(request.POST), User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user == user:
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
@@ -116,8 +108,7 @@ class UserDocCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post = DocForm(request.POST, request.FILES)
-        user = User.objects.get(pk=self.kwargs["pk"])
+        form_post, user = DocForm(request.POST, request.FILES), User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == user:
             list = DocList.objects.get(creator_id=user.pk, community=None, type=DocList.MAIN)
@@ -137,11 +128,9 @@ class UserDoclistEdit(TemplateView):
     изменение списка документов пользователя
     """
     template_name = None
-    form=None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("docs/doc_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("docs/doc_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -151,9 +140,7 @@ class UserDoclistEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        self.form = DoclistForm(request.POST,instance=self.list)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.list, self.form, self.user = DocList.objects.get(uuid=self.kwargs["uuid"]), DoclistForm(request.POST,instance=self.list), User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
             self.form.save()
@@ -164,8 +151,7 @@ class UserDoclistEdit(TemplateView):
 
 class UserDoclistDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        user, list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user and list.type == DocList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
@@ -175,8 +161,7 @@ class UserDoclistDelete(View):
 
 class UserDoclistAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        user, list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])
@@ -186,12 +171,10 @@ class UserDoclistAbortDelete(View):
 
 
 class UserDoclistPreview(TemplateView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.list = DocList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("docs/doc_create/list_preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = DocList.objects.get(pk=self.kwargs["pk"]), get_settings_template("docs/doc_create/list_preview.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDoclistPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

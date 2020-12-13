@@ -9,7 +9,7 @@ def add_good_administrator(user, request_user):
         user.good_user_staff.level = "A"
         user.good_user_staff.save(update_fields=['level'])
     except:
-        user_staff = GoodStaff.objects.create(user=user, level="A")
+        user_staff = GoodUserStaff.objects.create(user=user, level="A")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
@@ -20,7 +20,7 @@ def add_good_moderator(user, request_user):
         user.good_user_staff.level = "M"
         user.good_user_staff.save(update_fields=['level'])
     except:
-        user_staff = GoodStaff.objects.create(user=user, level="M")
+        user_staff = GoodUserStaff.objects.create(user=user, level="M")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
@@ -31,7 +31,7 @@ def add_good_editor(user, request_user):
         user.good_user_staff.level = "E"
         user.good_user_staff.save(update_fields=['level'])
     except:
-        user_staff = GoodStaff.objects.create(user=user, level="E")
+        user_staff = GoodUserStaff.objects.create(user=user, level="E")
     user.perm = User.MANAGER
     user.save(update_fields=['perm'])
     GoodWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)

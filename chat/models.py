@@ -2,17 +2,14 @@ import uuid
 from users.models import User
 from django.conf import settings
 from django.db import models
-from django.http import HttpResponse
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.contrib.postgres.indexes import BrinIndex
-from django.utils import timezone
 from posts.models import Post
 from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
 from users.helpers import upload_to_user_directory
 from imagekit.models import ProcessedImageField
-from common.processing.message import get_message_processing
 
 
 class Chat(models.Model):
@@ -222,7 +219,7 @@ class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -236,7 +233,6 @@ class ChatUsers(models.Model):
         if ChatUsers.objects.filter(user=user, chat=chat).exists():
             membership = ChatUsers.objects.get(user=user, chat=chat)
             membership.delete()
-            return HttpResponse()
         else:
             pass
 
@@ -317,6 +313,7 @@ class Message(models.Model):
     def get_or_create_chat_and_send_message(creator, user, repost, text):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
+        from common.processing.message import get_message_processing
 
         chat_list = creator.get_all_chats()
         current_chat = None
@@ -336,6 +333,7 @@ class Message(models.Model):
 
     def create_chat_append_members_and_send_message(creator, users_ids, text):
         # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
+        from common.processing.message import get_message_processing
 
         chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
         sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
@@ -349,6 +347,7 @@ class Message(models.Model):
 
     def send_message(chat, creator, repost, parent, text):
         # программа для отсылки сообщения, когда чат известен
+        from common.processing.message import get_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Message.STATUS_PROCESSING)

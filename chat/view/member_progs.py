@@ -8,12 +8,10 @@ from common.template.user import get_settings_template
 
 
 class ChatMembers(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatMembers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -28,8 +26,7 @@ class ChatMembers(ListView):
 
 class ChatMemberCreate(View):
 	def get(self,request,*args,**kwargs):
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(pk=self.kwargs["user_pk"])
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and chat.creator == request.user:
 			ChatUsers.create_membership(user=user, chat=chat)
 			return HttpResponse()
@@ -38,8 +35,7 @@ class ChatMemberCreate(View):
 
 class ChatMemberDelete(View):
 	def get(self,request,*args,**kwargs):
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(pk=self.kwargs["user_pk"])
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax():
 			ChatUsers.delete_membership(user=user, chat=chat)
 			return HttpResponse()
@@ -49,8 +45,7 @@ class ChatMemberDelete(View):
 
 class ChatAdminCreate(View):
 	def get(self,request,*args,**kwargs):
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(pk=self.kwargs["user_pk"])
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
 			new_admin = chat.add_administrator(user)
 			return HttpResponse("!")
@@ -59,8 +54,7 @@ class ChatAdminCreate(View):
 
 class ChatAdminDelete(View):
 	def get(self,request,*args,**kwargs):
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(pk=self.kwargs["user_pk"])
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
 			new_admin = chat.remove_administrator(user)
 			return HttpResponse("!")

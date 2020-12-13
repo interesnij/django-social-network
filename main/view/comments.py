@@ -13,7 +13,7 @@ class PostCommentsView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_post_comments(self.request.user).order_by('-created')
+			items = get_timeline_post_comments(self.request.user.pk).order_by('-created')
 		else:
 			items = []
 		return items
@@ -29,7 +29,7 @@ class PhotoCommentsView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_photo_comments(self.request.user)
+			items = get_timeline_photo_comments(self.request.user.pk)
 		else:
 			items = []
 		return items
@@ -45,7 +45,7 @@ class GoodCommentsView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_good_comments(self.request.user)
+			items = get_timeline_good_comments(self.request.user.pk)
 		else:
 			items = []
 		return items
@@ -61,7 +61,7 @@ class VideoCommentsView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = get_timeline_video_comments(self.request.user)
+			items = get_timeline_video_comments(self.request.user.pk)
 		else:
 			items = []
 		return items

@@ -1,9 +1,6 @@
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-
 from rest_framework.exceptions import PermissionDenied
-from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-from common.check.community import check_can_get_lists, check_anon_can_get_list
 
 
 def get_template_community_music(community, folder, template, request_user, user_agent):
@@ -55,6 +52,8 @@ def get_template_community_music(community, folder, template, request_user, user
     return template_name
 
 def get_permission_community_music(community, folder, template, request_user, user_agent):
+    from common.check.community import check_can_get_lists, check_anon_can_get_list
+
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():
@@ -128,6 +127,8 @@ def get_template_user_music(user, folder, template, request_user, user_agent):
     return template_name
 
 def get_permission_user_music(user, folder, template, request_user, user_agent):
+    from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif user.is_blocked():
