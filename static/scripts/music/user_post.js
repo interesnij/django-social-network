@@ -108,11 +108,10 @@ on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
     toast_error("Ссылка - обязательное поле!");
   } else {this.disabled = true}
   saver = document.body.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
   uuid = saver.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {

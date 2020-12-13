@@ -33,6 +33,30 @@ class UserVideoList(ListView):
         return video_list
 
 
+class VideoUserCommentList(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        #if not request.is_ajax() or not self.video.comments_enabled:
+            #raise Http404
+
+        self.template_name = get_permission_user_video(self.video.creator, "video/u_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(VideoUserCommentList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoUserCommentList, self).get_context_data(**kwargs)
+        context['parent'] = self.video
+        context['user'] = self.user
+        return context
+
+    def get_queryset(self):
+        comments = self.video.get_comments()
+        return comments
+
+
 class UserPostVideoList(TemplateView):
     template_name = None
 

@@ -1,6 +1,3 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm, AlbumForm
@@ -8,9 +5,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
 from users.models import User
-from django.views.generic import ListView
-from rest_framework.exceptions import PermissionDenied
-from common.template.photo import get_permission_user_photo
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
 
@@ -91,31 +85,6 @@ class PhotoAttachUserCreate(View):
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
-
-
-class PhotoUserCommentList(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() or not self.photo.comments_enabled:
-            raise Http404
-        self.template_name = get_permission_user_photo(self.photo.creator, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
-        return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(PhotoUserCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.photo
-        context['user'] = self.user
-        return context
-
-    def get_queryset(self):
-        comments = self.photo.get_comments()
-        return comments
 
 
 class PhotoCommentUserCreate(View):

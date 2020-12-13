@@ -4,8 +4,7 @@ from common.template.user import get_settings_template, get_detect_main_template
 
 
 class PostCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/posts.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -20,8 +19,7 @@ class PostCommentsView(ListView):
 
 
 class PhotoCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/photos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -36,8 +34,7 @@ class PhotoCommentsView(ListView):
 
 
 class GoodCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/goods.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -52,8 +49,7 @@ class GoodCommentsView(ListView):
 
 
 class VideoCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/videos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -68,8 +64,7 @@ class VideoCommentsView(ListView):
 
 
 class FeaturedPostCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/featured_posts.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -84,8 +79,7 @@ class FeaturedPostCommentsView(ListView):
 
 
 class FeaturedPhotoCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/featured_photos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -100,8 +94,7 @@ class FeaturedPhotoCommentsView(ListView):
 
 
 class FeaturedGoodCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/featured_goods.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -116,8 +109,7 @@ class FeaturedGoodCommentsView(ListView):
 
 
 class FeaturedVideoCommentsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/comments/featured_videos.html", request.user, request.META['HTTP_USER_AGENT'])

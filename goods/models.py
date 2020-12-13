@@ -4,8 +4,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notify.model.good import *
-from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from common.model.votes import GoodVotes, GoodCommentVotes

@@ -3,7 +3,6 @@ from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.audio import *
 from music.models import SoundcloudParsing
-from managers.forms import AudioModeratedForm
 from django.views.generic.base import TemplateView
 from managers.model.audio import ModeratedAudio
 from django.http import Http404
@@ -13,7 +12,7 @@ from common.template.user import get_detect_platform_template
 class AudioAdminCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser or request.user.is_work_audio_administrator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_administrator()):
             add_audio_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -22,7 +21,7 @@ class AudioAdminCreate(View):
 class AudioAdminDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_audio_administrator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_administrator()):
             remove_audio_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -32,7 +31,7 @@ class AudioAdminDelete(View):
 class AudioModerCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_audio_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_moderator()):
             add_audio_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -41,7 +40,7 @@ class AudioModerCreate(View):
 class AudioModerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_audio_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_moderator()):
             remove_audio_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -51,7 +50,7 @@ class AudioModerDelete(View):
 class AudioEditorCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_audio_editor:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_editor()):
             add_audio_editor(user, request.user)
             return HttpResponse()
         else:
@@ -60,7 +59,7 @@ class AudioEditorCreate(View):
 class AudioEditorDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_audio_editor:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_editor()):
             remove_audio_editor(user, request.user)
             return HttpResponse()
         else:
@@ -126,9 +125,10 @@ class AudioWorkerEditorDelete(View):
 
 class AudioDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        form = AudioModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and (request.user.is_audio_manager or request.user.is_superuser):
+        from managers.forms import AudioModeratedForm
+
+        audio, form = SoundcloudParsing.objects.get(pk=self.kwargs["pk"]), AudioModeratedForm(request.POST)
+        if request.is_ajax() and form.is_valid() and (request.user.is_audio_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedAudio.get_or_create_moderated_object_for_audio(audio)
             moderate_obj.status = ModeratedAudio.STATUS_DELETED
@@ -144,7 +144,7 @@ class AudioDeleteCreate(View):
 class AudioDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_audio_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
             moderate_obj = ModeratedAudio.objects.get(audio=audio)
             moderate_obj.delete_deleted(manager_id=request.user.pk, audio_id=audio.pk)
             audio.is_deleted = False
@@ -170,7 +170,7 @@ class AudioClaimCreate(View):
 class AudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_audio_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
             moderate_obj = ModeratedAudio.objects.get(audio=audio)
             moderate_obj.reject_moderation(manager_id=request.user.pk, audio_id=audio.pk)
             return HttpResponse()
@@ -182,7 +182,7 @@ class AudioUnverify(View):
     def get(self,request,*args,**kwargs):
         audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         obj = ModeratedAudio.objects.get(pk=self.kwargs["obj_pk"])
-        if request.is_ajax() and request.user.is_audio_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
             obj.unverify_moderation(manager_id=request.user.pk, audio_id=audio.pk)
             return HttpResponse()
         else:
@@ -193,25 +193,23 @@ class AudioDeleteWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_audio_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
             self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
     def get_context_data(self,**kwargs):
         context = super(AudioDeleteWindow,self).get_context_data(**kwargs)
-        context["object"] = self.audio
+        context["object"] = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         return context
 
 class AudioClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.audio = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AudioClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(AudioClaimWindow,self).get_context_data(**kwargs)
-        context["object"] = self.audio
+        context["object"] = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         return context

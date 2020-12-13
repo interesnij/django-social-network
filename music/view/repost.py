@@ -1,12 +1,10 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
-from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
 from music.models import SoundList, SoundcloudParsing
 from users.models import User
-from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
@@ -21,8 +19,7 @@ class UUCMMusicWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.track, self.user = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         self.template_name = get_detect_platform_template("music/music_repost_window/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -42,8 +39,7 @@ class CUCMMusicWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.track, self.community = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("music/music_repost_window/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicWindow,self).get(request,*args,**kwargs)
@@ -62,8 +58,7 @@ class UUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.playlist, self.user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         self.template_name = get_detect_platform_template("music/music_repost_window/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -83,8 +78,7 @@ class CUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.playlist, self.community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("music/music_repost_window/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicListWindow,self).get(request,*args,**kwargs)
@@ -102,8 +96,7 @@ class UUMusicRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        track, user = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
@@ -123,9 +116,7 @@ class CUMusicRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
+        track, community, form_post = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -144,8 +135,7 @@ class UCMusicRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        track, user = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_community_send(track, Post.MUSIC_REPOST, None, request)
@@ -156,8 +146,7 @@ class CCMusicRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        track, community = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_community_send(track, Post.MUSIC_REPOST, community, request)
         return HttpResponse()
@@ -168,8 +157,7 @@ class UMMusicRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        track, user = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(track, Post.MUSIC_REPOST, None, request, "Репост плейлиста пользователя")
@@ -180,8 +168,7 @@ class CMMusicRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        track, community = SoundcloudParsing.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(track, Post.MUSIC_REPOST, community, request, "Репост плейлиста сообщества")
         return HttpResponse()
@@ -192,8 +179,7 @@ class UUMusicListRepost(View):
     создание репоста плейлиста пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        playlist, user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
@@ -213,9 +199,7 @@ class CUMusicListRepost(View):
     создание репоста плейлиста сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        form_post = PostForm(request.POST)
+        playlist, community, form_post = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -234,8 +218,7 @@ class UCMusicListRepost(View):
     создание репоста плейлиста пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        playlist, user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_community_send(playlist, Post.MUSIC_LIST_REPOST, None, request)
@@ -247,8 +230,7 @@ class CCMusicListRepost(View):
     создание репоста плейлиста сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        playlist, community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_community_send(playlist, Post.MUSIC_LIST_REPOST, community, request)
         return HttpResponse()
@@ -259,8 +241,7 @@ class UMMusicListRepost(View):
     создание репоста плейлиста пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        playlist, user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(playlist, Post.MUSIC_LIST_REPOST, None, request, "Репост плейлиста пользователя")
@@ -272,8 +253,7 @@ class CMMusicListRepost(View):
     создание репоста плейлиста сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        playlist, community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(playlist, Post.MUSIC_LIST_REPOST, community, request, "Репост плейлиста сообщества")
         return HttpResponse()

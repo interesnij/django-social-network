@@ -1,5 +1,4 @@
 from django.views.generic.base import TemplateView
-from users.models import User
 from common.template.user import get_detect_platform_template
 
 

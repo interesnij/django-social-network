@@ -1,4 +1,3 @@
-
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from users.models import User
@@ -6,15 +5,16 @@ from goods.models import Good, GoodComment
 from communities.models import Community
 from common.model.votes import GoodVotes, GoodCommentVotes
 from common.template.good import get_permission_community_good, get_permission_user_good
+from django.http import Http404
 
 
 class GoodUserLikeWindow(TemplateView):
-    template_name="good_votes/u_like.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_user_good(self.good.creator, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserLikeWindow,self).get(request,*args,**kwargs)
 
@@ -31,7 +31,7 @@ class GoodUserDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_user_good(self.good.creator, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -81,7 +81,7 @@ class GoodCommunityLikeWindow(TemplateView):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_community_good(self.community, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityLikeWindow,self).get(request,*args,**kwargs)
 
@@ -96,10 +96,9 @@ class GoodCommunityDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
-        self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
+        self.good, self.community = Good.objects.get(pk=self.kwargs["good_pk"]), Сommunity.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_community_good(self.community, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -114,8 +113,7 @@ class GoodCommunityCommentLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
+        self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Сommunity.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -130,8 +128,7 @@ class GoodCommunityCommentDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Сommunity.objects.get(pk=self.kwargs["pk"])
+        self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Сommunity.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -144,13 +141,12 @@ class GoodCommunityCommentDislikeWindow(TemplateView):
 
 
 class AllGoodUserLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_user_good(self.good.creator, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodUserLikeWindow,self).get(request,*args,**kwargs)
 
@@ -165,13 +161,12 @@ class AllGoodUserLikeWindow(ListView):
         return users
 
 class AllGoodUserDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_user_good(self.good.creator, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodUserDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -187,8 +182,7 @@ class AllGoodUserDislikeWindow(ListView):
 
 
 class AllGoodUserCommentLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -207,8 +201,7 @@ class AllGoodUserCommentLikeWindow(ListView):
 
 
 class AllGoodUserCommentDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -227,14 +220,13 @@ class AllGoodUserCommentDislikeWindow(ListView):
 
 
 class AllGoodCommunityLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
+        self.good, self.community = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_community_good(self.community, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityLikeWindow,self).get(request,*args,**kwargs)
 
@@ -249,14 +241,12 @@ class AllGoodCommunityLikeWindow(ListView):
         return users
 
 class AllGoodCommunityDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.good, self.community = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if not self.good.votes_on:
-            raise PermissionDenied("Ошибка доступа")
+            raise Http404
         self.template_name = get_permission_community_good(self.community, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -272,12 +262,10 @@ class AllGoodCommunityDislikeWindow(ListView):
 
 
 class AllGoodCommunityCommentLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -293,12 +281,10 @@ class AllGoodCommunityCommentLikeWindow(ListView):
 
 
 class AllGoodCommunityCommentDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
@@ -314,12 +300,10 @@ class AllGoodCommunityCommentDislikeWindow(ListView):
 
 
 class AllGoodCommunityRepostWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.good, self.community = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_permission_community_good(self.community, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityRepostWindow,self).get(request,*args,**kwargs)
 
@@ -334,8 +318,7 @@ class AllGoodCommunityRepostWindow(ListView):
         return users
 
 class AllGoodUserRepostWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])

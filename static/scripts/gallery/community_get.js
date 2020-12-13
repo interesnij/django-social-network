@@ -154,7 +154,7 @@ on('#ajax', 'click', '.c_photo_comments', function() {
   data = document.body.querySelector(".data_display");
   pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
-  url = "/gallery/community_progs/comment/" + pk + "/" + uuid + "/";
+  url = "/gallery/community/comment/" + pk + "/" + uuid + "/";
   list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });

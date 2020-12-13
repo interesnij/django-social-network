@@ -14,8 +14,8 @@ from django.http import Http404
 
 class GoodUserLikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
+        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404
 
@@ -35,15 +35,13 @@ class GoodUserLikeCreate(View):
             result = True
             if user != request.user:
                 good_notification_handler(request.user, item.creator, item, GoodNotify.LIKE)
-        likes = good.likes_count()
-        dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
+        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404
         if user != request.user:
@@ -62,15 +60,13 @@ class GoodUserDislikeCreate(View):
             result = True
             if user != request.user:
                 good_notification_handler(request.user, item.creator, item, PhotoNotify.DISLIKE)
-        likes = good.likes_count()
-        dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
         if not request.is_ajax():
             raise Http404
         if user != request.user:
@@ -92,15 +88,13 @@ class GoodCommentUserLikeCreate(View):
                     good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_REPLY, "u_good_reply_notify")
                 else:
                     good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_COMMENT, "u_good_comment_notify")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
         if not request.is_ajax():
             raise Http404
         if user != request.user:
@@ -122,15 +116,13 @@ class GoodCommentUserDislikeCreate(View):
                     good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_REPLY, "u_good_reply_notify")
                 else:
                     good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_COMMENT, "u_good_comment_notify")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
@@ -148,15 +140,13 @@ class GoodCommunityLikeCreate(View):
             result = True
             if not request.user.is_staff_of_community(community.pk):
                 good_community_notification_handler(request.user, community, item, GoodCommunityNotify.LIKE)
-        likes = good.likes_count()
-        dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user, community)
@@ -174,15 +164,13 @@ class GoodCommunityDislikeCreate(View):
             result = True
             if not request.user.is_staff_of_community(community.pk):
                 good_community_notification_handler(request.user, community, item, GoodCommunityNotify.DISLIKE)
-        likes = good.likes_count()
-        dislikes = good.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
@@ -202,15 +190,13 @@ class GoodCommentCommunityLikeCreate(View):
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_REPLY, "c_good_reply_notify")
             else:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_COMMENT, "c_good_comment_notify")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
 class GoodCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
@@ -230,6 +216,4 @@ class GoodCommentCommunityDislikeCreate(View):
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_REPLY, "c_good_reply_notify")
             else:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_COMMENT, "c_good_comment_notify")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

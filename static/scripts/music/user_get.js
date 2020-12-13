@@ -1,25 +1,18 @@
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_create_list_window/" + pk + "/", loader)
+  open_fullscreen("/music/user_progs/souncloud_create_list_window/", loader)
 });
 on('#ajax', 'click', '.u_soundcloud_set_list_main', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_list_window_main/" + pk + "/", loader)
+  open_fullscreen("/music/user_progs/souncloud_list_window_main/", loader)
 });
 on('#ajax', 'click', '.u_soundcloud_set_list', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_list_window/" + pk + "/", loader)
+  open_fullscreen("/music/user_progs/souncloud_list_window/", loader)
 });
 on('#ajax', 'click', '.u_music_list_create_window', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/create_list_window/" + pk + "/", loader)
+  open_fullscreen("/music/user_progs/create_list_window/", loader)
 });
 on('#ajax', 'click', '.u_music_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");

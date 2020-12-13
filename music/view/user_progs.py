@@ -14,7 +14,6 @@ class UserSoundcloudSetPlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("music/music_create/u_soundcloud_add_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserSoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
@@ -27,7 +26,6 @@ class UserSoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
@@ -46,9 +44,8 @@ class UserSoundcloudSetCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = PlaylistForm(request.POST)
-        user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid():
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
             new_list.save()
@@ -59,9 +56,8 @@ class UserSoundcloudSetCreate(View):
 
 class UserSoundcloudSet(View):
     def post(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == user:
+        if request.is_ajax():
             add_playlist(request.POST.get('permalink'), request.user, list)
             return HttpResponse()
         else:

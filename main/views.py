@@ -32,8 +32,7 @@ class MainPhoneSend(TemplateView):
 
 
 class PostsListView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/posts/posts.html", request.user, request.META['HTTP_USER_AGENT'])

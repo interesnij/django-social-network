@@ -1,16 +1,9 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-from django.views.generic.base import TemplateView
-from users.models import User
 from gallery.models import Album, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm, AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.community import check_can_get_lists
-from django.views.generic import ListView
 from communities.models import Community
-from rest_framework.exceptions import PermissionDenied
-from common.template.photo import get_permission_community_photo
 from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
 from django.http import Http404
@@ -92,29 +85,6 @@ class CommunityAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
-class PhotoCommunityCommentList(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() or not self.photo.comments_enabled:
-            raise Http404
-        self.template_name = get_permission_community_photo(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(PhotoCommunityCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.photo
-        context['community'] = self.community
-        return context
-
-    def get_queryset(self):
-        check_can_get_lists(self.request.user, self.community)
-        comments = self.photo.get_comments()
-        return comments
-
 
 class PhotoCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
@@ -123,9 +93,9 @@ class PhotoCommentCommunityCreate(View):
         photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
 
         if not community.is_comment_photo_send_all() and not request.user.is_member_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
+            raise Http404
         elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
+            raise Http404
         elif request.is_ajax() and form_post.is_valid() and photo_comment.comments_enabled:
             comment=form_post.save(commit=False)
 
@@ -150,9 +120,9 @@ class PhotoReplyCommunityCreate(View):
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
         if not community.is_comment_photo_send_all() and not request.user.is_member_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
+            raise Http404
         elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
+            raise Http404
         elif request.is_ajax() and form_post.is_valid() and parent.photo_comment.comments_enabled:
             comment = form_post.save(commit=False)
 

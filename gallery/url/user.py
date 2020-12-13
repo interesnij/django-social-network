@@ -11,5 +11,7 @@ urlpatterns=[
     url(r'^wall_photo/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserWallPhoto.as_view(), name="u_wall_photo"),
     url(r'^avatar_photo/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserDetailAvatar.as_view(), name="user_avatar"),
 	url(r'^avatar/(?P<pk>\d+)/$', UserFirstAvatar.as_view()),
-	url(r'^preview_photo/(?P<pk>\d+)/$', GetUserPhoto.as_view()),  
+	url(r'^preview_photo/(?P<pk>\d+)/$', GetUserPhoto.as_view()),
+
+	url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoUserCommentList.as_view()),
 ]

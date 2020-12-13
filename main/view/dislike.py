@@ -4,8 +4,7 @@ from common.template.user import get_settings_template, get_detect_main_template
 
 
 class PostDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/posts.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -20,8 +19,7 @@ class PostDislikesView(ListView):
 
 
 class PhotoDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/photos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -36,8 +34,7 @@ class PhotoDislikesView(ListView):
 
 
 class GoodDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/goods.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -52,8 +49,7 @@ class GoodDislikesView(ListView):
 
 
 class VideoDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/videos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -68,8 +64,7 @@ class VideoDislikesView(ListView):
 
 
 class FeaturedPostDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/featured_posts.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -84,8 +79,7 @@ class FeaturedPostDislikesView(ListView):
 
 
 class FeaturedPhotoDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/featured_photos.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -100,8 +94,7 @@ class FeaturedPhotoDislikesView(ListView):
 
 
 class FeaturedGoodDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/featured_goods.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -116,8 +109,7 @@ class FeaturedGoodDislikesView(ListView):
 
 
 class FeaturedVideoDislikesView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/news_list/dislikes/featured_videos.html", request.user, request.META['HTTP_USER_AGENT'])

@@ -13,7 +13,7 @@ from common.template.user import get_detect_platform_template
 class GoodAdminCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser or request.user.is_work_good_administrator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_good_administrator()):
             add_good_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -22,7 +22,7 @@ class GoodAdminCreate(View):
 class GoodAdminDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_good_administrator:
+        if request.is_ajax() and (request.user.is_superuser and request.user.is_work_good_administrator()):
             remove_good_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -31,7 +31,7 @@ class GoodAdminDelete(View):
 class GoodModerCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_good_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_good_moderator()):
             add_good_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -40,7 +40,7 @@ class GoodModerCreate(View):
 class GoodModerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_good_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_good_moderator()):
             remove_good_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -49,7 +49,7 @@ class GoodModerDelete(View):
 class GoodEditorCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_good_editor:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_good_editor()):
             add_good_editor(user, request.user)
             return HttpResponse()
         else:
@@ -58,7 +58,7 @@ class GoodEditorCreate(View):
 class GoodEditorDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_superuser and request.user.is_work_good_editor:
+        if request.user.is_superuser and request.user.is_work_good_editor():
             remove_good_editor(user, request.user)
             return HttpResponse()
         else:
@@ -120,9 +120,8 @@ class GoodWorkerEditorDelete(View):
 
 class GoodDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
-        form = GoodModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and (request.user.is_good_manager or request.user.is_superuser):
+        good, form = Good.objects.get(uuid=self.kwargs["uuid"]), GoodModeratedForm(request.POST)
+        if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedGood.get_or_create_moderated_object_for_good(good)
             moderate_obj.status = ModeratedGood.STATUS_DELETED
@@ -138,7 +137,7 @@ class GoodDeleteCreate(View):
 class GoodDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = ModeratedGood.objects.get(good=good)
             moderate_obj.delete_deleted(manager_id=request.user.pk, good_id=good.pk)
             good.is_deleted = False
@@ -163,7 +162,7 @@ class GoodClaimCreate(View):
 class GoodRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = ModeratedGood.objects.get(good=good)
             moderate_obj.reject_moderation(manager_id=request.user.pk, good_id=good.pk)
             return HttpResponse()
@@ -172,9 +171,8 @@ class GoodRejectedCreate(View):
 
 class GoodUnverify(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["good_uuid"])
-        obj = ModeratedGood.objects.get(pk=self.kwargs["obj_pk"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        good, obj = Good.objects.get(uuid=self.kwargs["good_uuid"]), ModeratedGood.objects.get(pk=self.kwargs["obj_pk"])
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             obj.unverify_moderation(manager_id=request.user.pk, good_id=good.pk)
             return HttpResponse()
         else:
@@ -182,9 +180,8 @@ class GoodUnverify(View):
 
 class CommentGoodUnverify(View):
     def get(self,request,*args,**kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        obj = ModeratedGoodComment.objects.get(pk=self.kwargs["obj_pk"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        comment, obj = GoodComment.objects.get(pk=self.kwargs["pk"]), ModeratedGoodComment.objects.get(pk=self.kwargs["obj_pk"])
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
             return HttpResponse()
         else:
@@ -192,9 +189,8 @@ class CommentGoodUnverify(View):
 
 class CommentGoodDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        form = GoodCommentModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and (request.user.is_good_manager or request.user.is_superuser):
+        comment, form = GoodComment.objects.get(pk=self.kwargs["pk"]), GoodCommentModeratedForm(request.POST)
+        if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedGoodComment.get_or_create_moderated_object_for_comment(comment)
             moderate_obj.status = ModeratedGoodComment.STATUS_DELETED
@@ -210,7 +206,7 @@ class CommentGoodDeleteCreate(View):
 class CommentGoodDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = ModeratedGoodComment.objects.get(comment=comment)
             moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
             comment.is_deleted = False
@@ -235,7 +231,7 @@ class CommentGoodClaimCreate(View):
 class CommentGoodRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_good_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = ModeratedGoodComment.objects.get(comment=comment)
             moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
             return HttpResponse()
@@ -247,7 +243,7 @@ class GoodDeleteWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_good_manager or request.user.is_superuser:
+        if request.user.is_good_manager() or request.user.is_superuser:
             self.template_name = get_detect_platform_template("managers/manage_create/good/good_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -262,8 +258,7 @@ class GoodClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Good.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_detect_platform_template("managers/manage_create/good/good_claim.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.photo, self.template_name = Good.objects.get(uuid=self.kwargs["uuid"]), get_detect_platform_template("managers/manage_create/good/good_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -277,7 +272,7 @@ class GoodCommentDeleteWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_good_manager or request.user.is_superuser:
+        if request.user.is_good_manager() or request.user.is_superuser:
             self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -292,12 +287,11 @@ class GoodCommentClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
+        self.comment, self.template_name = GoodComment.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         try:
             self.photo = self.comment.parent_comment.photo
         except:
             self.photo = self.comment.photo
-        self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommentClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

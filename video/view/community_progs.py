@@ -13,29 +13,6 @@ from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
 
 
-class VideoCommunityCommentList(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() or not self.video.comments_enabled:
-            raise Http404
-        self.template_name = get_permission_community_photo(self.video.community, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(VideoCommunityCommentList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(VideoCommunityCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.video
-        context['community'] = self.community
-        return context
-
-    def get_queryset(self):
-        comments = self.video.get_comments()
-        return comments
-
-
 class VideoCommentCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):

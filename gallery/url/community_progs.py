@@ -13,8 +13,7 @@ urlpatterns=[
     url(r'^off_private/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOffPrivatePhoto.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOffVotesPhoto.as_view()),
-
-    url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoCommunityCommentList.as_view()),
+    
     url(r'^post-comment/$', login_required(PhotoCommentCommunityCreate.as_view())),
     url(r'^reply-comment/$', login_required(PhotoReplyCommunityCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityDelete.as_view())),

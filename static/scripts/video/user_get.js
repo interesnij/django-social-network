@@ -61,7 +61,7 @@ on('#video_loader', 'click', '.u_video_comments', function() {
   video_display = this.parentElement.parentElement.parentElement;
   pk = video_display.getAttribute("data-pk");
   uuid = video_display.getAttribute("data-uuid");
-  url = "/video/user_progs/comment/" + uuid + "/" + pk + "/";
+  url = "/video/user/comment/" + uuid + "/" + pk + "/";
   list_load(video_display.nextElementSibling, url);
   this.classList.toggle("comments_open");
 });

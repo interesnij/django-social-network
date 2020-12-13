@@ -4,7 +4,6 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView
 from goods.models import Good, GoodAlbum
 from users.models import User
-from rest_framework.exceptions import PermissionDenied
 from stst.models import GoodNumbers
 from common.template.good import get_template_user_good, get_permission_user_good
 from django.http import Http404
@@ -14,11 +13,7 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["pk"])
-        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.goods = self.album.get_goods()
-        self.user = self.album.creator
-        user_agent = request.META['HTTP_USER_AGENT']
+        self.good, self.album, self.goods, self.user, user_agent = Good.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), self.album.get_goods(), self.album.creator, user_agent = request.META['HTTP_USER_AGENT']
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -37,8 +32,7 @@ class UserGood(TemplateView):
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name = "goods/u_good/staff_good.html"
-                    self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
+                    self.template_name, self.get_buttons_block = "goods/u_good/staff_good.html", request.user.get_staff_buttons_profile(self.user.pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
                     self.template_name = "generic/u_template/block_user.html"
                 elif self.user.is_closed_profile():
@@ -73,8 +67,6 @@ class UserGood(TemplateView):
             self.template_name = "mobile/" + self.template_name
         else:
             self.template_name = "desctop/" + self.template_name
-        self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-        self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -82,21 +74,18 @@ class UserGood(TemplateView):
         context["object"] = self.good
         context["album"] = self.album
         context["user"] = self.user
-        context["next"] = self.next
-        context["prev"] = self.prev
+        context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+        context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return context
 
 
 class GoodUserCommentList(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_permission_user_good(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_good(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

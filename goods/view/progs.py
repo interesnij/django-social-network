@@ -11,8 +11,7 @@ class GoodSubCategories(TemplateView):
 
 
 class GoodsCats(TemplateView):
-	template_name = "desctop/goods/good_base/cats.html"
-	categ = None
+	template_name, categ = "desctop/goods/good_base/cats.html", None
 
 	def get(self,request,*args,**kwargs):
 		self.categ = GoodSubCategory.objects.filter(category__order=self.kwargs["order"])

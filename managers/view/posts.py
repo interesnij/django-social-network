@@ -13,7 +13,7 @@ from common.template.user import get_detect_platform_template
 class PostAdminCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser or request.user.is_work_post_administrator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_administrator()):
             add_post_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -22,7 +22,7 @@ class PostAdminCreate(View):
 class PostAdminDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_post_administrator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_administrator()):
             remove_post_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -31,7 +31,7 @@ class PostAdminDelete(View):
 class PostModerCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_post_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_moderator()):
             add_post_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -40,7 +40,7 @@ class PostModerCreate(View):
 class PostModerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_post_moderator:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_moderator()):
             remove_post_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -49,7 +49,7 @@ class PostModerDelete(View):
 class PostEditorCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_post_editor:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_editor()):
             add_post_editor(user, request.user)
             return HttpResponse()
         else:
@@ -58,7 +58,7 @@ class PostEditorCreate(View):
 class PostEditorDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser and request.user.is_work_post_editor:
+        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_post_editor()):
             remove_post_editor(user, request.user)
             return HttpResponse()
         else:
@@ -120,9 +120,8 @@ class PostWorkerEditorDelete(View):
 
 class PostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        form = PostModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and (request.user.is_post_manager or request.user.is_superuser):
+        post, form = Post.objects.get(uuid=self.kwargs["uuid"]), PostModeratedForm(request.POST)
+        if request.is_ajax() and form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedPost.get_or_create_moderated_object_for_post(post)
             moderate_obj.status = ModeratedPost.STATUS_DELETED
@@ -138,7 +137,7 @@ class PostDeleteCreate(View):
 class PostDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = ModeratedPost.objects.get(post=post)
             moderate_obj.delete_deleted(manager_id=request.user.pk, post_id=post.pk)
             post.is_deleted = False
@@ -163,7 +162,7 @@ class PostClaimCreate(View):
 class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = ModeratedPost.objects.get(post=post)
             moderate_obj.reject_moderation(manager_id=request.user.pk, post_id=post.pk)
             return HttpResponse()
@@ -175,7 +174,7 @@ class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["post_uuid"])
         obj = ModeratedPost.objects.get(pk=self.kwargs["obj_pk"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
             return HttpResponse()
         else:
@@ -185,7 +184,7 @@ class CommentPostUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         obj = ModeratedPostComment.objects.get(pk=self.kwargs["obj_pk"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
             return HttpResponse()
         else:
@@ -195,7 +194,7 @@ class CommentPostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         form = PostCommentModeratedForm(request.POST)
-        if form.is_valid() and (request.user.is_post_manager or request.user.is_superuser):
+        if form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedPostComment.get_or_create_moderated_object_for_comment(comment)
             moderate_obj.status = ModeratedPostComment.STATUS_DELETED
@@ -211,7 +210,7 @@ class CommentPostDeleteCreate(View):
 class CommentPostDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = ModeratedPostComment.objects.get(comment=comment)
             moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
             comment.is_deleted = False
@@ -236,7 +235,7 @@ class CommentPostClaimCreate(View):
 class CommentPostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_post_manager or request.user.is_superuser:
+        if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = ModeratedPostComment.objects.get(comment=comment)
             moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
             return HttpResponse()
@@ -248,7 +247,7 @@ class PostDeleteWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_post_manager or request.user.is_superuser:
+        if request.user.is_post_manager() or request.user.is_superuser:
             self.template_name = get_detect_platform_template("managers/manage_create/post/post_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -263,13 +262,12 @@ class PostClaimWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_detect_platform_template("managers/manage_create/post/post_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostClaimWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(PostClaimWindow,self).get_context_data(**kwargs)
-        context["object"] = self.post
+        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
         return context
 
 
@@ -278,7 +276,7 @@ class PostCommentDeleteWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_post_manager or request.user.is_superuser:
+        if request.user.is_post_manager() or request.user.is_superuser:
             self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404

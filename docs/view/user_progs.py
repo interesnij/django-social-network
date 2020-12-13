@@ -1,4 +1,4 @@
-from docs.models import *
+from docs.models import Doc2, DocList
 from users.models import User
 from django.views import View
 from django.views.generic.base import TemplateView
@@ -111,9 +111,8 @@ class UserDocCreate(View):
         form_post, user = DocForm(request.POST, request.FILES), User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == user:
-            list = DocList.objects.get(creator_id=user.pk, community=None, type=DocList.MAIN)
-            new_doc = form_post.save(commit=False)
-            new_doc.creator = request.user
+            list, new_doc = DocList.objects.get(creator_id=user.pk, community=None, type=DocList.MAIN), form_post.save(commit=False)
+            new_doc.creator_id = request.user.pk
             lists = form_post.cleaned_data.get("list")
             new_doc.save()
             for _list in lists:
@@ -151,8 +150,8 @@ class UserDoclistEdit(TemplateView):
 
 class UserDoclistDelete(View):
     def get(self,request,*args,**kwargs):
-        user, list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == DocList.LIST:
+        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and self.kwargs["pk"] == request.user.pk and list.type == DocList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -161,8 +160,8 @@ class UserDoclistDelete(View):
 
 class UserDoclistAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user, list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
+        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and self.kwargs["pk"] == request.user.pk:
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])
             return HttpResponse()

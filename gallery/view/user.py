@@ -67,6 +67,31 @@ class UserAlbumPhotosList(ListView):
         return photo_list
 
 
+class PhotoUserCommentList(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax() or not self.photo.comments_enabled:
+            raise Http404
+        self.template_name = get_permission_user_photo(self.photo.creator, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + template_name
+        return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoUserCommentList, self).get_context_data(**kwargs)
+        context['parent'] = self.photo
+        context['user'] = self.user
+        return context
+
+    def get_queryset(self):
+        comments = self.photo.get_comments()
+        return comments
+
+
 class UserPhoto(TemplateView):
     """
     страница фото, не имеющего альбома для пользователя с разрещениями и без

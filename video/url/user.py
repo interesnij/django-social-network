@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^list_post_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', UserPostCommentVideoList.as_view()),
     url(r'^detail/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserVideoDetail.as_view(), name="video_detail"),
     url(r'^info/(?P<pk>\d+)/(?P<video_pk>\d+)/$', UserVideoInfo.as_view()),
+
+    url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', VideoUserCommentList.as_view()),
 ]

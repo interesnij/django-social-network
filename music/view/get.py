@@ -1,16 +1,13 @@
 from music.models import *
 from django.views.generic.base import TemplateView
-import json
 from common.template.user import get_settings_template
 
 
 class TagMusicGet(TemplateView):
-    template_name="music/load_playlist.html"
+    template_name = "music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
-        self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
-        self.list_ = SoundcloudParsing.objects.filter(tag=self.tag)
-        self.list_ = self.list_[0:100]
+        self.list_ = SoundcloudParsing.objects.filter(tag_id=self.kwargs["pk"])[0:100]
         self.result = reversed(list(self.list_))
         return super(TagMusicGet,self).get(request,*args,**kwargs)
 
@@ -20,12 +17,10 @@ class TagMusicGet(TemplateView):
         return context
 
 class GenreMusicGet(TemplateView):
-    template_name="music/load_playlist.html"
+    template_name = "music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
-        self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
-        self.list_ = SoundcloudParsing.objects.filter(genre=self.genre)
-        self.list_ = self.list_[0:100]
+        self.list_ = SoundcloudParsing.objects.filter(genre_id=self.kwargs["pk"])[0:100]
         self.result = reversed(list(self.list_))
         return super(GenreMusicGet,self).get(request,*args,**kwargs)
 
@@ -35,7 +30,7 @@ class GenreMusicGet(TemplateView):
         return context
 
 class ListMusicGet(TemplateView):
-    template_name="music/load_playlist.html"
+    template_name = "music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(pk=self.kwargs["pk"])
@@ -48,12 +43,10 @@ class ListMusicGet(TemplateView):
 
 
 class MusicPlaylistPreview(TemplateView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.playlist = SoundList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("music/playlist_preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.playlist, self.template_name = SoundList.objects.get(pk=self.kwargs["pk"]), get_settings_template("music/playlist_preview.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MusicPlaylistPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

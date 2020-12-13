@@ -5,6 +5,6 @@ class LogsView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_superuser:
             self.template_name = "logs.html"
         return super(LogsView,self).get(request,*args,**kwargs)

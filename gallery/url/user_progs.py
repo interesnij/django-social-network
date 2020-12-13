@@ -14,7 +14,6 @@ urlpatterns=[
     url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', UserOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesPhoto.as_view()),
 
-    url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoUserCommentList.as_view()),
     url(r'^post-comment/$', login_required(PhotoCommentUserCreate.as_view())),
     url(r'^reply-comment/$', login_required(PhotoReplyUserCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentUserDelete.as_view())),
@@ -32,7 +31,7 @@ urlpatterns=[
     url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserEdit.as_view(), name="photo_album_edit_user"),
     url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserDelete.as_view()),
     url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserAbortDelete.as_view()),
-    url(r'^add_photo_in_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumAdd.as_view()), 
+    url(r'^add_photo_in_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumAdd.as_view()),
     url(r'^remove_photo_in_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumRemove.as_view()),
 
     url(r'^get_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()),

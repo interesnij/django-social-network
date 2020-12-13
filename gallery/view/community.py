@@ -1,14 +1,11 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
-from users.models import User
 from communities.models import Community
 from gallery.models import Album, Photo
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from rest_framework.exceptions import PermissionDenied
-from common.template.photo import get_template_community_photo, get_permission_community_photo, get_permission_community_photo_detail
+from common.template.photo import get_template_community_photo, get_permission_community_photo
 from common.check.community import check_can_get_lists
 from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
@@ -66,6 +63,30 @@ class CommunityAlbumPhotosList(ListView):
     def get_queryset(self):
         photo_list = self.photo_list
         return photo_list
+
+class PhotoCommunityCommentList(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax() or not self.photo.comments_enabled:
+            raise Http404
+        self.template_name = get_permission_community_photo(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoCommunityCommentList, self).get_context_data(**kwargs)
+        context['parent'] = self.photo
+        context['community'] = self.community
+        return context
+
+    def get_queryset(self):
+        check_can_get_lists(self.request.user, self.community)
+        comments = self.photo.get_comments()
+        return comments
+
 
 class CommunityDetailAvatar(TemplateView):
     """
@@ -192,6 +213,8 @@ class CommunityWallPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from common.template.photo import get_permission_community_photo_detail
+
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         try:

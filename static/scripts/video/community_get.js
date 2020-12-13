@@ -73,7 +73,7 @@ on('#video_loader', 'click', '.c_video_comments', function() {
   video_display = this.parentElement.parentElement.parentElement;
   pk = video_display.getAttribute("data-pk");
   uuid = video_display.getAttribute("data-uuid");
-  url = "/video/community_progs/comment/" + uuid + "/" + pk + "/";
+  url = "/video/community/comment/" + uuid + "/" + pk + "/";
   list_load(data.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
 });
