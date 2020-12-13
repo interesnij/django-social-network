@@ -269,7 +269,7 @@ class CommunityPrivatePhotoView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.community, self.private_photo, self.form = Community.objects.get(pk=self.kwargs["pk"]), CommunityPrivatePhoto.objects.get(community=self.community), CommunityPrivatePhotoForm(request.POST, instance=self.private_photo
+		self.community, self.private_photo, self.form = Community.objects.get(pk=self.kwargs["pk"]), CommunityPrivatePhoto.objects.get(community=self.community), CommunityPrivatePhotoForm(request.POST, instance=self.private_photo)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			self.form.save()
 			return HttpResponse()
