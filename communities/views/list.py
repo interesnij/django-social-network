@@ -4,8 +4,7 @@ from common.template.user import get_default_template
 
 
 class CommunityMembersView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -23,8 +22,7 @@ class CommunityMembersView(ListView):
 
 
 class CommunityFriendsView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -42,8 +40,7 @@ class CommunityFriendsView(ListView):
 
 
 class AllCommunities(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_default_template("communities/list/", "all_communities.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -61,8 +58,7 @@ class AllCommunities(ListView):
 
 
 class TrendCommunities(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_default_template("communities/list/", "trend_communities.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -80,8 +76,7 @@ class TrendCommunities(ListView):
 
 
 class CommunityCategoryView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
@@ -101,8 +96,7 @@ class CommunityCategoryView(ListView):
 
 
 class CommunityDocs(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
@@ -132,8 +126,7 @@ class CommunityDocs(ListView):
 		return doc_list
 
 class CommunityDocsList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
@@ -163,8 +156,7 @@ class CommunityDocsList(ListView):
 
 
 class CommunityGoods(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
@@ -193,8 +185,7 @@ class CommunityGoods(ListView):
 		return goods_list
 
 class CommunityGoodsList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
@@ -225,31 +216,26 @@ class CommunityGoodsList(ListView):
 
 
 class CommunityMusic(ListView):
-    template_name = None
-    paginate_by = 15
+	template_name, paginate_by = None, 15
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
-		self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityMusic,self).get(request,*args,**kwargs)
+		self.community, self.playlist, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN), get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityMusic,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['playlist'] = self.playlist
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityMusic,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['playlist'] = self.playlist
+		return context
 
-    def get_queryset(self):
-        music_list = self.community.get_music()
-        return music_list
+	def get_queryset(self):
+		music_list = self.community.get_music()
+		return music_list
 
 class CommunityMusicList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
@@ -275,8 +261,7 @@ class CommunityMusicList(ListView):
 
 
 class CommunityVideo(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
@@ -304,8 +289,7 @@ class CommunityVideo(ListView):
 
 
 class CommunityVideoList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
@@ -335,8 +319,7 @@ class CommunityVideoList(ListView):
 
 
 class CommunityPostsListView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
@@ -364,8 +347,7 @@ class CommunityPostsListView(ListView):
 
 
 class PostsDraftCommunity(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -384,8 +366,7 @@ class PostsDraftCommunity(ListView):
         return item_list
 
 class PostsUserDraftCommunity(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
