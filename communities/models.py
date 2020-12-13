@@ -786,11 +786,11 @@ class Community(models.Model):
 
     def get_sity_count(self, sity):
         from stst.models import CommunityNumbers
-        from users.model.profile import OneUserLocation
+        from users.model.profile import UserLocation
 
         v_s = CommunityNumbers.objects.filter(community=self.pk).values('user')
         ids = [use['user'] for use in v_s]
-        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
 
     def get_community_notify(self):

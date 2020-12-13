@@ -1394,23 +1394,19 @@ class User(AbstractUser):
         return community_to_leave
 
     def get_last_location(self):
-        from users.model.profile import OneUserLocation, TwoUserLocation, ThreeUserLocation
-        if self.user_ip.ip_3:
-            return ThreeUserLocation.objects.get(user=self)
-        elif self.user_ip.ip_2:
-            return TwoUserLocation.objects.get(user=self)
-        elif self.user_ip.ip_1:
-            return OneUserLocation.objects.get(user=self)
-        else:
+        from users.model.profile import UserLocation
+        try:
+            return UserLocation.objects.filter(user_id=self.pk).last()
+        except:
             return "Местоположение не указано"
 
     def get_sity_count(self, sity):
         from stst.models import UserNumbers
-        from users.model.profile import OneUserLocation
+        from users.model.profile import UserLocation
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('target')
         ids = [use['target'] for use in v_s]
-        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
 
     ''''' модерация '''''
