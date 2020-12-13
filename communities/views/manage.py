@@ -12,18 +12,19 @@ class CommunityGeneralView(TemplateView):
 	form=None
 
 	def get(self,request,*args,**kwargs):
-		self.community, self.form, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), GeneralCommunityForm(instance=self.community), get_community_manage_template("communities/manage/general.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+		self.c = Community.objects.get(pk=self.kwargs["pk"])
+		self.form, self.template_name = GeneralCommunityForm(instance=self.c), get_community_manage_template("communities/manage/general.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGeneralView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityGeneralView,self).get_context_data(**kwargs)
 		context["form"] = self.form
-		context["community"] = self.community
+		context["community"] = self.c
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.community, self.form = Community.objects.get(pk=self.kwargs["pk"]), GeneralCommunityForm(request.POST, instance=self.community)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
+		self.c, self.form = Community.objects.get(pk=self.kwargs["pk"]), GeneralCommunityForm(request.POST, instance=self.c)
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse('!')
 		else:
