@@ -310,7 +310,7 @@ class CommunityAdminView(ListView):
 		return context
 
 	def get_queryset(self):
-		admins = self.community.get_community_administrators(self.community.pk)
+		admins = self.community.get_administrators(self.community.pk)
 		return admins
 
 
@@ -327,7 +327,7 @@ class CommunityEditorsView(ListView):
 		return context
 
 	def get_queryset(self):
-		admins = self.community.get_community_editors(self.community.pk)
+		admins = self.community.get_editors(self.community.pk)
 		return admins
 
 
@@ -344,7 +344,7 @@ class CommunityAdvertisersView(ListView):
 		return context
 
 	def get_queryset(self):
-		advertisers = self.community.get_community_advertisers(self.community.pk)
+		advertisers = self.community.get_advertisers(self.community.pk)
 		return advertisers
 
 
@@ -361,7 +361,7 @@ class CommunityModersView(ListView):
 		return context
 
 	def get_queryset(self):
-		moders=self.community.get_community_moderators(self.community.pk)
+		moders=self.community.get_moderators(self.community.pk)
 		return moders
 
 
@@ -405,25 +405,20 @@ class CommunityMemberManageView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.community,
-		self.administrators,
-		self.moderators,
-		self.editors,
-		self.advertisers,
-		self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Community.get_community_administrators(self.community.pk),Community.get_community_moderators(self.community.pk),Community.get_community_editors(self.community.pk),Community.get_community_advertisers(self.community.pk),get_community_manage_template("communities/manage/members.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+		self.c,self.a,self.m,self.e,self.ad,self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Community.get_administrators(self.c.pk),Community.get_moderators(self.c.pk),Community.get_editors(self.c.pk),Community.get_advertisers(self.c.pk),get_community_manage_template("communities/manage/members.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityMemberManageView,self).get_context_data(**kwargs)
-		context["community"] = self.community
-		context["administrators"] = self.administrators
-		context["moderators"] = self.moderators
-		context["editors"] = self.editors
-		context["advertisers"] = self.advertisers
+		context["community"] = self.c
+		context["administrators"] = self.a
+		context["moderators"] = self.m
+		context["editors"] = self.e
+		context["advertisers"] = self.ad
 		return context
 
 	def get_queryset(self):
-		membersheeps = self.community.get_community_members(self.community.pk)
+		membersheeps = self.c.get_members(self.c.pk)
 		return membersheeps
 
 

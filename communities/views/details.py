@@ -100,7 +100,7 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDetail,self).get_context_data(**kwargs)
-        context["membersheeps"] = self.community.get_community_members(self.community.pk)[0:6]
+        context["membersheeps"] = self.community.get_members(self.community.pk)[0:6]
         context["community"] = self.community
         context["common_friends"] = self.common_friends
         context["common_friends_count"] = self.common_friends_count

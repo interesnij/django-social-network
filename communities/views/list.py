@@ -17,7 +17,7 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
-		membersheeps = self.community.get_community_members(self.community.pk)
+		membersheeps = self.community.get_members(self.community.pk)
 		return membersheeps
 
 

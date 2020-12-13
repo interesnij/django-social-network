@@ -531,35 +531,35 @@ class Community(models.Model):
 
 
     @classmethod
-    def get_community_members(cls, community_pk):
+    def get_members(cls, community_pk):
         from users.models import User
 
         community_members_query = Q(communities_memberships__community__pk=community_pk)
         return User.objects.filter(community_members_query)
 
     @classmethod
-    def get_community_administrators(cls, community_pk):
+    def get_administrators(cls, community_pk):
         from users.models import User
 
         community_administrators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_administrator=True)
         return User.objects.filter(community_administrators_query)
 
     @classmethod
-    def get_community_moderators(cls, community_pk):
+    def get_moderators(cls, community_pk):
         from users.models import User
 
         community_administrators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_moderator=True)
         return User.objects.filter(community_administrators_query)
 
     @classmethod
-    def get_community_editors(cls, community_pk):
+    def get_editors(cls, community_pk):
         from users.models import User
 
         community_moderators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_editor=True)
         return User.objects.filter(community_moderators_query)
 
     @classmethod
-    def get_community_advertisers(cls, community_pk):
+    def get_advertisers(cls, community_pk):
         from users.models import User
 
         community_moderators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_advertiser=True)
