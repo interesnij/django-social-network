@@ -7,6 +7,7 @@ from common.check.user import check_user_can_get_list
 from users.models import User
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
+from django.views.generic.base import TemplateView
 
 
 class UserAddAvatar(View):
