@@ -405,7 +405,17 @@ class CommunityMemberManageView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.community,self.administrators,self.moderators,self.editors,self.advertisers,self.template_name = Community.objects.get(pk=self.kwargs["pk"]),Community.get_community_administrators(self.community.pk),self.moderators = Community.get_community_moderators(self.community.pk),self.editors = Community.get_community_editors(self.community.pk),Community.get_community_advertisers(self.community.pk), get_community_manage_template("communities/manage/members.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+		self.community,
+		self.administrators,
+		self.moderators,
+		self.editors,
+		self.advertisers,
+		self.template_name = Community.objects.get(pk=self.kwargs["pk"]),
+							Community.get_community_administrators(self.community.pk),
+							self.moderators = Community.get_community_moderators(self.community.pk),
+							self.editors = Community.get_community_editors(self.community.pk),
+							Community.get_community_advertisers(self.community.pk),
+							get_community_manage_template("communities/manage/members.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
