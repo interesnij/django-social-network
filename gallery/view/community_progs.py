@@ -7,6 +7,7 @@ from communities.models import Community
 from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
 from django.http import Http404
+from django.views.generic.base import TemplateView
 
 
 class PhotoCommunityCreate(View):
