@@ -229,13 +229,13 @@ class CommunityMusic(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        from music.models import SoundList
+		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
-        self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityMusic,self).get(request,*args,**kwargs)
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.playlist = SoundList.objects.get(community_id=self.community.pk, type=SoundList.MAIN)
+		self.template_name = get_template_community_music(self.community, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityMusic,self).get_context_data(**kwargs)
