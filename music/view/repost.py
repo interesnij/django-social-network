@@ -10,6 +10,7 @@ from common.check.community import check_can_get_lists
 from common.attach.post_attacher import get_post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
 from common.template.user import get_detect_platform_template
+from django.views import View
 
 
 class UUCMMusicWindow(TemplateView):
