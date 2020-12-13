@@ -40,7 +40,7 @@ class CommunityCoberturaMonth(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.sities, self.years, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'month')[0:10], get_community_manage_template("communities/stat/cobertura_month.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.sities, self.months, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'month')[0:10], get_community_manage_template("communities/stat/cobertura_month.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.months:
 			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.c.pk).distinct("user").count()
 			self.views += [view]
@@ -72,7 +72,7 @@ class CommunityCoberturaWeek(TemplateView):
 		import datetime
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.sities, self.range, self.years, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/cobertura_week.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.sities, self.range, self.weeks, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/cobertura_week.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.c.pk).distinct("user").count()
@@ -105,7 +105,7 @@ class CommunityCoberturaDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.sities, self.years, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'day')[0:10], get_community_manage_template("communities/stat/cobertura_day.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.sities, self.days, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'day')[0:10], get_community_manage_template("communities/stat/cobertura_day.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.days:
 			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.c.pk).distinct("user").count()
 			self.views += [view]
@@ -204,7 +204,7 @@ class CommunityTrafficWeek(TemplateView):
 		import datetime
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.un_views, self.range, self.sities, self.months, self.template_name = [], [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/traffic_week.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.un_views, self.range, self.sities, self.weeks, self.template_name = [], [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/traffic_week.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.c.pk).count()
@@ -243,7 +243,7 @@ class CommunityTrafficDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.un_views, self.sities, self.months, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'day')[0:10], get_community_manage_template("communities/stat/traffic_day.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.un_views, self.sities, self.days, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'day')[0:10], get_community_manage_template("communities/stat/traffic_day.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.days:
 			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.c.pk).count()
 			self.views += [view]
