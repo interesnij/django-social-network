@@ -612,7 +612,14 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.getElementById("video_loader").innerHTML=""
 });
 on('body', 'click', '.create_fullscreen_hide', function() {document.querySelector(".create_fullscreen").style.display = "none";document.getElementById("create_loader").innerHTML=""});
-
+on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+  this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+});
+on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+  this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+});
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
 });
