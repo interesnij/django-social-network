@@ -3,7 +3,7 @@
   <ul class="date-list" style="width:max-content">
     {% for object in request.user.get_albums %}
         {% if object.is_not_empty %}
-        <li class="date" style="flex: 0 0 50%;max-width:50%;padding:5px"> 
+        <li class="date" style="flex: 0 0 50%;max-width:50%;padding:5px">
           <div class="cover_block" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}" style="padding:5px;">
               <div class="card rounded-0 border-0 mb-3">
                   <div class="card-header">
@@ -15,7 +15,7 @@
                       </div>
                   </div>
                   <div class="card-body">
-                    <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
+                    <a data-href="{% url 'u_photo_list_load' uuid=object.uuid %}" class="pointer create_ajax">
                         {% if object.get_cover_photo %}
                           <img style="object-fit: cover;height: 150px;width: 170px;" src="{{ object.get_cover_photo.file.url }}" />
                         {% else %}

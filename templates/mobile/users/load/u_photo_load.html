@@ -22,10 +22,10 @@
     </div>
   </div>
 
-  <div class="card-body border-bottom">
+  <div class="card-body">
 
 {% if request.user.is_public_album_exists %}
-  {% include 'mobile/users/load/albums.html' %}
+  {% include 'mobile/users/load/u_albums.html' %}
 {% endif %}
 
 {% if object_list %}
