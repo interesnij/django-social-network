@@ -310,12 +310,14 @@ class ProfileUserView(TemplateView):
         c['docs_list'],
         c['good_album'],
         c['get_buttons_block'],
-        c['common_frends'] = self.user,
-                            self.user.get_or_create_photo_album(),
-                            self.user.get_or_create_video_album(),
-                            self.user.get_or_create_playlist(),
-                            self.user.get_or_create_doc_list(),
-                            self.user.get_or_create_good_album(),
-                            self.get_buttons_block,
-                            self.common_frends
+        c['common_frends']
+        = 
+        self.user,
+        self.user.get_or_create_photo_album(),
+        self.user.get_or_create_video_album(),
+        self.user.get_or_create_playlist(),
+        self.user.get_or_create_doc_list(),
+        self.user.get_or_create_good_album(),
+        self.get_buttons_block,
+        self.common_frends
         return c
