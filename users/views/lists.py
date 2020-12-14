@@ -2,20 +2,13 @@
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post, PostList
-from common.template.post import get_permission_user_post
-from common.template.video import get_template_user_video
-from common.template.music import get_template_user_music
 from common.template.user import get_settings_template
-from common.template.good import get_template_user_good
-from common.template.doc import get_template_user_doc
-from common.template.user import get_default_template
 from django.http import Http404
 
 
 
 class UserVisitCommunities(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/user_community/visited_communities.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -26,11 +19,9 @@ class UserVisitCommunities(ListView):
 		return communities
 
 class BlackListUsers(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("users/u_list/blacklist.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(BlackListUsers,self).get(request,*args,**kwargs)
 
@@ -40,11 +31,11 @@ class BlackListUsers(ListView):
 
 
 class UserVideoList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
+		from common.template.video import get_template_user_video
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
@@ -70,11 +61,11 @@ class UserVideoList(ListView):
 
 
 class UserGoodsList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
+		from common.template.good import get_template_user_good
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
@@ -100,11 +91,11 @@ class UserGoodsList(ListView):
 
 
 class UserMusicList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
+		from common.template.music import get_template_user_music
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
@@ -126,14 +117,13 @@ class UserMusicList(ListView):
 
 
 class UserDocsList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
+		from common.template.doc import get_template_user_doc
 
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
 			self.doc_list = self.list.get_my_docs()
 		else:
@@ -156,17 +146,15 @@ class UserDocsList(ListView):
 
 
 class AllPossibleUsersList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user = request.user
 		self.template_name = get_settings_template("users/u_list/possible_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AllPossibleUsersList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(AllPossibleUsersList,self).get_context_data(**kwargs)
-		context['user'] = self.user
+		context['user'] = self.request.user
 		return context
 
 	def get_queryset(self):
@@ -174,12 +162,12 @@ class AllPossibleUsersList(ListView):
 		return possible_list
 
 class UserPostsListView(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.list=PostList.objects.get(pk=self.kwargs["list_pk"])
+		from common.template.post import get_permission_user_post
+
+		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if (self.user.pk != request.user.pk and self.list.is_private_list()) or not request.is_ajax():
 			raise Http404
 		else:
@@ -199,10 +187,11 @@ class UserPostsListView(ListView):
 
 
 class AllUsers(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.template.user import get_default_template
+
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AllUsers,self).get(request,*args,**kwargs)
 

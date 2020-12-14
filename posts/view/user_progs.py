@@ -1,24 +1,18 @@
 from users.models import User
 from posts.models import *
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from posts.forms import *
-from common.attach.post_attacher import get_post_attach
-from common.processing.post import get_post_processing
-from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 from django.http import Http404
-from common.template.user import render_for_platform, get_detect_platform_template
 from django.views.generic.base import TemplateView
 
 
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
-        self.form_post = PostForm(request.POST)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        form_post, user, lists = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists")
 
-        if request.is_ajax() and self.form_post.is_valid():
-            post = self.form_post.save(commit=False)
-            lists = request.POST.getlist("lists")
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
 
             if request.POST.get('text') or request.POST.get('photo') or \
                 request.POST.get('video') or request.POST.get('music') or \
@@ -27,10 +21,14 @@ class PostUserCreate(View):
                 request.POST.get('photo_list') or request.POST.get('doc_list') or \
                 request.POST.get('doc') or request.POST.get('user') or \
                 request.POST.get('community') or request.POST.get('good_list'):
+                from common.template.user import render_for_platform
+                from common.processing.post import get_post_processing
+                from common.attach.post_attacher import get_post_attach
+
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_attach(request, new_post)
                 get_post_processing(new_post)
-                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post}) 
+                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -72,17 +70,19 @@ class UserAdPostView(View):
 class PostCommentUserCreate(View):
 
     def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk=request.POST.get('pk'))
-        post = Post.objects.get(uuid=request.POST.get('uuid'))
+        form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(uuid=request.POST.get('uuid'))
 
         if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
+            from common.check.user import check_user_can_get_list
+
             comment = form_post.save(commit=False)
 
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.attach.comment_attacher import get_comment_attach
+                from common.template.user import render_for_platform
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
@@ -97,17 +97,18 @@ class PostCommentUserCreate(View):
 class PostReplyUserCreate(View):
 
     def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST, request.FILES)
-        user = User.objects.get(pk=request.POST.get('pk'))
-        parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
+        form_post, user, post = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
-            comment=form_post.save(commit=False)
+            from common.check.user import check_user_can_get_list
 
+            comment=form_post.save(commit=False)
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 from common.attach.comment_attacher import get_comment_attach
+                from common.template.user import render_for_platform
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, post=None, text=comment.text)
                 get_comment_attach(request, new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:
@@ -141,8 +142,7 @@ class PostCommentUserAbortDelete(View):
 class PostWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -152,8 +152,7 @@ class PostWallCommentUserDelete(View):
 class PostWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -214,8 +213,7 @@ class PostUserDelete(View):
 class PostWallUserDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
             item.is_deleted = True
             item.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -235,8 +233,7 @@ class PostUserAbortDelete(View):
 class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
+        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -279,19 +276,21 @@ class UserPostListCreate(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        from common.template.user import get_detect_platform_template
+
         self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserPostListCreate,self).get_context_data(**kwargs)
         context["form"] = PostListForm()
-        context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
+            from common.template.user import render_for_platform
+
             list = self.form.save(commit=False)
             list.creator = request.user
             list.type = PostList.LIST
@@ -309,6 +308,8 @@ class UserPostListEdit(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
+        from common.template.user import get_detect_platform_template
+
         self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostListEdit,self).get(request,*args,**kwargs)
 
@@ -320,8 +321,7 @@ class UserPostListEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
         self.form = PostListForm(request.POST,instance=self.list)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid() and self.kwargs["pk"] == request.user.pk:
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
@@ -332,9 +332,8 @@ class UserPostListEdit(TemplateView):
 
 class UserPostListDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and user == request.user and list.type == PostList.LIST:
+        if request.is_ajax() and self.kwargs["pk"] == request.user.pk and list.type == PostList.LIST:
             list.type = PostList.DELETED
             list.save(update_fields=['type'])
             return HttpResponse()
@@ -343,9 +342,8 @@ class UserPostListDelete(View):
 
 class UserPostListAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and user == request.user:
+        if request.is_ajax() and self.kwargs["pk"] == request.user.pk:
             list.type = PostList.LIST
             list.save(update_fields=['type'])
             return HttpResponse()

@@ -8,13 +8,11 @@ from django.http import Http404
 
 
 class PostCommunityCommentList(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() or not self.item.comments_enabled:
+        self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if not request.is_ajax() or not self.post.comments_enabled:
             raise Http404
 
         self.template_name = get_permission_community_post(self.community, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -22,12 +20,12 @@ class PostCommunityCommentList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostCommunityCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.item
+        context['parent'] = self.post
         context['community'] = self.community
         return context
 
     def get_queryset(self):
-        comments = self.item.get_comments()
+        comments = self.post.get_comments()
         return comments
 
 
@@ -35,9 +33,7 @@ class PostCommunityDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_permission_community_post(self.community, "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post(Community.objects.get(uuid=self.kwargs["uuid"]), "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

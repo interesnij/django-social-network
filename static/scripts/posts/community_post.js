@@ -91,7 +91,7 @@ on('#ajax', 'click', '.c_replyParentItemComment', function() {
 });
 
 on('#ajax', 'click', '.c_post_comment_delete', function() {
-  comment_delete(this, "/posts/community_progs/delete_comment/", "c_post_comment_abort_remove")
+  comment_delete(this, "/posts/community_progs/delete_comment/", "c_post_comment_abort_remove") 
 })
 on('#ajax', 'click', '.c_post_comment_abort_remove', function() {
   comment_abort_delete(this, "/posts/community_progs/abort_delete_comment/")

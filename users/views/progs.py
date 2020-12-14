@@ -2,19 +2,18 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from django.http import Http404
-import json, requests
-from io import StringIO
 from common.template.user import render_for_platform
 
 
 class GetUserGender(View):
     def get(self,request,*args,**kwargs):
         import pandas as pd
+        from io import StringIO
 
         ru_url = "http://раса.рус/static/scripts/csv/rus.csv"
         en_url = "http://раса.рус/static/scripts/csv/en.csv"
-        ru_s=requests.get(ru_url).text
-        en_s=requests.get(en_url).text
+        ru_s = requests.get(ru_url).text
+        en_s = requests.get(en_url).text
 
         dfru = pd.read_csv(StringIO(ru_s))
         dfen = pd.read_csv(StringIO(en_s))
@@ -90,7 +89,6 @@ class UserColorChange(View):
 class PhoneVerify(View):
     def get(self,request,*args,**kwargs):
         from common.model.other import PhoneCodes
-        from users.models import User
 
         if not request.is_ajax():
             raise Http404
@@ -120,7 +118,6 @@ class PhoneSend(View):
     def get(self,request,*args,**kwargs):
         import json, requests
         from common.model.other import PhoneCodes
-        from users.models import User
 
         text = ""
         if not request.is_ajax() and not request.user.is_no_phone_verified():

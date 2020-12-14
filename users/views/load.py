@@ -3,13 +3,12 @@ from common.template.user import get_settings_template
 
 
 class UserLoadPhoto(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
-		self.album = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None)
-		self.template_name = get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -23,13 +22,12 @@ class UserLoadPhoto(ListView):
 
 
 class UserLoadPhotoAlbum(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
-		self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		self.album, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -42,13 +40,11 @@ class UserLoadPhotoAlbum(ListView):
 		return photo_list
 
 class UserLoadPhotoComment(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
-		self.album = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None)
-		self.template_name = get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -56,13 +52,12 @@ class UserLoadPhotoComment(ListView):
 		return photos_list
 
 class UserLoadPhotoAlbumComment(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
-		self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_photo_list_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		self.album, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoAlbumComment,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -76,13 +71,12 @@ class UserLoadPhotoAlbumComment(ListView):
 
 
 class UserLoadVideo(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
-		self.album = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community=None)
-		self.template_name = get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		self.album, self.template_name = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community=None), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -95,13 +89,12 @@ class UserLoadVideo(ListView):
 		return videos_list
 
 class UserLoadVideoAlbum(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
-		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		self.album, self.template_name = VideoAlbum.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -115,8 +108,7 @@ class UserLoadVideoAlbum(ListView):
 
 
 class UserLoadMusic(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
@@ -134,8 +126,7 @@ class UserLoadMusic(ListView):
 		return musics_list
 
 class UserLoadMusicList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
@@ -154,8 +145,7 @@ class UserLoadMusicList(ListView):
 
 
 class UserLoadDoc(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
@@ -173,8 +163,7 @@ class UserLoadDoc(ListView):
 		return doc_list
 
 class UserLoadDocList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
@@ -201,8 +190,7 @@ class UserLoadArticle(ListView):
 		return articles_list
 
 class UserLoadGood(ListView):
-	template_name = 'load/u_good_load.html'
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
@@ -220,8 +208,7 @@ class UserLoadGood(ListView):
 		return goods_list
 
 class UserLoadGoodList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
@@ -281,8 +268,7 @@ class CommunityLoadArticle(ListView):
 
 
 class CommunityLoadGood(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from music.models import GoodAlbum
@@ -302,8 +288,7 @@ class CommunityLoadGood(ListView):
 
 
 class ChatItemsLoad(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/chat_items.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -316,8 +301,7 @@ class ChatItemsLoad(ListView):
 
 
 class CommunitiesLoad(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -330,8 +314,7 @@ class CommunitiesLoad(ListView):
 
 
 class FriendsLoad(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/friends.html", request.user, request.META['HTTP_USER_AGENT'])

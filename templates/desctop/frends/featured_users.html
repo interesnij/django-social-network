@@ -2,7 +2,7 @@
 {% if user.get_6_possible_friends %}
 <div class="card mb-3">
     <div class="card-header">
-      <a href="{% url 'possible_users' pk=user.pk %}" class="ajax">
+      <a href="{% url 'possible_users' %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Рекомендации</h6>

@@ -14,7 +14,7 @@ from django.http import Http404
 
 class GoodUserLikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404
@@ -40,7 +40,7 @@ class GoodUserLikeCreate(View):
 
 class GoodUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), good.likes_count(), good.dislikes_count()
         if not good.votes_on or not request.is_ajax():
             raise Http404

@@ -1,4 +1,3 @@
-
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from users.models import User
@@ -8,12 +7,10 @@ from django.http import Http404
 
 
 class PostUserCommentList(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.item, self.user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.item.comments_enabled:
             raise Http404
         self.template_name = get_permission_user_post(self.user, "posts/u_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -33,14 +30,13 @@ class PostUserDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-
-        self.template_name = get_permission_user_post(self.user, "posts/post_user/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_permission_user_post(self.post.creator, "posts/post_user/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostUserDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(PostUserDetail,self).get_context_data(**kwargs)
-        context["object"] = self.item
+        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
         return context
 
 
@@ -49,8 +45,7 @@ class PostLoadView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_permission_user_post(self.user, "posts/post_user/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_post(self.post.creator, "posts/post_user/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostLoadView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

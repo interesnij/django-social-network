@@ -1,39 +1,27 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.views.generic import ListView
-from music.models import SoundcloudParsing
-from communities.models import Community
-from rest_framework.exceptions import PermissionDenied
-from common.template.post import get_template_user_post
-from common.template.music import get_template_user_music
-from common.template.video import get_template_user_video
-from common.template.good import get_template_user_good
-from common.template.doc import get_template_user_doc
-from common.template.photo import get_template_user_photo
-from common.template.user import get_template_user, get_detect_platform_template
+from common.template.user import get_template_user
 
 
 class UserPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from posts.models import Post
+        from common.template.post import get_template_user_post
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.posts = self.user.get_posts()
-        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.next = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
-        self.prev = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
+        self.posts, self.template_name = self.user.get_posts(), get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        from posts.models import Post
+
         context = super(UserPostView,self).get_context_data(**kwargs)
-        context["object"] = self.post
+        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
         context["user"] = self.user
-        context["next"] = self.next
-        context["prev"] = self.prev
+        context["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
+        context["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
         return context
 
 class UserGallery(TemplateView):
@@ -42,51 +30,53 @@ class UserGallery(TemplateView):
     """
     template_name = None
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
+        from common.template.photo import get_template_user_photo
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
+        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user.pk == request.user.pk:
             self.albums_list = self.user.get_my_all_albums().order_by('-created')
         else:
             self.albums_list = self.user.get_all_albums().order_by('-created')
-        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        from gallery.models import Album
+
         context = super(UserGallery,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['albums_list'] = self.albums_list
-        context['album'] = self.album
+        context['album'] = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
         return context
 
 class UserAlbum(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
+        from common.template.photo import get_template_user_photo
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_template_user_photo(self.user, "users/user_album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        from gallery.models import Album
+
         context = super(UserAlbum,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['album'] = self.album
+        context['album'] = Album.objects.get(uuid=self.kwargs["uuid"])
         return context
 
 
 class UserCommunities(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -99,8 +89,7 @@ class UserCommunities(ListView):
         return communities_list
 
 class UserStaffCommunities(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -119,8 +108,7 @@ class UserStaffCommunities(ListView):
 
 
 class UserMobStaffed(ListView):
-    template_name = "mobile/users/user_community/staffed.html"
-    paginate_by = 15
+    template_name, paginate_by = "mobile/users/user_community/staffed.html", 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
@@ -132,21 +120,21 @@ class UserMobStaffed(ListView):
 
 
 class UserMusic(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from music.models import SoundList
+        from common.template.music import get_template_user_music
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.playlist = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
         self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        from music.models import SoundList
+
         context = super(UserMusic,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['playlist'] = self.playlist
+        context['playlist'] = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
         return context
 
     def get_queryset(self):
@@ -155,11 +143,11 @@ class UserMusic(ListView):
 
 
 class UserDocs(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         from docs.models import DocList
+        from common.template.doc import get_template_user_doc
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
@@ -186,11 +174,11 @@ class UserDocs(ListView):
 
 
 class UserGoods(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         from goods.models import GoodAlbum
+        from common.template.good import get_template_user_good
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
@@ -217,15 +205,17 @@ class UserGoods(ListView):
 
 
 class UserVideo(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         from video.models import VideoAlbum
+        from common.template.video import get_template_user_video
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-
-        self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
+        try:
+            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
+        except:
+            self.album = VideoAlbum.objects.create(creator_id=self.user.id, community=None, type=VideoAlbum.MAIN, name="Основной список")
         if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
         else:
@@ -245,20 +235,18 @@ class UserVideo(ListView):
 
 
 class ProfileUserView(TemplateView):
-    template_name = None
-    get_buttons_block = None
+    template_name, get_buttons_block, common_frends = None, None, None
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
-        from users.model.list import UserPopulateFriend
+        import re
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        user_agent = request.META['HTTP_USER_AGENT']
+        self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), self.kwargs["pk"], request.user.pk
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
-            elif self.user.pk == request.user.pk:
+            elif user_pk == r_user_pk:
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/you_suspended.html"
                 elif self.user.is_blocked():
@@ -267,24 +255,23 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/my_user_child.html"
                 else:
                     self.template_name = "users/account/my_user.html"
-            elif request.user.pk != self.user.pk:
-                self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
+            elif r_user_pk != user_pk:
+                self.get_buttons_block = request.user.get_buttons_profile(user_pk), self.common_frends = self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_blocked():
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name = "users/account/staff_user.html"
-                    self.get_buttons_block = request.user.get_staff_buttons_profile(self.user.pk)
-                    if request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                        request.user.create_or_plus_populate_friend(self.user.pk)
-                elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
+                    self.template_name, self.get_buttons_block = "users/account/staff_user.html", request.user.get_staff_buttons_profile(user_pk)
+                    if request.user.is_connected_with_user_with_id(user_id=user_pk):
+                        request.user.create_or_plus_populate_friend(user_pk)
+                elif request.user.is_blocked_with_user_with_id(user_id=user_pk):
                     self.template_name = "users/account/block_user.html"
-                elif request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                elif request.user.is_connected_with_user_with_id(user_id=user_pk):
                     self.template_name = "users/account/user.html"
-                    request.user.create_or_plus_populate_friend(self.user.pk)
+                    request.user.create_or_plus_populate_friend(user_pk)
                 elif self.user.is_closed_profile():
-                    if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
+                    if request.user.is_followers_user_with_id(user_id=user_pk) or request.user.is_connected_with_user_with_id(user_id=user_pk):
                         self.template_name = "users/account/user.html"
                     else:
                         self.template_name = "users/account/close_user.html"
@@ -293,9 +280,9 @@ class ProfileUserView(TemplateView):
                 else:
                     self.template_name = "users/account/user.html"
                 if MOBILE_AGENT_RE.match(user_agent):
-                    UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=0)
+                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=0)
                 else:
-                    UserNumbers.objects.create(visitor=request.user.pk, target=self.user.pk, platform=1)
+                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=1)
         elif request.user.is_anonymous:
             if self.user.is_suspended():
                 self.template_name = "generic/u_template/anon_user_suspended.html"
@@ -324,6 +311,5 @@ class ProfileUserView(TemplateView):
         context['docs_list'] = self.user.get_or_create_doc_list()
         context['good_album'] = self.user.get_or_create_good_album()
         context['get_buttons_block'] = self.get_buttons_block
-        if self.request.user.is_authenticated:
-            context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
+        context['common_frends'] = self.common_frends
         return context

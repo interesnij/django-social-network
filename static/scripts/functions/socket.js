@@ -60,10 +60,10 @@ function case_c_photo_repost_notify(uuid) {
     new Audio('/static/audio/apple/nota.mp3').play();
 }
 
-function case_u_post_create(request_user_id, uuid) {
+function case_u_post_create(uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('GET', "/posts/user/load_post/" + uuid + "/" + request_user_id + "/", true);
+  link_.open('GET', "/posts/user/load_post/" request_user_id + "/" + uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
@@ -181,7 +181,7 @@ webSocket.listen(function (event) {
       case "create_item":
         if (event.creator_id != request_user_id){
           console.log("отрисовка созданных элементов для пользователей на странице");
-          if (event.name == "u_post_create"){case_u_post_create(request_user_id, event.post_id)}
+          if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
         }
         break;
 

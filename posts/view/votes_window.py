@@ -1,4 +1,3 @@
-
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from users.models import User
@@ -141,8 +140,7 @@ class PostCommunityCommentDislikeWindow(TemplateView):
 
 
 class AllPostUserLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -162,8 +160,7 @@ class AllPostUserLikeWindow(ListView):
         return users
 
 class AllPostUserDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -184,8 +181,7 @@ class AllPostUserDislikeWindow(ListView):
 
 
 class AllPostUserCommentLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -204,8 +200,7 @@ class AllPostUserCommentLikeWindow(ListView):
 
 
 class AllPostUserCommentDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -224,8 +219,7 @@ class AllPostUserCommentDislikeWindow(ListView):
 
 
 class AllPostCommunityLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -246,8 +240,7 @@ class AllPostCommunityLikeWindow(ListView):
         return users
 
 class AllPostCommunityDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -268,8 +261,7 @@ class AllPostCommunityDislikeWindow(ListView):
 
 
 class AllPostCommunityCommentLikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -288,8 +280,7 @@ class AllPostCommunityCommentLikeWindow(ListView):
 
 
 class AllPostCommunityCommentDislikeWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -308,8 +299,7 @@ class AllPostCommunityCommentDislikeWindow(ListView):
 
 
 class AllPostCommunityRepostWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -327,8 +317,7 @@ class AllPostCommunityRepostWindow(ListView):
         return users
 
 class AllPostUserRepostWindow(ListView):
-    template_name = None
-    paginate_by = 15
+    template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])

@@ -13,8 +13,7 @@ from django.http import Http404
 
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        item, user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
         if user != request.user:
@@ -40,8 +39,7 @@ class PostUserLikeCreate(View):
 
 class PostUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        item, user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
         if user != request.user:
@@ -67,8 +65,7 @@ class PostUserDislikeCreate(View):
 
 class PostCommentUserLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        comment, user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
         if user != request.user:
@@ -96,8 +93,7 @@ class PostCommentUserLikeCreate(View):
 
 class PostCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        comment, user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
         if user != request.user:
@@ -126,8 +122,7 @@ class PostCommentUserDislikeCreate(View):
 
 class PostCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        item, community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
         check_can_get_lists(request.user, community)
@@ -152,8 +147,7 @@ class PostCommunityLikeCreate(View):
 
 class PostCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        item, community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not item.votes_on:
             raise Http404
         check_can_get_lists(request.user, community)
@@ -178,8 +172,7 @@ class PostCommunityDislikeCreate(View):
 
 class PostCommentCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        comment, community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
@@ -206,8 +199,7 @@ class PostCommentCommunityLikeCreate(View):
 
 class PostCommentCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        comment, community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)

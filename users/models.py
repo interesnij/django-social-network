@@ -1,16 +1,9 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 import uuid
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.conf import settings
 from django.db.models import Q
-from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
-from notify.model.user import UserNotify, notification_handler
-from datetime import date
-from posts.models import Post, PostList
 from common.check.user import *
 
 
@@ -77,6 +70,8 @@ class User(AbstractUser):
         return naturaltime(self.last_activity)
 
     def calculate_age(birthday):
+        from datetime import date
+
         today = date.today()
         return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
 
@@ -167,8 +162,12 @@ class User(AbstractUser):
         return first_name + " " + last_name
 
     def notification_follow(self, user):
+        from notify.model.user import UserNotify, notification_handler
+
         notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_REQUEST)
     def notification_connect(self, user):
+        from notify.model.user import UserNotify, notification_handler
+
         notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_CONFIRMED)
 
     def create_s_avatar(self, photo_input):
@@ -984,6 +983,7 @@ class User(AbstractUser):
         return query[0:5]
 
     def get_fixed_post(self):
+        from posts.models import Post
         try:
             post = Post.objects.get(creator_id=self.pk, is_fixed=True, community=None)
             return post
@@ -991,16 +991,22 @@ class User(AbstractUser):
             return None
 
     def get_draft_posts(self):
+        from posts.models import Post
+
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
+        from posts.models import Post
+
         posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
 
     def get_post_lists(self):
+        from posts.models import PostList
+
         lists_query = Q(creator_id=self.id, community=None, type="LI")
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
@@ -1010,12 +1016,16 @@ class User(AbstractUser):
         return PostCategory.objects.only("pk")
 
     def get_my_post_lists(self):
+        from posts.models import PostList
+
         lists_query = Q(creator_id=self.id, community=None, type="LI")
         lists_query.add(~Q(type="MA"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
     def get_my_all_post_lists(self):
+        from posts.models import PostList
+
         lists_query = Q(creator_id=self.id, community=None)
         lists_query.add(~Q(type="DE"), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
