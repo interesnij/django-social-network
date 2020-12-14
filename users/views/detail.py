@@ -256,7 +256,7 @@ class ProfileUserView(TemplateView):
                 else:
                     self.template_name = "users/account/my_user.html"
             elif r_user_pk != user_pk:
-                self.get_buttons_block = request.user.get_buttons_profile(user_pk), self.common_frends = self.user.get_common_friends_of_user(self.request.user)[0:5]
+                self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_blocked():
