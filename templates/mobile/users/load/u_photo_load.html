@@ -9,11 +9,13 @@
 <div class="card mb-4">
   <div class="row">
     <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-      <form id="add_photos" slass="custom_color border">
+      <span class="custom_color border">
+      <form id="add_photos">
         {% csrf_token %}
         <input type="file" id="u_photo_post_attach" class="upload_for_post_attach" name="file" style="display:none" multiple="multiple">
         <p class="content-color-primary mb-0" id="u_multi_comments_photos">загрузить (до 10)</p>
       </form>
+      </span>
     </div>
     <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
       <a class="btn btn-sm custom_color border create_fullscreen_hide_2" style="width: -webkit-fill-available;">
