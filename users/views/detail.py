@@ -68,8 +68,10 @@ class UserCommunities(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_staffed_user() and self.user == request.user:
+            from common.template.user import get_detect_platform_template
             self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
+            from common.template.user import get_template_user
             self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
