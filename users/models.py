@@ -568,6 +568,8 @@ class User(AbstractUser):
             return "desctop/users/button/null_value.html"
 
 
+    def is_public_album_exists(self):
+        return self.created_user.filter(creator__id=self.pk, community=None, is_public=True).exists()
     def is_album_exists(self):
         return self.created_user.filter(creator__id=self.pk, community=None).exists()
 
