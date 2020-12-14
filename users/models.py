@@ -569,12 +569,12 @@ class User(AbstractUser):
 
 
     def is_public_album_exists(self):
-        return self.created_user.filter(creator__id=self.pk, community=None, is_public=True).exists()
+        return self.photo_album_creator.filter(creator_id=self.pk, community=None, is_public=True).exists()
     def is_album_exists(self):
-        return self.created_user.filter(creator__id=self.pk, community=None).exists()
+        return self.photo_album_creator.filter(creator_id=self.pk, community=None).exists()
 
     def is_photo_exists(self):
-        return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
+        return self.photo_creator.filter(creator_id=self.pk, community=None).exists()
 
     def is_suspended(self):
         return self.user_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
