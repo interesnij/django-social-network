@@ -251,7 +251,7 @@ class ProfileUserView(TemplateView):
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
-            elif user_pk == r_user_pk:
+            elif int(user_pk) == int(r_user_pk):
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/you_suspended.html"
                 elif self.user.is_blocked():
