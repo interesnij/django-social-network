@@ -10,13 +10,10 @@ class GetUserGender(View):
         import pandas as pd
         from io import StringIO
 
-        ru_url = "http://раса.рус/static/scripts/csv/rus.csv"
-        en_url = "http://раса.рус/static/scripts/csv/en.csv"
-        ru_s = requests.get(ru_url).text
-        en_s = requests.get(en_url).text
+        ru_url, en_url = "http://раса.рус/static/scripts/csv/rus.csv", "http://раса.рус/static/scripts/csv/en.csv"
+        ru_s, en_s = requests.get(ru_url).text, requests.get(en_url).text
 
-        dfru = pd.read_csv(StringIO(ru_s))
-        dfen = pd.read_csv(StringIO(en_s))
+        dfru, dfen = pd.read_csv(StringIO(ru_s)), pd.read_csv(StringIO(en_s))
 
         rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
         rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
@@ -30,8 +27,7 @@ class GetUserGender(View):
         enfemalenames = set(dfen[dfen['Gender'] == 'female']['GivenName'])
         enfemalesurnames = set(dfen[dfen['Gender'] == 'female']['Surname'])
 
-        name = request.user.first_name
-        surname = request.user.last_name
+        name, surname = request.user.first_name, request.user.last_name
 
         if name in rumalenames:
             request.user.gender = "Man"

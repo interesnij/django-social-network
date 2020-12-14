@@ -63,7 +63,7 @@ function case_c_photo_repost_notify(uuid) {
 function case_u_post_create(uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('GET', "/posts/user/load_post/" request_user_id + "/" + uuid + "/", true);
+  link_.open('GET', "/posts/user/load_post/" + request_user_id + "/" + uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {

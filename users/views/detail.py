@@ -17,12 +17,9 @@ class UserPostView(TemplateView):
     def get_context_data(self,**kwargs):
         from posts.models import Post
 
-        context = super(UserPostView,self).get_context_data(**kwargs)
-        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
-        context["user"] = self.user
-        context["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
-        context["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
-        return context
+        c = super(UserPostView,self).get_context_data(**kwargs)
+        c["object"], c["user"], c["next"], c["prev"] = Post.objects.get(uuid=self.kwargs["uuid"]), self.user, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
+        return c
 
 class UserGallery(TemplateView):
     """
@@ -43,11 +40,9 @@ class UserGallery(TemplateView):
     def get_context_data(self,**kwargs):
         from gallery.models import Album
 
-        context = super(UserGallery,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['albums_list'] = self.albums_list
-        context['album'] = Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
-        return context
+        c = super(UserGallery,self).get_context_data(**kwargs)
+        c['user'], c['albums_list'], c['album'] = self.user, self.albums_list, Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
+        return c
 
 class UserAlbum(TemplateView):
     template_name = None
@@ -62,10 +57,9 @@ class UserAlbum(TemplateView):
     def get_context_data(self,**kwargs):
         from gallery.models import Album
 
-        context = super(UserAlbum,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['album'] = Album.objects.get(uuid=self.kwargs["uuid"])
-        return context
+        c = super(UserAlbum,self).get_context_data(**kwargs)
+        c['user'], c['album'] = self.user, Album.objects.get(uuid=self.kwargs["uuid"])
+        return c
 
 
 class UserCommunities(ListView):
@@ -133,8 +127,7 @@ class UserMusic(ListView):
         from music.models import SoundList
 
         context = super(UserMusic,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['playlist'] = SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
+        c['user'], c['playlist'] = self.user, SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
         return context
 
     def get_queryset(self):
@@ -163,10 +156,9 @@ class UserDocs(ListView):
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserDocs,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['list'] = self.list
-        return context
+        c = super(UserDocs,self).get_context_data(**kwargs)
+        c['user'], c['list'] = self.user, self.list
+        return c
 
     def get_queryset(self):
         doc_list = self.doc_list
@@ -194,10 +186,9 @@ class UserGoods(ListView):
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserGoods,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['album'] = self.album
-        return context
+        c = super(UserGoods,self).get_context_data(**kwargs)
+        c['user'], c['album'] = self.user, self.album
+        return c
 
     def get_queryset(self):
         goods_list = self.goods_list
@@ -224,10 +215,9 @@ class UserVideo(ListView):
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserVideo,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['album'] = self.album
-        return context
+        c = super(UserVideo,self).get_context_data(**kwargs)
+        c['user'], c['album'] = self.user, self.album
+        return c
 
     def get_queryset(self):
         video_list = self.video_list

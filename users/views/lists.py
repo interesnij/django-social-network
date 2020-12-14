@@ -1,10 +1,8 @@
-
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post, PostList
 from common.template.user import get_settings_template
 from django.http import Http404
-
 
 
 class UserVisitCommunities(ListView):
