@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from common.template.user import get_settings_template
 from common.template.community import get_community_moders_template
+from communities.models import Community
 
 
 class AllNotifyView(ListView):
