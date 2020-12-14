@@ -3286,26 +3286,6 @@ input[type="button"].btn-block {
     border: 0
 }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
-    color: #16181b;
-    text-decoration: none;
-    background-color: #f8f9fa
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-    color: #fff;
-    text-decoration: none;
-    background-color: #7979ff
-}
-
-.dropdown-item.disabled,
-.dropdown-item:disabled {
-    color: #6c757d;
-    background-color: transparent
-}
-
 .dropdown-menu.show {
     display: block
 }
