@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-{% if user.get_6_friends %}
+{% if user.is_have_friends %}
 <div class="card mb-3">
   <a href="{% url 'frends' pk=user.pk %}" class="ajax">
     <div class="card-body py-2">

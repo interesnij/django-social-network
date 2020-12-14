@@ -1,4 +1,4 @@
-{% if communities %}
+{% if user.is_have_communities %}
 
 {% load liked_user %}
 <div class="card mb-3">
@@ -13,7 +13,7 @@
       </a>
     </div>
 
-    {% for object in communities %}
+    {% for object in user.get_6_communities %}
     <div class="card border-top">
         <div class="card-body">
             <div class="media">

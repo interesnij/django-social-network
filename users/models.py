@@ -859,6 +859,11 @@ class User(AbstractUser):
         frends_ids = [user['friend'] for user in frends_query][:6]
         return frends_ids
 
+    def is_have_friends(self):
+        from frends.models import Connect
+
+        return Connect.objects.filter(user_id=self.pk).exists()
+
     def get_6_populate_friends(self):
         query = []
         for frend_id in self.get_6_populate_friends_ids():
@@ -877,6 +882,11 @@ class User(AbstractUser):
             return self.get_6_populate_friends()
         except:
             return self.get_6_default_connection()
+
+    def is_have_communities(self):
+        from communities.models import Community
+
+        return Community.objects.filter(memberships__user_id=self.pk).exists()
 
     def get_6_default_communities(self):
         from communities.models import Community

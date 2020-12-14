@@ -303,9 +303,7 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['communities'] = self.user.get_6_communities()
-        context['photo_album'] = self.user.get_or_create_photo_album()
+        context['user'], context['photo_album'] = self.user, self.user.get_or_create_photo_album()
         context['video_album'] = self.user.get_or_create_video_album()
         context['playlist'] = self.user.get_or_create_playlist()
         context['docs_list'] = self.user.get_or_create_doc_list()

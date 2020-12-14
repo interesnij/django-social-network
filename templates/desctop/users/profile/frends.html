@@ -1,5 +1,5 @@
 
-{% if user.get_6_friends %}
+{% if user.is_have_friends %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'frends' pk=user.pk %}" class="ajax">
