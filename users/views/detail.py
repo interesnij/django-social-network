@@ -302,12 +302,6 @@ class ProfileUserView(TemplateView):
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileUserView, self).get_context_data(**kwargs)
-        context['user'], context['photo_album'] = self.user, self.user.get_or_create_photo_album()
-        context['video_album'] = self.user.get_or_create_video_album()
-        context['playlist'] = self.user.get_or_create_playlist()
-        context['docs_list'] = self.user.get_or_create_doc_list()
-        context['good_album'] = self.user.get_or_create_good_album()
-        context['get_buttons_block'] = self.get_buttons_block
-        context['common_frends'] = self.common_frends
-        return context
+        c = super(ProfileUserView, self).get_context_data(**kwargs)
+        c['user'], c['photo_album'], c['video_album'], c['playlist'], c['docs_list'], c['good_album'], c['get_buttons_block'], c['common_frends'] = self.user, self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album(), self.get_buttons_block, self.common_frends
+        return c
