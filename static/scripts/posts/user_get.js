@@ -174,37 +174,37 @@ on('#ajax', 'click', '.u_comment_article', function() {
 });
 
 on('#ajax', 'click', '.u_select_photo', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_img_load/', loader)
 });
 on('#ajax', 'click', '.u_select_video', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_video_load/', loader)
 });
 on('#ajax', 'click', '.u_select_music', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_music_load/', loader)
 });
 on('#ajax', 'click', '.u_select_doc', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_doc_load/', loader)
 });
 on('#ajax', 'click', '.u_select_good', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_good_load/', loader)
 });
 on('#ajax', 'click', '.u_select_article', function() {
-  this.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_article_load/', loader)
