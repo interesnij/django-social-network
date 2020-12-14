@@ -240,18 +240,13 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
         import re
-
-        user_pk = self.kwargs["pk"]
-
-        self.user, user_agent, MOBILE_AGENT_RE, r_user_pk = User.objects.get(pk=user_pk), \
-                                                                request.META['HTTP_USER_AGENT'], \
-                                                                re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), \
-                                                                request.user.pk
+        
+        self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]),  request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), self.kwargs["pk"], request.user.pk
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
-            elif int(user_pk) == int(r_user_pk):
+            elif int(user_pk) == r_user_pk:
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/you_suspended.html"
                 elif self.user.is_blocked():
