@@ -1,4 +1,3 @@
-
 from users.models import User
 from django.views import View
 from django.http import HttpResponse
@@ -12,7 +11,8 @@ class FrendsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		#self.common_users=self.user.get_common_friends_of_user(request.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
@@ -31,7 +31,8 @@ class OnlineFrendsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -47,7 +48,8 @@ class CommonFrendsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("frends/frends_common/frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("frends/frends_common/frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

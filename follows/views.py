@@ -13,7 +13,8 @@ class FollowsView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
