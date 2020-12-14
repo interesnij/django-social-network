@@ -7,7 +7,7 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-
+{{ r_user_pk }} | {{ user_pk }}
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
@@ -50,7 +50,7 @@
   <div class="row no-gutters">
     <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
       <span class="btn btn-sm custom_color border user_send_page_message" data-pk="{{ user.pk }}" style="width: -webkit-fill-available">Сообщение</span>
-    </div> 
+    </div>
     <div style="flex: 0 0 60%;max-width:60%;padding:5px;">
       {% include get_buttons_block %}
     </div>
