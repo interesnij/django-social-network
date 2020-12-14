@@ -312,6 +312,6 @@ class ProfileUserView(TemplateView):
         context['good_album'] = self.user.get_or_create_good_album()
         context['get_buttons_block'] = self.get_buttons_block
         context['common_frends'] = self.common_frends
-        context['r_user_pk'] = self.r_user_pk
-        context['user_pk'] = self.user_pk
+        context['r_user_pk'] = r_user_pk
+        context['user_pk'] = user_pk
         return context
