@@ -51,7 +51,7 @@
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
     <ul class="date-list" style="width:max-content">
-      {% for object in user.get_all_post_lists %}
+      {% for object in user.get_post_lists %}
         {% if object.is_main_list %}
         <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
           <div class="media">

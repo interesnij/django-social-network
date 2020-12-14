@@ -7,7 +7,7 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
- 
+
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
 <div class="user_page">
   <div class="card mb-3" style="padding:10px">
@@ -65,7 +65,7 @@
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
     <ul class="date-list" style="width:max-content">
-      {% for object in user.get_all_post_lists %}
+      {% for object in user.get_post_lists %}
         {% if object.is_main_list %}
         <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
           <div class="media">
