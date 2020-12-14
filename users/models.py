@@ -1007,7 +1007,8 @@ class User(AbstractUser):
     def get_post_lists(self):
         from posts.models import PostList
 
-        lists_query = Q(creator_id=self.id, community=None, type="LI")
+        lists_query = Q(creator_id=self.id, community=None)
+        lists_query.add(~Q(Q(type="DE")|Q(type="PR")), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
 
