@@ -1,5 +1,3 @@
-from django.views import View
-from music.models import *
 from django.views.generic import ListView
 from common.template.user import get_settings_template
 from common.template.community import get_community_moders_template
@@ -47,7 +45,8 @@ class CommunityNotifyView(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.community, self.user, self.template_name, self.all_notify = Community.objects.get(pk=self.kwargs["pk"]), request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
         self.community.read_community_notify(self.user.pk)
         return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
