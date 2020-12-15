@@ -129,7 +129,7 @@ class UserMusic(ListView):
         from music.models import SoundList
 
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['playlist'] = self.user, SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
+        c['user'], c['playlist'] = self.user, SoundList.objects.get(creator_id=self.kwargs["pk"], community=None, type=SoundList.MAIN)
         return c
 
     def get_queryset(self):
