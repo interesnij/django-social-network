@@ -122,7 +122,6 @@ class UserCreatePlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("music/music_create/u_create_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
@@ -130,7 +129,6 @@ class UserEditPlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserEditPlaylistWindow,self).get(request,*args,**kwargs)
@@ -151,7 +149,6 @@ class UserPlaylistCreate(View):
 
     def post(self,request,*args,**kwargs):
         form_post = PlaylistForm(request.POST)
-        user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == user:
             new_list = form_post.save(commit=False)
@@ -172,7 +169,7 @@ class UserPlaylistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.user = request.user
         self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPlaylistEdit,self).get(request,*args,**kwargs)
 
@@ -185,8 +182,7 @@ class UserPlaylistEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PlaylistForm(request.POST,instance=self.list)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
@@ -196,9 +192,8 @@ class UserPlaylistEdit(TemplateView):
 
 class UserPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == SoundList.LIST:
+        if request.is_ajax() and list.type == SoundList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -207,9 +202,8 @@ class UserPlaylistDelete(View):
 
 class UserPlaylistAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
+        if request.is_ajax():
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])
             return HttpResponse()

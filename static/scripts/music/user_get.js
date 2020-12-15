@@ -16,10 +16,9 @@ on('#ajax', 'click', '.u_music_list_create_window', function() {
 });
 on('#ajax', 'click', '.u_music_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/music/user_progs/edit_list_window/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_music_repost', function() {
