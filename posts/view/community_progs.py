@@ -262,3 +262,88 @@ def post_update_interactions(request):
     item = Post.objects.get(uuid=data_point)
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
+
+
+class CommunityPostListCreate(TemplateView):
+    """
+    создание списка записей сообщества
+    """
+    template_name, form = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("posts/post_user/add_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+        return super(UserPostListCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommunityPostListCreate,self).get_context_data(**kwargs)
+        context["form"] = PostListForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = CommunityListForm(request.POST)
+        if request.is_ajax() and self.form.is_valid():
+            from common.template.user import render_for_platform
+
+            list = self.form.save(commit=False)
+            list.creator = request.user
+            list.community = self.c
+            list.type = PostList.LIST
+            list.save()
+            return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': list})
+        else:
+            return HttpResponse()
+        return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
+
+
+class CommunityPostListEdit(TemplateView):
+    """
+    изменение списка записей сообщества
+    """
+    template_name, form = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("posts/post_user/edit_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+        return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPostListEdit,self).get_context_data(**kwargs)
+        context["list"] = PostList.objects.get(pk=self.kwargs["list_pk"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        self.form = PostListForm(request.POST,instance=self.list)
+        if request.is_ajax() and self.form.is_valid():
+            list = self.form.save(commit=False)
+            self.form.save()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
+
+
+class CommunityPostListDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and list.type == PostList.LIST and request.user.is_staff_of_community(self.kwargs["pk"]):
+            list.type = PostList.DELETED
+            list.save(update_fields=['type'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityPostListAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            list.type = PostList.LIST
+            list.save(update_fields=['type'])
+            return HttpResponse()
+        else:
+            raise Http404
