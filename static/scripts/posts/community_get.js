@@ -20,7 +20,7 @@ on('#ajax', 'click', '.c_post_list_change', function() {
     };
     block = parent.parentElement.parentElement.nextElementSibling;
     list_block_load(block, ".post_stream", "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
-    this.classList.remove("pointer", "c_post_list_change");
+    this.classList.remove("pointer", "c_post_list_change"); 
     this.classList.add("tab_active");
   }
 });
