@@ -150,7 +150,7 @@ class UserPlaylistCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = PlaylistForm(request.POST)
 
-        if request.is_ajax() and form_post.is_valid() and request.user == user:
+        if request.is_ajax() and form_post.is_valid():
             new_list = form_post.save(commit=False)
             new_list.creator = request.user
             if not new_list.order:
