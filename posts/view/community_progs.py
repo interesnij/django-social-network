@@ -274,7 +274,7 @@ class CommunityPostListCreate(TemplateView):
         from common.template.community import get_community_manage_template
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("posts/post_user/add_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("posts/post_community/add_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -308,7 +308,7 @@ class CommunityPostListEdit(TemplateView):
         from common.template.community import get_community_manage_template
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("posts/post_user/edit_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
