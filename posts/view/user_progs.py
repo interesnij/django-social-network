@@ -332,6 +332,7 @@ class UserPostListEdit(TemplateView):
 
 class UserPostListDelete(View):
     def get(self,request,*args,**kwargs):
+        list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.type == PostList.LIST and list.creator.pk == request.user.pk:
             list.type = PostList.DELETED
             list.save(update_fields=['type'])
