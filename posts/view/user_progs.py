@@ -321,7 +321,7 @@ class UserPostListEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
         self.form = PostListForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and self.kwargs["pk"] == request.user.pk:
+        if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
