@@ -59,7 +59,7 @@ def get_template_community_photo(community, folder, template, request_user, user
 
 def get_permission_community_photo(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
-    
+
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():
@@ -188,6 +188,8 @@ def get_permission_user_photo(user, folder, template, request_user, user_agent):
     return template_name
 
 def get_permission_user_photo_detail(user, photo, folder, template, request_user, user_agent):
+    from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif user.is_blocked():
