@@ -15,25 +15,7 @@
         Опции
     </button>
     <div class="dropdown-menu">
-        <span>
-          <a class="dropdown-item u_post_wall_remove pointer">Удалить</a>
-        </span>
-        <a class="dropdown-item u_post_wall_remove pointer">Редактировать</a>
-        <a class="dropdown-item u_post_fixed pointer">Закрепить</a>
-        <span>
-          {% if object.comments_enabled %}
-            <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
-          {% else %}
-            <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
-          {% endif %}
-        </span>
-        <span>
-          {% if object.votes_on %}
-            <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
-          {% else %}
-            <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
-          {% endif %}
-        </span>
+        <span class="dropdown-item post_delete_window">♦ Удалить</span>
         <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
           <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
         </span>
