@@ -10,6 +10,21 @@ on('#ajax', 'click', '.c_edit_post_list', function() {
   open_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", loader)
 });
 
+on('#ajax', 'click', '.c_post_list_change', function() {
+  if (!this.classList.contains("tab_active")){
+    parent = this.parentElement;
+    list = parent.querySelectorAll(".list");
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.remove("tab_active");
+      list[i].classList.add("pointer", "c_post_list_change");
+    };
+    block = parent.parentElement.parentElement.nextElementSibling;
+    list_block_load(block, ".post_stream", "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    this.classList.remove("pointer", "c_post_list_change");
+    this.classList.add("tab_active");
+  }
+});
+
 on('#ajax', 'click', '#c_repost_for_community', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
