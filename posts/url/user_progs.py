@@ -27,8 +27,8 @@ urlpatterns = [
 	url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', UserOnVotesPost.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesPost.as_view()),
 
-	url(r'^add_list/(?P<pk>\d+)/$', UserPostListCreate.as_view()),
-    url(r'^edit_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UserPostListEdit.as_view()),
-    url(r'^delete_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UserPostListDelete.as_view()),
-    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UserPostListAbortDelete.as_view()),
+	url(r'^add_list/$', UserPostListCreate.as_view()),
+    url(r'^edit_list/(?P<list_pk>\d+)/$', UserPostListEdit.as_view()),
+    url(r'^delete_list/(?P<list_pk>\d+)/$', UserPostListDelete.as_view()),
+    url(r'^abort_delete_list/(?P<list_pk>\d+)/$', UserPostListAbortDelete.as_view()),
 ]
