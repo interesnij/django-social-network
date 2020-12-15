@@ -1,6 +1,6 @@
 function get_post_view() {
-    if (document.querySelector(".post_stream")) {
-        container = document.querySelector(".post_stream");
+    if (document.body.querySelector(".post_stream")) {
+        container = document.body.querySelector(".post_stream");
         link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
@@ -14,9 +14,7 @@ function get_post_view() {
                         } else if (!list[i].querySelector(".reklama")) {
                             link.open('GET', '/posts/user_progs/post_view/' + uuid + "/", true)
                         }
-                    } catch {
-                        null
-                    }
+                    } catch {null}
                     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                     link.send();
                     list[i].classList.add("showed");
@@ -33,7 +31,7 @@ function scrolled(link, block_id, target) {
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
-        try {
+        //try {
             _block = document.body.querySelector(block_id)
 
             box = _block.querySelector('.last');
@@ -47,9 +45,7 @@ function scrolled(link, block_id, target) {
             if (target == 1) {
                 get_post_view()
             }
-        } catch {
-            return
-        }
+        //} catch {return}
     }
 }
 page = 2;
