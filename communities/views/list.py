@@ -327,10 +327,9 @@ class CommunityPostsListView(ListView):
 		return super(CommunityPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPostsListView,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['object'] = self.c.get_fixed_post()
-		return context
+		c = super(CommunityPostsListView,self).get_context_data(**kwargs)
+		c['community'], c['object'], c['list'] = self.c, self.c.get_fixed_post(), self.list
+		return c
 
 	def get_queryset(self):
 		posts_list = self.posts_list
