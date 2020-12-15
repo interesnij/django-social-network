@@ -18,7 +18,7 @@ class UserPostView(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(UserPostView,self).get_context_data(**kwargs)
-        c["object"], c["user"], c["next"], c["prev"] = self.post, self.list.creator, self.posts.filter(pk__gt=self.post.pk, is_delete=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_delete=True).order_by('-pk').first()
+        c["object"], c["user"], c["next"], c["prev"] = self.post, self.list.creator, self.posts.filter(pk__gt=self.post.pk, is_deleted=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=True).order_by('-pk').first()
         return c
 
 class UserGallery(TemplateView):
