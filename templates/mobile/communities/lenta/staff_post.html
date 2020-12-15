@@ -14,25 +14,7 @@
         Опции
     </button>
     <div class="dropdown-menu">
-      <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
-      <span class="dropdown-item">Редактировать</span>
-      <span class="fixed_block">
-        <span class="dropdown-item c_post_fixed">Закрепить</span>
-      </span>
-      <span>
-        {% if object.comments_enabled %}
-          <span class="dropdown-item c_post_off_comment">Выключить комментарии</span>
-        {% else %}
-          <span class="dropdown-item c_post_on_comment">Включить комментарии</span>
-        {% endif %}
-      </span>
-      <span>
-        {% if object.votes_on %}
-          <span class="dropdown-item c_post_off_votes">Выкл. реакции</span>
-        {% else %}
-          <span class="dropdown-item c_post_on_votes">Вкл. реакции</span>
-        {% endif %}
-      </span>
+      <span class="dropdown-item post_delete_window">♦ Удалить</span>
       <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
         <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'community_item_detail' uuid=object.uuid %}</textarea>
       </span>
@@ -40,7 +22,6 @@
         <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
         <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
       </span>
-      <span class="dropdown-item item_stat_f">Статистика записи</span>
     </div>
   </div>
   <div class="col" style="padding:5px;">
