@@ -43,7 +43,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   container = this.parentElement;
   uuid = container.getAttribute('data-uuid');
   console.log(container.parentElement.parentElement);
-  container.parentElement.parentElement.getAttribute('list-pk') ? pk = container.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
+  container.parentElement.parentElement.getAttribute('list-pk') ? pk = container.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
