@@ -33,7 +33,7 @@ function scrolled(link, block_id, target) {
     onscroll = function() {
         //try {
             _block = document.body.querySelector(block_id);
-            console.log(block_id)
+            console.log(_block)
 
             box = _block.querySelector('.last');
             if (box && box.classList.contains("last")) {
