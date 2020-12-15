@@ -278,9 +278,9 @@ class CommunityPostListCreate(TemplateView):
         return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityPostListCreate,self).get_context_data(**kwargs)
-        context["form"], context["community"] = PostListForm(), self.c
-        return context
+        c = super(CommunityPostListCreate,self).get_context_data(**kwargs)
+        c["form"], c["community"] = PostListForm(), self.c
+        return c
 
     def post(self,request,*args,**kwargs):
         self.form = PostListForm(request.POST)
@@ -289,7 +289,7 @@ class CommunityPostListCreate(TemplateView):
 
             list = self.form.save(commit=False)
             list.creator = request.user
-            list.community = self.c
+            list.community_id = self.kwargs["pk"]
             list.type = PostList.LIST
             list.save()
             return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': list})
