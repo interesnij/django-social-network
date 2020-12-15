@@ -9,6 +9,7 @@ class UserPostView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.template.post import get_template_user_post
+        from posts.models import Post, PostList
 
         self.list = PostList.objects.get(pk=self.kwargs["pk"])
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -16,8 +17,6 @@ class UserPostView(TemplateView):
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from posts.models import Post
-
         c = super(UserPostView,self).get_context_data(**kwargs)
         c["object"], c["user"], c["next"], c["prev"] = post, self.list.user, self.posts.filter(pk__gt=self.post.pk, is_delete=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_delete=True).order_by('-pk').first()
         return c
