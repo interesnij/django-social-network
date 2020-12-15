@@ -17,7 +17,7 @@ class PostCommunity(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(PostCommunity,self).get_context_data(**kwargs)
-        c["object"], c["community"], c["next"], c["prev"] = self.post, self.list.community, self.posts.filter(pk__gt=self.post.pk, is_deleted=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=True).order_by('-pk').first()
+        c["object"], c["community"], c["next"], c["prev"] = self.post, self.list.community, self.posts.filter(pk__gt=self.post.pk, is_deleted=False).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=False).order_by('-pk').first()
         return c
 
 

@@ -639,11 +639,11 @@ on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
 });
-on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
+on('#ajax', 'click', '.post_fullscreen_hide_2', function() { 
   parent = this.parentElement.parentElement.parentElement;
   parent.parentElement.style.display = "none";
   parent.innerHTML=""
-}); 
+});
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
 });

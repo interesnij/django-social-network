@@ -113,8 +113,8 @@ class CommunityDetailAvatar(TemplateView):
         context = super(CommunityDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.community
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["album"] = self.album
         return context
 
@@ -143,7 +143,7 @@ class CommunityFirstAvatar(TemplateView):
         context = super(CommunityFirstAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.community
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["album"] = self.album
         return context
 
@@ -168,8 +168,8 @@ class CommunityPhoto(TemplateView):
         context = super(CommunityPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.album.community
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["album"] = self.album
         return context
@@ -199,8 +199,8 @@ class CommunityAlbumPhoto(TemplateView):
         context["object"] = self.photo
         context["community"] = self.album.community
         context["album"] = self.album
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
@@ -234,8 +234,8 @@ class CommunityWallPhoto(TemplateView):
         context["community"] = self.community
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["album"] = self.album
         return context
 
