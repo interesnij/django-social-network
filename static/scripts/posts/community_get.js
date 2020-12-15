@@ -37,7 +37,7 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
 })
 
 on('#ajax', 'click', '.c_fullscreen', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
+  uuid = this.parentElement.getAttribute('data-uuid');
   this.parentElement.parentElement.parentElement.getAttribute('list-pk') ? pk = this.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
