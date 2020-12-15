@@ -2,6 +2,10 @@ on('#ajax', 'click', '.u_add_post_list', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/posts/user_progs/add_list/", loader)
 });
+on('#ajax', 'click', '.u_edit_post_list', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/posts/user_progs/edit_list/", loader)
+});
 
 on('#ajax', 'click', '.u_post_list_change', function() {
   if (!this.classList.contains("tab_active")){
