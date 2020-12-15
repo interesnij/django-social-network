@@ -128,9 +128,9 @@ class UserMusic(ListView):
     def get_context_data(self,**kwargs):
         from music.models import SoundList
 
-        context = super(UserMusic,self).get_context_data(**kwargs)
+        c = super(UserMusic,self).get_context_data(**kwargs)
         c['user'], c['playlist'] = self.user, SoundList.objects.get(creator_id=self.user.pk, community=None, type=SoundList.MAIN)
-        return context
+        return c
 
     def get_queryset(self):
         music_list = self.playlist.playlist_too().order_by('-created_at')
