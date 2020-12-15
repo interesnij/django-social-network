@@ -468,6 +468,19 @@ function list_load(block, link) {
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
 }
+function list_block_load(target_block, response_block, link) {
+  // грузим блок response_block по ссылке link в блок target_block
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  request.open( 'GET', link, true );
+  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  request.onreadystatechange = function () {
+    if ( request.readyState == 4 && request.status == 200 ){
+        elem_ = document.createElement('span');
+        elem_.innerHTML = request.responseText;
+       target_block.innerHTML = elem_.querySelector(response_block).innerHTML
+    }};
+    request.send( null );
+}
 
 function ajax_get_reload(url) {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
