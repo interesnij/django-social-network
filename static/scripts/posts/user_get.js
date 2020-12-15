@@ -40,7 +40,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
-  container = this.parentElement;
+  container = this.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
   container.parentElement.getAttribute('list-pk') ? pk = container.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
