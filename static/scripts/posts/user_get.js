@@ -5,7 +5,7 @@ on('#ajax', 'click', '.u_add_post_list', function() {
 on('#ajax', 'click', '.u_edit_post_list', function() {
   list_pk = this.parentElement.parentElement.getAttribute("list-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/posts/user_progs/edit_list/" + pk + "/", loader)
+  open_fullscreen("/posts/user_progs/edit_list/" + list_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_post_list_change', function() {
