@@ -42,7 +42,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 on('#ajax', 'click', '.fullscreen', function() {
   container = this.parentElement;
   uuid = container.getAttribute('data-uuid');
-  container.parentElement.querySelector(".list_pk") ? pk = container.parentElement.querySelector(".list_pk").getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
+  container.parentElement.getAttribute('list-pk') ? pk = container.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
