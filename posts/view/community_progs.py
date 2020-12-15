@@ -279,7 +279,7 @@ class CommunityPostListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(CommunityPostListCreate,self).get_context_data(**kwargs)
-        context["form"] = PostListForm()
+        context["form"], context["community"] = PostListForm(), self.c
         return context
 
     def post(self,request,*args,**kwargs):
