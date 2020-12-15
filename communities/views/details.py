@@ -8,22 +8,17 @@ class PostCommunity(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.template.post import get_template_community_post
-        from posts.models import Post
+        from posts.models import Post, PostList
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.items = self.community.get_posts()
-
-        self.template_name = get_template_community_post(self.community, "communities/lenta/", "item.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.posts = self.list.get_posts()
+        self.template_name = get_template_community_post(self.list.community, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PostCommunity,self).get_context_data(**kwargs)
-        context["object"] = self.item
-        context["community"] = self.community
-        context["next"] = self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-        context["prev"] = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        return context
+        c = super(PostCommunity,self).get_context_data(**kwargs)
+        c["object"], c["community"], c["next"], c["prev"] = self.post, self.list.community, self.posts.filter(pk__gt=self.post.pk, is_deleted=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=True).order_by('-pk').first()
+        return c
 
 
 class CommunityDetail(TemplateView):
