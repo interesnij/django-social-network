@@ -1,6 +1,12 @@
 <div id="lenta_container">
 
     <span class="post_stream stream post_container">
+      {% if list.is_user_list %}
+        <a class="u_post_list_edit_window pointer mb-3">изменить</a>
+          &nbsp;
+        <a class="u_post_list_delete pointer mb-3">удалить</a>
+      {% endif %}
+
       {% if object %}
         {% include 'mobile/users/lenta/my_fixed_post.html' %}
       {% endif %}

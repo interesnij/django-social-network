@@ -51,12 +51,17 @@ class PostList(models.Model):
 
     def is_main_list(self):
         return self.type == self.MAIN
-    def is_user_list(self):
+    def is_list_list(self):
         return self.type == self.LIST
     def is_deleted_list(self):
         return self.type == self.DELETED
     def is_private_list(self):
         return self.type == self.PRIVATE
+    def is_user_list(self):
+        if self.type == self.LIST or self.type == self.PRIVATE:
+            return True
+        else:
+            return False
 
     class Meta:
         verbose_name = "список записей"
