@@ -32,7 +32,8 @@ function scrolled(link, block_id, target) {
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
         //try {
-            _block = document.body.querySelector(block_id)
+            _block = document.body.querySelector(block_id);
+            console.log(block_id)
 
             box = _block.querySelector('.last');
             if (box && box.classList.contains("last")) {
