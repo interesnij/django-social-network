@@ -215,14 +215,13 @@ class CommunityMusic(ListView):
 		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-		self.c, Community.objects.get(pk=self.kwargs["pk"])
+		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist, self.template_name = SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN), get_template_community_music(self.c, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityMusic,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['playlist'] = self.playlist
-		return context
+		c = super(CommunityMusic,self).get_context_data(**kwargs)
+		c['community'], c['playlist'] = self.c, self.playlist
+		return c
 
 	def get_queryset(self):
 		music_list = self.c.get_music()
@@ -243,10 +242,9 @@ class CommunityMusicList(ListView):
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityMusicList,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['playlist'] = self.playlist
-		return context
+		c = super(CommunityMusicList,self).get_context_data(**kwargs)
+		c['community'], c['playlist'] = self.c, self.playlist
+		return c
 
 	def get_queryset(self):
 		playlist = self.playlist.playlist_too()
@@ -319,8 +317,13 @@ class CommunityPostsListView(ListView):
 		from common.template.post import get_permission_community_post
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if (not request.user.is_staff_of_community(self.c.pk) and self.list.is_private_list()) or not request.is_ajax():
-			raise Http404
+		if self.list.is_private_list():
+			if request.user.is_anonymous:
+				raise Http404
+			elif not request.user.is_staff_of_community(self.c.pk):
+				raise Http404
+			else:
+				self.posts_list = self.list.get_posts()
 		else:
 			self.posts_list = self.list.get_posts()
 		self.template_name = get_permission_community_post(self.c, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])

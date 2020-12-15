@@ -110,6 +110,7 @@ class CommunityGallery(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from gallery.models import Album
+        from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.album, self.albums_list, self.template_name = Album.objects.get(community_id=self.c.pk, type=Album.MAIN), self.c.get_albums().order_by('-created'), get_template_community_photo(self.c, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
