@@ -11,14 +11,14 @@ class UserPostView(TemplateView):
         from common.template.post import get_template_user_post
         from posts.models import Post, PostList
 
-        self.list = PostList.objects.get(pk=self.kwargs["pk"])
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.posts, self.template_name = self.list.get_posts(), get_template_user_post(self.list.creator, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.user, self.posts = self.list.creator, self.list.get_posts()
+        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["user"], c["next"], c["prev"] = self.post, self.list, self.list.creator, \
+        c["object"], c["list"], c["user"], c["next"], c["prev"] = self.post, self.list, self.user, \
         self.posts.filter(pk__gt=self.post.pk, is_deleted=False).first(), \
         self.posts.filter(pk__lt=self.post.pk, is_deleted=False).first()
         return c
