@@ -515,21 +515,27 @@ if_list(document.getElementById('ajax'));
 
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
-function scrolled(link, block_id, target){
-	// работа с прокруткой:
-	// 1. Ссылка на страницу с пагинацией
-	// 2. id блока, куда нужно грузить следующие страницы
-	// 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
-	onscroll = function(){
-		_block = document.body.querySelector(block_id);
-		box = _block.querySelector('.last');
-		if(box && box.classList.contains("last")){
-				inViewport = elementInViewport(box);
-				if(inViewport){
-					box.classList.remove("last");
-					paginate(link, block_id);
-		}};
-	}
+function scrolled(link, block_id, target) {
+    // работа с прокруткой:
+    // 1. Ссылка на страницу с пагинацией
+    // 2. id блока, куда нужно грузить следующие страницы
+    // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
+    onscroll = function() {
+        try {
+            _block = document.body.querySelector(block_id);
+            box = _block.querySelector('.last');
+            if (box && box.classList.contains("last")) {
+                inViewport = elementInViewport(box);
+                if (inViewport) {
+                    box.classList.remove("last");
+                    paginate(link, block_id);
+                }
+            };
+            if (target == 1) {
+                get_post_view()
+            }
+        } catch {return}
+    }
 }
 page = 2;
 loaded = false;
