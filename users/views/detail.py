@@ -10,15 +10,16 @@ class UserPostView(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.post import get_template_user_post
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.posts, self.template_name = self.user.get_posts(), get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list = PostList.objects.get(pk=self.kwargs["pk"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.posts, self.template_name = self.list.get_posts(), get_template_user_post(self.list.creator, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from posts.models import Post
 
         c = super(UserPostView,self).get_context_data(**kwargs)
-        c["object"], c["user"], c["next"], c["prev"] = Post.objects.get(uuid=self.kwargs["uuid"]), self.user, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
+        c["object"], c["user"], c["next"], c["prev"] = post, self.list.user, self.posts.filter(pk__gt=self.post.pk, is_delete=True).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_delete=True).order_by('-pk').first()
         return c
 
 class UserGallery(TemplateView):
