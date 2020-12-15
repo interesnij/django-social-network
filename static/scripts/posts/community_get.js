@@ -1,3 +1,15 @@
+on('#ajax', 'click', '.c_add_post_list', function() {
+  loader = document.getElementById("create_loader");
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  open_fullscreen("/posts/community_progs/add_list/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.c_edit_post_list', function() {
+  list_pk = this.parentElement.parentElement.getAttribute("list-pk");
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", loader)
+});
+
 on('#ajax', 'click', '#c_repost_for_community', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
