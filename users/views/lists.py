@@ -174,10 +174,9 @@ class UserPostsListView(ListView):
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserPostsListView,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		context['object'] = self.user.get_fixed_post()
-		return context
+		c = super(UserPostsListView,self).get_context_data(**kwargs)
+		c['user'], c['object'], c['list'] = self.user, self.user.get_fixed_post(), self.list
+		return c
 
 	def get_queryset(self):
 		posts_list = self.posts_list
