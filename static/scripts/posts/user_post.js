@@ -106,7 +106,7 @@ on('#ajax', 'click', '#u_edit_post_list_btn', function() {
     ajax_link.send(form_data);
 });
 
-on('#ajax', 'click', '.u_post_list_delete', function() {
+on('#ajax', 'click', '.u_delete_post_list', function() {
   _this = this;
   list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
   block = _this.parentElement.nextElementSibling;
@@ -118,14 +118,14 @@ on('#ajax', 'click', '.u_post_list_delete', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         block.style.display = "none";
         _this.innerHTML = "Отменить удаление";
-        _this.classList.remove("u_post_list_delete");
-        _this.classList.add("u_post_list_abort_delete");
+        _this.classList.remove("u_delete_post_list");
+        _this.classList.add("u_abort_delete_post_list");
         toast_success("Список удален");
       }
     }
     ajax_link.send();
 });
-on('#ajax', 'click', '.u_post_list_abort_delete', function() {
+on('#ajax', 'click', '.u_abort_delete_post_list', function() {
   _this = this;
   list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
   block = _this.parentElement.nextElementSibling;
@@ -137,8 +137,8 @@ on('#ajax', 'click', '.u_post_list_abort_delete', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         block.style.display = "block";
         _this.innerHTML = "удалить список";
-        _this.classList.remove("u_post_list_delete");
-        _this.classList.add("u_post_list_abort_delete");
+        _this.classList.remove("u_delete_post_list");
+        _this.classList.add("u_abort_delete_post_list");
         toast_success("Список восстановлен");
       }
     }
