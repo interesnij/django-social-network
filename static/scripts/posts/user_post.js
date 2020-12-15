@@ -101,7 +101,8 @@ on('#ajax', 'click', '#u_edit_post_list_btn', function() {
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
-        document.body.querySelector(".list_name").innerHTML = name;
+        title = document.body.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
+        title.querySelector(".list_name").innerHTML = name;
         close_create_window();
         toast_success("Список изменен")
       }
