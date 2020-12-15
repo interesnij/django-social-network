@@ -318,9 +318,7 @@ class CommunityPostsListView(ListView):
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if self.list.is_private_list():
-			if request.user.is_anonymous:
-				raise Http404
-			elif not request.user.is_staff_of_community(self.c.pk):
+			if request.user.is_anonymous or not request.user.is_staff_of_community(self.c.pk):
 				raise Http404
 			else:
 				self.posts_list = self.list.get_posts()
