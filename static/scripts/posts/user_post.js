@@ -141,8 +141,8 @@ on('#ajax', 'click', '.u_abort_delete_post_list', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         block.style.display = "block";
         _this.innerHTML = "удалить список";
-        _this.classList.remove("u_delete_post_list");
-        _this.classList.add("u_abort_delete_post_list");
+        _this.classList.remove("u_abort_delete_post_list");
+        _this.classList.add("u_delete_post_list");
         toast_success("Список восстановлен");
       }
     }
