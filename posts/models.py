@@ -18,7 +18,7 @@ class PostList(models.Model):
         (MAIN, 'Основной список'),
         (LIST, 'Пользовательский список'),
 		(PRIVATE, 'Приватный список'),
-		(DELETED, 'Удаленный список'),
+		(DELETED, 'Архивный список'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
