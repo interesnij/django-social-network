@@ -141,6 +141,12 @@ on('#ajax', 'click', '.item_stat_f', function() {
   open_fullscreen("/stat/item/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  parent.parentElement.style.display = "none";
+  parent.innerHTML=""
+});
+
 on('#ajax', 'click', '.article_fullscreen_hide', function() {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
 on('#ajax', 'click', '.photo_fullscreen_hide', function() {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
 on('#ajax', 'click', '.votes_fullscreen_hide', function() {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
