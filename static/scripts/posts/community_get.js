@@ -20,7 +20,7 @@ on('#ajax', 'click', '.c_post_list_change', function() {
     };
     block = parent.parentElement.parentElement.nextElementSibling;
     list_block_load(block, ".post_stream", "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
-    this.classList.remove("pointer", "c_post_list_change"); 
+    this.classList.remove("pointer", "c_post_list_change");
     this.classList.add("tab_active");
   }
 });
@@ -38,7 +38,7 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
 
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
+  container.parentElement.querySelector(".list_pk") ? pk = container.parentElement.querySelector(".list_pk").getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
