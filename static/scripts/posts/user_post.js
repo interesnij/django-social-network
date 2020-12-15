@@ -83,6 +83,68 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#u_edit_post_list_btn', function() {
+  form = document.body.querySelector("#post_list_form");
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+  pk = form.getAttribute("data-pk");
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/posts/user_progs/edit_list/" + pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        name = form.querySelector('#id_name').value;
+        document.body.querySelector(".list_name").innerHTML = name;
+        close_create_window();
+        toast_success("Список изменен")
+      }
+    }
+    ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.u_post_list_delete', function() {
+  _this = this;
+  list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
+  block = _this.parentElement.nextElementSibling;
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/posts/user_progs/delete_list/" + list_pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        block.style.display = "none";
+        _this.innerHTML = "Отменить удаление";
+        _this.classList.remove("u_post_list_delete");
+        _this.classList.add("u_post_list_abort_delete");
+        toast_success("Список удален");
+      }
+    }
+    ajax_link.send();
+});
+on('#ajax', 'click', '.u_post_list_abort_delete', function() {
+  _this = this;
+  list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
+  block = _this.parentElement.nextElementSibling;
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/posts/user_progs/abort_delete_list/" + list_pk + "/", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        block.style.display = "block";
+        _this.innerHTML = "удалить список";
+        _this.classList.remove("u_post_list_delete");
+        _this.classList.add("u_post_list_abort_delete");
+        toast_success("Список восстановлен");
+      }
+    }
+    ajax_link.send();
+});
+
 on('#ajax', 'click', '#article_post', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.forms.new_post);
