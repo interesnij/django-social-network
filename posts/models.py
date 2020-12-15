@@ -112,6 +112,15 @@ class Post(models.Model):
     id = models.BigAutoField(primary_key=True)
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
 
+    class Meta:
+        ordering = ["-created"]
+        verbose_name = "Запись"
+        verbose_name_plural = "Записи"
+        indexes = (BrinIndex(fields=['created']),)
+
+    def __str__(self):
+        return self.creator.get_full_name()
+
     @classmethod
     def create_post(cls, creator, text, category, lists, community, parent, comments_enabled, is_signature, votes_on, status):
         if not lists:
@@ -143,15 +152,6 @@ class Post(models.Model):
     def create_parent_post(cls, creator, community, status):
         post = cls.objects.create(creator=creator, community=community, status=status, )
         return post
-
-    class Meta:
-        ordering = ["-created"]
-        verbose_name = "Запись"
-        verbose_name_plural = "Записи"
-        indexes = (BrinIndex(fields=['created']),)
-
-    def __str__(self):
-        return self.creator.get_full_name()
 
     def get_parent_attach_photos(self):
         return self.parent.item_photo.all()
