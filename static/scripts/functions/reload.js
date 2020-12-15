@@ -31,10 +31,8 @@ function scrolled(link, block_id, target) {
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
-        //try {
+        try {
             _block = document.body.querySelector(block_id);
-            console.log(_block)
-
             box = _block.querySelector('.last');
             if (box && box.classList.contains("last")) {
                 inViewport = elementInViewport(box);
@@ -46,7 +44,7 @@ function scrolled(link, block_id, target) {
             if (target == 1) {
                 get_post_view()
             }
-        //} catch {return}
+        } catch {return}
     }
 }
 page = 2;
