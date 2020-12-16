@@ -236,7 +236,7 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
     p.innerHTML = "Запись удалена. <span class='u_post_wall_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
-    block = document.body.querySelector(".post_container"),
+    block = document.body.querySelector(".post_stream"),
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
     item.parentElement.insertBefore(p, item),
     item.style.display = "none")

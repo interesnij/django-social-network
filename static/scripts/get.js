@@ -116,7 +116,7 @@ on('#ajax', 'click', '.item_stat_f', function() {
 });
 
 on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
-  parent = this.parentElement.parentElement.parentElement;
+  parent = this.parentElement.parentElement.parentElement.parentElement;
   parent.parentElement.style.display = "none";
   parent.innerHTML=""
 });
