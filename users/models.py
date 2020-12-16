@@ -1206,7 +1206,7 @@ class User(AbstractUser):
     def get_music_count(self):
         count = 0
         for list in self.get_playlists():
-            count += list.count_tracks
+            count += list.count_tracks()
         return count
 
     def get_last_music(self):
