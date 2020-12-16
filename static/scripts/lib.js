@@ -1,6 +1,6 @@
 function loadScripts( src ) {
     var script = document.createElement("SCRIPT"),
-        head = document.getElementsByTagName( "div1" )[ 0 ],
+        head = document.getElementsByTagName( "head" )[ 0 ], 
         error = false;
 
     script.type = "text/javascript";
