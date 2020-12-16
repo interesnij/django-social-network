@@ -1,10 +1,3 @@
-loadScripts('/static/scripts/functions/preview.js')
-loadScripts('/static/scripts/functions/comment_attach.js')
-loadScripts('/static/scripts/functions/post_attach.js')
-loadScripts('/static/scripts/functions/message_attach.js')
-loadScripts('/static/scripts/functions/reload.js')
-loadScripts('/static/scripts/functions/socket.js')
-
 function check_photo_in_block(block, _this, pk) {
     if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
