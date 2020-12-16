@@ -1,4 +1,4 @@
-
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
   <div class="col" style="padding:5px;">
@@ -15,6 +15,7 @@
         Опции
     </button>
     <div class="dropdown-menu">
+      <span>
         <span class="dropdown-item post_delete_window">♦ Удалить</span>
         <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
           <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
@@ -24,6 +25,7 @@
           <span class="dropdown-item u_all_posts_dislikes pointer">Не оценили</span>
         </span>
         <span class="dropdown-item item_stat_f">Статистика записи</span>
+      </span>
     </div>
   </div>
   <div class="col" style="padding:5px;">
@@ -40,7 +42,6 @@
   {% endif %}
 </div>
 
-<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">

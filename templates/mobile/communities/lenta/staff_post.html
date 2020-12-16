@@ -1,3 +1,4 @@
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
   <div class="col" style="padding:5px;">
@@ -14,13 +15,15 @@
         Опции
     </button>
     <div class="dropdown-menu">
-      <span class="dropdown-item post_delete_window">♦ Удалить</span>
-      <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
-        <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'community_item_detail' uuid=object.uuid %}</textarea>
-      </span>
       <span>
-        <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
-        <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
+        <span class="dropdown-item post_delete_window">♦ Удалить</span>
+        <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+          <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'community_item_detail' uuid=object.uuid %}</textarea>
+        </span>
+        <span>
+          <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
+          <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
+        </span>
       </span>
     </div>
   </div>
@@ -38,7 +41,6 @@
   {% endif %}
 </div>
 
-<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">

@@ -1,4 +1,4 @@
-
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
   <div class="col" style="padding:5px;">
@@ -14,12 +14,14 @@
     </button>
     <div class="dropdown-menu">
       <span>
-        <span class="dropdown-item u_all_posts_likes pointer">Оценили</span>
-        <span class="dropdown-item u_all_posts_dislikes pointer">Не оценили</span>
-      </span>
+        <span>
+          <span class="dropdown-item u_all_posts_likes pointer">Оценили</span>
+          <span class="dropdown-item u_all_posts_dislikes pointer">Не оценили</span>
+        </span>
         <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
           <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
         </span>
+      </span>
     </div>
   </div>
   <div class="col" style="padding:5px;">
