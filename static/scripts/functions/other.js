@@ -1,21 +1,27 @@
-function on(elSelector, eventName, selector, fn) {
-    var element = document.querySelector(elSelector);
-    element.addEventListener(eventName, function(event) {
-        var possibleTargets = element.querySelectorAll(selector);
-        var target = event.target;
-        for (var i = 0, l = possibleTargets.length; i < l; i++) {
-            var el = target;
-            var p = possibleTargets[i];
-            while (el && el !== element) {
-                if (el === p) {
-                    return fn.call(p, event);
-                }
-                el = el.parentNode;
-            }
-        }
-    });
-};
-
+function close_fullscreen() {
+  if (document.body.querySelector(".create_fullscreen").style.display == "block") {
+    document.body.querySelector(".create_fullscreen").style.display = "none";
+    document.querySelector("#create_fullscreen").innerHTML=""
+  } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
+    document.body.querySelector(".photo_fullscreen").style.display = "none";
+    document.querySelector("#photo_loader").innerHTML=""
+  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
+    document.body.querySelector(".article_fullscreen").style.display = "none";
+    document.querySelector("#article_loader").innerHTML=""
+  } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
+    document.body.querySelector(".item_fullscreen").style.display = "none";
+    document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".good_fullscreen").style.display == "block") {
+    document.body.querySelector(".good_fullscreen").style.display = "none";
+    document.body.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
+    document.body.querySelector(".article_fullscreen").style.display = "none";
+    document.body.querySelector(".article_fullscreen").querySelector(".loader_0").innerHTML=""
+  } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
+    document.body.querySelector(".votes_fullscreen").style.display = "none";
+    document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
+  }
+}
 function check_photo_in_block(block, _this, pk) {
     if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
