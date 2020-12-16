@@ -27,7 +27,7 @@ function get_audio_dop(){
   }else if (style.href.indexOf("dark-grey") != -1){
     settings += ["images/audio_dark",'#000000','#000000']
   }
-  return settings.split(',') 
+  return settings.split(',')
 }
 
 function load_video_playlist(video_saver_id, counter) {
@@ -276,7 +276,7 @@ music_player = new FWDMSP({
     //main settings
     instanceName:"player1",
     playlistsId:"audio_playlists",
-    mainFolderPath:"/static/images/",
+    mainFolderPath:"/static/",
     skinPath:get_audio_dop()[0],
     showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
     showMainBackground:"no",  						// показать общий фон
