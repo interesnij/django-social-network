@@ -1,30 +1,3 @@
-on('body', 'click', '.user_nav_button', function() {
-  document.body.querySelector(".settings_block_hide") ? (settings_block = document.body.querySelector(".settings_block_hide"),settings_block.classList.add("settings_block_show"),settings_block.classList.remove("settings_block_hide"))
-  : (settings_block = document.body.querySelector(".settings_block_show"),settings_block.classList.add("settings_block_hide"),settings_block.classList.remove("settings_block_show"))
-});
-
-function on(elSelector, eventName, selector, fn) {
-    var element = document.querySelector(elSelector);
-    element.addEventListener(eventName, function(event) {
-        var possibleTargets = element.querySelectorAll(selector);
-        var target = event.target;
-        for (var i = 0, l = possibleTargets.length; i < l; i++) {
-            var el = target;
-            var p = possibleTargets[i];
-            while (el && el !== element) {
-                if (el === p) {
-                    return fn.call(p, event);
-                }
-                el = el.parentNode;
-            }
-        }
-    });
-};
-
-on('body', 'click', '.clean_panel', function(event) {
-  close_fullscreen()
-})
-
 on('body', 'click', '.menu_drop', function() {
   block = this.nextElementSibling;
   if (block.classList.contains("show")) { block.classList.remove("show") }
@@ -35,6 +8,14 @@ on('body', 'click', '.menu_drop', function() {
   } block.classList.add("show")}
 });
 
+on('body', 'click', '.user_nav_button', function() {
+  document.body.querySelector(".settings_block_hide") ? (settings_block = document.body.querySelector(".settings_block_hide"),settings_block.classList.add("settings_block_show"),settings_block.classList.remove("settings_block_hide"))
+  : (settings_block = document.body.querySelector(".settings_block_show"),settings_block.classList.add("settings_block_hide"),settings_block.classList.remove("settings_block_show"))
+});
+
+on('body', 'click', '.clean_panel', function(event) {
+  close_fullscreen()
+})
 
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
