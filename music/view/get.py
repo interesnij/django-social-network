@@ -4,7 +4,7 @@ from common.template.user import get_settings_template
 
 
 class TagMusicGet(TemplateView):
-    template_name = "music/load_playlist.html"
+    template_name = "desctop/music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
         self.list_ = SoundcloudParsing.objects.filter(tag_id=self.kwargs["pk"])[0:100]
@@ -17,7 +17,7 @@ class TagMusicGet(TemplateView):
         return context
 
 class GenreMusicGet(TemplateView):
-    template_name = "music/load_playlist.html"
+    template_name = "desctop/music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
         self.list_ = SoundcloudParsing.objects.filter(genre_id=self.kwargs["pk"])[0:100]
@@ -30,7 +30,7 @@ class GenreMusicGet(TemplateView):
         return context
 
 class ListMusicGet(TemplateView):
-    template_name = "music/load_playlist.html"
+    template_name = "desctop/music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(pk=self.kwargs["pk"])
