@@ -1188,13 +1188,15 @@ class User(AbstractUser):
         music_query = list.players.filter(is_deleted=False)
         return music_query
 
-    def get_music_count(self):
-        from music.models import SoundList, SoundcloudParsing
+    def is_have_music(self):
+        from music.models import SoundcloudParsing
 
-        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
-        music_query = Q(list=list, is_deleted=False)
-        count = SoundcloudParsing.objects.filter(music_query).values("pk")
-        return count.count()
+        return SoundcloudParsing.objects.filter(creator_id=self.id, is_deleted=False).exists()
+
+    def get_music_count(self):
+        from music.models import SoundcloudParsing
+
+        return SoundcloudParsing.objects.filter(creator_id=self.id, is_deleted=False).values("pk").count()
 
     def get_last_music(self):
         lists = []
