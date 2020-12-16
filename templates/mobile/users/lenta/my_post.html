@@ -1,4 +1,4 @@
-
+<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
   <div class="col" style="padding:5px;">
@@ -58,7 +58,6 @@
   {% endif %}
 </div>
 
-<div class="card mb-3 post_detail" data-uuid="{{ object.uuid }}">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
