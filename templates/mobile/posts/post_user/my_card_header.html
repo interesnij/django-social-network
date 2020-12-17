@@ -18,5 +18,35 @@
             </h6>
             <p class="mb-0">{{ object.get_created }}</p>
         </div>
+        <div class="dropdown">
+          <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+            <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+              <span class="dropdown-item u_post_wall_remove">Удалить запись</span>
+              <span class="dropdown-item">Редактировать</span>
+              <span>
+                <span class="dropdown-item u_post_fixed">Закрепить</span>
+              </span>
+              <span>
+                {% if object.comments_enabled %}
+                  <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+                {% else %}
+                  <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+                {% endif %}
+              </span>
+              <span>
+                {% if object.votes_on %}
+                  <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+                {% else %}
+                  <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+                {% endif %}
+              </span>
+              <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+                <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
+              </span>
+              <span class="dropdown-item item_stat_f">Статистика записи</span>
+          </div>
+        </div>
     </div>
 </div>
