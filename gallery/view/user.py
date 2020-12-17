@@ -221,7 +221,7 @@ class UserPostPhoto(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.post.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.post.creator, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserPostPhoto,self).get(request,*args,**kwargs)
@@ -248,7 +248,7 @@ class UserCommentPhoto(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.photos = self.comment.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.comment.commenter, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserCommentPhoto,self).get(request,*args,**kwargs)
