@@ -187,7 +187,7 @@ class Community(models.Model):
     def is_have_fixed_posts(self):
         from posts.models import PostList
         try:
-            list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIX)
+            list = PostList.objects.get(community_id=self.pk, type=PostList.FIX)
             if list.is_not_empty():
                 return True
             else:

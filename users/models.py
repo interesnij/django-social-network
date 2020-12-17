@@ -997,7 +997,7 @@ class User(AbstractUser):
     def is_have_fixed_posts(self):
         from posts.models import PostList
         try:
-            list = PostList.objects.get(creator_id=user_id, community=None, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
             if list.is_not_empty():
                 return True
             else:
