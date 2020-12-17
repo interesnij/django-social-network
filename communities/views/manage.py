@@ -23,8 +23,8 @@ class CommunityGeneralView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.c, self.form = Community.objects.get(pk=self.kwargs["pk"]), GeneralCommunityForm(request.POST, instance=self.c)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		self.form = GeneralCommunityForm(request.POST, instance=self.c)
+		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.kwargs["pk"]):
 			self.form.save()
 			return HttpResponse('!')
 		else:
