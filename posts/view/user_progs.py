@@ -161,20 +161,18 @@ class PostWallCommentUserAbortDelete(View):
 
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == item.creator:
-            item.is_fixed = True
-            item.save(update_fields=['is_fixed'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user == post.creator:
+            post.fixed_user_post(post.creator.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == item.creator:
-            item.is_fixed = False
-            item.save(update_fields=['is_fixed'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user == post.creator:
+            post.unfixed_user_post(post.creator.pk)
             return HttpResponse()
         else:
             raise Http404

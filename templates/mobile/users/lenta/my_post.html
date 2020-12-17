@@ -19,10 +19,10 @@
         <a class="dropdown-item u_post_wall_remove pointer">Удалить</a>
         <a class="dropdown-item u_post_wall_remove pointer">Редактировать</a>
         <span>
-          {% if object.is_fixed %}
-            <a class="dropdown-item u_post_unfixed pointer">Открепить</a>
-          {% else %}
-            <a class="dropdown-item u_post_fixed pointer">Закрепить</a>
+          {% if object.is_fixed_in_user %}
+          <span class="dropdown-item u_post_unfixed">Открепить</span>
+          {% elif object.is_can_fixed_in_user %}
+          <span class="dropdown-item u_post_fixed">Закрепить</span>
           {% endif %}
         </span>
         <span>

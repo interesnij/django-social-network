@@ -15,9 +15,6 @@
               <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                 {{ object.community.name }} &nbsp;
               </a>
-              {% if object.is_fixed %}
-              <span class="is_fixed" style="color: #888888;font-size: 13px;">закреплено</span>
-              {% endif %}
             </h6>
             <p class="mb-0">{{ object.get_created }}</p>
         </div>
@@ -28,10 +25,10 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
-                <span class="fixed_block">
-                  {% if object.is_fixed %}
+                <span>  
+                  {% if object.is_fixed_in_community %}
                   <span class="dropdown-item c_post_unfixed">Открепить</span>
-                  {% else %}
+                  {% elif object.is_can_fixed_in_community %}
                   <span class="dropdown-item c_post_fixed">Закрепить</span>
                   {% endif %}
                 </span>

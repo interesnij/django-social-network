@@ -15,9 +15,6 @@
               <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                 {{ object.community.name }} &nbsp;
               </a>
-              {% if object.is_fixed %}
-              <span class="is_fixed" style="color: #888888;font-size: 13px;">закреплено</span>
-              {% endif %}
             </h6>
             <p class="mb-0">{{ object.get_created }}</p>
         </div>

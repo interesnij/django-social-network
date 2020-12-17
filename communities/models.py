@@ -193,13 +193,13 @@ class Community(models.Model):
     def get_draft_posts(self):
         from posts.models import Post, PostList
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         posts = Post.objects.filter(posts_query)
         return posts
     def get_count_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT)
+        posts_query = Q(community_id=self.pk, is_deleted=False, status=Post.STATUS_DRAFT)
         count_posts = Post.objects.filter(posts_query).values("pk").count()
         return count_posts
 
@@ -235,14 +235,6 @@ class Community(models.Model):
         list = PostList.objects.get(community_id=self.id, type=PostList.DELETED)
         posts = Post.objects.filter(list=list, is_deleted=False)
         return posts
-
-    def get_fixed_post(self):
-        from posts.models import Post
-        try:
-            post = Post.objects.get(community_id=self.pk, is_fixed=True)
-            return post
-        except:
-            return None
 
     def get_post_lists(self):
         from posts.models import PostList

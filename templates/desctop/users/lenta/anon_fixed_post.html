@@ -15,7 +15,6 @@
                 <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                   {{ object.creator.get_full_name }} &nbsp;
                 </a>
-                <span class="is_fixed" style="font-size: 13px;">закреплено</span>
              </h6>
               <p class="mb-0">{{ object.get_created }}</p>
           </div>

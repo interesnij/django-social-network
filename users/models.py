@@ -994,18 +994,10 @@ class User(AbstractUser):
                 query += [frend,]
         return query[0:5]
 
-    def get_fixed_post(self):
-        from posts.models import Post
-        try:
-            post = Post.objects.get(creator_id=self.pk, is_fixed=True, community=None)
-            return post
-        except:
-            return None
-
     def get_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Post.STATUS_DRAFT, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, status=Post.STATUS_DRAFT, community=None)
         posts = Post.objects.filter(posts_query)
         return posts
 

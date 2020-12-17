@@ -24,7 +24,6 @@
                         <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                           {{ object.community.name }} &nbsp;
                         </a>
-                        <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                       </h6>
                       <p class="mb-0">{{ object.get_created }}</p>
                   </div>
@@ -122,7 +121,6 @@
                         <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                           {{ object.creator.get_full_name }} &nbsp;
                         </a>
-                        <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
                       </h6>
                       <p class="mb-0">{{ object.get_created }}</p>
                   </div>
