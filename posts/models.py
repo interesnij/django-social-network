@@ -674,7 +674,7 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        parent_comments = PostComment.objects.filter(post_id=self.pk)
+        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False).values("pk")
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -876,7 +876,7 @@ class PostComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.replies.count()
+        return self.replies.filter(is_deleted=False).values("pk").count()
 
     def likes(self):
         likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
@@ -924,7 +924,7 @@ class PostComment(models.Model):
         return comment
 
     def count_replies_ru(self):
-        count = self.replies.count()
+        count = self.replies.filter(is_deleted=False).values("pk").count()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):

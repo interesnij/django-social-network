@@ -19,15 +19,15 @@ class VideoCategory(models.Model):
     def __str__(self):
         return self.name
 
-    def get_tracks_count(self):
-        return self.video_category.count()
+    def get_videos_count(self):
+        return self.video_category.filter(is_deleted=True).values("pk").count()
 
     def is_video_in_category(self, track_id):
         self.video_category.filter(id=track_id).exists()
 
-    def playlist_too(self):
-        queryset = self.video_category.all()
-        return queryset[:300]
+    def get_100_videos(self):
+        queryset = self.video_category.filter(is_deleted=True).values("pk").count()
+        return queryset[:100]
 
     class Meta:
         verbose_name = "Категория ролика"
@@ -63,7 +63,7 @@ class VideoAlbum(models.Model):
         return self.title
 
     def count_video(self):
-        return self.video_album.filter(is_deleted=False).count()
+        return self.video_album.filter(is_deleted=False).values("pk").count()
 
     def get_queryset(self):
         queryset = self.video_album.filter(is_public=True).order_by("-created")
@@ -78,7 +78,7 @@ class VideoAlbum(models.Model):
         return count
 
     def get_my_video_count(self):
-        count = self.video_album.all().values("pk").count()
+        count = self.video_album.filter(is_public=True).values("pk").count()
         return count
 
     def is_main_album(self):
@@ -186,7 +186,7 @@ class Video(models.Model):
             return ''
 
     def count_comments(self):
-        parent_comments = VideoComment.objects.filter(video_comment_id=self.pk)
+        parent_comments = VideoComment.objects.filter(video_comment_id=self.pk, is_deleted=False).values("pk").count()
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -238,7 +238,7 @@ class VideoComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.video_comment_replies.count()
+        return self.video_comment_replies.filter(is_deleted=False).values("pk").count()
 
     def likes(self):
         likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
@@ -290,9 +290,9 @@ class VideoComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
-        
+
     def count_replies_ru(self):
-        count = self.video_comment_replies.count()
+        count = self.video_comment_replies.filter(is_deleted=False).values("pk").count()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):

@@ -215,7 +215,7 @@ class Good(models.Model):
 		comments_query.add(Q(parent_comment__isnull=True), Q.AND)
 		return GoodComment.objects.filter(comments_query)
 	def count_comments(self):
-		parent_comments = GoodComment.objects.filter(good_comment_id=self.pk)
+		parent_comments = GoodComment.objects.filter(good_comment_id=self.pk, is_deleted=False).values("pk").count()
 		parents_count = parent_comments.count()
 		i = 0
 		for comment in parent_comments:
@@ -272,7 +272,7 @@ class GoodComment(models.Model):
 		return get_comments
 
 	def count_replies(self):
-		return self.good_comment_replies.count()
+		return self.good_comment_replies.filter(is_deleted=False).values("pk").count()
 
 	def likes(self):
 		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
@@ -322,7 +322,7 @@ class GoodComment(models.Model):
 		return naturaltime(self.created)
 
 	def count_replies_ru(self):
-		count = self.good_comment_replies.count()
+		count = self.good_comment_replies.filter(is_deleted=False).values("pk").count()
 		a = count % 10
 		b = count % 100
 		if (a == 1) and (b != 11):
