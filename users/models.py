@@ -1022,7 +1022,7 @@ class User(AbstractUser):
     def get_post_lists(self):
         from posts.models import PostList
 
-        lists_query = Q(creator_id=self.id, community=None)
+        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
         lists_query.add(~Q(Q(type="DE")|Q(type="PR")), Q.AND)
         lists = PostList.objects.filter(lists_query).order_by("order")
         return lists
@@ -1033,7 +1033,7 @@ class User(AbstractUser):
 
     def get_my_all_post_lists(self):
         from posts.models import PostList
-        lists_query = Q(creator_id=self.id, community=None)
+        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
         lists_query.add(Q(~Q(type=PostList.DELETED)|~Q(type=PostList.FIX)), Q.AND)
         lists = PostList.objects.filter(lists_query)
         return lists

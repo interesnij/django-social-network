@@ -331,8 +331,8 @@ class CommunityPostListDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.type == PostList.LIST and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.type = PostList.DELETED
-            list.save(update_fields=['type'])
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
@@ -341,8 +341,8 @@ class CommunityPostListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.type = PostList.LIST
-            list.save(update_fields=['type'])
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
