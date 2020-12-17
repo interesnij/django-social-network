@@ -113,13 +113,12 @@ class CommunityGallery(TemplateView):
         from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.album, self.albums_list, self.template_name = Album.objects.get(community_id=self.c.pk, type=Album.MAIN), self.c.get_albums().order_by('-created'), get_template_community_photo(self.c, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.album, self.template_name = Album.objects.get(community_id=self.c.pk, type=Album.MAIN), get_template_community_photo(self.c, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityGallery,self).get_context_data(**kwargs)
         context['community'] = self.c
-        context['albums_list'] = self.albums_list
         context['album'] = self.album
         return context
 

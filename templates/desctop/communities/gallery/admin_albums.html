@@ -1,6 +1,6 @@
 
 <div class="row" style="margin-left: 0;margin-right: 0;">
-    {% for object in albums_list %}
+    {% for object in community.get_admin_albums %}
     <div class="col-md-6 col-lg-4 cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}">
 
         <div class="card rounded-0 border-0 mb-3">

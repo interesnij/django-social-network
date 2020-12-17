@@ -33,17 +33,13 @@ class UserGallery(TemplateView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user.pk == request.user.pk:
-            self.albums_list = self.user.get_my_all_albums().order_by('-created')
-        else:
-            self.albums_list = self.user.get_all_albums().order_by('-created')
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from gallery.models import Album
 
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['albums_list'], c['album'] = self.user, self.albums_list, Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
+        c['user'], c['album'] = self.user, Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
         return c
 
 class UserAlbum(TemplateView):

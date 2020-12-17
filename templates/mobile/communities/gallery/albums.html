@@ -6,7 +6,7 @@
 <div class="row overflow-x-auto no-gutters">
   <div class="col-12">
   <ul class="date-list" style="width:max-content">
-    {% for object in albums_list %}
+    {% for object in community.get_albums %}
         <li class="date">
           <div class="cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}" style="padding:5px;">
               <div class="card rounded-0 border-0 mb-3">
