@@ -831,7 +831,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_albums(self):
-        return self.photo_album_creator.filter(community=None, is_deleted=False).values('pk').count()
+        return self.photo_album_creator.filter(creator_id=self.pk, community=None, is_deleted=False).values('pk').count()
 
     def count_goods(self):
         return self.good_creator.values('pk').count()
@@ -1066,18 +1066,11 @@ class User(AbstractUser):
         albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
-    def get_my_all_albums(self):
+    def get_my_albums(self):
         from gallery.models import Album
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
-        return albums
-
-    def get_my_albums(self):
-        from gallery.models import Album
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type="AL")
         albums = Album.objects.filter(albums_query).order_by("order")
         return albums
 
