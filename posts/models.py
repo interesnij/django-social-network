@@ -263,7 +263,7 @@ class Post(models.Model):
             return "mobile/generic/attach/c_good_list_attach.html"
         elif self.is_doc_list_attached():
             return "mobile/generic/attach/c_doc_list_attach.html"
-        else: 
+        else:
             return "mobile/generic/attach/c_post_attach.html"
 
     def is_photo_repost(self):

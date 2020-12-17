@@ -208,6 +208,61 @@ class UserDetailAvatar(TemplateView):
         context["album"] = self.album
         return context
 
+class UserPostPhoto(TemplateView):
+    """
+    страница отдельного фото записи пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from posts.models import Post
+
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = self.post.get_attach_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(UserPostPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPostPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user"] = self.request.user
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
+
+class UserCommentPhoto(TemplateView):
+    """
+    страница отдельного фото комментария к записи пользователя с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from posts.models import PostComment
+
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.comment.get_attach_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(UserCommentPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserCommentPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user"] = self.request.user
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
+
+
 class UserFirstAvatar(TemplateView):
     """
     страница аватара пользователя с разрещениями и без

@@ -239,6 +239,59 @@ class CommunityWallPhoto(TemplateView):
         context["album"] = self.album
         return context
 
+class CommunityPostPhoto(TemplateView):
+    """
+    страница отдельного фото записи сообщества с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from posts.models import Post
+
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = self.post.get_attach_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(CommunityPostPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityPostPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["community"] = self.post.community
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
+
+class CommunityCommentPhoto(TemplateView):
+    """
+    страница отдельного фото комментария к записи сообщества с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from posts.models import PostComment
+
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.comment.get_attach_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(CommunityCommentPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityCommentPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["community"] = self.post.community
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
 
 class GetCommunityPhoto(TemplateView):
     """
