@@ -184,6 +184,17 @@ class Community(models.Model):
         trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
+    def is_have_fixed_posts(self):
+        from posts.models import PostList
+        try:
+            list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIX)
+            if list.is_not_empty():
+                return True
+            else:
+                return False
+        except:
+            pass 
+
     def get_posts(self):
         from posts.models import Post, PostList
 

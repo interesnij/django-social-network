@@ -1,8 +1,8 @@
 <span class="post_stream stream post_container">
      <span class="list_pk" list-pk="{{ list.pk }}">
        <span>
-         {% if object %}
-           {% include 'mobile/users/lenta/fixed_post.html' %}
+         {% if user.is_have_fixed_posts %}
+           is_have_fixed_posts
          {% endif %}
 
          {% for object in object_list %}

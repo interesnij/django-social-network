@@ -10,8 +10,8 @@
         </span>
         {% endif %}
         <span>
-          {% if object %}
-            {% include 'mobile/users/lenta/my_fixed_post.html' %}
+          {% if user.is_have_fixed_posts %}
+            is_have_fixed_posts
           {% endif %}
 
           {% for object in object_list %}

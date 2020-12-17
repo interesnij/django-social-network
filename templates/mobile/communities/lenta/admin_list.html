@@ -8,8 +8,8 @@
         </span>
         {% endif %}
         <span>
-          {% if object %}
-            {% include 'mobile/communities/lenta/admin_fixed_post.html' %}
+          {% if community.is_have_fixed_posts %}
+            is_have_fixed_posts
           {% endif %}
 
           {% for object in object_list %}
