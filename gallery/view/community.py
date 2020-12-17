@@ -261,6 +261,7 @@ class CommunityPostPhoto(TemplateView):
         context = super(CommunityPostPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.post.community
+        context["post"] = self.post
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)

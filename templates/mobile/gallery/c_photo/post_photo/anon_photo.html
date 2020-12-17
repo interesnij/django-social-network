@@ -3,23 +3,12 @@
   <div class="row" style="margin-right: -10px;margin-left: -10px;">
     {% if next %}
     <div class="col" style="padding:5px;">
-      <a class="btn btn-sm custom_color border next_photo" href="{% url 'community_avatar' uuid=album.uuid pk=next.pk %}" style="width: -webkit-fill-available;position:static">
+      <a class="btn btn-sm custom_color border next_photo" href="{% url 'community_post_photo' photo_pk=next.pk pk=community.pk %}" style="width: -webkit-fill-available;position:static">
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
     {% endif %}
 
-    {% include 'mobile/gallery/add_photo.html' %}
-    <div class="col" style="padding:5px;">
-      <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-          Опции
-      </button>
-      <div class="dropdown-menu">
-          <span>
-            <a class="dropdown-item pointer photo_delete_window">♦ Удалить</a>
-          </span>
-      </div>
-    </div>
     <div class="col" style="padding:5px;">
       <a class="btn btn-sm custom_color border pointer photo_fullscreen_hide_2" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -27,7 +16,7 @@
     </div>
     {% if prev %}
       <div class="col" style="padding:5px;">
-        <a class="btn btn-sm custom_color border prev_photo" href="{% url 'community_avatar' uuid=album.uuid pk=prev.pk %}" style="width: -webkit-fill-available;position:static">
+        <a class="btn btn-sm custom_color border prev_photo" href="{% url 'community_post_photo' photo_pk=prev.pk pk=community.pk %}" style="width: -webkit-fill-available;position:static">
           <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
         </a>
       </div>
@@ -69,7 +58,7 @@
       </span>
       <br><br>
 
-      {% include 'mobile/gallery/c_photo/info.html' %}
+      {% include 'mobile/gallery/c_photo/anon_info.html' %}
       </span></span>
   </div>
 <br><br><br>

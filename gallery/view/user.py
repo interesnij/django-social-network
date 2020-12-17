@@ -229,6 +229,7 @@ class UserPostPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserPostPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
+        context["post"] = self.post
         context["user"] = self.request.user
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
