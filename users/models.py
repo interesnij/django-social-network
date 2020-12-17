@@ -1072,14 +1072,14 @@ class User(AbstractUser):
 
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
+        albums = Album.objects.filter(albums_query)
         return albums
 
     def get_video_albums(self):
         from video.models import VideoAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
+        albums = VideoAlbum.objects.filter(albums_query)
         return albums
 
     def user_photo_album_exists(self):

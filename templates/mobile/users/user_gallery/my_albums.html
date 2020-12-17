@@ -5,6 +5,7 @@
 </div>
 <div class="row overflow-x-auto no-gutters">
   <div class="col-12">
+    {{ user.get_my_albums }}
   <ul class="date-list" style="width:max-content">
     {% for object in user.get_my_albums %}
         <li class="date">
