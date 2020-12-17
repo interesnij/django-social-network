@@ -3,7 +3,7 @@
 <div class="attach_container">
   {% for photo in object.get_attach_photos %}
     {% include 'mobile/generic/items/c_photo.html' %}
-  {% endfor %}
+  {% endfor %} 
 
   {% for album in object.get_attach_photo_list %}
     {% include 'mobile/generic/items/c_album.html' %}
