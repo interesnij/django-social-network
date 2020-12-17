@@ -247,6 +247,7 @@ class CommunityPostPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from posts.models import Post
+        from common.template.photo import get_permission_community_photo_detail
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
@@ -275,6 +276,7 @@ class CommunityCommentPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from posts.models import PostComment
+        from common.template.photo import get_permission_community_photo_detail
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
