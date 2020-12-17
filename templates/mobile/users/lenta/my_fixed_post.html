@@ -168,9 +168,11 @@ white-space: nowrap;
 </style>
 
 <div class="csslider infinity" id="slider1">
+  {% for object in user.get_fixed_posts %}
+    <input type="radio" name="slides" checked="checked" id="s_{{ forloop.counter }}"/>
+  {% endfor %}
   <ul>
     {% for object in user.get_fixed_posts %}
-    <input type="radio" name="slides" checked="checked" id="s_{{ forloop.counter }}"/>
     <li class="scrollable">
       {% include 'mobile/posts/post_user/my_post.html' %}
     </li>
@@ -179,7 +181,7 @@ white-space: nowrap;
   </ul>
   <div class="arrows">
     {% for object in user.get_fixed_posts %}
-      
+      <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
     <label class="goto-first" for="slides_1"></label>
