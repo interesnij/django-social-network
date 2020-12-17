@@ -20,7 +20,11 @@
             <a class="dropdown-item mob_user_photo_remove pointer">Удалить</a>
           </span>
           <span>
+          {% if avatar %}
             <a class="dropdown-item mob_u_unset_avatar pointer">Убрать аватар</a>
+          {% else %}
+            <a class="dropdown-item mob_u_set_avatar pointer">Сделать аватаром</a>
+          {% endif %}
           </span>
           <span>
           {% if object.comments_enabled %}
