@@ -169,7 +169,7 @@ white-space: nowrap;
 
 <div class="csslider infinity" id="slider1">
   {% for object in user.get_fixed_posts %}
-    <input type="radio" name="slides" checked="checked" id="s_{{ forloop.counter }}"/>
+
   {% endfor %}
   <ul>
     {% for object in user.get_fixed_posts %}
@@ -181,6 +181,7 @@ white-space: nowrap;
   </ul>
   <div class="arrows">
     {% for object in user.get_fixed_posts %}
+      <input type="radio" name="slides" checked="checked" id="s_{{ forloop.counter }}"/>
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
