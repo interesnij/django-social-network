@@ -49,7 +49,7 @@ class PostList(models.Model):
         return queryset
 
     def count_posts(self):
-        return self.post_list.all().values("pk").count()
+        return self.post_list.filter(is_delete=False).values("pk").count()
 
     def is_full_list(self):
         if self.is_fix_list() and self.count_posts() == 10:
