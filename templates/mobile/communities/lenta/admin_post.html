@@ -19,7 +19,11 @@
       <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
       <span class="dropdown-item">Редактировать</span>
       <span class="fixed_block">
-        <span class="dropdown-item c_post_fixed">Закрепить</span>
+        {% if object.is_fixed_in_community %}
+          <span class="dropdown-item c_post_unfixed">Открепить</span>
+        {% elif object.is_can_fixed_in_community %}
+          <span class="dropdown-item c_post_fixed">Закрепить</span>
+        {% endif %}
       </span>
       <span>
         {% if object.comments_enabled %}

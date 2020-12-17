@@ -698,12 +698,12 @@ class Post(models.Model):
         except:
             pass
     def is_fixed_in_user(self):
-        #try:
-        list = PostList.objects.get(creator_id=self.creator.pk, community=None, type=PostList.FIX)
-        if list.is_post_in_list(self.pk):
-            return True
-        #except:
-        #    pass
+        try:
+            list = PostList.objects.get(creator_id=self.creator.pk, community=None, type=PostList.FIX)
+            if list.is_post_in_list(self.pk):
+                return True
+        except:
+            pass
 
     def is_can_fixed_in_community(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
