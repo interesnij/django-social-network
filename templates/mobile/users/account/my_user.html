@@ -55,6 +55,10 @@
 
   {% include 'mobile/users/profile/new_post.html' %}
 
+  {% if user.is_have_fixed_posts %}
+    {% include 'mobile/users/lenta/my_fixed_post.html' %}
+  {% endif %} 
+
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
     <ul class="date-list" style="width:max-content">

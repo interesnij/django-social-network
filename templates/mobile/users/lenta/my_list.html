@@ -9,10 +9,7 @@
           <a class="u_delete_post_list pointer">удалить список</a>
         </span>
         {% endif %}
-        {% if user.is_have_fixed_posts %}
-          {% include 'mobile/users/lenta/my_fixed_post.html' %}
-        {% endif %}
-        
+
         <span>
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/my_post.html' %}
