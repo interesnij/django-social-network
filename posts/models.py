@@ -36,7 +36,7 @@ class PostList(models.Model):
         return self.post_list.filter(list=self).values("pk").exists()
 
     def get_posts(self):
-        queryset = self.post_list.only("pk")
+        queryset = self.post_list.filter(is_deleted=False, is_fixed=False)
         return queryset
 
     def list_30(self):
