@@ -193,7 +193,7 @@ class Community(models.Model):
             else:
                 return False
         except:
-            pass 
+            pass
 
     def get_posts(self):
         from posts.models import Post, PostList
@@ -249,13 +249,13 @@ class Community(models.Model):
 
     def get_post_lists(self):
         from posts.models import PostList
-        lists_query = Q(Q(community_id=self.id, type="LI") | Q(community_id=self.id, type="MA"))
+        lists_query = Q(Q(community_id=self.id, type="LI")|Q(community_id=self.id, type="MA"))
         lists = PostList.objects.filter(lists_query)
         return lists
     def get_admin_all_post_lists(self):
         from posts.models import PostList
         lists_query = Q(community_id=self.id)
-        lists_query.add(~Q(community_id=self.id, type="DE"), Q.AND)
+        lists_query.add(Q(~Q(community_id=self.id, type="DE")|~Q(community_id=self.id, type="FI")), Q.AND)
         lists = PostList.objects.filter(lists_query)
         return lists
     def post_list_exists(self):

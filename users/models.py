@@ -1031,20 +1031,11 @@ class User(AbstractUser):
         from posts.models import PostCategory
         return PostCategory.objects.only("pk")
 
-    def get_my_post_lists(self):
-        from posts.models import PostList
-
-        lists_query = Q(creator_id=self.id, community=None, type="LI")
-        lists_query.add(~Q(type="MA"), Q.AND)
-        lists = PostList.objects.filter(lists_query).order_by("order")
-        return lists
-
     def get_my_all_post_lists(self):
         from posts.models import PostList
-
         lists_query = Q(creator_id=self.id, community=None)
-        lists_query.add(~Q(type="DE"), Q.AND)
-        lists = PostList.objects.filter(lists_query).order_by("order")
+        lists_query.add(Q(~Q(type="DE")|~Q(type="FI")), Q.AND)
+        lists = PostList.objects.filter(lists_query)
         return lists
 
     def get_articles(self):
