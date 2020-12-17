@@ -195,6 +195,11 @@ class Community(models.Model):
         except:
             pass
 
+    def get_fixed_posts(self):
+        from posts.models import PostList
+        list = PostList.objects.get(community_id=self.pk, type=PostList.FIX)
+        return list.get_posts()
+
     def get_posts(self):
         from posts.models import Post, PostList
 

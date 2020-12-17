@@ -1005,6 +1005,11 @@ class User(AbstractUser):
         except:
             pass
 
+    def get_fixed_posts(self):
+        from posts.models import PostList
+        list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
+        return list.get_posts()
+
     def get_draft_posts(self):
         from posts.models import Post
 
