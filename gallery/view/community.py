@@ -252,7 +252,7 @@ class CommunityPostPhoto(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.post.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityPostPhoto,self).get(request,*args,**kwargs)
@@ -280,7 +280,7 @@ class CommunityCommentPhoto(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.photos = self.comment.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityCommentPhoto,self).get(request,*args,**kwargs)
