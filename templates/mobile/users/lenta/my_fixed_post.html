@@ -81,49 +81,7 @@
 .csslider > ul > li.scrollable {
   overflow-y: scroll;
 }
-.csslider > .navigation {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  z-index: 10;
-  margin-bottom: -10px;
-  font-size: 0;
-  line-height: 0;
-  text-align: center;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.csslider > .navigation > div {
-  margin-left: -100%;
-}
-.csslider > .navigation label {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 50%;
-  margin: 0 4px;
-  padding: 4px;
-  background: #3A3A3A;
-}
-.csslider > .navigation label:hover:after {
-  opacity: 1;
-}
-.csslider > .navigation label:after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -6px;
-  margin-top: -6px;
-  background: #71ad37;
-  border-radius: 50%;
-  padding: 6px;
-  opacity: 0;
-}
+
 .csslider > .arrows {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -237,8 +195,8 @@
     <input type="radio" name="slides" checked="checked" id="s_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
+    {% for object in user.get_fixed_posts %}
     <li class="scrollable">
-      {% for object in user.get_fixed_posts %}
       <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
         <div class="card-header">
             <div class="media">
@@ -312,8 +270,8 @@
 
           {% include 'mobile/posts/post_user/info.html' %}
       </div>
-      {% endfor %}
     </li>
+    {% endfor %}
   </ul>
   <div class="arrows">
     {% for object in user.get_fixed_posts %}
@@ -322,10 +280,5 @@
 
     <label class="goto-first" for="slides_1"></label>
     <label class="goto-last" for="slides_6"></label>
-  </div>
-  <div class="navigation">
-    <div>
-      <label for="s_1"></label>
-    </div>
   </div>
 </div>
