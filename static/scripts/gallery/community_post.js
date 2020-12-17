@@ -237,3 +237,45 @@ on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
   }}
   link_.send(form_data);
 });
+
+
+on('#ajax', 'click', '.mob_c_photo_off_comment', function() {
+  mob_send_change(this, "/gallery/community_progs/off_comment/", "mob_c_photo_on_comment", "Вкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".u_photo_comments").style.display = "none"
+})
+on('#ajax', 'click', '.mob_c_photo_on_comment', function() {
+  mob_send_change(this, "/gallery/community_progs/on_comment/", "mob_c_photo_off_comment", "Выкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".u_photo_comments").style.display = "unset"
+})
+on('#ajax', 'click', '.mob_c_photo_off_private', function() {
+  mob_send_change(this, "/gallery/community_progs/off_private/", "mob_c_photo_on_private", "Вкл. приватность")
+})
+on('#ajax', 'click', '.mob_c_photo_on_private', function() {
+  mob_send_change(this, "/gallery/community_progs/on_private/", "mob_c_photo_off_private", "Выкл. приватность")
+})
+on('#ajax', 'click', '.mob_c_photo_off_votes', function() {
+  mob_send_change(this, "/gallery/community_progs/off_votes/", "mob_c_photo_on_votes", "Вкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "none";
+  post.querySelector(".dislike").style.display = "none";
+})
+on('#ajax', 'click', '.mob_c_photo_on_votes', function() {
+  mob_send_change(this, "/gallery/community_progs/on_votes/", "mob_c_photo_off_votes", "Выкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "unset";
+  post.querySelector(".dislike").style.display = "unset";
+})
+on('#ajax', 'click', '.mob_community_photo_remove', function() {
+  mob_send_change(this, "/gallery/community_progs/delete/", "mob_community_photo_abort_remove", "Отмена");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".content_block").style.display = "none";
+  post.querySelector(".image_card").style.opacity = "0.5";
+})
+on('#ajax', 'click', '.mob_community_photo_abort_remove', function() {
+  mob_send_change(this, "/gallery/community_progs/abort_delete/", "mob_community_photo_remove", "Удалить");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".content_block").style.display = "unset";
+  post.querySelector(".image_card").style.opacity = "1";
+})
