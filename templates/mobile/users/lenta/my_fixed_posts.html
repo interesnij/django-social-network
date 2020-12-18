@@ -92,6 +92,16 @@ white-space: nowrap;
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
+@media screen and (max-width: 640px) {
+  .csslider > .arrows {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 26px;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+  }
 .csslider > .arrows label {
   display: none;
   position: absolute;
@@ -160,7 +170,7 @@ white-space: nowrap;
 }
 </style>
 
-<div class="csslider infinity" id="slider1">
+<div class="csslider infinity mt-3" id="slider1">
   {% for object in fix_list.get_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
