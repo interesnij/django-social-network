@@ -1014,7 +1014,7 @@ class User(AbstractUser):
         from posts.models import PostList
         list, query, num = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX), [], 0
         for i in list.get_posts_ids():
-            query += (num + 1)
+            query += num + 1
         return query
 
 
