@@ -1010,6 +1010,14 @@ class User(AbstractUser):
         list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
         return list.get_posts()
 
+    def get_fixed_count(self):
+        from posts.models import PostList
+        list, query, num = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX), [], 0
+        for i in list.count_posts():
+            query += (num + 1)
+        return query
+
+
     def get_draft_posts(self):
         from posts.models import Post
 
