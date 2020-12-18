@@ -161,22 +161,21 @@ white-space: nowrap;
 {{ user.get_fixed_count }}
 <div class="csslider infinity" id="slider1">
   {% for object in user.get_fixed_posts %}
-
+    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
     {% for object in user.get_fixed_posts %}
-    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
     <li class="scrollable">
-      {% include 'mobile/posts/post_user/my_post.html' %}
+      {% include 'mobile/posts/post_user/post.html' %}
     </li>
     {% endfor %}
-    <div class="arrows">
-      {% for object in user.get_fixed_posts %}
-        <label for="s_{{ forloop.counter }}"></label>
-      {% endfor %}
-
-      <label class="goto-first" for="slides_1"></label>
-      <label class="goto-last" for="slides_6"></label>
-    </div>
   </ul>
+  <div class="arrows">
+    {% for object in user.get_fixed_posts %}
+      <label for="s_{{ forloop.counter }}"></label>
+    {% endfor %}
+
+    <label class="goto-first" for="slides_1"></label>
+    <label class="goto-last" for="slides_6"></label>
+  </div>
 </div>
