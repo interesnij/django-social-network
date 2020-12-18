@@ -195,7 +195,7 @@ white-space: nowrap;
 }
 </style>
 
-<div class="csslider infinity mt-3" id="slider1">
+<div class="csslider infinity mt-5" id="slider1">
   {% for object in fix_list.get_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
