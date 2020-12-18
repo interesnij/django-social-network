@@ -1005,7 +1005,7 @@ class User(AbstractUser):
         except:
             pass
     def get_or_create_fix_list(self):
-        from gallery.models import PostList
+        from posts.models import PostList
         try:
             fix_list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
         except:
