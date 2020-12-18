@@ -52,7 +52,7 @@ class PostList(models.Model):
         return self.post_list.filter(is_deleted=False).values("pk").count()
     def get_posts_ids(self):
         ids =  self.post_list.filter(is_deleted=False).values("pk")
-        return [id['id'] for id in ids]
+        return [id['pk'] for id in ids]
 
     def is_full_list(self):
         if self.is_fix_list() and self.count_posts() == 10:
