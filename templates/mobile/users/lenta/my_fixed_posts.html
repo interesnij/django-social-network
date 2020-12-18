@@ -171,6 +171,7 @@ white-space: nowrap;
     </li>
     {% endfor %}
   </ul>
+  {% if fix_list.count_posts > 1 %}
   <div class="arrows">
     {% for object in fix_list.get_posts_ids %}
       <label for="s_{{ forloop.counter }}"></label>
@@ -179,5 +180,6 @@ white-space: nowrap;
     <label class="goto-first" for="s_1"></label>
     <label class="goto-last" for="s_{{ fix_list.count_posts }}"></label>
   </div>
+  {% endif %}
 </div>
 {% endif %}

@@ -1,3 +1,5 @@
+{% if fix_list.is_not_empty %}
+
 <style>
   .csslider {
   -moz-perspective: 1300px;
@@ -76,13 +78,6 @@ white-space: nowrap;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-.csslider.inside .navigation {
-  bottom: 10px;
-  margin-bottom: 10px;
-}
-.csslider.inside .navigation label {
-  border: 1px solid #7e7e7e;
 }
 
 .csslider > .arrows {
@@ -166,22 +161,25 @@ white-space: nowrap;
 </style>
 
 <div class="csslider infinity" id="slider1">
-  {% for object in user.get_fixed_posts %}
+  {% for object in fix_list.get_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
-    {% for object in user.get_fixed_posts %}
+    {% for object in fix_list.get_posts %}
     <li class="scrollable">
       {% include 'mobile/posts/post_user/post.html' %}
     </li>
     {% endfor %}
   </ul>
+  {% if fix_list.count_posts > 1 %}
   <div class="arrows">
-    {% for object in user.get_fixed_posts %}
+    {% for object in fix_list.get_posts_ids %}
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
-    <label class="goto-first" for="slides_1"></label>
-    <label class="goto-last" for="slides_6"></label>
+    <label class="goto-first" for="s_1"></label>
+    <label class="goto-last" for="s_{{ fix_list.count_posts }}"></label>
   </div>
+  {% endif %}
 </div>
+{% endif %}
