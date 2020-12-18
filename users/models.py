@@ -1004,20 +1004,13 @@ class User(AbstractUser):
                 return False
         except:
             pass
-
-    def get_fixed_posts(self):
-        from posts.models import PostList
-        list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
-        return list.get_posts()
-
-    def get_fixed_count(self):
-        from posts.models import PostList
-        list, query, num = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX), [], 0
-        for i in list.get_posts_ids():
-            num += 1
-            query += [num]
-        return query
-
+    def get_or_create_fix_list(self):
+        from gallery.models import PostList
+        try:
+            fix_list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
+        except:
+            fix_list = PostList.objects.create(creator_id=self.pk, community=None, type=PostList.FIX, title="Закрепленный список")
+        return fix_list
 
     def get_draft_posts(self):
         from posts.models import Post
