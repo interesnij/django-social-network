@@ -371,7 +371,7 @@ ul{
 ul li {
   position: relative;
 }
-.fullscreen, .c_fullscreen {
+.fullscreen, .c_fullscreen, .fix_fullscreen, .c_fix_fullscreen {
   padding-left: 10px;
 }
 .like_window div, .dislike_window div {
