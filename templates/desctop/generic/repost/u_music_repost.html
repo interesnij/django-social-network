@@ -1,3 +1,5 @@
+{% with track=object.get_music_repost %}
+
 {% load get_key %}
 
 <div class="col-md-12 music" data-path="{{ track.uri }}" data-duration="{{ track.duration }}" style="flex-basis: 100%;">
@@ -43,3 +45,6 @@
         </div>
     </div>
   </div>
+
+
+{% endwith %}

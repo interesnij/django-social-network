@@ -343,39 +343,39 @@ class Post(models.Model):
 		# FOR DESCTOP PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "desctop/posts/post_community/photo_repost.html"
+            return "desctop/generic/repost/c_photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "desctop/posts/post_community/photo_album_repost.html"
+            return "desctop/generic/repost/c_photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "desctop/generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "desctop/posts/post_community/good_repost.html"
+            return "desctop/generic/repost/c_good_repost.html"
         elif parent.is_good_list_repost():
-            return "desctop/posts/post_community/good_list_repost.html"
+            return "desctop/generic/repost/c_good_list_repost.html"
         elif parent.is_good_list_attached():
             return "desctop/generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
-            return "desctop/posts/post_community/music_repost.html"
+            return "desctop/generic/repost/c_music_repost.html"
         elif parent.is_music_list_repost():
-            return "desctop/posts/post_community/music_list_repost.html"
+            return "desctop/generic/repost/c_music_list_repost.html"
         elif parent.is_playlist_attached():
             return "desctop/generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
-            return "desctop/posts/post_community/video_repost.html"
+            return "desctop/generic/repost/c_video_repost.html"
         elif parent.is_video_list_repost():
-            return "desctop/posts/post_community/video_list_repost.html"
+            return "desctop/generic/repost/c_video_list_repost.html"
         elif parent.is_video_list_attached():
             return "desctop/generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "desctop/posts/post_community/doc_repost.html"
+            return "desctop/generic/repost/c_doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "desctop/posts/post_community/doc_list_repost.html"
+            return "desctop/generic/repost/c_doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "desctop/generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "desctop/posts/post_community/user_repost.html"
+            return "desctop/generic/repost/user_repost.html"
         elif parent.is_community_repost():
-            return "desctop/posts/post_community/community_repost.html"
+            return "desctop/generic/repost/community_repost.html"
         else:
             return "desctop/generic/attach/parent_community.html"
 
@@ -387,39 +387,39 @@ class Post(models.Model):
 		# FOR DESCTOP PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "desctop/posts/post_user/photo_repost.html"
+            return "desctop/generic/repost/u_photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "desctop/posts/post_user/photo_album_repost.html"
+            return "desctop/generic/repost/u_photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "desctop/generic/parent_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "desctop/posts/post_user/good_repost.html"
+            return "desctop/generic/repost/u_good_repost.html"
         elif parent.is_good_list_repost():
-            return "desctop/posts/post_user/good_list_repost.html"
+            return "desctop/generic/repost/u_good_list_repost.html"
         elif parent.is_good_list_attached():
             return "desctop/generic/parent_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
-            return "desctop/posts/post_user/music_repost.html"
+            return "desctop/generic/repost/u_music_repost.html"
         elif parent.is_music_list_repost():
-            return "desctop/posts/post_user/music_list_repost.html"
+            return "desctop/generic/repost/u_music_list_repost.html"
         elif parent.is_playlist_attached():
             return "desctop/generic/parent_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
-            return "desctop/posts/post_user/video_repost.html"
+            return "desctop/generic/repost/u_video_repost.html"
         elif parent.is_video_list_repost():
-            return "desctop/posts/post_user/video_list_repost.html"
+            return "desctop/generic/repost/u_video_list_repost.html"
         elif parent.is_video_list_attached():
             return "desctop/generic/parent_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "desctop/posts/post_user/doc_repost.html"
+            return "desctop/generic/repost/u_doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "desctop/posts/post_user/doc_list_repost.html"
+            return "desctop/generic/repost/u_doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "desctop/generic/parent_attach/u_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "desctop/posts/post_user/user_repost.html"
+            return "desctop/generic/repost/u_user_repost.html"
         elif parent.is_community_repost():
-            return "desctop/posts/post_user/community_repost.html"
+            return "desctop/generic/repost/u_community_repost.html"
         else:
             return "desctop/generic/attach/parent_user.html"
 
@@ -511,39 +511,39 @@ class Post(models.Model):
 		# FOR MOBILE PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "mobile/posts/post_community/photo_repost.html"
+            return "mobile/generic/repost/c_photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "mobile/posts/post_community/photo_album_repost.html"
+            return "mobile/generic/repost/c_photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "mobile/generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "mobile/posts/post_community/good_repost.html"
+            return "mobile/generic/repost/c_good_repost.html"
         elif parent.is_good_list_repost():
-            return "mobile/posts/post_community/good_list_repost.html"
+            return "mobile/generic/repost/c_good_list_repost.html"
         elif parent.is_good_list_attached():
             return "mobile/generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
-            return "mobile/posts/post_community/music_repost.html"
+            return "mobile/generic/repost/c_music_repost.html"
         elif parent.is_music_list_repost():
-            return "mobile/posts/post_community/music_list_repost.html"
+            return "mobile/generic/repost/c_music_list_repost.html"
         elif parent.is_playlist_attached():
             return "mobile/generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
-            return "mobile/posts/post_community/video_repost.html"
+            return "mobile/generic/repost/c_video_repost.html"
         elif parent.is_video_list_repost():
-            return "mobile/posts/post_community/video_list_repost.html"
+            return "mobile/generic/repost/c_video_list_repost.html"
         elif parent.is_video_list_attached():
             return "mobile/generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "mobile/posts/post_community/doc_repost.html"
+            return "mobile/generic/repost/c_doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "mobile/posts/post_community/doc_list_repost.html"
+            return "mobile/generic/repost/c_doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "mobile/generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "mobile/posts/post_community/user_repost.html"
+            return "mobile/generic/repost/c_user_repost.html"
         elif parent.is_community_repost():
-            return "mobile/posts/post_community/community_repost.html"
+            return "mobile/generic/repost/c_community_repost.html"
         else:
             return "mobile/generic/attach/parent_community.html"
 
@@ -555,39 +555,39 @@ class Post(models.Model):
 		# FOR MOBILE PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
-            return "mobile/posts/post_user/photo_repost.html"
+            return "mobile/generic/repost/u_photo_repost.html"
         elif parent.is_photo_album_repost():
-            return "mobile/posts/post_user/photo_album_repost.html"
+            return "mobile/generic/repost/u_photo_album_repost.html"
         if parent.is_photo_list_attached():
             return "mobile/generic/parent_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
-            return "mobile/posts/post_user/good_repost.html"
+            return "mobile/generic/repost/u_ood_repost.html"
         elif parent.is_good_list_repost():
-            return "mobile/posts/post_user/good_list_repost.html"
+            return "mobile/generic/repost/u_good_list_repost.html"
         elif parent.is_good_list_attached():
             return "mobile/generic/parent_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
-            return "mobile/posts/post_user/music_repost.html"
+            return "mobile/generic/repost/u_music_repost.html"
         elif parent.is_music_list_repost():
-            return "mobile/posts/post_user/music_list_repost.html"
+            return "mobile/generic/repost/u_music_list_repost.html"
         elif parent.is_playlist_attached():
             return "mobile/generic/parent_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
-            return "mobile/posts/post_user/video_repost.html"
+            return "mobile/generic/repost/u_video_repost.html"
         elif parent.is_video_list_repost():
-            return "mobile/posts/post_user/video_list_repost.html"
+            return "mobile/generic/repost/u_video_list_repost.html"
         elif parent.is_video_list_attached():
             return "mobile/generic/parent_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
-            return "mobile/posts/post_user/doc_repost.html"
+            return "mobile/generic/repost/u_doc_repost.html"
         elif parent.is_doc_list_repost():
-            return "mobile/posts/post_user/doc_list_repost.html"
+            return "mobile/generic/repost/u_doc_list_repost.html"
         elif parent.is_doc_list_attached():
             return "mobile/generic/parent_attach/u_doc_list_attach.html"
         elif parent.is_user_repost():
-            return "mobile/posts/post_user/user_repost.html"
+            return "mobile/generic/repost/u_user_repost.html"
         elif parent.is_community_repost():
-            return "mobile/posts/post_user/community_repost.html"
+            return "mobile/generic/repost/u_community_repost.html"
         else:
             return "mobile/generic/attach/parent_user.html"
 
