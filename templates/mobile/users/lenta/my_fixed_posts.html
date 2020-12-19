@@ -23,6 +23,8 @@
 </div>
 {% elif fix_list.count_posts == 1 %}
 
-{% include 'mobile/posts/post_user/my_fix_post.html' %}
+{% for object in fix_list.get_posts %}
+  {% include 'mobile/posts/post_user/my_fix_post.html' %}
+{% endfor %}
 
 {% endif %}
