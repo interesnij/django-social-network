@@ -441,11 +441,13 @@ function open_fullscreen(link, block) {
 }
 function if_list(block) {
     if (block.querySelector('.is_profile_post_paginate')) {
-        link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + document.body.querySelector(".is_main_post_list").getAttribute("list-pk") + "/";
+        pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
+        link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + pk + "/";
         list_block_load(block.querySelector('.is_profile_post_paginate'), ".post_stream", link);
         scrolled(link, '.list_pk', target = 0)
     } else if (block.querySelector('.is_community_post_paginate')) {
-        link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + document.body.querySelector(".is_main_post_list").getAttribute("list-pk") + "/";
+        pk = document.body.querySelector(".tab_active").getAttribute("list-pk");
+        link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + pk + "/";
         list_block_load(block.querySelector('.is_community_post_paginate'), ".post_stream", link);
         scrolled(link, '.list_pk', target = 0)
     } else if (block.querySelector('.is_block_post_paginate')) {
@@ -640,7 +642,7 @@ on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
 });
 on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement; 
+  parent = this.parentElement.parentElement.parentElement.parentElement;
   parent.parentElement.style.display = "none";
   parent.innerHTML=""
 });
