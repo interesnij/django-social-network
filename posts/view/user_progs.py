@@ -142,7 +142,7 @@ class PostCommentUserAbortDelete(View):
 class PostWallCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
+        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -152,7 +152,7 @@ class PostWallCommentUserDelete(View):
 class PostWallCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
+        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -231,7 +231,7 @@ class PostUserAbortDelete(View):
 class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == self.kwargs["pk"]:
+        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
             item.is_deleted = False
             item.save(update_fields=['is_deleted'])
             return HttpResponse()
