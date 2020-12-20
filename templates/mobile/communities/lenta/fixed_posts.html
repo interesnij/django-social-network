@@ -22,7 +22,7 @@
   </div>
 </div>
 {% elif fix_list.count_posts == 1 %}
-
-{% include 'mobile/communities/lenta/fix_post.html' %}
-
+{% for object in fix_list.get_posts %}
+  {% include 'mobile/communities/lenta/fix_post.html' %}
+{% endfor %}
 {% endif %}
