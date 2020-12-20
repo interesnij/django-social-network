@@ -184,7 +184,7 @@ top: 0;
 .csslider > input:nth-of-type(9):checked ~ .arrows > label:nth-of-type(10),
 .csslider > input:nth-of-type(10):checked ~ .arrows > label:nth-of-type(11),
 .csslider > input:nth-of-type(11):checked ~ .arrows > label:nth-of-type(12) {
-  right: 20px;
+  right: 40px;
   -moz-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   -o-transform: rotate(225deg);
