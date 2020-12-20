@@ -89,16 +89,17 @@ class CommunityDetail(TemplateView):
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityDetail,self).get_context_data(**kwargs)
-        context["membersheeps"] = self.c.get_members(self.c.pk)[0:6]
-        context["community"] = self.c
-        context["common_friends"] = self.common_friends
-        context["common_friends_count"] = self.common_friends_count
-        context['photo_album'] = self.c.get_or_create_photo_album()
-        context['video_album'] = self.c.get_or_create_video_album()
-        context['music_list'] = self.c.get_or_create_playlist()
-        context['docs_list'] = self.c.get_or_create_doc_list()
-        context['good_album'] = self.c.get_or_create_good_album()
+        c = super(CommunityDetail,self).get_context_data(**kwargs)
+        c["membersheeps"] = self.c.get_members(self.c.pk)[0:6]
+        c["community"] = self.c
+        c["common_friends"] = self.common_friends
+        c["common_friends_count"] = self.common_friends_count
+        c['photo_album'] = self.c.get_or_create_photo_album()
+        c['video_album'] = self.c.get_or_create_video_album()
+        c['music_list'] = self.c.get_or_create_playlist()
+        c['docs_list'] = self.c.get_or_create_doc_list()
+        c['good_album'] = self.c.get_or_create_good_album()
+        c['fix_list'] = self.c.get_or_create_fix_list()
         return context
 
 

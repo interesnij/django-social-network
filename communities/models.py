@@ -195,10 +195,13 @@ class Community(models.Model):
         except:
             pass
 
-    def get_fixed_posts(self):
+    def get_or_create_fix_list(self):
         from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type=PostList.FIX)
-        return list.get_posts()
+        try:
+            fix_list = PostList.objects.get(community_id=self.pk, type=PostList.FIX)
+        except:
+            fix_list = PostList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=PostList.FIX, title="Закрепленный список")
+        return fix_list
 
     def get_posts(self):
         from posts.models import Post, PostList

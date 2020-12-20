@@ -69,6 +69,8 @@
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
+  {% include 'mobile/users/lenta/fixed_posts.html' %}
+
   <span class="draft_post_container">
   {% if request.user|is_community_draft_exists:community.pk %}
   <div class="card mt-3 user_draft_list">
