@@ -93,23 +93,23 @@ class Chat(models.Model):
         creator_figure = ''
         if count == 1:
             if self.image:
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif self.creator.get_avatar():
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.creator.get_avatar())
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = self.creator.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">{} \<span class="status bg-success"></span><small class="float-right text-muted">{} \</small></h5><p class="mb-0" style="white-space: nowrap;">{}</p></div>'.format(chat_name, first_message.get_created(), first_message.get_preview_text())
-            return '<div class="media">{}{}</div>'.format(figure, media_body)
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">',chat_name, '<span class="status bg-success"></span><small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(), '</p></div>'])
+            return ''.join(['<div class="media">', figure, media_body, '</div>'])
         elif count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif member.get_avatar():
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.member.get_avatar())
+                figure = ''.join(['<figure><img src="', self.member.get_avatar(), '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
@@ -122,11 +122,11 @@ class Chat(models.Model):
                 status = ''
             if first_message.creator.user_id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">{}{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, status, first_message.get_created(), creator_figure, first_message.get_preview_text())
-            return '<div class="media">{}{}{}</div>'.format(figure, media_body, self.get_unread_count_message(user_id))
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
+            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif count > 2:
             if self.image:
-                figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
             else:
                 figure = '<figure><img src="/static/images/group_chat.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
@@ -135,15 +135,12 @@ class Chat(models.Model):
                 chat_name = "Групповой чат"
             if first_message.creator.user_id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '<small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + first_message.get_preview_text() + '</p></div>'
-            return '<div class="media">' + figure + media_body + self.get_unread_count_message(user_id) + '</div>'
+            media_body = '<div class="media-body"><h5 class="time-title mb-0">{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, first_message.get_created(), creator_figure, first_message.get_preview_text())
+            return '<div class="media">{}{}{}</div>'.format(figure, media_body, self.get_unread_count_message(user_id))
 
     def get_avatars(self):
         urls = []
-        members = self.chat_relation.all()[:10]
-        for user in members:
+        for user in self.chat_relation.all()[:10]:
             urls += [user.user.get_avatar()]
         return urls
 
@@ -152,26 +149,25 @@ class Chat(models.Model):
         if count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
-                figure = '<figure><a href="/users/' + str(member.pk) + '/" class="ajax"><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
+                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
             elif member.get_avatar():
-                figure = '<figure><a href="/users/' + str(member.pk) + '/" class="ajax"><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></a></figure>'
+                figure = '<figure><a href="/users/{}/" class="ajax"><img src="{}" style="border-radius:50px;width:50px;" alt="image"></a></figure>'.format(member.pk, member.get_avatar())
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = member.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
+            media_body = '<div class="media-body"><h5 class="time-title mb-0">{}</h5><p class="mb-0">{}</p></div>'.format(chat_name, self.get_type_display())
             return figure + media_body
         elif count > 2:
             if self.image:
-                figure = '<figure><img src="' + self.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="{}"style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
             else:
                 avatars = ''
                 for figure in self.get_avatars():
                     if figure:
-                        avatars += '<figure class="avatar-50 staked"><img src="' + figure + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                        avatars += '<figure class="avatar-50 staked"><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(figure)
                     else:
                         avatars += '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
@@ -286,10 +282,7 @@ class Message(models.Model):
         return self.creator.user
 
     def get_reseiver_ids(self):
-        chat = self.chat
-        members_ids = chat.get_members_ids()
-        #reseiver_ids = members_ids.remove(self.creator.pk)
-        return members_ids
+        return self.chat.get_members_ids()
 
     def create_socket(self):
         channel_layer = get_channel_layer()
@@ -310,8 +303,7 @@ class Message(models.Model):
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
         from common.processing.message import get_message_processing
 
-        chat_list = creator.get_all_chats()
-        current_chat = None
+        chat_list, current_chat = creator.get_all_chats(), None
         for chat in chat_list:
             if user.pk in chat.get_members_ids():
                 current_chat = chat
@@ -371,8 +363,7 @@ class Message(models.Model):
     def is_photo_album_repost(self):
         return try_except(self.repost.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
-        photo_album = self.repost.parent.post_album.filter(is_deleted=False)[0]
-        return photo_album
+        return self.repost.parent.post_album.filter(is_deleted=False)[0]
 
     def is_music_repost(self):
         return try_except(self.repost.status == Post.MUSIC_REPOST)
@@ -390,30 +381,25 @@ class Message(models.Model):
     def is_good_list_repost(self):
         return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        good = self.repost.item_good.filter(is_deleted=False)[0]
-        return good
+        return self.repost.item_good.filter(is_deleted=False)[0]
     def get_good_list_repost(self):
-        good_list = self.repost.parent.post_good_album.filter(is_deleted=False)[0]
-        return good_list
+        return self.repost.parent.post_good_album.filter(is_deleted=False)[0]
 
     def is_doc_repost(self):
         return try_except(self.repost.status == Post.DOC_REPOST)
     def is_doc_list_repost(self):
         return try_except(self.repost.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        list = self.repost.parent.post_doclist.filter(is_deleted=False)[0]
-        return list
+        return self.repost.parent.post_doclist.filter(is_deleted=False)[0]
     def get_doc_repost(self):
-        doc = self.repost.parent.item_doc.filter(is_deleted=False)[0]
-        return doc
+        return self.repost.parent.item_doc.filter(is_deleted=False)[0]
 
     def is_video_repost(self):
         return try_except(self.repost.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
         return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        video_list = self.repost.parent.post_video_album.filter(is_deleted=False)[0]
-        return video_list
+        return self.repost.parent.post_video_album.filter(is_deleted=False)[0]
 
     def get_attach_photos(self):
         return self.message_photo.filter(is_deleted=False)
@@ -460,7 +446,7 @@ class Message(models.Model):
             return "desctop/posts/post_community/photo_repost.html"
         elif repost.is_photo_album_repost():
             return "desctop/posts/post_community/photo_album_repost.html"
-        if repost.is_photo_list_attached():
+        elif repost.is_photo_list_attached():
             return "desctop/generic/parent_attach/c_photo_list_attach.html"
         elif repost.is_good_repost():
             return "desctop/posts/post_community/good_repost.html"
@@ -504,7 +490,7 @@ class Message(models.Model):
             return "desctop/posts/post_user/photo_repost.html"
         elif repost.is_photo_album_repost():
             return "desctop/posts/post_user/photo_album_repost.html"
-        if repost.is_photo_list_attached():
+        elif repost.is_photo_list_attached():
             return "desctop/generic/parent_attach/u_photo_list_attach.html"
         elif repost.is_good_repost():
             return "desctop/posts/post_user/good_repost.html"
@@ -548,7 +534,7 @@ class Message(models.Model):
             return "mobile/posts/post_community/photo_repost.html"
         elif repost.is_photo_album_repost():
             return "mobile/posts/post_community/photo_album_repost.html"
-        if repost.is_photo_list_attached():
+        elif repost.is_photo_list_attached():
             return "mobile/generic/parent_attach/c_photo_list_attach.html"
         elif repost.is_good_repost():
             return "mobile/posts/post_community/good_repost.html"
@@ -592,7 +578,7 @@ class Message(models.Model):
             return "mobile/posts/post_user/photo_repost.html"
         elif repost.is_photo_album_repost():
             return "mobile/posts/post_user/photo_album_repost.html"
-        if repost.is_photo_list_attached():
+        elif repost.is_photo_list_attached():
             return "mobile/generic/parent_attach/u_photo_list_attach.html"
         elif repost.is_good_repost():
             return "mobile/posts/post_user/good_repost.html"
