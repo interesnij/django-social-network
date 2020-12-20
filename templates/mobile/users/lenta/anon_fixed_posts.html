@@ -8,7 +8,7 @@
   <ul>
     {% for object in fix_list.get_posts %}
     <li class="scrollable">
-      {% include 'mobile/users/lenta/fix_post.html' %}
+      {% include 'mobile/users/lenta/anon_fix_post.html' %}
     </li>
     {% endfor %}
   </ul>
@@ -23,6 +23,6 @@
 </div>
 {% elif fix_list.count_posts == 1 %}
 
-{% include 'mobile/users/lenta/fix_post.html' %}
+{% include 'mobile/users/lenta/anon_fix_post.html' %}
 
 {% endif %}

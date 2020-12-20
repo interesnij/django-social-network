@@ -34,7 +34,7 @@
   </div>
 <div class="row border-left" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-  <div class="col-md-6 col-lg-4 mt-3">
+  <div class="col-6 mt-3">
     <div class="c_AL_photo progressive replace pointer mt-3" photo-pk="{{ photo.pk }}" data-uuid="{{ album.uuid }}" data-href="{{ photo.file.url }}">
       {% if photo.file %}
         <img class="preview image_fit_small" src="{% if photo.preview %}{{ photo.preview.url }}{% else %}/static/images/tiny.png{% endif %}" alt="img">
