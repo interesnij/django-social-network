@@ -48,7 +48,7 @@ class Chat(models.Model):
         return self.type == Chat.TYPE_MANAGER
 
     def get_members(self):
-        members = User.objects.filter(chat_users__chat_pk=self.pk)
+        members = User.objects.filter(chat_users__chat__pk=self.pk)
         return members
 
     def get_members_ids(self):
