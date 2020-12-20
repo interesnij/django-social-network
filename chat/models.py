@@ -48,13 +48,12 @@ class Chat(models.Model):
         return self.type == Chat.TYPE_MANAGER
 
     def get_members(self):
-        members = User.objects.filter(chat_users__chat__pk=self.pk)
+        members = User.objects.filter(chat_users__chat_pk=self.pk)
         return members
 
     def get_members_ids(self):
         users = self.get_members().values('id')
-        users_ids = [_user['id'] for _user in users]
-        return users_ids
+        return [_user['id'] for _user in users]
 
     def get_members_count(self):
         return self.get_members().values('id').count()
@@ -68,7 +67,7 @@ class Chat(models.Model):
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
         if count:
-            return '<span style="font-size: 80%;" class="tab_badge badge-success">' + str(count) + '</span>'
+            return '<span style="font-size: 80%;" class="tab_badge badge-success">{}</span>'.format(str(count))
         else:
             return ""
 
@@ -94,19 +93,17 @@ class Chat(models.Model):
         creator_figure = ''
         if count == 1:
             if self.image:
-                figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
             elif self.creator.get_avatar():
-                figure = '<figure><img src="' + self.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.creator.get_avatar())
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = self.creator.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            ' <span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + \
-            '</small></h5><p class="mb-0" style="white-space: nowrap;">' + first_message.get_preview_text() + '</p></div>'
-            return '<div class="media">' + figure + media_body + '</div>'
+            media_body = '<div class="media-body"><h5 class="time-title mb-0">{} \<span class="status bg-success"></span><small class="float-right text-muted">{} \</small></h5><p class="mb-0" style="white-space: nowrap;">{}</p></div>'.format(chat_name, first_message.get_created(), first_message.get_preview_text())
+            return '<div class="media">{}{}</div>'.format(figure, media_body)
         elif count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
