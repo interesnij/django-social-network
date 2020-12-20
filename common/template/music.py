@@ -9,7 +9,7 @@ def get_template_community_music(community, folder, template, request_user, user
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
-        if request_user.is_member_of_community(community.pk):
+        elif request_user.is_member_of_community(community.pk):
             if request_user.is_staff_of_community(community.pk):
                 template_name = folder + "admin_" + template
             elif request_user.is_audio_manager():
@@ -128,7 +128,7 @@ def get_template_user_music(user, folder, template, request_user, user_agent):
 
 def get_permission_user_music(user, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-    
+
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif user.is_blocked():

@@ -9,7 +9,7 @@ def get_template_community_doc(community, folder, template, request_user, user_a
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
-        if request_user.is_member_of_community(community.pk):
+        elif request_user.is_member_of_community(community.pk):
             if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template
             elif request_user.is_moderator_of_community(community.pk):
@@ -59,7 +59,7 @@ def get_template_community_doc(community, folder, template, request_user, user_a
 
 def get_permission_community_doc(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
-    
+
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():

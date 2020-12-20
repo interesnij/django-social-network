@@ -9,7 +9,7 @@ def get_template_community_photo(community, folder, template, request_user, user
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
-        if request_user.is_member_of_community(community.pk):
+        elif request_user.is_member_of_community(community.pk):
             if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template
             elif request_user.is_moderator_of_community(community.pk):
@@ -119,7 +119,7 @@ def get_template_user_photo(user, folder, template, request_user, user_agent):
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
-        elif user.pk == request_user.pk: 
+        elif user.pk == request_user.pk:
             if user.is_suspended():
                 template_name = "generic/u_template/you_suspended.html"
             elif user.is_blocked():
