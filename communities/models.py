@@ -782,17 +782,13 @@ class Community(models.Model):
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
 
-        good_notify = GoodCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
-        photo_notify = PhotoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
-        post_notify = PostCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
-        community_notify = UserCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
-        video_notify = VideoCommunityNotify.objects.filter(community_id=self.pk, recipient_id=user_pk, unread=True).values("pk").count()
-        return good_notify + photo_notify + post_notify + community_notify + video_notify
+        query = Q(community_id=self.pk, recipient_id=user_pk, unread=True)
+        return GoodCommunityNotify.objects.filter(query).values("pk").count() + PhotoCommunityNotify.objects.filter(query).values("pk").count() + PostCommunityNotify.objects.filter(query).values("pk").count() + UserCommunityNotify.objects.filter(query).values("pk").count() + VideoCommunityNotify.objects.filter(query).values("pk").count()
 
     def count_unread_notify(self, user_pk):
         count = self.count_community_unread_notify(user_pk)
         if count > 0:
-            return '<span class="tab_badge badge-success" style="font-size: 60%;">' + str(count) + '</span>'
+            return '<span class="tab_badge badge-success" style="font-size: 60%;">{}</span>'.format(str(count))
         else:
             return ''
 
@@ -839,8 +835,7 @@ class CommunityMembership(models.Model):
 
     @classmethod
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
-        membership = cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
-        return membership
+        return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:
         #unique_together = (('user', 'community'),)
