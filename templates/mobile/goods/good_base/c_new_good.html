@@ -1,6 +1,6 @@
 
 
-<div class="col-md-6 mb-3">
+<div class="mb-3" style="flex: 0 0 50%;max-width:50%;padding:5px;">
   <span class="span1 {% for list in object.get_albums_for_good %}{{ list.uuid }} {% endfor %}"></span>
         <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ album.uuid }}">
             <div class="row align-items-center no-gutters">

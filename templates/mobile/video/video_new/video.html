@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 u_video_list_detail pointer pag {% if forloop.last %}last{% endif %}"  video-pk="{{ object.pk }}" video-counter="{{ forloop.counter0|add:page_obj.start_index }}">
+<div class="u_video_list_detail pointer pag {% if forloop.last %}last{% endif %}" style="flex: 0 0 50%;max-width:50%;padding:5px;" video-pk="{{ object.pk }}" video-counter="{{ forloop.counter0|add:page_obj.start_index }}">
   <span class="span1 {% for list in object.get_albums_for_video %}{{ list.uuid }} {% endfor %}"></span>
   <div class="blog-header-img">
     {% if object.image %}

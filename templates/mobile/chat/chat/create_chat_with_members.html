@@ -1,5 +1,5 @@
 
-<div class="col-md-8 col-lg-8 col-xl-6 mx-auto">
+<div class="">
     <form id="add_chat_form">
       {% csrf_token %}
         <div class="card mb-3">
@@ -21,8 +21,8 @@
 
                 <span class="centered user_add_members pointer">Добавить участников</span>
                 <div class="row">
-                  <div class="col-md-7" id="chat_members" data-pk="{{ user.pk }}"></div>
-                  <div class="col-md-5" id="user_collector"></div>
+                  <div class="col-7" id="chat_members" data-pk="{{ user.pk }}"></div>
+                  <div class="col-5" id="user_collector"></div>
                 </div>
 
             </div>

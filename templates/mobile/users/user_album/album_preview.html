@@ -33,7 +33,7 @@
   </div>
 <div class="row" style="margin-left: 0;margin-right: 0;">
   {% for photo in album.get_6_photos %}
-    <div class="u_WA_photo col-md-6 col-lg-4" photo-pk="{{ photo.pk }}" data-pk="{{ request.user.pk }}">
+    <div class="u_WA_photo" style="flex: 0 0 50%;max-width:50%;padding:5px;" photo-pk="{{ photo.pk }}" data-pk="{{ request.user.pk }}">
       <div class="progressive replace pointer" data-href="{{ photo.file.url }}">
         {% if photo.preview %}
           <img class="preview image_fit_small" src="{{ photo.preview.url }}" alt="img">

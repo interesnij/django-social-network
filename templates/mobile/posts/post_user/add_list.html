@@ -1,5 +1,5 @@
 
-<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+<div class="">
     <form id="post_list_form">
       {% csrf_token %}
         <div class="card mb-3">
@@ -8,7 +8,6 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12">
                         <div class="form-group ">
                             <label>Название</label>
                             <input type="text" name="name" id="id_name" class="form-control">
@@ -24,7 +23,6 @@
                           <label>Порядковый номер</label>
                           <input type="number" value="1" min="1" name="order" class="form-control" id="id_order">
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="card-footer">

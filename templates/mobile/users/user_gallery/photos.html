@@ -2,7 +2,7 @@
 {% if photo_list %}
 
 {% for object in photo_list %}
-  <div class="col-sm-12 col-md-6 col-lg-4 u_photo_detail" style="cursor:pointer" data-id="{{ object.id }}">
+  <div class="u_photo_detail pointer" style="flex: 0 0 50%;max-width:50%;padding:5px;" data-id="{{ object.id }}">
       <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}
           <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">

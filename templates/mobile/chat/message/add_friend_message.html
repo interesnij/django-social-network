@@ -1,4 +1,4 @@
-<div class="col-md-10 col-lg-10 col-xl-8 mx-auto">
+<div class="">
     <form>
       {% csrf_token %}
         <div class="card mb-3">
@@ -6,8 +6,8 @@
                 <h5 class="content-color-primary">Написать {{ member.get_full_name_datv }}</h5>
                 <span class="user_add_members pointer mt-3">Добавить участников</span>
                 <div class="row">
-                  <div class="col-md-7" id="chat_members" data-pk="{{ member.pk }}"></div>
-                  <div class="col-md-5" id="user_collector"></div>
+                  <div class="col-7" id="chat_members" data-pk="{{ member.pk }}"></div>
+                  <div class="col-5" id="user_collector"></div>
                 </div>
             </div>
 
