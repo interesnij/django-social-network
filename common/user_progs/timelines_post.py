@@ -11,17 +11,17 @@ def get_timeline_posts(user):
     my_posts = user.post_creator.only('created').filter(Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status="P"))
 
     _community_posts = Q(community__memberships__user__id=user.pk, is_deleted=False, status="P")
-    #_community_posts.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk) |Q(list__type="DE") |Q(list__type="PR")), Q.AND)
+    _community_posts.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk) |Q(list__type="DE") |Q(list__type="PR")), Q.AND)
     community_posts = Post.objects.only('created').filter(_community_posts)
 
     followeds = user.follows.values('followed_user_id')
     _followed_users = Q(creator_id__in=[i['followed_user_id'] for i in followeds], creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
-    #_followed_users.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
+    _followed_users.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
     followed_users = Post.objects.only('created').filter(_followed_users)
 
     frends = user.connections.values('target_user_id')
     _frends_query = Q(creator_id__in=[i['target_user_id'] for i in frends], is_deleted=False, status="P")
-    #_frends_query.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
+    _frends_query.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
     frends = Post.objects.only('created').filter(_frends_query)
     return my_posts.union(community_posts, followed_users, frends)
 
@@ -29,12 +29,12 @@ def get_timeline_featured_posts(user):
     """ лента записей, которые публикуются рекомендованнными для пользователя пользователями, их сообществами """
     possible_users = user.get_possible_friends_ids()
     posts_query = Q(creator_id__in=possible_users, creator__user_private__is_private=False, community__isnull=True, is_deleted=False, status=Post.STATUS_PUBLISHED)
+    posts_query.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
     posts_queryset = Post.objects.only('created').filter(posts_query)
     community_query = Q(community__memberships__user__id__in=possible_users, is_deleted=False, status=Post.STATUS_PUBLISHED)
-    community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk)), Q.AND)
+    community_query.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk) | Q(list__type="DE") | Q(list__type="PR")), Q.AND)
     community_queryset = Post.objects.only('created').filter(community_query)
-    final_queryset = posts_queryset.union(community_queryset)
-    return final_queryset
+    return posts_queryset.union(community_queryset)
 
 
 def get_timeline_photos(user):
