@@ -127,7 +127,7 @@ width: 300%;
 .csslider > input:nth-of-type(10):checked ~ .arrows > label:nth-of-type(9),
 .csslider > input:nth-of-type(11):checked ~ .arrows > label:nth-of-type(10) {
 display: block;
-left: 0;
+left: 34px;
 right: auto;
 -moz-transform: rotate(45deg);
 -ms-transform: rotate(45deg);
