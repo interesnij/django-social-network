@@ -126,7 +126,7 @@ class Chat(models.Model):
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif count > 2:
             if self.image:
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
                 figure = '<figure><img src="/static/images/group_chat.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
             if self.name:
@@ -135,8 +135,8 @@ class Chat(models.Model):
                 chat_name = "Групповой чат"
             if first_message.creator.user_id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, first_message.get_created(), creator_figure, first_message.get_preview_text())
-            return '<div class="media">{}{}{}</div>'.format(figure, media_body, self.get_unread_count_message(user_id))
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
+            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'
 
     def get_avatars(self):
         urls = []
@@ -149,34 +149,33 @@ class Chat(models.Model):
         if count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
-                figure = '<figure><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif member.get_avatar():
-                figure = '<figure><a href="/users/{}/" class="ajax"><img src="{}" style="border-radius:50px;width:50px;" alt="image"></a></figure>'.format(member.pk, member.get_avatar())
+                figure = ''.join(['<figure><a href="/users/', member.pk,' class="ajax"><img src="', member.get_avatar(),'" style="border-radius:50px;width:50px;" alt="image"></a></figure>'])
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = member.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">{}</h5><p class="mb-0">{}</p></div>'.format(chat_name, self.get_type_display())
-            return figure + media_body
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">',self.get_type_display(), '</p></div>'])
+            return ''.join([figure, media_body])
         elif count > 2:
             if self.image:
-                figure = '<figure><img src="{}"style="border-radius:50px;width:50px;" alt="image"></figure>'.format(self.image.url)
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
                 avatars = ''
                 for figure in self.get_avatars():
                     if figure:
-                        avatars += '<figure class="avatar-50 staked"><img src="{}" style="border-radius:50px;width:50px;" alt="image"></figure>'.format(figure)
+                        avatars = ''.join([avatars, '<figure><img src="', figure, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
                     else:
-                        avatars += '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                        avatars = ''.join([avatars, '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = "Групповой чат"
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
-            return avatars + media_body
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, + '</h5><p class="mb-0">', self.get_type_display(), '</p></div>'])
+            return ''.join([avatars, media_body])
         elif count == 1:
             if self.image:
                 figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
