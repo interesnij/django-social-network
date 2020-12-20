@@ -24,7 +24,7 @@ class CommunityFixPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_template_user_post
+        from common.template.post import get_template_community_post
         from posts.models import Post, PostList
 
         self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
