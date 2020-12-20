@@ -162,7 +162,7 @@ top: 0;
   top: 0;
 }
 .csslider > .arrows {
-  left: 30px;
+  left: 20px;
   padding: 0;
   height: 26px;
   position: absolute;
@@ -184,7 +184,7 @@ top: 0;
 .csslider > input:nth-of-type(9):checked ~ .arrows > label:nth-of-type(10),
 .csslider > input:nth-of-type(10):checked ~ .arrows > label:nth-of-type(11),
 .csslider > input:nth-of-type(11):checked ~ .arrows > label:nth-of-type(12) {
-  right: 40px;
+  right: 20px;
   -moz-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   -o-transform: rotate(225deg);
