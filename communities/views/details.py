@@ -100,7 +100,7 @@ class CommunityDetail(TemplateView):
         c['docs_list'] = self.c.get_or_create_doc_list()
         c['good_album'] = self.c.get_or_create_good_album()
         c['fix_list'] = self.c.get_or_create_fix_list()
-        return context
+        return c
 
 
 class CommunityGallery(TemplateView):
