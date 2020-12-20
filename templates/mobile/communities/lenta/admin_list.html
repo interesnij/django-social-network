@@ -8,9 +8,6 @@
         </span>
         {% endif %}
         <span>
-          {% if community.is_have_fixed_posts %}
-            is_have_fixed_posts
-          {% endif %}
 
           {% for object in object_list %}
             {% include 'mobile/posts/post_community/admin_post.html' %}
