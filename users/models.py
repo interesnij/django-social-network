@@ -256,8 +256,7 @@ class User(AbstractUser):
         check_can_follow_user(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
-        follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
-        return follow
+        return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
 
     def community_follow_user(self, community_pk):
         return self.follow_community(community_pk)
@@ -266,8 +265,7 @@ class User(AbstractUser):
         from follows.models import CommunityFollow
 
         check_can_join_community(user=self, community_pk=community_pk)
-        follow = CommunityFollow.create_follow(user_id=self.pk, community_pk=community_pk)
-        return follow
+        return CommunityFollow.create_follow(user_id=self.pk, community_pk=community_pk)
 
     def community_unfollow_user(self, community_pk):
         return self.unfollow_community(community_pk)
@@ -298,11 +296,11 @@ class User(AbstractUser):
 
     def delete_populate_friend(self, user_id):
         from users.model.list import UserPopulateFriend
-        #try:
-        populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
-        populate_friend.delete()
-        #except:
-        #    pass
+        try:
+            populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+            populate_friend.delete()
+        except:
+            pass
 
     def create_or_plus_populate_community(self, community_id):
         from users.model.list import UserPopulateCommunity
@@ -346,20 +344,18 @@ class User(AbstractUser):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
-        featured_ids = [user['featured_user'] for user in featured]
-        return featured_ids
+        return [user['featured_user'] for user in featured]
 
     def get_possible_friends_count(self):
         from users.model.list import UserFeaturedFriend
-        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
-        return featured.count()
+
+        return UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user").count()
 
     def get_6_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
-        featured_ids = [user['featured_user'] for user in featured][:6]
-        return featured_ids
+        return [user['featured_user'] for user in featured][:6]
 
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -848,18 +844,15 @@ class User(AbstractUser):
     ''''' GET всякие  219-186 '''''
     def get_6_default_connection(self):
         my_frends = self.connections.values('target_user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        connection_query = Q(id__in=my_frends_ids)
+        connection_query = Q(id__in=[target_user['target_user_id'] for target_user in my_frends])
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
-        frends = User.objects.filter(connection_query)
-        return frends[0:6]
+        return User.objects.filter(connection_query)[0:6]
 
     def get_6_populate_friends_ids(self):
         from users.model.list import UserPopulateFriend
 
         frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
-        frends_ids = [user['friend'] for user in frends_query][:6]
-        return frends_ids
+        return [user['friend'] for user in frends_query][:6]
 
     def is_have_friends(self):
         from frends.models import Connect
@@ -870,7 +863,7 @@ class User(AbstractUser):
         query = []
         for frend_id in self.get_6_populate_friends_ids():
             user = User.objects.get(pk=frend_id)
-            query = query + [user,]
+            query = query + [user]
         return query
 
     def get_6_populate_object(self):
@@ -894,38 +887,33 @@ class User(AbstractUser):
         from communities.models import Community
 
         query = Q(memberships__user=self)
-        communities = Community.objects.filter(query)
-        return communities[0:6]
+        return Community.objects.filter(query)[0:6]
 
     def get_6_populate_communities(self):
         from users.model.list import UserPopulateCommunity
         from communities.models import Community
 
-        communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        communities_ids = [community['community'] for community in communities_query][:6]
-        query = []
-        for community_id in communities_ids:
+        communities_query, query = UserPopulateCommunity.objects.filter(user=self.pk).values("community"), []
+        for community_id in [community['community'] for community in communities_query][:6]:
             community = Community.objects.get(pk=community_id)
-            query = query + [community,]
+            query = query + [community]
         return query
 
     def get_default_communities(self):
         from communities.models import Community
 
         query = Q(memberships__user=self)
-        communities = Community.objects.filter(query)
-        return communities
+        return Community.objects.filter(memberships__user_id=self.pk)
 
     def get_populate_communities(self):
         from users.model.list import UserPopulateCommunity
         from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        communities_ids = [community['community'] for community in communities_query]
         query = []
-        for community_id in communities_ids:
+        for community_id in [community['community'] for community in communities_query]:
             community = Community.objects.get(pk=community_id)
-            query = query + [community,]
+            query = query + [community]
         return query
 
     def get_6_communities(self):
@@ -942,13 +930,11 @@ class User(AbstractUser):
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        return my_frends_ids
+        return [target_user['target_user_id'] for target_user in my_frends]
 
     def get_friend_and_friend_of_friend_ids(self):
         frends = self.get_all_connection()
-        frends_val = frends.values('id')
-        frends_ids = [user['id'] for user in frends_val]
+        frends_ids = [u['id'] for u in frends.values('id')]
         query = []
         for frend in frends:
             i = frend.get_all_connection().values('id')
@@ -963,41 +949,35 @@ class User(AbstractUser):
 
 
     def get_all_connection(self):
-        my_frends = self.connections.values('target_user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=self.get_all_connection_ids())
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
-        frends = User.objects.filter(connection_query)
-        return frends
+        return User.objects.filter(connection_query)
 
     def get_online_connection(self):
-        frends = self.get_all_connection()
-        query = []
+        frends, query = self.get_all_connection(), []
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
         return query
 
     def get_online_connection_count(self):
-        frends = self.get_all_connection()
-        query = []
+        frends, query = self.get_all_connection(), []
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
         return len(query)
 
     def get_pop_online_connection(self):
-        frends = self.get_all_connection()
-        query = []
+        frends, query = self.get_all_connection(), []
         for frend in frends:
-            if frend.get_online():
-                query += [frend,]
-        return query[0:5]
+            if frend.get_online() and len(query) < 6:
+                query += [frend]
+        return query
 
     def is_have_fixed_posts(self):
         from posts.models import PostList
         try:
-            list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIX)
             if list.is_not_empty():
                 return True
             else:
@@ -1007,32 +987,28 @@ class User(AbstractUser):
     def get_or_create_fix_list(self):
         from posts.models import PostList
         try:
-            fix_list = PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
+            return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIX)
         except:
-            fix_list = PostList.objects.create(creator_id=self.pk, community=None, type=PostList.FIX, title="Закрепленный список")
-        return fix_list
+            return PostList.objects.create(creator_id=self.pk, community__isnull=True, type=PostList.FIX, title="Закрепленный список")
 
     def get_draft_posts(self):
         from posts.models import Post
 
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Post.STATUS_DRAFT, community=None)
-        posts = Post.objects.filter(posts_query)
-        return posts
+        return Post.objects.filter(posts_query)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
 
         posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
-        posts = Post.objects.filter(posts_query)
-        return posts
+        return Post.objects.filter(posts_query)
 
     def get_post_lists(self):
         from posts.models import PostList
 
-        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
         lists_query.add(~Q(Q(type="DE")|Q(type="PR")), Q.AND)
-        lists = PostList.objects.filter(lists_query).order_by("order")
-        return lists
+        return PostList.objects.filter(lists_query).order_by("order")
 
     def get_post_categories(self):
         from posts.models import PostCategory
@@ -1040,148 +1016,130 @@ class User(AbstractUser):
 
     def get_my_all_post_lists(self):
         from posts.models import PostList
-        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
         lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.FIX)), Q.AND)
-        lists = PostList.objects.filter(lists_query)
-        return lists
+        return PostList.objects.filter(lists_query)
 
     def get_articles(self):
         from article.models import Article
 
         articles_query = Q(creator_id=self.id, is_deleted=False)
-        articles = Article.objects.filter(articles_query)
-        return articles
+        return Article.objects.filter(articles_query)
 
     def get_all_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
-        return albums
+        return Album.objects.filter(albums_query).order_by("order")
 
     def get_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
-        return albums
+        return Album.objects.filter(albums_query).order_by("order")
 
     def get_my_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query)
-        return albums
+        return Album.objects.filter(albums_query)
 
     def get_video_albums(self):
         from video.models import VideoAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
-        albums = VideoAlbum.objects.filter(albums_query)
-        return albums
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
+        return VideoAlbum.objects.filter(albums_query)
 
     def user_photo_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.id, community=None, is_deleted=False, type="AL").exists()
+        return self.photo_album_creator.filter(creator_id=self.id, community__isnull=True, is_deleted=False, type="AL").exists()
     def user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None, is_deleted=False, type="AL").exists()
+        return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_deleted=False, type="AL").exists()
     def is_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community=None, is_public=True, is_deleted=False).exists()
+        return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_public=True, is_deleted=False).exists()
     def is_music_playlist_exists(self):
-        return self.user_playlist.filter(creator_id=self.id, community=None, type="LI", is_deleted=False).exists()
+        return self.user_playlist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
     def is_good_album_exists(self):
-        return self.good_album_creator.filter(creator_id=self.id, community=None, type="AL", is_deleted=False).exists()
+        return self.good_album_creator.filter(creator_id=self.id, community__isnull=True, type="AL", is_deleted=False).exists()
     def post_list_exists(self):
-        return self.user_postlist.filter(creator_id=self.id, community=None, type="AL").exists()
+        return self.user_postlist.filter(creator_id=self.id, community__isnull=True, type="AL").exists()
     def my_post_list_exists(self):
-        return self.user_postlist.filter(creator_id=self.id, community=None).exclude(type="MA").exists()
+        return self.user_postlist.filter(creator_id=self.id, community__isnull=True).exclude(type="MA").exists()
 
     def get_my_video_albums(self):
         from video.models import VideoAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type="AL")
-        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type="AL")
+        return VideoAlbum.objects.filter(albums_query).order_by("order")
 
     def get_all_video_albums(self):
         from video.models import VideoAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        albums = VideoAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
+        return VideoAlbum.objects.filter(albums_query).order_by("order")
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community=None, type=SoundList.LIST, is_deleted=False)
-        playlists = SoundList.objects.filter(playlists_query).order_by("order")
-        return playlists
+        playlists_query = Q(creator_id=self.id, community__isnull=True, type=SoundList.LIST, is_deleted=False)
+        return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_all_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community=None, is_deleted=False)
-        playlists = SoundList.objects.filter(playlists_query).order_by("order")
-        return playlists
+        playlists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
+        return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_good_albums(self):
         from goods.models import GoodAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None, type=GoodAlbum.ALBUM)
-        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type=GoodAlbum.ALBUM)
+        return GoodAlbum.objects.filter(albums_query).order_by("order")
 
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
+        return GoodAlbum.objects.filter(albums_query).order_by("order")
 
     def get_or_create_good_album(self):
         from goods.models import GoodAlbum
         try:
-            album = GoodAlbum.objects.get(creator_id=self.pk, community=None, type=GoodAlbum.MAIN)
+            return GoodAlbum.objects.get(creator_id=self.pk, community__isnull=True, type=GoodAlbum.MAIN)
         except:
-            album = GoodAlbum.objects.create(creator_id=self.pk, community=None, type=GoodAlbum.MAIN, title="Основной альбом")
-        return album
+            return GoodAlbum.objects.create(creator_id=self.pk, community__isnull=True, type=GoodAlbum.MAIN, title="Основной альбом")
     def get_or_create_playlist(self):
         from music.models import SoundList
         try:
-            playlist = SoundList.objects.get(creator_id=self.pk, community=None, type=SoundList.MAIN)
+            return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
         except:
-            playlist = SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
-        return playlist
+            return SoundList.objects.create(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN, name="Основной плейлист")
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
         try:
-            album = VideoAlbum.objects.get(creator_id=self.pk, community=None, type=VideoAlbum.MAIN)
+            return VideoAlbum.objects.get(creator_id=self.pk, community__isnull=True, type=VideoAlbum.MAIN)
         except:
-            album = VideoAlbum.objects.create(creator_id=self.pk, community=None, type=VideoAlbum.MAIN, title="Основной альбом")
-        return album
+            return VideoAlbum.objects.create(creator_id=self.pk, community__isnull=True, type=VideoAlbum.MAIN, title="Основной альбом")
     def get_or_create_photo_album(self):
         from gallery.models import Album
         try:
-            album = Album.objects.get(creator_id=self.pk, community=None, type=Album.MAIN)
+            return Album.objects.get(creator_id=self.pk, community__isnull=True, type=Album.MAIN)
         except:
-            album = Album.objects.create(creator_id=self.pk, community=None, type=Album.MAIN, title="Основной альбом")
-        return album
+            return Album.objects.create(creator_id=self.pk, community__isnull=True, type=Album.MAIN, title="Основной альбом")
     def get_or_create_doc_list(self):
         from docs.models import DocList
         try:
-            list = DocList.objects.get(creator_id=self.pk, community=None, type=DocList.MAIN)
+            return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
         except:
-            list = DocList.objects.create(creator_id=self.pk, community_id=None, type=DocList.MAIN, name="Основной список")
-        return list
+            return DocList.objects.create(creator_id=self.pk, community__isnull=True, type=DocList.MAIN, title="Основной список")
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
 
-        list = SoundList.objects.get(creator_id=self.id, community=None, type=SoundList.MAIN)
-        music_query = list.players.filter(is_deleted=False)
-        return music_query
+        list = SoundList.objects.get(creator_id=self.id, community__isnull=True, type=SoundList.MAIN)
+        return list.players.filter(is_deleted=False)
 
     def is_have_music(self):
         for list in self.get_playlists():
@@ -1189,14 +1147,10 @@ class User(AbstractUser):
                 return True
         return False
 
-        return SoundcloudParsing.objects.filter(creator_id=self.id, is_deleted=False).exists()
-
     def get_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, is_deleted=False, community=None)
-        playlists = SoundList.objects.filter(playlists_query)
-        return playlists
+        return SoundList.objects.filter(creator_id=self.id, is_deleted=False, community__isnull=True)
 
     def get_music_count(self):
         count = 0
@@ -1206,28 +1160,24 @@ class User(AbstractUser):
 
     def get_last_music(self):
         lists = []
-        i = 1
-        for music in self.get_music():
-            if i < 6:
-                lists += [music,]
-                i += 1
+        for i in self.get_music():
+            if len(lists) < 6:
+                lists += [i]
         return lists
 
     def get_video_count(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
+        list = VideoAlbum.objects.get(creator_id=self.id, community__isnull=True, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False)
-        count = Video.objects.filter(video_query).values("pk")
-        return count.count()
+        return Video.objects.filter(video_query).values("pk").count()
 
     def get_last_video(self):
         from video.models import Video, VideoAlbum
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community=None, type=VideoAlbum.MAIN)
+        list = VideoAlbum.objects.get(creator_id=self.id, community__isnull=True, type=VideoAlbum.MAIN)
         video_query = Q(album=list, is_deleted=False, is_public=True)
-        video_list = Video.objects.filter(video_query).order_by("-created")
-        return video_list[0:2]
+        return Video.objects.filter(video_query).order_by("-created")[0:2]
 
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
@@ -1252,44 +1202,39 @@ class User(AbstractUser):
         elif genre_music:
             return genre_music.playlist_too()
         else:
-            queryset = self.get_music()
-            return queryset
+            return self.get_music()
 
     def get_docs_count(self):
         from docs.models import Doc2
 
-        docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False).values("pk").count()
-        return docs_list
+        return Doc2.objects.filter(creator_id=self.pk, community__isnull=True).values("pk").count()
 
     def get_last_docs(self):
         from docs.models import DocList, Doc2
 
-        docs_list = Doc2.objects.filter(creator_id=self.pk, is_community=False, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
+        docs_list = Doc2.objects.filter(creator_id=self.pk, community__isnull=True, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
         return docs_list[0:5]
 
     def is_doc_list_exists(self):
-        return self.user_doclist.filter(creator_id=self.id, community=None, type="LI", is_deleted=False).exists()
+        return self.user_doclist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community=None, type=DocList.LIST, is_deleted=False)
-        lists = DocList.objects.filter(lists_query).order_by("order")
-        return lists
+        lists_query = Q(creator_id=self.id, community__isnull=True, type=DocList.LIST, is_deleted=False)
+        return DocList.objects.filter(lists_query).order_by("order")
 
     def get_my_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community=None, is_public=True, type=DocList.LIST, is_deleted=False)
-        lists = DocList.objects.filter(lists_query).order_by("order")
-        return lists
+        lists_query = Q(creator_id=self.id, community__isnull=True, is_public=True, type=DocList.LIST, is_deleted=False)
+        return DocList.objects.filter(lists_query).order_by("order")
 
     def get_all_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community=None, is_deleted=False)
-        lists = DocList.objects.filter(lists_query).order_by("order")
-        return lists
+        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
+        return DocList.objects.filter(lists_query).order_by("order")
 
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
@@ -1315,10 +1260,8 @@ class User(AbstractUser):
 
     def get_friends_and_followings_ids(self):
         my_frends = self.connections.values('target_user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         my_followings = self.followers.values('user_id')
-        my_followings_ids = [user['user_id'] for user in my_followings]
-        return my_frends_ids + my_followings_ids
+        return [i['target_user_id'] for i in my_frends] + [u['user_id'] for u in my_followings]
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
@@ -1326,25 +1269,18 @@ class User(AbstractUser):
             return ""
         my_frends = self.connections.values('target_user_id')
         user_frends = user.connections.values('target_user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        user_frend_ids = [target_user['target_user_id'] for target_user in user_frends]
-        result=list(set(my_frends_ids) & set(user_frend_ids))
+        result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([target_user['target_user_id'] for target_user in user_frends]))
         query = Q(id__in=result)
-        connection = User.objects.filter(query)
-        return connection
+        return User.objects.filter(query)
 
     def get_common_friends_of_community(self, community_id):
         from communities.models import Community
 
-        community = Community.objects.get(pk=community_id)
-        my_frends = self.connections.values('target_user_id')
+        community, my_frends = Community.objects.get(pk=community_id), self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        community_frends_ids = [user_id['user_id'] for user_id in community_frends]
-        result=list(set(my_frends_ids) & set(community_frends_ids))
+        result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([user_id['user_id'] for user_id in community_frends]))
         query = Q(id__in=result)
-        connection = User.objects.filter(query)
-        return connection
+        return User.objects.filter(query)
 
     def get_common_friends_of_community_count_ru(self, community_id):
         from communities.models import Community
@@ -1357,31 +1293,27 @@ class User(AbstractUser):
         result=list(set(my_frends_ids) & set(community_frends_ids))
         query = Q(id__in=result)
         count = User.objects.filter(query).values("pk").count()
-        a = count % 10
-        b = count % 100
+        a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
-            return str(count) + " друг"
+            return '{}{}'.format(str(count)," друг")
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return str(count) + " друга"
+            return '{}{}'.format(str(count)," друга")
         else:
-            return str(count) + " друзей"
+            return '{}{}'.format(str(count)," друзей")
 
     def get_target_users(self):
         from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")
-        ids = [user['target'] for user in v_s]
         query = []
-        for user in ids:
-            query = query + [User.objects.get(id=user), ]
+        for user in [user['target'] for user in UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")]:
+            query = query + [User.objects.get(id=user)]
         return query
 
     def get_last_visited_communities(self):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values('community')
-        ids = [use['community'] for use in v_s]
         result = list()
-        map(lambda x: not x in result and result.append(x), ids)
+        map(lambda x: not x in result and result.append(x), [use['community'] for use in v_s])
         query = []
         for i in result:
             query = query + [Community.objects.get(id=i), ]
@@ -1391,9 +1323,7 @@ class User(AbstractUser):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).distinct("community").values("community")
-        ids = [use['community'] for use in v_s]
-        query = Community.objects.filter(id__in=ids)
-        return query
+        return Community.objects.filter(id__in=[use['community'] for use in v_s])
 
     def get_visited_communities_count(self):
         from stst.models import CommunityNumbers
@@ -1418,7 +1348,6 @@ class User(AbstractUser):
     def leave_community(self, community_pk):
         from communities.models import Community
 
-
         check_can_leave_community(user=self, community_id=community_pk)
         community_to_leave = Community.objects.get(pk=community_pk)
         community_to_leave.remove_member(self)
@@ -1436,8 +1365,7 @@ class User(AbstractUser):
         from users.model.profile import UserLocation
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('target')
-        ids = [use['target'] for use in v_s]
-        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        count = UserLocation.objects.filter(user_id__in=[use['target'] for use in v_s], city_ru=sity).count()
         return count
 
     ''''' модерация '''''
@@ -1539,7 +1467,7 @@ class User(AbstractUser):
     def get_penalty_audios(self):
         # оштрафованные записи
         from managers.model.audio import ModerationPenaltyAudio
-        return ModerationPenaltyAudio.objects.filter(manager__id=self.pk)
+        return ModerationPenaltyAudio.objects.filter(manager_id=self.pk)
     ''''' конец модерации '''''
 
 
@@ -1547,17 +1475,15 @@ class User(AbstractUser):
 
     def get_private_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user=self, type=Chat.TYPE_PRIVATE, is_deleted=False)
+        return Chat.objects.filter(chat_relation__user_id=self.pk, type=Chat.TYPE_PRIVATE, is_deleted=False)
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user=self, is_deleted=False)
+        return Chat.objects.filter(chat_relation__user_id=self.pk, is_deleted=False)
 
     def get_chats_and_connections(self):
         from itertools import chain
-        chats = self.get_all_chats()
-        friends = self.get_all_connection()
-        return list(chain(chats, friends))
+        return list(chain(self.get_all_chats(), self.get_all_connection()))
 
     def is_administrator_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True).exists()
@@ -1565,8 +1491,7 @@ class User(AbstractUser):
         return self.chat_users.filter(chat__pk=chat_pk).exists()
 
     def get_unread_chats(self):
-        chats = self.get_all_chats()
-        count = 0
+        chats, count = self.get_all_chats(), 0
         for chat in chats:
             if chat.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=self.pk).exists():
                 count += 1
@@ -1583,14 +1508,7 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        good_notify = GoodNotify.objects.only('created').filter(recipient_id=self.pk)
-        photo_notify = PhotoNotify.objects.only('created').filter(recipient_id=self.pk)
-        post_notify = PostNotify.objects.only('created').filter(recipient_id=self.pk)
-        user_notify = UserNotify.objects.only('created').filter(recipient_id=self.pk)
-        video_notify = VideoNotify.objects.only('created').filter(recipient_id=self.pk)
-
-        result_list = sorted(chain(user_notify, post_notify, photo_notify, good_notify, video_notify), key=lambda instance: instance.created, reverse=True)
-        return result_list
+        return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk), PostNotify.objects.only('created').filter(recipient_id=self.pk), PhotoNotify.objects.only('created').filter(recipient_id=self.pk), GoodNotify.objects.only('created').filter(recipient_id=self.pk), VideoNotify.objects.only('created').filter(recipient_id=self.pk)), key=lambda instance: instance.created, reverse=True)
 
     def read_user_notify(self):
         from notify.model.good import GoodNotify
@@ -1612,18 +1530,13 @@ class User(AbstractUser):
         from notify.model.user import UserNotify
         from notify.model.video import VideoNotify
 
-        good_notify = GoodNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
-        photo_notify = PhotoNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
-        post_notify = PostNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
-        community_notify = UserNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
-        video_notify = VideoNotify.objects.filter(recipient_id=self.pk, unread=True).values("pk").count()
-        return good_notify + photo_notify + post_notify + community_notify + video_notify
+        query = Q(recipient_id=self.pk, unread=True)
+        return GoodNotify.objects.filter(query).values("pk").count() + PhotoNotify.objects.filter(query).values("pk").count() + PostNotify.objects.filter(query).values("pk").count() + UserNotify.objects.filter(query).values("pk").count() + VideoNotify.objects.filter(query).values("pk").count()
 
     def unread_notify_count(self):
         count = self.count_user_unread_notify()
         if self.is_staffed_user():
-            communities = self.get_staffed_communities()
-            for community in communities:
+            for community in self.get_staffed_communities():
                 count += community.count_community_unread_notify(self.pk)
         if count > 0:
             return count
