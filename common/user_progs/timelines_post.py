@@ -20,7 +20,7 @@ def get_timeline_posts(user):
     followed_users = Post.objects.only('created').filter(_followed_users)
 
     frends = user.connections.values('target_user_id')
-    _frends_query = Q(creator_id__in=[target_user['target_user_id'] for target_user in frends], is_deleted=False, status=status="P")
+    _frends_query = Q(creator_id__in=[target_user['target_user_id'] for target_user in frends], is_deleted=False, status="P")
     _frends_query.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
     frends = Post.objects.only('created').filter(_frends_query)
     return my_posts.union(community_posts, followed_users, frends)
