@@ -274,17 +274,16 @@ class Community(models.Model):
         from gallery.models import Album
         albums = Album.objects.filter(community_id=self.id)
         count = 0
-        #for album in albums:
-        #    count += album.count_photo()
-        return count + album.count_photo() for album in albums
+        for album in albums:
+            count += album.count_photo()
+        return count
 
     def get_albums(self):
         from gallery.models import Album
 
         albums_query = Q(community=self, is_deleted=False, is_public=True)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
-        return albums
+        return Album.objects.filter(albums_query).order_by("order")
 
     def count_albums(self):
         return self.album_community.filter(community_id=self.pk, is_deleted=False).values('pk').count()
@@ -294,8 +293,7 @@ class Community(models.Model):
 
         albums_query = Q(community=self, is_deleted=False)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        albums = Album.objects.filter(albums_query).order_by("order")
-        return albums
+        return Album.objects.filter(albums_query).order_by("order")
 
     def is_album_exists(self):
         return self.album_community.filter(community=self, is_deleted=False).exists()
@@ -309,14 +307,12 @@ class Community(models.Model):
         from goods.models import GoodAlbum
 
         albums_query = Q(community_id=self.id, type="AL", is_deleted=False)
-        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        return GoodAlbum.objects.filter(albums_query).order_by("order")
     def get_all_good_albums(self):
         from goods.models import GoodAlbum
 
         albums_query = Q(community_id=self.id, is_deleted=False)
-        albums = GoodAlbum.objects.filter(albums_query).order_by("order")
-        return albums
+        return GoodAlbum.objects.filter(albums_query).order_by("order")
 
     def get_goods_count(self):
         count = 0
@@ -327,17 +323,15 @@ class Community(models.Model):
     def get_or_create_good_album(self):
         from goods.models import GoodAlbum
         try:
-            album = GoodAlbum.objects.get(community_id=self.pk, type=GoodAlbum.MAIN)
+            return GoodAlbum.objects.get(community_id=self.pk, type=GoodAlbum.MAIN)
         except:
-            album = GoodAlbum.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=GoodAlbum.MAIN, title="Основной альбом")
-        return album
+            return GoodAlbum.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=GoodAlbum.MAIN, title="Основной альбом")
     def get_or_create_playlist(self):
         from music.models import SoundList
         try:
-            playlist = SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
+            return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
         except:
-            playlist = SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, name="Основной плейлист")
-        return playlist
+            return SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, name="Основной плейлист")
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
         try:
