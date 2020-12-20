@@ -8,7 +8,7 @@ class UserLoadPhoto(ListView):
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
 
-		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -44,7 +44,7 @@ class UserLoadPhotoComment(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import Album
-		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community=None), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -76,7 +76,7 @@ class UserLoadVideo(ListView):
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoAlbum
 
-		self.album, self.template_name = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community=None), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.album, self.template_name = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community__isnull=True), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -112,7 +112,7 @@ class UserLoadMusic(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		self.playlist = SoundList.objects.get(creator_id=request.user.pk, type=SoundList.MAIN, community=None)
+		self.playlist = SoundList.objects.get(creator_id=request.user.pk, type=SoundList.MAIN, community__isnull=True)
 		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
@@ -149,7 +149,7 @@ class UserLoadDoc(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
-		self.list = DocList.objects.get(creator_id=request.user.pk, type=DocList.MAIN, community=None)
+		self.list = DocList.objects.get(creator_id=request.user.pk, type=DocList.MAIN, community__isnull=True)
 		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadDoc,self).get(request,*args,**kwargs)
 
@@ -194,7 +194,7 @@ class UserLoadGood(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, creator=request.user, community=None)
+		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, creator=request.user, community__isnull=True)
 		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 

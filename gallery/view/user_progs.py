@@ -19,9 +19,9 @@ class UserAddAvatar(View):
         if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
             try:
-                _album = Album.objects.get(creator=user, type=Album.AVATAR, community=None)
+                _album = Album.objects.get(creator=user, type=Album.AVATAR, community__isnull=True)
             except:
-                _album = Album.objects.create(creator=user, type=Album.AVATAR, community=None, title="Фото со страницы", description="Фото со страницы")
+                _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
             photo = Photo.objects.create(file=photo_input, preview=photo_input,creator=user)
             photo.album.add(_album)
 
@@ -39,7 +39,7 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            _album = Album.objects.get(creator_id=self.user.id, community=None, type=Album.MAIN)
+            _album = Album.objects.get(creator_id=self.user.id, community__isnull=True, type=Album.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -76,9 +76,9 @@ class PhotoAttachUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _album = Album.objects.get(creator=request.user, community=None, type=Album.WALL)
+                _album = Album.objects.get(creator=request.user, community__isnull=True, type=Album.WALL)
             except:
-                _album = Album.objects.create(creator=request.user, community=None, type=Album.WALL, title="Фото со стены", description="Фото со стены")
+                _album = Album.objects.create(creator=request.user, type=Album.WALL, title="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
                 _album.photo_album.add(photo)
@@ -277,7 +277,7 @@ class UserRemoveAvatarPhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             photo.album = None
-            album = Album.objects.get(creator=user, community=None, type=Album.AVATAR)
+            album = Album.objects.get(creator=user, community__isnull=True, type=Album.AVATAR)
             photo.album = album
             photo.save()
             return HttpResponse()

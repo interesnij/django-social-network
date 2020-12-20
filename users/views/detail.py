@@ -60,7 +60,7 @@ class UserGallery(TemplateView):
         from gallery.models import Album
 
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, Album.objects.get(creator_id=self.user.pk, community=None, type=Album.MAIN)
+        c['user'], c['album'] = self.user, Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
         return c
 
 class UserAlbum(TemplateView):
@@ -142,7 +142,7 @@ class UserMusic(ListView):
         from music.models import SoundList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name, self.playlist = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT']), SoundList.objects.get(creator_id=self.kwargs["pk"], community=None, type=SoundList.MAIN)
+        self.template_name, self.playlist = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT']), SoundList.objects.get(creator_id=self.kwargs["pk"], community__isnull=True, type=SoundList.MAIN)
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -164,9 +164,9 @@ class UserDocs(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.list = DocList.objects.get(creator_id=self.user.id, community=None, type=DocList.MAIN)
+            self.list = DocList.objects.get(creator_id=self.user.id, community__isnull=True, type=DocList.MAIN)
         except:
-            self.list = DocList.objects.create(creator_id=self.user.id, community=None, type=DocList.MAIN, name="Основной список")
+            self.list = DocList.objects.create(creator_id=self.user.id, type=DocList.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
             self.doc_list = self.list.get_my_docs()
         else:
@@ -194,9 +194,9 @@ class UserGoods(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = GoodAlbum.objects.get(creator_id=self.user.id, community=None, type=GoodAlbum.MAIN)
+            self.album = GoodAlbum.objects.get(creator_id=self.user.id, community__isnull=True, type=GoodAlbum.MAIN)
         except:
-            self.album = GoodAlbum.objects.create(creator_id=self.user.id, community=None, type=GoodAlbum.MAIN, name="Основной список")
+            self.album = GoodAlbum.objects.create(creator_id=self.user.id, type=GoodAlbum.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
             self.goods_list = self.album.get_staff_goods()
         else:
@@ -224,9 +224,9 @@ class UserVideo(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
+            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoAlbum.MAIN)
         except:
-            self.album = VideoAlbum.objects.create(creator_id=self.user.id, community=None, type=VideoAlbum.MAIN, name="Основной список")
+            self.album = VideoAlbum.objects.create(creator_id=self.user.id, type=VideoAlbum.MAIN, name="Основной список")
         if self.user == request.user:
             self.video_list = self.album.get_my_queryset()
         else:

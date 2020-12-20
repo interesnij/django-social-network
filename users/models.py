@@ -565,12 +565,12 @@ class User(AbstractUser):
 
 
     def is_public_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.pk, community=None, is_public=True).exists()
+        return self.photo_album_creator.filter(creator_id=self.pk, community__isnull=True, is_public=True).exists()
     def is_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.pk, community=None).exists()
+        return self.photo_album_creator.filter(creator_id=self.pk, community__isnull=True).exists()
 
     def is_photo_exists(self):
-        return self.photo_creator.filter(creator_id=self.pk, community=None).exists()
+        return self.photo_creator.filter(creator_id=self.pk, community__isnull=True).exists()
 
     def is_suspended(self):
         return self.user_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
@@ -827,7 +827,7 @@ class User(AbstractUser):
         return self.communities_memberships.values('pk').count()
 
     def count_albums(self):
-        return self.photo_album_creator.filter(community=None, is_deleted=False).exclude(type="MA").values('pk').count()
+        return self.photo_album_creator.filter(community__isnull=True, is_deleted=False).exclude(type="MA").values('pk').count()
 
     def count_goods(self):
         return self.good_creator.values('pk').count()
@@ -994,7 +994,7 @@ class User(AbstractUser):
     def get_draft_posts(self):
         from posts.models import Post
 
-        posts_query = Q(creator_id=self.id, is_deleted=False, status=Post.STATUS_DRAFT, community=None)
+        posts_query = Q(creator_id=self.id, is_deleted=False, status=Post.STATUS_DRAFT, community__isnull=True)
         return Post.objects.filter(posts_query)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):

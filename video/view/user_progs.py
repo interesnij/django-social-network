@@ -217,7 +217,7 @@ class UserVideoAttachCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == self.user:
-            self.my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=None, type=VideoAlbum.MAIN)
+            self.my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoAlbum.MAIN)
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()

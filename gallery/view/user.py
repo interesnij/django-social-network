@@ -18,7 +18,7 @@ class UserPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=self.user.pk, type=Album.MAIN, community=None)
+        self.album = Album.objects.get(creator_id=self.user.pk, type=Album.MAIN, community__isnull=True)
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "users/user_gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -156,7 +156,7 @@ class UserWallPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(creator=self.user, type=Album.WALL, community=None)
+            self.album = Album.objects.get(creator=self.user, type=Album.WALL, community__isnull=True)
         except:
             self.album = Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены", description="Фото со стены")
         self.photos = self.album.get_photos()
@@ -188,9 +188,9 @@ class UserDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(creator=self.user, community=None, type=Album.AVATAR)
+            self.album = Album.objects.get(creator=self.user, community__isnull=True, type=Album.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
+            self.album = Album.objects.create(creator=self.user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -274,9 +274,9 @@ class UserFirstAvatar(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         try:
-            self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community=None)
+            self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community__isnull=True)
         except:
-            self.album = Album.objects.create(creator=self.user, community=None, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
+            self.album = Album.objects.create(creator=self.user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photo = self.album.get_first_photo()
         self.photos = self.album.get_photos()
         if request.is_ajax():
