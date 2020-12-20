@@ -4,22 +4,10 @@
 {% block content %}
 
 <div class="container chat_list_container pk_saver" data-pk="{{ request.user.pk }}">
-  <div class="row no-gutters">
-    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-      <span class="btn btn-sm custom_color border" style="width: -webkit-fill-available;">
-          Сообщения
-      </span>
-    </div>
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      <a class="btn btn-sm custom_color border pointer user_create_chat" style="width: -webkit-fill-available;" data-pk="{{ user.pk }}">
-        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-    </div>
-  </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск сообщений">
             <div class="input-group-append">
-                <button class="btn custom_color border" type="button">Искать</button>
+                <button class="btn custom_color border user_create_chat" data-pk="{{ user.pk }}" type="button">Создать</button>
             </div>
         </div>
 
