@@ -136,7 +136,7 @@ class Chat(models.Model):
             if first_message.creator.user_id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
-            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'
+            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_avatars(self):
         urls = []
