@@ -276,7 +276,7 @@ class Community(models.Model):
         count = 0
         #for album in albums:
         #    count += album.count_photo()
-        return count + [album.count_photo() for album in albums]
+        return [count + album.count_photo() for album in albums]
 
     def get_albums(self):
         from gallery.models import Album
