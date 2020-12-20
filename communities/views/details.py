@@ -20,6 +20,27 @@ class PostCommunity(TemplateView):
         c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.list.community, self.posts.filter(pk__gt=self.post.pk, is_deleted=False).first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=False).first()
         return c
 
+class CommunityFixPostView(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.post import get_template_user_post
+        from posts.models import Post, PostList
+
+        self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.list = self.community.get_or_create_fix_list()
+        self.posts = self.list.get_posts()
+        self.template_name = get_template_community_post(self.community, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommunityFixPostView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        c = super(CommunityFixPostView,self).get_context_data(**kwargs)
+        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.community, \
+        self.posts.filter(pk__gt=self.post.pk, is_deleted=False).first(), \
+        self.posts.filter(pk__lt=self.post.pk, is_deleted=False).first()
+        return c
+
+
 
 class CommunityDetail(TemplateView):
     template_name, common_friends, common_friends_count = None, None, None

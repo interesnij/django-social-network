@@ -10,31 +10,31 @@ position: relative;
 display: none;
 }
 .csslider > input:nth-of-type(10):checked ~ ul li:first-of-type {
-margin-left: -909%;
+margin-left: -918%;
 }
 .csslider > input:nth-of-type(9):checked ~ ul li:first-of-type {
-margin-left: -808%;
+margin-left: -816%;
 }
 .csslider > input:nth-of-type(8):checked ~ ul li:first-of-type {
-margin-left: -707%;
+margin-left: -714%;
 }
 .csslider > input:nth-of-type(7):checked ~ ul li:first-of-type {
-margin-left: -606%;
+margin-left: -612%;
 }
 .csslider > input:nth-of-type(6):checked ~ ul li:first-of-type {
-margin-left: -505%;
+margin-left: -510%;
 }
 .csslider > input:nth-of-type(5):checked ~ ul li:first-of-type {
-margin-left: -404%;
+margin-left: -408%;
 }
 .csslider > input:nth-of-type(4):checked ~ ul li:first-of-type {
-margin-left: -303%;
+margin-left: -306%;
 }
 .csslider > input:nth-of-type(3):checked ~ ul li:first-of-type {
-margin-left: -202%;
+margin-left: -204%;
 }
 .csslider > input:nth-of-type(2):checked ~ ul li:first-of-type {
-margin-left: -101%;
+margin-left: -102%;
 }
 .csslider > input:nth-of-type(1):checked ~ ul li:first-of-type {
 margin-left: 0%;

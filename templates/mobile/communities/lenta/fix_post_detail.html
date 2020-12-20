@@ -2,7 +2,7 @@
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
   <div class="col" style="padding:5px;">
-    <a class="btn btn-sm custom_color border next_item" href="{% url 'community_post' pk=list.pk uuid=next.uuid %}" style="width: -webkit-fill-available;position:static">
+    <a class="btn btn-sm custom_color border next_item" href="{% url 'community_fix_post' pk=community.pk uuid=next.uuid %}" style="width: -webkit-fill-available;position:static">
       <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
     </a>
   </div>
@@ -34,7 +34,7 @@
   </div>
   {% if prev %}
     <div class="col" style="padding:5px;">
-      <a class="btn btn-sm custom_color border prev_item" href="{% url 'community_post' pk=list.pk uuid=prev.uuid %}" style="width: -webkit-fill-available;position:static">
+      <a class="btn btn-sm custom_color border prev_item" href="{% url 'community_fix_post' pk=community.pk uuid=prev.uuid %}" style="width: -webkit-fill-available;position:static">
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
       </a>
     </div>
@@ -57,13 +57,11 @@
               <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
                 {{ object.community.name }} &nbsp;
               </a>
-              {% if object.is_fixed_in_community %}
               <span class="is_fixed">
                 <svg style="width: 17px;vertical-align: bottom;" fill="currentColor" viewBox="0 0 24 24">
                   <g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g>
                 </svg>
               </span>
-              {% endif %}
             </h6>
             <p class="mb-0">{{ object.get_created }}</p>
         </div>

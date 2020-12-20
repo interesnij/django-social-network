@@ -1,0 +1,28 @@
+
+{% if fix_list.count_posts > 1 %}
+<div class="csslider infinity mt-5" id="slider1">
+  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
+  {% for object in fix_list.get_posts_ids %}
+    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
+  {% endfor %}
+  <ul>
+    {% for object in fix_list.get_posts %}
+    <li class="scrollable">
+      {% include 'mobile/users/lenta/fix_post.html' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="arrows">
+    {% for object in fix_list.get_posts_ids %}
+      <label for="s_{{ forloop.counter }}"></label>
+    {% endfor %}
+
+    <label class="goto-first" for="s_1"></label>
+    <label class="goto-last" for="s_{{ fix_list.count_posts }}"></label>
+  </div>
+</div>
+{% elif fix_list.count_posts == 1 %}
+
+{% include 'mobile/users/lenta/fix_post.html' %}
+
+{% endif %}

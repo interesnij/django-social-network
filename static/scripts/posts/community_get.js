@@ -40,8 +40,16 @@ on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   this.parentElement.parentElement.parentElement.getAttribute('list-pk') ? pk = this.parentElement.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
   loader = document.getElementById("item_loader");
-  open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/communities/post/" + pk + "/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.c_fix_fullscreen', function() {
+  container = this.parentElement;
+  uuid = container.getAttribute('data-uuid');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/communities/fix_post/" + pk + "/" + uuid + "/", loader)
+})
+
 on('#ajax', 'click', '.c_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");

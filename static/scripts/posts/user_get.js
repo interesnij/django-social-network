@@ -46,6 +46,13 @@ on('#ajax', 'click', '.fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
 })
+on('#ajax', 'click', '.fix_fullscreen', function() {
+  container = this.parentElement;
+  uuid = container.getAttribute('data-uuid');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
+})
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
