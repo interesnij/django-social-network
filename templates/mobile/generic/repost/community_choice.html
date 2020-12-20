@@ -1,6 +1,5 @@
 <div class="form-group">
-  <div class="row">
-    <div style="flex: 0 0 33.3333%;max-width:33.3333%;padding:5px;">
+    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
     <div class="custom-control custom-radio repost_for_wall" style="margin-bottom:10px">
         <input type="radio" name="radiogroup-1" {% if object.creator.pk == request.user.pk %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
         <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
@@ -17,7 +16,7 @@
     </div>
     </div>
 
-    <div style="flex: 0 0 66.6666%;max-width:66.6666;padding:5px;">
+    <div style="flex: 0 0 100%;max-width:100;padding:5px;">
       <span id="community_append">
         <span id="user_communities_window"></span>
       </span>
@@ -25,5 +24,4 @@
         <span id="user_chat_items_window"></span>
       </span>
     </div>
-  </div>
 </div>
