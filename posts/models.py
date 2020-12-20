@@ -38,14 +38,14 @@ class PostList(models.Model):
         return self.post_list.filter(list=self).values("pk").exists()
 
     def get_posts(self):
-        queryset = self.post_list.filter(is_deleted=False)
+        queryset = self.post_list.filter(is_deleted=False).order_by('-created')
         return queryset
 
     def list_30(self):
-        queryset = self.post_list.only("pk")[:30]
+        queryset = self.post_list.only("pk")[:30].order_by('-created')
         return queryset
     def list_6(self):
-        queryset = self.post_list.only("pk")[:6]
+        queryset = self.post_list.only("pk")[:6].order_by('-created')
         return queryset
 
     def count_posts(self):
@@ -125,7 +125,6 @@ class Post(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
 
     class Meta:
-        ordering = ["-created"]
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
