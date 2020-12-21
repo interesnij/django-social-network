@@ -999,7 +999,7 @@ class User(AbstractUser):
         from posts.models import PostList
 
         lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
-        lists_query.add(~Q(Q(type="DE")|Q(type="PR")), Q.AND)
+        lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.PRIVATE)|Q(type=PostList.FIX)), Q.AND)
         return PostList.objects.filter(lists_query).order_by("order")
 
     def get_post_categories(self):
