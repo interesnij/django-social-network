@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from posts.models import Post
 
 class PostVotes(models.Model):
     LIKE = 1
@@ -9,7 +9,7 @@ class PostVotes(models.Model):
 
     vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="post_votes_creator", on_delete=models.CASCADE, verbose_name="Пользователь")
-    parent = models.ForeignKey('posts.Post', related_name="post_votes", on_delete=models.CASCADE)
+    parent = models.ForeignKey(Post, related_name="post_votes", on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
 
 class PostCommentVotes(models.Model):
