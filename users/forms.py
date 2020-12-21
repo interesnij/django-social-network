@@ -9,7 +9,7 @@ class InfoUserForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('first_name','last_name','sity')
+        fields = ('first_name','last_name')
 
 class UserNotifyForm(forms.ModelForm):
     class Meta:
