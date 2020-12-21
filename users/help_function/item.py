@@ -182,7 +182,7 @@ def _get_timeline_posts_with_no_filters(self, max_id=None, min_id=None, count=10
     """
     получаем таймлайн записей
     """
-
+    posts_prefetch_related = ('circles', 'creator', 'creator__profile__badges', 'hashtags', 'community')
     posts_select_related = ('creator', 'creator__profile', 'community', 'image')
 
     posts_only = ('text', 'id', 'uuid', 'created', 'image__image',
