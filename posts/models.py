@@ -783,29 +783,27 @@ class Post(models.Model):
 
     def likes_count(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent=self, vote__gt=0)
-        if dislikes > 0:
-            return dislikes
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        if likes > 0:
+            return likes
         else:
             return ''
 
     def dislikes_count(self):
         from common.model.votes import PostVotes
-	    count = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-	    if count > 0:
-		    return count
-	    else:
-		    return ''
+        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
+        if dislikes > 0:
+            return dislikes
+        else:
+            return ''
 
     def window_likes(self):
         from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
-        return likes[0:6]
+        return PostVotes.objects.filter(parent=self, vote__gt=0)[0:6]
 
-    def window_dislikes(self):
+    def window_likes(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes[0:6]
+        return PostVotes.objects.filter(parent=self, vote__lt=0)[0:6]
 
     def get_reposts(self):
         parents = Post.objects.filter(parent=self)
