@@ -97,7 +97,7 @@ class IPUser(models.Model):
         index_together = [('id', 'user'),]
 
     def __str__(self):
-        return '{} - {}, {}, {}'.format(self.user.get_full_name(), self.ip_1, self.ip_2, self.ip_3)
+        return '{} - {}'.format(self.user.get_full_name(), self.ip)
 
 
 class UserProfileFamily(models.Model):

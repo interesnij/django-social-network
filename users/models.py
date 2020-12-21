@@ -1239,24 +1239,24 @@ class User(AbstractUser):
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query)
+        return User.objects.filter(followers_query).select_related('profile')
 
     def get_all_users(self):
         all_query = Q()
         all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         if self.is_child():
             all_query.add(~Q(Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
-        return User.objects.filter(all_query)
+        return User.objects.filter(all_query).select_related('profile')
 
     def get_pop_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query)[0:6]
+        return User.objects.filter(followers_query)[0:6].select_related('profile')
 
     def get_followings(self):
         followings_query = Q(followers__user_id=self.pk)
         followings_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followings_query)
+        return User.objects.filter(followings_query).select_related('profile')
 
     def get_friends_and_followings_ids(self):
         my_frends = self.connections.values('target_user_id')
@@ -1271,7 +1271,7 @@ class User(AbstractUser):
         user_frends = user.connections.values('target_user_id')
         result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([target_user['target_user_id'] for target_user in user_frends]))
         query = Q(id__in=result)
-        return User.objects.filter(query)
+        return User.objects.filter(query).select_related('profile')
 
     def get_common_friends_of_community(self, community_id):
         from communities.models import Community
@@ -1280,7 +1280,7 @@ class User(AbstractUser):
         community_frends = community.memberships.values('user_id')
         result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([user_id['user_id'] for user_id in community_frends]))
         query = Q(id__in=result)
-        return User.objects.filter(query)
+        return User.objects.filter(query).select_related('profile')
 
     def get_common_friends_of_community_count_ru(self, community_id):
         from communities.models import Community
