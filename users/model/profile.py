@@ -10,10 +10,6 @@ from users.helpers import upload_to_user_directory
 class UserProfile(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
-    b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
-    s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
-    sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
-    status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     activity = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Деятельность")
     interests = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Интересы")
     favorite_music = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Любимая музыка")

@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Q
 from common.utils import try_except
 from common.check.user import *
+from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
@@ -47,6 +48,10 @@ class User(AbstractUser):
     perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
+    sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
+    status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
 
     #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
@@ -171,46 +176,33 @@ class User(AbstractUser):
         notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_CONFIRMED)
 
     def create_s_avatar(self, photo_input):
-        from users.model.profile import UserProfile
         from easy_thumbnails.files import get_thumbnailer
-        try:
-            user_profile = UserProfile.objects.get(user=self)
-        except:
-            user_profile = UserProfile.objects.create(user=self)
-        user_profile.s_avatar = photo_input
-        user_profile.save(update_fields=['s_avatar'])
-        new_img = get_thumbnailer(user_profile.s_avatar)['small_avatar'].url.replace('media/', '')
-        user_profile.s_avatar = new_img
-        user_profile.save(update_fields=['s_avatar'])
-        return user_profile.s_avatar
+
+        self.s_avatar = photo_input
+        self.save(update_fields=['s_avatar'])
+        new_img = get_thumbnailer(self.s_avatar)['small_avatar'].url.replace('media/', '')
+        self.s_avatar = new_img
+        return self.save(update_fields=['s_avatar'])
 
     def create_b_avatar(self, photo_input):
-        from users.model.profile import UserProfile
         from easy_thumbnails.files import get_thumbnailer
-        try:
-            user_profile = UserProfile.objects.get(user=self)
-        except:
-            user_profile = UserProfile.objects.create(user=self)
-        user_profile.b_avatar = photo_input
-        user_profile.save(update_fields=['b_avatar'])
-        new_img = get_thumbnailer(user_profile.b_avatar)['avatar'].url.replace('media/', '')
-        user_profile.b_avatar = new_img
-        user_profile.save(update_fields=['b_avatar'])
-        return user_profile.b_avatar
+
+        self.b_avatar = photo_input
+        self.save(update_fields=['b_avatar'])
+        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
+        self.b_avatar = new_img
+        self.save(update_fields=['b_avatar'])
+        return self.save(update_fields=['b_avatar'])
 
     def get_b_avatar(self):
-        from users.model.profile import UserProfile
         try:
-            user_profile = UserProfile.objects.get(user=self)
-            return user_profile.b_avatar.url
+            return self.b_avatar.url
         except:
             return None
 
     def get_avatar(self):
-        from users.model.profile import UserProfile
         try:
-            user_profile = UserProfile.objects.get(user=self)
-            return user_profile.s_avatar.url
+            return self.s_avatar.url
         except:
             return None
 
@@ -1239,24 +1231,24 @@ class User(AbstractUser):
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query).select_related('profile')
+        return User.objects.filter(followers_query)
 
     def get_all_users(self):
         all_query = Q()
         all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
         if self.is_child():
             all_query.add(~Q(Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
-        return User.objects.filter(all_query).select_related('profile')
+        return User.objects.filter(all_query)
 
     def get_pop_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
         followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query)[0:6].select_related('profile')
+        return User.objects.filter(followers_query)[0:6]
 
     def get_followings(self):
         followings_query = Q(followers__user_id=self.pk)
         followings_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followings_query).select_related('profile')
+        return User.objects.filter(followings_query)
 
     def get_friends_and_followings_ids(self):
         my_frends = self.connections.values('target_user_id')
@@ -1271,7 +1263,7 @@ class User(AbstractUser):
         user_frends = user.connections.values('target_user_id')
         result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([target_user['target_user_id'] for target_user in user_frends]))
         query = Q(id__in=result)
-        return User.objects.filter(query).select_related('profile')
+        return User.objects.filter(query)
 
     def get_common_friends_of_community(self, community_id):
         from communities.models import Community
@@ -1280,7 +1272,7 @@ class User(AbstractUser):
         community_frends = community.memberships.values('user_id')
         result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([user_id['user_id'] for user_id in community_frends]))
         query = Q(id__in=result)
-        return User.objects.filter(query).select_related('profile')
+        return User.objects.filter(query)
 
     def get_common_friends_of_community_count_ru(self, community_id):
         from communities.models import Community

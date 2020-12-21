@@ -23,7 +23,7 @@ class FollowsView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list = self.user.get_followers()
+		friends_list = self.user.get_followers() 
 		return friends_list
 
 class FollowingsView(ListView):
