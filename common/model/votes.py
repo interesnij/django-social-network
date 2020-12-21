@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
-from posts.models import Post
 
 class PostVotes(models.Model):
+    from posts.models import Post
     LIKE = 1
     DISLIKE = -1
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
