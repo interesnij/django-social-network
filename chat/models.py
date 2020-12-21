@@ -178,18 +178,17 @@ class Chat(models.Model):
             return ''.join([avatars, media_body])
         elif count == 1:
             if self.image:
-                figure = '<figure><img src="' + self.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif self.creator.get_avatar():
-                figure = '<figure><img src="' + self.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
+                figure = ''.join(['<figure><img src="', self.creator.get_avatar(), '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
                 figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             if self.name:
                  chat_name = self.name
             else:
                 chat_name = self.creator.get_full_name()
-            media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + \
-            '</h5><p class="mb-0">' + self.get_type_display() + '</p></div>'
-            return figure + media_body
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">', self.get_type_display(), '</p></div>'})
+            return ''.join([figure, media_body])
 
     def is_not_empty(self):
         return self.chat_message.filter(chat=self,is_deleted=False).values("pk").exists()
