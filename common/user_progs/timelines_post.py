@@ -8,7 +8,7 @@ from music.models import SoundList
 
 def get_timeline_posts(user):
     """ лента записей, которые публикуются друзьями, источниками подписки, сообществами пользователя """
-    u_select_related, c_select_related = ('creator', 'parent'), ('creator', 'community', 'parent')
+    u_select_related, c_select_related = ('creator'), ('creator', 'community')
     my_posts = user.post_creator.only('created').select_related(*u_select_related).filter(Q(creator_id=user.pk, community__isnull=True, is_deleted=False, status="P"))
 
     _community_posts = Q(community__memberships__user__id=user.pk, is_deleted=False, status="P")
