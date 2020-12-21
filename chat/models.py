@@ -187,7 +187,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = self.creator.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">', self.get_type_display(), '</p></div>'})
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">', self.get_type_display(), '</p></div>'])
             return ''.join([figure, media_body])
 
     def is_not_empty(self):
