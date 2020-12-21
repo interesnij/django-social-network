@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
 from notify.model.post import *
-from common.model.votes import PostVotes, PostCommentVotes
 from common.utils import try_except
 
 
@@ -773,14 +772,17 @@ class Post(models.Model):
             return ValidationError("Запись и так не в списке.")
 
     def likes(self):
+        from common.model.votes import PostVotes
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)
         return likes
 
     def dislikes(self):
+        from common.model.votes import PostVotes
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
 
     def likes_count(self):
+        from common.model.votes import PostVotes
 	    count = PostVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
 	    if count > 0:
 		    return count
@@ -788,6 +790,7 @@ class Post(models.Model):
 		    return ''
 
     def dislikes_count(self):
+        from common.model.votes import PostVotes
 	    count = PostVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
 	    if count > 0:
 		    return count
@@ -795,10 +798,12 @@ class Post(models.Model):
 		    return ''
 
     def window_likes(self):
+        from common.model.votes import PostVotes
         likes = PostVotes.objects.filter(parent=self, vote__gt=0)
         return likes[0:6]
 
     def window_dislikes(self):
+        from common.model.votes import PostVotes
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
 
@@ -881,18 +886,22 @@ class PostComment(models.Model):
         return self.replies.filter(is_deleted=False).values("pk").count()
 
     def likes(self):
+        from common.model.votes import PostCommentVotes
         likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes
 
     def window_likes(self):
+        from common.model.votes import PostCommentVotes
         likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
+        from common.model.votes import PostCommentVotes
         dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes
 
     def likes_count(self):
+        from common.model.votes import PostCommentVotes
 	    likes = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
 	    if likes > 0:
 		    return likes
@@ -900,6 +909,7 @@ class PostComment(models.Model):
 		    return ''
 
     def dislikes_count(self):
+        from common.model.votes import PostCommentVotes
 	    dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
 	    if dislikes > 0:
 		    return dislikes
@@ -907,6 +917,7 @@ class PostComment(models.Model):
 		    return ''
 
     def window_dislikes(self):
+        from common.model.votes import PostCommentVotes
         dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes[0:6]
 
