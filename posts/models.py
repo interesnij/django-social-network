@@ -885,39 +885,35 @@ class PostComment(models.Model):
 
     def likes(self):
         from common.model.votes import PostCommentVotes
-        likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
-        return likes
-
-    def window_likes(self):
-        from common.model.votes import PostCommentVotes
-        likes = PostCommentVotes.objects.filter(item=self, vote__gt=0)
-        return likes[0:6]
+        return PostCommentVotes.objects.filter(item=self, vote__gt=0)
 
     def dislikes(self):
         from common.model.votes import PostCommentVotes
-        dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
-        return dislikes
+        return PostCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def likes_count(self):
         from common.model.votes import PostCommentVotes
-	    likes = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
-	    if likes > 0:
-		    return likes
-	    else:
-		    return ''
+        qs = PostCommentVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        if qs > 0:
+            return qs
+        else:
+            return ''
 
     def dislikes_count(self):
         from common.model.votes import PostCommentVotes
-	    dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
-	    if dislikes > 0:
-		    return dislikes
-	    else:
-		    return ''
+        qs = PostCommentVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        if qs > 0:
+            return qs
+        else:
+            return ''
+
+    def window_likes(self):
+        from common.model.votes import PostCommentVotes
+        return PostCommentVotes.objects.filter(item=self, vote__gt=0)[0:6]
 
     def window_dislikes(self):
         from common.model.votes import PostCommentVotes
-        dislikes = PostCommentVotes.objects.filter(item=self, vote__lt=0)
-        return dislikes[0:6]
+        return PostCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
 
     def __str__(self):
         return self.commenter.get_full_name()
