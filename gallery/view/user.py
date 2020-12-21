@@ -281,7 +281,7 @@ class UserFirstAvatar(TemplateView):
         self.photos = self.album.get_photos()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
+        else: 
             raise Http404
         return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
