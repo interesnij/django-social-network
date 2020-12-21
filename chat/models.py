@@ -141,7 +141,7 @@ class Chat(models.Model):
     def get_avatars(self):
         urls = []
         for user in self.chat_relation.all()[:10]:
-            urls += [user.user.get_avatar()]
+            urls += [user.user.s_avatar.url]
         return urls
 
     def get_header_chat(self, user_id):

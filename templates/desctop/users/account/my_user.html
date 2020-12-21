@@ -6,7 +6,7 @@
 <meta property="og:url" content="http://трезвый.рус/users/{{ user.pk }}" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.get_avatar }}{% else %}/static/images/user.png{% endif %}"/>
+<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.b_avatar.url }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
 
@@ -81,7 +81,7 @@
 
         {% include 'desctop/users/profile/new_post.html' %}
 
-        <div class="is_profile_post_paginate" data-link="/users/detail/posts/{{ user.pk }}/"></div> 
+        <div class="is_profile_post_paginate" data-link="/users/detail/posts/{{ user.pk }}/"></div>
 
         </div>
     </div>

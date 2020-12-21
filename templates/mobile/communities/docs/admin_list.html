@@ -51,8 +51,8 @@
             <div class="card mb-2">
                 <div class="card-body" style="padding: 10px;padding-bottom: 0;">
                     <div style="display:flex">
-                        {% if community.get_avatar %}
-                        <img src="{{ community.get_avatar }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
+                        {% if community.s_avatar %}
+                        <img src="{{ community.s_avatar.url }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
                         {% else %}
                         <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0z" fill="none" />
