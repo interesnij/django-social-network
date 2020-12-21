@@ -1039,6 +1039,13 @@ class User(AbstractUser):
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query)
 
+    def get_my_al_albums(self):
+        from gallery.models import Album
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type=Album.ALBUM)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        return Album.objects.filter(albums_query)
+
     def get_video_albums(self):
         from video.models import VideoAlbum
 
