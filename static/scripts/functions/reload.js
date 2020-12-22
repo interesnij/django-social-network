@@ -32,6 +32,7 @@ function scrolled(link, block_id, target) {
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
       //  try {
+      console.log("paginate");
             if (document.body.querySelector(".chat_container")){
               console.log("is_chat_paginate");
               _block = document.body.querySelector(".is_chat_paginate");
