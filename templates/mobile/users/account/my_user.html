@@ -4,7 +4,7 @@
 <meta property="og:url" content="dvizhenie.tv" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
+<meta property="og:image" content="{% if user.s_avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.s_avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
 
@@ -67,7 +67,7 @@
 
   {% include 'mobile/users/profile/new_post.html' %}
   {% include 'mobile/users/lenta/my_fixed_posts.html' %}
-  
+
   <div class="row overflow-x-auto no-gutters">
     <div class="col-12">
     <ul class="date-list" style="width:max-content">

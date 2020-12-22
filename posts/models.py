@@ -37,8 +37,11 @@ class PostList(models.Model):
         return self.post_list.filter(list=self).values("pk").exists()
 
     def get_posts(self):
-        queryset = self.post_list.filter(is_deleted=False).order_by('-created')
-        return queryset
+        select_related = ('creator', 'community')
+        only = ('creator__id', 'community__id', 'created')
+        prefetch_related = ('post_album', 'item_photo', 'post_doclist', 'item_doc', 'attached_item', 'post_good_album', 'item_good', 'post_soundlist', 'item_music', 'item_video', 'post_video_album')
+        posts = self.post_list.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(list_id=self.pk, is_deleted=False, status="P")
+        return posts
 
     def list_30(self):
         queryset = self.post_list.only("pk")[:30].order_by('-created')
