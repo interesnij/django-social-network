@@ -33,11 +33,13 @@ function scrolled(link, block_id, target) {
     onscroll = function() {
       //  try {
             if (document.body.querySelector(".is_chat_paginate")){
+              console.log("is_chat_paginate");
               _block = document.body.querySelector(".is_chat_paginate");
               box = _block.querySelector('.first');
               if (box && box.classList.contains("first")) {
+                console.log(box);
                 inViewport = elementInViewport(box);
-                if (inViewport) {box.classList.remove("first");top_paginate(link, block_id)}}
+                if (inViewport) {console.log("inViewport");box.classList.remove("first");top_paginate(link, block_id)}}
             }
             else {_block = document.body.querySelector(block_id);
                   box = _block.querySelector('.last');
