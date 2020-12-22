@@ -786,7 +786,7 @@ class Post(models.Model):
 
     def likes_count(self):
         from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        likes = PostVotes.objects.filter(parent=self, vote__gt=0).values('pk').count()
         if likes > 0:
             return likes
         else:
@@ -794,7 +794,7 @@ class Post(models.Model):
 
     def dislikes_count(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
+        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values('pk').count()
         if dislikes > 0:
             return dislikes
         else:
@@ -818,7 +818,7 @@ class Post(models.Model):
 
     def count_reposts(self):
         parents = self.get_reposts()
-        count_reposts = parents.count()
+        count_reposts = parents.values('pk').count()
         return count_reposts
 
     def get_visiter_sity(self):
@@ -840,7 +840,7 @@ class Post(models.Model):
         ads_posts = PostAdNumbers.objects.filter(post=self.pk).values('user')
         user_ids = posts + ads_posts
         ids = [use['user'] for use in user_ids]
-        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).values('pk').count()
         return count
 
     def post_visits_count(self):
@@ -935,14 +935,13 @@ class PostComment(models.Model):
 
     def count_replies_ru(self):
         count = self.replies.filter(is_deleted=False).values("pk").count()
-        a = count % 10
-        b = count % 100
+        a, b= count % 10, count % 100
         if (a == 1) and (b != 11):
-            return str(count) + " ответ"
+            return ''.join([str(count), " ответ"])
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return str(count) + " ответа"
+            return ''.join([str(count), " ответа"])
         else:
-            return str(count) + " ответов"
+            return ''.join([str(count), " ответов"])
 
     def get_attach_photos(self):
         return self.comment_photo.all()
