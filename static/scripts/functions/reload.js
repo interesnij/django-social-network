@@ -53,7 +53,7 @@ function scrolled(link, block_id, target) {
                   if (target == 1) {get_post_view()}}
         //        } catch {return}
     }
-}
+};
 page = 2;
 loaded = false;
 m_page = 2;
