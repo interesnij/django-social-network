@@ -292,6 +292,8 @@ class UserPostListCreate(TemplateView):
             list = self.form.save(commit=False)
             list.creator = request.user
             list.type = PostList.LIST
+            if list.order < 1:
+                list.order = 1
             list.save()
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': list})
         else:
@@ -321,6 +323,8 @@ class UserPostListEdit(TemplateView):
         self.form = PostListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
+            if list.order < 1:
+                list.order = 1
             self.form.save()
             return HttpResponse()
         else:
