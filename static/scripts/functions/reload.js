@@ -35,12 +35,12 @@ function scrolled(link, block_id, target) {
       console.log("paginate");
             if (document.body.querySelector(".chat_container")){
               console.log("is_chat_paginate");
-              _block = document.body.querySelector(".is_chat_paginate");
-              box = _block.querySelector('.first');
-              if (box && box.classList.contains("first")) {
-                console.log(box);
-                inViewport = elementInViewport(box);
-                if (inViewport) {console.log("inViewport");box.classList.remove("first");top_paginate(link, block_id)}}
+              block_ = document.body.querySelector(".is_chat_paginate");
+              box_ = block_.querySelector('.first');
+              if (box_ && box_.classList.contains("first")) {
+                console.log(box_);
+                inViewport = elementInViewport(box_);
+                if (inViewport) {console.log("inViewport");box_.classList.remove("first");top_paginate(link, block_id)}}
             }
             else {_block = document.body.querySelector(block_id);
                   box = _block.querySelector('.last');
