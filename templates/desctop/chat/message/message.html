@@ -1,4 +1,4 @@
-<div class="media mt-3">
+<div class="media mt-3 pag {% if forloop.first %}first{% endif %}"">
     <figure>
       <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">
         {% if object.get_creator.s_avatar %}
