@@ -153,7 +153,7 @@ function create_pagination(block) {
     scrolled(window.location.href, '.is_post_paginate', target = 1)
   }
   else if (block.querySelector('.is_chat_paginate')) {
-    scrolled(window.location.href, '.is_chat_paginate', target = 1)
+    scrolled(window.location.href, '.is_chat_paginate', target = 0)
   }
 }
 
