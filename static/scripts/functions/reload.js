@@ -33,7 +33,7 @@ function scrolled(link, block_id, target) {
     onscroll = function() {
       //  try {
             if (document.body.querySelector(".is_chat_paginate")){
-              _block = document.body.querySelector(block_id);
+              _block = document.body.querySelector(".is_chat_paginate");
               box = _block.querySelector('.first');
               if (box && box.classList.contains("first")) {
                 inViewport = elementInViewport(box);
