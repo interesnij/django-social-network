@@ -50,7 +50,47 @@ function scrolled(link, block_id, target) {
 page = 2;
 loaded = false;
 
+m_page = 2;
+m_loaded = false;
+
+function top_scrolled(link, block_id) {
+    // работа с прокруткой для подгрузки сообщений вверх страницы:
+    // 1. Ссылка на страницу с пагинацией
+    // 2. id блока, куда нужно грузить следующие страницы
+    onscroll = function() {
+        try {
+            _block = document.body.querySelector(block_id);
+            box = _block.querySelector('.first');
+            if (box && box.classList.contains("first")) {
+                inViewport = elementInViewport(box);
+                if (inViewport) {
+                    box.classList.remove("first");
+                    block = document.body.querySelector(block_id);
+                    if (block.getElementsByClassName('pag').length === (m_page - 1) * 15) {
+                        if (m_loaded) {return};
+                        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                        link_3.open('GET', link + '?page=' + m_page++, true);
+                        link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                        link_3.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var elem = document.createElement('span');
+                                elem.innerHTML = link_3.responseText;
+                                if (elem.getElementsByClassName('pag').length < 15) {m_loaded = true};
+                                xxx = document.createElement("span");
+                                xxx.innerHTML = elem.querySelector(block_id).innerHTML;
+                                block.afterbegin('beforeend', xxx.innerHTML)
+                            }
+                        }
+                        link_3.send();
+                    }
+                }
+            };
+        } catch {return}
+    }
+}
 function paginate(link, block_id) {
+  // общая подгрузка списков в конец указанного блока
     block = document.body.querySelector(block_id);
     if (block.getElementsByClassName('pag').length === (page - 1) * 15) {
         if (loaded) {
@@ -71,9 +111,7 @@ function paginate(link, block_id) {
                     xxx = document.createElement("span");
                     xxx.innerHTML = elem.querySelector(block_id).innerHTML;
                     block.insertAdjacentHTML('beforeend', xxx.innerHTML)
-                    //block.append(xxx);
                 } else {
-                    //block.append(elem)
                     block.insertAdjacentHTML('beforeend', elem.innerHTML)
                 }
             }
