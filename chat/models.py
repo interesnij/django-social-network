@@ -441,41 +441,41 @@ class Message(models.Model):
         # ДЛЯ КОМПЬЮТЕРА!
         repost = self.repost
         if repost.is_photo_repost():
-            return "desctop/posts/post_community/photo_repost.html"
+            return "desctop/chat/repost/photo_repost.html"
         elif repost.is_photo_album_repost():
-            return "desctop/posts/post_community/photo_album_repost.html"
+            return "desctop/chat/repost/photo_album_repost.html"
         elif repost.is_photo_list_attached():
             return "desctop/generic/parent_attach/c_photo_list_attach.html"
         elif repost.is_good_repost():
-            return "desctop/posts/post_community/good_repost.html"
+            return "desctop/chat/repost/good_repost.html"
         elif repost.is_good_list_repost():
-            return "desctop/posts/post_community/good_list_repost.html"
+            return "desctop/chat/repost/good_list_repost.html"
         elif repost.is_good_list_attached():
             return "desctop/generic/parent_attach/c_good_list_attach.html"
         elif repost.is_music_repost():
-            return "desctop/posts/post_community/music_repost.html"
+            return "desctop/chat/repost/music_repost.html"
         elif repost.is_music_list_repost():
-            return "desctop/posts/post_community/music_list_repost.html"
+            return "desctop/chat/repost/music_list_repost.html"
         elif repost.is_playlist_attached():
-            return "desctop/generic/parent_attach/c_playlist_attach.html"
+            return "desctop/chat/parent_attach/c_playlist_attach.html"
         elif repost.is_video_repost():
-            return "desctop/posts/post_community/video_repost.html"
+            return "desctop/chat/repost/video_repost.html"
         elif repost.is_video_list_repost():
-            return "desctop/posts/post_community/video_list_repost.html"
+            return "desctop/chat/repost/video_list_repost.html"
         elif repost.is_video_list_attached():
             return "desctop/generic/parent_attach/c_video_list_attach.html"
         elif repost.is_doc_repost():
-            return "desctop/posts/post_community/doc_repost.html"
+            return "desctop/chat/repost/doc_repost.html"
         elif repost.is_doc_list_repost():
-            return "desctop/posts/post_community/doc_list_repost.html"
+            return "desctop/chat/repost/doc_list_repost.html"
         elif repost.is_doc_list_attached():
             return "desctop/generic/parent_attach/c_doc_list_attach.html"
         elif repost.is_user_repost():
-            return "desctop/posts/post_community/user_repost.html"
+            return "desctop/chat/repost/user_repost.html"
         elif repost.is_community_repost():
-            return "desctop/posts/post_community/community_repost.html"
+            return "desctop/chat/repost/community_repost.html"
         else:
-            return "desctop/generic/attach/parent_community.html"
+            return "desctop/chat/attach/parent_community.html"
 
     def get_u_repost_items_desctop(self):
         # метод выясняет, есть ли у поста-родителя пользователя прикрепленные большие элементы, а также их репосты.
@@ -485,41 +485,41 @@ class Message(models.Model):
         # ДЛЯ КОМПЬЮТЕРА!
         repost = self.repost
         if repost.is_photo_repost():
-            return "desctop/posts/post_user/photo_repost.html"
+            return "desctop/chat/repost/photo_repost.html"
         elif repost.is_photo_album_repost():
-            return "desctop/posts/post_user/photo_album_repost.html"
+            return "desctop/chat/repost/photo_album_repost.html"
         elif repost.is_photo_list_attached():
             return "desctop/generic/parent_attach/u_photo_list_attach.html"
         elif repost.is_good_repost():
-            return "desctop/posts/post_user/good_repost.html"
+            return "desctop/chat/repost/good_repost.html"
         elif repost.is_good_list_repost():
-            return "desctop/posts/post_user/good_list_repost.html"
+            return "desctop/chat/repost/good_list_repost.html"
         elif repost.is_good_list_attached():
             return "desctop/generic/parent_attach/u_good_list_attach.html"
         elif repost.is_music_repost():
-            return "desctop/posts/post_user/music_repost.html"
+            return "desctop/chat/repost/music_repost.html"
         elif repost.is_music_list_repost():
-            return "desctop/posts/post_user/music_list_repost.html"
+            return "desctop/chat/repost/music_list_repost.html"
         elif repost.is_playlist_attached():
             return "desctop/generic/parent_attach/u_playlist_attach.html"
         elif repost.is_video_repost():
-            return "desctop/posts/post_user/video_repost.html"
+            return "desctop/chat/repost/video_repost.html"
         elif repost.is_video_list_repost():
-            return "desctop/posts/post_user/video_list_repost.html"
+            return "desctop/chat/repost/video_list_repost.html"
         elif repost.is_video_list_attached():
             return "desctop/generic/parent_attach/u_video_list_attach.html"
         elif repost.is_doc_repost():
-            return "desctop/posts/post_user/doc_repost.html"
+            return "desctop/chat/repost/doc_repost.html"
         elif repost.is_doc_list_repost():
-            return "desctop/posts/post_user/doc_list_repost.html"
+            return "desctop/chat/repost/doc_list_repost.html"
         elif repost.is_doc_list_attached():
             return "desctop/generic/parent_attach/u_doc_list_attach.html"
         elif repost.is_user_repost():
-            return "desctop/posts/post_user/user_repost.html"
+            return "desctop/chat/repost/user_repost.html"
         elif repost.is_community_repost():
-            return "desctop/posts/post_user/community_repost.html"
+            return "desctop/chat/repost/community_repost.html"
         else:
-            return "desctop/generic/attach/parent_user.html"
+            return "desctop/chat/attach/parent_user.html"
 
     def get_c_repost_items_mobile(self):
         # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.
@@ -529,41 +529,41 @@ class Message(models.Model):
         # ДЛЯ ТЕЛЕФОНА!
         repost = self.repost
         if repost.is_photo_repost():
-            return "mobile/posts/post_community/photo_repost.html"
+            return "mobile/chat/repost/photo_repost.html"
         elif repost.is_photo_album_repost():
-            return "mobile/posts/post_community/photo_album_repost.html"
+            return "mobile/chat/repost/photo_album_repost.html"
         elif repost.is_photo_list_attached():
             return "mobile/generic/parent_attach/c_photo_list_attach.html"
         elif repost.is_good_repost():
-            return "mobile/posts/post_community/good_repost.html"
+            return "mobile/chat/repost/good_repost.html"
         elif repost.is_good_list_repost():
-            return "mobile/posts/post_community/good_list_repost.html"
+            return "mobile/chat/repost/good_list_repost.html"
         elif repost.is_good_list_attached():
             return "mobile/generic/parent_attach/c_good_list_attach.html"
         elif repost.is_music_repost():
-            return "mobile/posts/post_community/music_repost.html"
+            return "mobile/chat/repost/music_repost.html"
         elif repost.is_music_list_repost():
-            return "mobile/posts/post_community/music_list_repost.html"
+            return "mobile/chat/repost/music_list_repost.html"
         elif repost.is_playlist_attached():
             return "mobile/generic/parent_attach/c_playlist_attach.html"
         elif repost.is_video_repost():
-            return "mobile/posts/post_community/video_repost.html"
+            return "mobile/chat/repost/video_repost.html"
         elif repost.is_video_list_repost():
-            return "mobile/posts/post_community/video_list_repost.html"
+            return "mobile/chat/repost/video_list_repost.html"
         elif repost.is_video_list_attached():
             return "mobile/generic/parent_attach/c_video_list_attach.html"
         elif repost.is_doc_repost():
-            return "mobile/posts/post_community/doc_repost.html"
+            return "mobile/chat/repost/doc_repost.html"
         elif repost.is_doc_list_repost():
-            return "mobile/posts/post_community/doc_list_repost.html"
+            return "mobile/chat/repost/doc_list_repost.html"
         elif repost.is_doc_list_attached():
             return "mobile/generic/parent_attach/c_doc_list_attach.html"
         elif repost.is_user_repost():
-            return "mobile/posts/post_community/user_repost.html"
+            return "mobile/chat/repost/user_repost.html"
         elif repost.is_community_repost():
-            return "mobile/posts/post_community/community_repost.html"
+            return "mobile/chat/repost/community_repost.html"
         else:
-            return "mobile/generic/attach/parent_community.html"
+            return "mobile/chat/attach/parent_community.html"
 
     def get_u_repost_items_mobile(self):
         # метод выясняет, есть ли у поста-родителя пользователя прикрепленные большие элементы, а также их репосты.
@@ -573,69 +573,69 @@ class Message(models.Model):
         # ДЛЯ ТЕЛЕФОНА!
         repost = self.repost
         if repost.is_photo_repost():
-            return "mobile/posts/post_user/photo_repost.html"
+            return "mobile/chat/repost/photo_repost.html"
         elif repost.is_photo_album_repost():
-            return "mobile/posts/post_user/photo_album_repost.html"
+            return "mobile/chat/repost/photo_album_repost.html"
         elif repost.is_photo_list_attached():
             return "mobile/generic/parent_attach/u_photo_list_attach.html"
         elif repost.is_good_repost():
-            return "mobile/posts/post_user/good_repost.html"
+            return "mobile/chat/repost/good_repost.html"
         elif repost.is_good_list_repost():
-            return "mobile/posts/post_user/good_list_repost.html"
+            return "mobile/chat/repost/good_list_repost.html"
         elif repost.is_good_list_attached():
             return "mobile/generic/parent_attach/u_good_list_attach.html"
         elif repost.is_music_repost():
-            return "mobile/posts/post_user/music_repost.html"
+            return "mobile/chat/repost/music_repost.html"
         elif repost.is_music_list_repost():
-            return "mobile/posts/post_user/music_list_repost.html"
+            return "mobile/chat/repost/music_list_repost.html"
         elif repost.is_playlist_attached():
             return "mobile/generic/parent_attach/u_playlist_attach.html"
         elif repost.is_video_repost():
-            return "mobile/posts/post_user/video_repost.html"
+            return "mobile/chat/repost/video_repost.html"
         elif repost.is_video_list_repost():
-            return "mobile/posts/post_user/video_list_repost.html"
+            return "mobile/chat/repost/video_list_repost.html"
         elif repost.is_video_list_attached():
             return "mobile/generic/parent_attach/u_video_list_attach.html"
         elif repost.is_doc_repost():
-            return "mobile/posts/post_user/doc_repost.html"
+            return "mobile/chat/repost/doc_repost.html"
         elif repost.is_doc_list_repost():
-            return "mobile/posts/post_user/doc_list_repost.html"
+            return "mobile/chat/repost/doc_list_repost.html"
         elif repost.is_doc_list_attached():
             return "mobile/generic/parent_attach/u_doc_list_attach.html"
         elif repost.is_user_repost():
-            return "mobile/posts/post_user/user_repost.html"
+            return "mobile/chat/repost/user_repost.html"
         elif repost.is_community_repost():
-            return "mobile/posts/post_user/community_repost.html"
+            return "mobile/chat/repost/community_repost.html"
         else:
-            return "mobile/generic/attach/parent_user.html"
+            return "mobile/chat/attach/parent_user.html"
 
     def get_attach_items_desctop(self):
         if self.is_photo_list_attached():
-            return "desctop/generic/attach/u_photo_list_attach.html"
+            return "desctop/chat/repost/u_photo_list_attach.html"
         elif self.is_playlist_attached():
-            return "desctop/generic/attach/u_playlist_attach.html"
+            return "desctop/chat/attach/u_playlist_attach.html"
         elif self.is_video_list_attached():
-            return "desctop/generic/attach/u_video_list_attach.html"
+            return "desctop/chat/attach/u_video_list_attach.html"
         elif self.is_good_list_attached():
-            return "desctop/generic/attach/u_good_list_attach.html"
+            return "desctop/chat/attach/u_good_list_attach.html"
         elif self.is_doc_list_attached():
-            return "desctop/generic/attach/u_doc_list_attach.html"
+            return "desctop/chat/attach/u_doc_list_attach.html"
         else:
-            return "desctop/generic/attach/u_post_attach.html"
+            return "desctop/chat/attach/u_attach.html"
 
     def get_attach_items_mobile(self):
         if self.is_photo_list_attached():
-            return "mobile/generic/attach/u_photo_list_attach.html"
+            return "mobile/chat/attach/u_photo_list_attach.html"
         elif self.is_playlist_attached():
-            return "mobile/generic/attach/u_playlist_attach.html"
+            return "mobile/chat/attach/u_playlist_attach.html"
         elif self.is_video_list_attached():
-            return "mobile/generic/attach/u_video_list_attach.html"
+            return "mobile/chat/attach/u_video_list_attach.html"
         elif self.is_good_list_attached():
-            return "mobile/generic/attach/u_good_list_attach.html"
+            return "mobile/chat/attach/u_good_list_attach.html"
         elif self.is_doc_list_attached():
-            return "mobile/generic/attach/u_doc_list_attach.html"
+            return "mobile/chat/attach/u_doc_list_attach.html"
         else:
-            return "mobile/generic/attach/u_post_attach.html"
+            return "mobile/chat/attach/u_attach.html"
 
     def get_fixed_message_for_chat(self, chat_id):
         try:
