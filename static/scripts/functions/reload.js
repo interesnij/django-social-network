@@ -39,8 +39,8 @@ function scrolled(link, block_id, target) {
               box_ = block_.querySelector('.first');
               if (box_ && box_.classList.contains("first")) {
                 console.log(box_);
-                inViewport = elementInViewport(box_);
-                if (inViewport) {console.log("inViewport");box_.classList.remove("first");top_paginate(link, block_id)}}
+                inViewport_ = elementInViewport(box_);
+                if (inViewport_) {console.log("inViewport");box_.classList.remove("first");top_paginate(link, block_id)}}
             }
             else {_block = document.body.querySelector(block_id);
                   box = _block.querySelector('.last');
