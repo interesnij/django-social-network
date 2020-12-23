@@ -34,7 +34,7 @@ class Chat(models.Model):
     class Meta:
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
-        ordering = "-created",
+        ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
