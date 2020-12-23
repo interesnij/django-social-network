@@ -69,7 +69,7 @@ class Chat(models.Model):
 
     def get_photos(self):
         from gallery.models import Photo
-        return Photo.objects.filter(message_uuid__in=self.get_messages_uuids())
+        return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
