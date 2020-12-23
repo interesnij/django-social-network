@@ -12,12 +12,6 @@
 		stopBtn.onclick = recorder.stopRecord;
 
 		function RecordVoiceAudios() {
-			let elementVolume = document.querySelector('.js-volume');
-			let ctx = elementVolume.getContext('2d');
-			let codeBtn = document.querySelector('.js-code');
-			let pre = document.querySelector('pre');
-			let downloadLink = document.getElementById('download');
-			let audioElement = document.querySelector('audio');
 			let encoder = null;
 			let microphone;
 			let isRecording = false;
