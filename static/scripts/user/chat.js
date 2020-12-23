@@ -10,6 +10,19 @@ on('#ajax', 'click', '.user_send_page_message', function() {
   open_fullscreen("/chat/message_progs/send_page_message/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '.u_chat_photo', function() {
+  photo_pk = this.getAttribute('photo-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/user/chat_photo/" + pk + "/" + photo_pk + "/", loader)
+});
+on('#ajax', 'click', '.c_chat_photo', function() {
+  photo_pk = this.getAttribute('photo-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/community/chat_photo/" + pk + "/" + photo_pk + "/", loader)
+});
+
 on('#ajax', 'click', '.user_add_members', function() {
   block = this.nextElementSibling.querySelector("#chat_members");
   if (!block.querySelector(".load_pag")){

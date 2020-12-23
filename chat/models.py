@@ -67,7 +67,7 @@ class Chat(models.Model):
         messages = self.chat_message.filter(is_deleted=False).values('uuid')
         return [i['uuid'] for i in messages]
 
-    def get_photos(self):
+    def get_attach_photos(self):
         from gallery.models import Photo
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 

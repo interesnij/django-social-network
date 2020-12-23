@@ -17,6 +17,11 @@
           <span>
             <a class="dropdown-item pointer">Пожаловаться</a>
           </span>
+          {% if avatar %}
+            <a class="dropdown-item mob_u_unset_avatar pointer">Убрать аватар</a>
+          {% else %}
+            <a class="dropdown-item mob_u_set_avatar pointer">Сделать аватаром</a>
+          {% endif %}
       </div>
     </div>
     <div class="col" style="padding:5px;">

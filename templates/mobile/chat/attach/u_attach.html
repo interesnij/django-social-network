@@ -1,0 +1,33 @@
+<!-- прикрепленные элементы к сообщению пользователей -->
+
+<div class="attach_container">
+ {% for photo in object.get_attach_photos %}
+ <div class="photo">
+   <div class="progressive replace image_fit u_chat_photo pointer" data-href="{{ photo.file.url }}" photo-pk="{{ photo.pk }}">
+     <img class="preview image_fit" width="20" height="15" loading="lazy" src="{% if photo.preview %}{{ photo.preview.url }}{% else %}/static/images/tiny.png{% endif %}" alt="img">
+   </div>
+ </div>
+ {% endfor %}
+
+ {% for video in object.get_attach_videos %}
+ <div class="video">
+     <img class="image_fit" src="{{ video.image.url }}" alt="img">
+     <div class="video_icon_play_v2 u_chat_video" data-pk="{{ video.creator.pk }}" video-pk="{{ video.pk }}" data-uuid="{{ object.uuid }}" video-counter="{{ forloop.counter }}"></div>
+ </div>
+ {% endfor %}
+
+ {% for good in object.get_attach_goods %}
+    {% include 'mobile/generic/items/u_good.html' %}
+ {% endfor %}
+ {% for article in object.get_attach_articles %}
+   {% include 'mobile/generic/items/u_article.html' %}
+ {% endfor %}
+
+ {% for music in object.get_attach_tracks %}
+   {% include 'mobile/generic/items/u_music.html' %}
+ {% endfor %}
+
+ {% for doc in object.get_attach_docs %}
+   {% include 'mobile/generic/items/u_doc.html' %}
+ {% endfor %}
+</div>

@@ -315,3 +315,31 @@ class GetCommunityPhoto(TemplateView):
         context["object"] = self.photo
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
+
+
+class CommunityChatPhoto(TemplateView):
+    """
+    страница отдельного фото чата сообщества с разрещениями и без
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from chat.models import Chat
+
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.chat.get_attach_photos()
+        if request.is_ajax():
+            self.template_name = get_permission_community_photo_detail(self.photo.community, self.photo, "chat/attach/photo/", "c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(CommunityChatPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityChatPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["chat"] = self.chat
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
