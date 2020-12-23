@@ -61,7 +61,7 @@ class Chat(models.Model):
         return self.chat_message.filter(is_deleted=False).last()
 
     def get_messages(self):
-        return self.chat_message.filter(is_deleted=False).order_by("-created")
+        return self.chat_message.filter(is_deleted=False)
 
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
