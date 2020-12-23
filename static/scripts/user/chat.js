@@ -106,7 +106,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         window.history.pushState(null, "vfgffgfgf", url);
         m_page = 2;
         m_loaded = false;
-        scrolled(window.location.href, '.is_chat_paginate', target = 0)
+        scrolled(window.location.href, '.chat_container', target = 0)
       }
     }
     ajax_link.send();

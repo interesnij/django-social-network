@@ -146,8 +146,8 @@ function create_load_pagination(block) {
 
 
 function create_pagination(block) {
-  if (block.querySelector('.is_chat_paginate')) {
-    scrolled(window.location.href, '.is_chat_paginate', target = 0)
+  if (block.querySelector('.chat_container')) {
+    scrolled(window.location.href, '.chat_container', target = 0)
   }
   else if (block.querySelector('.is_paginate')) {
     scrolled(window.location.href, '.is_paginate', target = 0)
