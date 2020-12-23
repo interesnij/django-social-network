@@ -5,10 +5,6 @@
 <div class="container mt-3">
   {% include 'mobile/main/news_list/menu.html' %}
 
-          <div class="stream-update">
-            <a href=""><span class="new-posts"></span> Показать новые записи</a>
-          </div>
-
           {% if object_list %}
             <span class="post_stream stream is_paginate">
               {% for object in object_list %}
