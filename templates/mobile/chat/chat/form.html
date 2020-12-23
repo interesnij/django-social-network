@@ -3,8 +3,8 @@
   		window.AudioContext = window.AudioContext || window.webkitAudioContext;
   		navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
   		var recorder = new RecordVoiceAudios();
-  		let startBtn = document.querySelector('.js-start');
-  		let stopBtn = document.querySelector('.js-stop');
+  		let startBtn = document.querySelector('#voice_start_btn');
+  		let stopBtn = document.querySelector('#message_post_btn');
   		startBtn.onclick = recorder.startRecord;
   		stopBtn.onclick = recorder.stopRecord;
 
@@ -106,7 +106,7 @@
   				console.log(error);
   			}
   		}
-  	
+
 </script>
 <form>
     {% csrf_token %}
