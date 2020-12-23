@@ -77,9 +77,9 @@ function top_paginate(link, block_id) {
                 if (elem.getElementsByClassName('pag').length < 15) {
                     m_loaded = true
                 };
-                if (elem.querySelector(block_id)) {
+                if (elem.querySelector(".is_chat_paginate")) {
                     xxx = document.createElement("span");
-                    xxx.innerHTML = elem.querySelector(block_id).innerHTML;
+                    xxx.innerHTML = elem.querySelector(".is_chat_paginate").innerHTML;
                     block.insertAdjacentHTML('afterbegin', xxx.innerHTML)
                 } else {
                     block.insertAdjacentHTML('afterbegin', elem.innerHTML)
