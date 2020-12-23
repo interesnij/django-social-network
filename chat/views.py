@@ -30,6 +30,7 @@ class MessagesListView(ListView):
 class ChatDetailView(ListView):
 	template_name = None
 	paginate_by = 15
+	model = Message
 
 	def get(self,request,*args,**kwargs):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
