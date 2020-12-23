@@ -2,7 +2,7 @@
 {% block title %}Публичный чат{% endblock %}
 {% load messager %}
 {% block content %}
-
+{{ chat.get_photos }}
 <div class="container mt-3 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
