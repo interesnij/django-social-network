@@ -80,9 +80,9 @@ function top_paginate(link, block_id) {
                 if (elem.querySelector(block_id)) {
                     xxx = document.createElement("span");
                     xxx.innerHTML = elem.querySelector(block_id).innerHTML;
-                    block.afterbegin('beforeend', xxx.innerHTML)
+                    block.insertAdjacentHTML('afterbegin', xxx.innerHTML)
                 } else {
-                    block.afterbegin('beforeend', elem.innerHTML)
+                    block.insertAdjacentHTML('afterbegin', elem.innerHTML)
                 }
             }
         }
