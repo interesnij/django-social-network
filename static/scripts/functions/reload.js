@@ -35,7 +35,7 @@ function scrolled(link, block_id, target) {
       console.log("paginate");
             if (document.body.querySelector(".chat_container")){
               console.log("is_chat_paginate");
-              block_ = document.body.querySelector(".is_chat_paginate");
+              block_ = document.body.querySelector(block_id);
               box_ = block_.querySelector('.first');
               if (box_ && box_.classList.contains("first")) {
                 console.log(box_);
