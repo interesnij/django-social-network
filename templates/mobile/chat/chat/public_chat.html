@@ -23,7 +23,7 @@
         <ul class="chatlist app is_chat_paginate">
           {% if object_list %}
 
-          {% for object in object_list %}
+          {% for object in object_list reversed %}
             {% include 'mobile/chat/message/message.html' %}
           {% endfor %}
           <span id="scrolled"></span>
