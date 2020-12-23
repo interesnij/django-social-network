@@ -36,7 +36,7 @@ InlineWorker.prototype.postMessage = function postMessage(data) {
   }, 0);
 };
 
-export class Recorder {
+class Recorder {
     config = {
         bufferLen: 4096,
         numChannels: 2,
@@ -287,9 +287,6 @@ export class Recorder {
         link.dispatchEvent(click);
     }
 }
-
-export default Recorder;
-
 
 
 
