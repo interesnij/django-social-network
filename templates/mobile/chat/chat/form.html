@@ -1,91 +1,112 @@
 <script>
   window.URL = window.URL || window.webkitURL;
-		window.AudioContext = window.AudioContext || window.webkitAudioContext;
-		navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-		var recorder = new RecordVoiceAudios();
-		let startBtn = document.querySelector('#voice_start_btn');
-		let stopBtn = document.querySelector('#message_post_btn');
-		startBtn.onclick = recorder.startRecord;
-		stopBtn.onclick = recorder.stopRecord;
+  		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  		navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+  		var recorder = new RecordVoiceAudios();
+  		let startBtn = document.querySelector('.js-start');
+  		let stopBtn = document.querySelector('.js-stop');
+  		startBtn.onclick = recorder.startRecord;
+  		stopBtn.onclick = recorder.stopRecord;
 
-		function RecordVoiceAudios() {
-			let encoder = null;
-			let microphone;
-			let isRecording = false;
-			var audioContext;
-			let processor;
-			let config = {
-				bufferLen: 4096,
-				numChannels: 2,
-				mimeType: 'audio/mpeg'
-			};
+  		function RecordVoiceAudios() {
+  			let elementVolume = document.querySelector('.js-volume');
+  			let pre = document.querySelector('pre');
+  			let encoder = null;
+  			let microphone;
+  			let isRecording = false;
+  			var audioContext;
+  			let processor;
+  			let config = {
+  				bufferLen: 4096,
+  				numChannels: 2,
+  				mimeType: 'audio/mpeg'
+  			};
 
-			this.startRecord = function() {
-				audioContext = new AudioContext();
-				if (audioContext.createJavaScriptNode) {
-					processor = audioContext.createJavaScriptNode(config.bufferLen, config.numChannels, config.numChannels);
-				} else if (audioContext.createScriptProcessor) {
-					processor = audioContext.createScriptProcessor(config.bufferLen, config.numChannels, config.numChannels);
-				} else {
-					console.log('WebAudio API has no support on this browser.');
-				}
+  			this.startRecord = function() {
+  				audioContext = new AudioContext();
+  				if (audioContext.createJavaScriptNode) {
+  					processor = audioContext.createJavaScriptNode(config.bufferLen, config.numChannels, config.numChannels);
+  				} else if (audioContext.createScriptProcessor) {
+  					processor = audioContext.createScriptProcessor(config.bufferLen, config.numChannels, config.numChannels);
+  				} else {
+  					console.log('WebAudio API has no support on this browser.');
+  				}
 
-				processor.connect(audioContext.destination);
-				navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-				.then(gotStreamMethod)
-				.catch(logError);
-			};
+  				processor.connect(audioContext.destination);
+  				navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+  				.then(gotStreamMethod)
+  				.catch(logError);
+  			};
 
-			let getBuffers = (event) => {
-				var buffers = [];
-				for (var ch = 0; ch < 2; ++ch)
-					buffers[ch] = event.inputBuffer.getChannelData(ch);
-				return buffers;
-			}
+  			let getBuffers = (event) => {
+  				var buffers = [];
+  				for (var ch = 0; ch < 2; ++ch)
+  					buffers[ch] = event.inputBuffer.getChannelData(ch);
+  				return buffers;
+  			}
 
-			let gotStreamMethod = (stream) => {
-				startBtn.setAttribute('disabled', true);
-				stopBtn.removeAttribute('disabled');
-				audioElement.src = "";
-				config = {
-					bufferLen: 4096,
-					numChannels: 2,
-					mimeType: 'audio/mpeg'
-				};
-				isRecording = true;
+  			let gotStreamMethod = (stream) => {
+  				startBtn.setAttribute('disabled', true);
+  				stopBtn.removeAttribute('disabled');
+  				config = {
+  					bufferLen: 4096,
+  					numChannels: 2,
+  					mimeType: 'audio/mpeg'
+  				};
+  				isRecording = true;
 
-				let tracks = stream.getTracks();
-				microphone = audioContext.createMediaStreamSource(stream);
-				microphone.connect(processor);
-				encoder = new Mp3LameEncoder(audioContext.sampleRate, 160);
-				processor.onaudioprocess = function(event) {
-					encoder.encode(getBuffers(event));
-				};
+  				let tracks = stream.getTracks();
+  				microphone = audioContext.createMediaStreamSource(stream);
+  				microphone.connect(processor);
+  				encoder = new Mp3LameEncoder(audioContext.sampleRate, 160);
+  				processor.onaudioprocess = function(event) {
+  					encoder.encode(getBuffers(event));
+  				};
 
-				stopBtnRecord = () => {
-					console.log('stopBtnRecord');
-					isRecording = false;
-					startBtn.removeAttribute('disabled');
-					stopBtn.setAttribute('disabled', true);
-					audioContext.close();
-					processor.disconnect();
-					tracks.forEach(track => track.stop());
-					audioElement.src = URL.createObjectURL(encoder.finish());
-				};
+  				stopBtnRecord = () => {
+  					console.log('stopBtnRecord');
+  					isRecording = false;
+  					startBtn.removeAttribute('disabled');
+  					stopBtn.setAttribute('disabled', true);
+  					audioContext.close();
+  					processor.disconnect();
+  					tracks.forEach(track => track.stop());
+  				};
 
-				analizer(audioContext);
-			}
+  				analizer(audioContext);
+  			}
 
-			this.stopRecord = function() {
-				stopBtnRecord();
-			};
-		}
+  			this.stopRecord = function() {
+  				stopBtnRecord();
+  			};
 
-			let logError = (error) => {
-				alert(error);
-				console.log(error);
-			}
-		}
+  			let analizer = (context) => {
+  				let listener = context.createAnalyser();
+  				microphone.connect(listener);
+  				listener.fftSize = 256;
+  				var bufferLength = listener.frequencyBinCount;
+  				let analyserData = new Uint8Array(bufferLength);
+
+  				let getVolume = () => {
+  					let volumeSum = 0;
+  					let volumeMax = 0;
+
+  					listener.getByteFrequencyData(analyserData);
+
+  					for (let i = 0; i < bufferLength; i++) {
+  						volumeSum += analyserData[i];
+  					}
+  				}
+
+  				getVolume();
+  			}
+
+  			let logError = (error) => {
+  				alert(error);
+  				console.log(error);
+  			}
+  		}
+  	
 </script>
 <form>
     {% csrf_token %}
