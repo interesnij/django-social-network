@@ -294,7 +294,7 @@ music_player = new FWDMSP({
     volume:.8,														// громкость по умолчанию 80%
 
     // controller settings
-    showControllerByDefault:"yes",        // показать контроллер по умолчанию
+    showControllerByDefault:"no",        // показать контроллер по умолчанию
     showThumbnail:"yes",                  // показывать миниатюры
     showNextAndPrevButtons:"yes",					// показывать кнопки переключения треков
     showSoundAnimation:"yes",							// показывать анимацию музыкального воспроизведения
