@@ -50,4 +50,4 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.chat.get_messages()
+		return reversed(self.chat.get_messages())
