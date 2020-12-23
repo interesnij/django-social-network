@@ -63,13 +63,13 @@ class Chat(models.Model):
     def get_messages(self):
         return self.chat_message.filter(is_deleted=False)
 
-    def get_messages_ids(self):
-        messages = self.chat_message.filter(is_deleted=False).values('id')
-        return [i['id'] for i in messages]
+    def get_messages_uuids(self):
+        messages = self.chat_message.filter(is_deleted=False).values('uuid')
+        return [i['uuid'] for i in messages]
 
     def get_photos(self):
         from gallery.models import Photo
-        return Photo.objects.filter(message_photo_id__in=self.get_messages_ids()) 
+        return Photo.objects.filter(message_photo_uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
