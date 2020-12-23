@@ -1,4 +1,4 @@
-var WORKER_ENABLED = !!(global === global.window && global.URL && global.Blob && global.Worker);
+var WORKER_ENABLED;
 
 function InlineWorker(func, self) {
   var _this = this;
