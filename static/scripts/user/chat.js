@@ -7,7 +7,7 @@ on('#ajax', 'click', '.user_create_chat', function() {
 on('#ajax', 'click', '.user_send_page_message', function() {
   loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
-  open_fullscreen("/chat/message_progs/send_page_message/" + pk + "/", loader)
+  open_fullscreen("/chat/user_progs/send_page_message/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_chat_photo', function() {
@@ -64,7 +64,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/chat/message_progs/send_page_message/' + pk + '/', true );
+      ajax_link.open( 'POST', '/chat/user_progs/send_page_message/' + pk + '/', true );
       ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
@@ -83,7 +83,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/chat/message_progs/send_message/" + pk + "/", true );
+  link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

@@ -13,6 +13,9 @@
         <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
+    {% if object.voice %}
+      <audio src="{{ object.voice.url }}"></audio>
+    {% else %}
       {% if object.text %}
         <div class="">
           {{ object.text|linebreaks }}
@@ -32,5 +35,7 @@
           {% endif %}
         </span>
       {% endif %}
+
+    {% endif %}
     </div>
 </div>

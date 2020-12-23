@@ -81,7 +81,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container")) {
-  link_.open('GET', "/chat/message_progs/load_message/" + message_uuid + "/", true);
+  link_.open('GET', "/chat/user_progs/load_message/" + message_uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
@@ -97,7 +97,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_.send()
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') != chat_id) {
-    link_.open('GET', "/chat/message_progs/load_chat_message/" + message_uuid + "/", true);
+    link_.open('GET', "/chat/user_progs/load_chat_message/" + message_uuid + "/", true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
     link_.onreadystatechange = function() {

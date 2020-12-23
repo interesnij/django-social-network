@@ -14,3 +14,8 @@ class MessageForm(forms.ModelForm):
 	class Meta:
 		model = Message
 		fields = ['text']
+
+class VoiceForm(forms.ModelForm):
+	class Meta:
+		model = Message
+		fields = ['voice']

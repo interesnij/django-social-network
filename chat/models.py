@@ -8,7 +8,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from posts.models import Post
 from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
-from users.helpers import upload_to_user_directory
+from chat.helpers import upload_to_chat_directory
 from imagekit.models import ProcessedImageField
 
 
@@ -25,6 +25,7 @@ class Chat(models.Model):
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPES, default=TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
     image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_user_directory,processors=[ResizeToFit(width=100, height=100,)])
+    voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
     community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
