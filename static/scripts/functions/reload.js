@@ -146,14 +146,14 @@ function create_load_pagination(block) {
 
 
 function create_pagination(block) {
-  if (block.querySelector('.is_paginate')) {
+  if (block.querySelector('.is_chat_paginate')) {
+    scrolled(window.location.href, '.is_chat_paginate', target = 0)
+  }
+  else if (block.querySelector('.is_paginate')) {
     scrolled(window.location.href, '.is_paginate', target = 0)
   }
   else if (block.querySelector('.is_post_paginate')) {
     scrolled(window.location.href, '.is_post_paginate', target = 1)
-  }
-  else if (block.querySelector('.is_chat_paginate')) {
-    scrolled(window.location.href, '.is_chat_paginate', target = 0)
   }
 }
 
