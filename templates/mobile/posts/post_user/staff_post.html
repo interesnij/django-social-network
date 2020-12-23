@@ -1,4 +1,4 @@
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.creator.pk }}" data-uuid="{{ object.uuid }}">
     {% include 'mobile/posts/post_user/staff_card_header.html' %}
 
       <div class="fullscreen pointer">

@@ -1,4 +1,4 @@
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.community.pk }}" data-uuid="{{ object.uuid }}">
     {% include 'mobile/posts/post_community/staff_card_header.html' %}
 
     {% if object.parent %}
