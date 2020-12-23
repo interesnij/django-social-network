@@ -34,7 +34,6 @@ class Chat(models.Model):
     class Meta:
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
-        ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
@@ -62,7 +61,7 @@ class Chat(models.Model):
         return self.chat_message.filter(is_deleted=False).last()
 
     def get_messages(self):
-        return self.chat_message.filter(is_deleted=False)
+        return self.chat_message.filter(is_deleted=False).order_by("-created")
 
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
