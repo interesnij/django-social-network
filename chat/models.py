@@ -24,7 +24,7 @@ class Chat(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPES, default=TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
-    image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_user_directory,processors=[ResizeToFit(width=100, height=100,)])
+    image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
     community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
