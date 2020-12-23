@@ -25,10 +25,6 @@
 
 			this.startRecord = function() {
 				audioContext = new AudioContext();
-				/**
-				* Create a ScriptProcessorNode with a bufferSize of
-				* 4096 and two input and output channel
-				* */
 				if (audioContext.createJavaScriptNode) {
 					processor = audioContext.createJavaScriptNode(config.bufferLen, config.numChannels, config.numChannels);
 				} else if (audioContext.createScriptProcessor) {
@@ -65,18 +61,9 @@
 				isRecording = true;
 
 				let tracks = stream.getTracks();
-				/**
-				* Create a MediaStreamAudioSourceNode for the microphone
-				* */
 				microphone = audioContext.createMediaStreamSource(stream);
-				/**
-				* connect the AudioBufferSourceNode to the gainNode
-				* */
 				microphone.connect(processor);
 				encoder = new Mp3LameEncoder(audioContext.sampleRate, 160);
-				/**
-				* Give the node a function to process audio events
-				*/
 				processor.onaudioprocess = function(event) {
 					encoder.encode(getBuffers(event));
 				};
@@ -136,35 +123,10 @@
 				getVolume();
 			}
 
-			let drawAudio = (volume) => {
-				ctx.save();
-				ctx.translate(0, 120);
-
-				for (var i = 0; i < 14; i++) {
-					fillStyle = '#ffcbcd';
-					if (i < volume)
-						fillStyle = '#ff2c77';
-
-					ctx.fillStyle = fillStyle;
-					ctx.beginPath();
-					ctx.arc(10, 2, 17, 0, Math.PI * 2);
-					ctx.closePath();
-					ctx.fill();
-					ctx.translate(0, -7);
-				}
-
-				ctx.restore();
-			}
-
 			let logError = (error) => {
 				alert(error);
 				console.log(error);
 			}
-
-			codeBtn.addEventListener('click', () => {
-				pre.classList.toggle('hide');
-				pre.innerHTML = document.querySelector('.containerScript').innerHTML;
-			});
 
 			drawAudio(0);
 		}
