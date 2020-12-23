@@ -1,8 +1,5 @@
 <script>
   window.URL = window.URL || window.webkitURL;
-		/**
-		 * Detecte the correct AudioContext for the browser
-		 * */
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 		var recorder = new RecordVoiceAudios();
@@ -34,9 +31,6 @@
 				}
 
 				processor.connect(audioContext.destination);
-				/**
-				*  ask permission of the user for use microphone or camera
-				* */
 				navigator.mediaDevices.getUserMedia({ audio: true, video: false })
 				.then(gotStreamMethod)
 				.catch(logError);
@@ -85,50 +79,12 @@
 			this.stopRecord = function() {
 				stopBtnRecord();
 			};
-
-			let analizer = (context) => {
-				let listener = context.createAnalyser();
-				microphone.connect(listener);
-				listener.fftSize = 256;
-				var bufferLength = listener.frequencyBinCount;
-				let analyserData = new Uint8Array(bufferLength);
-
-				let getVolume = () => {
-					let volumeSum = 0;
-					let volumeMax = 0;
-
-					listener.getByteFrequencyData(analyserData);
-
-					for (let i = 0; i < bufferLength; i++) {
-						volumeSum += analyserData[i];
-					}
-
-					let volume = volumeSum / bufferLength;
-
-					if (volume > volumeMax)
-						volumeMax = volume;
-
-					drawAudio(volume / 10);
-					/**
-					* Call getVolume several time for catch the level until it stop the record
-					*/
-					return setTimeout(()=>{
-						if (isRecording)
-							getVolume();
-						else
-							drawAudio(0);
-					}, 10);
-				}
-
-				getVolume();
-			}
+		}
 
 			let logError = (error) => {
 				alert(error);
 				console.log(error);
 			}
-
-			drawAudio(0);
 		}
 </script>
 <form>
