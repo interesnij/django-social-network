@@ -1,115 +1,180 @@
 <script>
+  window.URL = window.URL || window.webkitURL;
+		/**
+		 * Detecte the correct AudioContext for the browser
+		 * */
+		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+		navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+		var recorder = new RecordVoiceAudios();
+		let startBtn = document.querySelector('#voice_start_btn');
+		let stopBtn = document.querySelector('#message_post_btn');
+		startBtn.onclick = recorder.startRecord;
+		stopBtn.onclick = recorder.stopRecord;
 
-    let audioIN = { audio: true };
-    //  audio is true, for recording
+		function RecordVoiceAudios() {
+			let elementVolume = document.querySelector('.js-volume');
+			let ctx = elementVolume.getContext('2d');
+			let codeBtn = document.querySelector('.js-code');
+			let pre = document.querySelector('pre');
+			let downloadLink = document.getElementById('download');
+			let audioElement = document.querySelector('audio');
+			let encoder = null;
+			let microphone;
+			let isRecording = false;
+			var audioContext;
+			let processor;
+			let config = {
+				bufferLen: 4096,
+				numChannels: 2,
+				mimeType: 'audio/mpeg'
+			};
 
-    // Access the permission for use
-    // the microphone
-    navigator.mediaDevices.getUserMedia(audioIN)
+			this.startRecord = function() {
+				audioContext = new AudioContext();
+				/**
+				* Create a ScriptProcessorNode with a bufferSize of
+				* 4096 and two input and output channel
+				* */
+				if (audioContext.createJavaScriptNode) {
+					processor = audioContext.createJavaScriptNode(config.bufferLen, config.numChannels, config.numChannels);
+				} else if (audioContext.createScriptProcessor) {
+					processor = audioContext.createScriptProcessor(config.bufferLen, config.numChannels, config.numChannels);
+				} else {
+					console.log('WebAudio API has no support on this browser.');
+				}
 
-      // 'then()' method returns a Promise
-      .then(function (mediaStreamObj) {
+				processor.connect(audioContext.destination);
+				/**
+				*  ask permission of the user for use microphone or camera
+				* */
+				navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+				.then(gotStreamMethod)
+				.catch(logError);
+			};
 
-        // Connect the media stream to the
-        // first audio element
-        let audio = document.querySelector('audio');
-        //returns the recorded audio via 'audio' tag
+			let getBuffers = (event) => {
+				var buffers = [];
+				for (var ch = 0; ch < 2; ++ch)
+					buffers[ch] = event.inputBuffer.getChannelData(ch);
+				return buffers;
+			}
 
-        // 'srcObject' is a property which
-        // takes the media object
-        // This is supported in the newer browsers
-        if ("srcObject" in audio) {
-          audio.srcObject = mediaStreamObj;
-        }
-        else {   // Old version
-          audio.src = window.URL
-            .createObjectURL(mediaStreamObj);
-        }
+			let gotStreamMethod = (stream) => {
+				startBtn.setAttribute('disabled', true);
+				stopBtn.removeAttribute('disabled');
+				audioElement.src = "";
+				config = {
+					bufferLen: 4096,
+					numChannels: 2,
+					mimeType: 'audio/mpeg'
+				};
+				isRecording = true;
 
-        // It will play the audio
-        audio.onloadedmetadata = function (ev) {
+				let tracks = stream.getTracks();
+				/**
+				* Create a MediaStreamAudioSourceNode for the microphone
+				* */
+				microphone = audioContext.createMediaStreamSource(stream);
+				/**
+				* connect the AudioBufferSourceNode to the gainNode
+				* */
+				microphone.connect(processor);
+				encoder = new Mp3LameEncoder(audioContext.sampleRate, 160);
+				/**
+				* Give the node a function to process audio events
+				*/
+				processor.onaudioprocess = function(event) {
+					encoder.encode(getBuffers(event));
+				};
 
-          // Play the audio in the 2nd audio
-          // element what is being recorded
-          audio.play();
-        };
+				stopBtnRecord = () => {
+					console.log('stopBtnRecord');
+					isRecording = false;
+					startBtn.removeAttribute('disabled');
+					stopBtn.setAttribute('disabled', true);
+					audioContext.close();
+					processor.disconnect();
+					tracks.forEach(track => track.stop());
+					audioElement.src = URL.createObjectURL(encoder.finish());
+				};
 
-        // Start record
-        let start = document.getElementById('btnStart');
+				analizer(audioContext);
+			}
 
-        // Stop record
-        let stop = document.getElementById('btnStop');
+			this.stopRecord = function() {
+				stopBtnRecord();
+			};
 
-        // 2nd audio tag for play the audio
-        let playAudio = document.getElementById('adioPlay');
+			let analizer = (context) => {
+				let listener = context.createAnalyser();
+				microphone.connect(listener);
+				listener.fftSize = 256;
+				var bufferLength = listener.frequencyBinCount;
+				let analyserData = new Uint8Array(bufferLength);
 
-        // This is the main thing to recorde
-        // the audio 'MediaRecorder' API
-        let mediaRecorder = new MediaRecorder(mediaStreamObj);
-        // Pass the audio stream
+				let getVolume = () => {
+					let volumeSum = 0;
+					let volumeMax = 0;
 
-        // Start event
-        start.addEventListener('click', function (ev) {
-          mediaRecorder.start();
-          // console.log(mediaRecorder.state);
-        })
+					listener.getByteFrequencyData(analyserData);
 
-        // Stop event
-        stop.addEventListener('click', function (ev) {
-          mediaRecorder.stop();
-          // console.log(mediaRecorder.state);
-        });
+					for (let i = 0; i < bufferLength; i++) {
+						volumeSum += analyserData[i];
+					}
 
-        // If audio data available then push
-        // it to the chunk array
-        mediaRecorder.ondataavailable = function (ev) {
-          dataArray.push(ev.data);
-        }
+					let volume = volumeSum / bufferLength;
 
-        // Chunk array to store the audio data
-        let dataArray = [];
+					if (volume > volumeMax)
+						volumeMax = volume;
 
-        // Convert the audio data in to blob
-        // after stopping the recording
-        mediaRecorder.onstop = function (ev) {
+					drawAudio(volume / 10);
+					/**
+					* Call getVolume several time for catch the level until it stop the record
+					*/
+					return setTimeout(()=>{
+						if (isRecording)
+							getVolume();
+						else
+							drawAudio(0);
+					}, 10);
+				}
 
-          // blob of type mp3
-          let audioData = new Blob(dataArray,
-                    { 'type': 'audio/mp3;' });
+				getVolume();
+			}
 
-          // After fill up the chunk
-          // array make it empty
-          dataArray = [];
+			let drawAudio = (volume) => {
+				ctx.save();
+				ctx.translate(0, 120);
 
-          // Creating audio url with reference
-          // of created blob named 'audioData'
-          let audioSrc = window.URL
-              .createObjectURL(audioData);
+				for (var i = 0; i < 14; i++) {
+					fillStyle = '#ffcbcd';
+					if (i < volume)
+						fillStyle = '#ff2c77';
 
-          // Pass the audio url to the 2nd video tag
-          playAudio.src = audioSrc;
-        }
-      })
+					ctx.fillStyle = fillStyle;
+					ctx.beginPath();
+					ctx.arc(10, 2, 17, 0, Math.PI * 2);
+					ctx.closePath();
+					ctx.fill();
+					ctx.translate(0, -7);
+				}
 
-      // If any error occurs then handles the error
-      .catch(function (err) {
-        console.log(err.name, err.message);
-      });
-  </script>
+				ctx.restore();
+			}
 
-  <button id="btnStart">START RECORDING</button>
+			let logError = (error) => {
+				alert(error);
+				console.log(error);
+			}
 
-    <button id="btnStop">STOP RECORDING</button>
-    <!--button for 'stop recording'-->
+			codeBtn.addEventListener('click', () => {
+				pre.classList.toggle('hide');
+				pre.innerHTML = document.querySelector('.containerScript').innerHTML;
+			});
 
-  <!--for record-->
-  <audio controls></audio>
-  <!--'controls' use for add
-    play, pause, and volume-->
-
-  <!--for play the audio-->
-  <audio id="adioPlay" controls></audio>
-
+			drawAudio(0);
+		}
+</script>
 <form>
     {% csrf_token %}
     <div class="row files_0"></div>
@@ -136,7 +201,7 @@
             <a class="btn btn-link btn-sm text-secondary" id="voice_start_btn" type="button">
               <svg class="svg_default svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
             </a>
-            <a class="btn btn-link btn-sm text-secondary" id="message_post_btn" style="display:none" type="button">
+            <a class="btn btn-link btn-sm text-secondary" id="message_post_btn" type="button">
               <svg class="svg_default svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
             </a>
         </div>
