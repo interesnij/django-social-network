@@ -3,7 +3,7 @@
 {% load messager %}
 {% block content %}
 
-<div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+<div class="px-0 container mt-3 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-header border-bottom">
         <div class="media w-100">
           {{ chat|get_chat_header:request.user.pk|safe }}
