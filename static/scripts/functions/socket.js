@@ -93,7 +93,6 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
           new_post.innerHTML = elem;
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.querySelector("li").innerHTML)
           : lenta.prepend(new_post);
-          new Audio('/static/audio/apple/message.mp3').play();
           document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
   link_.send()
 }
