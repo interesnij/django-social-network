@@ -114,7 +114,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
       chats.classList.add("tab_badge", "badge-success");
-      chats.innerHTML = "";tab_span.append(tab_span);
+      chats.innerHTML = "";tab_span.append(count);
       new Audio('/static/audio/apple/message.mp3').play()
   }
 }
