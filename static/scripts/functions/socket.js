@@ -109,6 +109,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
         new_post = document.createElement("span");
         new_post.innerHTML = elem;
         lenta.append(new_post);
+        scrollToBottom("#scrolled");
         document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
   link_.send()
 } else {
