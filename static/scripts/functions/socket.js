@@ -81,12 +81,13 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container")) {
+    // если в момент получения нового сообщения получатель на странице списка чатов
   link_.open('GET', "/chat/user_progs/load_message/" + message_uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          lenta = document.body.querySelector('.is_paginate');
+          lenta = document.body.querySelector('.is_chat_paginate');
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
@@ -96,28 +97,30 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
           document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
   link_.send()
 }
-  else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') != chat_id) {
+  else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') == chat_id) {
+    // если в момент получения нового сообщения получатель на странице чата, в котором ему написалм
     link_.open('GET', "/chat/user_progs/load_chat_message/" + message_uuid + "/", true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
     link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        lenta = document.body.querySelector('.is_paginate');
+        lenta = document.body.querySelector('.is_chat_paginate');
         elem = link_.responseText;
         new_post = document.createElement("span");
         new_post.innerHTML = elem;
-        lenta.prepend(new_post);
+        lenta.append(new_post);
         document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
   link_.send()
 } else {
+  // если в момент получения нового сообщения получатель не на странице чата или списка чатов
       chats = document.body.querySelector(".new_unread_chats");
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
       console.log(count);
       chats.classList.add("tab_badge", "badge-success");
       chats.innerHTML = "";tab_span.append(count);chats.append(count);
-      new Audio('/static/audio/apple/message.mp3').play()
   }
+  new Audio('/static/audio/apple/message.mp3').play()
 }
 
 

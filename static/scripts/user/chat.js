@@ -103,6 +103,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'click', '.chat_ajax', function(e) {
+  _this = this;
   e.preventDefault();
 	var url = this.getAttribute('href');
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -119,7 +120,14 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         window.history.pushState(null, "vfgffgfgf", url);
         m_page = 2;
         m_loaded = false;
-        scrolled(window.location.href, '.chat_container', target = 0)
+        scrolled(window.location.href, '.chat_container', target = 0);
+        _this.querySelector(".tab_badge") ? (chats = document.body.querySelector(".new_unread_chats"),
+                                             all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
+                                             all_count = all_count*1,
+                                             result = all_count - 1,
+                                             result > 0 ? chats.querySelector(".tab_badge").innerHTML = result : chats.innerHTML = '',
+                                             console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
+                                           ) : null)
       }
     }
     ajax_link.send();
