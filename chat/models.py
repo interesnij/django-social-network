@@ -338,7 +338,7 @@ class Message(models.Model):
         new_message.create_socket()
         return new_message
 
-    def send_message(chat, creator, repost, parent, text):
+    def send_message(chat, creator, repost, parent, text, voice): 
         # программа для отсылки сообщения, когда чат известен
         from common.processing.message import get_message_processing
 
