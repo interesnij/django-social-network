@@ -200,7 +200,7 @@ class Community(models.Model):
         try:
             return PostList.objects.get(community_id=self.pk, type=PostList.FIX)
         except:
-            return PostList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=PostList.FIX, title="Закрепленный список")
+            return PostList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=PostList.FIX, name="Закрепленный список")
 
     def get_posts(self):
         from posts.models import Post, PostList
