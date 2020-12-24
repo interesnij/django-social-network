@@ -126,7 +126,7 @@ notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_
 tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-success");
 
-ws_path = 'wss://' + "раса.рус/notif/";
+ws_path = 'wss://' + "раса.рус/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
