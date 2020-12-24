@@ -1,10 +1,11 @@
 from users.models import User
 from posts.models import *
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 from posts.forms import *
 from django.http import Http404
 from django.views.generic.base import TemplateView
+
 
 
 class PostUserCreate(View):

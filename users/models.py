@@ -981,7 +981,7 @@ class User(AbstractUser):
         try:
             return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIX)
         except:
-            return PostList.objects.create(creator_id=self.pk, community__isnull=True, type=PostList.FIX, title="Закрепленный список")
+            return PostList.objects.create(creator_id=self.pk, community__isnull=True, type=PostList.FIX, name="Закрепленный список")
 
     def get_draft_posts(self):
         from posts.models import Post
