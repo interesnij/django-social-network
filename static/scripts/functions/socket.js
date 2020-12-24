@@ -128,7 +128,7 @@ tab_span.classList.add("tab_badge", "badge-success");
 
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-ws_path = ws_scheme + '://' + "раса.рус/ws" + "/notify/";
+ws_path = ws_scheme + '://' + "раса.рус" + "/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 
