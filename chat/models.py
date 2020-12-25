@@ -154,6 +154,7 @@ class Chat(models.Model):
 
     def get_header_chat(self, user_id):
         count = self.get_members_count()
+        buttons = '<svg fill="currentColor" class="svg_default svg_default_20" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg><svg fill="currentColor" class="svg_default svg_default_20" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z"fill="none"/></svg>'
         if count == 2:
             member = self.get_chat_member(user_id)
             if self.image:
@@ -166,7 +167,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = member.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">',self.get_type_display(), '</p></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0">', self.get_type_display(), '</p><p class="mb-0">', buttons, '</p></div>'])
             return ''.join([figure, media_body])
         elif count > 2:
             if self.image:
@@ -338,7 +339,7 @@ class Message(models.Model):
         new_message.create_socket()
         return new_message
 
-    def send_message(chat, creator, repost, parent, text, voice): 
+    def send_message(chat, creator, repost, parent, text, voice):
         # программа для отсылки сообщения, когда чат известен
         from common.processing.message import get_message_processing
 

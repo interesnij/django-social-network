@@ -5141,7 +5141,7 @@ width: 100%
 #article_loader iframe {
   width: 100% !important;
 }
-
+.svg_default_20 { width: 20px; height: 20px;border-radius: 50%; padding: 3px; }
 .svg_default_30 { width: 30px; height: 30px;border-radius: 50%; padding: 3px; }
 .svg_default_40 { width: 40px; height: 40px;border-radius: 50%; padding: 4px; }
 .svg_default_50 { width: 50px; height: 50px;border-radius: 50%; padding: 5px;  }
