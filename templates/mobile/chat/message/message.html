@@ -1,4 +1,4 @@
-<div class="media mt-3 pag {% if forloop.first %}first{% endif %}">
+<div class="media p-2 pointer message pag {% if forloop.first %}first{% endif %}">
     <figure>
       <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">
         {% if object.get_creator.s_avatar %}
@@ -11,7 +11,10 @@
     <div class="media-body">
       <h5 class="time-title mb-0">
         <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
-        <small class="float-right text-muted">{{ object.get_created }}</small>
+        <small class="text-muted">{{ object.get_created }}</small>
+        <small class="text-right">
+
+        </small>
       </h5>
     {% if object.voice %}
       <audio src="{{ object.voice.url }}"></audio>

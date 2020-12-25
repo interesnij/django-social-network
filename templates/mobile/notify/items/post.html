@@ -12,7 +12,7 @@
           </a>
         </figure>
           <div class="media-body">
-              <p class="mb-0" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.creator.pk }}">
+              <p class="mb-0" data-uuid="{{ object.post.uuid }}" list-pk="{{ object.post.get_list_pk }}">
                 <a href="{% url 'user' pk=object.creator.pk %}" class="ajax" style="font-weight: bold;">{{ object.creator.get_full_name }}</a>
                 {{ object.get_verb_display }} <a class="fullscreen pointer" style="text-decoration: underline">{{ object.get_info }}</a>
               </p>
