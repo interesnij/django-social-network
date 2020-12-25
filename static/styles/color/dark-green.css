@@ -185,7 +185,7 @@ a.media:hover {
 }
 .like_window, .dislike_window, .repost_window,
 .comment_like_window, .comment_dislike_window, .custom_color {
-  background: #002e1f; color: rgba(255, 255, 255, 0.6) !important;
+  background: #002e1f !important; color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .thumb{

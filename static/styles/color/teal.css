@@ -190,7 +190,7 @@ a.media:hover {
 }
 .like_window, .dislike_window, .repost_window,
 .comment_like_window, .comment_dislike_window, .custom_color {
-  background: #009eb2; color: rgba(255, 255, 255, 0.9) !important;
+  background: #009eb2 !important; color: rgba(255, 255, 255, 0.9) !important;
 }
 .thumb{
 border: rgba(255, 255, 255, 0.9) solid 1px;
