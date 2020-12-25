@@ -1,3 +1,12 @@
+on('#ajax', 'click', '.message', function() {
+  btn_display = document.body.querySelector(".target_display");
+  this.classList.contains("custom_color") ? (this.classList.remove("custom_color"),
+                                             btn_display.querySelector(".settings_btn").style.display = "none",
+                                             btn_display.querySelector(".type_display").style.display = "block")
+                                          : (this.classList.add("custom_color"),
+                                             btn_display.querySelector(".type_display").style.display = "none",
+                                             btn_display.querySelector(".settings_btn").style.display = "block")
+});
 
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
