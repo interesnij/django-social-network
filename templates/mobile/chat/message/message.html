@@ -12,9 +12,6 @@
       <h5 class="time-title mb-0">
         <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
         <small class="text-muted">{{ object.get_created }}</small>
-        <small class="text-right">
-
-        </small>
       </h5>
     {% if object.voice %}
       <audio src="{{ object.voice.url }}"></audio>
