@@ -3,37 +3,7 @@
 {% load messager %}
 {% block content %}
 
-<div class="card-header border-bottom">
-    <div class="media w-100">
-      {{ chat|get_chat_header:request.user.pk|safe }}
-        <div class="dropdown d-inline-block">
-          <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
-            <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-          </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a href="" class="dropdown-item">Refresh</a>
-                <a href="" class="dropdown-item">Setting</a>
-                <a href="" class="dropdown-item">Close</a>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container mt-3 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
-    <div class="card-header border-bottom">
-        <div class="media w-100">
-          {{ chat|get_chat_header:request.user.pk|safe }}
-            <div class="dropdown d-inline-block">
-              <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
-                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="" class="dropdown-item">Refresh</a>
-                    <a href="" class="dropdown-item">Setting</a>
-                    <a href="" class="dropdown-item">Close</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="card-body bg-light-secondary chatview" id="chatcontent">
         <ul class="chatlist app is_chat_paginate">
           {% if object_list %}
