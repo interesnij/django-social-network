@@ -4,4 +4,4 @@ from survey.models import *
 
 admin.site.register(Survey)
 admin.site.register(Answer)
-admin.site.register(SurveyMembership)
+admin.site.register(SurveyVote)
