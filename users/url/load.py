@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^u_music_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadMusicList.as_view()), name="u_music_list_load"),
 
     url(r'^u_article_load/$', login_required(UserLoadArticle.as_view())),
+    url(r'^u_survey_load/$', login_required(UserLoadSurvey.as_view()), name="u_survey_load"),
 
     url(r'^u_good_load/$', login_required(UserLoadGood.as_view()), name="u_good_load"),
     url(r'^u_good_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadGoodList.as_view()), name="u_good_list_load"),
@@ -33,5 +34,5 @@ urlpatterns = [
 
     url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())),
     url(r'^communities/$', login_required(CommunitiesLoad.as_view())),
-    url(r'^friends/$', login_required(FriendsLoad.as_view())), 
+    url(r'^friends/$', login_required(FriendsLoad.as_view())),
 ]

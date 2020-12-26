@@ -189,6 +189,18 @@ class UserLoadArticle(ListView):
 		articles_list = self.request.user.get_articles().order_by('-created')
 		return articles_list
 
+class UserLoadSurvey(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/load/u_survey_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadSurvey,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		surveys_list = self.request.user.get_surveys()
+		return surveys_list
+
+
 class UserLoadGood(ListView):
 	template_name, paginate_by = None, 15
 

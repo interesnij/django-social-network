@@ -1023,6 +1023,12 @@ class User(AbstractUser):
         articles_query = Q(creator_id=self.id, is_deleted=False)
         return Article.objects.filter(articles_query)
 
+    def get_surveys(self):
+        from survey.models import Survey
+
+        query = Q(creator_id=self.id, is_deleted=False)
+        return Survey.objects.filter(articles_query)
+
     def get_all_albums(self):
         from gallery.models import Album
 

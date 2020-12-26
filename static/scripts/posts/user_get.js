@@ -191,6 +191,13 @@ on('#ajax', 'click', '.u_select_photo', function() {
   loader = document.getElementById("create_loader");
   open_load_fullscreen('/users/load/u_img_load/', loader)
 });
+on('#ajax', 'click', '.u_select_survey', function() {
+  this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
+  clear_comment_dropdown();
+  loader = document.getElementById("create_loader");
+  open_load_fullscreen('/users/load/u_survey_load/', loader)
+});
+
 on('#ajax', 'click', '.u_select_video', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
