@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class Survey(models.Model):
