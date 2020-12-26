@@ -26,21 +26,40 @@ class Survey(models.Model):
         return self.title
 
     @classmethod
-    def create_survey(cls, title, community, creator, is_deleted, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+    def create_survey(cls, title, community, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers):
         survey = cls.objects.create(
                                     title=title,
                                     community=community,
                                     creator=creator,
-                                    is_deleted=is_deleted,
                                     is_anonymous=is_anonymous,
                                     is_multiple=is_multiple,
                                     is_no_edited=is_no_edited,
                                     time_end=time_end)
-        SurveyMembership.create_membership(user=creator, survey=survey)
         for answer in answers:
             Answer.objects.create(survey=survey, text=answer)
         return survey
 
+    def is_user_voted(self, user_id):
+        return Survey.objects.filter(survey=survey, text=answer).exists()
+
+    def get_answers(self):
+        return Answer.objects.filter(survey_id=self.pk)
+
+    def get_all_count(self):
+        count = 0
+        for answer in self.get_answers():
+            count += answer.get_count()
+        if count > 0:
+            return count
+        else:
+            return ''
+
+    def get_votes_count(self):
+        query = []
+        for answer in self.get_answers():
+            query += [answer.get_count()]
+        return query
+        
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
@@ -53,22 +72,25 @@ class Answer(models.Model):
     def __str__(self):
         return self.text
 
+    def get_count(self):
+        return self.user_answer.all().values("pk").count()
 
-class SurveyMembership(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='survey_memberships', null=False, blank=False, verbose_name="Участник опроса")
-    survey = models.ForeignKey(Survey, db_index=False, on_delete=models.CASCADE, related_name='surveys', null=False, blank=False, verbose_name="Опрос")
+
+class SurveyVote(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_voter', verbose_name="Участник опроса")
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='user_answer', verbose_name="Опрос")
 
     def __str__(self):
         return self.user.get_full_name()
 
     @classmethod
-    def create_membership(cls, user, survey):
-        return cls.objects.create(user=user, survey=survey)
+    def create_answer(cls, user, answer):
+        return cls.objects.create(user=user, answer=answer)
 
     class Meta:
-        unique_together = (('user', 'survey'),)
+        unique_together = (('user', 'answer'),)
         indexes = [
-            models.Index(fields=['survey', 'user']),
+            models.Index(fields=['answer', 'user']),
             ]
-        verbose_name = 'Участник'
-        verbose_name_plural = 'Участники'
+        verbose_name = 'Голос'
+        verbose_name_plural = 'Голоса'

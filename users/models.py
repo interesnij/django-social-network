@@ -475,6 +475,11 @@ class User(AbstractUser):
     def is_member_of_community(self, community_pk):
         return self.communities_memberships.filter(community__pk=community_pk).exists()
 
+    def is_voted_of_survey(self, survey_pk):
+        return self.user_voter.filter(survey__pk=survey_pk).exists()
+    def get_vote_of_survey(self, survey_pk):
+        return self.user_voter.filter(survey__pk=survey_pk)[0]
+
     def is_banned_from_community(self, community_pk):
         return self.banned_of_communities.filter(pk=community_pk).exists()
 
