@@ -1027,7 +1027,7 @@ class User(AbstractUser):
         from survey.models import Survey
 
         query = Q(creator_id=self.id, is_deleted=False)
-        return Survey.objects.filter(articles_query)
+        return Survey.objects.filter(query)
 
     def get_all_albums(self):
         from gallery.models import Album
