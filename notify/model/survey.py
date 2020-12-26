@@ -40,7 +40,7 @@ class SurveyNotify(models.Model):
     def __str__(self):
         if self.community:
             return '{} {}'.format(self.community, self.get_verb_display())
-        else if self.verb == self.ANON_VOTE:
+        elif self.verb == self.ANON_VOTE:
             return '{}'.format(self.get_verb_display())
         else:
             return '{} {}'.format(self.creator, self.get_verb_display())
@@ -99,7 +99,7 @@ class SurveyCommunityNotify(models.Model):
     def __str__(self):
         if self.community_creator:
             return '{} {}'.format(self.community_creator, self.get_verb_display())
-        else if self.verb == self.ANON_VOTE:
+        elif self.verb == self.ANON_VOTE:
             return '{}'.format(self.get_verb_display())
         else:
             return '{} {}'.format(self.creator, self.get_verb_display())
