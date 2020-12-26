@@ -47,7 +47,6 @@ class Answer(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey', verbose_name="Опрос")
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Опрос'
         verbose_name_plural = 'Опросы'
 
