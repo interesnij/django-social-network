@@ -53,7 +53,7 @@ class SurveyUserEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.survey, self.form, Survey.objects.get(pk=self.kwargs["pk"]), SurveyForm(request.POST,request.FILES,instance=self.survey))
+        self.survey, self.form = Survey.objects.get(pk=self.kwargs["pk"]), SurveyForm(request.POST,request.FILES,instance=self.survey)
         if request.is_ajax() and self.form.is_valid():
             self.form.save()
             return HttpResponse()
