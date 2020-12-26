@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^follows/', include('follows.urls')),
     url(r'^invitations/', include('invitations.urls')),
     url(r'^communities/', include('communities.urls')),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^friends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),
@@ -43,5 +42,6 @@ urlpatterns = [
     url(r'^managers/', include('managers.urls')),
     url(r'^notify/', include('notify.urls')),
     url(r'^docs/', include('docs.urls')),
+    url(r'^survey/', include('survey.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

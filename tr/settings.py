@@ -33,8 +33,6 @@ DJANGO_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     #'django_extensions',
-    'ckeditor',
-    'ckeditor_uploader',
 ]
 
 MY_APPS = [
@@ -59,6 +57,7 @@ MY_APPS = [
     'logs',
     'managers',
     'notify',
+    'survey',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS
