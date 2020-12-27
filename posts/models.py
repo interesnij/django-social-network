@@ -896,7 +896,7 @@ class PostComment(models.Model):
 
     def likes_count(self):
         from common.model.votes import PostCommentVotes
-        qs = PostCommentVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        qs = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
         if qs > 0:
             return qs
         else:
@@ -904,7 +904,7 @@ class PostComment(models.Model):
 
     def dislikes_count(self):
         from common.model.votes import PostCommentVotes
-        qs = PostCommentVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        qs = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
         if qs > 0:
             return qs
         else:
