@@ -1,14 +1,6 @@
 
 <div class="media reply">
-  <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
-    <figure>
-        {% if reply.commenter.s_avatar %}
-          <img src="{{ reply.commenter.s_avatar.url }}" class="pull-left comment_user_image" alt="User Image">
-        {% else %}
-          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        {% endif %}
-    </figure>
-  </a>
+  {% include 'desctop/generic/user/reply_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
         <h5 class="mt-0">
           <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
