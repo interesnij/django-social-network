@@ -1,12 +1,7 @@
 <div class="media reply">
     {% include 'mobile/generic/user/reply_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        <h5 class="mt-0">
-            <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
-                <span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
-            </a>
-            <small class="text-muted float-right">{{ reply.get_created }}</small>
-        </h5>
+        {% include 'mobile/generic/user/reply_meta.html' %}
 
         {{ reply.text|linebreaks }}
 
@@ -28,18 +23,8 @@
                         <div class="comment_like_pop" style="margin:15px">
                             <span class="u_all_photo_comment_likes" style="cursor:pointer">Оценили: <span data-count="like">{{ reply.likes_count }}</span> </span>
                             <span style="display: flex;">
-                                {% for heart in reply.window_likes %}
-                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ heart.user.pk }}">
-                                    <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
-                                        {% if heart.user.s_avatar %}
-                                        <img src="{{ heart.user.s_avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                        {% else %}
-                                        <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                            <path d="M0 0h24v24H0z" fill="none" /></svg>
-                                        {% endif %}
-                                    </figure>
-                                </a>
+                                {% for voter in reply.window_likes %}
+                                  {% include 'mobile/generic/user/voter.html' %}
                                 {% endfor %}
                             </span>
                         </div>
@@ -58,18 +43,8 @@
                         <div class="comment_dislike_pop">
                             <span class="u_all_photo_comment_dislikes pointer">Не оценили: <span data-count="dislike">{{ reply.dislikes_count }}</span></span>
                             <span style="display: flex;margin-top: 10px;">
-                                {% for sheet in reply.window_dislikes %}
-                                <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px" data-pk="{{ sheet.user.pk }}">
-                                    <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
-                                        {% if sheet.user.s_avatar %}
-                                        <img src="{{ sheet.user.s_avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                        {% else %}
-                                        <svg fill="currentColor" class="svg_default svg_default_50"" viewBox=" 0 0 24 24">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                            <path d="M0 0h24v24H0z" fill="none" /></svg>
-                                        {% endif %}
-                                    </figure>
-                                </a>
+                                {% for voter in reply.window_dislikes %}
+                                  {% include 'mobile/generic/user/voter.html' %}
                                 {% endfor %}
                             </span>
                         </div>
