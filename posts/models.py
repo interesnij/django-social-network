@@ -678,7 +678,7 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False).values("pk")
+        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
