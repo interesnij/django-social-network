@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from ckeditor_uploader import views
-from main.views import SignupView
+from main.views import SignupView, SwitchView
 
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'', include ('main.urls')),
+    url(r'^(?P<slug>[\w\-]+)/', SwitchView.as_view(), name='switch',
 
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
