@@ -13,9 +13,7 @@
         <h6 class="my-0 mt-1">{{ album.title }}</h6>
         <p class="">
           Список товаров
-          <a class="ajax underline" href="{% url 'user' pk=album.creator.pk %}">
-            {{ album.creator.get_full_name_genitive }}
-          </a>
+          {% include 'mobile/generic/user/user_gen.html' %}
           <br>
           Товаров: {{ album.count_goods }}
         </p>

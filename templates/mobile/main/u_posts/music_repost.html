@@ -1,7 +1,7 @@
 {% with track=object.get_music_repost %}
 <span style="padding: 5px;">
-  <a class="ajax underline" href="{% url 'user' pk=doc.creator.pk %}">
-    {{ object.creator }}</a>&nbsp;{% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} аудиозаписью
+  {% include 'mobile/generic/user/creator.html' %}
+  &nbsp;{% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} аудиозаписью
 </span>
 <br>
   {% if object.parent.community %}

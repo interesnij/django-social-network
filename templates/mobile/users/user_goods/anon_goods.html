@@ -7,9 +7,7 @@
   {% if user.is_good_album_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-        <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
-          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-        </a>
+      {% include 'mobile/generic/user/back.html' %}
     </div>
     <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
             <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
@@ -24,9 +22,7 @@
   </div>
   {% else %}
   <span style="margin-bottom: 10px;position:relative" class="centered">
-    <a class="btn btn-sm custom_color border ajax" href="{% url 'user' pk=user.pk %}" style="width: -webkit-fill-available;">
-      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-    </a>
+    {% include 'mobile/generic/user/back.html' %}
   </span>
   {% endif %}
 
@@ -48,9 +44,7 @@
                 <div class="media-body" style="margin-left: 10px;">
                   <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
                   <p class="">Товары
-                  <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
-                    {{ user.get_full_name_genitive }}
-                  </a>
+                  {% include 'mobile/generic/user/user_gen.html' %}
                   </p>
                 </div>
               </div>
