@@ -54,7 +54,8 @@ class SwitchView(TemplateView):
 		from stst.models import UserNumbers, CommunityNumbers
 
 		try:
-			self.user, user_agent, user_pk, r_user_pk = User.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], int(self.kwargs["pk"]), request.user.pk
+			self.user, user_agent, r_user_pk = User.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], request.user.pk
+			user_pk = self.user
 			if request.user.is_authenticated:
 				if request.user.is_no_phone_verified():
 					self.template_name = "main/phone_verification.html"
@@ -109,6 +110,7 @@ class SwitchView(TemplateView):
 			self.fix_list, self.video_album, self.photo_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
 		except User.DoesNotExist:
 			self.c, user_agent, c_pk, u_pk = Community.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], int(self.kwargs["pk"]), request.user.pk
+			c_pk = self.c.pk
 			if self.c.is_suspended():
 				self.template_name = "communities/detail/community_suspended.html"
 			elif self.c.is_blocked():
