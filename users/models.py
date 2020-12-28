@@ -52,6 +52,7 @@ class User(AbstractUser):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
+    url = models.CharField(max_length=100, blank=True, verbose_name="Название сслыки, уникально для П. и С.")
 
     #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
