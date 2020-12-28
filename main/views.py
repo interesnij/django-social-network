@@ -55,7 +55,7 @@ class SwitchView(TemplateView):
 
 		try:
 			self.user, user_agent, r_user_pk = User.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], request.user.pk
-			user_pk = self.user
+			user_pk = self.user.pk
 			if request.user.is_authenticated:
 				if request.user.is_no_phone_verified():
 					self.template_name = "main/phone_verification.html"
