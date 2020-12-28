@@ -22,7 +22,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'', include ('main.urls')),
-    url(r'^(?P<slug>[\w\-]+)/', SwitchView.as_view(), name='switch'),
+    url(r'^(?P<url>[\w\-]+)/', SwitchView.as_view(), name='switch'),
 
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
