@@ -10,7 +10,6 @@ urlpatterns = [
 
     url(r'^members/(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),
     url(r'^friends/(?P<pk>\d+)/$', CommunityFriendsView.as_view(), name='community_friends'),
-    url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
 
     url(r'^post/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PostCommunity.as_view(), name='community_post'),
     url(r'^fix_post/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityFixPostView.as_view(), name='community_fix_post'),
