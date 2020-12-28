@@ -4,8 +4,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from ckeditor_uploader import views
 from main.views import SignupView, SwitchView
+from users.view.detail import ProfileUserView
+from communities.view.details import CommunityDetail
 
 
 urlpatterns = [
@@ -45,5 +46,7 @@ urlpatterns = [
     url(r'^survey/', include('survey.urls')),
 
     url(r'^(?P<link>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
+    url(r'^public(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
+    url(r'^id(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
