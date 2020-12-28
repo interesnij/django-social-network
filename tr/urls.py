@@ -22,7 +22,6 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'', include ('main.urls')),
-    url(r'^(?P<link>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
 
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
@@ -44,5 +43,7 @@ urlpatterns = [
     url(r'^notify/', include('notify.urls')),
     url(r'^docs/', include('docs.urls')),
     url(r'^survey/', include('survey.urls')),
+
+    url(r'^(?P<link>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
