@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from main.views import SignupView, SwitchView
-from users.view.detail import ProfileUserView
-from communities.view.details import CommunityDetail
+from users.views.detail import ProfileUserView
+from communities.views.details import CommunityDetail
 
 
 urlpatterns = [
