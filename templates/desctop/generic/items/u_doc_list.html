@@ -14,7 +14,7 @@
             Документов: {{ list.count_docs }}
             <br>
             <a class="ajax underline" href="{% url 'user' pk=list.creator.pk %}">
-              {{ list.creator.get_full_name }}
+              {{ list.creator.get_full_name_genitive }}
             </a>
           </p>
         </div>

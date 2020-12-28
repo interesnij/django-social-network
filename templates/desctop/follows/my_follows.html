@@ -25,22 +25,12 @@
               {% if object_list %}
 
               <ul class="list-group is_paginate">
-                  {% for object in object_list %}
-                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.pk }}">
+                  {% for user in object_list %}
+                  <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ user.pk }}">
                       <div class="media">
-                        <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                          <figure>
-                            {% if object.s_avatar %}
-                              <img src="{{ object.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                            {% else %}
-                              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                            {% endif %}
-                          </figure>
-                        </a>
+                        {% include 'desctop/generic/user/figure.html' %}
                         <div class="media-body">
-                            <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                                <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
-                            </a>
+                            {% include 'desctop/generic/user/user.html' %}
                             <a class="small connect_create pointer">Принять заявку</a>
                         </div>
                       </div>
@@ -65,21 +55,7 @@
     <div class="col-12 col-md-4">
       <div class="card border-top mb-3 mt-3">
           <div class="card-body">
-            <a href="{% url 'user' pk=user.pk %}" class="ajax">
-              <div class="media">
-                  <figure style="width:50px;">
-                    {% if user.s_avatar %}
-                      <img src="{{ user.s_avatar.url }}" style="border-radius:50px" alt="image">
-                    {% else %}
-                      <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                    {% endif %}
-                  </figure>
-                <div class="media-body">
-                    <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
-                    <p class="small">Подписчики</p>
-                </div>
-              </div>
-            </a>
+            {% include 'desctop/generic/user/card_go_user.html' %}
           </div>
       </div>
       {% include 'desctop/users/profile/my_list_user_sidebar.html' %}

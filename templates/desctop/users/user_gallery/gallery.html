@@ -8,9 +8,7 @@
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">Альбомы
-              <a class="ajax underline" href="{% url 'user' pk=user.pk %}">
-                {{ user.get_full_name_genitive }}
-              </a>
+              {% include 'desctop/generic/user/user_gen.html' %}
             </h5>
         </div>
         <div class="col-12 col-md-4"></div>
@@ -33,10 +31,8 @@
   <div class="container-fluid mt-3">
       <div class="row">
           <div class="col-12">
-              <h5 class="mt-1">Фотографии
-                  <a class="ajax underline" href="{% url 'user' pk=user.pk %}">
-                    {{ user.get_full_name_genitive }}
-                  </a>
+              <h5 class="mt-1">Фотографии 
+                  {% include 'desctop/generic/user/user_gen.html' %}
               </h5>
               Фото: {{ album.count_photo }}
           </div>

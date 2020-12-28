@@ -11,9 +11,7 @@
               <div class="media">
                   <div class="media-body">
 										<h5 class="mt-1">Посещаемость по дням -
-											<a class="ajax underline" href="{% url 'user' pk=user.pk %}">
-													{{ user.get_full_name }}
-											</a>
+											{% include 'desctop/generic/user/user.html' %}
 										</h5>
 									</div>
                   <div class="dropdown">

@@ -32,9 +32,7 @@
                 {% else %}
                 <span style="padding: 5px;">
                     Новый товар &nbsp;
-                    <a class="ajax underline" href="{% url 'user' pk=good.creator.pk %}">
-                        {{ good.creator.get_full_name_genitive }}
-                    </a>
+                    {% include 'desctop/generic/user/user_gen.html' %}
                 </span>
                 {% include 'desctop/generic/items/u_good.html' %}
                 {% endif %}

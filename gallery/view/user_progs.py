@@ -296,7 +296,7 @@ class UserAlbumPreview(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(UserAlbumPreview,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context["album"], context["user"] = self.album, self.album.cretor
 		return context
 
 

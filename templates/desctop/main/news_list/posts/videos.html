@@ -60,9 +60,7 @@
                     <a class="ajax underline" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
                      {{ object.title }}
                     </a>&nbsp;
-                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
-                      {{ object.creator.get_full_name_genitive }}
-                    </a>
+                    {% include 'desctop/generic/user/user_creator_gen.html' %}
                   </span>
                   <div album-uuid="{{ object.uuid }}">
                     <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
@@ -119,9 +117,7 @@
                     <a class="ajax underline" href="{% url 'user_video' pk=object.creator.pk %}">
                      Новое видео
                     </a>&nbsp;
-                    <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
-                      {{ object.creator.get_full_name_genitive }}
-                    </a>
+                    {% include 'desctop/generic/user/user_creator_gen.html' %}
                   </span>
                   <div album-uuid="{{ object.uuid }}">
                     <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">

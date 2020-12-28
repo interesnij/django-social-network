@@ -6,7 +6,7 @@
   <div class="row mb-3">
       <div class="col-12 col-md-8">
         <h5 class="mt-1">{{ album.title }} - <a class="ajax underline" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
-          <a class="underline" href="{% url 'user' pk=user.pk %}">{{ user.get_full_name_genitive }}</a>
+          {% include 'desctop/generic/user/user_gen.html' %}
         </h5>
         Фото: {{ album.count_photo }}
       </div>

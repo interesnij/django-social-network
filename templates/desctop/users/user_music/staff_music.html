@@ -24,9 +24,7 @@
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">Основной плейлист ({{ playlist.count_tracks }})</h6>
                     <p class="">Музыка
-                    <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
-                      {{ user.get_full_name_genitive }}
-                    </a>
+                    {% include 'desctop/generic/user/user_gen.html' %}
                     </p>
                   </div>
                   <span class='u_ucm_music_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
@@ -55,11 +53,7 @@
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>
                   <h6 style="margin: 20px;text-align: center;">
-                    В основном плейлисте
-                    <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
-                      {{ user.get_full_name_genitive }}
-                    </a>
-                    пока нет музыки.
+                    В плейлисте пока нет музыки.
                   </h6>
                 </div>
                 {% endif %}

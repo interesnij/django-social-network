@@ -3,12 +3,7 @@
 <div class="media reply">
   {% include 'desctop/generic/user/reply_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        <h5 class="mt-0">
-          <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
-            <span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
-          </a>
-          <small class="text-muted float-right">{{ reply.get_created }}</small>
-        </h5>
+        {% include 'desctop/generic/user/reply_meta.html' %}
 
         {{ reply.text|linebreaks }}
 

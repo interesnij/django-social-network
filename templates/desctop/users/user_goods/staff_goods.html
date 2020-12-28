@@ -23,10 +23,8 @@
                 {% endif %}
                 <div class="media-body" style="margin-left: 10px;">
                   <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
-                  <p class="">Товары
-                  <a href="{% url 'user' pk=user.pk %}" class="ajax underline">
-                    {{ user.get_full_name_genitive }}
-                  </a>
+                  <p class="">Товары 
+                  {% include 'desctop/generic/user/user_gen.html' %}
                   </p>
                 </div>
                 <span class='u_ucm_good_list_add btn_default pointer' title="Добавить" style="margin-top: 12px;margin-right: 5px;width:30px">
