@@ -67,9 +67,15 @@ class User(AbstractUser):
 
     def get_link(self):
         if self.have_link:
-            return ''.join(["/", self.user_link.filter(user_id=self.pk)[0].link, "/"])
+            return ''.join([ "/id", self.user_link.filter(user_id=self.pk)[0].link, "/"])
         else:
             return ''.join([ "/id", str(self.pk), "/"])
+
+    def get_slug(self):
+        if self.have_link:
+            return ''.join([ "@", self.user_link.filter(user_id=self.pk)[0].link])
+        else:
+            return ''.join([ "@id", str(self.pk)])
 
     def get_color_background(self):
         try:
