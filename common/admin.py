@@ -1,6 +1,6 @@
 from django.contrib import admin
 from common.model.votes import *
-from common.model.other import PhoneCodes
+from common.model.other import *
 
 
 class PostVotesAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class PostVotesAdmin(admin.ModelAdmin):
 
 admin.site.register(PostVotes, PostVotesAdmin)
 admin.site.register(PhoneCodes)
+admin.site.register(CustomLink)
