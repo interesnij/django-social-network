@@ -74,11 +74,11 @@ class Community(models.Model):
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
+    #uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
-    link = models.CharField(max_length=32, blank=True, verbose_name="Название сслыки, уникально для П. и С.")
+    have_link = models.BooleanField(verbose_name="Есть своя ссылка", default=False)
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
 

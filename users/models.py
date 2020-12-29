@@ -52,7 +52,7 @@ class User(AbstractUser):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    link = models.CharField(max_length=32, blank=True, verbose_name="Название сслыки, уникально для П. и С.")
+    have_link = models.BooleanField(verbose_name="Есть своя ссылка", default=False)
 
     #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
@@ -64,6 +64,12 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.get_full_name()
+
+    def get_link(self):
+        if self.have_link:
+            return ''.join(["/", self.user_link.filter(user_id=self.pk)[0].link, "/"])
+        else:
+            return "/" + self.pk + "/"
 
     def get_color_background(self):
         try:
