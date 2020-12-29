@@ -69,7 +69,7 @@ class User(AbstractUser):
         if self.have_link:
             return ''.join(["/id", self.user_link.filter(user_id=self.pk)[0].link, "/"])
         else:
-            return "/" + self.pk + "/"
+            return ''.join([ "/", self.pk, "/"])
 
     def get_color_background(self):
         try:
