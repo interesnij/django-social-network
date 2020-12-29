@@ -32,7 +32,7 @@
                           {% if object.post.community %}
                           <div class="card-header">
                               <div class="media">
-                                <a href="{% url 'community_detail' pk=object.post.community.pk %}" class="ajax">
+                                <a href="{{ object.post.community.get_link }}" class="ajax">
                                   <figure>
                                     {% if object.post.community.s_avatar %}
                                       <img src="{{ object.post.community.s_avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
@@ -43,7 +43,7 @@
                                 </a>
                                   <div class="media-body">
                                       <h6 class="mb-0">
-                                        <a href="{% url 'community_detail' pk=object.post.community.pk %}" class="ajax">
+                                        <a href="{{ object.post.community.get_link }}" class="ajax">
                                           {{ object.post.community.name }} &nbsp;
                                         </a>
                                       </h6>

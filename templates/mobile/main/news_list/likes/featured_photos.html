@@ -19,9 +19,7 @@
                   <a class="ajax underline" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Новый аватар
                   </a>&nbsp;
-                  <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                    сообщества {{ object.community }}
-                  </a>
+                  сообщества {% include 'mobile/generic/community/object.html' %}
                 </span>
               <div class="c_AV_photo pag {% if forloop.last %}last{% endif %}" photo-uuid="{{ object.get_first_photo.uuid }}" data-pk="{{ object.community.pk }}">
                   <div class="card rounded-0 border-0 mb-3 pointer">
@@ -64,9 +62,7 @@
                   <a class="ajax underline" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Фото на стене
                   </a>&nbsp;
-                  <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                    собщества {{ object.community }}
-                  </a>
+                  собщества {% include 'mobile/generic/community/object.html' %}
                 </span>
                 <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                   {% for photo in object.get_6_photos %}
@@ -117,9 +113,7 @@
                   <a class="ajax underline" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Альбом {{ object.title }}
                   </a>&nbsp;
-                  <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                    сообщества {{ object.community }}
-                  </a>
+                  сообщества {% include 'mobile/generic/community/object.html' %}
                 </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}
@@ -169,9 +163,7 @@
                   <a class="ajax underline" href="{% url 'community_album' pk=object.community.pk uuid=object.uuid %}">
                     Новое фото
                   </a>&nbsp;
-                  <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                    в сообществе {{ object.community }}
-                  </a>
+                  в сообществе {% include 'mobile/generic/community/object.html' %}
                 </span>
               <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
                 {% for photo in object.get_6_photos %}

@@ -20,9 +20,7 @@
                       <a class="ajax underline" href="{% url 'community_video_list' pk=object.community.pk uuid=object.uuid %}">
                        {{ object.title }}
                       </a>&nbsp;
-                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                        сообщества {{ object.community }}
-                      </a>
+                      сообщества {% include 'mobile/generic/community/object.html' %}
                     </span>
                     <div album-uuid="{{ object.uuid }}">
                       <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">
@@ -78,9 +76,7 @@
                       <a class="ajax underline" href="{% url 'community_video' pk=object.community.pk %}">
                        Новое видео
                       </a>&nbsp;
-                      <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                        сообщества {{ object.community }}
-                      </a>
+                      сообщества {% include 'mobile/generic/community/object.html' %}
                     </span>
                     <div album-uuid="{{ object.uuid }}">
                       <div class="row pag {% if forloop.last %}last{% endif %}" style="margin-left: 0;margin-right: 0;">

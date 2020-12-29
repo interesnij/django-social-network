@@ -8,9 +8,7 @@
         <div class="row">
             <div class="col-12 col-md-8">
               <h5 class="mt-1">
-                <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                  {{ community.name }}
-                </a> - альбомы
+                {% include 'desctop/generic/community/community.html' %} - альбомы
               </h5>
             </div>
             <div class="col-12 col-md-4"></div>
@@ -24,9 +22,7 @@
         <div class="row">
             <div class="col-12 col-md-8">
                 <h5 class="mt-1">
-                  <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                    {{ community.name }}
-                  </a>
+                  {% include 'desctop/generic/community/community.html' %}
                   - Альбомов нет</h5>
             </div>
             <div class="col-12 col-md-4"></div>
@@ -38,9 +34,7 @@
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">
-              <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                {{ community.name }}
-              </a> - фотографии
+              {% include 'desctop/generic/community/community.html' %} - фотографии
             </h5>
             Фото: {{ album.count_photo }}
         </div>

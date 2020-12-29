@@ -19,9 +19,7 @@
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
                     <p>
-                    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-                      {{ community.name }}
-                    </a>
+                    {% include 'desctop/generic/community/community.html' %}
                    </p>
                   </div>
                   <span title="Поделиться" class="c_ucm_music_list_repost btn_default pointer" style="margin-top: 14px;width:25px">

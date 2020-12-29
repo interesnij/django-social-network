@@ -9,10 +9,8 @@
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Приватность фотографий -
-                            <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                              {{ community.name }}
-                            </a>
+                        <h5 class="content-color-primary mb-0">Приватность фотографий - 
+                          {% include 'desctop/generic/community/community.html' %}
                         </h5>
                     </div>
                     <div class="card-body">

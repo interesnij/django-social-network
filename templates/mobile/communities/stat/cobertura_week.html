@@ -12,9 +12,7 @@
               <div class="media">
                   <div class="media-body">
                     <h5 class="mt-1">Охват по неделям -
-                      <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                          {{ community.name }}
-                      </a>
+                      {% include 'mobile/generic/community/community.html' %}
                     </h5>
 									</div>
 

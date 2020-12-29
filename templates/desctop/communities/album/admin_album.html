@@ -6,9 +6,7 @@
   <div class="row mb-3">
       <div class="col-12 col-md-8">
         <h5 class="mt-1">
-          <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-            {{ community.name }}
-          </a> -
+          {% include 'desctop/generic/community/community.html' %} - 
           <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax underline">
             Галерея
           </a> - {{ album.title }}

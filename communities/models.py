@@ -97,7 +97,7 @@ class Community(models.Model):
             return ''.join([ "@public", str(self.pk)])
     def get_link(self):
         if self.have_link:
-            return ''.join([ "/id", self.community_link.filter(community_id=self.pk)[0].link, "/"])
+            return ''.join([ "/", self.community_link.filter(community_id=self.pk)[0].link, "/"])
         else:
             return ''.join([ "/public", str(self.pk), "/"])
 

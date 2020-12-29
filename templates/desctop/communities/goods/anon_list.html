@@ -24,9 +24,7 @@
                 <div class="media-body" style="margin-left: 10px;">
                   <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
                   <p class="">Товары -
-                    <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-                      {{ community.name }}
-                    </a>
+                    {% include 'desctop/generic/community/community.html' %}
                   </p>
                 </div>
               </div>

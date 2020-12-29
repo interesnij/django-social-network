@@ -24,9 +24,7 @@
                 {% if object.community %}
                 <span style="padding: 5px;">
                     Новый товар в сообществе &nbsp;
-                    <a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">
-                        {{ object.community }}
-                    </a>
+                    {% include 'desctop/generic/community/object.html' %}
                 </span>
                   {% include 'desctop/generic/items/c_good.html' %}
                 {% else %}

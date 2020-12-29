@@ -2,9 +2,9 @@
 
 <span style="padding: 5px;">
   {% if object.community %}
-    Сообщество&nbsp;<a class="ajax underline" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>&nbsp;поделилось записью
+    Сообщество&nbsp;{% include 'mobile/generic/community/object.html' %}&nbsp;поделилось записью
   {% else %}
-  {% include 'mobile/generic/user/creator.html' %} 
+  {% include 'mobile/generic/user/creator.html' %}
     {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} записью
   {% endif %}
 </span>

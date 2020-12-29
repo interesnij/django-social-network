@@ -16,9 +16,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
-                          {{ community.name }}
-                        </a>
+                        {% include 'desctop/generic/community/community.html' %} 
                         - Предложенные записи
                       </h5>
                     </div>

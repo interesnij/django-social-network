@@ -26,7 +26,7 @@
                   {% for object in object_list %}
                   <li class="list-group-item pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
                       <div class="media">
-                        <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                        <a href="{{ object.post.community.get_link }}" class="ajax">
                           <figure>
                             {% if object.community.s_avatar %}
                               <img src="{{ object.community.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
@@ -36,7 +36,7 @@
                           </figure>
                         </a>
                         <div class="media-body btn_console">
-                            <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                            <a href="{{ object.post.community.get_link }}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.post.community.name }}</h6>
                             </a>
                             {% if object.is_suspend %}

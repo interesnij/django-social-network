@@ -1,6 +1,6 @@
 
   <span style="padding: 5px;">
-    Сообщество&nbsp;<a class="ajax underline" href="{% url 'community_detail' pk=object.parent.community.pk %}">{{ object.parent.community.name }}</a>&nbsp;поделилось фотографией
+    Сообщество&nbsp;{% include 'mobile/generic/community/parent.html' %}&nbsp;поделилось фотографией
   </span>
 
   {% if object.parent.community %}

@@ -6,9 +6,7 @@
   {% if community.is_docs_list_exists %}
   <div class="row no-gutters">
     <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      <a class="btn btn-sm custom_color border ajax" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-      </a>
+      {% include 'mobile/generic/community/back.html' %}
     </div>
     <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
       <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
@@ -23,9 +21,7 @@
   </div>
   {% else %}
   <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
-    <a class="btn btn-sm custom_color border ajax" href="{% url 'community_detail' pk=community.pk %}" style="width: -webkit-fill-available;">
-      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-    </a>
+    {% include 'mobile/generic/community/back.html' %}
   </div>
   {% endif %}
 
@@ -40,9 +36,7 @@
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
                     <p class="">
-                      <a href="{% url 'community_detail' pk=community.pk %}" class="ajax underline">
-                        {{ community.name }}
-                      </a>
+                      {% include 'mobile/generic/community/community.html' %}
                     </p>
                   </div>
                 </div>
