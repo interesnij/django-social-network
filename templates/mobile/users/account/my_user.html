@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
 <input type="datetime-local">
-{{ user.get_slug }}
+
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
   <div class="card mb-3" style="padding:10px">
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
@@ -56,7 +56,7 @@
     <div style="padding-left: 10px;">
       <span>Д. р.: </span>{{ user.birthday }}<br>
       <span>Тел.: </span>{{ user.phone }}<br>
-      <span>Пол: </span>{{ user.get_gender_display }}<br>
+      <span>Ссылка: </span>{{ user.get_slug }}<br>
     </div>
   </div>
 

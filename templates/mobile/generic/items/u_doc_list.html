@@ -13,7 +13,7 @@
           <p class="">
             Документов: {{ list.count_docs }}
             <br>
-            <a class="ajax underline" href="{% url 'user' pk=list.creator.pk %}">
+            <a class="ajax underline" href="{{ list.creator.get_link }}">
               {{ list.creator.get_full_name }}
             </a>
           </p>

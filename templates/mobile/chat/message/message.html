@@ -1,6 +1,6 @@
 <div class="media p-2 pointer message pag {% if forloop.first %}first{% endif %}">
     <figure>
-      <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">
+      <a href="{{ object.get_creator.get_link }}" class="ajax">
         {% if object.get_creator.s_avatar %}
           <img src="{{ object.get_creator.s_avatar.url }}" style="border-radius:40px;width:40px;" alt="image">
         {% else %}
@@ -10,7 +10,7 @@
     </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="{% url 'user' pk=object.get_creator.pk %}" class="ajax">{{ object.get_creator.first_name }}</a>
+        <a href="{{ object.get_creator.get_link }}" class="ajax">{{ object.get_creator.first_name }}</a>
         <small class="text-muted">{{ object.get_created }}</small>
       </h5>
     {% if object.voice %}

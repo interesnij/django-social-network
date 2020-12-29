@@ -90,6 +90,17 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def get_slug(self):
+        if self.have_link:
+            return ''.join([ "@", self.community_link.filter(community_id=community.pk)[0].link])
+        else:
+            return ''.join([ "@public", str(self.pk)])
+    def get_link(self):
+        if self.have_link:
+            return ''.join([ "/id", self.community_link.filter(community_id=self.pk)[0].link, "/"])
+        else:
+            return ''.join([ "/public", str(self.pk), "/"])
+
     def is_deleted(self):
         return try_except(self.perm == Community.DELETED)
     def is_standart(self):

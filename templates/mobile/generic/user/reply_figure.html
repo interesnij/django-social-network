@@ -1,4 +1,4 @@
-<a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
+<a href="{{ reply.commenter.get_link }}" class="ajax">
   <figure>
       {% if reply.commenter.s_avatar %}
         <img src="{{ reply.commenter.s_avatar.url }}" class="pull-left comment_user_image" alt="User Image">

@@ -33,7 +33,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
-                        <a class="dropdown-item ajax" href="{% url 'user' pk=request.user.pk %}">
+                        <a class="dropdown-item ajax" href="{{ request.user.get_link }}">
                             <div class="row align-items-center">
                                 <div class="col">Моя страница</div>
                                 <div class="col-auto">

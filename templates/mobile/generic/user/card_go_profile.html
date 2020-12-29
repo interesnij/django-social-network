@@ -1,5 +1,5 @@
 <div class="media">
-    <a href="{% url 'user' pk=object.pk %}" class="ajax">
+    <a href="{{ object.get_link }}" class="ajax">
         <figure>
             {% if object.s_avatar %}
             <img src="{{ object.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
@@ -11,7 +11,7 @@
         </figure>
     </a>
     <div class="media-body">
-        <a href="{% url 'user' pk=object.pk %}" class="ajax">
+        <a href="{{ object.get_link }}" class="ajax">
             <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
         </a>
         <a href="" class="small">Перейти</a>

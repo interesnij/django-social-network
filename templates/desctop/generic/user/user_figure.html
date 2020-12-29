@@ -1,4 +1,4 @@
-<a href="{% url 'user' pk=object.user.pk %}" class="ajax">
+<a href="{{ object.user.get_link }}" class="ajax">
     <figure>
         {% if object.user.s_avatar %}
         <img src="{{ object.user.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">

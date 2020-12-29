@@ -7,7 +7,7 @@
 <div class="col-auto sidebar-inner position-relative ">
     <br>
     <div class="nav flex-column nav-pills faqnav">
-        <a class="ajax" href="{% url 'user' pk=request.user.pk %}">
+        <a class="ajax" href="{{ request.user.get_link }}">
           <div class="icon-20">
             <svg class="svg_info svg_default" style="margin-bottom:5px" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
           </div>
