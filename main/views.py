@@ -52,9 +52,12 @@ class SwitchView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from stst.models import UserNumbers, CommunityNumbers
+		from common.model.other import CustomLink
+
+		self.custom_link = CustomLink.objects.get(link=self.kwargs["link"])
 
 		try:
-			self.user, user_agent, r_user_pk = User.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], request.user.pk
+			self.user, user_agent, r_user_pk = User.objects.get(pk=self.custom_link.user_id), request.META['HTTP_USER_AGENT'], request.user.pk
 			user_pk = self.user.pk
 			if request.user.is_authenticated:
 				if request.user.is_no_phone_verified():
@@ -109,7 +112,7 @@ class SwitchView(TemplateView):
 					self.template_name = "users/account/anon_user.html"
 			self.fix_list, self.video_album, self.photo_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
 		except User.DoesNotExist:
-			self.c, user_agent, c_pk, u_pk = Community.objects.get(link=self.kwargs["link"]), request.META['HTTP_USER_AGENT'], int(self.kwargs["pk"]), request.user.pk
+			self.c, user_agent, c_pk, u_pk = Community.objects.get(pk=self.custom_link.community_id), request.META['HTTP_USER_AGENT'], int(self.kwargs["pk"]), request.user.pk
 			c_pk = self.c.pk
 			if self.c.is_suspended():
 				self.template_name = "communities/detail/community_suspended.html"
