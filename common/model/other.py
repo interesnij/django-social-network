@@ -19,8 +19,8 @@ class CustomLink(models.Model):
 
     def __str__(self):
         if self.user:
-            return '{} - {}'.format(self.user.get_full_name, self.link)
+            return '{} - {}'.format(self.user, self.link)
         elif self.community:
-            return '{} - {}'.format(self.community.name, self.link)
+            return '{} - {}'.format(self.community, self.link)
         else:
             return self.link
