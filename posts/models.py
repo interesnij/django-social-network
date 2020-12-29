@@ -804,10 +804,6 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent=self, vote__gt=0)[0:6]
 
-    def window_likes(self):
-        from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent=self, vote__lt=0)[0:6]
-
     def get_reposts(self):
         parents = Post.objects.filter(parent=self)
         return parents
