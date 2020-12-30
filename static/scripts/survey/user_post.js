@@ -12,7 +12,7 @@ on('#ajax', 'click', '#u_add_survey_btn', function() {
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else if (!val){
-    form_post.querySelector("#ansvers")style.border = "1px #FF0000 solid";
+    form_post.querySelector("#ansvers").style.border = "1px #FF0000 solid";
     toast_error("Напишите варианты ответов!");
     return
   } else {this.disabled = true}
