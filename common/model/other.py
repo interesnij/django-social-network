@@ -24,3 +24,6 @@ class CustomLink(models.Model):
             return '{} - {}'.format(self.community, self.link)
         else:
             return self.link
+
+    def get_user_pk(self):
+        return self.user.pk
