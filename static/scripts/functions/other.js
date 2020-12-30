@@ -132,8 +132,7 @@ function attach_list_for_post(_this, url) {
                     response = document.createElement("span");
                     response.innerHTML = elem;
                     attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-                    document.querySelector(".create_fullscreen").style.display = "none";
-                    document.getElementById("create_loader").innerHTML = ""
+                    close_create_window()
                 }
             };
             link_.send()

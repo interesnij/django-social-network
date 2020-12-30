@@ -27,15 +27,18 @@ class SurveyUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             survey = self.form.save(commit=False)
             ansvers = request.POST.getlist("ansvers")
-            new_survey = survey.create_good(
+            new_survey = survey.create_survey(
                                             title=survey.title,
                                             creator=request.user,
+                                            order=survey.order,
                                             is_anonymous=survey.is_anonymous,
                                             is_multiple=survey.is_multiple,
                                             is_no_edited=survey.is_no_edited,
                                             time_end=survey.time_end,
                                             ansvers=ansvers)
-            return render_for_platform(request, 'survey/user/survey.html',{'object': new_survey})
+            for ansver in ansvers:
+                Answer.objects.create(survey=new_survey, text=ansver)
+            return render_for_platform(request, 'survey/user/new_survey.html',{'object': new_survey})
         else:
             return HttpResponseBadRequest("")
 

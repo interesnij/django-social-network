@@ -33,8 +33,7 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
     album.querySelector("h6").innerHTML = title;
     album.querySelector(".albom_description").innerHTML = description;
     album.classList.remove("album_active");
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
     toast_success("Альбом изменен")
   }}
   link_.send(form_data);
@@ -260,8 +259,7 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
     dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
     photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
     }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
   }
   link_.send(form_data);
 });

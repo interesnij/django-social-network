@@ -19,7 +19,7 @@ function is_full_dropdown(){
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   if (dropdown.classList.contains("files_two")){
     dropdown.style.display = "none";
-    close_create_window()
+    close_create_window() 
   }
   if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
     dropdown.style.display = "block"}

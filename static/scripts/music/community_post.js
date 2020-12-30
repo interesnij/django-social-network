@@ -106,8 +106,7 @@ on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
+        close_create_window();
         this_page_reload(document.location.href);
       }
     }
@@ -161,8 +160,7 @@ on('#ajax', 'click', '#c_edit_playlist_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
         document.body.querySelector(".playlist_name").innerHTML = name;
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
+        close_create_window();
         toast_success("Плейлист изменен")
       }
     }

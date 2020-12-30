@@ -183,7 +183,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
-    if (span1.classList.contains(uuid)){ 
+    if (span1.classList.contains(uuid)){
       container = document.body.querySelector(".profile_block_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".video_none") ? container.querySelector(".video_none").style.display = "none" : null;
@@ -191,8 +191,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     } else{
       toast_info("Видео создано!")
     }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
   }};
 
   link_.send(form_data);
@@ -227,8 +226,7 @@ on('#ajax', 'click', '#u_edit_video_list_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_title').value;
         document.body.querySelector(".list_name").innerHTML = name;
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
+        close_create_window();
         toast_success("Список видео изменен")
       }
     }

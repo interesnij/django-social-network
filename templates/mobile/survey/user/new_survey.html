@@ -1,0 +1,64 @@
+
+<div class="">
+    <form id="u_create_survey_form">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Добавление альбома</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                  <label>Название</label>
+                  <input type="text" name="title" class="form-control" id="id_title">
+                </div>
+                <div class="form-group">
+                  <label>Порядковый номер</label>
+                  <input type="number" value="1" min-value="0" name="order" class="form-control" id="id_order">
+                </div>
+
+                <div class="form-group">
+                  <label>Вариант 1</label>
+                  <input type="number" name="ansvers" class="form-control ansver">
+                </div>
+                <div class="form-group">
+                  <label>Вариант 2</label>
+                  <input type="number" name="ansvers" class="form-control ansver">
+                </div>
+
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_anonymous" class="custom-control-input" checked id="id_is_anonymous">
+                    <label class="custom-control-label" for="id_is_anonymous">Анонимный опрос</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_multiple" class="custom-control-input" checked id="id_is_multiple">
+                    <label class="custom-control-label" for="id_is_multiple">Несколько вариантов</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_no_edited" class="custom-control-input" checked id="id_is_no_edited">
+                    <label class="custom-control-label" for="id_is_no_edited">Запрет отмены голоса</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="need_time_end">
+                    <label class="custom-control-label" for="need_time_end">Ограничить время</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Дата окончания</label>
+                  <input name="time_end" type="datetime-local" class="form-control">
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
+                <button id="u_create_survey_btn" type="button" class="btn btn-success float-right">Создать</button>
+            </div>
+        </div>
+    </form>
+</div>

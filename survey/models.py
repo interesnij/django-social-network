@@ -14,6 +14,7 @@ class Survey(models.Model):
     is_multiple = models.BooleanField(verbose_name="Несколько вариантов", default=False)
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     time_end = models.DateTimeField(default=timezone.now, null=True, blank=True, verbose_name="Дата окончания")
+    order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_survey')
 
@@ -26,11 +27,12 @@ class Survey(models.Model):
         return self.title
 
     @classmethod
-    def create_survey(cls, title, community, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+    def create_survey(cls, title, community, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
         survey = cls.objects.create(
                                     title=title,
                                     community=community,
                                     creator=creator,
+                                    order=order,
                                     is_anonymous=is_anonymous,
                                     is_multiple=is_multiple,
                                     is_no_edited=is_no_edited,
@@ -59,7 +61,7 @@ class Survey(models.Model):
         for answer in self.get_answers():
             query += [answer.get_count()]
         return query
-        
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")

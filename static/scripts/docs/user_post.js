@@ -59,8 +59,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     } else{
       toast_info("Документ создан!")
     }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
   }};
 
   link_.send(form_data);
@@ -85,8 +84,7 @@ on('#ajax', 'click', '#u_edit_doclist_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
         document.body.querySelector(".list_name").innerHTML = name;
-        document.querySelector(".create_fullscreen").style.display = "none";
-        document.getElementById("create_loader").innerHTML="";
+        close_create_window();
         toast_success("Список документов изменен")
       }
     }

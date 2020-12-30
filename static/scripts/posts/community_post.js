@@ -388,8 +388,7 @@ on('#ajax', 'change', '#c_photo_post_attach', function() {
 
     photo_post_upload_attach(response.querySelectorAll(".c_photo_detail"), document.body.querySelector(".attach_block"), photo_list.length);
     }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
   }
   link_.send(form_data);
 });
@@ -408,8 +407,7 @@ on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
     response.innerHTML = elem;
     photo_comment_attach(response.querySelectorAll(".c_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
     }
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML="";
+    close_create_window();
   }
   link_.send(form_data);
 });
