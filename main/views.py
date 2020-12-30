@@ -48,7 +48,7 @@ class PostsListView(ListView):
 		return items
 
 class SwitchView(TemplateView):
-	template_name, get_buttons_block, common_frends, common_friends_count, user, community = None, None, None, None, None, None
+	template_name, get_buttons_block, common_frends, common_friends_count, user, c = None, None, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from stst.models import UserNumbers, CommunityNumbers
