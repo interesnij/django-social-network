@@ -189,7 +189,12 @@ class AllUsers(ListView):
 		from common.template.user import get_default_template
 
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		all_query = Q()
+		all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+		if request.user.is_anonymous or request.user.is_child():
+			all_query.add(~Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
+		self.all_users = User.objects.filter(all_query)
 		return super(AllUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.request.user.get_all_users()
+		return self.all_users
