@@ -48,6 +48,6 @@ urlpatterns = [
     url(r'^public(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^id(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
 
-    url(r'^(?P<link>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
+    url(r'^(?P<slug>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
