@@ -1,3 +1,9 @@
+.show {
+  display:block;
+}
+.hide {
+  display:none;
+}
 .csslider {
 -moz-perspective: 1300px;
 -ms-perspective: 1300px;
