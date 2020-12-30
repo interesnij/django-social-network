@@ -57,7 +57,7 @@ class SwitchView(TemplateView):
 		self.custom_link = CustomLink.objects.get(link=self.kwargs["link"])
 
 		if self.custom_link.user:
-			self.user = User.objects.filter(pk=self.custom_link.user.pk)[0]
+			self.user = self.custom_link.user
 			user_agent = request.META['HTTP_USER_AGENT']
 			r_user_pk = request.user.pk
 			user_pk = self.user.pk
