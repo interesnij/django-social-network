@@ -57,7 +57,7 @@ class SwitchView(TemplateView):
 		self.custom_link = CustomLink.objects.get(link=self.kwargs["link"])
 
 		if self.custom_link.user:
-			self.user, user_agent, r_user_pk = User.objects.get(pk=self.custom_link.get_user_pk()), request.META['HTTP_USER_AGENT'], request.user.pk
+			self.user, user_agent, r_user_pk = User.objects.filter(pk=self.custom_link.user_pk)[0], request.META['HTTP_USER_AGENT'], request.user.pk
 			user_pk = self.user.pk
 			if request.user.is_authenticated:
 				if request.user.is_no_phone_verified():
@@ -173,5 +173,8 @@ class SwitchView(TemplateView):
 
 		def get_context_data(self, **kwargs):
 			c = super(SwitchView, self).get_context_data(**kwargs)
-			c['user'],c['custom_link'],c['community'],c['fix_list'],c['photo_album'],c['video_album'],c['playlist'], c['docs_list'],c['good_album'],c['get_buttons_block'],c['common_frends'],c['common_friends_count'] = self.user, self.custom_link, self.c, self.fix_list(), self.photo_album(), self.video_album(), self.playlist(), self.doc_list(), self.good_album(), self.get_buttons_block, self.common_frends, self.common_friends_count
+			c['user'], c['custom_link'], c['community'], c['fix_list'], c['photo_album'], c['video_album'],c['playlist'], \
+			c['docs_list'], c['good_album'], c['get_buttons_block'], c['common_frends'], c['common_friends_count'] = self.user, \
+			self.custom_link, self.c, self.fix_list(), self.photo_album(), self.video_album(), self.playlist(), self.doc_list(), \
+			self.good_album(), self.get_buttons_block, self.common_frends, self.common_friends_count
 			return c
