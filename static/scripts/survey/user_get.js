@@ -8,7 +8,7 @@ on('#ajax', 'click', '#need_time_end', function() {
 });
 
 on('#ajax', 'click', '.remove_answer', function() {
-  this.parentElement.remove()
+  this.remove()
 });
 on('#ajax', 'click', '.add_answer', function() {
   div = document.createElement("div");
