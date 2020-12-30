@@ -7,7 +7,7 @@ on('#ajax', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")
 });
 
-on('#ajax', 'click', '#remove_answer', function() {
+on('#ajax', 'click', '.remove_answer', function() {
   this.parentElement.remove()
 });
 on('#ajax', 'click', '.add_answer', function() {
