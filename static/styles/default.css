@@ -1,3 +1,6 @@
+.border_2 {padding: 10px;text-align: center;margin: 20px;cursor:pointer;width: 85%;min-width: 85%;}
+.border_2 img {width: 85%;height: auto;}
+
 .progress_span_l {
   float: right;
   padding-right: 10px;
