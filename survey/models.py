@@ -62,6 +62,11 @@ class Survey(models.Model):
             query += [answer.get_count()]
         return query
 
+    def get_users(self):
+        voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")
+        ids = [i['user_id'] for i in voter_ids]
+        return User.objects.get(id__in=ids)
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
