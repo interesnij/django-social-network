@@ -179,7 +179,7 @@ a.media:hover {
 .btn_danger svg, .btn_danger span{ color:#FF0000 !important}
 
 .svg_default_30, .svg_default_40, .svg_default_50, .svg_default_80{border: rgba(255, 255, 255, 0.6) solid 1px;}
-.dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #DC5858 !important}
+.dropdown-menu, .lite_color{color:rgba(255, 255, 255, 0.6) !important; background-color: #DC5858 !important}
 .dropdown-menu .dropdown-item:hover {
     background-color: #D32C2C !important;
     color: rgba(255, 255, 255, 0.6) !important;

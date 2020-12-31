@@ -182,7 +182,7 @@ a.media:hover {
 .svg_default_40 {border: rgba(255, 255, 255, 0.7) solid 1px;}
 .svg_default_50 {border: rgba(255, 255, 255, 0.7) solid 1px;}
 .svg_default_30, .svg_default_40, .svg_default_50, .svg_default_80{border: rgba(255, 255, 255, 0.7) solid 1px;}
-.dropdown-menu{color:rgba(255, 255, 255, 0.9) !important; background-color: #EE9235 !important}
+.dropdown-menu, .lite_color{color:rgba(255, 255, 255, 0.9) !important; background-color: #EE9235 !important}
 .dropdown-menu .dropdown-item:hover {
     background-color: #E87E13 !important;
     color: rgba(255, 255, 255, 0.9) !important;
