@@ -81,7 +81,7 @@ class Answer(models.Model):
         return self.user_voter.filter(answer_id=self.pk, user_id=user_id).exists()
 
     def get_answers(self):
-        return self.surveyvote.all()
+        return SurveyVote.objects.filter(answer_id=self.pk)
 
 
 class SurveyVote(models.Model):
