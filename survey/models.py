@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from users.helpers import upload_to_user_directory
-from pilkit.processors import ResizeToFill, ResizeToFit
+from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 
 
@@ -18,7 +18,7 @@ class Survey(models.Model):
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     time_end = models.DateTimeField(default=timezone.now, null=True, blank=True, verbose_name="Дата окончания")
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
-    image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[ResizeToFit(512,512)],upload_to=upload_to_user_directory)
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_survey')
 
