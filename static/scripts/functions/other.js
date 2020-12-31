@@ -679,7 +679,7 @@ function get_image_priview(ggg, img) {
                         $img.id = "targetImageCrop";
                         $img.src = e.target.result;
                         $img.class = "thumb-image";
-                        ggg.innerHTML = '<a href="#" style="position: absolute;right:15px;top: 0;" class="delete_thumb">Удалить</a>'
+                        ggg.innerHTML = '<a href="#" style="right:15px;top: 0;" class="delete_thumb">Удалить</a>'
                         ggg.append($img)
                     };
                     reader.readAsDataURL(img.files[0])
