@@ -35,10 +35,9 @@
             {% for answer in object.get_answers %}
             <div class="lite_color mb-3">
               <div style="width: 100%">
-                  <span class="progress_line2" style="width: {{ answer.get_procent }}%"></span>
-                   <span class="progress_span_r">{{ answer.text }}</span>
-                   <span class="progress_span_l">{{ answer.get_count }}</span>
-
+                <span class="progress_span_r">{{ answer.text }}</span>
+                <span class="progress_span_l">{{ answer.get_count }}</span>
+                <span class="progress_line2" style="width: {{ answer.get_procent }}%"></span>
               </div>
             </div>
             {% endfor %}
