@@ -27,9 +27,9 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
     _new.innerHTML = elem;
 
     if (document.querySelector(".attach_block")){
-      check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk))
+      block = document.body.querySelector(".attach_block").append(_new)
     } else if (document.querySector(".message_attach_block")){
-      check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk))
+      document.body.querySelector(".message_attach_block").append(_new)
     }
     else {
         container = document.body.querySelector(".is_paginate");
