@@ -2,7 +2,7 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);
 
-  ansvers = form_post.querySelector("#answers_container");
+  answers = form_post.querySelector("#answers_container");
   selectedOptions = ansvers.querySelectorAll(".answer");
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
@@ -12,7 +12,7 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else if (!val){
-    form_post.querySelector("#ansvers").style.border = "1px #FF0000 solid";
+    answers.style.border = "1px #FF0000 solid";
     toast_error("Напишите варианты ответов!");
     return
   } else {this.disabled = true}
