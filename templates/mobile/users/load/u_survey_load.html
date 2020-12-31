@@ -27,8 +27,7 @@
             <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
             <br>
             <h4 class="text-white">{{ object.title }}</h4>
-            <p class="lead text-white">{{ object.creator }}</p>
-            <hr class="my-3">
+            <p class="text-secondary">{{ object.creator }}</p>
             {% if object.time_end %}
             <p class="text-secondary">Голосование открыто до {{ object.time_end }}</p>
             {% endif %}
