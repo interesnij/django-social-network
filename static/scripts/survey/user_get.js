@@ -8,10 +8,10 @@ on('#ajax', 'click', '#need_time_end', function() {
 });
 
 on('#ajax', 'click', '.remove_answer', function() {
-  this.remove()
+  this.parentElement.parentElement.parentElement.remove()
 });
 on('#ajax', 'click', '.add_answer', function() {
-  container = this.parentElement.parentElement
+  container = this.parentElement.parentElement.parentElement.parentElement
   answers = container.querySelectorAll(".answer");
   answers.length > 9 ? toast_error("Допустимо не больше 10 вариантов!") :
   (div = document.createElement("div"), div.classList.add("form-group"),
