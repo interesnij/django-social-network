@@ -16,15 +16,15 @@
 {% if object_list %}
   <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="load_container" data-link="/users/load/u_survey_load/">
     {% for object in object_list %}
-    <div class="load_pag mb-3 {% if forloop.last %}load_last{% endif %}" style="cursor:pointer;flex: 0 0 100%;max-width:100%;">
-      <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+    <div class="card load_pag mb-3 {% if forloop.last %}load_last{% endif %}" style="cursor:pointer;flex: 0 0 100%;">
+      <div class="jumbotron mb-4 text-center has-background-img position-relative box-shadow">
           <figure class="background-img">
             {% if object.image %}
               <img src="{{ object.image.url }}" alt="user image">
             {% endif %}
           </figure>
           <div class="container" style="list-style-type:none">
-            <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+            <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
             <br>
             <h4 class="text-white">{{ object.title }}</h4>
             <p class="text-secondary underline">{{ object.creator }}</p>
