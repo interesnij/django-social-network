@@ -17,7 +17,7 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
     return
   } else {this.disabled = true}
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/goods/user_progs/add/", true );
+  link_.open( 'POST', "/survey/user_progs/add/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
