@@ -2,7 +2,7 @@ on('#ajax', 'click', '#u_add_survey_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);
 
-  ansvers = form_post.querySelector("#ansvers");
+  ansvers = form_post.querySelector("#answers");
   selectedOptions = ansvers.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
