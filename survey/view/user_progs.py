@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from survey.models import Survey
+from survey.models import Survey, Answer
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.user import check_user_can_get_list
@@ -39,8 +39,6 @@ class SurveyUserCreate(TemplateView):
                                             is_no_edited=survey.is_no_edited,
                                             time_end=survey.time_end,
                                             answers=answers)
-            for ansver in answers:
-                Answer.objects.create(survey=new_survey, text=ansver)
             return render_for_platform(request, 'survey/user/new_survey.html',{'object': new_survey})
         else:
             return HttpResponseBadRequest("")
