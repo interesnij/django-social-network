@@ -1,3 +1,16 @@
+#video_holder{
+width: 200px;
+min-width: 200px;
+padding: 10px;
+text-align: center;
+margin:10px;
+cursor: pointer;
+margin:9px;
+}
+
+#id_album{
+height: auto;
+}
 .border_2 {padding: 10px;text-align: center;margin: 20px;cursor:pointer;width: 85%;min-width: 85%;}
 .border_2 img {width: 85%;height: auto;}
 
