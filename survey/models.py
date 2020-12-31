@@ -63,6 +63,7 @@ class Survey(models.Model):
         return query
 
     def get_users(self):
+        from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")
         ids = [i['user_id'] for i in voter_ids]
         return User.objects.get(id__in=ids)
