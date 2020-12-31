@@ -26,7 +26,7 @@ class SurveyUserCreate(TemplateView):
         self.form = SurveyForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
             survey = self.form.save(commit=False)
-            ansvers = request.POST.getlist("ansvers")
+            ansvers = request.POST.getlist("answers")
             new_survey = survey.create_survey(
                                             title=survey.title,
                                             creator=request.user,

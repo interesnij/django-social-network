@@ -12,9 +12,11 @@ on('#ajax', 'click', '.remove_answer', function() {
 });
 on('#ajax', 'click', '.add_answer', function() {
   container = this.parentElement.parentElement
-  answers = container.querySelectorAll("ansver");
+  answers = container.querySelectorAll("answer");
   answers.length > 9 ? toast_error("Допустимо не больше 10 вариантов!") :
   (div = document.createElement("div"), div.classList.add("form-group"),
-  div.innerHTML = '<input type="text" name="ansvers" placeholder="Вариант ответа" class="form-control ansver"><div class="input-group pointer remove_answer"><input type="text" name="ansvers" placeholder="Вариант ответа" class="form-control ansver"><div class="input-group-append"><span class="input-group-text custom_color">x</span></div></div>',
+  div.innerHTML = '<div class="input-group pointer remove_answer"><input type="text" name="answers" placeholder="Вариант ответа" class="form-control answer"><div class="input-group-append"><span class="input-group-text custom_color">x</span></div></div>',
   container.append(div));
+  console.log(container);
+  console.log(answers.length)
 });
