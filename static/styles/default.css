@@ -9,7 +9,7 @@
 .progress_line2 {
   height: 2px;
   display: list-item;
-  color: #7979FF
+  background-color: #7979FF
 }
 .show {
   display:block;
