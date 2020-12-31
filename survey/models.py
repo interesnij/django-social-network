@@ -42,7 +42,7 @@ class Survey(models.Model):
         return survey
 
     def is_user_voted(self, user_id):
-        return Survey.objects.filter(survey=survey, text=answer).exists()
+        return self.survey.filter(survey__user_voter_id=user_id).exists()
 
     def get_answers(self):
         return self.survey.only("pk")
@@ -76,6 +76,12 @@ class Answer(models.Model):
 
     def get_count(self):
         return self.user_answer.all().values("pk").count()
+
+    def is_user_voted(self, user_id):
+        return self.user_voter.filter(answer_id=self.pk, user_id=user_id).exists()
+
+    def get_answers(self):
+        return self.user_voter.only("pk")
 
 
 class SurveyVote(models.Model):
