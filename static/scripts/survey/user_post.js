@@ -38,7 +38,7 @@ on('#ajax', 'click', '#u_add_survey_btn', function() {
         toast_info("Опрос создан!")
   }
   close_create_window();
-  toast_info("Товар создан!")
+  toast_info("Опрос создан!")
   }};
   link_.send(form_data);
 });

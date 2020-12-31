@@ -7,10 +7,10 @@ on('#ajax', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")
 });
 
-on('#ajax', 'click', '.remove_answer', function() {
+on('#create_loader', 'click', '.remove_answer', function() {
   this.parentElement.parentElement.parentElement.remove()
 });
-on('#ajax', 'click', '.add_answer', function() {
+on('#create_loader', 'click', '.add_answer', function() {
   container = this.parentElement.parentElement.parentElement.parentElement
   answers = container.querySelectorAll(".answer");
   answers.length > 9 ? toast_error("Допустимо не больше 10 вариантов!") :
