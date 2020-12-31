@@ -35,6 +35,7 @@
             {% for answer in object.get_answers %}
             <div class="lite_color progress mb-3">
               <div style="width: 100%">
+                   <span class="pregress_bar"></span>
                    <span class="progress_span_r">{{ answer.text }}</span>
                    <span class="progress_span_l">{{ answer.get_count }}</span>
               </div>
