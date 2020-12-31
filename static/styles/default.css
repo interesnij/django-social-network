@@ -1,14 +1,8 @@
 .progress_span_l {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
   margin-left: auto;
   padding-right: 10px;
 }
 .progress_span_r {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
   padding-left: 10px;
 }
 .show {
