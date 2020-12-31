@@ -1,4 +1,4 @@
-on('#ajax', 'click', '#u_add_survey_btn', function() {
+on('#create_loader', 'click', '#u_add_survey_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);
 

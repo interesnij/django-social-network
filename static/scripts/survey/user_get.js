@@ -3,7 +3,7 @@ on('#ajax', 'click', '.u_add_survey', function() {
   open_fullscreen('/survey/user_progs/add/', loader);
 });
 
-on('#ajax', 'click', '#need_time_end', function() {
+on('#create_loader', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")
 });
 
