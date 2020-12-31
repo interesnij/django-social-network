@@ -34,17 +34,18 @@
             <br>
             {% for answer in object.get_answers %}
             <div class="lite_color progress mb-3">
+              <span class="progress_span_r">{{ answer.text }}</span>
               <div class="progress-bar"
                    role="progressbar"
                    style="width: 25%"
                    aria-valuenow="25"
                    aria-valuemin="0"
-                   aria-valuemax="100">{{ answer.text }}
+                   aria-valuemax="100">
               </div>
-              <span class="progress_span">{{ answer.get_count }}</span>
+              <span class="progress_span_l">{{ answer.get_count }}</span>
             </div>
             {% endfor %}
-             
+
             {{ object.get_users }} | {{ object.get_votes_count }}
           </div>
       </div>
