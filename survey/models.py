@@ -51,10 +51,7 @@ class Survey(models.Model):
         count = 0
         for answer in self.get_answers():
             count += answer.get_count()
-        if count > 0:
-            return count
-        else:
-            return ''
+        return count
 
     def get_votes_count(self):
         query = []
@@ -88,6 +85,9 @@ class Answer(models.Model):
 
     def get_answers(self):
         return SurveyVote.objects.filter(answer_id=self.pk)
+
+    def get_procent(self):
+        return self.get_count() * 100 / self.survey.get_all_count()
 
 
 class SurveyVote(models.Model):
