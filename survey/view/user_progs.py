@@ -33,6 +33,7 @@ class SurveyUserCreate(TemplateView):
                                             title=survey.title,
                                             creator=request.user,
                                             community=None,
+                                            image=survey.image,
                                             order=survey.order,
                                             is_anonymous=survey.is_anonymous,
                                             is_multiple=survey.is_multiple,

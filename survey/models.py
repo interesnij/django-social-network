@@ -31,10 +31,11 @@ class Survey(models.Model):
         return self.title
 
     @classmethod
-    def create_survey(cls, title, community, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+    def create_survey(cls, title, community, image, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
         survey = cls.objects.create(
                                     title=title,
                                     community=community,
+                                    image=image, 
                                     creator=creator,
                                     order=order,
                                     is_anonymous=is_anonymous,
