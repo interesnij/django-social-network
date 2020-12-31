@@ -1,9 +1,10 @@
 .progress_span_l {
-  margin-left: auto;
+  float: right;
   padding-right: 10px;
 }
 .progress_span_r {
   padding-left: 10px;
+  float: left;
 }
 .show {
   display:block;
