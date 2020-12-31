@@ -40,12 +40,12 @@
                    aria-valuenow="25"
                    aria-valuemin="0"
                    aria-valuemax="100">{{ answer.text }}
-              </div> 
+              </div>
               <span class="progress_span">{{ answer.get_count }}</span>
             </div>
-            1{{ answer.get_answers }}
             {% endfor %}
-            2{{ object.get_users }} | 3{{ object.get_votes_count }}
+             
+            {{ object.get_users }} | {{ object.get_votes_count }}
           </div>
       </div>
     </div>
