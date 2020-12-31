@@ -3,7 +3,7 @@ on('#ajax', 'click', '#u_add_survey_btn', function() {
   form_data = new FormData(form_post);
 
   ansvers = form_post.querySelector(".answers_container");
-  selectedOptions = ansvers.querySelectorAll("answer");
+  selectedOptions = ansvers.querySelectorAll(".answer");
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
     if(selectedOptions[i].value) {val = true}
