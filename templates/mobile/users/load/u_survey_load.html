@@ -27,10 +27,22 @@
             <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
             <br>
             <h4 class="text-white">{{ object.title }}</h4>
-            <p class="text-secondary">{{ object.creator }}</p>
+            <p class="text-secondary underline">{{ object.creator }}</p>
             {% if object.time_end %}
-            <p class="text-secondary">Голосование открыто до {{ object.time_end }}</p>
+            <p class="text-secondary">До {{ object.time_end }}</p>
             {% endif %}
+            <br>
+            {% for answer in object.get_answers %}
+            <div class="progress mb-3">
+              <div class="progress-bar"
+                   role="progressbar"
+                   style="width: 25%"
+                   aria-valuenow="25"
+                   aria-valuemin="0"
+                   aria-valuemax="100">{{ answer.text }}
+              </div>
+            </div>
+            {% endfor %}
           </div>
       </div>
     </div>

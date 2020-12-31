@@ -45,7 +45,7 @@ class Survey(models.Model):
         return Survey.objects.filter(survey=survey, text=answer).exists()
 
     def get_answers(self):
-        return Answer.objects.filter(survey_id=self.pk)
+        return self.survey.only("pk")
 
     def get_all_count(self):
         count = 0
