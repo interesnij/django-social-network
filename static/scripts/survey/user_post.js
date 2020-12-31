@@ -32,7 +32,7 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
       document.body.querySelector(".message_attach_block").append(_new)
     }
     else {
-        container = document.body.querySelector(".is_paginate");
+        container = document.body.querySelector(".is_paginate"); 
         container.insertAdjacentHTML('afterBegin', _new.innerHTML);
         container.querySelector(".surveys_empty") ? container.querySelector(".surveys_empty").style.display = "none" : null;
         toast_info("Опрос создан!")
