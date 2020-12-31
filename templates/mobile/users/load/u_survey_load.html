@@ -39,8 +39,11 @@
             </div>
             <span class="progress_line2 mb-3" style="width: {{ answer.get_procent }}%"></span>
             {% endfor %}
-
-            {{ object.get_users }} | {{ object.get_votes_count }}
+            {% if object.is_have_votes %}
+              {{ object.get_users }}
+            {% else %}
+              Пока никто не голосовал. Станьте первым!
+            {% endif %}
           </div>
       </div>
     </div>

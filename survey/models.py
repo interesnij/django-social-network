@@ -68,6 +68,9 @@ class Survey(models.Model):
         ids = [i['user_id'] for i in voter_ids]
         return User.objects.get(id__in=ids)
 
+    def is_have_votes(self):
+        return SurveyVote.objects.filter(answer__survey_id=self.pk).values("id").exists()
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
