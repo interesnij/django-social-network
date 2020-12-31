@@ -68,8 +68,8 @@ class Answer(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey', verbose_name="Опрос")
 
     class Meta:
-        verbose_name = 'Опрос'
-        verbose_name_plural = 'Опросы'
+        verbose_name = 'Вариант ответа'
+        verbose_name_plural = 'Варианты ответа'
 
     def __str__(self):
         return self.text

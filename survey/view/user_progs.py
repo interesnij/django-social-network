@@ -39,7 +39,7 @@ class SurveyUserCreate(TemplateView):
                                             is_no_edited=survey.is_no_edited,
                                             time_end=survey.time_end,
                                             answers=answers)
-            for ansver in ansvers:
+            for ansver in answers:
                 Answer.objects.create(survey=new_survey, text=ansver)
             return render_for_platform(request, 'survey/user/new_survey.html',{'object': new_survey})
         else:
