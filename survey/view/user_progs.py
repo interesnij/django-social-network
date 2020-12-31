@@ -32,6 +32,7 @@ class SurveyUserCreate(TemplateView):
             new_survey = survey.create_survey(
                                             title=survey.title,
                                             creator=request.user,
+                                            community=None,
                                             order=survey.order,
                                             is_anonymous=survey.is_anonymous,
                                             is_multiple=survey.is_multiple,
