@@ -144,7 +144,7 @@ function attach_list_for_post(_this, url) {
 function attach_item_for_post(_this, url) {
     if (document.body.querySelector(".current_file_dropdown")) {
         toast_error("Элемент прикрепляется только к постам")
-    } else (document.body.querySelector(".attach_block")) {
+    } else {
         attach_block = document.body.querySelector(".attach_block");
             pk = _this.getAttribute("data-pk");
             link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -163,7 +163,6 @@ function attach_item_for_post(_this, url) {
                 }
             };
             link_.send()
-        }
     }
 }
 
