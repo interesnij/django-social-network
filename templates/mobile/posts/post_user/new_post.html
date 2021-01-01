@@ -1,4 +1,4 @@
-{{ items }}
+{{ item_ }} | {{ _item }}
 <div class="card mb-3 pag" data-uuid="{{ object.uuid }}">
 <span class="span1 {% for list in object.get_lists %}{{ list.pk }} {% endfor %}"></span>
   {% include 'mobile/posts/post_user/my_card_header.html' %}
