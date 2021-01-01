@@ -163,6 +163,7 @@ function attach_item_for_post(_this, url) {
                 }
             };
             link_.send()
+        }
     }
 }
 
