@@ -40,7 +40,7 @@ class PostList(models.Model):
         select_related = ('creator', 'community')
         only = ('creator__id', 'community__id', 'created')
         prefetch_related = ('post_album', 'item_photo', 'post_doclist', 'item_doc', 'attached_item', 'post_good_album', 'item_good', 'post_soundlist', 'item_music', 'item_video', 'post_video_album')
-        posts = self.post_list.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(list=self, is_deleted=False, status="P")
+        posts = self.post_list.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
         return posts
 
     def list_30(self):

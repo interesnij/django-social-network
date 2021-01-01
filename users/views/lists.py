@@ -169,7 +169,7 @@ class UserPostsListView(ListView):
 		if (self.user.pk != request.user.pk and self.list.is_private_list()) or not request.is_ajax():
 			raise Http404
 		else:
-			self.posts_list = self.list.get_posts()
+			self.posts_list = self.list.get_posts() 
 		self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
