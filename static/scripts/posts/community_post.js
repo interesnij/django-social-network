@@ -16,7 +16,7 @@ on('#ajax', 'click', '#community_article_add', function() {
 on('#ajax', 'click', '#c_add_post_btn', function() {
   form_data = new FormData(document.forms.new_community_post);
   form_post = document.querySelector("#c_add_post_form");
-  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

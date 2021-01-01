@@ -19,7 +19,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = document.querySelector("#form_post");
   form_data = new FormData(form_post);
 
-  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
