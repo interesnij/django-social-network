@@ -572,8 +572,7 @@ on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block.remove();
 })
 on('#ajax', 'click', '.survey_attach_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
-  block.remove();
+  this.parentElement.parentElement.remove();
   remove_file_attach();
   is_full_attach()
 })
