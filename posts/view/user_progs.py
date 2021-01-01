@@ -23,7 +23,7 @@ class PostUserCreate(View):
                 post_attach(request.POST.getlist('attach_items'), new_post)
                 get_post_processing(new_post)
                 items = request.POST.getlist('attach_items')[0]
-                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post, 'item1': items[2:], 'item2': items[3:]})
+                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post, 'items': items, 'item1': items[2:], 'item2': items[3:]})
             else:
                 return HttpResponseBadRequest()
         else:
