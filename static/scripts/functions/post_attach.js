@@ -87,9 +87,9 @@ function doc_post_attach(block, media_block, pk) {
 
 function good_post_attach(block, src, pk, uuid, title) {
   is_full_attach();
-  div = create_preview_good(src, pk, uuid, title)}
+  div = create_preview_good(src, pk, uuid, title);
   block.append(div);
-  add_file_attach()
+  add_file_attach();
   is_full_attach();
 }
 
@@ -97,7 +97,7 @@ function article_post_attach(_this, block) {
   is_full_attach();
   _this.parentElement.classList.add("attach_toggle");
   title = _this.parentElement.querySelector(".article_title").innerHTML;
-  div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title)}
+  div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title);
   block.append(div);
   add_file_attach()
   is_full_attach();
