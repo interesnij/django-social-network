@@ -573,7 +573,7 @@ on('#ajax', 'click', '.music_attach_playlist_remove', function() {
 })
 on('#ajax', 'click', '.survey_attach_remove', function() {
   block = this.parentElement.parentElement.parentElement;
-  block.parentElement.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
 })
 on('#ajax', 'click', '.doc_attach_list_remove', function() {
