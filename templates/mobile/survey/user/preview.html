@@ -1,13 +1,13 @@
-<div class="card load_pag mb-3 {% if forloop.last %}load_last{% endif %}" style="cursor:pointer;flex: 0 0 100%;">
+<div class="card load_pag mb-3 {% if forloop.last %}load_last{% endif %}" style="flex: 0 0 100%;">
+  <a class="survey_attach_remove pointer" style="position: absolute;top: 8px;right: 8px;">
+    Открепить
+  </a>
   <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
       <figure class="background-img">
         {% if object.image %}
           <img src="{{ object.image.url }}" alt="user image">
         {% endif %}
       </figure>
-      <a class="survey_attach_remove pointer" style="position: absolute;top: 8px;right: 8px;">
-        Открепить
-      </a>
       <div class="container" style="list-style-type:none">
         <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
         <br>
