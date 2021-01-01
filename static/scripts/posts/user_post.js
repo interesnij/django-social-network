@@ -559,7 +559,7 @@ on('#ajax', 'click', '.attach_doc_list', function() {
   attach_list_for_post(this, "/docs/user_progs/list_preview/")
 });
 on('#ajax', 'click', '.attach_survey', function() {
-  attach_list_for_post(this, "/survey/user_progs/preview/")
+  attach_item_for_post(this, "/survey/user_progs/preview/") 
 });
 on('#ajax', 'click', '.attach_good_album', function() {
   attach_list_for_post(this, "/goods/user_progs/get_album_preview/")
