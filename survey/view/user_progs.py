@@ -40,7 +40,7 @@ class SurveyUserCreate(TemplateView):
                                             is_no_edited=survey.is_no_edited,
                                             time_end=survey.time_end,
                                             answers=answers)
-            return render_for_platform(request, 'survey/user/new_survey.html',{'object': new_survey})
+            return render_for_platform(request, 'survey/user/preview.html',{'object': new_survey})
         else:
             return HttpResponseBadRequest("")
 
@@ -130,3 +130,16 @@ class SurveyUserDetail(TemplateView):
         context["object"] = self.survey
         context["user"] = self.user
         return context
+
+
+class SurveyPreview(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.object, self.template_name = Survey.objects.get(pk=self.kwargs["pk"]), get_settings_template("survey/user/preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(SurveyPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(SurveyPreview,self).get_context_data(**kwargs)
+		context["object"] = self.object
+		return context

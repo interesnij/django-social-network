@@ -16,7 +16,7 @@ class Survey(models.Model):
     is_anonymous = models.BooleanField(verbose_name="Анонимный", default=False)
     is_multiple = models.BooleanField(verbose_name="Несколько вариантов", default=False)
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
-    time_end = models.DateTimeField(default=timezone.now, null=True, blank=True, verbose_name="Дата окончания")
+    time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
 
@@ -35,7 +35,7 @@ class Survey(models.Model):
         survey = cls.objects.create(
                                     title=title,
                                     community=community,
-                                    image=image, 
+                                    image=image,
                                     creator=creator,
                                     order=order,
                                     is_anonymous=is_anonymous,

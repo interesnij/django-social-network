@@ -25,14 +25,17 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
     elem = link_.responseText;
     _new = document.createElement("div");
     _new.innerHTML = elem;
-
     if (document.querySelector(".attach_block")){
-      block = document.body.querySelector(".attach_block").append(_new)
+      document.body.querySelector(".attach_block").append(_new.querySector(".load_pag"));
+      add_file_attach();
+      is_full_attach();
     } else if (document.querySector(".message_attach_block")){
-      document.body.querySelector(".message_attach_block").append(_new)
+      document.body.querySelector(".message_attach_block").append(_new.querySector(".load_pag"));
+      add_file_attach();
+      is_full_attach();
     }
     else {
-        container = document.body.querySelector(".is_paginate"); 
+        container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', _new.innerHTML);
         container.querySelector(".surveys_empty") ? container.querySelector(".surveys_empty").style.display = "none" : null;
         toast_info("Опрос создан!")

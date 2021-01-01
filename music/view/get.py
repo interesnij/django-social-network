@@ -43,7 +43,7 @@ class ListMusicGet(TemplateView):
 
 
 class MusicPlaylistPreview(TemplateView):
-	template_name, paginate_by = None, 15
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.playlist, self.template_name = SoundList.objects.get(pk=self.kwargs["pk"]), get_settings_template("music/playlist_preview.html", request.user, request.META['HTTP_USER_AGENT'])
