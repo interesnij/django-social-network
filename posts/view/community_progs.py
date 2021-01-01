@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from communities.models import Community
 from posts.forms import *
-from common.attach.post_attacher import get_post_attach
+from common.attach.post_attach import post_attach
 from common.processing.post import get_post_processing, get_post_offer_processing
 from common.check.community import check_can_get_lists, check_private_post_exists
 from common.template.user import render_for_platform
@@ -25,16 +25,10 @@ class PostCommunityCreate(View):
         elif request.is_ajax() and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('photo') or \
-                request.POST.get('video') or request.POST.get('music') or \
-                request.POST.get('good') or request.POST.get('article') or \
-                request.POST.get('playlist') or request.POST.get('video_list') or \
-                request.POST.get('photo_list') or request.POST.get('doc_list') or \
-                request.POST.get('doc') or request.POST.get('user') or request.POST.get('community'):
-
+            if request.POST.get('text') or request.POST.get('attach_items'):
                 lists = request.POST.getlist("lists")
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                get_post_attach(request, new_post)
+                post_attach(request, new_post)
                 get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
@@ -59,7 +53,7 @@ class PostOfferCommunityCreate(View):
             if request.POST.get('text') or request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
                 lists = request.POST.getlist("lists")
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                get_post_attach(request, new_post)
+                post_attach(request, new_post)
                 get_post_offer_processing(new_post)
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:

@@ -89,6 +89,14 @@ def goodlist_attach(value, post):
     except:
         raise ValidationError('Видеоальбом не найден')
 
+def survey_attach(value, survey):
+    try:
+        from survey.models import Survey
+        _select_survey = Survey.objects.get(pk=value)
+        _select_survey.post.add(post)
+    except:
+        raise ValidationError('Опрос не найден')
+
 
 def get_post_attach(request, post):
     if request.POST.get('playlist'):

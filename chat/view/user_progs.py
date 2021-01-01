@@ -42,7 +42,7 @@ class SendPageMessage(TemplateView):
 				request.POST.get('good') or request.POST.get('article') or \
 				request.POST.get('playlist') or request.POST.get('video_list') or \
 				request.POST.get('photo_list') or request.POST.get('doc_list') or \
-				request.POST.get('doc') or request.POST.get('good_list'):
+				request.POST.get('doc') or request.POST.get('good_list') or request.POST.get('survey'):
 				if connections:
 					connections += [self.user.pk,]
 					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text)

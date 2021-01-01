@@ -43,19 +43,8 @@ function remove_file_attach(){
 
 function photo_post_attach(block, photo_pk, user_pk, src) {
   is_full_attach();
-    if (!block.querySelector(".select_photo1")){div = create_preview_photo("select_photo1", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo2")){div = create_preview_photo("select_photo2", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo3")){div = create_preview_photo("select_photo3", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo4")){div = create_preview_photo("select_photo4", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo5")){div = create_preview_photo("select_photo5", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo6")){div = create_preview_photo("select_photo6", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo7")){div = create_preview_photo("select_photo7", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo8")){div = create_preview_photo("select_photo8", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo9")){div = create_preview_photo("select_photo9", src, photo_pk, user_pk)}
-    else if (!block.querySelector(".select_photo10")){div = create_preview_photo("select_photo10", src, photo_pk, user_pk)}
-    block.append(div);
-  block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
-
+  div = create_preview_photo(src, photo_pk, user_pk)
+  block.append(div);
   add_file_attach()
   is_full_attach();
 }
@@ -63,147 +52,53 @@ function photo_post_attach(block, photo_pk, user_pk, src) {
 function photo_post_upload_attach(photo_list, block, block_divs_length){
   is_full_attach();
   for (var i = 0; i < block_divs_length; i++){
-    parent = photo_list[i]
-    if (!block.querySelector(".select_photo1")){
-      div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo2")){
-      div = create_preview_photo("select_photo1", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo2")){
-      div = create_preview_photo("select_photo2", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo3")){
-      div = create_preview_photo("select_photo3", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo4")){
-      div = create_preview_photo("select_photo4", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo5")){
-      div = create_preview_photo("select_photo5", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo6")){
-      div = create_preview_photo("select_photo6", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo7")){
-      div = create_preview_photo("select_photo7", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo8")){
-      div = create_preview_photo("select_photo8", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo9")){
-      div = create_preview_photo("select_photo9", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-    else if (!block.querySelector(".select_photo10")){
-      div = create_preview_photo("select_photo10", parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk")); add_file_attach(); block.append(div);
-    }
-  }
-  block.querySelector(".photo_input") ? null : ($photo_input = document.createElement("span"), $photo_input.innerHTML = '<input type="hidden" class="photo_input" name="photo" value="1">', block.append($photo_input));
+    parent = photo_list[i];
+    div = create_preview_photo(parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
+    add_file_attach();
+    block.append(div);
+    is_full_attach();
+  };
   close_create_window()
   }
 
-
 function video_post_attach(block, pk, counter, src) {
   is_full_attach();
-    if (!block.querySelector(".video_input")){div = create_preview_video("select_video1", src, pk, counter)}
-    else if (!block.querySelector(".select_video2")){div = create_preview_video("select_video2", src, pk, counter)}
-    else if (!block.querySelector(".select_video3")){div = create_preview_video("select_video3", src, pk, counter)}
-    else if (!block.querySelector(".select_video4")){div = create_preview_video("select_video4", src, pk, counter)}
-    else if (!block.querySelector(".select_video5")){div = create_preview_video("select_video5", src, pk, counter)}
-    else if (!block.querySelector(".select_video6")){div = create_preview_video("select_video6", src, pk, counter)}
-    else if (!block.querySelector(".select_video7")){div = create_preview_video("select_video7", src, pk, counter)}
-    else if (!block.querySelector(".select_video8")){div = create_preview_video("select_video8", src, pk, counter)}
-    else if (!block.querySelector(".select_video9")){div = create_preview_video("select_video9", src, pk, counter)}
-    else if (!block.querySelector(".select_video10")){div = create_preview_video("select_video10", src, pk, counter)}
+  div = create_preview_video(src, pk, counter)
   block.append(div);
-  block.querySelector(".video_input") ? null : ($video_input = document.createElement("span"), $video_input.innerHTML = '<input type="hidden" class="video_input" name="video" value="1">', block.append($video_input));
-
   add_file_attach()
   is_full_attach();
 }
 
 function music_post_attach(block, pk, counter, src) {
   is_full_attach();
-    if (!block.querySelector(".select_music1")){div = create_preview_music("select_music1", src, pk, counter)}
-    else if (!block.querySelector(".select_music2")){div = create_preview_music("select_music2", src, pk, counter)}
-    else if (!block.querySelector(".select_music3")){div = create_preview_music("select_music3", src, pk, counter)}
-    else if (!block.querySelector(".select_music4")){div = create_preview_music("select_music4", src, pk, counter)}
-    else if (!block.querySelector(".select_music5")){div = create_preview_music("select_music5", src, pk, counter)}
-    else if (!block.querySelector(".select_music6")){div = create_preview_music("select_music6", src, pk, counter)}
-    else if (!block.querySelector(".select_music7")){div = create_preview_music("select_music7", src, pk, counter)}
-    else if (!block.querySelector(".select_music8")){div = create_preview_music("select_music8", src, pk, counter)}
-    else if (!block.querySelector(".select_music9")){div = create_preview_music("select_music9", src, pk, counter)}
-    else if (!block.querySelector(".select_music10")){div = create_preview_music("select_music10", src, pk, counter)}
+  div = create_preview_music(src, pk, counter)
   block.append(div);
-  block.querySelector(".music_input") ? null : ($music_input = document.createElement("span"), $music_input.innerHTML = '<input type="hidden" class="music_input" name="music" value="1">', block.append($music_input));
-
   add_file_attach()
   is_full_attach();
 }
 
 function doc_post_attach(block, media_block, pk) {
   is_full_attach();
-  if (!block.querySelector(".select_doc1")){div = create_preview_doc("select_doc1", media_block, pk)}
-  else if (!block.querySelector(".select_doc2")){div = create_preview_doc("select_doc2", media_block, pk)}
-    else if (!block.querySelector(".select_doc3")){div = create_preview_doc("select_doc3", media_block, pk)}
-    else if (!block.querySelector(".select_doc4")){div = create_preview_doc("select_doc4", media_block, pk)}
-    else if (!block.querySelector(".select_doc5")){div = create_preview_doc("select_doc5", media_block, pk)}
-    else if (!block.querySelector(".select_doc6")){div = create_preview_doc("select_doc6", media_block, pk)}
-    else if (!block.querySelector(".select_doc7")){div = create_preview_doc("select_doc7", media_block, pk)}
-    else if (!block.querySelector(".select_doc8")){div = create_preview_doc("select_doc8", media_block, pk)}
-    else if (!block.querySelector(".select_doc9")){div = create_preview_doc("select_doc9", media_block, pk)}
-    else if (!block.querySelector(".select_doc10")){div = create_preview_doc("select_doc10", media_block, pk)}
+  div = create_preview_doc(media_block, pk)
   block.append(div);
-  block.querySelector(".doc_input") ? null : ($doc_input = document.createElement("span"), $doc_input.innerHTML = '<input type="hidden" class="doc_input" name="doc" value="1">', block.append($doc_input));
-
   add_file_attach()
   is_full_attach();
 }
 
 function good_post_attach(block, src, pk, uuid, title) {
   is_full_attach();
-
-    if (!block.querySelector(".good_input")){div = create_preview_good("select_good1", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good2")){div = create_preview_good("select_good2", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good3")){div = create_preview_good("select_good3", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good4")){div = create_preview_good("select_good4", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good5")){div = create_preview_good("select_good5", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good6")){div = create_preview_good("select_good6", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good7")){div = create_preview_good("select_good7", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good8")){div = create_preview_good("select_good8", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good9")){div = create_preview_good("select_good9", src, pk, uuid, title)}
-    else if (!block.querySelector(".select_good10")){div = create_preview_good("select_good10", src, pk, uuid, title)}
+  div = create_preview_good(src, pk, uuid, title)}
   block.append(div);
-  block.querySelector(".good_input") ? null : ($good_input = document.createElement("span"), $good_input.innerHTML = '<input type="hidden" class="good_input" name="good" value="1">', block.append($good_input));
-
   add_file_attach()
   is_full_attach();
 }
 
 function article_post_attach(_this, block) {
   is_full_attach();
-  uuid = _this.getAttribute('data-uuid');
-  if (block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )){
-    _this.parentElement.setAttribute("tooltip", "Статья уже выбрана");
-    _this.parentElement.setAttribute("flow", "up");
-    return
-  };
   _this.parentElement.classList.add("attach_toggle");
   title = _this.parentElement.querySelector(".article_title").innerHTML;
-
-    if (!block.querySelector(".article_input")){div = create_preview_article("select_article1", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article2")){div = create_preview_article("select_article2", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article3")){div = create_preview_article("select_article3", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article4")){div = create_preview_article("select_article4", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article5")){div = create_preview_article("select_article5", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article6")){div = create_preview_article("select_article6", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article7")){div = create_preview_article("select_article7", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article8")){div = create_preview_article("select_article8", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article9")){div = create_preview_article("select_article9", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
-    else if (!block.querySelector(".select_article10")){div = create_preview_article("select_article10", _this.querySelector("img").getAttribute('data-src'), uuid, title)}
+  div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title)}
   block.append(div);
-  block.querySelector(".article_input") ? null : ($article_input = document.createElement("span"), $article_input.innerHTML = '<input type="hidden" class="article_input" name="article" value="1">', block.append($article_input));
-
   add_file_attach()
   is_full_attach();
 }

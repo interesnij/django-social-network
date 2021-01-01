@@ -108,11 +108,11 @@ function create_preview_chat_item(_this){
   return $div
 }
 
-function create_preview_photo(div_class, img_src, photo_pk, user_pk){
+function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "photo", div_class);
+  $div.classList.add("col-md-4", "photo");
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + photo_pk + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
   $img.classList.add("u_WA_photo", "image_fit", "pointer");
   $img.setAttribute("src", img_src);
@@ -124,11 +124,11 @@ function create_preview_photo(div_class, img_src, photo_pk, user_pk){
   return $div
 }
 
-function create_preview_video(div_class, img_src, pk, counter){
+function create_preview_video(img_src, pk, counter){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "video", div_class);
+  $div.classList.add("col-md-4", "video");
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="vid' + pk + '">';
   $img = document.createElement("img");
   $icon_div = document.createElement("span");
   $img.classList.add("image_fit");
@@ -143,7 +143,7 @@ function create_preview_video(div_class, img_src, pk, counter){
   $div.append($icon_div);
   return $div
 }
-function create_preview_music(div_class, img_src, pk, counter){
+function create_preview_music(img_src, pk, counter){
   $div = document.createElement("div");
   $input = document.createElement("span");
   $img = document.createElement("img");
@@ -152,13 +152,13 @@ function create_preview_music(div_class, img_src, pk, counter){
 
   media_body = _this.querySelector(".media-body");
 
-  $div.classList.add("col-md-12", "music", div_class);
+  $div.classList.add("col-md-12", "music");
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
   $div.setAttribute('music-counter', counter);
 
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="mus' + pk + '">';
 
   $img.src = img_src;
   $img.style.width = "30px";
@@ -177,20 +177,20 @@ function create_preview_music(div_class, img_src, pk, counter){
   $div.append($media);
   return $div
 }
-function create_preview_doc(div_class, media_body, pk){
+function create_preview_doc(media_body, pk){
   $div = document.createElement("div");
   $input = document.createElement("span");
   $span = document.createElement("span");
   $figure = document.createElement("figure");
   $media = document.createElement("span");
 
-  $div.classList.add("col-md-12", "doc", div_class);
+  $div.classList.add("col-md-12", "doc");
   $div.setAttribute("data-pk", pk);
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
 
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="doc' + pk + '">';
 
   $span.innerHTML = '<svg fill="currentColor" style="width:35px;heigth:35px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
   $figure.append($span);
@@ -208,9 +208,9 @@ function create_preview_doc(div_class, media_body, pk){
   $div.append($media);
   return $div
 }
-function create_preview_good(div_class, img_src, pk, uuid, title){
+function create_preview_good(img_src, pk, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "u_good_detail", "good", div_class);
+  $div.classList.add("col-md-4", "u_good_detail", "good");
   $div.setAttribute('good-pk', pk);
   $div.setAttribute('data-uuid', uuid);
   $div.style.cursor = "pointer";
@@ -218,7 +218,7 @@ function create_preview_good(div_class, img_src, pk, uuid, title){
   $input = document.createElement("span");
   $title = document.createElement("span");
   $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>';
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + pk + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="goo' + pk + '">';
   $img = document.createElement("img");
   $img.classList.add("image_fit");
   $img.src = img_src;
@@ -229,15 +229,15 @@ function create_preview_good(div_class, img_src, pk, uuid, title){
   $div.append($img);
   return $div
 }
-function create_preview_article(div_class, img_src, uuid, title){
+function create_preview_article(img_src, pk, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "article", div_class);
+  $div.classList.add("col-md-4", "article");
   $title = document.createElement("span");
-  $div.setAttribute('data-uuid', uuid);
+  $div.setAttribute('data-pk', pk);
   $div.style.cursor = "pointer";
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="' + div_class + '" value="' + uuid + '">';
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="art' + pk + '">';
 
   $img = document.createElement("img");
   $img.style.width = "100%";

@@ -1,5 +1,5 @@
 <div class="card mb-3" style="flex-basis: 100%;">
-  <input type="hidden" name="photo_list" value="{{ album.pk }}">
+  <input type="hidden" name="attach_items" value="lph{{ album.pk }}">
   <div class="card-body" style="padding: 8px;padding-bottom: 0;">
     <div style="display:flex">
       <figure>
@@ -16,7 +16,7 @@
       <div class="media-body" style="margin-left:10px">
         <h6 class="my-0 mt-1">{{ album.title }}</h6>
         <p class="">
-          Фотоальбом 
+          Фотоальбом
           {% include 'desctop/generic/user/user_creator_gen.html' %}
           <br>
           Всего: {{ album.count_photo }}

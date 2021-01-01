@@ -7,7 +7,6 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
-
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, user, lists = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists")
@@ -15,19 +14,13 @@ class PostUserCreate(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
 
-            if request.POST.get('text') or request.POST.get('photo') or \
-                request.POST.get('video') or request.POST.get('music') or \
-                request.POST.get('good') or request.POST.get('article') or \
-                request.POST.get('playlist') or request.POST.get('video_list') or \
-                request.POST.get('photo_list') or request.POST.get('doc_list') or \
-                request.POST.get('doc') or request.POST.get('user') or \
-                request.POST.get('community') or request.POST.get('good_list'):
+            if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
                 from common.processing.post import get_post_processing
-                from common.attach.post_attacher import get_post_attach
+                from common.attach.post_attach import post_attach
 
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                get_post_attach(request, new_post)
+                post_attach(request.POST.getlist('attach_items'), new_post)
                 get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
