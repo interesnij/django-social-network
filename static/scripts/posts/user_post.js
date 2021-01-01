@@ -35,7 +35,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
+    list = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),

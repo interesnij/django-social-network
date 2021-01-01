@@ -27,7 +27,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
-    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
+    list = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
     elem = link_.responseText;
