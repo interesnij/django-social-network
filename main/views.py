@@ -112,7 +112,7 @@ class SwitchView(TemplateView):
 					self.template_name = "users/account/anon_no_child_safety.html"
 				else:
 					self.template_name = "users/account/anon_user.html"
-			self.fix_list, self.video_album, self.photo_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
+			self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
 		elif self.custom_link.community:
 			self.c, user_agent, c_pk, u_pk = self.custom_link.community, request.META['HTTP_USER_AGENT'], int(self.kwargs["slug"]), request.user.pk
 			c_pk = self.c.pk
@@ -165,7 +165,7 @@ class SwitchView(TemplateView):
 					self.template_name = "communities/detail/anon_close_community.html"
 				elif self.c.is_private():
 					self.template_name = "communities/detail/anon_private_community.html"
-			self.fix_list, self.video_album, self.photo_album, self.playlist, self.doc_list, self.good_album = self.c.get_or_create_fix_list(), self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), self.c.get_or_create_doc_list(), self.c.get_or_create_good_album()
+			self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, self.good_album = self.c.get_or_create_fix_list(), self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), self.c.get_or_create_doc_list(), self.c.get_or_create_good_album()
 
 		if MOBILE_AGENT_RE.match(user_agent):
 			self.template_name = "mobile/" + self.template_name
