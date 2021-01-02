@@ -16,7 +16,7 @@ on('#ajax', 'click', '#community_article_add', function() {
 on('#ajax', 'click', '#c_add_post_btn', function() {
   form_data = new FormData(document.forms.new_community_post);
   form_post = document.querySelector("#c_add_post_form");
-  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+  lenta_load = form_post.parentElement.parentElement.querySelector(".list_pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -27,7 +27,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
-    list = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".tab_active");
+    list = form_post.parentElement.parentElement.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
     elem = link_.responseText;
