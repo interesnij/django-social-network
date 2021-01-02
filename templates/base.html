@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
 
 </head>
-  <body class="fixed-header">
-    <div class="wrapper" id="video_id_saver" data-video="first_player">
+  <body class="fixed-header" data-video="first_player">
+    <div class="wrapper">
         {% include "base_block/navbar.html" %}
         <div class="row">
           <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
