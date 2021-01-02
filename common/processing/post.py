@@ -19,7 +19,7 @@ def get_post_offer_processing(post):
     return post
 
 def repost_community_send(list, status, community, request):
-    from common.attach.post_attacher import get_post_attach
+    from common.attach.post_attach import post_attach
 
     communities = request.POST.getlist("communities")
     lists = request.POST.getlist("lists")
@@ -34,11 +34,11 @@ def repost_community_send(list, status, community, request):
             if request.user.is_staff_of_community(community_id):
                 new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
-                get_post_attach(new_post)
+                post_attach(request.POST.getlist('attach_items'), new_post)
 
 def repost_message_send(list, status, community, request, text):
     from chat.models import Message, Chat
-    from common.attach.message_attacher import get_message_attach
+    from common.attach.message_attach import message_attach
     from users.models import User
 
     connections = request.POST.getlist("chat_items")
@@ -54,10 +54,10 @@ def repost_message_send(list, status, community, request, text):
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
                 message = Message.send_message(chat=chat, repost=repost, creator=request.user, parent=None, text=text)
-                get_message_attach(request, message)
+                message_attach(request.POST.get('attach_items'), message)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
                 message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=repost, user=user, text=text)
-                get_message_attach(request, message)
+                message_attach(request.POST.get('attach_items'), message)
             else:
                 return HttpResponse("not ok")

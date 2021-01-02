@@ -28,10 +28,11 @@ class VideoCommentCommunityCreate(View):
             comment = form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.attach.comment_attacher import get_comment_attach
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
-                get_comment_attach(request, new_comment, "video_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "video_comment")
                 if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -55,10 +56,11 @@ class VideoReplyCommunityCreate(View):
             comment = form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.attach.comment_attacher import get_comment_attach
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)
-                get_comment_attach(request, new_comment, "video_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "video_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
             else:

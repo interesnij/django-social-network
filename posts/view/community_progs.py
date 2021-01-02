@@ -74,10 +74,11 @@ class PostCommunityCommentCreate(View):
         elif request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.attach.comment_attacher import get_comment_attach
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
-                get_comment_attach(request, new_comment, "item_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "item_comment")
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -98,10 +99,11 @@ class PostCommunityReplyCreate(View):
         elif request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music') or request.POST.get('good') or request.POST.get('article'):
-                from common.attach.comment_attacher import get_comment_attach
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text, post=None)
-                get_comment_attach(request, new_comment, "item_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "item_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})

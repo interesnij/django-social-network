@@ -9,7 +9,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.attach.post_attacher import get_post_attach
+from common.attach.post_attach import post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
 from common.template.user import get_detect_platform_template
 
@@ -102,7 +102,7 @@ class UUDocRepost(View):
             parent = Post.create_parent_post(creator=user, community=None, status=Post.DOC_REPOST)
             doc.item.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status=Post.STATUS_PROCESSING)
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -120,7 +120,7 @@ class CUDocRepost(View):
             parent = Post.create_parent_post(creator=request.user, community=community, status=Post.DOC_REPOST)
             doc.item.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse("")
         else:
@@ -186,7 +186,7 @@ class UUDocListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=None, status=Post.DOC_LIST_REPOST)
             list.post.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -204,7 +204,7 @@ class CUDocListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, status=Post.DOC_LIST_REPOST)
             list.post.add(parent)
             new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse("")
         else:

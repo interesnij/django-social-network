@@ -7,7 +7,7 @@ from posts.models import Post
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.attach.post_attacher import get_post_attach
+from common.attach.post_attach import post_attach
 from common.processing.post import get_post_processing
 from common.template.user import get_detect_platform_template
 from notify.model.post import *
@@ -65,7 +65,7 @@ class UUPostRepost(View):
             else:
                 parent = parent
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             if parent.creator.pk != request.user.pk:
                 post_repost_notification_handler(request.user, parent.creator, None, parent, PostNotify.REPOST)
@@ -87,7 +87,7 @@ class CUPostRepost(View):
             else:
                 parent = parent
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             post_repost_community_notification_handler(request.user, community, None, parent, PostCommunityNotify.REPOST)
             return HttpResponse("")
@@ -115,7 +115,7 @@ class UCPostRepost(View):
                 community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_attach(request, new_post)
+                    post_attach(request.POST.getlist('attach_items'), new_post)
                     get_post_processing(new_post)
                     if parent.creator.pk != request.user.pk:
                         post_repost_notification_handler(request.user, parent.creator, community, parent, PostNotify.COMMUNITY_REPOST)
@@ -142,7 +142,7 @@ class CCPostRepost(View):
                 _community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_attach(request, new_post)
+                    post_attach(request.POST.getlist('attach_items'), new_post)
                     get_post_processing(new_post)
                     post_repost_community_notification_handler(request.user, community, _community, parent, PostCommunityNotify.COMMUNITY_REPOST)
             return HttpResponse()
@@ -162,7 +162,7 @@ class UMPostRepost(View):
             return HttpResponseBadRequest()
 
         if request.is_ajax() and form_post.is_valid():
-            from common.attach.message_attacher import get_message_attach
+            from common.attach.message_attach import message_attach
             from chat.models import Message, Chat
 
             post = form_post.save(commit=False)
@@ -172,15 +172,15 @@ class UMPostRepost(View):
                 parent = parent
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, category=None, lists=[], is_signature=False, text=post.text, community=None, comments_enabled=False, votes_on=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
+                post_attach(request.POST.getlist('attach_items'), new_post)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
-                    get_message_attach(request, message)
+                    message_attach(request.POST.get('attach_items'), message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
-                    get_message_attach(request, message)
+                    message_attach(request.POST.get('attach_items'), message)
                 else:
                     return HttpResponseBadRequest()
         else:
@@ -198,7 +198,7 @@ class CMPostRepost(View):
         if not connections:
             return HttpResponseBadRequest()
         if request.is_ajax() and form_post.is_valid():
-            from common.attach.message_attacher import get_message_attach
+            from common.attach.message_attach import message_attach
             from chat.models import Message, Chat
 
             post = form_post.save(commit=False)
@@ -208,15 +208,15 @@ class CMPostRepost(View):
                 parent = parent
             for object_id in connections:
                 new_post = post.create_post(creator=request.user, category=None, lists=[], is_signature=False, text=post.text, community=community, comments_enabled=False, votes_on=False, parent=parent, status="PG")
-                get_post_attach(request, new_post)
+                post_attach(request.POST.getlist('attach_items'), new_post)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
-                    get_message_attach(request, message)
+                    message_attach(request.POST.get('attach_items'), message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
-                    get_message_attach(request, message)
+                    message_attach(request.POST.get('attach_items'), message)
                 else:
                     return HttpResponseBadRequest()
         else:

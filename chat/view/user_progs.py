@@ -6,7 +6,7 @@ from chat.models import Chat, Message, MessageFavorite
 from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
-from common.attach.message_attacher import get_message_attach
+from common.attach.message_attach import message_attach
 from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
 from common.check.message import check_can_send_message
 
@@ -37,19 +37,14 @@ class SendPageMessage(TemplateView):
 
 		if request.is_ajax() and self.form.is_valid():
 			message = self.form.save(commit=False)
-			if request.POST.get('text') or request.POST.get('photo') or \
-				request.POST.get('video') or request.POST.get('music') or \
-				request.POST.get('good') or request.POST.get('article') or \
-				request.POST.get('playlist') or request.POST.get('video_list') or \
-				request.POST.get('photo_list') or request.POST.get('doc_list') or \
-				request.POST.get('doc') or request.POST.get('good_list') or request.POST.get('survey'):
+			if request.POST.get('text') or request.POST.get('attach_items'):
 				if connections:
 					connections += [self.user.pk,]
 					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text)
-					get_message_attach(request, _message)
+					message_attach(request.POST.get('attach_items'), _message)
 				else:
 					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text)
-					get_message_attach(request, _message)
+					message_attach(request.POST.get('attach_items'), _message)
 				return HttpResponse()
 			else:
 				return HttpResponseBadRequest()
@@ -137,15 +132,10 @@ class LoadUserMessage(TemplateView):
 class SendMessage(View):
 	def post(self,request,*args,**kwargs):
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
-		if request.POST.get('text') or request.POST.get('voice') or request.POST.get('photo') or \
-			request.POST.get('video') or request.POST.get('music') or \
-			request.POST.get('good') or request.POST.get('article') or \
-			request.POST.get('playlist') or request.POST.get('video_list') or \
-			request.POST.get('photo_list') or request.POST.get('doc_list') or \
-			request.POST.get('doc') or request.POST.get('good_list'):
+		if request.POST.get('text') or request.POST.get('attach_items'):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'))
-			get_message_attach(request, message)
+			message_attach(request.POST.get('attach_items'), message)
 			return render_for_platform(request, 'chat/message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
@@ -157,14 +147,9 @@ class MessageParent(View):
         check_can_send_message(request.user, chat)
         if request.is_ajax() and form_post.is_valid():
             message = form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('photo') or \
-                request.POST.get('video') or request.POST.get('music') or \
-                request.POST.get('good') or request.POST.get('article') or \
-                request.POST.get('playlist') or request.POST.get('video_list') or \
-                request.POST.get('photo_list') or request.POST.get('doc_list') or \
-                request.POST.get('doc') or request.POST.get('good_list'):
+            if request.POST.get('text') or request.POST.get('attach_items'):
             	new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text)
-            	get_post_attach(request, new_post)
+            	message_attach(request.POST.get('attach_items'), new_message)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

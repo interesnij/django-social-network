@@ -10,7 +10,7 @@ from notify.model.video import *
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.attach.post_attacher import get_post_attach
+from common.attach.post_attach import post_attach
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
 from common.template.user import get_detect_platform_template
 
@@ -115,7 +115,7 @@ class UUVideoRepost(View):
             parent = Post.create_parent_post(creator=video.creator, community=None, status=Post.VIDEO_REPOST)
             video.item.add(parent)
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -136,7 +136,7 @@ class CUVideoRepost(View):
             parent = Post.create_parent_post(creator=video.creator, community=community, status=Post.VIDEO_REPOST)
             video.item.add(parent)
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse("")
         else:
@@ -209,7 +209,7 @@ class UUVideoAlbumRepost(View):
             parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.VIDEO_LIST_REPOST)
             album.post.add(parent)
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -230,7 +230,7 @@ class CUVideoAlbumRepost(View):
             parent = Post.create_parent_post(creator=album.creator, community=community, status=Post.VIDEO_LIST_REPOST)
             album.post.add(parent)
             new_post = post.create_post(creator=request.user, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_attach(request, new_post)
+            post_attach(request.POST.getlist('attach_items'), new_post)
             get_post_processing(new_post)
             return HttpResponse("")
         else:

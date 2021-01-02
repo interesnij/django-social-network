@@ -25,10 +25,11 @@ class GoodCommentCommunityCreate(View):
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, c)
-            if request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.attach.comment_attacher import get_comment_attach
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, good_comment=good, text=comment.text)
-                get_comment_attach(request, new_comment, "good_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "good_comment")
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_community_comment(request.user, c)
                 return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': c})
@@ -53,10 +54,11 @@ class GoodReplyCommunityCreate(View):
                 raise Http404
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
-            elif request.is_ajax() and request.POST.get('text') or  request.POST.get('photo') or request.POST.get('video') or request.POST.get('music'):
-                from common.attach.comment_attacher import get_comment_attach
+            elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
+                from common.attach.comment_attach import comment_attach
+                
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, good_comment=None, text=comment.text)
-                get_comment_attach(request, new_comment, "good_comment")
+                comment_attach(request.POST.get('attach_items'), new_comment, "good_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, c)
             else:
