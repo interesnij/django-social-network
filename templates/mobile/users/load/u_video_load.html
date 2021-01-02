@@ -2,10 +2,10 @@
 <div class="card mb-4">
   <div class="row">
     <div class="col">
-      <a class="user_video_create_attach pointer custom_color border" style="width: -webkit-fill-available;">+ видео</a>
+      <a class="btn btn-sm user_video_create_attach custom_color border" style="width: -webkit-fill-available;">+ видео</a>
     </div>
     <div class="col">
-      <a class="attach_video_album pointer custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
+      <a class="btn btn-sm attach_video_album custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
     </div>
     {% if request.user.user_video_album_exists %}
     <div class="col">
