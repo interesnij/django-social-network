@@ -5,9 +5,11 @@
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
+    {% if album.is_not_empty %}
     <div class="col">
       <a class="btn btn-sm attach_video_album custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
     </div>
+    {% endif %}
     {% if request.user.user_video_album_exists %}
     <div class="col">
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">

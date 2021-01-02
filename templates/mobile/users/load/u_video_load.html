@@ -3,9 +3,11 @@
     <div class="col">
       <a class="btn btn-sm user_video_create_attach custom_color border" style="width: -webkit-fill-available;">+ видео</a>
     </div>
+    {% if album.is_not_empty %}
     <div class="col">
       <a class="btn btn-sm attach_video_album custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
     </div>
+    {% endif %}
     {% if request.user.user_video_album_exists %}
     <div class="col">
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
