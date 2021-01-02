@@ -6,18 +6,14 @@
                 <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
             </div>
             <div class="card-body">
-
                   <div class="form-group">
-                    <label>Название</label>
-                    <input type="text" name="title" class="form-control" id="id_title">
+                    <input type="text" placeholder="Название" name="title" class="form-control" id="id_title">
                   </div>
                   <div class="form-group">
-                    <label>Описание</label>
                     {{ form_post.description }}
                   </div>
                   <div class="form-group">
-                    <label>Ссылка на ролик</label>
-                    <input type="text" name="uri" class="form-control" id="id_uri">
+                    <input type="text" placeholder="Ссылка на ролик" name="uri" class="form-control" id="id_uri">
                   </div>
 
                   <div class="form-group">
@@ -34,11 +30,10 @@
                   </div>
 
                   <div class="form-group">
-                    <label>Обложка</label>
                     <div class="hide_image">
                       <input type="file" name="image" accept="image/*" id="id_image">
                     </div>
-                    <div id="video_holder">
+                    <div id="video_holder" class="border">  
                       <h4>Обложка</h4>
                       <i>(обязательно)</i>
                     </div>

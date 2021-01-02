@@ -27,6 +27,9 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
+    block = document.body.querySelector(".attach_panel");
+    drops = block.querySelectorAll(".dropdown-menu");
+    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     list = form_post.parentElement.parentElement.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
