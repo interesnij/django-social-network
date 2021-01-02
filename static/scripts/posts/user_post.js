@@ -38,6 +38,8 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     list = form_post.parentElement.parentElement.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
+    block = document.body.querySelector(".attach_panel");
+    for (var i = 0; i < block.querySelectorAll(".dropdown-menu").length; i++){drops[i].classList.remove("show")}
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),
                                        toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
