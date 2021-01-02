@@ -72,7 +72,7 @@ class Album(models.Model):
         return self.photo_album.filter(is_deleted=False,is_public=True)[:5]
 
     def get_staff_6_photos(self):
-        return self.photo_album.filter(is_deleted=False)[:5]
+        return self.photo_album.filter(is_deleted=False)[:5] 
 
     def count_photo(self):
         try:
