@@ -103,7 +103,7 @@ class PhotoCommentUserCreate(View):
                 from common.attach.comment_attach import comment_attach
 
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "photo_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
@@ -126,9 +126,9 @@ class PhotoReplyUserCreate(View):
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.attach.comment_attach import comment_attach
-                
+
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "photo_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "photo_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:

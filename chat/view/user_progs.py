@@ -41,10 +41,10 @@ class SendPageMessage(TemplateView):
 				if connections:
 					connections += [self.user.pk,]
 					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text)
-					message_attach(request.POST.get('attach_items'), _message)
+					message_attach(request.POST.getlist('attach_items'), _message)
 				else:
 					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text)
-					message_attach(request.POST.get('attach_items'), _message)
+					message_attach(request.POST.getlist('attach_items'), _message)
 				return HttpResponse()
 			else:
 				return HttpResponseBadRequest()
@@ -135,7 +135,7 @@ class SendMessage(View):
 		if request.POST.get('text') or request.POST.get('attach_items'):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'))
-			message_attach(request.POST.get('attach_items'), message)
+			message_attach(request.POST.getlist('attach_items'), message)
 			return render_for_platform(request, 'chat/message/message.html', {'object': message, 'attach_items': request.POST.get('attach_items')})
 		else:
 			return HttpResponseBadRequest()
@@ -149,7 +149,7 @@ class MessageParent(View):
             message = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
             	new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text)
-            	message_attach(request.POST.get('attach_items'), new_message)
+            	message_attach(request.POST.getlist('attach_items'), new_message)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

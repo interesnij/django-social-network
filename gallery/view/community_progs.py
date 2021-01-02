@@ -105,7 +105,7 @@ class PhotoCommentCommunityCreate(View):
                 from common.attach.comment_attach import comment_attach
 
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, photo_comment=photo_comment, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "photo_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "photo_comment")
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -133,7 +133,7 @@ class PhotoReplyCommunityCreate(View):
                 from common.attach.comment_attach import comment_attach
 
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, photo_comment=None, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "photo_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "photo_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
             else:

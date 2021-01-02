@@ -180,7 +180,7 @@ class UMPostRepost(View):
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
-                    message_attach(request.POST.get('attach_items'), message)
+                    message_attach(request.POST.getlist('attach_items'), message)
                 else:
                     return HttpResponseBadRequest()
         else:
@@ -212,11 +212,11 @@ class CMPostRepost(View):
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
-                    message_attach(request.POST.get('attach_items'), message)
+                    message_attach(request.POST.getlist('attach_items'), message)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
                     message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
-                    message_attach(request.POST.get('attach_items'), message)
+                    message_attach(request.POST.getlist('attach_items'), message)
                 else:
                     return HttpResponseBadRequest()
         else:

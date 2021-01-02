@@ -32,7 +32,7 @@ class VideoCommentCommunityCreate(View):
                 from common.attach.comment_attach import comment_attach
 
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=None, video_comment=video_comment, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "video_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "video_comment")
                 if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -60,7 +60,7 @@ class VideoReplyCommunityCreate(View):
                 from common.attach.comment_attach import comment_attach
 
                 new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, video_comment=None, text=comment.text)
-                comment_attach(request.POST.get('attach_items'), new_comment, "video_comment")
+                comment_attach(request.POST.getlist('attach_items'), new_comment, "video_comment")
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
             else:

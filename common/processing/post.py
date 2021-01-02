@@ -54,10 +54,10 @@ def repost_message_send(list, status, community, request, text):
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
                 message = Message.send_message(chat=chat, repost=repost, creator=request.user, parent=None, text=text)
-                message_attach(request.POST.get('attach_items'), message)
+                message_attach(request.POST.getlist('attach_items'), message)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
                 message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=repost, user=user, text=text)
-                message_attach(request.POST.get('attach_items'), message)
+                message_attach(request.POST.getlist('attach_items'), message)
             else:
                 return HttpResponse("not ok")
