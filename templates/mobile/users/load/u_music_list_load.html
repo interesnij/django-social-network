@@ -18,7 +18,7 @@
         <div class="dropdown-menu" style="top: 34px;">
           <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_load' %}">
           {% for object in request.user.get_audio_playlists %}
-            <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_list_load' %}">
+            <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_list_load' uuid=object.uuid %}">
               {{ object.name }}
             </a>
           {% endfor %}
