@@ -113,7 +113,7 @@ class SwitchView(TemplateView):
 				else:
 					self.template_name = "users/account/anon_user.html"
 			self.fix_list, self.video_album, self.photo_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
-		if self.custom_link.community:
+		elif self.custom_link.community:
 			self.c, user_agent, c_pk, u_pk = self.custom_link.community, request.META['HTTP_USER_AGENT'], int(self.kwargs["slug"]), request.user.pk
 			c_pk = self.c.pk
 			if self.c.is_suspended():
