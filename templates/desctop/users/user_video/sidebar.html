@@ -9,7 +9,7 @@
     <div class="nav flex-column nav-pills faqnav">
       <h6 style="margin-bottom:15px">Альбомы</h6>
       {% for object in user.get_video_albums %}
-        <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+        <a class="ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">
           {{ object.title }}
         </a>
       {% endfor %}

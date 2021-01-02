@@ -82,7 +82,7 @@
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
                 {% for object in user.get_my_video_albums %}
-                  <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+                  <a class="ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">
                     {{ object.title }}
                   </a>
                 {% endfor %}

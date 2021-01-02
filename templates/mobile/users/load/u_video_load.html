@@ -1,4 +1,3 @@
-
 <div class="card mb-4">
   <div class="row">
     <div class="col">
@@ -12,7 +11,7 @@
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
             Альбомы
         </button>
-        <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+        <div class="dropdown-menu" style="top: 34px;">
           {% for object in request.user.get_my_video_albums %}
             <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}">
               {{ object.title }}
@@ -36,7 +35,7 @@
 <div class="{% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px;position: relative;">
   <div>
     {% if object.image %}
-      <img class="image_fit_200 video_load_one pointer"
+      <img class="image_fit_small video_load_one pointer"
            video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
            video-pk="{{ object.pk }}"
            src="{{ object.image.url }}" alt="img">

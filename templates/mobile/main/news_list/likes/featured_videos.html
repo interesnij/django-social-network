@@ -44,7 +44,7 @@
                 <div class="card mb-3">
                   <span style="padding: 5px;">
                     Альбом
-                    <a class="ajax underline" href="{% url 'user_video_list' pk=object.creator.pk uuid=object.uuid %}">
+                    <a class="ajax underline" href="{% url 'user_video_album' pk=object.creator.pk uuid=object.uuid %}">
                      {{ object.title }}
                     </a>&nbsp;
                     {% include 'mobile/generic/user/creator_gen.html' %}
