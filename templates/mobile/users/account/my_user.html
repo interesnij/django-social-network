@@ -7,7 +7,6 @@
 <meta property="og:image" content="{% if user.s_avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.s_avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-<input type="datetime-local" class="form-control">
 
 <div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
   <div class="card mb-3" style="padding:10px">

@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 def post_attach(attach_items, post):
     for item in attach_items:
-        if item[0:2] == "pho":
+        if item[0] == "p":
             from gallery.models import Photo
             try:
                 photo = Photo.objects.get(pk=item[3:], is_public=True)
