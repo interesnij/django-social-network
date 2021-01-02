@@ -4,8 +4,8 @@ function clear_attach_block(){
     a_b.innerHTML = "";
     a_b.classList = "";
     a_b.classList.add("files_0");
-    drops = a_b.querySelectorAll(".dropdown-menu");
-    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
+    block = document.body.querySelector(".attach_panel");
+    for (var i = 0; i < block.querySelectorAll(".dropdown-menu").length; i++){drops[i].classList.remove("show")}
   }
 }
 
