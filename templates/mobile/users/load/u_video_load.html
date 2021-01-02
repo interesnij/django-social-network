@@ -1,25 +1,4 @@
 
-<style>
-  .user_video_create_attach {
-    border: 1px dashed green;
-    padding: 5px;
-    text-align: center;}
-  .user_video_create_attach:hover {cursor: pointer}
-</style>
-
-{% if request.user.user_video_album_exists %}
-<div class="card">
-    <div class="nav flex-column nav-pills faqnav">
-      <h6 style="margin-bottom:15px">Видеоальбомы</h6>
-      <a>Основной видеоальбом</a>
-      {% for object in request.user.get_my_video_albums %}
-        <a class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}">
-          {{ object.title }}
-        </a>
-      {% endfor %}
-    </div>
-</div>
-
 <div class="card mb-4">
   <div class="row">
     <div class="col">
