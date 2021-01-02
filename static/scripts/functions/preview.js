@@ -268,7 +268,6 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".photo") ? null : block.querySelector(".photo_input").parentElement.remove();
 });
 on('#ajax', 'click', '.doc_preview_delete', function() {
   parent = this.parentElement;
@@ -281,8 +280,6 @@ on('#ajax', 'click', '.doc_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".doc") ? null : block.querySelector(".doc_input").parentElement.remove();
-
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.video_preview_delete', function() {
@@ -296,7 +293,6 @@ on('#ajax', 'click', '.video_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".video") ? null : block.querySelector(".video_input").parentElement.remove();
 });
 on('#ajax', 'click', '.music_preview_delete', function() {
   parent = this.parentElement;
@@ -309,7 +305,6 @@ on('#ajax', 'click', '.music_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".music") ? null : block.querySelector(".music_input").parentElement.remove();
 });
 
 on('#ajax', 'click', '.preview_item_delete', function() {
@@ -330,7 +325,6 @@ on('#ajax', 'click', '.good_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".good") ? null : block.querySelector(".good_input").parentElement.remove();
 });
 on('#ajax', 'click', '.article_preview_delete', function() {
   parent = this.parentElement;
@@ -343,7 +337,6 @@ on('#ajax', 'click', '.article_preview_delete', function() {
     remove_file_message_attach(); is_full_message_attach()
   }
   parent.remove();
-  block.querySelector(".article") ? null : block.querySelector(".article_input").parentElement.remove();
 });
 
 function like_reload(like_block, dislike_block, _class){

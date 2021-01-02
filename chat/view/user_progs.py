@@ -136,7 +136,7 @@ class SendMessage(View):
 			message = form_post.save(commit=False)
 			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'))
 			message_attach(request.POST.get('attach_items'), message)
-			return render_for_platform(request, 'chat/message/message.html', {'object': message})
+			return render_for_platform(request, 'chat/message/message.html', {'object': message, 'attach_items': request.POST.get('attach_items')})
 		else:
 			return HttpResponseBadRequest()
 
