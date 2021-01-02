@@ -44,7 +44,7 @@ function remove_file_attach(){
 function photo_post_attach(block, photo_pk, user_pk, src) {
   is_full_attach();
   div = create_preview_photo(src, photo_pk, user_pk)
-  block.append(div);
+  block.append(div); 
   add_file_attach()
   is_full_attach();
 }
