@@ -1,88 +1,73 @@
 <div class="card mb-4">
-  <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">
-    <a data-href="{% url 'u_doc_load' %}" class="pointer create_ajax underline">
-      Прикрепление документов
-    </a>
-      / {{ list.name }}
-    </h5>
+  <div class="row">
+    <div class="col">
+      <a class="btn btn-sm custom_color border create_ajax" href="{% url 'u_doc_load' %}" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    {% if list.is_not_empty %}
+    <div class="col">
+      <a class="btn btn-sm attach_doc_list custom_color border" data-pk="{{ list.pk }}" style="width: -webkit-fill-available;">+ список</a>
+    </div>
+    {% endif %}
+    {% if request.user.is_doc_list_exists %}
+    <div class="col">
+        <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
+          Списки
+        </button>
+        <div class="dropdown-menu" style="top: 34px;">
+          <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_load' %}">
+          {% for object in request.user.get_docs_lists %}
+            <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_doc_list_load' uuid=object.uuid %}">
+              {{ object.name }}
+            </a>
+          {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="col">
+      <a class="btn btn-sm custom_color border create_fullscreen_hide_2" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
   </div>
   <div class="card-body border-bottom">
 
-<div class="row">
+{% if object_list %}
 
-<div class="col-lg-8" data-pk="{{ list.pk }}">
-  {% if object_list %}
-  <div class="card mb-2">
-      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-        <div style="display:flex">
-          {% if list.creator.s_avatar %}
-            <img src="{{ list.creator.s_avatar.url }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
-          {% else %}
-            <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-          {% endif %}
-          <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_docs }})</h6>
-            <p class="">Мои документы</p>
-          </div>
-          <div class="icon-circle icon-50 bg-light-white attach_doc_list pointer" data-pk="{{ list.pk }}">
-            <svg fill="currentColor" class="svg_default svg_default_50" viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  <span class="doc_load_container" data-link="/users/load/u_doc_load/">
+<span class="music_load_container" data-link="/users/load/u_music_load/">
 {% for object in object_list %}
-  <div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}">
-    <div style="display:flex" data-pk="{{ object.pk }}">
-        <figure>
-          <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-          </svg>
-        </figure>
-        <div class="media-body" style="padding-top: 5px; padding-left: 5px;margin-right:40px">
-            <h6 class="">
-              <a href="{{ object.file.url }}" style="white-space: nowrap;" target="_blank" rel="nofollow">{{ object.title }}</a>
-            </h6>
-        </div>
-    </div>
-    <span class="item_attach_circle doc_load_several"
-         tooltip="Выбрать несколько"
-         flow="up"
-         style="margin-top: 5px;">
-        <svg fill="currentColor" viewBox="0 0 24 24">
-          <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+<div class="list-group-item load_pag {% if forloop.last %}load_last{% endif %}">
+  <div style="display:flex" data-pk="{{ object.pk }}">
+      <figure>
+        <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
         </svg>
-    </span>
+      </figure>
+      <div class="media-body" style="padding-top: 5px; padding-left: 5px;margin-right:40px">
+          <h6 class="">
+            <a href="{{ object.file.url }}" style="white-space: nowrap;" target="_blank" rel="nofollow">{{ object.title }}</a>
+          </h6>
+      </div>
   </div>
-  {% endfor %}
+  <span class="item_attach_circle doc_load_several" style="margin-top: 5px;">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+      </svg>
+  </span>
+</div>
+{% endfor %}
 </span>
-  {% else %}
-    <div class="card mb-3 centered">
-      <div class="card-body">
-      <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-      </div>
-      <h6 style="text-align: center;margin: 20px;"> В списке пока документов.</h6>
+
+{% else %}
+  <div class="card mb-3 centered">
+    <div class="card-body">
+    <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
     </div>
-  {% endif %}
-</div>
-<div class="col-md-4">
-  {% if user.is_doc_list_exists %}
-  <div class="card">
-      <div class="nav flex-column nav-pills faqnav">
-        <h6 style="margin-bottom:15px">Плейлисты</h6>
-        <a class="create_ajax pointer" data-href="{% url 'u_doc_load' %}">
-          Основной список
-        </a>
-        {% for object in user.get_docs_lists %}
-          <a class="create_ajax pointer" data-href="/users/load/u_doc_list_load/{{ object.uuid }}/">
-            {{ object.name }}
-          </a>
-        {% endfor %}
-      </div>
+    <h6 style="text-align: center;margin: 20px;"> В основном плейлисте нет музыки.</h6>
   </div>
-  {% endif %}
+{% endif %}
+
 </div>
-</div>
-</div>
+
 </div>
