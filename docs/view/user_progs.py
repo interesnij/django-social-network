@@ -94,7 +94,7 @@ class UserDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render_for_platform(request, 'users/docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/user_docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -139,7 +139,8 @@ class UserDoclistEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list, self.form, self.user = DocList.objects.get(uuid=self.kwargs["uuid"]), DoclistForm(request.POST,instance=self.list), User.objects.get(pk=self.kwargs["pk"])
+        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.form, self.user = DoclistForm(request.POST,instance=self.list), User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
             self.form.save()

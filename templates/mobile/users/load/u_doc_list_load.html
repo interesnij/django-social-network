@@ -1,7 +1,7 @@
 <div class="card mb-4">
   <div class="row">
     <div class="col">
-      <a class="btn btn-sm custom_color border create_ajax" href="{% url 'u_doc_load' %}" style="width: -webkit-fill-available;">
+      <a class="btn btn-sm custom_color border create_ajax" data-href="{% url 'u_doc_load' %}" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
@@ -60,12 +60,12 @@
 </span>
 
 {% else %}
-  <div class="card mb-3 centered">
-    <div class="card-body">
-    <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-    </div>
-    <h6 style="text-align: center;margin: 20px;"> В основном плейлисте нет музыки.</h6>
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
   </div>
+  <h6 style="text-align: center;margin: 20px;"> В списке нет документов.</h6>
+</div>
 {% endif %}
 
 </div>

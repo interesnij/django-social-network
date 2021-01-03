@@ -140,7 +140,8 @@ class CommunityDoclistEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list, self.form = DocList.objects.get(uuid=self.kwargs["uuid"]), PlaylistForm(request.POST,instance=self.list)
+        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             list = self.form.save(commit=False)
             self.form.save()

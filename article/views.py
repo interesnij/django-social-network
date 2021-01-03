@@ -17,7 +17,8 @@ class ArticleUserDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.article, self.template_name = User.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"]), get_permission_user_post(self.user, "article/u_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.article = User.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_permission_user_post(self.user, "article/u_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -30,7 +31,8 @@ class ArticleCommunityDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community, self.article, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"]), get_permission_community_post(self.community, "article/c_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.article = Community.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_permission_community_post(self.community, "article/c_article/", "article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
