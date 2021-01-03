@@ -700,9 +700,9 @@ function get_image_priview(ggg, img) {
                     reader = new FileReader();
                     reader.onload = function(e) {
                         $img = document.createElement("img");
-                        $img.id = "targetImageCrop";
                         $img.src = e.target.result;
                         $img.class = "thumb-image";
+                        $img.style.width = "100%";
                         ggg.innerHTML = '<a href="#" style="right:15px;top: 0;" class="delete_thumb">Удалить</a>'
                         ggg.append($img)
                     };
