@@ -382,6 +382,7 @@ function send_good_change(span, _link, new_class, html) {
 function send_mob_good_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement;
+    console.log(item);
     pk = item.getAttribute("good-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + pk + "/", true);
