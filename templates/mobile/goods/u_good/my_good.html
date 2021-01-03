@@ -45,17 +45,11 @@
 
   <div class="card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
       <div class="card-body py-0">
-          <div class="row">
-              <div class="col-md-8">
-                {% include 'mobile/goods/good_base/gallery.html' %}
-              </div>
+        {% include 'mobile/goods/good_base/gallery.html' %}
 
-              <div class="col-md-4 pr-0">
-                {% include 'mobile/goods/good_base/info.html' %}
-              </div>
-          </div>
+        {% include 'mobile/goods/good_base/info.html' %}
 
-          {% include 'mobile/goods/u_good/info.html' %}
+        {% include 'mobile/goods/u_good/info.html' %}
       </div>
   </div>
 </div>
