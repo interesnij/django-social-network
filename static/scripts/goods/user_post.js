@@ -267,8 +267,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
 });
 
 on('#ajax', 'click', '#u_create_good_list_btn', function() {
-  this.disabled = true;
-  form = document.body.querySelector("#u_good_list_create");
+  form = this.parentElement.parentElement.parentElement; 
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";

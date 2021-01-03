@@ -254,7 +254,7 @@ on('#ajax', 'click', '#c_ucm_good_list_repost_btn', function() {
 });
 
 on('#ajax', 'click', '#c_create_good_list_btn', function() {
-  form = document.body.querySelector("#c_good_list_create");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
