@@ -7,7 +7,7 @@
           <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
               Списки
           </button>
-          <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+          <div class="dropdown-menu" style="right: 15px;left: 15px; top: 40px;">
             {% for object in user.get_docs_lists %}
               <a class="dropdown-item ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
             {% endfor %}
