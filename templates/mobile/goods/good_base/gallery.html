@@ -1,6 +1,4 @@
 <div class="product-gallery">
-  <div class="row">
-    <div class="col-md-3">
       <div class="product-gallery-thumbnails">
         <ol class="thumb_list list-unstyled">
           {% if object.image %}
@@ -22,8 +20,7 @@
           {% endif %}
         </ol>
       </div>
-    </div>
-    <div class="col-md-9">
+
       <div id="big_img">
         {% if object.image %}
         <img src="{{ object.image.url }}" class="big_img" alt="">
@@ -31,6 +28,4 @@
         <img src="/static/images/no_album_photo.png" class="big_img" alt="">
         {% endif %}
       </div>
-    </div>
-  </div>
 </div>
