@@ -1,5 +1,3 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
@@ -77,8 +75,6 @@ class PhotoUserCommentList(ListView):
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
         self.template_name = get_permission_user_photo(self.photo.creator, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.template_name = "mob_" + template_name
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

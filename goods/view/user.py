@@ -13,7 +13,8 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.album, self.goods, self.user, user_agent = Good.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), self.album.get_goods(), self.album.creator, request.META['HTTP_USER_AGENT']
+        self.good, self.album = Good.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.goods, self.user, user_agent = self.album.get_goods(), self.album.creator, request.META['HTTP_USER_AGENT']
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -83,7 +84,8 @@ class GoodUserCommentList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_permission_user_good(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_permission_user_good(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         if not request.is_ajax() or not self.good.comments_enabled:
             raise Http404
         return super(GoodUserCommentList,self).get(request,*args,**kwargs)
