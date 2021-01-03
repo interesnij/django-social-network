@@ -215,7 +215,7 @@ class Good(models.Model):
 		comments_query.add(Q(parent_comment__isnull=True), Q.AND)
 		return GoodComment.objects.filter(comments_query)
 	def count_comments(self):
-		parent_comments = GoodComment.objects.filter(good_comment_id=self.pk, is_deleted=False).values("pk").count()
+		parent_comments = GoodComment.objects.filter(good_comment_id=self.pk, is_deleted=False).values("pk")
 		parents_count = parent_comments.count()
 		i = 0
 		for comment in parent_comments:
