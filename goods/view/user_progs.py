@@ -245,7 +245,8 @@ class UserGoodAlbumEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        user, album, self.form = User.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), GoodAlbumForm(request.POST,instance=self.album)
+        user, album = User.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.form = GoodAlbumForm(request.POST,instance=self.album)
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             album = self.form.save(commit=False)
             self.form.save()
