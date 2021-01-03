@@ -241,11 +241,11 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
     src = good.querySelector("img").getAttribute('src');
     title = good.querySelector(".good_title").innerHTML;
 
-    if (document.querySelector(".current_file_dropdown")){
+    if (document.body.querySelector(".current_file_dropdown")){
       check_good_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (good_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk))
-    } else if (document.querySelector(".attach_block")){
+    } else if (document.body.querySelector(".attach_block")){
       check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk))
-    } else if (document.querySector(".message_attach_block")){
+    } else if (document.body.querySector(".message_attach_block")){
       check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk))
     }
     else {
@@ -267,7 +267,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
 });
 
 on('#ajax', 'click', '#u_create_good_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement; 
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
