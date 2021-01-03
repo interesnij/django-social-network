@@ -67,7 +67,7 @@ class UserGood(TemplateView):
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:
-            self.template_name = "desctop/" + self.template_name
+            self.template_name = "mobile/" + self.template_name
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
