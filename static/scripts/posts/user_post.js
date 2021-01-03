@@ -41,7 +41,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     block = document.body.querySelector(".attach_panel");
     drops = block.querySelectorAll(".dropdown-menu");
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.querySelector(".list_pk").prepend(new_post),
+    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.prepend(new_post),
                                        toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
                                     :  toast_info('Запись опубликована');
