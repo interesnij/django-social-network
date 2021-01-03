@@ -69,17 +69,6 @@ on('#ajax', 'click', '.u_replyParentGoodComment', function() {
   block.classList.add("replies_open")
 });
 
-on('#ajax', 'click', '.u_good_off_comment', function() {
-  send_good_change(this, "/goods/user_progs/off_comment/", "u_good_on_comment", "Вкл. комментарии");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_good_comments").style.display = "none"
-})
-on('#ajax', 'click', '.u_good_on_comment', function() {
-  send_good_change(this, "/goods/user_progs/on_comment/", "u_good_off_comment", "Выкл. комментарии");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_good_comments").style.display = "unset"
-})
-
 on('#ajax', 'click', '.u_good_comment_delete', function() {
   comment_delete(this, "/goods/user_progs/delete_comment/", "u_good_comment_abort_remove")
 })
@@ -332,3 +321,47 @@ on('#ajax', 'click', '.u_good_album_recover', function() {
     }
     ajax_link.send();
 });
+
+
+
+on('#ajax', 'click', '.mob_u_good_off_comment', function() {
+  send_mob_good_change(this, "/goods/user_progs/off_comment/", "mob_u_good_on_comment", "Вкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".u_good_comments").style.display = "none"
+})
+on('#ajax', 'click', '.mob_u_good_on_comment', function() {
+  send_mob_good_change(this, "/goods/user_progs/on_comment/", "mob_u_good_off_comment", "Выкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".u_good_comments").style.display = "unset"
+})
+on('#ajax', 'click', '.mob_u_good_off_votes', function() {
+  send_mob_good_change(this, "/goods/user_progs/off_votes/", "mob_u_good_on_votes", "Вкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "none";
+  post.querySelector(".dislike").style.display = "none";
+})
+on('#ajax', 'click', '.mob_u_good_on_votes', function() {
+  send_mob_good_change(this, "/goods/user_progs/on_votes/", "mob_u_good_off_votes", "Выкл. реакции");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".like").style.display = "unset";
+  post.querySelector(".dislike").style.display = "unset";
+})
+on('#ajax', 'click', '.mob_u_good_hide', function() {
+  send_mob_good_change(this, "/goods/user_progs/hide/", "mob_u_good_unhide", "Товар не виден");
+})
+on('#ajax', 'click', '.mob_u_good_unhide', function() {
+  send_mob_good_change(this, "/goods/user_progs/unhide/", "mob_u_good_hide", "Товар виден");
+})
+on('#ajax', 'click', '.mob_user_good_remove', function() {
+  send_mob_good_change(this, "/goods/user_progs/delete/", "mob_user_good_abort_remove", "Отмена");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".good_card").style.display = "none";
+  post.querySelector(".card").style.opacity = "0.5";
+  this.style.color = "#FF0000";
+})
+on('#ajax', 'click', '.mob_user_good_abort_remove', function() {
+  send_mob_good_change(this, "/goods/user_progs/abort_delete/", "mob_user_good_remove", "Удалить");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post.querySelector(".good_card").style.display = "unset";
+  post.querySelector(".card").style.opacity = "1";
+})

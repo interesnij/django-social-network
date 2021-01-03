@@ -16,16 +16,16 @@
           Опции
       </button>
       <div class="dropdown-menu">
-        <span class="dropdown-item u_good_remove">Удалить видео</span>
+        <span class="dropdown-item mob_u_good_remove">Удалить видео</span>
         <span class="dropdown-item">Редактировать</span>
         <span>
-          <span class="dropdown-item u_good_off_comment">Выключить комментарии</span>
+          <span class="dropdown-item mob_u_good_off_comment">Выключить комментарии</span>
         </span>
         <span>
-          <span class="dropdown-item u_good_off_votes">Выкл. реакции</span>
+          <span class="dropdown-item mob_u_good_off_votes">Выкл. реакции</span>
         </span>
         <span>
-          <span class="dropdown-item u_good_hide">Товар виден</span>
+          <span class="dropdown-item mob_u_good_hide">Товар виден</span>
         </span>
       </div>
     </div>
@@ -43,7 +43,7 @@
     {% endif %}
   </div>
 
-  <div class="card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
+  <div class="card good_card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
       <div class="card-body py-0">
         {% include 'mobile/goods/good_base/gallery.html' %}
 

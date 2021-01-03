@@ -379,6 +379,24 @@ function send_good_change(span, _link, new_class, html) {
     };
     link.send(null)
 }
+function send_mob_good_change(span, _link, new_class, html) {
+    parent = span.parentElement;
+    item = span.parentElement.parentElement.parentElement.parentElement;
+    pk = item.getAttribute("good-pk");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', _link + pk + "/", true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link.onreadystatechange = function() {
+        if (link.readyState == 4 && link.status == 200) {
+            new_span = document.createElement("span");
+            new_span.classList.add(new_class, "dropdown-item");
+            new_span.innerHTML = html;
+            parent.innerHTML = "";
+            parent.append(new_span)
+        }
+    };
+    link.send(null)
+}
 
 function send_photo_change(span, _link, new_class, html) {
     parent = span.parentElement;
