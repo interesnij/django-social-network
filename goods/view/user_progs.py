@@ -139,7 +139,7 @@ class UserOnVotesGood(View):
 
 class UserUnHideGood(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uupk=self.kwargs["pk"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.status = Good.STATUS_PUBLISHED
             good.save(update_fields=['status'])
