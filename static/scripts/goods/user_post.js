@@ -161,19 +161,19 @@ on('#ajax', 'click', '#good_image', function() {
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '#good_image2', function() {
-  img = this.previousElementSibling.querySelector("#id_image2")
-  get_image_priview(this, img); 
+  img = this.previousElementSibling.querySelector(".image")
+  get_image_priview(this, img);
 });
 on('#ajax', 'click', '#good_image3', function() {
-  img = this.previousElementSibling.querySelector("#id_image3")
+  img = this.previousElementSibling.querySelector(".image")
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '#good_image4', function() {
-  img = this.previousElementSibling.querySelector("#id_image4")
+  img = this.previousElementSibling.querySelector(".image")
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '#good_image5', function() {
-  img = this.previousElementSibling.querySelector("#id_image5")
+  img = this.previousElementSibling.querySelector(".image")
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '.u_good_add', function() {
