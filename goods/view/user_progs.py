@@ -179,6 +179,8 @@ class GoodUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
+            if not good.price:
+                good.price = 0
             new_good = good.create_good(title=good.title,image=good.image,sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),creator=self.user,description=good.description,price=good.price,comments_enabled=good.comments_enabled,votes_on=good.votes_on,status="PG")
             get_good_processing(new_good)
             for _album in albums:

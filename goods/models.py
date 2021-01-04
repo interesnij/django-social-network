@@ -110,7 +110,7 @@ class Good(models.Model):
 
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
-	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
+	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
