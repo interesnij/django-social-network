@@ -35,7 +35,7 @@
    <div class="form-group">
      <label>Список</label>
      <select name="album" multiple="" id="id_album" style="height:100%">
-       {% for object in community.get_all_good_albums %} 
+       {% for object in community.get_all_good_albums %}
          <option value="{{ object.pk }}">{{ object.title }}</option>
        {% endfor %}
      </select>
@@ -90,7 +90,7 @@
 
     <div class="card-footer">
         <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-        <button type="button" id="c_add_good_btn" class="btn btn-success float-right">Опубликовать</button>
+        <button type="button" id="c_add_good_btn" class="btn btn-success float-right">Создать</button>
     </div>
 </form>
 </div>

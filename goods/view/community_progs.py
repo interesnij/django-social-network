@@ -199,8 +199,6 @@ class GoodCommunityCreate(TemplateView):
             good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
             images = request.POST.getlist('images')
-            good.creator = request.user
-            good.community_id = self.kwargs["pk"]
             if not good.price:
                 new_good.price = 0
             new_good = good.create_good(
@@ -209,7 +207,7 @@ class GoodCommunityCreate(TemplateView):
                                         images=images,
                                         albums=albums,
                                         sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
-                                        creator=self.user,
+                                        creator=request.user,
                                         community=self.community,
                                         description=good.description,
                                         price=good.price,
