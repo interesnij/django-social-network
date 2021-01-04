@@ -354,12 +354,6 @@ class Community(models.Model):
         except:
             return DocList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=DocList.MAIN, name="Основной список")
 
-    def get_all_good_albums(self):
-        from goods.models import GoodAlbum
-
-        albums_query = Q(community_id=self.id, is_deleted=False)
-        return GoodAlbum.objects.filter(albums_query).order_by("order")
-
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
 
