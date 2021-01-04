@@ -7,7 +7,7 @@
           <img src="/static/images/no_album_photo.png" class="big_img img-responsive" alt="">
           {% endif %}
           {% for image in object.get_images %}
-            <li><img src="{{ image.url }}" class="img-responsive" alt="img"></li>
+            <li><img src="{{ image.image.url }}" class="img-responsive" alt="img"></li>
           {% endfor %}
         </ol>
       </div>
