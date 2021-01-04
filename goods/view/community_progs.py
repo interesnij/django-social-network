@@ -192,6 +192,7 @@ class GoodCommunityCreate(TemplateView):
         context["form"] = GoodForm()
         context["sub_categories"] = GoodSubCategory.objects.only("id")
         context["categories"] = GoodCategory.objects.only("id")
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
