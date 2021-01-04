@@ -35,7 +35,7 @@
    <div class="form-group">
      <label>Список</label>
      <select name="album" multiple="" id="id_album" style="height:100%">
-       {% for object in user.get_all_good_albums %} 
+       {% for object in community.get_all_good_albums %} 
          <option value="{{ object.pk }}">{{ object.title }}</option>
        {% endfor %}
      </select>
