@@ -72,7 +72,7 @@ class Album(models.Model):
         return self.photo_album.filter(is_deleted=False,is_public=True)[:5]
 
     def get_staff_6_photos(self):
-        return self.photo_album.filter(is_deleted=False)[:5] 
+        return self.photo_album.filter(is_deleted=False)[:5]
 
     def count_photo(self):
         try:
@@ -96,7 +96,7 @@ class Album(models.Model):
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     album = models.ManyToManyField(Album, related_name="photo_album", blank=True)
-    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=1024, upscale=False)])
+    file = ProcessedImageField(format='JPEG', options={'quality': 100}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=1024, upscale=False)])
     preview = ProcessedImageField(format='JPEG', options={'quality': 60}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=102, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")

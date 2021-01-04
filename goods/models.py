@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from common.model.votes import GoodVotes, GoodCommentVotes
 from django.db.models import Q
-from goods.helpers import upload_to_good_directory
+from goods.helpers import upload_to_good_directory, upload_to_sub_good_directory
 
 
 class GoodCategory(models.Model):
@@ -114,7 +114,7 @@ class Good(models.Model):
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to=upload_to_good_directory)
+	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 	status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=2, verbose_name="Статус")
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
@@ -253,7 +253,7 @@ class Good(models.Model):
 
 class GoodImage(models.Model):
 	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
-	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 90}, processors=[ResizeToFit(512,512)],upload_to=upload_to_good_directory)
+	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(1000,1000)],upload_to=upload_to_sub_good_directory)
 
 
 class GoodComment(models.Model):

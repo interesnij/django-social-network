@@ -15,3 +15,17 @@ def _upload_to_user_directory(creator, filename):
 
     return '%(path)s%(new_filename)s' % {'path': path,
                                          'new_filename': new_filename, }
+
+
+def upload_to_sub_good_directory(good, filename):
+    return _upload_to_sub_directory(good=good, filename=filename)
+
+def _upload_to_sub_directory(good, filename):
+    extension = splitext(filename)[1].lower()
+    new_filename = str(uuid.uuid4()) + extension
+
+    path = '/goods/%(good_id)s/' % {
+        'good_id': str(good.id)}
+
+    return '%(path)s%(new_filename)s' % {'path': path,
+                                         'new_filename': new_filename, }
