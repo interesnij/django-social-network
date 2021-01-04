@@ -179,12 +179,22 @@ class GoodUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
+            images = request.POST.getlist('images')
             if not good.price:
                 good.price = 0
-            new_good = good.create_good(title=good.title,image=good.image,sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),creator=self.user,description=good.description,price=good.price,comments_enabled=good.comments_enabled,votes_on=good.votes_on,status="PG")
+            new_good = good.create_good(
+                                        title=good.title,
+                                        image=good.image,
+                                        images=images,
+                                        sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
+                                        creator=self.user,
+                                        description=good.description,
+                                        price=good.price,
+                                        albums=albums,
+                                        comments_enabled=good.comments_enabled,
+                                        votes_on=good.votes_on,
+                                        status="PG")
             get_good_processing(new_good)
-            for _album in albums:
-                _album.good_album.add(new_good)
             return render_for_platform(request, 'goods/good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")

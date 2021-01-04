@@ -162,7 +162,7 @@ on('#ajax', 'click', '#good_image', function() {
 });
 on('#ajax', 'click', '#good_image2', function() {
   img = this.previousElementSibling.querySelector("#id_image2")
-  get_image_priview(this, img);
+  get_image_priview(this, img); 
 });
 on('#ajax', 'click', '#good_image3', function() {
   img = this.previousElementSibling.querySelector("#id_image3")

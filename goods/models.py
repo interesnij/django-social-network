@@ -107,26 +107,21 @@ class Good(models.Model):
 		(STATUS_SOLD, 'Продан'),
 		(STATUS_PROCESSING, 'Обработка'),
 		)
-
+	id = models.BigAutoField(primary_key=True)
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
-	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-	id = models.BigAutoField(primary_key=True)
-	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True, verbose_name="Подборка")
-
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to=upload_to_good_directory)
-	image2 = ProcessedImageField(verbose_name='изображение 2', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(512, 512)],upload_to=upload_to_good_directory)
-	image3 = ProcessedImageField(verbose_name='изображение 3', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to=upload_to_good_directory)
-	image4 = ProcessedImageField(verbose_name='изображение 4', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to=upload_to_good_directory)
-	image5 = ProcessedImageField(verbose_name='изображение 5', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to=upload_to_good_directory)
 	status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=2, verbose_name="Статус")
 
+	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+
+	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True, verbose_name="Подборка")
 	post = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
 	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
 	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
@@ -142,10 +137,10 @@ class Good(models.Model):
 		return naturaltime(self.created)
 
 	@classmethod
-	def create_good(cls, image, title, sub_category, creator, description, \
+	def create_good(cls, title, image, albums, images, sub_category, creator, description, \
 					price, comments_enabled, votes_on, status):
-		good = Good.objects.create(title=title, sub_category=sub_category, image=image, creator=creator, description=description, \
-								status=status,price=price,comments_enabled=comments_enabled,votes_on=votes_on)
+		good = Good.objects.create(title=title, image=image, sub_category=sub_category, creator=creator, description=description, \
+								status=status, price=price, comments_enabled=comments_enabled, votes_on=votes_on,)
 		channel_layer = get_channel_layer()
 		payload = {
 			"type": "receive",
@@ -153,6 +148,12 @@ class Good(models.Model):
 			"actor_name": good.creator.get_full_name()
 			}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
+		if images:
+			for image in images:
+				GoodImage.objects.create(good=good, image=image)
+		if albums:
+			for album in albums:
+				album.good_album.add(good)
 		return good
 
 	class Meta:
@@ -246,6 +247,13 @@ class Good(models.Model):
 	def get_album_uuid(self):
 		return self.album.all()[0].uuid
 
+	def get_images(self):
+		return GoodImage.objects.filter(good_id=self.pk)
+
+
+class GoodImage(models.Model):
+	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 90}, processors=[ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 
 
 class GoodComment(models.Model):

@@ -181,7 +181,7 @@ class GoodCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
-
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
@@ -199,12 +199,25 @@ class GoodCommunityCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             new_good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
+            images = request.POST.getlist('images')
             new_good.creator = request.user
-            new.good.community_id = self.kwargs["pk"]
-            new_good = self.form.save()
+            new_good.community_id = self.kwargs["pk"]
+            if not new_good.price:
+                new_good.price = 0
+            new_good = good.create_good(
+                                        title=good.title,
+                                        image=good.image,
+                                        images=images,
+                                        albums=albums,
+                                        sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
+                                        creator=self.user,
+                                        community=self.community,
+                                        description=good.description,
+                                        price=good.price,
+                                        comments_enabled=good.comments_enabled,
+                                        votes_on=good.votes_on,
+                                        status="PG")
             get_good_processing(new_good)
-            for _album in albums:
-                _album.good_album.add(new_good)
             return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
