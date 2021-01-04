@@ -137,9 +137,9 @@ class Good(models.Model):
 		return naturaltime(self.created)
 
 	@classmethod
-	def create_good(cls, title, community, image, albums, images, sub_category, creator, description, \
+	def create_good(cls, title, image, albums, images, sub_category, creator, description, \
 					price, comments_enabled, votes_on, status):
-		good = Good.objects.create(title=title, image=image, community=community, sub_category=sub_category, creator=creator, description=description, \
+		good = Good.objects.create(title=title, image=image, sub_category=sub_category, creator=creator, description=description, \
 								status=status, price=price, comments_enabled=comments_enabled, votes_on=votes_on,)
 		channel_layer = get_channel_layer()
 		payload = {

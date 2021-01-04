@@ -208,7 +208,6 @@ class GoodCommunityCreate(TemplateView):
                                         albums=albums,
                                         sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
                                         creator=request.user,
-                                        community=Community.objects.get(pk=self.kwargs["pk"]),
                                         description=good.description,
                                         price=good.price,
                                         comments_enabled=good.comments_enabled,

@@ -191,7 +191,6 @@ class GoodUserCreate(TemplateView):
                                         description=good.description,
                                         price=good.price,
                                         albums=albums,
-                                        community_id=None,
                                         comments_enabled=good.comments_enabled,
                                         votes_on=good.votes_on,
                                         status="PG")
