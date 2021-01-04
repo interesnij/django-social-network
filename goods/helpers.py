@@ -17,7 +17,7 @@ def _upload_to_user_directory(creator, filename):
 
 
 def upload_to_sub_good_directory(good, filename):
-    creator = good.creator
+    creator = good.good.creator
     return _upload_to_sub_directory(creator=creator, filename=filename)
 
 def _upload_to_sub_directory(creator, filename):
