@@ -29,6 +29,13 @@
         <span>
           <span class="dropdown-item mob_u_good_hide">Товар виден</span>
         </span>
+        <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
+          <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
+        </span>
+        <span>
+          <span class="dropdown-item u_all_goods_likes pointer">Оценили</span>
+          <span class="dropdown-item u_all_goods_dislikes pointer">Не оценили</span>
+        </span>
       </div>
     </div>
     <div class="col" style="padding:5px;">
@@ -45,7 +52,7 @@
     {% endif %}
   </div>
 
-  <div class="card good_card mb-3">
+  <div class="card good_card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
       <div class="card-body py-0">
         {% include 'mobile/goods/good_base/gallery.html' %}
 
