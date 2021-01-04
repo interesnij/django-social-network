@@ -23,7 +23,7 @@ class CommunityGood(TemplateView):
         context = super(CommunityGood,self).get_context_data(**kwargs)
         context["object"] = self.good
         context["album"] = self.album
-        context["community"] = self.good.community
+        context["community"] = self.album.community
         context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return context
@@ -49,3 +49,17 @@ class GoodCommunityCommentList(ListView):
     def get_queryset(self):
         comments = self.good.get_comments()
         return comments
+
+
+class GoodCommunityDetail(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.good, self.c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_template_community_good(self.c, "goods/c_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(GoodCommunityDetail,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodCommunityDetail,self).get_context_data(**kwargs)
+        context["object"], context["community"] = self.good, self.c
+        return context

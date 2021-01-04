@@ -99,3 +99,17 @@ class GoodUserCommentList(ListView):
     def get_queryset(self):
         comments = self.good.get_comments()
         return comments
+
+
+class GoodUserDetail(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_permission_user_good(self.user, "goods/u_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(GoodUserDetail,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodUserDetail,self).get_context_data(**kwargs)
+        context["object"], context["user"] = self.good, self.user
+        return context
