@@ -1,6 +1,8 @@
 from django.contrib import admin
-from goods.models import Good, GoodAlbum, GoodSubCategory, GoodCategory
+from goods.models import *
 
+class GoodImagesInline(admin.TabularInline):
+    model = GoodImage
 
 class GoodCategoryAdmin(admin.ModelAdmin):
     list_display = ['name','order','image']
@@ -24,6 +26,9 @@ class GoodAlbumAdmin(admin.ModelAdmin):
 class GoodAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'description', 'sub_category']
     search_fields = ['name']
+    inlines = [
+        GoodImagesInline,
+    ]
     class Meta:
             model = Good
 
