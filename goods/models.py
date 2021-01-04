@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from pilkit.processors import ResizeToFill, ResizeToFit
+from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
