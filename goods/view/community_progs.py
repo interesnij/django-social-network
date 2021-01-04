@@ -198,12 +198,12 @@ class GoodCommunityCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
-            new_good = self.form.save(commit=False)
+            good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
             images = request.POST.getlist('images')
-            new_good.creator = request.user
-            new_good.community_id = self.kwargs["pk"]
-            if not new_good.price:
+            good.creator = request.user
+            good.community_id = self.kwargs["pk"]
+            if not good.price:
                 new_good.price = 0
             new_good = good.create_good(
                                         title=good.title,
