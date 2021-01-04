@@ -7,7 +7,9 @@
           <img src="/static/images/no_album_photo.png" class="big_img image_fit_50" alt="">
           {% endif %}
           {% for image in object.get_images %}
-            <li><img src="{{ image.image.url }}" class="image_fit_50" alt="img"></li>
+            <li>
+              <img src="{% if image.image %}{{ image.image.url }}{% else %}/static/images/no_album_photo.png{% endif %}" class="image_fit_50" alt="img">
+            </li>
           {% endfor %}
         </ol>
       </div>
