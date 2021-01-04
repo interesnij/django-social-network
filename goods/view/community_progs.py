@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from goods.models import Good, GoodComment, GoodAlbum
+from goods.models import *
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists
@@ -186,8 +186,6 @@ class GoodCommunityCreate(TemplateView):
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from goods.models import GoodSubCategory, GoodCategory
-
         context = super(GoodCommunityCreate,self).get_context_data(**kwargs)
         context["form"] = GoodForm()
         context["sub_categories"] = GoodSubCategory.objects.only("id")
