@@ -241,7 +241,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
       uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
       span1 = new_good.querySelector('.span1')
       if (span1.classList.contains(data_pk)){
-        container = document.body.querySelector(".profile_block_paginate");
+        container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', new_good.innerHTML);
         container.querySelector(".goods_empty") ? container.querySelector(".goods_empty").style.display = "none" : null;
         toast_info("Товар создан!")
