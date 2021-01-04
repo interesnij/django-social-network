@@ -18,13 +18,13 @@ class GoodSubCategoryAdmin(admin.ModelAdmin):
             model = GoodSubCategory
 
 class GoodAlbumAdmin(admin.ModelAdmin):
-    list_display = ['title', 'order',]
+    list_display = ['title', 'community', 'order',]
     search_fields = ['name']
     class Meta:
             model = GoodAlbum
 
 class GoodAdmin(admin.ModelAdmin):
-    list_display = ['title', 'price', 'description', 'sub_category']
+    list_display = ['title', 'price', 'sub_category']
     search_fields = ['name']
     inlines = [
         GoodImagesInline,
