@@ -78,7 +78,7 @@ class Community(models.Model):
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
-    have_link = models.CharField(max_length=17, unique=True, verbose_name='Ссылка')
+    have_link = models.CharField(max_length=17, verbose_name='Ссылка')
 
     post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
 
