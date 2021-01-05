@@ -226,7 +226,7 @@ class User(AbstractUser):
             if self.device == User.DESCTOP:
                 return '<i class="text-success">Онлайн</i> - комп'
             else:
-                return '<i class="text-success">Онлайн</i> - мобила'
+                return '<i class="text-success">Онлайн</i>&nbsp;<svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>'
         else:
             if self.is_women():
                 '<i>Была' + self.get_last_activity + '</i>'
