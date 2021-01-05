@@ -211,6 +211,8 @@ class Post(models.Model):
         return self.item_doc.filter(is_deleted=False)
     def get_attach_doc_list(self):
         return self.post_doclist.filter(is_deleted=False)
+    def get_attach_survey(self):
+        return self.post_survey.filter(is_deleted=False)
 
     def is_photo_list_attached(self):
         return self.post_album.filter(post__pk=self.pk, is_deleted=False).exists()
@@ -222,62 +224,6 @@ class Post(models.Model):
         return self.post_good_album.filter(post__pk=self.pk, is_deleted=False).exists()
     def is_doc_list_attached(self):
         return self.post_doclist.filter(post__pk=self.pk, is_deleted=False).exists()
-
-    def get_u_attach_items_desctop(self):
-        if self.is_photo_list_attached():
-            return "desctop/generic/attach/u_photo_list_attach.html"
-        elif self.is_playlist_attached():
-            return "desctop/generic/attach/u_playlist_attach.html"
-        elif self.is_video_list_attached():
-            return "desctop/generic/attach/u_video_list_attach.html"
-        elif self.is_good_list_attached():
-            return "desctop/generic/attach/u_good_list_attach.html"
-        elif self.is_doc_list_attached():
-            return "desctop/generic/attach/u_doc_list_attach.html"
-        else:
-            return "desctop/generic/attach/u_post_attach.html"
-
-    def get_c_attach_items_desctop(self):
-        if self.is_photo_list_attached():
-            return "desctop/generic/attach/c_photo_list_attach.html"
-        elif self.is_playlist_attached():
-            return "desctop/generic/attach/c_playlist_attach.html"
-        elif self.is_video_list_attached():
-            return "desctop/generic/attach/c_video_list_attach.html"
-        elif self.is_good_list_attached():
-            return "desctop/generic/attach/c_good_list_attach.html"
-        elif self.is_doc_list_attached():
-            return "desctop/generic/attach/c_doc_list_attach.html"
-        else:
-            return "desctop/generic/attach/c_post_attach.html"
-
-    def get_u_attach_items_mobile(self):
-	    if self.is_photo_list_attached():
-		    return "mobile/generic/attach/u_photo_list_attach.html"
-	    elif self.is_playlist_attached():
-		    return "mobile/generic/attach/u_playlist_attach.html"
-	    elif self.is_video_list_attached():
-		    return "mobile/generic/attach/u_video_list_attach.html"
-	    elif self.is_good_list_attached():
-		    return "mobile/generic/attach/u_good_list_attach.html"
-	    elif self.is_doc_list_attached():
-		    return "mobile/generic/attach/u_doc_list_attach.html"
-	    else:
-	        return "mobile/generic/attach/u_post_attach.html"
-
-    def get_c_attach_items_mobile(self):
-        if self.is_photo_list_attached():
-            return "mobile/generic/attach/c_photo_list_attach.html"
-        elif self.is_playlist_attached():
-            return "mobile/generic/attach/c_playlist_attach.html"
-        elif self.is_video_list_attached():
-            return "mobile/generic/attach/c_video_list_attach.html"
-        elif self.is_good_list_attached():
-            return "mobile/generic/attach/c_good_list_attach.html"
-        elif self.is_doc_list_attached():
-            return "mobile/generic/attach/c_doc_list_attach.html"
-        else:
-            return "mobile/generic/attach/c_post_attach.html"
 
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)

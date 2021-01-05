@@ -550,22 +550,22 @@ on('#ajax', 'click', '.doc_load_several', function() {
 });
 
 on('#ajax', 'click', '.music_attach_playlist', function() {
-  attach_list_for_post(this, "/music/get/playlist_preview/")
+  attach_item_for_post(this, "/music/get/playlist_preview/")
 });
 on('#ajax', 'click', '.photo_attach_album', function() {
-  attach_list_for_post(this, "/gallery/user_progs/get_album_preview/")
+  attach_item_for_post(this, "/gallery/user_progs/get_album_preview/")
 });
 on('#ajax', 'click', '.attach_video_album', function() {
-  attach_list_for_post(this, "/video/user_progs/get_album_preview/")
+  attach_item_for_post(this, "/video/user_progs/get_album_preview/")
 });
 on('#ajax', 'click', '.attach_doc_list', function() {
-  attach_list_for_post(this, "/docs/user_progs/list_preview/")
+  attach_item_for_post(this, "/docs/user_progs/list_preview/")
 });
 on('#ajax', 'click', '.attach_survey', function() {
   attach_item_for_post(this, "/survey/user_progs/preview/")
 });
 on('#ajax', 'click', '.attach_good_album', function() {
-  attach_list_for_post(this, "/goods/user_progs/get_album_preview/")
+  attach_item_for_post(this, "/goods/user_progs/get_album_preview/")
 });
 
 on('#ajax', 'click', '.music_attach_playlist_remove', function() {

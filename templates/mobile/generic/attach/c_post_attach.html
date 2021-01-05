@@ -1,10 +1,7 @@
- <!-- прикрепленные элементы к записям сообществ -->
 
-<div class="attach_container">
   {% for photo in object.get_attach_photos %}
     {% include 'mobile/generic/items/c_photo.html' %}
-  {% endfor %} 
-
+  {% endfor %}
   {% for album in object.get_attach_photo_list %}
     {% include 'mobile/generic/items/c_album.html' %}
   {% endfor %}
@@ -12,9 +9,15 @@
   {% for video in object.get_attach_videos %}
     {% include 'mobile/generic/items/c_video.html' %}
   {% endfor %}
+  {% for album in object.get_attach_video_list %}
+    {% include 'mobile/generic/items/c_video_list.html' %}
+  {% endfor %}
 
   {% for good in object.get_attach_goods %}
     {% include 'mobile/generic/items/c_good.html' %}
+  {% endfor %}
+  {% for album in object.get_attach_good_list %}
+    {% include 'mobile/generic/items/c_good_list.html' %}
   {% endfor %}
 
   {% for article in object.get_attach_articles %}
@@ -24,8 +27,17 @@
   {% for music in object.get_attach_tracks %}
     {% include 'mobile/generic/items/c_music.html' %}
   {% endfor %}
+  {% for playlist in object.get_attach_music_list %}
+    {% include 'mobile/generic/items/c_music_list.html' %}
+  {% endfor %}
 
   {% for doc in object.get_attach_docs %}
     {% include 'mobile/generic/items/c_doc.html' %}
   {% endfor %}
-</div>
+  {% for list in object.get_attach_doc_list %}
+    {% include 'mobile/generic/items/c_doc_list.html' %}
+  {% endfor %}
+
+  {% for survey in object.get_attach_survey %}
+    {% include 'mobile/generic/items/c_survey.html' %}
+  {% endfor %}
