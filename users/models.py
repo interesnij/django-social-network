@@ -230,9 +230,9 @@ class User(AbstractUser):
             return '<i>Онлайн</i>' + device
         else:
             if self.is_women():
-                return '<i>Была' + self.get_last_activity() + '</i>' + device
+                return '<i>Была ' + self.get_last_activity() + '</i>' + device
             else:
-                return '<i>Был' + self.get_last_activity() + '</i>' + device
+                return '<i>Был ' + self.get_last_activity() + '</i>' + device
 
 
     def get_request_ip(request):
