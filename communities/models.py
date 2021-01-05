@@ -262,7 +262,7 @@ class Community(models.Model):
     def get_post_lists(self):
         from posts.models import PostList
         lists_query = Q(community_id=self.id, is_deleted=False)
-        lists_query = add(Q(Q(type="LI")|Q(type="MA")), Q.AND)
+        lists_query.add(Q(Q(type="LI")|Q(type="MA")), Q.AND)
         return PostList.objects.filter(lists_query)
     def get_admin_all_post_lists(self):
         from posts.models import PostList
