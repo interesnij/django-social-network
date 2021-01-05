@@ -3,6 +3,18 @@
 {% block content %}
 
 <div class="container mt-3 user_notify_container">
+  <div class="card-header p-0">
+    <div class="row no-gutters">
+      <div style="flex: 0 0 15%;max-width:15%;padding:5px;">
+        <a class="btn btn-sm custom_color border ajax" href="{% url 'all_notify' %}" style="width: -webkit-fill-available;">
+          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+        </a>
+      </div>
+      <div style="flex: 0 0 85%;max-width:85%;padding:5px;">
+          Уведомления профиля
+      </div>
+    </div>
+  </div>
           {% if object_list %}
             <span class="is_post_paginate">
               {% for object in object_list %}
