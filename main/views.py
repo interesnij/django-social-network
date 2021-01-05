@@ -167,7 +167,7 @@ class SwitchView(TemplateView):
 					self.template_name = "communities/detail/anon_private_community.html"
 			self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, self.good_album = self.c.get_or_create_fix_list(), self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), self.c.get_or_create_doc_list(), self.c.get_or_create_good_album()
 
-		if MOBILE_AGENT_RE.match(user_agent):
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mobile/" + self.template_name
 		else:
 			self.template_name = "mobile/" + self.template_name

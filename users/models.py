@@ -36,7 +36,7 @@ class User(AbstractUser):
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
-    have_link = models.CharField(max_length=17, verbose_name='Ссылка')
+    have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
 
