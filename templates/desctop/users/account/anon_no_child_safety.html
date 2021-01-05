@@ -31,13 +31,8 @@
     </div>
     <div class="col-lg-8 col-md-7 col-sm-12 order-2">
         <div class="card mb-3" style="padding:10px">
-            <h3 class="mb-0">{{ user.get_full_name }}</h3>
-            {% if user.get_online %}
-              <i class="text-success">Онлайн</i>
-            {% else %}
-              <i>Был{% if user.is_women %}а{% endif %} {{ user.get_last_activity }}</i>
-            {% endif %}
-            <br><br>
+          <h1 class="mb-0 mt-1" style="font-size: 22px;">{{ user.get_full_name }}</h1>
+            {{ user.get_online_display|safe }}
         </div>
 
         <div class="card mb-3 centered">
