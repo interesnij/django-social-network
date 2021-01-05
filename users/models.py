@@ -9,17 +9,7 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    DELETED = 'DE'
-    BLOCKED = 'BL'
-    PHONE_NO_VERIFIED = 'PV'
-    CHILD = 'CH'
-    STANDART = 'ST'
-    VERIFIED_SEND = 'VS'
-    VERIFIED = 'VE'
-    IDENTIFIED_SEND = 'IS'
-    IDENTIFIED = 'ID'
-    MANAGER = 'MA'
-    SUPERMANAGER = 'SM'
+    DELETED, BLOCKED, PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = 'DE', 'BL', 'PV', 'CH', 'ST', 'VS', 'VE', 'IS', 'ID', 'MA', 'SM'
     PERM = (
         (DELETED, 'Удален'),
         (BLOCKED, 'Заблокирован'),
@@ -33,26 +23,22 @@ class User(AbstractUser):
         (MANAGER, 'Менеджер'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
-    MALE = 'Man'
-    FEMALE = 'Fem'
-    UNCNOUN = 'Unc'
-    GENDER = (
-        (MALE, 'Мужской'),
-        (FEMALE, 'Женский'),
-        (UNCNOUN, 'Неизвестно'),
-    )
+    MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
+    GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
+    DEVICE = ((DESCTOP, 'Комп'),(PHONE, 'Телефон'),)
 
     id = models.BigAutoField(primary_key=True)
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
     perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
+    device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_user_directory)
+    have_link = models.CharField(max_length=17, unique=True, verbose_name='Ссылка')
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    have_link = models.BooleanField(verbose_name="Есть своя ссылка", default=False)
 
     #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
 
@@ -67,15 +53,15 @@ class User(AbstractUser):
 
     def get_link(self):
         if self.have_link:
-            return ''.join([ "/", self.user_link.filter(user_id=self.pk)[0].link, "/"])
+            return "/" + self.have_link + "/"
         else:
-            return ''.join([ "/id", str(self.pk), "/"])
+            return "/id" + str(self.pk) + "/"
 
     def get_slug(self):
         if self.have_link:
-            return ''.join([ "@", self.user_link.filter(user_id=self.pk)[0].link])
+            return "@" + self.have_link
         else:
-            return ''.join([ "@id", str(self.pk)])
+            return "@id" + str(self.pk)
 
     def get_color_background(self):
         try:
@@ -231,6 +217,22 @@ class User(AbstractUser):
             return True
         else:
             return False
+    def get_online_display(self):
+        from datetime import datetime, timedelta
+
+        now = datetime.now()
+        onl = self.last_activity + timedelta(minutes=3)
+        if now < onl:
+            if self.device == User.DESCTOP:
+                return '<i class="text-success">Онлайн</i> - комп'
+            else:
+                return '<i class="text-success">Онлайн</i> - мобила'
+        else:
+            if self.is_women():
+                '<i>Была' + self.get_last_activity + '</i>'
+            else:
+                '<i>Был' + self.get_last_activity + '</i>'
+
 
     def get_request_ip(request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
