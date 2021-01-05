@@ -6,6 +6,7 @@ from common.template.user import get_detect_main_template
 from common.user_progs.timelines_post import get_timeline_posts
 from communities.models import Community
 from users.models import User
+from django.http import Http404
 
 
 class SignupView(TemplateView):
@@ -23,6 +24,23 @@ class SignupView(TemplateView):
 			else:
 				self.template_name = "mobile/main/auth/signup.html"
 		return super(SignupView,self).get(request,*args,**kwargs)
+
+
+class MainServicesView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+			if request.user.is_authenticated:
+				self.template_name = "mobile/main/services.html"
+			else:
+				raise Http404
+		else:
+			if request.user.is_authenticated:
+				self.template_name = "mobile/main/services.html"
+			else:
+				raise Http404
+		return super(MainServicesView,self).get(request,*args,**kwargs)
 
 
 class MainPhoneSend(TemplateView):
