@@ -566,7 +566,7 @@ class Post(models.Model):
     def get_u_attach(self):
         if not self.attach:
             return ''
-        for item in self.attach:
+        for item in self.attach.split(","):
             block = ''
             if item[:3] == "pho":
                 from gallery.models import Photo
