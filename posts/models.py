@@ -150,7 +150,7 @@ class Post(models.Model):
                                     is_signature=is_signature,
                                     votes_on=votes_on,
                                     status=status,
-                                    attach=attach.replace("[", "").replace("'", "").replace("]", ""),)
+                                    attach=attach.replace("[", " ").replace("'", "").replace("]", ""),)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
@@ -570,9 +570,9 @@ class Post(models.Model):
         for item in self.attach.split(","):
             if item[:3] == "pho":
                 from gallery.models import Photo
-                photo = Photo.objects.get(pk=item[3:], is_public=True)
+                photo = Photo.objects.get(pk=item[4:], is_public=True)
                 #block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-            block = ''.join([block, item[:3]])
+            block = ''.join([block, item[:4]])
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
