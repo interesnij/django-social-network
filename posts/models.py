@@ -150,7 +150,7 @@ class Post(models.Model):
                                     is_signature=is_signature,
                                     votes_on=votes_on,
                                     status=status,
-                                    attach=attach,)
+                                    attach=attach.replace("[", "").replace("'", "").replace("]", ""),)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
@@ -568,11 +568,11 @@ class Post(models.Model):
             return ''
         block = ''
         for item in self.attach.split(","):
-            #if item[:3] == "pho":
-            from gallery.models import Photo
-            #photo = Photo.objects.get(pk=int(item[3:]), is_public=True)
-            #block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', photo.pk, '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-            return item[:3]
+            if item[:3] == "pho":
+                from gallery.models import Photo
+                photo = Photo.objects.get(pk=int(item[3:]), is_public=True)
+                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', photo.pk, '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+        return ''.join(["<div class='attach_container'>", block, "</div>"]) 
 
 
     def get_created(self):
