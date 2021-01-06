@@ -563,15 +563,48 @@ class Post(models.Model):
         else:
             return "mobile/main/c_posts/parent_community.html"
 
-    def get_u_attach(self):
-        if not self.attach:
-            return ''
+    def get_u_attach(self, user):
         block = ''
         for item in self.attach.split(","):
             if item[:3] == "pho":
                 from gallery.models import Photo
                 photo = Photo.objects.get(pk=item[3:], is_public=True)
                 block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+            elif item[:3] == "vid":
+                from video.models import Video
+                video = Video.objects.get(pk=item[3:], is_public=True)
+                block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_post_video" data-pk="', video.creator.pk, '" video-pk="', video.pk, '" data-uuid="', object.uuid, '" video-counter="0"></div></div>'])
+            elif item[:3] == "mus":
+                from music.models import SoundcloudParsing
+                music = SoundcloudParsing.objects.get(pk=item[3:])
+                if music.artwork_url:
+                    figure = '<figure><a class="music_list_post music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.artwork_url, '" alt="img" /></a></figure>'
+                else:
+                    figure = '<figure><a class="music_list_post music_thumb pointer"><svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></a></figure>'
+                lists = ''
+                for list in user.get_all_audio_playlists():
+                    if list.is_track_in_list(music.pk):
+                        lists = ''.join([lists, '<span data-uuid="', list.uuid, '"><span class="dropdown-item u_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span>'])
+                    else:
+                        lists = ''.join([lists, '<span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">', list.name, '</span>'])
+                block = ''.join([block, '<div class="music" data-path="', music.uri, '" data-duration="', music.duration, '" style="flex-basis: 100%;position: relative;"><div class="media" music-counter="', forloop.counter0, '">', figure, '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6><span class="span_btn" style="margin-left:auto;display:flex" data-pk="', music.pk, '" user-pk="', object.creator.pk, '"><span class='dropdown' style="position: inherit;"><span class="btn_default pointer drop"><svg fill="currentColor" style="width:25px;height:25px;" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', lists, '<span class="dropdown-item u_create_music_list_track_add" style="padding-left: 30px;">В новый плейлист</span></div></span><span class="u_ucm_music_repost btn_default pointer"><svg class="svg_default" style="width:20px;height:20px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span></span></div></div></div>'
+            elif item[:3] == "goo":
+                from goods.models import Good
+                good = Good.objects.get(pk=item[3:])
+                if good.image:
+                    figure = '<figure class="background-img shadow-dark"><img class="image_fit opacity-100" src="', good.image.url, '" alt="img"></figure>'
+                else:
+                    figure = '<figure class="background-img shadow-dark"><svg class="image_fit svg_default opacity-100" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" /></svg>'
+                block = ''.join([block, '<div class="card has-background-img u_good_detail mb-3 pointer" good-pk="', good.pk, '" data-uuid="', good.get_album_uuid, '" style="flex-basis: 100%;">', figure, '<div class="card-header"><div class="media"><div class="media-body"><h4 class="text-white mb-0">', good.title, '</h4></div></div></div><div class="card-body spantshirt"></div><div class="card-footer"><p class="small mb-1 text-success">', good.price, ' ₽</p></div></div>'
+            elif item[:3] == "art":
+                from article.models import Article
+                article = Article.objects.get(pk=item[3:])
+                if article.g_image:
+                    figure = '<div class="align-items-center"><img class="image_fit" src="', article.g_image.url, '" alt="img"></div>'
+                else:
+                    figure = '<div class="align-items-center"><img class="image_fit" src="/static/images/no-image.jpg" alt="img" /></div>'
+                block = ''.join([block, '<div class="article" data-uuid="', article.uuid, '"><span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>', article.title, '</span><div class="text-center u_article_detail pointer">', figure, '</div></div>'])
+            #elif item[:3] == "doc":
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
