@@ -150,7 +150,7 @@ class Post(models.Model):
                                     is_signature=is_signature,
                                     votes_on=votes_on,
                                     status=status,
-                                    attach=attach.replace("[", "").replace("'", "").replace("]", "").replace(" ", ""),)
+                                    attach=str(attach.replace("[", "").replace("'", "").replace("]", "").replace(" ", "")),)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
