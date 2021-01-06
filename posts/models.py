@@ -589,7 +589,12 @@ class Post(models.Model):
                     else:
                         lists = ''.join([lists, '<span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">', list.name, '</span>'])
                 block = ''.join([block, \
-                '<div class="music" data-path="'])
+                '<div class="music" data-path="', \
+                music.uri, '" data-duration="', \
+                music.duration, '" style="flex-basis: 100%;position: relative;"><div class="media" music-counter="0">', \
+                figure, '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', \
+                music.title, '</a></h6><span class="span_btn" style="margin-left:auto;display:flex" data-pk="', \
+                str(music.pk), '" user-pk="', str(self.creator.pk)])
             elif item[:3] == "goo":
                 from goods.models import Good
                 good = Good.objects.get(pk=item[3:])
