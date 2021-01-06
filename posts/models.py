@@ -592,7 +592,7 @@ class Post(models.Model):
                 '<div class="music" data-path="', \
                 music.uri, '" data-duration="', \
                 music.duration, '" style="flex-basis: 100%;position: relative;"><div class="media" music-counter="0">', \
-                
+                 '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', \
                 music.title, '</a></h6><span class="span_btn" style="margin-left:auto;display:flex" data-pk="', \
                 str(music.pk), '" user-pk="', str(self.creator.pk), \
                 '"><span class="dropdown" style="position: inherit;"><span class="btn_default pointer drop"><svg fill="currentColor" \
