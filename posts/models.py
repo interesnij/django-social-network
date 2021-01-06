@@ -567,12 +567,13 @@ class Post(models.Model):
         if not self.attach:
             return ''
         block = ''
+        query = self.attach
         for item in self.attach:
             if item[:3] == "pho":
                 from gallery.models import Photo
                 photo = Photo.objects.get(pk=item[3:], is_public=True)
                 block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', photo.pk, '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-                return item[:3]
+                return item
         #return ''.join(['<div class="">', block, '</div>'])
 
 
