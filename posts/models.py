@@ -590,11 +590,8 @@ class Post(models.Model):
                         lists = ''.join([lists, '<span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">', list.name, '</span>'])
                 block = ''.join([block, \
                 '<div class="music" data-path="', \
-                music.uri, '" data-duration="', \
-                music.duration, '" style="flex-basis: 100%;position: relative;"><div class="media" music-counter="0">', \
-                figure, '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', \
-                music.title, '</a></h6><span class="span_btn" style="margin-left:auto;display:flex" data-pk="', \
                 
+                str(music.pk), '" user-pk="', str(self.creator.pk), \
                 '"><span class="dropdown" style="position: inherit;"><span class="btn_default pointer drop"><svg fill="currentColor" \
                 style="width:25px;height:25px;" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>\
                 <path d="M0 0h24v24H0z" fill="none"/></svg></span><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', \
