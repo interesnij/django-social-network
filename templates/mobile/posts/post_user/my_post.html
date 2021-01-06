@@ -6,8 +6,8 @@
   </div>
 
   <span class="post_attach_panel">
-    {{ object.get_u_attach|safe }}
-    {{ object.attach }}
+    {{ object.get_u_attach|safe }} 
+    | {{ object.attach }}
   </span>
 
     {% if object.parent %}
