@@ -111,7 +111,7 @@ class UserDocCreate(View):
         form_post, user = DocForm(request.POST, request.FILES), User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == user:
-            list, new_doc = DocList.objects.get(creator_id=user.pk, community__isnull=Truee, type=DocList.MAIN), form_post.save(commit=False)
+            list, new_doc = DocList.objects.get(creator_id=user.pk, community__isnull=True, type=DocList.MAIN), form_post.save(commit=False)
             new_doc.creator_id = request.user.pk
             lists = form_post.cleaned_data.get("list")
             new_doc.save()
