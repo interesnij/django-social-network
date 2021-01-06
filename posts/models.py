@@ -573,7 +573,7 @@ class Post(models.Model):
             #photo = Photo.objects.get(pk=int(item[3:]), is_public=True)
             #block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', photo.pk, '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             block = block + item[:3]
-        return ''.join(['<div class="">', block, '</div>'])
+        return block
 
 
     def get_created(self):
