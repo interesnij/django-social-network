@@ -570,8 +570,9 @@ class Post(models.Model):
         for item in self.attach.split(","):
             if item[:3] == "pho":
                 from gallery.models import Photo
-                photo = Photo.objects.get(pk=int(item[3:]), is_public=True)
-                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                photo = Photo.objects.get(pk=item[3:], is_public=True)
+                #block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                block = ''.join([block, item[:3]])
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
