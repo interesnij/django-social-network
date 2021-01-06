@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, lists = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists")
+        form_post, user, lists, attach = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), request.POST.getlist('attach_items')
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -19,10 +19,10 @@ class PostUserCreate(View):
                 from common.processing.post import get_post_processing
                 from common.attach.post_attach import post_attach
 
-                new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 post_attach(request.POST.getlist('attach_items'), new_post)
-                get_post_processing(new_post)
-                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post, 'attach_items': request.POST.getlist('attach_items')})
+                #get_post_processing(new_post)
+                return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:

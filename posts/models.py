@@ -98,7 +98,9 @@ class PostCategory(models.Model):
 
 class Post(models.Model):
     STATUS_DRAFT, STATUS_PROCESSING, STATUS_MESSAGE_PUBLISHED, STATUS_PUBLISHED = 'D', 'PG', 'MP', 'P'
-    PHOTO_REPOST, PHOTO_ALBUM_REPOST, GOOD_REPOST, GOOD_LIST_REPOST, MUSIC_REPOST, MUSIC_LIST_REPOST, DOC_REPOST, DOC_LIST_REPOST, VIDEO_REPOST, VIDEO_LIST_REPOST, USER_REPOST, COMMUNITY_REPOST = 'PR', 'PAR', 'GR', 'GLR', 'MR', 'MLR', 'DR', 'DLR', 'VR', 'VLR', 'UR', 'CR'
+    PHOTO_REPOST, PHOTO_ALBUM_REPOST, GOOD_REPOST, GOOD_LIST_REPOST, MUSIC_REPOST, MUSIC_LIST_REPOST, DOC_REPOST, \
+    DOC_LIST_REPOST, VIDEO_REPOST, VIDEO_LIST_REPOST, USER_REPOST, COMMUNITY_REPOST = 'PR', 'PAR', 'GR', 'GLR', 'MR', 'MLR', 'DR', \
+    'DLR', 'VR', 'VLR', 'UR', 'CR'
     STATUSES = (
         (STATUS_DRAFT,'Черновик'),(STATUS_PROCESSING,'Обработка'),(STATUS_PUBLISHED,'Опубликована'),(STATUS_MESSAGE_PUBLISHED,'Репост в сообщения'),
         (PHOTO_REPOST, 'Репост фотографии'), (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
@@ -125,6 +127,7 @@ class Post(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     id = models.BigAutoField(primary_key=True)
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
+    attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:
         verbose_name = "Запись"
@@ -135,7 +138,7 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     @classmethod
-    def create_post(cls, creator, text, category, lists, community, parent, comments_enabled, is_signature, votes_on, status):
+    def create_post(cls, creator, text, category, lists, attach, community, parent, comments_enabled, is_signature, votes_on, status):
         if not lists:
             raise ValidationError("Не выбран список для новой записи")
         post = Post.objects.create(creator=creator,
@@ -146,7 +149,8 @@ class Post(models.Model):
                                     comments_enabled=comments_enabled,
                                     is_signature=is_signature,
                                     votes_on=votes_on,
-                                    status=status, )
+                                    status=status,
+                                    attach=attach,)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
