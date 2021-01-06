@@ -8,7 +8,7 @@
   </div>
 
   <span class="post_attach_panel">
-    {% include object.get_u_attach_items_mobile %}
+    {{ object.get_u_attach|safe }}
   </span>
 
     {% if object.parent %}

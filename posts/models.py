@@ -170,65 +170,6 @@ class Post(models.Model):
         post = cls.objects.create(creator=creator, community=community, status=status, )
         return post
 
-    def get_parent_attach_photos(self):
-        return self.parent.item_photo.all()
-    def get_parent_attach_photo_list(self):
-        return self.parent.post_album.all()
-    def get_parent_attach_videos(self):
-        return self.parent.item_video.all()
-    def get_parent_attach_video_list(self):
-        return self.parent.post_video_album.all()
-    def get_parent_attach_goods(self):
-        return self.parent.item_good.all()
-    def get_parent_attach_good_list(self):
-        return self.parent.post_good_album.all()
-    def get_parent_attach_articles(self):
-        return self.parent.attached_item.all()
-    def get_parent_attach_tracks(self):
-        return self.parent.item_music.all()
-    def get_parent_attach_music_list(self):
-        return self.parent.post_soundlist.all()
-    def get_parent_attach_docs(self):
-        return self.parent.item_doc.all()
-    def get_parent_attach_doc_list(self):
-        return self.parent.post_doclist.all()
-
-    def get_attach_photos(self):
-        return self.item_photo.filter(is_deleted=False)
-    def get_attach_photo_list(self):
-        return self.post_album.filter(is_deleted=False)
-    def get_attach_videos(self):
-        return self.item_video.filter(is_deleted=False)
-    def get_attach_video_list(self):
-        return self.post_video_album.filter(is_deleted=False)
-    def get_attach_goods(self):
-        return self.item_good.filter(is_deleted=False)
-    def get_attach_good_list(self):
-        return self.post_good_album.filter(is_deleted=False)
-    def get_attach_articles(self):
-        return self.attached_item.filter(is_deleted=False)
-    def get_attach_tracks(self):
-        return self.item_music.filter(is_deleted=False)
-    def get_attach_music_list(self):
-        return self.post_soundlist.filter(is_deleted=False)
-    def get_attach_docs(self):
-        return self.item_doc.filter(is_deleted=False)
-    def get_attach_doc_list(self):
-        return self.post_doclist.filter(is_deleted=False)
-    def get_attach_survey(self):
-        return self.post_survey.filter(is_deleted=False)
-
-    def is_photo_list_attached(self):
-        return self.post_album.filter(post__pk=self.pk, is_deleted=False).exists()
-    def is_playlist_attached(self):
-        return self.post_soundlist.filter(post__pk=self.pk, is_deleted=False).exists()
-    def is_video_list_attached(self):
-        return self.post_video_album.filter(post__pk=self.pk, is_deleted=False).exists()
-    def is_good_list_attached(self):
-        return self.post_good_album.filter(post__pk=self.pk, is_deleted=False).exists()
-    def is_doc_list_attached(self):
-        return self.post_doclist.filter(post__pk=self.pk, is_deleted=False).exists()
-
     def is_photo_repost(self):
         return try_except(self.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
@@ -621,6 +562,17 @@ class Post(models.Model):
             return "mobile/main/c_posts/community_repost.html"
         else:
             return "mobile/main/c_posts/parent_community.html"
+
+    def get_u_attach(self):
+        if not self.attach:
+            return
+        for item in self.attach:
+            block = ''
+            if item[:3] == "pho":
+                from gallery.models import Photo
+                photo = Photo.objects.get(pk=item[3:], is_public=True)
+                block = ''.join(['<div class="photo"><div class="progressive replace image_fit u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', photo.pk, '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+        return block
 
 
     def get_created(self):

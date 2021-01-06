@@ -6,7 +6,7 @@
       </div>
 
       <span class="post_attach_panel">
-        {% include 'mobile/generic/attach/u_post_attach.html' %}
+        {{ object.get_u_attach|safe }}
       </span>
 
     {% if object.parent %}

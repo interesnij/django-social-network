@@ -9,8 +9,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.attach.post_attach import post_attach
-from common.processing.post import get_post_processing, repost_message_send, repost_community_send
+from common.processing.post import repost_message_send, repost_community_send, get_post_processing
 from common.template.user import get_detect_platform_template
 
 
@@ -94,15 +93,14 @@ class UUDocRepost(View):
     создание репоста документа пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        doc, user, form_post = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
+        doc, user, form_post, attach = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=user, community=None, status=Post.DOC_REPOST)
             doc.item.add(parent)
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status=Post.STATUS_PROCESSING)
-            post_attach(request.POST.getlist('attach_items'), new_post)
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status=Post.STATUS_PROCESSING)
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -113,14 +111,13 @@ class CUDocRepost(View):
     создание репоста документа сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        doc, community, form_post = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
+        doc, community, form_post, attach = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=request.user, community=community, status=Post.DOC_REPOST)
             doc.item.add(parent)
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            post_attach(request.POST.getlist('attach_items'), new_post)
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse("")
         else:
@@ -178,15 +175,14 @@ class UUDocListRepost(View):
     создание репоста списка документов пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, user, form_post = DocList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
+        list, user, form_post, attach = DocList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, status=Post.DOC_LIST_REPOST)
             list.post.add(parent)
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            post_attach(request.POST.getlist('attach_items'), new_post)
+            new_post = post.create_post(creator=request.user, is_signature=False, attach=attach, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse()
         else:
@@ -197,14 +193,13 @@ class CUDocListRepost(View):
     создание репоста списка документов сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, community, form_post = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST)
+        list, community, form_post, attach = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=community, status=Post.DOC_LIST_REPOST)
             list.post.add(parent)
-            new_post = post.create_post(creator=request.user, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            post_attach(request.POST.getlist('attach_items'), new_post)
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse("")
         else:

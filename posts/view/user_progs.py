@@ -17,11 +17,9 @@ class PostUserCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
                 from common.processing.post import get_post_processing
-                from common.attach.post_attach import post_attach
 
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                post_attach(request.POST.getlist('attach_items'), new_post)
-                #get_post_processing(new_post)
+                get_post_processing(new_post)
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
