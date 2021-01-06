@@ -565,9 +565,9 @@ class Post(models.Model):
 
     def get_u_attach(self):
         if not self.attach:
-            return 'a'
+            return ''
+        block = ''
         for item in self.attach.split(","):
-            block = 'aa'
             if item[:3] == "pho":
                 from gallery.models import Photo
                 photo = Photo.objects.get(pk=item[3:], is_public=True)
