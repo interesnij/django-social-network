@@ -532,7 +532,7 @@ ul{
 }
 
 .attach_container{
-  display: flex; flex-wrap: wrap; padding-left: 7px;
+  display: flex; flex-wrap: wrap; padding-left: 7px; padding-right: 7px;
 }
 .attach_container div:nth-child(1),
 .attach_container div:nth-child(2),
