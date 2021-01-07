@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from common.parsing_soundcloud.add_playlist import add_playlist
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
+from common.check.user import check_user_can_get_list
 
 
 class UserSoundcloudSetPlaylistWindow(TemplateView):
@@ -59,6 +60,26 @@ class UserSoundcloudSet(View):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             add_playlist(request.POST.get('permalink'), request.user, list)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class UserPlaylistAdd(View):
+    def post(self,request,*args,**kwargs):
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
+            list.users.add(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class UserPlaylistRemove(View):
+    def post(self,request,*args,**kwargs):
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
+            list.users.remove(request.user)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

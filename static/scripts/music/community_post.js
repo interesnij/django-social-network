@@ -89,6 +89,39 @@ on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
     ajax_link.send(form_data);
 });
 
+on('#ajax', 'click', '.c_add_music_list', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/music/community_progs/add_list/" + pk + "/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("c_remove_music_list");
+      _this.classList.remove("c_add_music_list")
+      block.innerHTML = '<svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
+  }};
+  link.send( null );
+});
+on('#ajax', 'click', '.c_remove_music_list', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/music/community_progs/remove_list/" + pk + "/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("c_add_music_list");
+      _this.classList.remove("c_remove_music_list")
+      _this.innerHTML = '<svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  }};
+  link.send( null );
+});
+
 on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
   this.disabled = true;
   form = document.body.querySelector("#c_soundcloud_set_form");

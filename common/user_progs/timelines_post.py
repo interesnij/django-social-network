@@ -8,10 +8,9 @@ from music.models import SoundList
 
 def get_timeline_posts(user):
     """ лента записей, которые публикуются друзьями, источниками подписки, сообществами пользователя """
-    select_related = ('creator', 'community') 
+    select_related = ('creator', 'community')
     only = ('creator__id', 'community__id', 'created')
-    prefetch_related = ('post_album', 'item_photo', 'post_doclist', 'item_doc', 'attached_item', 'post_good_album', 'item_good', 'post_soundlist', 'item_music', 'item_video', 'post_video_album')
-    my_posts = user.post_creator.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(creator_id=user.pk, community__isnull=True, is_deleted=False, status="P")
+    my_posts = user.post_creator.select_related(*select_related).only(*only).filter(creator_id=user.pk, community__isnull=True, is_deleted=False, status="P")
 
     _community_posts = Q(community__memberships__user__id=user.pk, is_deleted=False, status="P")
     _community_posts.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk) |Q(list__type="DE") |Q(list__type="PR")), Q.AND)

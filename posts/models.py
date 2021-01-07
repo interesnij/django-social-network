@@ -653,6 +653,19 @@ class Post(models.Model):
                 from music.models import SoundList
                 playlist = SoundList.objects.get(pk=item[3:])
                 creator = playlist.creator
+                if playlist.image:
+                    image = '<img src="' + playlist.image.url + '" style="width:120px;height:120px;" alt="image">'
+                else:
+                    image = '<svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
+                repost_svg, add_svg = '', ''
+                if user.is_authenticated:
+                    if playlist.is_not_empty():
+                        repost_svg = '<span title="Поделиться" class="u_ucm_music_list_repost btn_default pointer" style="margin-top: 14px;width:25px"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>'
+                    if playlist.is_user_can_add_list(creator.pk):
+                        add_svg = '<a class="btn btn-sm custom_color border u_add_music_list"><svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a>'
+                    else:
+                        add_svg = '<a class="btn btn-sm custom_color border u_remove_music_list"><svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></a>'
+                block = ''.join([block, '<div style="width: 100%;" class="card" data-pk="', creator.pk, '" data-uuid="', playlist.uuid, '"><div class="card-body" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="', creator.get_link(), '"></a><br>Треков: ', playlist.count_tracks(), '</p></div>', add_svg, repost_svg, '</div></div></div>'])
 
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 

@@ -101,8 +101,18 @@ class SoundList(models.Model):
             return True
         else:
             return False
+    def is_user_can_delete_list(self, user_id):
+        if self.creator.pk != user_id and user_id in self.get_users_ids():
+            return True
+        else:
+            return False
     def is_community_can_add_list(self, community_id):
         if self.community.pk != community_id and community_id not in self.get_communities_ids():
+            return True
+        else:
+            return False
+    def is_community_can_delete_list(self, community_id):
+        if self.community.pk != community_id and community_id in self.get_communities_ids():
             return True
         else:
             return False

@@ -59,6 +59,28 @@ class CommunitySoundcloudSet(View):
         else:
             return HttpResponseBadRequest()
 
+class CommunityPlaylistAdd(View):
+    def post(self,request,*args,**kwargs):
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_community_can_add_list(community.pk):
+            list.communities.add(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CommunityPlaylistRemove(View):
+    def post(self,request,*args,**kwargs):
+        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
+            list.communities.remove(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
 
 class CommunityTrackAdd(View):
     """

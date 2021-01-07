@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPlaylistEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPlaylistDelete.as_view()),
     url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPlaylistAbortDelete.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPlaylistAdd.as_view()),
+    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPlaylistREmove.as_view()),
 
     url(r'^c_add_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackAdd.as_view())),
     url(r'^c_remove_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackRemove.as_view())),
