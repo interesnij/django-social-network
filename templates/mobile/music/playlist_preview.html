@@ -5,7 +5,7 @@
         <figure>
           <a>
             {% if playlist.image %}
-              <img src="{{ playlist.image }}" style="width:120px;height:120px;" alt="image">
+              <img src="{{ playlist.image.url }}" style="width:120px;height:120px;" alt="image">
             {% else %}
               <svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
             {% endif %}
@@ -29,30 +29,3 @@
       </div>
     </div>
   </div>
-<div class="card">
-    <div class="card-body" style="padding-left: 7px;padding-right: 7px;">
-          <ul data-pk="{{ playlist.pk }}" style="margin-bottom: 0">
-            {% for music in playlist.playlist_30 %}
-            <div class="music" data-path="{{ music.uri }}" data-duration="{{ music.duration }}" style="flex-basis: 100%;position: relative;">
-                <div class="media" music-counter="{{ forloop.counter0 }}">
-                    <figure>
-                      <a class="music_list_post music_thumb pointer">
-                        {% if music.artwork_url %}
-                          <img style="width:30px;heigth:auto" src="{{ music.artwork_url }}" alt="img" />
-                        {% else %}
-                          <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-                        {% endif %}
-                      </a>
-                    </figure>
-                    <div class="media-body" style="display: flex;">
-                        <h6 class="music_list_post music_title">
-                          <a>{{ music.title }}</a>
-                        </h6>
-                    </div>
-                </div>
-              </div>
-
-            {% endfor %}
-          </ul>
-    </div>
-</div>
