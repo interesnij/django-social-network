@@ -72,8 +72,8 @@ class SoundList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     image = models.CharField(max_length=255, blank=True, null=True)
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_soundlist')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_soundlist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -88,6 +88,14 @@ class SoundList(models.Model):
         queryset = self.players.filter(is_deleted=False)
         return queryset
 
+    def get_users_ids(self):
+        users = self.user_soundlist.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.community_soundlist.exclude(perm="DE").exclude(perm="BL")
+        return [i['pk'] for i in communities]
+
     def playlist_30(self):
         queryset = self.players.only("pk")[:30]
         return queryset
@@ -95,7 +103,7 @@ class SoundList(models.Model):
         queryset = self.players.only("pk")[:6]
         return queryset
 
-    def count_tracks(self): 
+    def count_tracks(self):
         return self.players.filter(is_deleted=False).values("pk").count()
 
     def is_main_list(self):
