@@ -13,10 +13,7 @@ def add_playlist(url, request_user, list):
 
     if data:
         try:
-            playlist_url = data['artwork_url']
-            img_response = requests.get(url=playlist_url)
-            list.image = img_response.replace("large.jpg", "crop.jpg")
-            list.save(update_fields=["image"])
+            list.get_remote_image(data["artwork_url"])
         except:
             pass
         for track in data['tracks']:

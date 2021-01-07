@@ -6,7 +6,9 @@ from django.utils import timezone
 from communities.models import Community
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-from gallery.helpers import upload_to_photo_directory
+from users.helpers import upload_to_user_directory
+from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
+from imagekit.models import ProcessedImageField
 
 
 class SoundGenres(models.Model):
@@ -70,7 +72,7 @@ class SoundList(models.Model):
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    image = models.CharField(max_length=255, blank=True, null=True)
+    image = ProcessedImageField(format='JPEG', options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
 
     users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
@@ -116,6 +118,18 @@ class SoundList(models.Model):
             return True
         else:
             return False
+
+    def get_remote_image(self, image_url):
+        import os
+        from django.core.files import File
+        from urllib import request
+
+        result = request.urlretrieve(image_url)
+        self.image.save(
+            os.path.basename(image_url),
+            File(open(result[0], 'rb'))
+        )
+        self.save()
 
     def playlist_30(self):
         queryset = self.players.only("pk")[:30]
