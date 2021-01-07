@@ -6,7 +6,10 @@
       </div>
 
       <span class="post_attach_panel">
-        {{ object.get_u_attach|safe }}
+        {% if object.attach %}
+        {% load post %}
+        {{ object|get_user_attach:request.user|safe }}
+        {% endif %}
       </span>
 
     {% if object.parent %}

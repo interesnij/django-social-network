@@ -5,8 +5,10 @@
     {{ object.text|linebreaks }}
   </div>
 
+  {% if object.attach %}
   {% load post %}
   {{ object|get_user_attach:request.user|safe }}
+  {% endif %}
 
     {% if object.parent %}
       {% include 'mobile/posts/post_user/repost.html' %}
