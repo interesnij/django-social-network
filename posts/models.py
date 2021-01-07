@@ -39,8 +39,7 @@ class PostList(models.Model):
     def get_posts(self):
         select_related = ('creator', 'community')
         only = ('creator__id', 'community__id', 'created')
-        prefetch_related = ('post_album', 'item_photo', 'post_doclist', 'item_doc', 'attached_item', 'post_good_album', 'item_good', 'post_soundlist', 'item_music', 'item_video', 'post_video_album')
-        posts = self.post_list.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
+        posts = self.post_list.select_related(*select_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
         return posts
 
     def list_30(self):
@@ -650,6 +649,11 @@ class Post(models.Model):
                 for answer in survey.get_answers():
                     answers = ''.join(['<div class="custom_color', _class, '" style="display:flex"><span class="progress_span_r">', answer.text, '</span><span class="progress_span_l" style="margin-left: auto;">', str(answer.get_count()), '</span></div><span class="progress_line2 mb-3" style="width:', str(answer.get_procent()), '%"></span>'])
                 block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><p class="underline">', str(survey.creator), '</p>', time, '<br>', answers, voters, '</span></div></div>'])
+            elif item[:3] == "lmu":
+                from music.models import SoundList
+                playlist = SoundList.objects.get(pk=item[3:])
+                creator = playlist.creator
+
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
