@@ -1,5 +1,5 @@
 <div class="card load_pag mb-3 {% if forloop.last %}load_last{% endif %}" style="flex: 0 0 100%;">
-  <input type="hidden" name="survey" value="{{ object.pk }}">
+  <input type="hidden" name="attach_items" value="sur{{ object.pk }}">  
   <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
       <figure class="background-img">
         {% if object.image %}
