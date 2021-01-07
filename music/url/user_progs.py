@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistDelete.as_view()),
     url(r'^abort_delete_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistAbortDelete.as_view()),
     url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistAdd.as_view()),
-    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistREmove.as_view()),
+    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistRemove.as_view()),
 
     url(r'^u_add_track/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackAdd.as_view())),
     url(r'^u_remove_track/(?P<uuid>[0-9a-f-]+)/$', login_required(UserTrackRemove.as_view())),
