@@ -14,6 +14,13 @@ on('#ajax', 'click', '.c_ucm_music_list_repost', function() {
   open_fullscreen("/music/repost/c_ucm_list_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
+on('#ajax', 'click', '.c_load_music_list', function() {
+  parent = this.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/community/load/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.c_soundcloud_set_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");

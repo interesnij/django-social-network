@@ -1139,9 +1139,9 @@ class User(AbstractUser):
     def get_or_create_playlist(self):
         from music.models import SoundList
         try:
-            return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
+            return SoundList.objects.get(creator_id=self.pk, community=None, type=SoundList.MAIN)
         except:
-            return SoundList.objects.create(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN, name="Основной плейлист")
+            return SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
         try:

@@ -21,6 +21,13 @@ on('#ajax', 'click', '.u_music_list_edit_window', function() {
   open_fullscreen("/music/user_progs/edit_list_window/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.u_load_music_list', function() {
+  parent = this.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/user/load/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_ucm_music_repost', function() {
   parent = this.parentElement;
   track_pk = parent.getAttribute("data-pk");
