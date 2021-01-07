@@ -616,6 +616,34 @@ class Post(models.Model):
                     else:
                         lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_add_doc_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
                 block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media border-left" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body" style="padding: 0"><h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span><span class="span_btn" doc-pk="', str(doc.pk), '" data-pk="', str(self.creator.pk), '"><span class="dropdown" style="position: inherit;"><span class="btn_default pointer drop" title="Добавить в плейлист"><svg fill="currentColor" style="width:25px;height:25px;" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><div class="dropdown-menu dropdown-menu-right" style="top: 32px;">', lists, '<span class="dropdown-item u_create_doc_list_doc_add" style="padding-left: 30px;">В новый список</span></div></span><span class="u_ucm_doc_repost btn_default pointer" title="Поделиться"><svg class="svg_default" style="width:20px;height:20px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span></span></div></div></div>'])
+            elif item[:3] == "sur":
+                from survey.models import Survey
+                survey = Survey.objects.get(pk=item[3:])
+                if survey.is_time_end():
+                    time = "<p class='text-secondary'>Время голосования вышло</p>"
+                    _class = ""
+                else:
+                    time = "<p class='text-secondary'>До " + survey.time_end + "</p>"
+                    if not survey.is_user_voted(user.pk):
+                        _class = "pointer u_survey_vote"
+                if survey.image:
+                    image = '<img src="' + object.image.url + '" alt="user image">'
+                else:
+                    image = ""
+                if survey.is_have_votes:
+                    voters = '<span class="u_survey_detail">'
+                    for user in survey.get_6_users():
+                        if user.s_avatar:
+                            img = '<img src="' + object.s_avatar.url + '" style="border-radius:30px;" alt="image">'
+                        else:
+                            img = '<img src="/static/images/no_img/user.jpg" style="border-radius:30px;" alt="image">'
+                        voters += '<figure style="width:30px;border-radius:30px;" class="avatar-30 staked">' + img + '</figure>'
+                else:
+                    voters = 'Пока никто не голосовал. Станьте первым!'
+                answers = ''
+                for answer in object.get_answers():
+                    answers += '<div class="custom_color' + _class +'" style="display:flex"><span class="progress_span_r">' + answer.text + '</span><span class="progress_span_l" style="margin-left: auto;">' + answer.get_count + '</span></div><span class="progress_line2 mb-3" style="width:' + answer.get_procent '%"></span>'
+                block = ''.join([block, '<div class="card load_pag mb-3" style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk) '"><div class="mb-3 border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail">', survey.title, '</h4><p class="text-secondary underline">', survey.creator, '</p>', time, '<br>', answers, voters, '</span></div></div></div>'})
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 

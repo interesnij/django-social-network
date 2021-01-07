@@ -15,13 +15,13 @@ on('#ajax', 'click', '.u_doc_create_window', function(e) {
 on('#ajax', 'click', '.u_doc_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid"); 
+  uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
-  parent = this.parentElement.parentElement.parentElement;
+  parent = this.parentElement;
   doc_pk = parent.getAttribute("doc-pk");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("votes_loader");

@@ -49,6 +49,17 @@ class Survey(models.Model):
     def is_user_voted(self, user_id):
         return self.survey.filter(survey__user_voter_id=user_id).exists()
 
+    def is_time_end(self):
+        if self.time_end:
+            from datetime import datetime, timedelta
+            now = datetime.now()
+            if self.time_end < now:
+                return True
+            else:
+                return False
+        else:
+            return False
+
     def get_answers(self):
         return self.survey.only("pk")
 
@@ -70,6 +81,12 @@ class Survey(models.Model):
     def get_users(self):
         from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")
+        ids = [i['user_id'] for i in voter_ids]
+        return User.objects.get(id__in=ids)
+
+    def get_6_users(self):
+        from users.models import User
+        voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")[:6]
         ids = [i['user_id'] for i in voter_ids]
         return User.objects.get(id__in=ids)
 

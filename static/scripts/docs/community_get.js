@@ -21,7 +21,7 @@ on('#ajax', 'click', '.c_doc_list_edit_window', function() {
 });
 
 on('#ajax', 'click', '.c_ucm_doc_repost', function() {
-  parent = this.parentElement.parentElement.parentElement;
+  parent = this.parentElement;
   doc_pk = parent.getAttribute("doc-pk");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("votes_loader");

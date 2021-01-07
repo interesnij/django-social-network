@@ -1347,7 +1347,10 @@ footer.main-footer {
   overflow: hidden;
   position: relative;
 }
-
+.has-background-img{
+  padding: 2rem 1rem;
+  border-radius: .3rem;
+}
 .background-img {
   width: 100%;
   position: absolute;
