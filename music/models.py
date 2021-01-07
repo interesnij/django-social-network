@@ -72,7 +72,7 @@ class SoundList(models.Model):
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    image = ProcessedImageField(format='JPEG', options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
+    image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
 
     users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
