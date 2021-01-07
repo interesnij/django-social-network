@@ -82,13 +82,13 @@ class Survey(models.Model):
         from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")
         ids = [i['user_id'] for i in voter_ids]
-        return User.objects.get(id__in=ids)
+        return User.objects.filter(id__in=ids)
 
     def get_6_users(self):
         from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")[:6]
         ids = [i['user_id'] for i in voter_ids]
-        return User.objects.get(id__in=ids)
+        return User.objects.filter(id__in=ids)
 
     def is_have_votes(self):
         return SurveyVote.objects.filter(answer__survey_id=self.pk).values("id").exists()

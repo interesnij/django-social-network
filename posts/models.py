@@ -632,7 +632,7 @@ class Post(models.Model):
                     image = ""
                 if survey.is_have_votes:
                     voters = '<span class="u_survey_detail">'
-                    for user in survey.get_users(): 
+                    for user in survey.get_6_users(): 
                         if user.s_avatar:
                             img = '<img src="' + user.s_avatar.url + '" style="border-radius:30px;" alt="image">'
                         else:
