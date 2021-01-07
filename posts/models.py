@@ -141,7 +141,8 @@ class Post(models.Model):
     def create_post(cls, creator, text, category, lists, attach, community, parent, comments_enabled, is_signature, votes_on, status):
         if not lists:
             raise ValidationError("Не выбран список для новой записи")
-        _attach = str(attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", ""))
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         post = Post.objects.create(creator=creator,
                                     text=text,
                                     category=category,
