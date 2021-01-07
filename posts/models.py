@@ -611,7 +611,7 @@ class Post(models.Model):
                 doc = Doc2.objects.get(pk=item[3:])
                 lists = ''
                 for list in user.get_all_docs_lists():
-                    if list.doc_in_list(doc.pk):
+                    if list.is_doc_in_list(doc.pk): 
                         lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_doc_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                     else:
                         lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_add_doc_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
