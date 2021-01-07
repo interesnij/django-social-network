@@ -199,7 +199,7 @@ class UserTempSoundList(models.Model):
 
 class SoundcloudParsing(models.Model):
     id = models.BigAutoField(primary_key=True)
-    artwork_url = models.URLField(blank=True, null=True)
+    artwork_url = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
     created_at = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
@@ -226,6 +226,18 @@ class SoundcloudParsing(models.Model):
         url.replace("\\?", "%3f")
         url.replace("=", "%3d")
         return url
+
+    def get_remote_image(self, image_url):
+        import os
+        from django.core.files import File
+        from urllib import request
+
+        result = request.urlretrieve(image_url)
+        self.artwork_url.save(
+            os.path.basename(image_url),
+            File(open(result[0], 'rb'))
+        )
+        self.save()
 
     class Meta:
         verbose_name = "спарсенные треки"

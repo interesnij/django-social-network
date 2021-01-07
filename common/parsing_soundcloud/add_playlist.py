@@ -29,12 +29,15 @@ def add_playlist(url, request_user, list):
                     genre = SoundGenres.objects.get(name=track_genre)
                 except:
                     genre = SoundGenres.objects.create(name=track_genre)
-                new_track = SoundcloudParsing.objects.create(artwork_url=track['artwork_url'],
-                                                        created_at=created_at,
+                new_track = SoundcloudParsing.objects.create(created_at=created_at,
                                                         description=description,
                                                         duration=track['duration'],
                                                         genre=genre,
                                                         title=track['title'],
                                                         uri=track['uri'],
                                                         release_year=track['release_year'])
+                try:
+                    new_track.get_remote_image(track['artwork_url'])
+                except:
+                    pass
                 list.players.add(new_track)
