@@ -643,7 +643,7 @@ class Post(models.Model):
                 answers = ''
                 for answer in survey.get_answers():
                     answers = ''.join(['<div class="custom_color', _class, '" style="display:flex"><span class="progress_span_r">', answer.text, '</span><span class="progress_span_l" style="margin-left: auto;">', str(answer.get_count()), '</span></div><span class="progress_line2 mb-3" style="width:', str(answer.get_procent()), '%"></span>'])
-                block = ''.join([block, '<div class="card" style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk), '"><div class="mb-3 border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><p class="underline">', str(survey.creator), '</p>', time, '<br>', answers, voters, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><p class="underline">', str(survey.creator), '</p>', time, '<br>', answers, voters, '</span></div></div>'])
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
