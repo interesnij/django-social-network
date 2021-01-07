@@ -632,7 +632,7 @@ class Post(models.Model):
                     image = ""
                 if survey.is_have_votes:
                     voters = '<span class="u_survey_detail">'
-                    for user in survey.get_6_users(): 
+                    for user in survey.get_6_users():
                         if user.s_avatar:
                             img = '<img src="' + user.s_avatar.url + '" style="border-radius:30px;" alt="image">'
                         else:
@@ -641,7 +641,7 @@ class Post(models.Model):
                 else:
                     voters = 'Пока никто не голосовал. Станьте первым!'
                 answers = ''
-                for answer in user.get_answers():
+                for answer in survey.get_answers():
                     answers = ''.join(['<div class="custom_color', _class, '" style="display:flex"><span class="progress_span_r">', answer.text, '</span><span class="progress_span_l" style="margin-left: auto;">', answer.get_count(), '</span></div><span class="progress_line2 mb-3" style="width:', answer.get_procent(), '%"></span>'])
                 block = ''.join([block, '<div class="card load_pag mb-3" style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk), '"><div class="mb-3 border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail">', survey.title, '</h4><p class="text-secondary underline">', survey.creator, '</p>', time, '<br>', answers, voters, '</span></div></div></div>'])
         return ''.join(["<div class='attach_container'>", block, "</div>"])
