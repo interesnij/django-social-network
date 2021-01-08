@@ -408,13 +408,17 @@ class Community(models.Model):
         return SoundcloudParsing.objects.filter(music_query)[0:5]
 
     def is_music_playlist_exists(self):
-        return self.community_playlist.filter(communities__id=self.id, community_id=self.id, type="LI", is_deleted=False).exists()
+        from music.models import SoundList
+
+        playlists_query = Q(type=SoundList.LIST, is_deleted=False)
+        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        return SoundList.objects.filter(playlists_query).exists()
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(communities__id=self.id, type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(~Q(community_id=self.id), Q.AND)
+        playlists_query = Q(type=SoundList.LIST, is_deleted=False)
+        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_docs(self):
