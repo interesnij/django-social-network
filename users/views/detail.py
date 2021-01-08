@@ -141,8 +141,8 @@ class UserMusic(ListView):
         from common.template.music import get_template_user_music
         from music.models import SoundList
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name, self.playlist = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT']), SoundList.objects.get(creator_id=self.kwargs["pk"], community__isnull=True, type=SoundList.MAIN)
+        self.user, self.playlist = User.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(creator_id=self.kwargs["pk"], community__isnull=True, type=SoundList.MAIN)
+        self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
