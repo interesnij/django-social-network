@@ -1247,7 +1247,7 @@ class User(AbstractUser):
         return docs_list[0:5]
 
     def is_doc_list_exists(self):
-        return self.user_doclist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
+        return self.creator_doclist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
