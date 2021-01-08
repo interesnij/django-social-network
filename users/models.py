@@ -1109,7 +1109,7 @@ class User(AbstractUser):
     def get_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(creator_id=self.id, community__isnull=True, type=SoundList.LIST, is_deleted=False)
+        playlists_query = Q(creator_id=self.id, users__id=self.pk, community__isnull=True, type=SoundList.LIST, is_deleted=False)
         return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_all_audio_playlists(self):
