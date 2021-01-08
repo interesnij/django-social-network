@@ -1000,9 +1000,9 @@ class User(AbstractUser):
     def get_or_create_fix_list(self):
         from posts.models import PostList
         try:
-            return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIX)
+            return PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
         except:
-            return PostList.objects.create(creator_id=self.pk, community__isnull=True, type=PostList.FIX, name="Закрепленный список")
+            return PostList.objects.create(creator_id=self.pk, community=None, type=PostList.FIX, name="Закрепленный список")
 
     def get_draft_posts(self):
         from posts.models import Post
@@ -1138,9 +1138,9 @@ class User(AbstractUser):
     def get_or_create_good_album(self):
         from goods.models import GoodAlbum
         try:
-            return GoodAlbum.objects.get(creator_id=self.pk, community__isnull=True, type=GoodAlbum.MAIN)
+            return GoodAlbum.objects.get(creator_id=self.pk, community=None, type=GoodAlbum.MAIN)
         except:
-            return GoodAlbum.objects.create(creator_id=self.pk, community__isnull=True, type=GoodAlbum.MAIN, title="Основной альбом")
+            return GoodAlbum.objects.create(creator_id=self.pk, community=None, type=GoodAlbum.MAIN, title="Основной альбом")
     def get_or_create_playlist(self):
         from music.models import SoundList
         try:
@@ -1150,21 +1150,21 @@ class User(AbstractUser):
     def get_or_create_video_album(self):
         from video.models import VideoAlbum
         try:
-            return VideoAlbum.objects.get(creator_id=self.pk, community__isnull=True, type=VideoAlbum.MAIN)
+            return VideoAlbum.objects.get(creator_id=self.pk, community=None, type=VideoAlbum.MAIN)
         except:
-            return VideoAlbum.objects.create(creator_id=self.pk, community__isnull=True, type=VideoAlbum.MAIN, title="Основной альбом")
+            return VideoAlbum.objects.create(creator_id=self.pk, community=None, type=VideoAlbum.MAIN, title="Основной альбом")
     def get_or_create_photo_album(self):
         from gallery.models import Album
         try:
-            return Album.objects.get(creator_id=self.pk, community__isnull=True, type=Album.MAIN)
+            return Album.objects.get(creator_id=self.pk, community=None, type=Album.MAIN)
         except:
-            return Album.objects.create(creator_id=self.pk, community__isnull=True, type=Album.MAIN, title="Основной альбом")
+            return Album.objects.create(creator_id=self.pk, community=None, type=Album.MAIN, title="Основной альбом")
     def get_or_create_doc_list(self):
         from docs.models import DocList
         try:
-            return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
+            return DocList.objects.get(creator_id=self.pk, community=None, type=DocList.MAIN)
         except:
-            return DocList.objects.create(creator_id=self.pk, community__isnull=True, type=DocList.MAIN, title="Основной список")
+            return DocList.objects.create(creator_id=self.pk, community=None, type=DocList.MAIN, title="Основной список")
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
