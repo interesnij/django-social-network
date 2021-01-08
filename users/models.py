@@ -1086,7 +1086,7 @@ class User(AbstractUser):
     def is_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_public=True, is_deleted=False).exists()
     def is_music_playlist_exists(self):
-        return self.user_playlist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
+        return self.user_playlist.filter(creator_id=self.id, users__id=self.pk community__isnull=True, type="LI", is_deleted=False).exists()
     def is_good_album_exists(self):
         return self.good_album_creator.filter(creator_id=self.id, community__isnull=True, type="AL", is_deleted=False).exists()
     def post_list_exists(self):
