@@ -12,8 +12,11 @@ def add_playlist(url, request_user, list):
     data = response.json()
 
     if data:
-        playlist_url = data['artwork_url'].replace("large.jpg", "crop.jpg")
-        list.get_remote_image(playlist_url)
+        try:
+            playlist_url = data['artwork_url'].replace("large.jpg", "crop.jpg")
+            list.get_remote_image(playlist_url)
+        except:
+            pass
         for track in data['tracks']:
             created_at = track['created_at']
             created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
