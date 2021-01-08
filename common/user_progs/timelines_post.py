@@ -14,17 +14,17 @@ def get_timeline_posts(user):
 
     _community_posts = Q(community__memberships__user__id=user.pk, is_deleted=False, status="P")
     _community_posts.add(~Q(Q(creator__blocked_by_users__blocker_id=user.pk) | Q(creator__user_blocks__blocked_user_id=user.pk) |Q(list__type="DE") |Q(list__type="PR")), Q.AND)
-    community_posts = Post.objects.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(_community_posts)
+    community_posts = Post.objects.select_related(*select_related).only(*only).filter(_community_posts)
 
     followeds = user.follows.values('followed_user_id')
     _followed_users = Q(creator_id__in=[i['followed_user_id'] for i in followeds], creator__user_private__is_private=False, is_deleted=False, status=Post.STATUS_PUBLISHED)
     _followed_users.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
-    followed_users = Post.objects.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(_followed_users)
+    followed_users = Post.objects.select_related(*select_related).only(*only).filter(_followed_users)
 
     frends = user.connections.values('target_user_id')
     _frends_query = Q(creator_id__in=[i['target_user_id'] for i in frends], is_deleted=False, status="P")
     _frends_query.add(~Q(Q(list__type="DE") |Q(list__type="PR")), Q.AND)
-    frends = Post.objects.select_related(*select_related).prefetch_related(*prefetch_related).only(*only).filter(_frends_query)
+    frends = Post.objects.select_related(*select_related).only(*only).filter(_frends_query)
     return my_posts.union(community_posts, followed_users, frends)
 
 def get_timeline_featured_posts(user):

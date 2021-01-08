@@ -91,11 +91,11 @@ class SoundList(models.Model):
         return queryset
 
     def get_users_ids(self):
-        users = self.user_soundlist.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV")
+        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.community_soundlist.exclude(perm="DE").exclude(perm="BL")
+        communities = self.community_soundlist.exclude(perm="DE").exclude(perm="BL").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
