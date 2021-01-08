@@ -1,4 +1,5 @@
 .playlist_share span {
+  width: 20px;
   margin-top: 14px;
   cursor:pointer
 }
