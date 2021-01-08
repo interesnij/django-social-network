@@ -571,34 +571,38 @@ on('#ajax', 'click', '.attach_good_album', function() {
 on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.nextElementSibling.remove();
   block.remove();
+  remove_file_attach();
 })
 on('#ajax', 'click', '.survey_attach_remove', function() {
-  this.parentElement.parentElement.remove();
+  block = this.parentElement.parentElement;
+  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
+  block.remove();
   remove_file_attach();
-  is_full_attach()
 })
 on('#ajax', 'click', '.doc_attach_list_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.nextElementSibling.remove();
   block.remove();
+  remove_file_attach();
 })
 on('#ajax', 'click', '.video_attach_album_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
+  remove_file_attach();
 })
 on('#ajax', 'click', '.good_attach_album_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
+  remove_file_attach();
 })
 on('#ajax', 'click', '.photo_attach_album_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
+  remove_file_attach();
 })
 
 on('#ajax', 'click', '.good_load_one', function() {
