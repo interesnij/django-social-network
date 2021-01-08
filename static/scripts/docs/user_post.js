@@ -17,6 +17,39 @@ on('#ajax', 'click', '#u_ucm_doc_list_repost_btn', function() {
                      "Репост списка документов в сообщения сделан")
 });
 
+on('#ajax', 'click', '.u_add_doc_list', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/user_progs/add_list/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("u_remove_doc_list");
+      _this.classList.remove("u_add_doc_list")
+      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
+  }};
+  link.send( null );
+});
+on('#ajax', 'click', '.u_remove_doc_list', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/user_progs/remove_list/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("u_add_doc_list");
+      _this.classList.remove("u_remove_doc_list")
+      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  }};
+  link.send( null );
+});
+
 on('#ajax', 'click', '.u_add_doc_in_list', function() {
   _this = this;
   parent = _this.parentElement;

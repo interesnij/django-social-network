@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^user_progs/', include('docs.url.user_progs')),
     url(r'^community_progs/', include('docs.url.community_progs')),
     url(r'^repost/', include('docs.url.repost')),
+
+    url(r'^user/', include('docs.url.user')),
+    url(r'^community/', include('docs.url.community')),
 ]

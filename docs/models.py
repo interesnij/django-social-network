@@ -21,8 +21,8 @@ class DocList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_doclist')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doclist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='user_doclist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_doclist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -40,6 +40,35 @@ class DocList(models.Model):
     def get_docs(self):
         queryset = self.doc_list.exclude(type=Doc2.PRIVATE)
         return queryset
+
+    def get_users_ids(self):
+        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        return [i['pk'] for i in communities]
+
+    def is_user_can_add_list(self, user_id):
+        if self.creator.pk != user_id and user_id not in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_user_can_delete_list(self, user_id):
+        if self.creator.pk != user_id and user_id in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_community_can_add_list(self, community_id):
+        if self.community.pk != community_id and community_id not in self.get_communities_ids():
+            return True
+        else:
+            return False
+    def is_community_can_delete_list(self, community_id):
+        if self.community.pk != community_id and community_id in self.get_communities_ids():
+            return True
+        else:
+            return False
 
     def list_30(self):
         queryset = self.doc_list.exclude(type=Doc2.PRIVATE)[:30]

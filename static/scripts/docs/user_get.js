@@ -20,6 +20,13 @@ on('#ajax', 'click', '.u_doc_list_edit_window', function() {
   open_fullscreen("/docs/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.u_load_doc_list', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/docs/user/load/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
   parent = this.parentElement;
   doc_pk = parent.getAttribute("doc-pk");

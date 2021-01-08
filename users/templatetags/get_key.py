@@ -31,6 +31,13 @@ def is_user_can_add_playlist(list, user_id):
     else:
         return False
 
+@register.filter
+def is_user_can_add_list(list, user_id):
+    if list.is_user_can_add_list(user_id):
+        return True
+    else:
+        return False
+
 
 @register.filter
 def doc_in_list(list, doc_id):

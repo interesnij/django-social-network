@@ -1,0 +1,71 @@
+{% load get_key %}
+
+<div class="container mt-3" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="row no-gutters">
+    <div class="col">
+      <a class="btn btn-sm custom_color border item_fullscreen_hide_2" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
+
+  {% if not list.is_deleted %}
+          <div class="card mb-2">
+              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+                <div style="display:flex">
+                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+                  <div class="media-body" style="margin-left: 10px;">
+                    <h6 class="my-0 mt-1">Основной список ({{ list.count_docs }})</h6>
+                    <p class="">Документы - {{ list.community.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="card mb-2">
+              <div class="card-body">
+                {% if object_list %}
+                    <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/docs/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
+                      {% for object in object_list %}
+                      <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
+                          <div class="media" style="align-items: unset;position: relative;">
+                              <div class="media-body doc_media_body">
+                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
+                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
+                                    <span class='span_btn' data-pk="{{ doc.pk }}">
+                                      {% include 'mobile/users/user_docs/add_dropdown.html' %}
+                                      <div class="dropdown" style="position: inherit;">
+                                        <a class="btn_default drop pointer">
+                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                        </a>
+                                          <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
+                                              <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
+                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
+                                          </div>
+                                      </div>
+                                    </span>
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                    </ul>
+
+                {% else %}
+                <div class="card centered">
+                  <div class="card-body" style="margin-top: 10%;">
+                  <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
+                  </div>
+                  <h6 style="margin: 20px;text-align: center;">В списке пока нет музыки.</h6>
+                </div>
+                {% endif %}
+              </div>
+          </div>
+
+          {% else %}
+          <div class="card centered" style="">
+            <div class="card-body" style="margin-top: 10%;">
+            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+            </div>
+            <h6 style="margin: 20px;text-align: center;">Список удален. </h6>
+          </div>
+          {% endif %}
+    </div>
