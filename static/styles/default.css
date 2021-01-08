@@ -1,6 +1,8 @@
 .playlist_share span {
   margin-top: 14px;
-  width:25px
+}
+.playlist_share svg {
+  width:25px !important
 }
 
 #video_holder{
