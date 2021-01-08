@@ -3,7 +3,8 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_doc(community, folder, template, request_user, user_agent):
+def get_template_community_doc(playlist, folder, template, request_user, user_agent):
+    community = playlist.community
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -86,7 +87,8 @@ def get_permission_community_doc(community, folder, template, request_user, user
         template_name = "mobile/" + template_name
     return template_name
 
-def get_template_user_doc(user, folder, template, request_user, user_agent):
+def get_template_user_doc(playlist, folder, template, request_user, user_agent):
+    user = playlist.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
