@@ -143,7 +143,7 @@ on('#ajax', 'click', '.u_add_music_list', function(e) {
       _this.innerHTML = "";
       _this.classList.add("u_remove_music_list");
       _this.classList.remove("u_add_music_list")
-      block.innerHTML = '<svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
+      _this.innerHTML = '<svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
   }};
   link.send( null );
 });
