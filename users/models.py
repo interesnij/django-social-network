@@ -683,6 +683,19 @@ class User(AbstractUser):
         except:
             return None
 
+    def is_doc_administrator(self):
+        return try_except(self.doc_user_staff.level == "A")
+    def is_doc_moderator(self):
+        return try_except(self.doc_user_staff.level == "M")
+    def is_doc_editor(self):
+        return try_except(self.doc_user_staff.level == "E")
+    def is_doc_manager(self):
+        try:
+            return try_except(self.doc_user_staff.level)
+        except:
+            return None
+
+
     def is_photo_administrator(self):
         return try_except(self.photo_user_staff.level == "A")
     def is_photo_moderator(self):
@@ -767,6 +780,18 @@ class User(AbstractUser):
         return try_except(self.can_work_staff_good_user.can_work_editor)
     def is_work_good_supermanager(self):
         if self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor():
+            return True
+        else:
+            return False
+
+    def is_work_doc_administrator(self):
+        return try_except(self.can_work_staff_doc_user.can_work_administrator)
+    def is_work_doc_moderator(self):
+        return try_except(self.can_work_staff_doc_user.can_work_moderator)
+    def is_work_doc_editor(self):
+        return try_except(self.can_work_staff_doc_user.can_work_editor)
+    def is_work_doc_supermanager(self):
+        if self.is_work_doc_administrator() or self.is_doc_good_moderator() or is_work_doc_editor():
             return True
         else:
             return False

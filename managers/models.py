@@ -82,6 +82,25 @@ class GoodUserStaff(models.Model):
         verbose_name = 'Полномочия в товарах пользователей'
         verbose_name_plural = 'Полномочия в товарах пользователей'
 
+class DocUserStaff(models.Model):
+    ADMINISTRATOR = 'A'
+    MODERATOR = 'M'
+    EDITOR = 'E'
+    LEVEL = (
+        (ADMINISTRATOR, 'Администратор'),
+        (MODERATOR, 'Модератор'),
+        (EDITOR, 'Редактор'),
+    )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_user_staff', verbose_name="Особый пользователь")
+    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в документах'
+        verbose_name_plural = 'Полномочия в документах'
+
 class PhotoUserStaff(models.Model):
     ADMINISTRATOR = 'A'
     MODERATOR = 'M'
@@ -98,8 +117,8 @@ class PhotoUserStaff(models.Model):
         return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Полномочия в фотографиях пользователей'
-        verbose_name_plural = 'Полномочия в фотографиях пользователей'
+        verbose_name = 'Полномочия в фотографиях'
+        verbose_name_plural = 'Полномочия в фотографиях'
 
 class VideoUserStaff(models.Model):
     ADMINISTRATOR = 'A'
@@ -117,8 +136,8 @@ class VideoUserStaff(models.Model):
         return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Полномочия в видеозаписях пользователей'
-        verbose_name_plural = 'Полномочия в видеозаписях пользователей'
+        verbose_name = 'Полномочия в видеозаписях'
+        verbose_name_plural = 'Полномочия в видеозаписях'
 
 class AudioUserStaff(models.Model):
     ADMINISTRATOR = 'A'
@@ -136,8 +155,8 @@ class AudioUserStaff(models.Model):
         return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Полномочия в аудиозаписях пользователей'
-        verbose_name_plural = 'Полномочия в аудиозаписях пользователей'
+        verbose_name = 'Полномочия в аудиозаписях'
+        verbose_name_plural = 'Полномочия в аудиозаписях'
 
 
 class CanWorkStaffUser(models.Model):
@@ -197,6 +216,20 @@ class CanWorkStaffGoodUser(models.Model):
     class Meta:
         verbose_name = 'Создатель персонала товаров'
         verbose_name_plural = 'Создатели персонала товаров'
+
+class CanWorkStaffDocUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_doc_user', verbose_name="Создатель персонала в товарах")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов докуметов")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов докуметов")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов докуметов")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей докуметов")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала докуметов'
+        verbose_name_plural = 'Создатели персонала докуметов'
 
 class CanWorkStaffPhotoUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_photo_user', verbose_name="Создатель персонала в фотографиях")
