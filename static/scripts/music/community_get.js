@@ -7,7 +7,7 @@ on('#ajax', 'click', '.c_ucm_music_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_ucm_music_list_repost', function() {
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");

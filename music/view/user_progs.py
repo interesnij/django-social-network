@@ -65,24 +65,24 @@ class UserSoundcloudSet(View):
             return HttpResponseBadRequest()
 
 class UserPlaylistAdd(View):
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.users.add(request.user)
             return HttpResponse()
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse()
 
 class UserPlaylistRemove(View):
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.users.remove(request.user)
             return HttpResponse()
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse()
 
 
 class UserTrackAdd(View):
