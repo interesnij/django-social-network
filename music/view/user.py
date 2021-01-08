@@ -10,7 +10,7 @@ class UserLoadPlaylist(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_music(self.user, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_music(self.playlist, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPlaylist,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

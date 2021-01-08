@@ -215,8 +215,8 @@ class CommunityMusic(ListView):
 		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.playlist, self.template_name = SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN), get_template_community_music(self.c, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.c, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN)
+		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusic,self).get_context_data(**kwargs)
@@ -236,9 +236,9 @@ class CommunityMusicList(ListView):
 
 		self.community, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_community_music(self.c, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_music(self.c, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_music(self.playlist, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

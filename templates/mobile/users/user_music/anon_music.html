@@ -28,7 +28,7 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
                     <h6 class="my-0 mt-1">{{ playlist.name }} ({{ playlist.count_tracks }})</h6>
-                    <p class="">Музыка {{ user.get_full_name_genitive }}</p>
+                    <p class="">Музыка {{ playlist.creator.get_full_name_genitive }}</p>
                   </div>
                 </div>
               </div>
