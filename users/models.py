@@ -1164,7 +1164,7 @@ class User(AbstractUser):
         try:
             return DocList.objects.get(creator_id=self.pk, community=None, type=DocList.MAIN)
         except:
-            return DocList.objects.create(creator_id=self.pk, community=None, type=DocList.MAIN, title="Основной список")
+            return DocList.objects.create(creator_id=self.pk, community=None, type=DocList.MAIN, name="Основной список")
 
     def get_music(self):
         from music.models import SoundList, SoundcloudParsing
