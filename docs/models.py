@@ -21,8 +21,8 @@ class DocList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='user_doclist')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_doclist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_doclist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_doclist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
