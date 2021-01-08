@@ -1087,8 +1087,8 @@ class User(AbstractUser):
         return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_public=True, is_deleted=False).exists()
     def is_music_playlist_exists(self):
         from music.models import SoundList
-        playlists_query = Q(users__id=self.pk, community__isnull=True, type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(Q(creator_id=self.id), Q.AND)
+        playlists_query = Q(community__isnull=True, type=SoundList.LIST, is_deleted=False)
+        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return SoundList.objects.filter(playlists_query).exists()
 
     def is_good_album_exists(self):
@@ -1119,8 +1119,8 @@ class User(AbstractUser):
     def get_all_audio_playlists(self):
         from music.models import SoundList
 
-        playlists_query = Q(users__id=self.pk, community__isnull=True, is_deleted=False)
-        playlists_query.add(Q(creator_id=self.id), Q.AND)
+        playlists_query = Q(community__isnull=True, is_deleted=False)
+        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_good_albums(self):
