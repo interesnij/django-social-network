@@ -2,7 +2,7 @@
   margin-top: 14px;
   cursor:pointer
 }
-.playlist_share svg {
+.playlist_share .add_svg {
   width:25px !important;
 }
 
