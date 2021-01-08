@@ -98,9 +98,9 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_user_music(self.user, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_music(self.user, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_music(self.playlist, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -169,7 +169,7 @@ class UserPostsListView(ListView):
 		if (self.user.pk != request.user.pk and self.list.is_private_list()) or not request.is_ajax():
 			raise Http404
 		else:
-			self.posts_list = self.list.get_posts() 
+			self.posts_list = self.list.get_posts()
 		self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 

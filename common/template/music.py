@@ -80,14 +80,15 @@ def get_permission_community_music(community, folder, template, request_user, us
         template_name = "mobile/" + template_name
     return template_name
 
-def get_template_user_music(user, folder, template, request_user, user_agent):
+def get_template_user_music(playlist, folder, template, request_user, user_agent):
+    user = playlist.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
         elif user.pk == request_user.pk:
-            if user.is_suspended():
+            if request_user.is_suspended():
                 template_name = "generic/u_template/you_suspended.html"
-            elif user.is_blocked():
+            elif request_user.is_blocked():
                 template_name = "generic/u_template/you_global_block.html"
             else:
                 template_name = folder + "my_" + template
