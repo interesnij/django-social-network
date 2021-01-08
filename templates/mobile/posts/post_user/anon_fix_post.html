@@ -34,9 +34,10 @@
     {{ object.text|linebreaks }}
   </div>
 
-  <span class="post_attach_panel">
-    {{ object.get_u_attach|safe }}
-  </span>
+  {% if object.attach %}
+  {% load post %}
+  {{ object|get_user_attach:request.user|safe }}
+  {% endif %}
 
     {% if object.parent %}
       {% include 'mobile/posts/post_user/repost.html' %}
