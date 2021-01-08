@@ -1,10 +1,8 @@
 .playlist_share span {
-  width: 20px;
-  margin-top: 14px;
   cursor:pointer
 }
 .playlist_share .add_svg {
-  width:25px !important;
+  width:20px !important;
 }
 
 #video_holder{
