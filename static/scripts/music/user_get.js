@@ -24,7 +24,7 @@ on('#ajax', 'click', '.u_music_list_edit_window', function() {
 on('#ajax', 'click', '.u_load_music_list', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
+  loader = document.getElementById("item_loader");
   open_fullscreen("/music/user/load/" + pk + "/" + uuid + "/", loader)
 });
 
@@ -37,7 +37,7 @@ on('#ajax', 'click', '.u_ucm_music_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
-  parent = this.parentElement.parentElement.parentElement; 
+  parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");

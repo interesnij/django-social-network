@@ -30,6 +30,10 @@ on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
 });
+on('#ajax', 'click', '.item_fullscreen_hide_2', function() {
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+  this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+});
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
