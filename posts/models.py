@@ -586,7 +586,7 @@ class Post(models.Model):
                     from music.models import SoundcloudParsing
                     music = SoundcloudParsing.objects.get(pk=item[3:])
                     if music.artwork_url:
-                        figure = ''.join(['<figure><a class="music_list_post music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.artwork_url, '" alt="img" /></a></figure>'])
+                        figure = ''.join(['<figure><a class="music_list_post music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.artwork_url.url, '" alt="img" /></a></figure>'])
                     else:
                         figure = '<figure><a class="music_list_post music_thumb pointer"><svg fill="currentColor" style="width:30px;heigth:30px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></a></figure>'
                     span_btn = ''
@@ -690,6 +690,7 @@ class Post(models.Model):
                     block = ''.join([block, '<div style="flex-basis: 100%;" class="card" data-pk="', str(creator.pk), '" data-uuid="', str(playlist.uuid), '"><div class="card-body" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Треков: ', str(playlist.count_tracks()), '</p></div>', add_svg, repost_svg, '</div></div></div>'])
                 except:
                     pass
+
 
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 

@@ -2,7 +2,7 @@
 
   {% for object in list %}
   <li data-path="{{ object.uri }}"
-      data-thumbpath="{{ object.artwork_url }}"
+      data-thumbpath="{{ object.artwork_url.url }}"
       data-title="{{ object.title }}"
       data-duration="{{ object.duration }}"
       data-add="{% if not request.user|is_track_exists:object.id %}true{% else %}false{% endif %}"

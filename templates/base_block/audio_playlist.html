@@ -17,7 +17,7 @@
 <ul id="playlist_" style="display:none;">
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
-      data-thumbpath="{{ track.artwork_url }}"
+      data-thumbpath="{{ track.artwork_url.url }}"
 			data-add="{% if not request.user|is_track_exists:track.id %}true{% else %}false{% endif %}"
 			data-track-id="{{ track.pk }}">
     <p><span style="font-weight:bold">{{ track.title }}</span></p>
