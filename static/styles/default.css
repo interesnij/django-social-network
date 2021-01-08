@@ -1,3 +1,8 @@
+.playlist_share span {
+  margin-top: 14px;
+  width:25px
+}
+
 #video_holder{
 width: 200px;
 min-width: 200px;
