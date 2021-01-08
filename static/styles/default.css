@@ -1,5 +1,6 @@
 .playlist_share span {
-  cursor:pointer
+  cursor:pointer;
+  width:20px !important;
 }
 .playlist_share .add_svg {
   width:20px !important;
