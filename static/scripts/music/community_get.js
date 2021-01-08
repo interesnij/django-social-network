@@ -15,7 +15,7 @@ on('#ajax', 'click', '.c_ucm_music_list_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_load_music_list', function() {
-  parent = this.parentElement.parentElement;
+  parent = this.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/community/load/" + pk + "/" + uuid + "/", loader)

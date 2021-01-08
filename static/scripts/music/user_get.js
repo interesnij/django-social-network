@@ -22,7 +22,7 @@ on('#ajax', 'click', '.u_music_list_edit_window', function() {
 });
 
 on('#ajax', 'click', '.u_load_music_list', function() {
-  parent = this.parentElement.parentElement;
+  parent = this.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user/load/" + pk + "/" + uuid + "/", loader)
