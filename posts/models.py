@@ -713,10 +713,15 @@ class Post(models.Model):
                     album = Album.objects.get(pk=item[3:], is_public=True)
                     creator = album.creator
                     if user.is_authenticated:
-                        share = '<div class="row"><a class="col pointer progress_span_r">Добавить</a><a class="col pointer progress_span_l">Поделиться</a></div>'
+                        if album.is_not_empty():
+                            share = '<a class="col pointer u_ucm_photo_list_repost ">Поделиться</a>'
+                        if album.is_user_can_add_list(user.pk):
+                            add = '<a class="col pointer u_add_photo_album">Добавить в коллекцию</a>'
+                        elif user.pk in album.get_users_ids():
+                            add = '<a class="col pointer u_remove_photo_album">Убрать из коллекции</a>'
                     else:
-                        share = ''
-                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), share, '</p>', '</div></div>'])
+                        shareб add = '', ''
+                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), '<div class="row">', share, add, '</div></p>', '</div></div>'])
                 except:
                     pass
 
