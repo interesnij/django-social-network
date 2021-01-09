@@ -59,7 +59,7 @@ on('#ajax', 'click', '.u_load_photo_album', function() {
   parent = this.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/gallery/community/load/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user/load/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
