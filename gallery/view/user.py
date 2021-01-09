@@ -16,10 +16,10 @@ class UserLoadAlbum(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_permission_user_photo(self.album, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        if request.user.is_authenticated and request.user.pk == user.pk:
-            self.photo_list = self.album.get_staff_photos()
-        else:
-            self.photo_list = self.album.get_photos()
+		if request.user.is_authenticated and request.user.pk == user.pk:
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
 		return super(UserLoadAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

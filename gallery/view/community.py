@@ -17,10 +17,10 @@ class CommunityLoadAlbum(ListView):
 	def get(self,request,*args,**kwargs):
 		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_permission_community_photo(self.album, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-            self.photo_list = self.album.get_staff_photos()
-        else:
-            self.photo_list = self.album.get_photos()
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
+			self.photo_list = self.album.get_staff_photos()
+		else:
+			self.photo_list = self.album.get_photos()
 		return super(CommunityLoadAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
