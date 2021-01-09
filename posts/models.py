@@ -716,7 +716,7 @@ class Post(models.Model):
                         share = '<div class="row"><a class="col pointer progress_span_r">Добавить</a><a class="col pointer progress_span_l">Поделиться</a></div>'
                     else:
                         share = ''
-                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;"><figure class="background-img">', album.get_cover_photo().file.url, '</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), share, '</p>', '</div></div>'])
+                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), share, '</p>', '</div></div>'])
                 except:
                     pass
 
