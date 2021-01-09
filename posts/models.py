@@ -715,7 +715,7 @@ class Post(models.Model):
                     share, add = '', ''
                     if user.is_authenticated:
                         if album.is_not_empty():
-                            share = '<a class="col pointer u_ucm_photo_list_repost ">Поделиться</a>'
+                            share = '<a class="col pointer u_ucm_photo_album_repost ">Поделиться</a>'
                         if album.is_user_can_add_list(user.pk):
                             add = '<a class="col pointer u_add_photo_album">В коллекцию</a>'
                         elif user.pk in album.get_users_ids():
