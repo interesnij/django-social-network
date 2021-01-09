@@ -710,9 +710,13 @@ class Post(models.Model):
             elif item[:3] == "lph":
                 try:
                     from gallery.models import Album
-                    album = Album.objects.get(pk=item[3:])
+                    album = Album.objects.get(pk=item[3:], is_public=True)
                     creator = album.creator
-                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;"><figure class="background-img">', album.get_cover_photo().file.url, '</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', album.creator, '</p><hr class="my-3"><p>', album.count_photo_ru(), '</p><div class="row"><a class="col pointer progress_span_r">Добавить</a><a class="col pointer progress_span_l">Поделиться</a></div></div></div>'])
+                    if user.is_authenticated:
+                        share = '<div class="row"><a class="col pointer progress_span_r">Добавить</a><a class="col pointer progress_span_l">Поделиться</a></div>'
+                    else:
+                        share = ''
+                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;"><figure class="background-img">', album.get_cover_photo().file.url, '</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), share, '</p>', '</div></div>'])
                 except:
                     pass
 
