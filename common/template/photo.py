@@ -3,7 +3,8 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_photo(community, folder, template, request_user, user_agent):
+def get_template_community_photo(album, folder, template, request_user, user_agent):
+    community = album.community
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -86,7 +87,8 @@ def get_permission_community_photo(community, folder, template, request_user, us
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_community_photo_detail(community, photo, folder, template, request_user, user_agent):
+def get_permission_community_photo_detail(album, photo, folder, template, request_user, user_agent):
+    community = album.community
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
     elif community.is_blocked():
@@ -115,7 +117,8 @@ def get_permission_community_photo_detail(community, photo, folder, template, re
         template_name = "mobile/" + template_name
     return template_name
 
-def get_template_user_photo(user, folder, template, request_user, user_agent):
+def get_template_user_photo(album, folder, template, request_user, user_agent):
+    user = album.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -161,8 +164,9 @@ def get_template_user_photo(user, folder, template, request_user, user_agent):
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_user_photo(user, folder, template, request_user, user_agent):
+def get_permission_user_photo(album, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    user = album.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
@@ -187,8 +191,9 @@ def get_permission_user_photo(user, folder, template, request_user, user_agent):
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_user_photo_detail(user, photo, folder, template, request_user, user_agent):
+def get_permission_user_photo_detail(album, photo, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    user = album.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')

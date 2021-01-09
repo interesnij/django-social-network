@@ -14,7 +14,7 @@ class UserLoadAlbum(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
+		self.album = Album.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_permission_user_photo(self.album, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.pk == user.pk:
 			self.photo_list = self.album.get_staff_photos()
@@ -24,7 +24,7 @@ class UserLoadAlbum(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(UserLoadAlbum,self).get_context_data(**kwargs)
-		c['user'], c['album'] = self.user, self.album
+		c['user'], c['album'] = self.album.creator, self.album
 		return c
 
 	def get_queryset(self):
@@ -40,7 +40,7 @@ class UserPhotosList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(creator_id=self.user.pk, type=Album.MAIN, community__isnull=True)
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "users/user_gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "users/user_gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 
@@ -67,7 +67,7 @@ class UserAlbumPhotosList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "users/user_album/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "users/user_album/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if self.user == request.user:
@@ -96,7 +96,7 @@ class PhotoUserCommentList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.photo.comments_enabled:
             raise Http404
-        self.template_name = get_permission_user_photo(self.photo.creator, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_photo(self.album, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoUserCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -121,7 +121,7 @@ class UserPhoto(TemplateView):
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.album.creator, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserPhoto,self).get(request,*args,**kwargs)
@@ -148,7 +148,7 @@ class UserAlbumPhoto(TemplateView):
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.album.creator, "gallery/u_photo/album_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/album_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
@@ -179,7 +179,7 @@ class UserWallPhoto(TemplateView):
             self.album = Album.objects.create(creator=self.user, type=Album.WALL, title="Фото со стены", description="Фото со стены")
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo_detail(self.user, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo_detail(self.album, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
@@ -211,7 +211,7 @@ class UserDetailAvatar(TemplateView):
             self.album = Album.objects.create(creator=self.user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
@@ -239,7 +239,7 @@ class UserPostPhoto(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.post.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.post.creator, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserPostPhoto,self).get(request,*args,**kwargs)
@@ -298,7 +298,7 @@ class UserFirstAvatar(TemplateView):
         self.photo = self.album.get_first_photo()
         self.photos = self.album.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.user, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserFirstAvatar,self).get(request,*args,**kwargs)
