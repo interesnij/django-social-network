@@ -33,7 +33,7 @@ on('#ajax', 'click', '.c_ucm_photo_repost', function() {
   open_fullscreen("/gallery/repost/c_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '.c_ucm_photo_list_repost', function() {
+on('#ajax', 'click', '.c_ucm_photo_album_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
@@ -57,7 +57,7 @@ on('#ajax', 'click', '.c_AV_photo', function() {
 
 on('#ajax', 'click', '.c_AL_photo', function() {
   container = this.parentElement;
-  document.body.querySelector(".pk_saver").getAttribute('data-uuid') ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.parentElement.parentElement.getAttribute('data-uuid');
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/album_photo/" + pk + "/" + uuid + "/", loader)

@@ -62,7 +62,7 @@ on('#ajax', 'click', '.u_load_photo_album', function() {
   open_fullscreen("/gallery/user/load/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
+on('#ajax', 'click', '.u_ucm_photo_album_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
@@ -78,7 +78,7 @@ on('#ajax', 'click', '.u_avatar_detail', function() {
 });
 
 on('#ajax', 'click', '.u_AL_photo', function() {
-  document.body.querySelector(".pk_saver").getAttribute('data-uuid') ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.parentElement.getAttribute('data-uuid');
+  uuid = this.parentElement.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/album_photo/" + pk + "/" + uuid + "/", loader)
