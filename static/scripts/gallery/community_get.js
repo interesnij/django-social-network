@@ -56,7 +56,6 @@ on('#ajax', 'click', '.c_AV_photo', function() {
 });
 
 on('#ajax', 'click', '.c_AL_photo', function() {
-  container = this.parentElement;
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
