@@ -1272,24 +1272,31 @@ class User(AbstractUser):
         return docs_list[0:5]
 
     def is_doc_list_exists(self):
-        return self.creator_doclist.filter(creator_id=self.id, community__isnull=True, type="LI", is_deleted=False).exists()
+        from docs.models import DocList
+
+        lists_query = Q(creator_id=self.id, community__isnull=True, type=DocList.LIST, is_deleted=False)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        return DocList.objects.filter(lists_query).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
         lists_query = Q(creator_id=self.id, community__isnull=True, type=DocList.LIST, is_deleted=False)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_my_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community__isnull=True, is_public=True, type=DocList.LIST, is_deleted=False)
+        lists_query = Q(community__isnull=True, is_public=True, type=DocList.LIST, is_deleted=False)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_all_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
+        lists_query = Q(community__isnull=True, is_deleted=False)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_followers(self):

@@ -411,14 +411,14 @@ class Community(models.Model):
         from music.models import SoundList
 
         playlists_query = Q(type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        playlists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         return SoundList.objects.filter(playlists_query).exists()
 
     def get_audio_playlists(self):
         from music.models import SoundList
 
         playlists_query = Q(type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        playlists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_docs(self):
@@ -441,18 +441,24 @@ class Community(models.Model):
         return Doc2.objects.filter(docs_query, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
 
     def is_docs_list_exists(self):
-        return self.community_doclist.filter(community_id=self.id, type="LI", is_deleted=False).exists()
+        from docs.models import DocList
+
+        lists_query = Q(type=DocList.LIST, is_public=True, is_deleted=False)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
+        return DocList.objects.filter(lists_query).exists()
 
     def get_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(community_id=self.id, type=DocList.LIST, is_public=True, is_deleted=False)
+        lists_query = Q(type=DocList.LIST, is_public=True, is_deleted=False)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_admin_docs_lists(self):
         from docs.models import DocList
 
-        lists_query = Q(community_id=self.id, type=DocList.LIST, is_deleted=False)
+        lists_query = Q(type=DocList.LIST, is_deleted=False)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_docs_count(self):
