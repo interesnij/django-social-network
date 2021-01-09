@@ -17,4 +17,5 @@ urlpatterns=[
 	url(r'^chat_photo/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserChatPhoto.as_view(), name="user_chat_photo"),
 
 	url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoUserCommentList.as_view()),
+	url(r'^load/(?P<uuid>[0-9a-f-]+)/$', UserLoadAlbum.as_view()),
 ]

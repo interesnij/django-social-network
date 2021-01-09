@@ -54,6 +54,14 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   open_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
+
+on('#ajax', 'click', '.u_load_photo_album', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/gallery/community/load/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')

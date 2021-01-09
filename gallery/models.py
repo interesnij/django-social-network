@@ -37,8 +37,8 @@ class Album(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_album')
-    message = models.ManyToManyField("chat.Message", blank=True, related_name='message_album')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
 
     class Meta:
         indexes = (
@@ -46,6 +46,35 @@ class Album(models.Model):
         )
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
+
+    def get_users_ids(self):
+        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        return [i['pk'] for i in communities]
+
+    def is_user_can_add_list(self, user_id):
+        if self.creator.pk != user_id and user_id not in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_user_can_delete_list(self, user_id):
+        if self.creator.pk != user_id and user_id in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_community_can_add_list(self, community_id):
+        if self.community.pk != community_id and community_id not in self.get_communities_ids():
+            return True
+        else:
+            return False
+    def is_community_can_delete_list(self, community_id):
+        if self.community.pk != community_id and community_id in self.get_communities_ids():
+            return True
+        else:
+            return False
 
     def is_avatar_album(self):
         return self.type == self.AVATAR
@@ -79,6 +108,16 @@ class Album(models.Model):
             return self.photo_album.filter(is_deleted=False).values("pk").count()
         except:
             return 0
+    def count_photo_ru(self):
+        count = self.count_photo()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " фотография"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " фотографии"
+        else:
+            return str(count) + " фотографий"
 
     def get_photos(self):
         return self.photo_album.filter(is_deleted=False, is_public=True)

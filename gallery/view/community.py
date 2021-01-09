@@ -11,6 +11,28 @@ from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
 
 
+class CommunityLoadAlbum(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_permission_community_photo(self.album, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
+            self.photo_list = self.album.get_staff_photos()
+        else:
+            self.photo_list = self.album.get_photos()
+		return super(CommunityLoadAlbum,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		c = super(CommunityLoadAlbum,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.c, self.album
+		return c
+
+	def get_queryset(self):
+		list = self.photo_list
+		return list
+
+
 class CommunityPhotosList(ListView):
     template_name = None
     paginate_by = 15

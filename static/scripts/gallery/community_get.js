@@ -18,6 +18,13 @@ on('#ajax', 'click', '.c_photo_priview', function() {
   open_fullscreen("/gallery/community/preview_photo/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '.c_load_photo_album', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/gallery/community/load/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.c_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
