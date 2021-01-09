@@ -16,7 +16,7 @@ class UserLoadAlbum(ListView):
 	def get(self,request,*args,**kwargs):
 		self.album = Album.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_permission_user_photo(self.album, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		if request.user.is_authenticated and request.user.pk == user.pk:
+		if request.user.is_authenticated and request.user.pk == self.album.creator.pk:
 			self.photo_list = self.album.get_staff_photos()
 		else:
 			self.photo_list = self.album.get_photos()
