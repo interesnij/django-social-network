@@ -707,6 +707,14 @@ class Post(models.Model):
                     block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_doc_list pointer">', list.name, '</h6><p>Список документов <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Документов: ', str(list.count_docs()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
                 except:
                     pass
+            elif item[:3] == "lph":
+                try:
+                    from gallery.models import Album
+                    album = Album.objects.get(pk=item[3:])
+                    creator = album.creator
+                    block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 2rem 1rem;border-radius: .3rem;"><figure class="background-img">', album.get_cover_photo().file.url, '</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', album.creator, '</p><hr class="my-3"><p>', album.count_photo_ru(), '</p><div class="row"><a class="col pointer progress_span_r">Добавить</a><a class="col pointer progress_span_l">Поделиться</a></div></div></div>'])
+                except:
+                    pass
 
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
