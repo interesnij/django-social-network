@@ -712,6 +712,7 @@ class Post(models.Model):
                     from gallery.models import Album
                     album = Album.objects.get(pk=item[3:], is_public=True)
                     creator = album.creator
+                    share, add = '', ''
                     if user.is_authenticated:
                         if album.is_not_empty():
                             share = '<a class="col pointer u_ucm_photo_list_repost ">Поделиться</a>'
@@ -719,8 +720,6 @@ class Post(models.Model):
                             add = '<a class="col pointer u_add_photo_album">Добавить в коллекцию</a>'
                         elif user.pk in album.get_users_ids():
                             add = '<a class="col pointer u_remove_photo_album">Убрать из коллекции</a>'
-                    else:
-                        share, add = '', ''
                     block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4>', album.title, '</h4><p class="lead">', str(album.creator), '</p><hr class="my-3"><p>', album.count_photo_ru(), '<div class="row">', share, add, '</div></p>', '</div></div>'])
                 except:
                     pass
