@@ -78,8 +78,8 @@ on('#ajax', 'click', '.u_avatar_detail', function() {
 });
 
 on('#ajax', 'click', '.u_AL_photo', function() {
-  document.body.querySelector(".pk_saver").getAttribute('data-uuid') ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute('photo-pk');
+  document.body.querySelector(".pk_saver").getAttribute('data-uuid') ? uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid') : uuid = this.parentElement.getAttribute('data-uuid');
+  pk = this.parentElement.parentElement.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/album_photo/" + pk + "/" + uuid + "/", loader)
 });
