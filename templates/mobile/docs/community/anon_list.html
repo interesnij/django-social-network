@@ -25,7 +25,7 @@
               <div class="card-body">
                 {% if object_list %}
                     <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/docs/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
-                      {% for object in object_list %}
+                      {% for doc in object_list %}
                       <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
                           <div class="media" style="align-items: unset;position: relative;">
                               <div class="media-body doc_media_body">
