@@ -24,16 +24,16 @@
   <div class="custom_color text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
     <figure class="background-img">
       {% if album.image %}
-        <img src="{{ object.get_cover_photo.file.url }}" alt="image">
+        <img src="{{ album.get_cover_photo.file.url }}" alt="image">
       {% endif %}
     </figure>
     <div class="container">
       <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i>
       <br>
-      <h4 class="">{{ object.title }}</h4>
-      <p class="lead">{{ object.creator }}</p>
+      <h4 class="">{{ album.title }}</h4>
+      <p class="lead">{{ album.creator }}</p>
       <hr class="my-3">
-      <p>{{ object.count_photo_ru }}</p>
+      <p>{{ album.count_photo_ru }}</p>
       <div class="row">
 
         <a class="col pointer progress_span_r">Добавить</a>
