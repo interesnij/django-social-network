@@ -9,6 +9,7 @@ from common.parsing_soundcloud.add_playlist import add_playlist
 from django.http import Http404
 from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
+from common.check.community import check_can_get_lists
 
 
 class CommunitySoundcloudSetPlaylistWindow(TemplateView):

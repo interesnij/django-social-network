@@ -7,6 +7,7 @@ from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
+from common.check.user import check_user_can_get_list
 
 
 class UserDoclistAdd(View):
