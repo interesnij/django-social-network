@@ -19,7 +19,7 @@ on('#ajax', 'click', '.c_photo_priview', function() {
 });
 
 on('#ajax', 'click', '.c_load_photo_album', function() {
-  parent = this.parentElement.parentElement.parentElement;
+  parent = this.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
   loader = document.getElementById("item_loader");
   open_fullscreen("/gallery/community/load/" + pk + "/" + uuid + "/", loader)
