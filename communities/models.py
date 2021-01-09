@@ -284,7 +284,8 @@ class Community(models.Model):
     def get_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(community=self, is_deleted=False, is_public=True)
+        albums_query = Q(is_deleted=False, is_public=True)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
@@ -294,12 +295,18 @@ class Community(models.Model):
     def get_admin_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(community=self, is_deleted=False)
+        albums_query = Q(is_deleted=False)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
     def is_album_exists(self):
-        return self.album_community.filter(community=self, is_deleted=False).exists()
+        from gallery.models import Album
+
+        albums_query = Q(is_deleted=False, is_public=True)
+        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        return Album.objects.filter(albums_query).exists()
 
     def get_profile_photos(self):
         return self.get_photos()[0:6]

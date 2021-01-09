@@ -576,12 +576,6 @@ class User(AbstractUser):
         else:
             return "desctop/users/button/null_value.html"
 
-
-    def is_public_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.pk, community__isnull=True, is_public=True).exists()
-    def is_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.pk, community__isnull=True).exists()
-
     def is_photo_exists(self):
         return self.photo_creator.filter(creator_id=self.pk, community__isnull=True).exists()
 
@@ -1073,28 +1067,32 @@ class User(AbstractUser):
     def get_all_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
+        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
     def get_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
+        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
     def get_my_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
+        albums_query = Q(is_deleted=False, community__isnull=True)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query)
 
-    def get_my_al_albums(self):
+    def get_my_all_albums(self):
         from gallery.models import Album
 
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type=Album.ALBUM)
+        albums_query = Q(is_deleted=False, community__isnull=True, type=Album.ALBUM)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query)
 
@@ -1105,7 +1103,12 @@ class User(AbstractUser):
         return VideoAlbum.objects.filter(albums_query)
 
     def user_photo_album_exists(self):
-        return self.photo_album_creator.filter(creator_id=self.id, community__isnull=True, is_deleted=False, type="AL").exists()
+        from gallery.models import Album
+
+        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
+        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        albums_query.add(~Q(type=Album.MAIN), Q.AND)
+        return Album.objects.filter(albums_query).exists()
     def user_video_album_exists(self):
         return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_deleted=False, type="AL").exists()
     def is_video_album_exists(self):
