@@ -649,7 +649,7 @@ class Post(models.Model):
                 else:
                     time = "<p>До " + str(survey.time_end) + "</p>"
                     if user.is_authenticated and not survey.is_user_voted(user.pk):
-                        _class = "pointer u_survey_vote" + survey.is_multiple
+                        _class = "pointer u_survey_vote" + str(survey.is_multiple)
                 if survey.image:
                     image = '<img src="' + survey.image.url + '" alt="user image">'
                 else:
