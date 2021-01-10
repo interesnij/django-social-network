@@ -182,7 +182,8 @@ a.media:hover {
 }
 .thumb{border:#6C757D solid 1px;}
 .thumb_small{border:#6C757D solid 1px;}
-.dropdown-menu, .lite_color{color:rgba(0, 0, 0, 0.9) !important; background-color: #f0f2f6 !important}
+.dropdown-menu {color:rgba(0, 0, 0, 0.9) !important; background-color: #f0f2f6 !important}
+.lite_color{color:rgba(0, 0, 0, 0.9) !important; background-color: #E0E0E0 !important}
 .dropdown-menu .dropdown-item:hover{
     background-color: #F0F2F6 !important;
     color: rgba(0, 0, 0) !important;
