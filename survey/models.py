@@ -109,7 +109,7 @@ class Answer(models.Model):
         return self.user_answer.all().values("pk").count()
 
     def is_user_voted(self, user_id):
-        return self.user_answer.filter(answer_id=self.pk, user_id=user_id).exists()
+        return SurveyVote.objects.filter(answer_id=self.pk, user_id=user_id).exists()
 
     def get_answers(self):
         return SurveyVote.objects.filter(answer_id=self.pk)
