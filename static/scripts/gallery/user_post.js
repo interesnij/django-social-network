@@ -12,7 +12,7 @@ on('#ajax', 'click', '.u_add_photo_album', function(e) {
       _this.innerHTML = "";
       _this.classList.add("u_remove_photo_album");
       _this.classList.remove("u_add_photo_album")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
+      _this.innerHTML = 'Удалить'
   }};
   link.send( null );
 });
@@ -28,7 +28,7 @@ on('#ajax', 'click', '.u_remove_photo_album', function(e) {
       _this.innerHTML = "";
       _this.classList.add("u_add_photo_album");
       _this.classList.remove("u_remove_photo_album")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+      _this.innerHTML = 'В коллекцию'
   }};
   link.send( null );
 });
