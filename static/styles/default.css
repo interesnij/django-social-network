@@ -1,3 +1,9 @@
+.answer_style {
+  display:flex;
+  position: relative;
+  margin-bottom: 5px;
+}
+
 .playlist_share {
   width:20px !important;
 }
