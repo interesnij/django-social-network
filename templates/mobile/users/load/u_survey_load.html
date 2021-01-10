@@ -1,4 +1,32 @@
+<style>
+  .progress {
+  bottom:0;
+  left:0;
+  position:absolute;
+  top:0;
+}
 
+.progress:before {
+  animation:slideIn 2s ease-out;
+  background-color:#def;
+  bottom:0;
+  left:0;
+  content:"";
+  position:absolute;
+  top:0;
+  width:100%;
+}
+@keyframes slideIn {
+  0% {
+    background-color:#abc;
+    width:0;
+  }
+  100% {
+    background-color:#def;
+    width:100%;
+  }
+}
+</style>
 <div class="card mb-4">
   <div class="row">
     <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
@@ -33,11 +61,11 @@
             {% endif %}
             <br>
             {% for answer in object.get_answers %}
+            <div class="progress" style="width:{{ answer.get_procent }}%"></div>
             <div class="custom_color" style="display:flex">
                 <span class="progress_span_r">{{ answer.text }}</span>
                 <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
             </div>
-            <span class="progress_line2 mb-3" style="width: {{ answer.get_procent }}%"></span>
             {% endfor %}
             {% if object.is_have_votes %}
               {{ object.get_6_users }}
