@@ -654,7 +654,7 @@ class Post(models.Model):
                     image = '<img src="' + survey.image.url + '" alt="user image">'
                 else:
                     image = ""
-                if survey.is_have_votes:
+                if survey.is_have_votes():
                     voters = '<span class="u_survey_detail pointer">'
                     for user in survey.get_6_users():
                         if user.s_avatar:
