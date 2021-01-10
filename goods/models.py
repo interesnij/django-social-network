@@ -95,7 +95,7 @@ class GoodAlbum(models.Model):
     def is_not_empty(self):
 	    return self.good_album.filter(album=self).values("pk").exists()
 
-	def get_users_ids(self):
+    def get_users_ids(self):
         users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
         return [i['pk'] for i in users]
 
