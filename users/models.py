@@ -1106,7 +1106,7 @@ class User(AbstractUser):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
-        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
+        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).exists()
     def user_video_album_exists(self):

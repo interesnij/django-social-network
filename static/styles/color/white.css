@@ -188,6 +188,6 @@ a.media:hover {
     color: rgba(0, 0, 0) !important;
 }
 .progress2:before{
-  background-color: rgba(127,127,127, 0.6) !important;
+  background-color: rgba(127,127,127, 0.5) !important;
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(0, 0, 0, 0.9) !important;}
