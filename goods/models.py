@@ -57,8 +57,8 @@ class GoodAlbum(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_album_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_good_album')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good_album')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
 
     class Meta:
         indexes = (
@@ -94,6 +94,35 @@ class GoodAlbum(models.Model):
 
     def is_not_empty(self):
 	    return self.good_album.filter(album=self).values("pk").exists()
+
+	def get_users_ids(self):
+        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        return [i['pk'] for i in communities]
+
+    def is_user_can_add_list(self, user_id):
+        if self.creator.pk != user_id and user_id not in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_user_can_delete_list(self, user_id):
+        if self.creator.pk != user_id and user_id in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_community_can_add_list(self, community_id):
+        if self.community.pk != community_id and community_id not in self.get_communities_ids():
+            return True
+        else:
+            return False
+    def is_community_can_delete_list(self, community_id):
+        if self.community.pk != community_id and community_id in self.get_communities_ids():
+            return True
+        else:
+            return False
 
 
 class Good(models.Model):

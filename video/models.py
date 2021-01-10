@@ -51,8 +51,8 @@ class VideoAlbum(models.Model):
     id = models.BigAutoField(primary_key=True)
     type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_video_album')
-    message = models.ManyToManyField("chat.Message", blank=True, related_name='message_video_album')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -96,7 +96,34 @@ class VideoAlbum(models.Model):
     def is_not_empty(self):
         return self.video_album.filter(album=self).values("pk").exists()
 
+    def get_users_ids(self):
+        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        return [i['pk'] for i in users]
 
+    def get_communities_ids(self):
+        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        return [i['pk'] for i in communities]
+
+    def is_user_can_add_list(self, user_id):
+        if self.creator.pk != user_id and user_id not in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_user_can_delete_list(self, user_id):
+        if self.creator.pk != user_id and user_id in self.get_users_ids():
+            return True
+        else:
+            return False
+    def is_community_can_add_list(self, community_id):
+        if self.community.pk != community_id and community_id not in self.get_communities_ids():
+            return True
+        else:
+            return False
+    def is_community_can_delete_list(self, community_id):
+        if self.community.pk != community_id and community_id in self.get_communities_ids():
+            return True
+        else:
+            return False
 
 
 class Video(models.Model):

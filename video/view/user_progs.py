@@ -13,8 +13,28 @@ from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
 
 
-class VideoCommentUserCreate(View):
+class UserVideoAlbumAdd(View):
+    def get(self,request,*args,**kwargs):
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
+            list.users.add(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
 
+class UserVideoAlbumRemove(View):
+    def get(self,request,*args,**kwargs):
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
+            list.users.remove(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
+
+
+class VideoCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))

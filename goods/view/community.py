@@ -8,6 +8,24 @@ from common.template.good import get_template_community_good
 from django.http import Http404
 
 
+class CommunityLoadGoodAlbum(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_template_community_good(self.album, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityLoadGoodAlbum,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		c = super(CommunityLoadGoodAlbum,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.c, self.album
+		return c
+
+	def get_queryset(self):
+		list = self.album.get_goods()
+		return list
+
+
 class CommunityGood(TemplateView):
     template_name = None
 

@@ -13,7 +13,7 @@ urlpatterns=[
     url(r'^off_private/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOffPrivatePhoto.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityOffVotesPhoto.as_view()),
-    
+
     url(r'^post-comment/$', login_required(PhotoCommentCommunityCreate.as_view())),
     url(r'^reply-comment/$', login_required(PhotoReplyCommunityCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityDelete.as_view())),
@@ -30,4 +30,6 @@ urlpatterns=[
     url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityEdit.as_view(), name="photo_album_edit_community"),
     url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityDelete.as_view()),
     url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityAbortDelete.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumAdd.as_view()),
+    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumRemove.as_view()),
 ]

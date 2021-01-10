@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^info/(?P<pk>\d+)/(?P<video_pk>\d+)/$', UserVideoInfo.as_view()),
 
     url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', VideoUserCommentList.as_view()),
+    url(r'^load/(?P<uuid>[0-9a-f-]+)/$', UserLoadVideoAlbum.as_view()),
 ]

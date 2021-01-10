@@ -10,6 +10,29 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
+class CommunityAlbumAdd(View):
+    def post(self,request,*args,**kwargs):
+        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_community_can_add_list(community.pk):
+            list.communities.add(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CommunityAlbumRemove(View):
+    def post(self,request,*args,**kwargs):
+        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
+            list.communities.remove(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
 class PhotoCommunityCreate(View):
     """
     асинхронная мульти загрузка фотографий пользователя в основной альбом

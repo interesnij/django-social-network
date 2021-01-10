@@ -10,8 +10,28 @@ from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
 
 
-class GoodCommentUserCreate(View):
+class UserGoodAlbumAdd(View):
+    def get(self,request,*args,**kwargs):
+        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
+            list.users.add(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
 
+class UserGoodAlbumRemove(View):
+    def get(self,request,*args,**kwargs):
+        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
+            list.users.remove(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
+
+
+class GoodCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, user, good = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Good.objects.get(pk=request.POST.get("good_pk"))
         if not request.is_ajax() and not self.good.comments_enabled:

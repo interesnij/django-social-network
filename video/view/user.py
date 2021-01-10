@@ -9,6 +9,24 @@ from common.template.video import get_template_user_video
 from common.template.user import get_settings_template
 
 
+class UserLoadVideoAlbum(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_template_user_good(self.album, "video/users/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		c = super(UserLoadVideoAlbum,self).get_context_data(**kwargs)
+		c['user'], c['album'] = self.album.creator, self.album
+		return c
+
+	def get_queryset(self):
+		list = self.album.get_queryset()
+		return list
+
+
 class UserVideoList(ListView):
     template_name = None
 

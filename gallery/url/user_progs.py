@@ -33,6 +33,8 @@ urlpatterns=[
     url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumUserAbortDelete.as_view()),
     url(r'^add_photo_in_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumAdd.as_view()),
     url(r'^remove_photo_in_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumRemove.as_view()),
+    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserAlbumAdd.as_view()),
+    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserAlbumRemove.as_view()),
 
     url(r'^get_album_preview/(?P<pk>\d+)/$', UserAlbumPreview.as_view()),
 ]

@@ -24,6 +24,8 @@ urlpatterns=[
     url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumEdit.as_view()),
     url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumDelete.as_view()),
     url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumAbortDelete.as_view()),
+    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumAdd.as_view()),
+    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumRemove.as_view()),
 
     url(r'^get_album_preview/(?P<pk>\d+)/$', UserGoodAlbumPreview.as_view()),
 ]

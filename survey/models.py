@@ -20,8 +20,6 @@ class Survey(models.Model):
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
 
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_survey')
-
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Опрос'

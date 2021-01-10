@@ -24,4 +24,6 @@ urlpatterns=[
     url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumEdit.as_view()),
     url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumDelete.as_view()),
     url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumAbortDelete.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumAdd.as_view()),
+    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodAlbumRemove.as_view()),
 ]

@@ -1,20 +1,40 @@
-
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from video.models import VideoAlbum, Video, VideoComment
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from video.forms import AlbumForm, VideoForm, CommentForm
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from common.template.video import get_permission_community_video
-from django.http import Http404
 from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
 
 
-class VideoCommentCommunityCreate(View):
+class CommunityVideoAlbumAdd(View):
+    def post(self,request,*args,**kwargs):
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_community_can_add_list(community.pk):
+            list.communities.add(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
 
+class CommunityVideoAlbumRemove(View):
+    def post(self,request,*args,**kwargs):
+        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
+            list.communities.remove(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class VideoCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
