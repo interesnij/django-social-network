@@ -116,7 +116,8 @@ class Answer(models.Model):
 
     def get_procent(self):
         if self.get_count():
-            return (self.get_count() / self.survey.get_all_count()) * 100
+            count = self.get_count() / self.survey.get_all_count() * 100
+            return int(count)
         else:
             return 0
 
