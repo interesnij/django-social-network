@@ -648,11 +648,8 @@ class Post(models.Model):
                         time = "<p>Время голосования вышло</p>"
                     else:
                         time = "<p>До " + survey.time_end + "</p>"
-                        if user.is_authenticated:
-                            if not survey.is_user_voted(user.pk):
-                                _class = "pointer u_survey_vote"
-                            else:
-                                voted = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+                        if user.is_authenticated and not survey.is_user_voted(user.pk):
+                            _class = "pointer u_survey_vote"
                     if survey.image:
                         image = '<img src="' + survey.image.url + '" alt="user image">'
                     else:
@@ -669,6 +666,8 @@ class Post(models.Model):
                         voters = 'Пока никто не голосовал. Станьте первым!'
                     answers = ''
                     for answer in survey.get_answers():
+                        if answer.is_user_voted(user.pk):
+                            voted = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
                         answers = ''.join([answers, '<div class="lite_color answer_style', _class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;">', voted, str(answer.get_procent()), '%</span></div>'])
                     block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(survey.creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><p class="underline">', str(survey.creator), '</p>', time, '<br>', answers, voters, '</span></div></div>'])
                 except:
