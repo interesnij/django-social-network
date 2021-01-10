@@ -47,7 +47,7 @@ class Survey(models.Model):
         return survey
 
     def is_user_voted(self, user_id):
-        return SurveyVote.objects.filter(survey__answer_id=self.pk, user_id=user_id).exists()
+        return SurveyVote.objects.filter(answer__survey_id=self.pk, user_id=user_id).exists()
 
     def is_time_end(self):
         if self.time_end:
