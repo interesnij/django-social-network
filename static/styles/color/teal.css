@@ -188,6 +188,9 @@ a.media:hover {
     background-color: #0095A8 !important;
     color: rgba(255, 255, 255, 0.9) !important;
 }
+.progress2:before{
+  background-color: #0FBDD4 !important;
+}
 .like_window, .dislike_window, .repost_window,
 .comment_like_window, .comment_dislike_window, .custom_color {
   background: #009eb2 !important; color: rgba(255, 255, 255, 0.9) !important;

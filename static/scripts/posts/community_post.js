@@ -27,8 +27,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
-    block = document.body.querySelector(".attach_panel");
-    drops = block.querySelectorAll(".dropdown-menu");
+    drops = form_post.querySelectorAll(".dropdown-menu");
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     list = form_post.parentElement.parentElement.querySelector(".tab_active");
     list_name = list.innerHTML;
@@ -59,7 +58,8 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     form_post.querySelector('.id_text').value = "";
     clear_attach_block();
-
+    drops = form_post.querySelectorAll(".dropdown-menu");
+    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     elem = link_.responseText;
     document.body.querySelector(".user_draft_list") ? (toast_info("Запись предложена"),
                                                        value = document.body.querySelector(".user_draft_count").innerHTML,

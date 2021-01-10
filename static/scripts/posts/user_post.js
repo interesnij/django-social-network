@@ -38,8 +38,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     list = form_post.parentElement.parentElement.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
-    block = document.body.querySelector(".attach_panel");
-    drops = block.querySelectorAll(".dropdown-menu");
+    drops = form_post.querySelectorAll(".dropdown-menu");
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.prepend(new_post),
                                        toast_info('Запись опубликована'),
@@ -572,7 +571,7 @@ on('#ajax', 'click', '.music_attach_playlist_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
-  remove_file_attach(); 
+  remove_file_attach();
 })
 on('#ajax', 'click', '.survey_attach_remove', function() {
   block = this.parentElement.parentElement;
