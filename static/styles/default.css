@@ -27,12 +27,16 @@ height: auto;
 .progress_span_l {
   float: right;
   padding-right: 10px;
-  z-index: 1
+  z-index: 1;
+  padding-top: 5px;
+  padding-bottom: 3px;
 }
 .progress_span_r {
   padding-left: 10px;
   float: left;
-  z-index: 1
+  z-index: 1;
+  padding-top: 5px;
+  padding-bottom: 3px;
 }
 
 .show {
