@@ -7,7 +7,6 @@ top:0;
 
 .progress2:before {
 animation: slideIn 2s ease-out;
-background-color: #323232 !important;
 bottom:0;
 left:0;
 content:"";
