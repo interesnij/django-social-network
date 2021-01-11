@@ -56,7 +56,7 @@ class GoodAlbum(models.Model):
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_album_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
-	image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
+    image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 
     users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
