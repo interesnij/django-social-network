@@ -89,12 +89,12 @@ class GoodAlbum(models.Model):
     def count_goods_ru(self):
 	    count = self.count_goods()
 	    a, b = count % 10, count % 100
-        if (a == 1) and (b != 11):
-            return str(count) + " товар"
-        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return str(count) + " птовара"
-        else:
-            return str(count) + " товаров"
+		if (a == 1) and (b != 11):
+			return str(count) + " товар"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " товара"
+		else:
+			return str(count) + " товаров"
 
     def get_goods(self):
         return self.good_album.filter(is_deleted=False, status=Good.STATUS_PUBLISHED)
