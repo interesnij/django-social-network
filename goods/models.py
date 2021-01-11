@@ -55,7 +55,8 @@ class GoodAlbum(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_album_creator', verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    is_deleted = models.BooleanField(verbose_name="Удален",default=False)
+	image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 
     users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
@@ -133,6 +134,12 @@ class GoodAlbum(models.Model):
             return True
         else:
             return False
+	def get_cover(self):
+		if self.image:
+			return.self.image.url
+		else:
+			return 'static/images/no_img/album.jpg'
+
 
 
 class Good(models.Model):
