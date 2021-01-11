@@ -86,10 +86,9 @@ class GoodAlbum(models.Model):
         except:
             return 0
 
-	def count_goods_ru(self):
-		count = self.count_goods()
-		a = count % 10
-        b = count % 100
+    def count_goods_ru(self):
+	    count = self.count_goods()
+	    a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             return str(count) + " товар"
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
