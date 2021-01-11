@@ -138,7 +138,7 @@ class GoodAlbum(models.Model):
 	    if self.image:
 		    return self.image.url
 	    else:
-		    return 'static/images/no_img/album.jpg'
+		    return '/static/images/no_img/album.jpg'
 
 
 
