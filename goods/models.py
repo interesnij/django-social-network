@@ -135,10 +135,10 @@ class GoodAlbum(models.Model):
         else:
             return False
     def get_cover(self):
-		if self.image:
-			return.self.image.url
-		else:
-			return 'static/images/no_img/album.jpg'
+	    if self.image:
+		    return.self.image.url
+	    else:
+		    return 'static/images/no_img/album.jpg'
 
 
 
