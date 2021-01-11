@@ -2,8 +2,8 @@
 {% block title %}Мои товары - {{ album.title }}{% endblock %}
 {% block content %}
 
-                        <div data-pk="{{ album.creator.pk }}" data-uuid="{{ album.uuid }}">
-                            <div class="media">
+                        <div data-pk="{{ album.creator.pk }}" data-uuid="{{ album.uuid }}" style="padding: 7px;">
+                            <div class="media mb-2">
                                 <div class="media-body">
                                     <h4 class="content-color-primary mb-0">
                                       <a class="u_load_good_album pointer">
@@ -23,7 +23,7 @@
                                 <a href="{{ album.creator.get_link }}" class="ajax">
                                     <figure class="avatar-120 mx-auto mb-3" style="width:120px">
                                       {% if album.creator.s_avatar %}
-                                        <img src="{{ album.creator.s_avatar.url }}" alt="img">
+                                        <img src="{{ album.creator.s_avatar.url }}" style="border-radius:120px" alt="img">
                                         {% else %}
                                           <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                         {% endif %}
