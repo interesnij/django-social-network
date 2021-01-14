@@ -14,7 +14,7 @@ class UserLoadGoodAlbum(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_good(self.album, "goods/users/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_good(self.album, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadGoodAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
