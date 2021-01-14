@@ -1,4 +1,35 @@
-
+on('#ajax', 'click', '.c_add_good_album', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/goods/community_progs/add_list/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("c_remove_good_album");
+      _this.classList.remove("c_add_good_album")
+      _this.innerHTML = '<svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+  }};
+  link.send( null );
+});
+on('#ajax', 'click', '.c_remove_good_album', function(e) {
+  _this = this;
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/goods/community_progs/remove_list/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add("c_add_good_album");
+      _this.classList.remove("c_remove_good_album")
+      _this.innerHTML = '<svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  }};
+  link.send( null );
+});
 
 on('#ajax', 'click', '.c_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
