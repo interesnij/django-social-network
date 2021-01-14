@@ -76,7 +76,7 @@ on('#ajax', 'click', '.u_good_comments', function() {
   this.classList.toggle("comments_open");
 });
 
-on('#ajax', 'click', '.u_load_photo_album', function() {
+on('#ajax', 'click', '.u_load_good_album', function() {
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
