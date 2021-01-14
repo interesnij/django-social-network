@@ -35,7 +35,7 @@ on('#ajax', 'click', '.c_ucm_good_repost', function() {
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_ucm_good_list_repost', function() {
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
@@ -80,4 +80,11 @@ on('#ajax', 'click', '.c_good_comments', function() {
   url = "/goods/community/comment/" + good_pk + "/" + pk + "/";
   list_load(block.querySelector(".c_load_comments"), url);
   this.classList.toggle("comments_open");
+});
+
+on('#ajax', 'click', '.c_load_good_album', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/goods/community/load/" + uuid + "/", loader)
 });
