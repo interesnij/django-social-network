@@ -302,7 +302,7 @@ class GoodImage(models.Model):
 	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(1000,1000)],upload_to=upload_to_sub_good_directory)
 
 	def __str__(self):
-		return self.image.url
+		return str(self.pk)
 
 
 class GoodComment(models.Model):
