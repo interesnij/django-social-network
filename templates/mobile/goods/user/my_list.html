@@ -17,8 +17,7 @@
   </div>
 
   <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">{{ album.title }} - подборка товаров {{ album.creator.get_full_name_genitive }}</h5>
-    <span>{{ album.count_goods_ru }}</span>
+    <h5 class="mt-1" style="flex: 1;">{{ album.title }} ({{ album.count_goods_ru }}) - товары {{ album.creator.get_full_name_genitive }}</h5>
   </div>
 
 <div class="row is_load_paginate no-gutters" data-link="/goods/user/load/{{ album.creator.pk }}/{{ album.uuid }}/">
