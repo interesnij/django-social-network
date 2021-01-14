@@ -26,7 +26,7 @@
                             </div>
                             <div class="align-items-center no-gutters">
                               <figure class="mx-auto mb-3" style="width:120px">
-                                <img class="u_load_good_album pointer" src="{{ album.get_cover }}" style="width:100%" />
+                                <img class="u_load_good_album pointer" src="{{ album.get_cover }}" style="width:100%;border-radius:50%" />
                               </figure>
                             </div>
 
@@ -39,6 +39,7 @@
                               {{ album.count_goods_ru }}
                             </h6>
                           </div>
+
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
   {% if user.is_good_album_exists %}
   <div class="row no-gutters">
