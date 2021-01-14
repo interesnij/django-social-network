@@ -80,5 +80,5 @@ on('#ajax', 'click', '.u_load_good_album', function() {
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/gallery/user/load/" + uuid + "/", loader)
+  open_fullscreen("/goods/user/load/" + uuid + "/", loader)
 });
