@@ -77,7 +77,7 @@ class UserAlbum(TemplateView):
         from gallery.models import Album
 
         c = super(UserAlbum,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, , self.album
+        c['user'], c['album'] = self.user, self.album
         return c
 
 
