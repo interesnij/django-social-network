@@ -3,7 +3,8 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_video(community, folder, template, request_user, user_agent):
+def get_template_community_video(album, folder, template, request_user, user_agent):
+    community = album.community
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -57,8 +58,9 @@ def get_template_community_video(community, folder, template, request_user, user
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_community_video(community, folder, template, request_user, user_agent):
+def get_permission_community_video(album, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
+    community = album.community
 
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
@@ -86,7 +88,8 @@ def get_permission_community_video(community, folder, template, request_user, us
         template_name = "mobile/" + template_name
     return template_name
 
-def get_template_user_video(user, folder, template, request_user, user_agent):
+def get_template_user_video(album, folder, template, request_user, user_agent):
+    community = album.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -132,8 +135,9 @@ def get_template_user_video(user, folder, template, request_user, user_agent):
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_user_video(user, folder, template, request_user, user_agent):
+def get_permission_user_video(album, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    community = album.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')

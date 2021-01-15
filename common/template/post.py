@@ -3,7 +3,8 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_post(community, folder, template, request_user, user_agent):
+def get_template_community_post(list, folder, template, request_user, user_agent):
+    community = list.community
     if request_user.is_authenticated:
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
@@ -57,8 +58,9 @@ def get_template_community_post(community, folder, template, request_user, user_
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_community_post(community, folder, template, request_user, user_agent):
+def get_permission_community_post(list, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
+    community = list.community
 
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
@@ -86,7 +88,8 @@ def get_permission_community_post(community, folder, template, request_user, use
         template_name = "mobile/" + template_name
     return template_name
 
-def get_template_user_post(user, folder, template, request_user, user_agent):
+def get_template_user_post(list, folder, template, request_user, user_agent):
+    user = list.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -132,8 +135,9 @@ def get_template_user_post(user, folder, template, request_user, user_agent):
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_user_post(user, folder, template, request_user, user_agent):
+def get_permission_user_post(list, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    user = list.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')

@@ -52,8 +52,9 @@ def get_template_community_music(playlist, folder, template, request_user, user_
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_community_music(community, folder, template, request_user, user_agent):
+def get_permission_community_music(playlist, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
+    community = playlist.community
 
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
@@ -128,8 +129,9 @@ def get_template_user_music(playlist, folder, template, request_user, user_agent
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_user_music(user, folder, template, request_user, user_agent):
+def get_permission_user_music(playlist, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
+    user = playlist.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')

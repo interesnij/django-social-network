@@ -58,8 +58,9 @@ def get_template_community_photo(album, folder, template, request_user, user_age
         template_name = "mobile/" + template_name
     return template_name
 
-def get_permission_community_photo(community, folder, template, request_user, user_agent):
+def get_permission_community_photo(album, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
+    community = album.community
 
     if community.is_suspended():
         raise PermissionDenied('Ошибка доступа')
