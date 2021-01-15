@@ -107,7 +107,7 @@ class CommunityDocs(ListView):
 			self.doc_list = self.list.get_my_docs()
 		else:
 			self.doc_list = self.list.get_docs()
-		self.template_name = get_template_community_doc(self.c, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_community_doc(self.list, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -133,9 +133,9 @@ class CommunityDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 		if self.list.type == DocList.MAIN:
-			self.template_name = get_template_community_doc(self.c, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_doc(self.list, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_doc(self.c, "communities/docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_doc(self.list, "communities/docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -165,7 +165,7 @@ class CommunityGoods(ListView):
 			self.goods_list = self.album.get_staff_goods()
 		else:
 			self.goods_list = self.album.get_goods()
-		self.template_name = get_template_community_good(self.c, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_community_good(self.album, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -192,9 +192,9 @@ class CommunityGoodsList(ListView):
 			self.goods_list = self.album.get_goods()
 
 		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_community_good(self.c, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_good(self.album, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_good(self.c, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_good(self.album, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -259,7 +259,7 @@ class CommunityVideo(ListView):
 		from common.template.video import get_template_community_video
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.c, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		self.album = VideoAlbum.objects.get(community_id=self.c.pk, type=VideoAlbum.MAIN)
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
@@ -292,9 +292,9 @@ class CommunityVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_community_video(self.c, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_video(self.c, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_video(self.album, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -324,7 +324,7 @@ class CommunityPostsListView(ListView):
 				self.posts_list = self.list.get_posts()
 		else:
 			self.posts_list = self.list.get_posts()
-		self.template_name = get_permission_community_post(self.c, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_permission_community_post(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

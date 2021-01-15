@@ -13,7 +13,7 @@ class UserPostView(TemplateView):
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.user, self.posts = self.list.creator, self.list.get_posts()
-        self.template_name = get_template_user_post(self.user, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_post(self.list, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -33,7 +33,7 @@ class UserFixPostView(TemplateView):
         self.user, self.post = User.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = self.user.get_or_create_fix_list()
         self.posts = self.list.get_posts()
-        self.template_name = get_template_user_post(self.user, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_post(self.list, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserFixPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -51,16 +51,15 @@ class UserGallery(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
+        from gallery.models import Album
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user_photo(self.user, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
+        self.template_name = get_template_user_photo(self.album, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from gallery.models import Album
-
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
+        c['user'], c['album'] = self.user, self.album
         return c
 
 class UserAlbum(TemplateView):
@@ -68,16 +67,17 @@ class UserAlbum(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
+        from gallery.models import Album
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_user_photo(self.user, "users/user_album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_template_user_photo(self.album, "users/user_album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from gallery.models import Album
 
         c = super(UserAlbum,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, Album.objects.get(uuid=self.kwargs["uuid"])
+        c['user'], c['album'] = self.user, , self.album
         return c
 
 
@@ -172,7 +172,7 @@ class UserDocs(ListView):
         else:
             self.doc_list = self.list.get_docs()
 
-        self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -202,7 +202,7 @@ class UserGoods(ListView):
         else:
             self.goods_list = self.album.get_goods()
 
-        self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_good(self.album, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -231,7 +231,7 @@ class UserVideo(ListView):
             self.video_list = self.album.get_my_queryset()
         else:
             self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_video(self.album, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

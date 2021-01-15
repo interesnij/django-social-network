@@ -12,7 +12,7 @@ class PostCommunity(TemplateView):
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.posts = self.list.get_posts()
-        self.template_name = get_template_community_post(self.list.community, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -30,7 +30,7 @@ class CommunityFixPostView(TemplateView):
         self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = self.community.get_or_create_fix_list()
         self.posts = self.list.get_posts()
-        self.template_name = get_template_community_post(self.community, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_community_post(self.list, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityFixPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -135,7 +135,8 @@ class CommunityGallery(TemplateView):
         from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.album, self.template_name = Album.objects.get(community_id=self.c.pk, type=Album.MAIN), get_template_community_photo(self.c, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.album = Album.objects.get(community_id=self.c.pk, type=Album.MAIN)
+        self.template_name = get_template_community_photo(self.album, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -152,7 +153,8 @@ class CommunityAlbum(TemplateView):
         from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.album, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), get_template_community_photo(self.c, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_template_community_photo(self.album, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

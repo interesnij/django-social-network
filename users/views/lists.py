@@ -42,9 +42,9 @@ class UserVideoList(ListView):
 		else:
 			self.video_list = self.album.get_queryset()
 		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_user_video(self.user, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_video(self.album, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_video(self.user, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_video(self.album, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -72,9 +72,9 @@ class UserGoodsList(ListView):
 		else:
 			self.goods_list = self.album.get_goods()
 		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_user_good(self.user, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_good(self.album, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_good(self.user, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_good(self.album, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -127,9 +127,9 @@ class UserDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_docs()
 		if self.list.type == DocList.MAIN:
-			self.template_name = get_template_user_doc(self.user, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_doc(self.user, "users/user_docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_doc(self.list, "users/user_docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -170,7 +170,7 @@ class UserPostsListView(ListView):
 			raise Http404
 		else:
 			self.posts_list = self.list.get_posts()
-		self.template_name = get_permission_user_post(self.user, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_permission_user_post(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
