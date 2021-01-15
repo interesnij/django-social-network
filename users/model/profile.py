@@ -8,7 +8,6 @@ from users.helpers import upload_to_user_directory
 
 
 class UserProfile(models.Model):
-    id = models.BigAutoField(primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     activity = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Деятельность")
     interests = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Интересы")
@@ -130,7 +129,6 @@ class UserProfileFamily(models.Model):
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_family', verbose_name="Пользователь")
-    id = models.BigAutoField(primary_key=True)
     male_status = models.CharField(max_length=5, choices=STATUS_MALE, default=NO_VALUE, verbose_name="Статус мужчины")
     female_status = models.CharField(max_length=5, choices=STATUS_FEMALE, default=NO_VALUE, verbose_name="Статус женщины")
     partner = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='user_profile_partner', verbose_name="Муж/Жена")
