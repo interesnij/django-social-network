@@ -1,6 +1,7 @@
 from django import forms
 from users.model.profile import UserProfile
 from users.model.settings import *
+from users.models import User
 
 
 class InfoUserForm(forms.ModelForm):
