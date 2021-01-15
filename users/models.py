@@ -39,8 +39,6 @@ class User(AbstractUser):
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
 
-    #post = models.ManyToManyField("posts.Post", blank=True, related_name='post_user')
-
     #USERNAME_FIELD = 'phone'
 
     class Meta:
@@ -108,7 +106,6 @@ class User(AbstractUser):
             return True
         else:
             return False
-
 
     def get_full_name(self):
         return str(self.first_name) + " " + str(self.last_name)
@@ -204,9 +201,6 @@ class User(AbstractUser):
         except:
             return None
 
-    def get_photos_count(self):
-        return self.photo_creator.values("pk").count()
-
     def get_online(self):
         from datetime import datetime, timedelta
 
@@ -233,14 +227,12 @@ class User(AbstractUser):
             else:
                 return '<i>Был ' + self.get_last_activity() + '</i>' + device
 
-
     def get_request_ip(request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
+            return x_forwarded_for.split(',')[-1].strip()
         else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
+            return request.META.get('REMOTE_ADDR')
 
     def get_blocked_users(self):
         blocked_users_query = Q(blocked_by_users__blocker_id=self.pk)

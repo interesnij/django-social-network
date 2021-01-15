@@ -29,16 +29,8 @@ class UserInfoChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		try:
-			self.profile = UserProfile.objects.get(user=request.user)
-		except:
-			self.profile = UserProfile.objects.create(user=request.user)
-		self.form = InfoUserForm(request.POST,instance=self.profile)
+		self.form = InfoUserForm(request.POST,instance=request.user)
 		if request.is_ajax() and self.form.is_valid():
-			user = self.request.user
-			user.first_name = self.form.cleaned_data['first_name']
-			user.last_name = self.form.cleaned_data['last_name']
-			user.save()
 			self.form.save()
 			return HttpResponse ('')
 		return super(UserInfoChange,self).post(request,*args,**kwargs)

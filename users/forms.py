@@ -4,12 +4,9 @@ from users.model.settings import *
 
 
 class InfoUserForm(forms.ModelForm):
-    first_name = forms.CharField(required=False,max_length=256,label='Имя')
-    last_name = forms.CharField(required=False,max_length=256,label='Фамилия')
-
     class Meta:
-        model = UserProfile
-        fields = ('first_name','last_name')
+        model = User
+        fields = ('sity','status')
 
 class UserNotifyForm(forms.ModelForm):
     class Meta:

@@ -18,6 +18,10 @@ on('#ajax', 'click', '.color_change', function() {
 };
 });
 
+on('#ajax', 'click', '#info_user_btn', function() {
+  send_form_with_pk_and_toast('/users/settings/info/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#info_user_btn"), "Изменения приняты!")
+});
+
 on('#ajax', 'click', '#user_private_profile_btn', function() {
   send_form_with_pk_and_toast('/users/settings/private/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#user_private_profile_form"), "Изменения приняты!")
 });
