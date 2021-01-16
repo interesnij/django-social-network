@@ -193,3 +193,18 @@ class CommunityDoclistAbortDelete(View):
             return HttpResponse()
         else:
             raise Http404
+
+class CommunityDoclistPreview(TemplateView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+
+		self.list = DocList.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("docs/doc_create/u_list_preview.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
+		return super(CommunityDoclistPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityDoclistPreview,self).get_context_data(**kwargs)
+		context["list"], context["community"] = self.list, self.list.community
+		return context

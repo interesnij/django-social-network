@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistAbortDelete.as_view()),
     url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistAdd.as_view()),
     url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDoclistRemove.as_view()),
+    url(r'^list_preview/(?P<pk>\d+)/$', login_required(CommunityDoclistPreview.as_view())),
 
     url(r'^create_doc/(?P<pk>\d+)/$', CommunityDocCreate.as_view()),
 
