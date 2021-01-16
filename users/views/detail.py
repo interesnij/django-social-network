@@ -53,7 +53,8 @@ class UserGallery(TemplateView):
         from common.template.photo import get_template_user_photo
         from gallery.models import Album
 
-        self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album = Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
         self.template_name = get_template_user_photo(self.album, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
