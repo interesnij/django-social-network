@@ -283,37 +283,33 @@ class UserCommentPhoto(TemplateView):
 
 
 class UserFirstAvatar(TemplateView):
-    """
-    страница аватара пользователя с разрещениями и без
-    """
-    template_name = None
+	"""страница аватара пользователя с разрещениями и без"""
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community__isnull=True)
+		except:
+			self.album = Album.objects.create(creator=self.user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
+		self.photo, self.photos = self.album.get_first_photo(), self.album.get_photos()
+		if request.is_ajax():
+			self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
-        try:
-            self.album = Album.objects.get(creator=self.user, type=Album.AVATAR, community__isnull=True)
-        except:
-            self.album = Album.objects.create(creator=self.user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
-        self.photo = self.album.get_first_photo()
-        self.photos = self.album.get_photos()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(UserFirstAvatar,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserFirstAvatar,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-	    try:
-		    context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-	    except:
-		    pass
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        context["album"] = self.album
-        context["user"] = self.user
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserFirstAvatar,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		try:
+			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		except:
+			pass
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		context["album"] = self.album
+		context["user"] = self.user
+		return context
 
 
 class GetUserPhoto(TemplateView):
