@@ -285,7 +285,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False, is_public=True)
-        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
+        albums_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
@@ -296,7 +296,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False)
-        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
+        albums_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).order_by("order")
 
@@ -304,7 +304,7 @@ class Community(models.Model):
         from gallery.models import Album
 
         albums_query = Q(is_deleted=False, is_public=True)
-        lists_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
+        albums_query.add(Q(Q(community_id=self.id)|Q(communities__id=self.pk)), Q.AND)
         albums_query.add(~Q(type=Album.MAIN), Q.AND)
         return Album.objects.filter(albums_query).exists()
 
