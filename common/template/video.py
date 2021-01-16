@@ -89,7 +89,7 @@ def get_permission_community_video(album, folder, template, request_user, user_a
     return template_name
 
 def get_template_user_video(album, folder, template, request_user, user_agent):
-    community = album.creator
+    user = album.creator
     if request_user.is_authenticated:
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
@@ -137,7 +137,7 @@ def get_template_user_video(album, folder, template, request_user, user_agent):
 
 def get_permission_user_video(album, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-    community = album.creator
+    user = album.creator
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
