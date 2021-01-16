@@ -306,7 +306,10 @@ class UserFirstAvatar(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserFirstAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		try:
+			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		except:
+			pass
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["album"] = self.album
         context["user"] = self.user
