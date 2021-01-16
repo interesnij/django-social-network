@@ -51,6 +51,9 @@
       <span>Д. р.: </span>{{ user.birthday }}<br>
       <span>Тел.: </span>{{ user.phone }}<br>
       <span>Ссылка: </span>{{ user.get_slug }}<br>
+      {% if user.city %}
+        <span>Ссылка: </span><a>{{ user.city }}</a><br>
+      {% endif %}
     </div>
   </div>
 
