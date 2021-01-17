@@ -17,7 +17,7 @@
         <div class="dropdown-menu" style="top: 34px;">
           {% for object in request.user.get_good_albums %}
             <a class="dropdown-item create_ajax pointer" data-href="/users/load/u_good_album_load/{{ object.uuid }}/">
-              {{ object.name }}
+              {{ object.title }}
             </a>
           {% endfor %}
         </div>

@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^u_survey_load/$', login_required(UserLoadSurvey.as_view()), name="u_survey_load"),
 
     url(r'^u_good_load/$', login_required(UserLoadGood.as_view()), name="u_good_load"),
-    url(r'^u_good_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadGoodList.as_view()), name="u_good_list_load"),
+    url(r'^u_good_album_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadGoodList.as_view()), name="u_good_list_load"),
 
     url(r'^c_img_load/$', login_required(CommunityLoadPhoto.as_view())),
     url(r'^c_img_comment_load/$', login_required(CommunityLoadPhotoComment.as_view())),
