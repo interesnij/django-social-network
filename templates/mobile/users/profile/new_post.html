@@ -30,7 +30,7 @@
                   <a class="btn btn-link btn-sm pointer menu_drop">
                     список
                   </a>
-                  <div class="dropdown-menu" style="">
+                  <div class="dropdown-menu" style="right: 0;left: 100px;">
                     {% for object in user.get_my_all_post_lists %}
                       <span data-pk="{{ object.pk }}">
                         {% if object.is_main_list %}
@@ -51,7 +51,7 @@
                   <a class="btn btn-link btn-sm pointer menu_drop">
                     тема
                   </a>
-                  <div class="dropdown-menu" style="">
+                  <div class="dropdown-menu" style="right: 0;left: 100px;">
                     {% for object in user.get_post_categories %}
                       <a class="dropdown-item" data-pk="{{ object.pk }}">{{ object.name }}</a>
                     {% endfor %}
