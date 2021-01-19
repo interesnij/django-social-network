@@ -27,7 +27,7 @@ class CommunityFollow(models.Model):
     view = models.BooleanField(default=False, verbose_name="Просмотрено")
 
     class Meta:
-        unique_together = ('user', 'community')
+        #unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'
         verbose_name_plural = 'Подписчики группы'
 
