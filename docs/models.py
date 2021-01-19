@@ -13,7 +13,7 @@ class DocList(models.Model):
         (LIST, 'Пользовательский список'),
     )
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_doclist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
@@ -21,8 +21,8 @@ class DocList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_doclist')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_doclist')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_doclist')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_doclist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -38,7 +38,7 @@ class DocList(models.Model):
         return queryset
 
     def get_docs(self):
-        queryset = self.doc_list.exclude(type=Doc2.PRIVATE)
+        queryset = self.doc_list.exclude(type=Doc.PRIVATE)
         return queryset
 
     def get_users_ids(self):
@@ -71,10 +71,10 @@ class DocList(models.Model):
             return False
 
     def list_30(self):
-        queryset = self.doc_list.exclude(type=Doc2.PRIVATE)[:30]
+        queryset = self.doc_list.exclude(type=Doc.PRIVATE)[:30]
         return queryset
     def list_6(self):
-        queryset = self.doc_list.exclude(type=Doc2.PRIVATE)[:6]
+        queryset = self.doc_list.exclude(type=Doc.PRIVATE)[:6]
         return queryset
 
     def count_docs(self):
@@ -91,7 +91,7 @@ class DocList(models.Model):
         ordering = ['order']
 
 
-class Doc2(models.Model):
+class Doc(models.Model):
     PRIVATE = 'P'
     STUDY = 'S'
     BOOK = 'B'
@@ -105,18 +105,11 @@ class Doc2(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    list = models.ManyToManyField(DocList, related_name='doc_list', blank="True")
+    list = models.ManyToManyField(DocList, related_name='doc_list', blank=True)
     type = models.CharField(choices=TYPES, default='P', max_length=2)
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     is_community = models.BooleanField(default=False, verbose_name="Пренадлежит к сообществу")
-
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='item_doc')
-    item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_doc')
-    photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_doc')
-    good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_doc')
-    video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_doc')
-    message = models.ManyToManyField('chat.Message', blank=True, related_name='message_doc')
 
     class Meta:
         ordering = ["-created"]

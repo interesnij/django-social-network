@@ -1,4 +1,4 @@
-from docs.models import Doc2, DocList
+from docs.models import Doc, DocList
 from communities.models import Community
 from django.views import View
 from django.views.generic.base import TemplateView
@@ -38,7 +38,7 @@ class CommunityDocAdd(View):
     Добавляем документ в список документов сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -50,7 +50,7 @@ class CommunityDocRemove(View):
     Удаляем документ
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc2.objects.get(pk=self.kwargs["doc_pk"])
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             doc.remove()
             return HttpResponse()
@@ -62,7 +62,7 @@ class CommunityDocListAdd(View):
     Добавляем документ в любой список сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -74,7 +74,7 @@ class CommunityDocListRemove(View):
     Удаляем документ из любого списка сообщества, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.remove(doc)
             return HttpResponse()

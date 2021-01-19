@@ -11,7 +11,7 @@ class Survey(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='survey_creator', verbose_name="Создатель")
-    community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     is_anonymous = models.BooleanField(verbose_name="Анонимный", default=False)
     is_multiple = models.BooleanField(verbose_name="Несколько вариантов", default=False)

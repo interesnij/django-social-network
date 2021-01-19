@@ -5,7 +5,6 @@ pip install -U channels
 easy_thumbnails
 django-allauth
 django-rest-auth
-django-ckeditor
 jwt
 six
 soundcloud

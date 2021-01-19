@@ -27,9 +27,9 @@ class SurveyNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
+    #survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
-    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - опросы пользователя"
@@ -80,15 +80,15 @@ class SurveyCommunityNotify(models.Model):
         (COMMUNITY_REPOST, 'поделилось Вашим опросом'),
     )
 
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='survey_community_notifications', verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='survey_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_survey_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
+    #survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
-    community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - опросы сообщества"

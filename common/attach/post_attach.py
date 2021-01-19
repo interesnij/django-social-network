@@ -40,8 +40,8 @@ def post_attach(attach_items, post):
                 raise ValidationError('Статья не найдена')
         elif item[:3] == "doc":
             try:
-                from docs.models import Doc2
-                doc = Doc2.objects.get(pk=item[3:])
+                from docs.models import Doc
+                doc = Doc.objects.get(pk=item[3:])
                 doc.post.add(post)
             except:
                 raise ValidationError('Документ не найден')

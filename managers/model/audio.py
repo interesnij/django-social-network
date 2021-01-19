@@ -138,7 +138,7 @@ class AudioModerationReport(models.Model):
 
 
 class ModerationPenaltyAudio(models.Model):
-    audio = models.ForeignKey("music.SoundcloudParsing", on_delete=models.CASCADE, related_name='audio_penalties', verbose_name="Оштрафованный трек")
+    #audio = models.ForeignKey("music.SoundcloudParsing", on_delete=models.CASCADE, related_name='audio_penalties', verbose_name="Оштрафованный трек")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_audio_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedAudio, on_delete=models.CASCADE, related_name='audio_moderated_object', verbose_name="Объект")
 

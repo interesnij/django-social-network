@@ -40,8 +40,8 @@ def message_attach(attach_items, message):
                 raise ValidationError('Статья не найдена')
         elif item[:3] == "doc":
             try:
-                from docs.models import Doc2
-                doc = Doc2.objects.get(pk=item[3:])
+                from docs.models import Doc
+                doc = Doc.objects.get(pk=item[3:])
                 doc.message.add(message)
             except:
                 raise ValidationError('Документ не найден')

@@ -18,7 +18,7 @@ class GoodSubCategoryAdmin(admin.ModelAdmin):
             model = GoodSubCategory
 
 class GoodAlbumAdmin(admin.ModelAdmin):
-    list_display = ['title', 'community', 'order',]
+    list_display = ['title', 'order',]
     search_fields = ['name']
     class Meta:
             model = GoodAlbum

@@ -268,7 +268,7 @@ class VideoCommentModerationReport(models.Model):
 
 
 class ModerationPenaltyVideo(models.Model):
-    video = models.ForeignKey("video.Video", on_delete=models.CASCADE, related_name='video_penalties', verbose_name="Оштрафованный ролик")
+    #video = models.ForeignKey("video.Video", on_delete=models.CASCADE, related_name='video_penalties', verbose_name="Оштрафованный ролик")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_video_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedVideo, on_delete=models.CASCADE, related_name='video_moderated_object', verbose_name="Объект")
 
@@ -294,7 +294,7 @@ class ModerationPenaltyVideo(models.Model):
         verbose_name_plural = 'Оштрафованные ролики'
 
 class ModerationPenaltyVideoComment(models.Model):
-    comment = models.ForeignKey("video.VideoComment", on_delete=models.CASCADE, related_name='video_comment_penalties', verbose_name="Оштрафованный комментарий к ролику")
+    #comment = models.ForeignKey("video.VideoComment", on_delete=models.CASCADE, related_name='video_comment_penalties', verbose_name="Оштрафованный комментарий к ролику")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_video_comment_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedVideoComment, on_delete=models.CASCADE, related_name='video_comment_moderated_object', verbose_name="Объект")
 

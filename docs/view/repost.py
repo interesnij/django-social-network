@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from docs.models import DocList, Doc2
+from docs.models import DocList, Doc
 from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
@@ -20,7 +20,7 @@ class UUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.user, self.template_name = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/doc_repost_window/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.doc, self.user, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/doc_repost_window/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocWindow,self).get(request,*args,**kwargs)
@@ -39,7 +39,7 @@ class CUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.community, self.template_name = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/doc_repost_window/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.doc, self.community, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/doc_repost_window/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMDocWindow,self).get(request,*args,**kwargs)
 
@@ -93,7 +93,7 @@ class UUDocRepost(View):
     создание репоста документа пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        doc, user, form_post, attach = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        doc, user, form_post, attach = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -111,7 +111,7 @@ class CUDocRepost(View):
     создание репоста документа сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        doc, community, form_post, attach = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        doc, community, form_post, attach = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -129,7 +129,7 @@ class UCDocRepost(View):
     создание репоста документа пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        doc, user = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
+        doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_community_send(doc, Post.DOC_REPOST, None, request)
@@ -141,7 +141,7 @@ class CCDocRepost(View):
     создание репоста документа сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        doc, community = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_community_send(doc, Post.DOC_REPOST, community, request)
         return HttpResponse()
@@ -152,7 +152,7 @@ class UMDocRepost(View):
     создание репоста документа пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        doc, user = Doc2.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
+        doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(doc, Post.DOC_REPOST, None, request, "Репост документа пользователя")
@@ -164,7 +164,7 @@ class CMDocRepost(View):
     создание репоста документа сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        doc, community = Doc2.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(doc, Post.DOC_REPOST, None, community, "Репост документа сообщества")
         return HttpResponse()

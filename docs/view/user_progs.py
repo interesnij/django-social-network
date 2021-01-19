@@ -1,4 +1,4 @@
-from docs.models import Doc2, DocList
+from docs.models import Doc, DocList
 from users.models import User
 from django.views import View
 from django.views.generic.base import TemplateView
@@ -36,7 +36,7 @@ class UserDocAdd(View):
     Добавляем документ в свой список, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_doc_in_list(doc.pk):
             list.doc_list.add(doc)
@@ -49,7 +49,7 @@ class UserDocRemove(View):
     Удаляем документ
     """
     def get(self, request, *args, **kwargs):
-        doc = Doc2.objects.get(pk=self.kwargs["pk"])
+        doc = Doc.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk):
             doc.remove()
             return HttpResponse()
@@ -61,7 +61,7 @@ class UserDocListAdd(View):
     Добавляем документ в любой список, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_doc_in_list(doc.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -73,7 +73,7 @@ class UserDocListRemove(View):
     Удаляем документ из любого списка, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc2.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_doc_in_list(doc.pk):
             list.doc_list.remove(doc)
             return HttpResponse()

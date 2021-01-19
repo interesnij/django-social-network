@@ -1255,14 +1255,14 @@ class User(AbstractUser):
             return self.get_music()
 
     def get_docs_count(self):
-        from docs.models import Doc2
+        from docs.models import Doc
 
-        return Doc2.objects.filter(creator_id=self.pk, community__isnull=True).values("pk").count()
+        return Doc.objects.filter(creator_id=self.pk, community__isnull=True).values("pk").count()
 
     def get_last_docs(self):
-        from docs.models import DocList, Doc2
+        from docs.models import DocList, Doc
 
-        docs_list = Doc2.objects.filter(creator_id=self.pk, community__isnull=True, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
+        docs_list = Doc.objects.filter(creator_id=self.pk, community__isnull=True, is_deleted=False).exclude(type=Doc.PRIVATE)[0:5]
         return docs_list[0:5]
 
     def is_doc_list_exists(self):

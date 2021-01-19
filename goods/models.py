@@ -48,8 +48,8 @@ class GoodAlbum(models.Model):
         (ALBUM, 'Пользовательский альбом'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    #community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -58,8 +58,8 @@ class GoodAlbum(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
 
     class Meta:
         indexes = (
@@ -166,14 +166,6 @@ class Good(models.Model):
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-
-	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True, verbose_name="Подборка")
-	post = models.ManyToManyField("posts.Post", blank=True, related_name='item_good')
-	item_comment = models.ManyToManyField("posts.PostComment", blank=True, related_name='comment_good')
-	photo_comment = models.ManyToManyField('gallery.PhotoComment', blank=True, related_name='gallery_comment_good')
-	good_comment = models.ManyToManyField('goods.GoodComment', blank=True, related_name='good_comment_good')
-	video_comment = models.ManyToManyField('video.VideoComment', blank=True, related_name='video_comment_good')
-	message = models.ManyToManyField('chat.Message', blank=True, related_name='message_good')
 
 	def __str__(self):
 		return self.title

@@ -74,13 +74,10 @@ class Community(models.Model):
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
-    #uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
-
-    post = models.ManyToManyField("posts.Post", blank=True, related_name='post_community')
 
     class Meta:
         verbose_name = 'сообщество'
@@ -429,11 +426,11 @@ class Community(models.Model):
         return SoundList.objects.filter(playlists_query).order_by("order")
 
     def get_docs(self):
-        from docs.models import DocList, Doc2
+        from docs.models import DocList, Doc
 
         list = DocList.objects.get(community=self, type=DocList.MAIN)
         docs_query = Q(list=list, is_deleted=False)
-        return Doc2.objects.filter(Doc_query)
+        return Doc.objects.filter(Doc_query)
 
     def get_all_docs_lists(self):
         from docs.models import DocList
@@ -442,10 +439,10 @@ class Community(models.Model):
         return DocList.objects.filter(lists_query).order_by("order")
 
     def get_last_docs(self):
-        from docs.models import Doc2
+        from docs.models import Doc
 
         docs_query = Q(list__in=self.get_docs_lists())
-        return Doc2.objects.filter(docs_query, is_deleted=False).exclude(type=Doc2.PRIVATE)[0:5]
+        return Doc.objects.filter(docs_query, is_deleted=False).exclude(type=Doc.PRIVATE)[0:5]
 
     def is_docs_list_exists(self):
         from docs.models import DocList
