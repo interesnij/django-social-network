@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
 from pilkit.processors import ResizeToFit, ResizeToFill
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
@@ -20,7 +19,7 @@ class Article(models.Model):
     )
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
-    content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
+    #content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
