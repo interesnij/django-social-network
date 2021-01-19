@@ -25,11 +25,11 @@ class Album(models.Model):
         (ALBUM, 'Пользовательский альбом'),
     )
 
-    #community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    #cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
+    cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -37,8 +37,8 @@ class Album(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
 
     class Meta:
         indexes = (

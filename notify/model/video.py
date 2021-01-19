@@ -48,11 +48,11 @@ class VideoNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    #video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
-    #album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    #video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
+    video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
+    video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
-    #community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - ролики пользователя"
@@ -110,17 +110,17 @@ class VideoCommunityNotify(models.Model):
         (ALBUM_COMMUNITY_REPOST, 'поделилось фотоальбомом'),
     )
 
-    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
-    #video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
-    #album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    #video_comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
+    video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
+    album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
+    video_comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key=True)
-    #community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
         verbose_name = "Уведомление - ролики сообщества"

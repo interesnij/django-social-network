@@ -66,7 +66,7 @@ class SoundList(models.Model):
         (LIST, 'Пользовательский плейлист'),
     )
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
@@ -74,8 +74,8 @@ class SoundList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
