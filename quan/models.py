@@ -1,5 +1,4 @@
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 
 
@@ -20,7 +19,7 @@ class QuestionsCategory(models.Model):
 
 class Question(models.Model):
 	quest = models.CharField(max_length=100, unique=True, verbose_name="Вопрос")
-	content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
+	#content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
 	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
 	category = models.ManyToManyField(QuestionsCategory, related_name='questions_categories', verbose_name="Категории вопроса")
 
