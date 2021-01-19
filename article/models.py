@@ -28,8 +28,8 @@ class Article(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
     id = models.BigAutoField(primary_key=True)
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_doclist')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_doclist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')
 
     @classmethod
     def create_article(cls, creator, title, community, g_image, content, created, status ):
