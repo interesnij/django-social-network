@@ -112,7 +112,7 @@ class CommunityPostVideoList(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityPostVideoList,self).get_context_data(**kwargs)
-        context['community'], context['object_list'] = self.community, self.video_list
+		context['community'], context['object_list'] = self.community, self.video_list
 		return context
 
 class CommunityPostCommentVideoList(TemplateView):
