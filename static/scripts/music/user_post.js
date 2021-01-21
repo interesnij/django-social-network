@@ -94,6 +94,7 @@ on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!"); return
   } else {this.disabled = true;}
+  close_create_window();
   post_and_load_object_page(form, "/music/user_progs/create_soundcloud_set/", "/users/", "/music_list/")
 });
 

@@ -213,7 +213,7 @@ class UserLoadGood(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadGood,self).get_context_data(**kwargs)
 		context["album"] = self.album
-		return context
+		return context 
 
 	def get_queryset(self):
 		goods_list = self.album.get_goods()

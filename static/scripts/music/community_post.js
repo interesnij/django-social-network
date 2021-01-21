@@ -66,7 +66,8 @@ on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
   } else if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
-  } else {this.disabled = true}
+  } else {this.disabled = true};
+  close_create_window();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
