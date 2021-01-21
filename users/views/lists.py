@@ -187,6 +187,7 @@ class AllUsers(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.template.user import get_default_template
+		from django.db.models import Q
 
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		all_query = Q()
