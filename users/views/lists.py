@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from posts.models import Post, PostList
 from common.template.user import get_settings_template
 from django.http import Http404
+from django.db.models import Q
 
 
 class UserVisitCommunities(ListView):
@@ -187,7 +188,6 @@ class AllUsers(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.template.user import get_default_template
-		from django.db.models import Q
 
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		all_query = Q()
