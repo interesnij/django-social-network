@@ -166,6 +166,7 @@ class Good(models.Model):
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True)
 
 	def __str__(self):
 		return self.title
