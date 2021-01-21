@@ -76,23 +76,21 @@ class VideoUserCommentList(ListView):
 
 
 class UserPostVideoList(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from posts.models import Post
+	def get(self,request,*args,**kwargs):
+		from posts.models import Post
 		from common.template.post import get_template_user_post
 
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.video_list = self.post.get_attach_videos()
-        self.template_name = get_template_user_post(self.post, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPostVideoList,self).get(request,*args,**kwargs)
+		self.post, self.user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+		self.video_list = self.post.get_attach_videos(), self.template_name, get_template_user_post(self.post, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserPostVideoList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserPostVideoList,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['object_list'] = self.video_list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserPostVideoList,self).get_context_data(**kwargs)
+        context['user'], context['object_list'] = self.user, self.video_list
+		return context
+		
 
 class UserPostCommentVideoList(TemplateView):
     template_name = None
