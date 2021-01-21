@@ -100,42 +100,36 @@ class CommunityVideoDetail(TemplateView):
 
 
 class CommunityPostVideoList(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from posts.models import Post
+	def get(self,request,*args,**kwargs):
+		from posts.models import Post
 		from common.template.post import get_template_community_post
 
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.video_list = self.post.get_attach_videos()
-        self.template_name = get_template_community_post(self.post, "video/c_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
+		self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+		self.video_list = self.post.get_attach_videos(), get_template_community_post(self.post, "video/c_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityPostVideoList,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['object_list'] = self.video_list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityPostVideoList,self).get_context_data(**kwargs)
+        context['community'], context['object_list'] = self.community, self.video_list
+		return context
 
 class CommunityPostCommentVideoList(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from posts.models import PostComment
+	def get(self,request,*args,**kwargs):
+		from posts.models import PostComment
 		from common.template.post import get_template_community_post
+		self.comment, self.community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+		self.video_list = self.comment.get_attach_videos(), get_template_community_post(self.post, "video/c_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
 
-        self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.community = community.objects.get(pk=self.kwargs["pk"])
-        self.video_list = self.comment.get_attach_videos()
-        self.template_name = get_template_community_post(self.post, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityPostCommentVideoList,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['object_list'] = self.video_list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityPostCommentVideoList,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['object_list'] = self.video_list
+		return context
 
 
 class CommunityVideoInfo(TemplateView):
