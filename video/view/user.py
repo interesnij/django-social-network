@@ -88,9 +88,9 @@ class UserPostVideoList(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(UserPostVideoList,self).get_context_data(**kwargs)
-        context['user'], context['object_list'] = self.user, self.video_list
+		context['user'], context['object_list'] = self.user, self.video_list
 		return context
-		
+
 
 class UserPostCommentVideoList(TemplateView):
     template_name = None
