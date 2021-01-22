@@ -10,7 +10,7 @@ class AllNotifyView(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.template_name = "notify/all_notify.html"
+        self.template_name = get_settings_template("notify/all_notify.html", request.user, request.META['HTTP_USER_AGENT'])
         self.user, self.all_notify = request.user, request.user.get_user_notify()
         if not self.user.is_staffed_user():
             self.user.read_user_notify()
