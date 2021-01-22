@@ -575,12 +575,12 @@ class Post(models.Model):
                 except:
                     pass
             elif item[:3] == "vid":
-                #try:
-                from video.models import Video
-                video = Video.objects.get(pk=item[3:], is_public=True)
-                block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_post_video" data-pk="', str(video.creator.pk), '" video-pk="', str(video.pk), '" data-uuid="', str(object.uuid), '" video-counter="0"></div></div>'])
-                #except:
-                #    pass
+                try:
+                    from video.models import Video
+                    video = Video.objects.get(pk=item[3:], is_public=True)
+                    block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_post_video" data-pk="', str(video.creator.pk), '" video-pk="', str(video.pk), '" data-uuid="', str(video.uuid), '" video-counter="0"></div></div>'])
+                except:
+                    pass
             elif item[:3] == "mus":
                 try:
                     from music.models import SoundcloudParsing
