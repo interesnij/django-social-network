@@ -4,7 +4,14 @@ on('#ajax', 'click', '.c_load_video_list', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/video/community/load/" + pk + "/" + uuid + "/", loader)
 });
-
+on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
+  parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/video/repost/c_ucm_video_album_window/" + pk + "/" + uuid + "/", loader);
+  clear_attach_block();
+})
 on('#ajax', 'click', '.c_ucm_video_repost', function() {
   parent = this.parentElement;
   track_pk = parent.getAttribute("data-pk");

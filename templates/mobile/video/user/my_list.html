@@ -32,7 +32,7 @@
               <div class="card-body">
                 {% if object_list %}
                     <ul data-pk="{{ album.pk }}" class="is_load_paginate" data-link="/video/user/load/{{ album.creator.pk }}/{{ album.uuid }}/">
-                      {% for doc in object_list %}
+                      {% for video in object_list %}
                         {% include 'mobile/users/user_video/video.html' %}
                       {% endfor %}
                     </ul>
