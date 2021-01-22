@@ -31,9 +31,10 @@
       {{ object.text|linebreaks }}
     </div>
 
-    <span class="post_attach_panel">
-      {% include object.get_c_attach_items_mobile %}
-    </span>
+    {% if object.attach %}
+    {% load post %}
+    {{ object|get_community_attach:request.user|safe }}
+    {% endif %}
 
   {% include 'mobile/posts/post_community/info.html' %}
 
