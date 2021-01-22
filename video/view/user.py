@@ -14,7 +14,7 @@ class UserLoadVideoAlbum(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_good(self.album, "video/users/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_video(self.album, "video/users/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
