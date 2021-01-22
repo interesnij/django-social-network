@@ -184,7 +184,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
     if (span1.classList.contains(uuid)){
-      container = document.body.querySelector(".profile_block_paginate");
+      container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".video_none") ? container.querySelector(".video_none").style.display = "none" : null;
       toast_info("Видео создано!")

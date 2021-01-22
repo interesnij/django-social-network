@@ -116,7 +116,7 @@ class UserDoclistCreate(View):
             if not new_list.order:
                 new_list.order = 0
             new_list.save()
-            return render_for_platform(request, 'users/user_docs/user_doc_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/user_docs_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 

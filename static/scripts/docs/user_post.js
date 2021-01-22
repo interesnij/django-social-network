@@ -124,7 +124,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
     if (span1.classList.contains(uuid)){
-      container = document.body.querySelector(".profile_block_paginate");
+      container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".doc_empty") ? container.querySelector(".doc_empty").style.display = "none" : null;
       toast_info("Документ создан!")
