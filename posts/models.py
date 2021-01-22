@@ -739,7 +739,23 @@ class Post(models.Model):
                     block = ''.join([block, '<div data-pk="', str(creator.pk), '" data-uuid="', str(album.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 u_load_good_album pointer"><a>', album.title, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="u_load_good_album pointer image_fit_small" src="', album.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', creator.get_full_name(), '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', album.count_goods_ru(), '</h6></div>'])
                 except:
                     pass
-
+            elif item[:3] == "lvi":
+                try:
+                    from docs.models import VideoAlbum
+                    list = VideoAlbum.objects.get(pk=item[3:])
+                    creator = list.creator
+                    image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
+                    repost_svg, add_svg = '', ''
+                    if user.is_authenticated:
+                        if list.is_not_empty():
+                            repost_svg = '<span title="Поделиться" class="u_ucm_video_list_repost repost_svg btn_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>'
+                        if list.is_user_can_add_list(user.pk):
+                            add_svg = '<span title="Добавить список видеозаписей" class="u_add_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
+                        elif user.pk in list.get_users_ids():
+                            add_svg = '<span title="Удалить список видеозаписей" class="u_remove_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_doc_list pointer">', list.title, '</h6><p>Список документов <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Видеозаписей: ', str(list.count_video()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                except:
+                    pass
         return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
