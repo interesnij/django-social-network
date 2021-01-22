@@ -7,9 +7,10 @@
       {{ object.text|linebreaks }}
     </div>
 
-    <span class="post_attach_panel">
-      {% include 'mobile/generic/attach/c_post_attach.html' %}
-    </span>
+    {% if object.attach %}
+    {% load post %}
+    {{ object|get_community_attach:request.user|safe }}
+    {% endif %}
 
     {% if object.parent %}
     <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
