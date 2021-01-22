@@ -4,7 +4,7 @@ loadScripts('/static/scripts/functions/comment_attach.js')
 loadScripts('/static/scripts/functions/post_attach.js')
 loadScripts('/static/scripts/functions/message_attach.js')
 loadScripts('/static/scripts/functions/reload.js')
-//loadScripts('/static/scripts/functions/socket.js')
+loadScripts('/static/scripts/functions/socket.js')
 
 loadScripts('/static/scripts/community/get.js')
 loadScripts('/static/scripts/community/post.js')

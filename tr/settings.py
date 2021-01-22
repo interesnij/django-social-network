@@ -2,9 +2,7 @@ import os
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 SECRET_KEY = 'ur_4&s!%8!z+_60jrgh!%i7m14z%*h!v*!=1rpou5ebfb%$8jnfg00'
-
 
 DEBUG = True
 
@@ -72,7 +70,6 @@ CKEDITOR_CONFIGS = {
        },
     }
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -119,7 +116,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [{'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},{'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},{'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},{'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},]
 
 AUTHENTICATION_BACKENDS = (
@@ -141,7 +137,6 @@ STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
-
 REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
@@ -149,7 +144,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 AUTH_USER_MODEL = 'users.User'
 ACCOUNT_USERNAME_REQUIRED = True
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'
@@ -220,7 +214,6 @@ PROFILE_AVATAR_MAX_SIZE = 10485760
 PROFILE_COVER_MAX_SIZE = 10485760
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
-
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
@@ -236,3 +229,15 @@ THUMBNAIL_ALIASES = {
         "small_avatar": {"size":(100,100)},
     },
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
