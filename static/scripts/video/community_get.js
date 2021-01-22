@@ -2,7 +2,7 @@ on('#ajax', 'click', '.c_load_video_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/video/community_progs/load/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/video/community/load/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_ucm_video_repost', function() {
