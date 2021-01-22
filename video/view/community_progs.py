@@ -11,6 +11,20 @@ from common.template.user import render_for_platform
 from common.template.community import get_community_manage_template
 
 
+class CommunityVideoAlbumPreview(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_community_manage_template("communities/video/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityVideoAlbumPreview,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityVideoAlbumPreview,self).get_context_data(**kwargs)
+		context["album"] = self.album
+		return context
+
+
 class CommunityVideoAlbumAdd(View):
     def post(self,request,*args,**kwargs):
         list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])

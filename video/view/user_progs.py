@@ -282,7 +282,6 @@ class UserVideoCreate(TemplateView):
 
 class UserVideoAlbumPreview(TemplateView):
 	template_name = None
-	paginate_by = 15
 
 	def get(self,request,*args,**kwargs):
 		self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
