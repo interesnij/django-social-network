@@ -96,6 +96,6 @@ on('#ajax', 'click', '.c_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid") ? uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid") : uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
+  this.getAttribute("data-uuid") ? uuid = this.getAttribute("data-uuid") : uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   play_video_list("/video/community/list/" + pk + "/" + uuid + "/", counter, pk, video_pk)
 });
