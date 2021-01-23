@@ -45,6 +45,7 @@ def get_timeline_video_likes(user_pk):
 
 def get_timeline_featured_post_likes(user):
     """ лента записей, которые понравились друзьям пользователя и тем, на кого он подписан """
+    from posts.models import Post
     possible_users = user.get_friends_and_followings_ids()
     likes = PostVotes.objects.filter(user_id__in=possible_users, vote=PostVotes.LIKE).values("parent_id")
     posts_ids = [post['parent_id'] for post in likes]

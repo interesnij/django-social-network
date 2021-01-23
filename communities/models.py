@@ -259,17 +259,13 @@ class Community(models.Model):
     def get_post_lists(self):
         from posts.models import PostList
         lists_query = Q(community_id=self.id, is_deleted=False)
-        lists_query.add(Q(Q(type="LI")|Q(type="MA")), Q.AND)
+        lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.PRIVATE)|Q(type=PostList.FIX)), Q.AND)
         return PostList.objects.filter(lists_query)
     def get_admin_all_post_lists(self):
         from posts.models import PostList
         lists_query = Q(community_id=self.id, is_deleted=False)
-        lists_query.add(~Q(Q(type="DE")|Q(type="FI")), Q.AND)
+        lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.FIX)), Q.AND)
         return PostList.objects.filter(lists_query)
-    def post_list_exists(self):
-        return self.community_postlist.filter(community_id=self.id, type="LI").exists()
-    def admin_post_list_exists(self):
-        return self.community_postlist.filter(community_id=self.id).exclude(type="MA").exists()
 
     def get_count_photos(self):
         from gallery.models import Album
