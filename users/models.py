@@ -1426,6 +1426,31 @@ class User(AbstractUser):
         count = UserLocation.objects.filter(user_id__in=[use['target'] for use in v_s], city_ru=sity).count()
         return count
 
+    def get_post_views_for_year(self, year):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_year(year)
+        return count
+    def get_post_views_for_month(self, month):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_month(month)
+        return count
+    def get_post_views_for_week(self, week):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_week(week)
+        return count
+    def get_post_views_for_day(self, day):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_day(day)
+        return count
+
     ''''' модерация '''''
     def get_longest_user_penalties(self):
         return self.user_penalties.filter(user=self)[0].expiration

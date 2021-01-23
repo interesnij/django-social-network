@@ -69,7 +69,6 @@ class CommunityCoberturaWeek(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.range, self.weeks, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/cobertura_week.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.weeks:
-			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = self.c.get_post_views_for_week([i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6])
 			i6 = i + datetime.timedelta(days=7)
 			self.range += [str(i.strftime('%d.%m')) + " - " + str(i6.strftime('%d.%m'))]

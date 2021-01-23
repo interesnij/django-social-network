@@ -10,7 +10,7 @@ class UserCoberturaYear(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.views, self.sities, self.years, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.years:
-			view = UserNumbers.objects.filter(created__year=i.year, target=pk).distinct("target").count()
+			view = request.user.get_post_views_for_year(i.year)
 			self.views += [view]
 		current_views = UserNumbers.objects.filter(created__year=self.years[0].year, target=pk).values('target').distinct()
 		user_ids = [use['target'] for use in current_views]
@@ -39,7 +39,7 @@ class UserCoberturaMonth(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.views, self.sities, self.months, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'month')[0:10], get_settings_template("users/user_stat/cobertura_month.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.months:
-			view = UserNumbers.objects.filter(created__month=i.month, target=pk).distinct("target").count()
+			view = request.user.get_post_views_for_month(i.month)
 			self.views += [view]
 
 		current_views = UserNumbers.objects.filter(created__month=self.months[0].month, target=pk).values('target').distinct()
@@ -70,8 +70,7 @@ class UserCoberturaWeek(TemplateView):
 
 		self.range, self.views, self.sities, self.weeks, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'week')[0:10], get_settings_template("users/user_stat/cobertura_week.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.weeks:
-			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
-			view = UserNumbers.objects.filter(created__day__in=days, target=pk).distinct("target").count()
+			view = request.user.get_post_views_for_week([i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6])
 			i6 = i + datetime.timedelta(days=7)
 			self.range += [str(i.strftime('%d.%m')) + " - " + str(i6.strftime('%d.%m'))]
 			self.views += [view ]
@@ -102,7 +101,7 @@ class UserCoberturaDay(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.views, self.sities, self.days, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/cobertura_day.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.days:
-			view = UserNumbers.objects.filter(created__day=i.day, target=pk).distinct("target").count()
+			view = request.user.get_post_views_for_day(i.day)
 			self.views += [view]
 		current_views = UserNumbers.objects.filter(created__day=self.days[0].day, target=pk).values('target').distinct()
 		user_ids = [use['target'] for use in current_views]
