@@ -429,7 +429,7 @@ class Post(models.Model):
         return PostNumbers.objects.filter(post=self.pk, created__month=month).values('pk').count()
     def post_visits_week(self, week):
         from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__week=week).values('pk').count()
+        return PostNumbers.objects.filter(post=self.pk, created__day__in=week).values('pk').count()
     def post_visits_day(self, day):
         from stst.models import PostNumbers
         return PostNumbers.objects.filter(post=self.pk, created__day=day).values('pk').count()
