@@ -12,7 +12,7 @@ class CommunityCoberturaYear(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.years, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
-			view = get_post_views_for_year(i.year)
+			view = self.c.get_post_views_for_year(i.year)
 			self.views += [view]
 		current_views = CommunityNumbers.objects.filter(created__year=self.years[0].year, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
