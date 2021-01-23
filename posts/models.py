@@ -359,19 +359,19 @@ class Post(models.Model):
             return get_u_post_attach(parent, user)
 
     def get_u_new_parent(self):
-		from common.attach.post_attach import get_u_news_parent
+        from common.attach.post_attach import get_u_news_parent
         return get_u_news_parent(self.parent, user)
 
     def get_c_new_parent(self):
-		from common.attach.post_attach import get_c_news_parent
+        from common.attach.post_attach import get_c_news_parent
         return get_c_news_parent(self.parent, user)
 
     def get_u_post_parent(self):
-		from common.attach.post_attach import get_u_posts_parent
+        from common.attach.post_attach import get_u_posts_parent
         return get_u_posts_parent(self.parent, user)
 
     def get_c_post_parent(self):
-		from common.attach.post_attach import get_c_posts_parent
+        from common.attach.post_attach import get_c_posts_parent
         return get_c_posts_parent(self.parent, user)
 
     def get_u_attach(self, user):
