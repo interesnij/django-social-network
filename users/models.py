@@ -1413,7 +1413,8 @@ class User(AbstractUser):
     def get_last_location(self):
         from users.model.profile import UserLocation
         try:
-            return UserLocation.objects.filter(user_id=self.pk).last().city_ru
+            city =  UserLocation.objects.filter(user_id=self.pk).last()
+            return "<a href='' class='ajax'>" + city.city_ru + "</a>"
         except:
             return "Местоположение не указано"
 
