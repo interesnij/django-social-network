@@ -421,6 +421,9 @@ class Post(models.Model):
     def post_visits_count(self):
         from stst.models import PostNumbers
         return PostNumbers.objects.filter(post=self.pk).values('pk').count()
+    def post_visits_year(self, year):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__year=year).values('pk').count()
     def post_ad_visits_count(self):
         from stst.models import PostAdNumbers
         return PostAdNumbers.objects.filter(post=self.pk).values('pk').count()

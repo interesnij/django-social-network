@@ -87,6 +87,11 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def get_post_views_for_year(self, year):
+        lists = self.get_admin_all_post_lists()
+        posts = Post.objects.filter(list__in=lists, id_delete=False)
+        return [i.post_visits_year(year) for i in posts]
+
     def get_slug(self):
         if self.have_link:
             return "@" + self.have_link
