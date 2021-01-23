@@ -4,6 +4,7 @@
   {{ object|get_user_attach:request.user|safe }}
 {% endif %}
 
+{% if object.parent %}
 <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
   {% if object.parent.community %}
     {{ object|c_post_parent:request.user|safe }}
@@ -11,3 +12,4 @@
     {{ object|u_post_parent:request.user|safe }}
   {% endif %}
 </span>
+{% endif %}
