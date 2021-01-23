@@ -234,7 +234,7 @@ class UserTrafficDay(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.un_views, self.sities, self.weeks, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/traffic_day.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
+		self.views, self.un_views, self.sities, self.days, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/traffic_day.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.days:
 			view = UserNumbers.objects.filter(created__day=i.day, target=pk).count()
 			self.views += [view]
