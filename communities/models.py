@@ -139,6 +139,7 @@ class Community(models.Model):
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
         creator.create_or_plus_populate_community(community.pk)
+        create_community_models(community)
         return community
 
     @classmethod
