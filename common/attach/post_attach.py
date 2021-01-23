@@ -344,7 +344,10 @@ def get_c_post_attach(post, user):
             try:
                 from gallery.models import Album
                 album = Album.objects.get(pk=item[3:], is_public=True)
-                community = album.community
+                if album.community:
+                    item, name = album.community, album.community.name
+                else:
+                    item, name = album.creator, album.creator.get_full_name()
                 share, add = '', ''
                 if user.is_authenticated:
                     if album.is_not_empty():
@@ -353,14 +356,18 @@ def get_c_post_attach(post, user):
                         add = '<a class="col pointer c_add_photo_album">В коллекцию</a>'
                     elif user.pk in album.get_users_ids():
                         add = '<a class="col pointer c_remove_photo_album">Удалить</a>'
-                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(community.pk), '" data-uuid="', str(album.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_album pointer"><a>', album.title, '</a></h4><p class="lead"><a class="ajax underline" href="', community.get_link(), '">', community, '</a></p><hr class="my-3"><a class="c_load_photo_album pointer">', album.count_photo_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
+                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(item.pk), '" data-uuid="', str(album.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', album.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_album pointer"><a>', album.title, '</a></h4><p class="lead"><a class="ajax underline" href="', item.get_link(), '">', name, '</a></p><hr class="my-3"><a class="c_load_photo_album pointer">', album.count_photo_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
             except:
                 pass
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodAlbum
                 album = GoodAlbum.objects.get(pk=item[3:])
-                community, share, add = community.creator, '', ''
+                share, add = '', ''
+                if album.community:
+                    item, name = album.community, album.community.name
+                else:
+                    item, name = album.creator, album.creator.get_full_name()
                 if user.is_authenticated:
                     if album.is_not_empty():
                         share = '<a class="btn btn-sm primary-gradient c_ucm_good_list_repost"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg></a>'
@@ -368,14 +375,17 @@ def get_c_post_attach(post, user):
                         add = '<a class="btn btn-sm primary-gradient c_add_good_album"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a>'
                     elif user.pk in album.get_users_ids():
                         add = '<a class="btn btn-sm primary-gradient c_remove_good_album"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg></a>'
-                block = ''.join([block, '<div data-pk="', str(community.pk), '" data-uuid="', str(album.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 c_load_good_album pointer"><a>', album.title, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="c_load_good_album pointer image_fit_small" src="', album.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', community.get_link(), '" class="ajax underline">', community.name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', album.count_goods_ru(), '</h6></div>'])
+                block = ''.join([block, '<div data-pk="', str(item.pk), '" data-uuid="', str(album.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 c_load_good_album pointer"><a>', album.title, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="c_load_good_album pointer image_fit_small" src="', album.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', item.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', album.count_goods_ru(), '</h6></div>'])
             except:
                 pass
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoAlbum
                 list = VideoAlbum.objects.get(pk=item[3:])
-                community = list.community
+                if list.community:
+                    item, name = list.community, list.community.name
+                else:
+                    item, name = list.creator, list.creator.get_full_name()
                 image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
                 repost_svg, add_svg = '', ''
                 if user.is_authenticated:
@@ -385,7 +395,7 @@ def get_c_post_attach(post, user):
                         add_svg = '<span title="Добавить список видеозаписей" class="c_add_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in list.get_users_ids():
                         add_svg = '<span title="Удалить список видеозаписей" class="c_remove_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(community.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_video_list pointer">', list.title, '</h6><p>Список документов - <a class="ajax underline" href="', community.get_link(), '">', str(community.name), '</a><br>Видеозаписей: ', str(list.count_video()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_video_list pointer">', list.title, '</h6><p>Список документов - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_video()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
