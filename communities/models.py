@@ -88,6 +88,7 @@ class Community(models.Model):
         return self.name
 
     def get_post_views_for_year(self, year):
+        from posts.models import Post
         lists = self.get_admin_all_post_lists()
         posts = Post.objects.filter(list__in=lists, id_delete=False)
         return [i.post_visits_year(year) for i in posts]
