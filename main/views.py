@@ -72,7 +72,10 @@ class SwitchView(TemplateView):
 		from stst.models import UserNumbers, CommunityNumbers
 		from common.model.other import CustomLink
 
-		self.custom_link = CustomLink.objects.get(link=self.kwargs["slug"])
+		try:
+			self.custom_link = CustomLink.objects.get(link=self.kwargs["slug"])
+		except:
+			raise Http404
 
 		if self.custom_link.user:
 			self.user = self.custom_link.user
