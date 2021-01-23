@@ -1,19 +1,13 @@
 {% load liked_user %}
 
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
-    {% include 'desctop/posts/post_user/anon_card_header.html' %}
+  {% include 'desctop/posts/post_user/anon_card_header.html' %}
 
-      <div class="fullscreen pointer">
-        {{ object.text|linebreaks }}
-      </div>
+  <div class="fullscreen pointer">
+    {{ object.text|linebreaks }}
+  </div>
 
-      <span class="post_attach_panel">
-        {% include object.get_u_attach_items_desctop %}
-      </span>
-
-    {% if object.parent %}
-      {% include 'desctop/posts/post_user/repost.html' %}
-    {% endif %}
+  {% include 'base_block/post.html' %}
 
     <div class="card-footer border-top py-2">
         <div class="row">

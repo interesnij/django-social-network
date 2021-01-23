@@ -229,172 +229,64 @@ class Post(models.Model):
         return try_except(self.status == Post.COMMUNITY_REPOST)
 
     def get_c_post_parent_items_desctop(self):
-        # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.
-        # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
-        # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
-        # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-		# FOR DESCTOP PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
             return "desctop/generic/repost/c_photo_repost.html"
         elif parent.is_photo_album_repost():
             return "desctop/generic/repost/c_photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "desctop/generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
             return "desctop/generic/repost/c_good_repost.html"
         elif parent.is_good_list_repost():
             return "desctop/generic/repost/c_good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "desctop/generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
             return "desctop/generic/repost/c_music_repost.html"
         elif parent.is_music_list_repost():
             return "desctop/generic/repost/c_music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "desctop/generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
             return "desctop/generic/repost/c_video_repost.html"
         elif parent.is_video_list_repost():
             return "desctop/generic/repost/c_video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "desctop/generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
             return "desctop/generic/repost/c_doc_repost.html"
         elif parent.is_doc_list_repost():
             return "desctop/generic/repost/c_doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "desctop/generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
             return "desctop/generic/repost/user_repost.html"
         elif parent.is_community_repost():
             return "desctop/generic/repost/community_repost.html"
         else:
-            return "desctop/generic/attach/parent_community.html"
+            from common.attach.post_attach import get_c_post_attach
+            return get_c_post_attach(parent, user)
 
     def get_u_post_parent_items_desctop(self):
-        # метод выясняет, есть ли у поста-родителя пользователя прикрепленные большие элементы, а также их репосты.
-        # Поскольку в пост влезает только один большой элемент, то это разгружает шаблонные расчеты, сразу выдавая
-        # шаблон вложения или репоста большого элемента. Если же таких нет, то остаток работы (проверка на репосты и вложения маленьких элементов)
-        # придется совершать в шаблоне, ведь варианты работы с небольшими элементами очень обширны.
-		# FOR DESCTOP PLATFORM
         parent = self.parent
         if parent.is_photo_repost():
             return "desctop/generic/repost/u_photo_repost.html"
         elif parent.is_photo_album_repost():
             return "desctop/generic/repost/u_photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "desctop/generic/parent_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
             return "desctop/generic/repost/u_good_repost.html"
         elif parent.is_good_list_repost():
             return "desctop/generic/repost/u_good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "desctop/generic/parent_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
             return "desctop/generic/repost/u_music_repost.html"
         elif parent.is_music_list_repost():
             return "desctop/generic/repost/u_music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "desctop/generic/parent_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
             return "desctop/generic/repost/u_video_repost.html"
         elif parent.is_video_list_repost():
             return "desctop/generic/repost/u_video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "desctop/generic/parent_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
             return "desctop/generic/repost/u_doc_repost.html"
         elif parent.is_doc_list_repost():
             return "desctop/generic/repost/u_doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "desctop/generic/parent_attach/u_doc_list_attach.html"
         elif parent.is_user_repost():
             return "desctop/generic/repost/u_user_repost.html"
         elif parent.is_community_repost():
             return "desctop/generic/repost/u_community_repost.html"
         else:
-            return "desctop/generic/attach/parent_user.html"
-
-    def get_u_news_parent_desctop(self):
-		# FOR DESCTOP PLATFORM
-        parent = self.parent
-        if parent.is_photo_repost():
-            return "desctop/posts/u_posts/photo_repost.html"
-        elif parent.is_photo_album_repost():
-            return "desctop/posts/u_posts/photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "desctop/generic/parent_attach/u_photo_list_attach.html"
-        elif parent.is_good_repost():
-            return "desctop/posts/u_posts/good_repost.html"
-        elif parent.is_good_list_repost():
-            return "desctop/posts/u_posts/good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "desctop/generic/parent_attach/u_good_list_attach.html"
-        elif parent.is_music_repost():
-            return "desctop/posts/u_posts/music_repost.html"
-        elif parent.is_music_list_repost():
-            return "desctop/posts/u_posts/music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "desctop/generic/parent_attach/u_playlist_attach.html"
-        elif parent.is_video_repost():
-            return "desctop/posts/u_posts/video_repost.html"
-        elif parent.is_video_list_repost():
-            return "desctop/posts/u_posts/video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "desctop/generic/parent_attach/u_video_list_attach.html"
-        elif parent.is_doc_repost():
-            return "desctop/posts/u_posts/doc_repost.html"
-        elif parent.is_doc_list_repost():
-            return "desctop/posts/u_posts/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "desctop/generic/parent_attach/u_doc_list_attach.html"
-        elif parent.is_user_repost():
-            return "desctop/posts/u_posts/user_repost.html"
-        elif parent.is_community_repost():
-            return "desctop/posts/u_posts/community_repost.html"
-        else:
-            return "desctop/posts/u_posts/parent_user.html"
-
-    def get_c_news_parent_desctop(self):
-		# FOR DESCTOP PLATFORM
-        parent = self.parent
-        if parent.is_photo_repost():
-            return "desctop/posts/c_posts/photo_repost.html"
-        elif parent.is_photo_album_repost():
-            return "desctop/posts/c_posts/photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "desctop/generic/parent_attach/c_photo_list_attach.html"
-        elif parent.is_good_repost():
-            return "desctop/posts/c_posts/good_repost.html"
-        elif parent.is_good_list_repost():
-            return "desctop/posts/c_posts/good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "desctop/generic/parent_attach/c_good_list_attach.html"
-        elif parent.is_music_repost():
-            return "desctop/posts/c_posts/music_repost.html"
-        elif parent.is_music_list_repost():
-            return "desctop/posts/c_posts/music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "desctop/generic/parent_attach/c_playlist_attach.html"
-        elif parent.is_video_repost():
-            return "desctop/posts/c_posts/video_repost.html"
-        elif parent.is_video_list_repost():
-            return "desctop/posts/c_posts/video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "desctop/generic/parent_attach/c_video_list_attach.html"
-        elif parent.is_doc_repost():
-            return "desctop/posts/c_posts/doc_repost.html"
-        elif parent.is_doc_list_repost():
-            return "desctop/posts/c_posts/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "desctop/generic/parent_attach/c_doc_list_attach.html"
-        elif parent.is_user_repost():
-            return "desctop/posts/c_posts/user_repost.html"
-        elif parent.is_community_repost():
-            return "desctop/posts/c_posts/community_repost.html"
-        else:
-            return "desctop/posts/c_posts/parent_community.html"
+            from common.attach.post_attach import get_u_post_attach
+            return get_u_post_attach(parent, user)
 
     def get_c_post_parent_items_mobile(self):
         # метод выясняет, есть ли у поста-родителя в сообществе прикрепленные большие элементы, а также их репосты.
@@ -407,38 +299,29 @@ class Post(models.Model):
             return "mobile/generic/repost/c_photo_repost.html"
         elif parent.is_photo_album_repost():
             return "mobile/generic/repost/c_photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "mobile/generic/parent_attach/c_photo_list_attach.html"
         elif parent.is_good_repost():
             return "mobile/generic/repost/c_good_repost.html"
         elif parent.is_good_list_repost():
             return "mobile/generic/repost/c_good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "mobile/generic/parent_attach/c_good_list_attach.html"
         elif parent.is_music_repost():
             return "mobile/generic/repost/c_music_repost.html"
         elif parent.is_music_list_repost():
             return "mobile/generic/repost/c_music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "mobile/generic/parent_attach/c_playlist_attach.html"
         elif parent.is_video_repost():
             return "mobile/generic/repost/c_video_repost.html"
         elif parent.is_video_list_repost():
             return "mobile/generic/repost/c_video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "mobile/generic/parent_attach/c_video_list_attach.html"
         elif parent.is_doc_repost():
             return "mobile/generic/repost/c_doc_repost.html"
         elif parent.is_doc_list_repost():
             return "mobile/generic/repost/c_doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "mobile/generic/parent_attach/c_doc_list_attach.html"
         elif parent.is_user_repost():
             return "mobile/generic/repost/c_user_repost.html"
         elif parent.is_community_repost():
             return "mobile/generic/repost/c_community_repost.html"
         else:
-            return "mobile/generic/attach/parent_community.html"
+            from common.attach.post_attach import get_c_post_attach
+            return get_c_post_attach(parent, user)
 
     def get_u_post_parent_items_mobile(self):
         # метод выясняет, есть ли у поста-родителя пользователя прикрепленные большие элементы, а также их репосты.
@@ -451,118 +334,45 @@ class Post(models.Model):
             return "mobile/generic/repost/u_photo_repost.html"
         elif parent.is_photo_album_repost():
             return "mobile/generic/repost/u_photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "mobile/generic/parent_attach/u_photo_list_attach.html"
         elif parent.is_good_repost():
             return "mobile/generic/repost/u_ood_repost.html"
         elif parent.is_good_list_repost():
             return "mobile/generic/repost/u_good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "mobile/generic/parent_attach/u_good_list_attach.html"
         elif parent.is_music_repost():
             return "mobile/generic/repost/u_music_repost.html"
         elif parent.is_music_list_repost():
             return "mobile/generic/repost/u_music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "mobile/generic/parent_attach/u_playlist_attach.html"
         elif parent.is_video_repost():
             return "mobile/generic/repost/u_video_repost.html"
         elif parent.is_video_list_repost():
             return "mobile/generic/repost/u_video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "mobile/generic/parent_attach/u_video_list_attach.html"
         elif parent.is_doc_repost():
             return "mobile/generic/repost/u_doc_repost.html"
         elif parent.is_doc_list_repost():
             return "mobile/generic/repost/u_doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "mobile/generic/parent_attach/u_doc_list_attach.html"
         elif parent.is_user_repost():
             return "mobile/generic/repost/u_user_repost.html"
         elif parent.is_community_repost():
             return "mobile/generic/repost/u_community_repost.html"
         else:
-            return "mobile/generic/attach/parent_user.html"
+            from common.attach.post_attach import get_u_post_attach
+            return get_u_post_attach(parent, user)
 
-    def get_u_news_parent_mobile(self):
-		# FOR MOBILE PLATFORM
-        parent = self.parent
-        if parent.is_photo_repost():
-            return "mobile/main/u_posts/photo_repost.html"
-        elif parent.is_photo_album_repost():
-            return "mobile/main/u_posts/photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "mobile/generic/parent_attach/u_photo_list_attach.html"
-        elif parent.is_good_repost():
-            return "mobile/main/u_posts/good_repost.html"
-        elif parent.is_good_list_repost():
-            return "mobile/main/u_posts/good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "mobile/generic/parent_attach/u_good_list_attach.html"
-        elif parent.is_music_repost():
-            return "mobile/main/u_posts/music_repost.html"
-        elif parent.is_music_list_repost():
-            return "mobile/main/u_posts/music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "mobile/generic/parent_attach/u_playlist_attach.html"
-        elif parent.is_video_repost():
-            return "mobile/main/u_posts/video_repost.html"
-        elif parent.is_video_list_repost():
-            return "mobile/main/u_posts/video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "mobile/generic/parent_attach/u_video_list_attach.html"
-        elif parent.is_doc_repost():
-            return "mobile/main/u_posts/doc_repost.html"
-        elif parent.is_doc_list_repost():
-            return "mobile/main/u_posts/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "mobile/generic/parent_attach/u_doc_list_attach.html"
-        elif parent.is_user_repost():
-            return "mobile/main/u_posts/user_repost.html"
-        elif parent.is_community_repost():
-            return "mobile/main/u_posts/community_repost.html"
-        else:
-            return "mobile/main/u_posts/parent_user.html"
+    def get_u_new_parent(self):
+		from common.attach.post_attach import get_u_news_parent
+        return get_u_news_parent(self.parent, user)
 
-    def get_c_news_parent_mobile(self):
-		# FOR MOBILE PLATFORM
-        parent = self.parent
-        if parent.is_photo_repost():
-            return "mobile/main/c_posts/photo_repost.html"
-        elif parent.is_photo_album_repost():
-            return "mobile/main/c_posts/photo_album_repost.html"
-        if parent.is_photo_list_attached():
-            return "mobile/generic/parent_attach/c_photo_list_attach.html"
-        elif parent.is_good_repost():
-            return "mobile/main/c_posts/good_repost.html"
-        elif parent.is_good_list_repost():
-            return "mobile/main/c_posts/good_list_repost.html"
-        elif parent.is_good_list_attached():
-            return "mobile/generic/parent_attach/c_good_list_attach.html"
-        elif parent.is_music_repost():
-            return "mobile/main/c_posts/music_repost.html"
-        elif parent.is_music_list_repost():
-            return "mobile/main/c_posts/music_list_repost.html"
-        elif parent.is_playlist_attached():
-            return "mobile/generic/parent_attach/c_playlist_attach.html"
-        elif parent.is_video_repost():
-            return "mobile/main/c_posts/video_repost.html"
-        elif parent.is_video_list_repost():
-            return "mobile/main/c_posts/video_list_repost.html"
-        elif parent.is_video_list_attached():
-            return "mobile/generic/parent_attach/c_video_list_attach.html"
-        elif parent.is_doc_repost():
-            return "mobile/main/c_posts/doc_repost.html"
-        elif parent.is_doc_list_repost():
-            return "mobile/main/c_posts/doc_list_repost.html"
-        elif parent.is_doc_list_attached():
-            return "mobile/generic/parent_attach/c_doc_list_attach.html"
-        elif parent.is_user_repost():
-            return "mobile/main/c_posts/user_repost.html"
-        elif parent.is_community_repost():
-            return "mobile/main/c_posts/community_repost.html"
-        else:
-            return "mobile/main/c_posts/parent_community.html"
+    def get_c_new_parent(self):
+		from common.attach.post_attach import get_c_news_parent
+        return get_c_news_parent(self.parent, user)
+
+    def get_u_post_parent(self):
+		from common.attach.post_attach import get_u_posts_parent
+        return get_u_posts_parent(self.parent, user)
+
+    def get_c_post_parent(self):
+		from common.attach.post_attach import get_c_posts_parent
+        return get_c_posts_parent(self.parent, user)
 
     def get_u_attach(self, user):
         from common.attach.post_attach import get_u_post_attach

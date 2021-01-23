@@ -4,13 +4,7 @@
 
   {{ object.text|linebreaks }}
 
-  <span class="post_attach_panel">
-    {% include object.get_u_attach_items_desctop %}
-  </span>
+  {% include 'base_block/post.html' %}
 
-  {% if object.parent %}
-    {% include 'desctop/posts/post_user/repost.html' %}
-  {% endif %}
-
-    {% include 'desctop/posts/post_user/info.html' %}
+  {% include 'desctop/posts/post_user/info.html' %}
 </div>

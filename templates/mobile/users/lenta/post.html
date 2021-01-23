@@ -64,14 +64,7 @@
 
   {{ object.text|linebreaks }}
 
-  {% if object.attach %}
-  {% load post %}
-  {{ object|get_user_attach:request.user|safe }}
-  {% endif %}
+  {% include 'base_block/post.html' %}
 
-  {% if object.parent %}
-    {% include 'mobile/posts/post_user/repost.html' %}
-  {% endif %}
-
-    {% include 'mobile/posts/post_user/info.html' %}
+  {% include 'mobile/posts/post_user/info.html' %}
 </div>

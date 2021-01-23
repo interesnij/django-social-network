@@ -1,3 +1,115 @@
+def get_u_news_parent(parent, user):
+    if parent.is_photo_repost():
+        return "desctop/main/u_posts/photo_repost.html"
+    elif parent.is_photo_album_repost():
+        return "desctop/main/u_posts/photo_album_repost.html"
+    elif parent.is_good_repost():
+        return "desctop/main/u_posts/good_repost.html"
+    elif parent.is_good_list_repost():
+        return "desctop/main/u_posts/good_list_repost.html"
+    elif parent.is_music_repost():
+        return "desctop/main/u_posts/music_repost.html"
+    elif parent.is_music_list_repost():
+        return "desctop/main/u_posts/music_list_repost.html"
+    elif parent.is_video_repost():
+        return "desctop/main/u_posts/video_repost.html"
+    elif parent.is_video_list_repost():
+        return "desctop/main/u_posts/video_list_repost.html"
+    elif parent.is_doc_repost():
+        return "desctop/main/u_posts/doc_repost.html"
+    elif parent.is_doc_list_repost():
+        return "desctop/main/u_posts/doc_list_repost.html"
+    elif parent.is_user_repost():
+        return "desctop/main/u_posts/user_repost.html"
+    elif parent.is_community_repost():
+        return "desctop/main/u_posts/community_repost.html"
+    else:
+        return get_u_post_attach(parent, user)
+
+def get_c_news_parent(parent, user):
+    if parent.is_photo_repost():
+        return "desctop/main/c_posts/photo_repost.html"
+    elif parent.is_photo_album_repost():
+        return "desctop/main/c_posts/photo_album_repost.html"
+    elif parent.is_good_repost():
+        return "desctop/main/c_posts/good_repost.html"
+    elif parent.is_good_list_repost():
+        return "desctop/main/c_posts/good_list_repost.html"
+    elif parent.is_music_repost():
+        return "desctop/main/c_posts/music_repost.html"
+    elif parent.is_music_list_repost():
+        return "desctop/main/c_posts/music_list_repost.html"
+    elif parent.is_video_repost():
+        return "desctop/main/c_posts/video_repost.html"
+    elif parent.is_video_list_repost():
+        return "desctop/main/c_posts/video_list_repost.html"
+    elif parent.is_doc_repost():
+        return "desctop/main/c_posts/doc_repost.html"
+    elif parent.is_doc_list_repost():
+        return "desctop/main/c_posts/doc_list_repost.html"
+    elif parent.is_user_repost():
+        return "desctop/main/c_posts/user_repost.html"
+    elif parent.is_community_repost():
+        return "desctop/main/c_posts/community_repost.html"
+    else:
+        return get_c_post_attach(parent, user)
+
+def get_u_posts_parent(parent, user):
+    if parent.is_photo_repost():
+        return "desctop/generic/repost/photo_repost.html"
+    elif parent.is_photo_album_repost():
+        return "desctop/generic/repost/photo_album_repost.html"
+    elif parent.is_good_repost():
+        return "desctop/generic/repost/good_repost.html"
+    elif parent.is_good_list_repost():
+        return "desctop/generic/repost/good_list_repost.html"
+    elif parent.is_music_repost():
+        return "desctop/generic/repost/music_repost.html"
+    elif parent.is_music_list_repost():
+        return "desctop/generic/repost/music_list_repost.html"
+    elif parent.is_video_repost():
+        return "desctop/generic/repost/video_repost.html"
+    elif parent.is_video_list_repost():
+        return "desctop/generic/repost/video_list_repost.html"
+    elif parent.is_doc_repost():
+        return "desctop/generic/repost/doc_repost.html"
+    elif parent.is_doc_list_repost():
+        return "desctop/generic/repost/doc_list_repost.html"
+    elif parent.is_user_repost():
+        return "desctop/generic/repost/user_repost.html"
+    elif parent.is_community_repost():
+        return "desctop/generic/reposts/community_repost.html"
+    else:
+        return get_u_post_attach(parent, user)
+
+def get_c_posts_parent(parent, user):
+    if parent.is_photo_repost():
+        return "desctop/generic/repost/photo_repost.html"
+    elif parent.is_photo_album_repost():
+        return "desctop/generic/repost/photo_album_repost.html"
+    elif parent.is_good_repost():
+        return "desctop/generic/repost/good_repost.html"
+    elif parent.is_good_list_repost():
+        return "desctop/generic/repost/good_list_repost.html"
+    elif parent.is_music_repost():
+        return "desctop/generic/repost/music_repost.html"
+    elif parent.is_music_list_repost():
+        return "desctop/generic/repost/music_list_repost.html"
+    elif parent.is_video_repost():
+        return "desctop/generic/repost/video_repost.html"
+    elif parent.is_video_list_repost():
+        return "desctop/generic/repost/video_list_repost.html"
+    elif parent.is_doc_repost():
+        return "desctop/generic/repost/doc_repost.html"
+    elif parent.is_doc_list_repost():
+        return "desctop/generic/repost/doc_list_repost.html"
+    elif parent.is_user_repost():
+        return "desctop/generic/repost/user_repost.html"
+    elif parent.is_community_repost():
+        return "desctop/generic/repost/community_repost.html"
+    else:
+        return get_c_post_attach(parent, user)
+
 
 def get_u_post_attach(post, user):
     block = ''

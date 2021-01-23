@@ -54,13 +54,7 @@
     {{ object.text|linebreaks }}
   </div>
 
-  <span class="post_attach_panel">
-    {% include object.get_u_attach_items_mobile %}
-  </span>
+  {% include 'base_block/post.html' %}
 
-    {% if object.parent %}
-      {% include 'mobile/posts/post_user/repost.html' %}
-    {% endif %}
-
-    {% include 'mobile/posts/post_user/info.html' %}
+  {% include 'mobile/posts/post_user/info.html' %}
 </div>

@@ -1,0 +1,13 @@
+{% load post %}
+
+{% if object.attach %}
+  {{ object|get_user_attach:request.user|safe }}
+{% endif %}
+
+<span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+  {% if object.parent.community %}
+    {{ object|c_post_parent:request.user|safe }}
+  {% else %}
+    {{ object|u_post_parent:request.user|safe }}
+  {% endif %}
+</span>

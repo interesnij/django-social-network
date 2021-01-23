@@ -35,14 +35,7 @@
     {{ object.text|linebreaks }}
   </div>
 
-  {% if object.attach %}
-  {% load post %}
-  {{ object|get_community_attach:request.user|safe }}
-  {% endif %}
+  {% include 'base_block/post.html' %}
 
-    {% if object.parent %}
-      {% include 'mobile/posts/post_community/repost.html' %}
-    {% endif %}
-
-    {% include 'mobile/posts/post_community/info.html' %}
+  {% include 'mobile/posts/post_community/info.html' %}
 </div>

@@ -1,3 +1,4 @@
+
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-pk="{{ object.creator.pk }}" data-uuid="{{ object.uuid }}">
     {% include 'mobile/posts/post_user/card_header.html' %}
 
@@ -7,14 +8,7 @@
       </div>
     {% endif %}
 
-      {% if object.attach %}
-      {% load post %}
-      {{ object|get_user_attach:request.user|safe }}
-      {% endif %}
-
-    {% if object.parent %}
-      {% include 'mobile/posts/post_user/repost.html' %}
-    {% endif %}
+    {% include 'base_block/post.html' %}
 
     {% include 'mobile/posts/post_user/info.html' %}
 </div>
