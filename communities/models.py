@@ -93,6 +93,24 @@ class Community(models.Model):
         for i in posts:
             count += i.post_visits_year(year)
         return count
+    def get_post_views_for_month(self, month):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_month(month)
+        return count
+    def get_post_views_for_week(self, week):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_week(week)
+        return count
+    def get_post_views_for_day(self, day):
+        from posts.models import Post
+        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
+        for i in posts:
+            count += i.post_visits_day(day)
+        return count
 
     def get_slug(self):
         if self.have_link:

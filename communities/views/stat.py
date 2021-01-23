@@ -37,7 +37,7 @@ class CommunityCoberturaMonth(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.months, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'month')[0:10], get_community_manage_template("communities/stat/cobertura_month.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.months:
-			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.c.pk).distinct("user").count()
+			view = self.c.get_post_views_for_month(i.month)
 			self.views += [view]
 
 		current_views = CommunityNumbers.objects.filter(created__month=self.months[0].month, community=self.c.pk).values('user').distinct()
@@ -70,7 +70,7 @@ class CommunityCoberturaWeek(TemplateView):
 		self.views, self.sities, self.range, self.weeks, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'week')[0:10], get_community_manage_template("communities/stat/cobertura_week.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
-			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.c.pk).distinct("user").count()
+			view = self.c.get_post_views_for_week(i.week)
 			i6 = i + datetime.timedelta(days=7)
 			self.range += [str(i.strftime('%d.%m')) + " - " + str(i6.strftime('%d.%m'))]
 			self.views += [view]
@@ -102,7 +102,7 @@ class CommunityCoberturaDay(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.days, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'day')[0:10], get_community_manage_template("communities/stat/cobertura_day.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.days:
-			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.c.pk).distinct("user").count()
+			view = self.c.get_post_views_for_day(i.day)
 			self.views += [view]
 		current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
