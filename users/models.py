@@ -1413,7 +1413,7 @@ class User(AbstractUser):
     def get_last_location(self):
         from users.model.profile import UserLocation
         try:
-            return UserLocation.objects.filter(user_id=self.pk).last()
+            return UserLocation.objects.filter(user_id=self.pk).last().city_ru
         except:
             return "Местоположение не указано"
 
