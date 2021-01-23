@@ -324,7 +324,10 @@ def get_c_post_attach(post, user):
             #try:
             from docs.models import DocList
             list = DocList.objects.get(pk=item[3:])
-            community = list.community
+            if list.community:
+                item = list.community, name = list.community.name
+            else:
+                item = list.creator, name = list.creator.get_full_name()
             image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
             repost_svg, add_svg = '', ''
             if user.is_authenticated:
@@ -334,7 +337,7 @@ def get_c_post_attach(post, user):
                     add_svg = '<span title="Добавить список документов" class="c_add_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                 elif user.pk in list.get_users_ids():
                     add_svg = '<span title="Удалить список документов" class="c_remove_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-            block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(community.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_doc_list pointer">', list.name, '</h6><p>Список документов - <a class="ajax underline" href="', community.get_link(), '">', str(community.name), '</a><br>Документов: ', str(list.count_docs()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+            block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_doc_list pointer">', list.name, '</h6><p>Список документов - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Документов: ', str(list.count_docs()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             #except:
             #    pass
         elif item[:3] == "lph":
