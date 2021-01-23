@@ -90,7 +90,7 @@ class Community(models.Model):
     def get_post_views_for_year(self, year):
         from posts.models import Post
         lists = self.get_admin_all_post_lists()
-        posts = Post.objects.filter(list__in=lists, id_delete=False)
+        posts = Post.objects.filter(list__in=lists, is_delete=False)
         return [i.post_visits_year(year) for i in posts]
 
     def get_slug(self):
