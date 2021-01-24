@@ -39,7 +39,7 @@ class UserPostView(View):
             if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
                 return HttpResponse()
             else:
-                PostNumbers.objects.create(user=request.user.pk, post=post.pk)
+                PostNumbers.objects.create(user=request.user.pk, post=post.pk, device=request.user.get_device())
                 return HttpResponse()
         else:
             return HttpResponse()
@@ -53,7 +53,7 @@ class UserAdPostView(View):
             if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
                 return HttpResponse()
             else:
-                PostAdNumbers.objects.get(user=request.user.pk, post=post.pk)
+                PostAdNumbers.objects.get(user=request.user.pk, post=post.pk, device=request.user.get_device())
                 return HttpResponse()
         else:
             raise Http404

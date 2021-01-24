@@ -117,14 +117,11 @@ class UserVideoInfo(TemplateView):
 
         self.video = Video.objects.get(pk=self.kwargs["video_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated:
+        if request.user.is_authenticated: 
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
-                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
-                else:
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
+				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, request.user.get_device())
         self.template_name = get_template_user_video(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoInfo,self).get(request,*args,**kwargs)
 

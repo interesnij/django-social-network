@@ -64,12 +64,9 @@ class UserGood(TemplateView):
                 else:
                     self.template_name = "goods/u_good/good.html"
             try:
-                GoodNumbers.objects.filter(user=request.user.pk, good=self.good.pk).exists()
+                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
             except:
-                if MOBILE_AGENT_RE.match(user_agent):
-                    GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=0)
-                else:
-                    GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, platform=1)
+                GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, device=request.user.get_device())
         elif request.user.is_anonymous:
             if self.user.is_suspended():
                 template_name = "generic/u_template/anon_user_suspended.html"

@@ -48,6 +48,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_device(self):
+        if self.device == User.DESCTOP:
+            return "De"
+        else:
+            return "Ph"
+
     def get_link(self):
         if self.have_link:
             return "/" + self.have_link + "/"

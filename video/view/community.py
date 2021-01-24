@@ -86,10 +86,7 @@ class CommunityVideoDetail(TemplateView):
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
-                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
-                else:
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
+                VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, request.user.get_device())
         return super(CommunityVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

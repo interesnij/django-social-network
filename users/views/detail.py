@@ -291,9 +291,9 @@ class ProfileUserView(TemplateView):
                 else:
                     self.template_name = "users/account/user.html"
                 if MOBILE_AGENT_RE.match(user_agent):
-                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=0)
+                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.PHONE)
                 else:
-                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=1)
+                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.DESCTOP)
         elif request.user.is_anonymous:
             if self.user.is_suspended():
                 self.template_name = "generic/u_template/anon_user_suspended.html"

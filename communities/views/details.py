@@ -88,9 +88,9 @@ class CommunityDetail(TemplateView):
 
             from stst.models import CommunityNumbers
             if MOBILE_AGENT_RE.match(user_agent):
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, platform=1)
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.PHONE)
             else:
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, platform=0)
+                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
         elif request.user.is_anonymous:
             if self.c.is_public():

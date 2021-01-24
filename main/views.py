@@ -119,9 +119,9 @@ class SwitchView(TemplateView):
 					else:
 						self.template_name = "users/account/user.html"
 					if MOBILE_AGENT_RE.match(user_agent):
-						UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=0)
+						UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.PHONE)
 					else:
-						UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, platform=1)
+						UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.DESCTOP)
 			elif request.user.is_anonymous:
 				if self.user.is_suspended():
 					self.template_name = "generic/u_template/anon_user_suspended.html"
@@ -172,9 +172,9 @@ class SwitchView(TemplateView):
 				elif self.c.is_private():
 					self.template_name = "generic/c_template/private_community.html"
 				if MOBILE_AGENT_RE.match(user_agent):
-					CommunityNumbers.objects.create(user=u_pk, community=c_pk, platform=1)
+					CommunityNumbers.objects.create(user=u_pk, community=c_pk, device=CommunityNumbers.PHONE)
 				else:
-					CommunityNumbers.objects.create(user=u_pk, community=c_pk, platform=0)
+					CommunityNumbers.objects.create(user=u_pk, community=c_pk, device=CommunityNumbers.DESCTOP)
 				self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(c_pk)[0:6], request.user.get_common_friends_of_community_count_ru(c_pk)
 			elif request.user.is_anonymous:
 				if self.c.is_public():
