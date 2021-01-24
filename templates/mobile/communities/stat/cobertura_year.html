@@ -39,9 +39,7 @@
                     style="height: 20rem !important">
             </canvas>
             </div>
-            <br><br>
-
-						<h5 class="mt-1" style="margin:10px">География за этот год</h5>
+						<h5 class="mt-4 mb-2" style="margin:10px">География за этот год</h5>
         		   {% for object in sities %}
         		    <div class="stat_city">
         			    <span class="city">{{ object|safe }}</span>
@@ -50,6 +48,15 @@
         			    </span>
         		     </div>
         		   {% endfor %}
+            <h5 class="mt-4 mb-2">Охват устройств</h5>
+            <div class="stat_city">
+              <span class="city">Просмотры с мобильного</span>
+              <span class="count"></span>
+             </div>
+            <div class="stat_city">
+             <span class="city">Просмотры с компьютера</span>
+             <span class="count"></span>
+            </div>
           </div>
         </div>
     </div>
