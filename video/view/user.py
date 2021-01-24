@@ -120,7 +120,7 @@ class UserVideoInfo(TemplateView):
 			try:
 				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
 			except:
-				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, request.user.get_device())
+				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, device=request.user.get_device())
 		self.template_name = get_template_user_video(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoInfo,self).get(request,*args,**kwargs)
 
