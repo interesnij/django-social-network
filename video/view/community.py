@@ -86,7 +86,7 @@ class CommunityVideoDetail(TemplateView):
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
             except:
-                VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, request.user.get_device())
+                VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, device=request.user.get_device())
         return super(CommunityVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
