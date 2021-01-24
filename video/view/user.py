@@ -110,26 +110,25 @@ class UserPostCommentVideoList(TemplateView):
 
 
 class UserVideoInfo(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from stst.models import VideoNumbers
+	def get(self,request,*args,**kwargs):
+		from stst.models import VideoNumbers
 
-        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated: 
-            try:
-                VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
-            except:
+		self.video, self.user = Video.objects.get(pk=self.kwargs["video_pk"]), User.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_authenticated:
+			try:
+				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
+			except:
 				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, request.user.get_device())
-        self.template_name = get_template_user_video(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserVideoInfo,self).get(request,*args,**kwargs)
+		self.template_name = get_template_user_video(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserVideoInfo,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserVideoInfo,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['object'] = self.video
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserVideoInfo,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['object'] = self.video
+		return context
 
 
 class UserVideoDetail(TemplateView):
