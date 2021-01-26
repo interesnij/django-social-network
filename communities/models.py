@@ -87,7 +87,7 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
-    def get_posts_ids(self, year):
+    def get_posts_ids(self):
         from posts.models import Post
         posts = Post.objects.filter(list__in=self.get_admin_all_post_lists()).values('id')
         return [i['id'] for i in posts]
