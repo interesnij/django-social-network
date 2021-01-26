@@ -440,6 +440,9 @@ class Post(models.Model):
     def comp_post_visits_year(self, year):
         from stst.models import PostNumbers
         return PostNumbers.objects.filter(post=self.pk, created__year=year, device=PostNumbers.DESCTOP).values('pk').count()
+    def mob_post_visits_year(self, year):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__year=year, device=PostNumbers.PHONE).values('pk').count()
 
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
