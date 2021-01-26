@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
-from stst.models import CommunityNumbers
+from stst.models import CommunityNumbers, PostNumbers
 from users.models import User
 from common.template.community import get_community_manage_template
 
@@ -8,7 +8,7 @@ from common.template.community import get_community_manage_template
 class CommunityCoberturaYear(TemplateView):
 	template_name = None
 
-	def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):	
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.years, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
