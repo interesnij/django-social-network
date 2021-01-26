@@ -436,6 +436,14 @@ class Post(models.Model):
     def post_ad_visits_count(self):
         from stst.models import PostAdNumbers
         return PostAdNumbers.objects.filter(post=self.pk).values('pk').count()
+
+    def comp_post_visits_year(self, year):
+        from stst.models import PostNumbers
+        count = PostNumbers.objects.filter(post=self.pk, created__year=year).values('pk').count()
+        comp_count = count.filter(device=PostNumbers.DESCTOP).values('pk').count()
+        procent = count / comp_count * 100
+        return str(count) + " (" + str(procent) + "%)"
+
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
 
