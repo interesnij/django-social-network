@@ -445,7 +445,7 @@ class Post(models.Model):
             procent = count.values('pk').count() / comp_count * 100
             return str(count) + " (" + str(procent) + "%)"
         else:
-            return str(count) + " (" + 0 + "%)"
+            return str(count) + " (" + str(0) + "%)"
 
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
