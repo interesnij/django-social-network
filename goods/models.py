@@ -251,7 +251,7 @@ class Good(models.Model):
 		return count_reposts
 
 	def get_comments(self):
-		comments_query = Q(good_comment_id=self.pk)
+		comments_query = Q(good_id=self.pk)
 		comments_query.add(Q(parent__isnull=True), Q.AND)
 		return GoodComment.objects.filter(comments_query)
 	def count_comments(self):

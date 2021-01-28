@@ -170,7 +170,7 @@ class Photo(models.Model):
         return self.photo_album.filter(creator=self.creator).exists()
 
     def get_comments(self):
-        comments_query = Q(photo_comment_id=self.pk)
+        comments_query = Q(photo_id=self.pk)
         comments_query.add(Q(parent__isnull=True), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 

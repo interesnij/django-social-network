@@ -215,7 +215,7 @@ class Video(models.Model):
         return i
 
     def get_comments(self):
-        comments_query = Q(video_comment_id=self.pk)
+        comments_query = Q(video_id=self.pk)
         comments_query.add(Q(parent__isnull=True), Q.AND)
         return VideoComment.objects.filter(comments_query)
 
