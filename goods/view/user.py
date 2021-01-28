@@ -96,26 +96,26 @@ class UserGood(TemplateView):
 
 
 class GoodUserCommentList(ListView):
-    template_name, paginate_by = None, 15
+	template_name, paginate_by = None, 15
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.template.good import get_permission_user_good_2
 
-        self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_permission_user_good_2(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        if not request.is_ajax() or not self.good.comments_enabled:
-            raise Http404
-        return super(GoodUserCommentList,self).get(request,*args,**kwargs)
+		self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_permission_user_good_2(self.user, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		if not request.is_ajax() or not self.good.comments_enabled:
+			raise Http404
+		return super(GoodUserCommentList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(GoodUserCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.good
-        context['user'] = self.user
-        return context
+	def get_context_data(self, **kwargs):
+		context = super(GoodUserCommentList, self).get_context_data(**kwargs)
+		context['parent'] = self.good
+		context['user'] = self.user
+		return context
 
-    def get_queryset(self):
-        comments = self.good.get_comments()
-        return comments
+	def get_queryset(self):
+		comments = self.good.get_comments()
+		return comments
 
 
 class GoodUserDetail(TemplateView):
