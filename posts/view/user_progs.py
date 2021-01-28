@@ -60,7 +60,6 @@ class UserAdPostView(View):
 
 
 class PostCommentUserCreate(View):
-
     def post(self,request,*args,**kwargs):
         form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(uuid=request.POST.get('uuid'))
 
@@ -87,7 +86,6 @@ class PostCommentUserCreate(View):
 
 
 class PostReplyUserCreate(View):
-
     def post(self,request,*args,**kwargs):
         form_post, user, post = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
 

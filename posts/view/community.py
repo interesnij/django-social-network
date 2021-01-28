@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from communities.models import Community
 from posts.models import Post, PostComment
 from common.check.community import check_can_get_lists
-from common.template.post import get_permission_community_post
+from common.template.post import get_permission_community_post_2
 from django.http import Http404
 
 
@@ -33,7 +33,7 @@ class PostCommunityDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_permission_community_post(Community.objects.get(uuid=self.kwargs["uuid"]), "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(Community.objects.get(uuid=self.kwargs["uuid"]), "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
