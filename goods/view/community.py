@@ -13,7 +13,11 @@ class CommunityLoadGoodAlbum(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_community_good(self.album, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.album.community:
+			self.template_name = get_template_community_good(self.album, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			from common.template.good import get_template_user_good
+			self.template_name = get_template_user_good(self.album, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityLoadGoodAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
