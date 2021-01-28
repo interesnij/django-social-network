@@ -73,7 +73,7 @@ class PostCommentUserCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=None, post=post, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render_for_platform(request, 'posts/u_post_comment/my_parent.html', {'comment': new_comment})
@@ -96,7 +96,7 @@ class PostReplyUserCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=parent, post=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:

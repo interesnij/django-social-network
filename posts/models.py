@@ -539,10 +539,10 @@ class PostComment(models.Model):
         return self.commenter.get_full_name()
 
     @classmethod
-    def create_comment(cls, commenter, attach, post, parent_comment, text):
+    def create_comment(cls, commenter, attach, post, parent, text):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent_comment=parent_comment, post=post, text=text, created=timezone.now())
+        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",

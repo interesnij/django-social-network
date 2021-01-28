@@ -356,10 +356,10 @@ class GoodComment(models.Model):
 			return ''
 
 	@classmethod
-	def create_comment(cls, commenter, attach, good, parent_comment, text):
+	def create_comment(cls, commenter, attach, good, parent, text):
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-		comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent_comment=parent_comment, good=good, text=text, created=timezone.now())
+		comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
 		channel_layer = get_channel_layer()
 		payload = {
 			"type": "receive",

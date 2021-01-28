@@ -300,10 +300,10 @@ class VideoComment(models.Model):
         return dislikes.count()
 
     @classmethod
-    def create_comment(cls, commenter, attach, video, parent_comment, text):
+    def create_comment(cls, commenter, attach, video, parent, text):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent_comment=parent_comment, video=video, text=text, created=timezone.now())
+        comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",

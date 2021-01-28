@@ -114,19 +114,19 @@ class PhotoCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        photo_comment = Photo.objects.get(uuid=request.POST.get('uuid'))
+        photo = Photo.objects.get(uuid=request.POST.get('uuid'))
 
         if not community.is_comment_photo_send_all() and not request.user.is_member_of_community(community.pk):
             raise Http404
         elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community(community.pk):
             raise Http404
-        elif request.is_ajax() and form_post.is_valid() and photo_comment.comments_enabled:
+        elif request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=None, photo_comment=photo_comment, text=comment.text)
-                if request.user.pk != photo_comment.creator.pk:
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
+                if request.user.pk != photo.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
@@ -150,7 +150,7 @@ class PhotoReplyCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=parent, photo_comment=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
             else:

@@ -300,10 +300,10 @@ class PhotoComment(models.Model):
             return ''
 
     @classmethod
-    def create_comment(cls, commenter, attach, photo, parent_comment, text):
+    def create_comment(cls, commenter, attach, photo, parent, text):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
+        comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
