@@ -387,6 +387,6 @@ class GoodComment(models.Model):
 		from common.attach.post_attach import get_u_post_attach
 		return get_u_post_attach(self, user)
 
-    def get_c_attach(self, user):
+	def get_c_attach(self, user):
 		from common.attach.post_attach import get_c_post_attach
 		return get_c_post_attach(self, user)
