@@ -485,6 +485,7 @@ class PostComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     id = models.BigAutoField(primary_key=True)
+    attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -559,15 +560,10 @@ class PostComment(models.Model):
         else:
             return ''.join([str(count), " ответов"])
 
-    def get_attach_photos(self):
-        return self.comment_photo.all()
-    def get_attach_videos(self):
-        return self.comment_video.all()
-    def get_attach_goods(self):
-        return self.comment_good.all()
-    def get_attach_articles(self):
-        return self.attached_comment.all()
-    def get_attach_tracks(self):
-        return self.comment_music.all()
-    def get_attach_docs(self):
-        return self.comment_doc.all()
+    def get_u_attach(self, user):
+        from common.attach.post_attach import get_u_post_attach
+        return get_u_post_attach(self, user)
+
+    def get_c_attach(self, user):
+        from common.attach.post_attach import get_c_post_attach
+        return get_c_post_attach(self, user)

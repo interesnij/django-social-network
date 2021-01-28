@@ -308,6 +308,7 @@ class GoodComment(models.Model):
 	is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
 	is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
 	good_comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )
@@ -381,3 +382,11 @@ class GoodComment(models.Model):
 			return str(count) + " ответа"
 		else:
 			return str(count) + " ответов"
+
+	def get_u_attach(self, user):
+        from common.attach.post_attach import get_u_post_attach
+        return get_u_post_attach(self, user)
+
+    def get_c_attach(self, user):
+        from common.attach.post_attach import get_c_post_attach
+        return get_c_post_attach(self, user)

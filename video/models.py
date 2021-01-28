@@ -235,6 +235,7 @@ class VideoComment(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
     video_comment = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     id = models.BigAutoField(primary_key=True)
+    attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
@@ -321,3 +322,11 @@ class VideoComment(models.Model):
             return str(count) + " ответа"
         else:
             return str(count) + " ответов"
+
+    def get_u_attach(self, user):
+        from common.attach.post_attach import get_u_post_attach
+        return get_u_post_attach(self, user)
+
+    def get_c_attach(self, user):
+        from common.attach.post_attach import get_c_post_attach
+        return get_c_post_attach(self, user)

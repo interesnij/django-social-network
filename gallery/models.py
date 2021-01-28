@@ -234,6 +234,7 @@ class PhotoComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     photo_comment = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     id = models.BigAutoField(primary_key=True)
+    attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
@@ -310,3 +311,11 @@ class PhotoComment(models.Model):
         async_to_sync(channel_layer.group_send)('notifications', payload)
         comment.save()
         return comment
+
+    def get_u_attach(self, user):
+        from common.attach.post_attach import get_u_post_attach
+        return get_u_post_attach(self, user)
+
+    def get_c_attach(self, user):
+        from common.attach.post_attach import get_c_post_attach
+        return get_c_post_attach(self, user)
