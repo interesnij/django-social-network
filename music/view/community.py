@@ -10,7 +10,7 @@ class CommunityLoadPlaylist(ListView):
 	def get(self,request,*args,**kwargs):
 		self.community, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.community:
-			self.template_name = get_template_community_music(self.playlist, "music/community/", "list.html", request.user
+			self.template_name = get_template_community_music(self.playlist, "music/community/", "list.html", request.user)
 		else:
 			from common.template.music import get_template_user_music
 			self.template_name = get_template_user_music(self.playlist, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
