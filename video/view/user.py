@@ -6,7 +6,6 @@ from video.models import VideoAlbum, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
 from common.template.video import get_template_user_video
-from common.template.user import get_settings_template
 
 
 class UserLoadVideoAlbum(ListView):

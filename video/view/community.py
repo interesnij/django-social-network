@@ -5,7 +5,7 @@ from communities.models import Community
 from video.models import VideoAlbum, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
-from common.template.video import get_template_community_video
+from common.template.video import get_template_community_video, get_template_user_video
 
 
 class CommunityLoadVideoAlbum(ListView):
@@ -13,7 +13,10 @@ class CommunityLoadVideoAlbum(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_community_video(self.album, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.album.community:
+			self.template_name = get_template_community_video(self.album, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_user_video(self.album, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityLoadVideoAlbum,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
