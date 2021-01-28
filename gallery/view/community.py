@@ -91,29 +91,28 @@ class CommunityAlbumPhotosList(ListView):
         return photo_list
 
 class PhotoCommunityCommentList(ListView):
-    template_name = None
-    paginate_by = 15
+	template_name, paginate_by = None, 15
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.template.photo import get_permission_community_photo_2
 
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() or not self.photo.comments_enabled:
-            raise Http404
-        self.template_name = get_permission_community_photo_2(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
+		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if not request.is_ajax() or not self.photo.comments_enabled:
+			raise Http404
+		self.template_name = get_permission_community_photo_2(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(PhotoCommunityCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.photo
-        context['community'] = self.community
-        return context
+	def get_context_data(self, **kwargs):
+		context = super(PhotoCommunityCommentList, self).get_context_data(**kwargs)
+		context['parent'] = self.photo
+		context['community'] = self.community
+		return context
 
-    def get_queryset(self):
-        check_can_get_lists(self.request.user, self.community)
-        comments = self.photo.get_comments()
-        return comments
+	def get_queryset(self):
+		check_can_get_lists(self.request.user, self.community)
+		comments = self.photo.get_comments()
+		return comments
 
 
 class CommunityDetailAvatar(TemplateView):
