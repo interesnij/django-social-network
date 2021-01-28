@@ -206,7 +206,7 @@ class Video(models.Model):
             return ''
 
     def count_comments(self):
-        parent_comments = VideoComment.objects.filter(video_comment__id=self.pk, is_deleted=False).values("pk").count()
+        parent_comments = VideoComment.objects.filter(video_id=self.pk, is_deleted=False).values("pk").count()
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
