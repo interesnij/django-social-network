@@ -7,7 +7,10 @@
 
         {{ reply.text }}
 
-        {% include 'mobile/generic/attach/c_reply_attach.html' %}
+        {% if reply.attach %}
+          {% load comment %}
+          {{ reply|get_community_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">

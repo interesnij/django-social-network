@@ -6,19 +6,10 @@
         {% include 'desctop/generic/user/reply_meta.html' %}
         {{ reply.text|linebreaks }}
 
-        <div class="row" data-pk="{{ reply.pk }}">
-          {% for object in reply.good_comment_photo.all %}
-            {% include 'desctop/generic/comment_item/c_comment_photo.html' %}
-          {% endfor %}
-
-          {% for object in reply.good_comment_video.all %}
-            {% include 'desctop/generic/comment_item/c_comment_video.html' %}
-          {% endfor %}
-
-          {% for object in reply.good_comment_music.all %}
-            {% include 'desctop/generic/comment_item/c_comment_music.html' %}
-          {% endfor %}
-        </div>
+        {% if reply.attach %}
+          {% load comment %}
+          {{ reply|get_community_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">
@@ -31,7 +22,7 @@
                   </span>
 
                   <span class="comment_like_window">
-                      {% if comment.window_likes %}
+                      {% if reply.window_likes %}
                       <div class="comment_like_pop">
                           <span class="c_all_good_comment_likes pointer">Оценили: <span data-count="like">{ reply.likes.count }}</span> {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <span style="display: flex;margin-top: 10px;">

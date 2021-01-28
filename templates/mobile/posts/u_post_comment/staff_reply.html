@@ -7,7 +7,10 @@
 
         {{ reply.text|linebreaks }}
 
-        {% include 'mobile/generic/attach/u_reply_attach.html' %}
+        {% if reply.attach %}
+          {% load comment %}
+          {{ reply|get_user_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">

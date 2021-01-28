@@ -6,7 +6,10 @@
         {% include 'desctop/generic/user/reply_meta.html' %}
         {{ reply.text|linebreaks }}
 
-        {% include 'desctop/generic/attach/c_photo_reply.html' %}
+        {% if reply.attach %}
+          {% load comment %}
+          {{ reply|get_community_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">
@@ -19,7 +22,7 @@
                   </span>
 
                   <span class="comment_like_window">
-                      {% if comment.window_likes %}
+                      {% if reply.window_likes %}
                       <div class="comment_like_pop">
                           <span class="c_all_photo_comment_likes pointer">Оценили: <span data-count="like">{{ reply.likes.count }}</span> {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <span style="display: flex;margin-top: 10px;">

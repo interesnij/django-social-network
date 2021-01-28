@@ -4,7 +4,10 @@
         {% include 'mobile/generic/user/comment_meta.html' %}
         {{ comment.text|linebreaks }}
 
-        {% include 'mobile/generic/attach/u_photo_comment.html' %}
+        {% if comment.attach %}
+          {% load comment %}
+          {{ comment|get_user_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">

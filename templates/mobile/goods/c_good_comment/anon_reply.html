@@ -6,19 +6,10 @@
         {% include 'mobile/generic/user/reply_meta.html' %}
         {{ reply.text|linebreaks }}
 
-        <div class="row" data-pk="{{ reply.pk }}">
-          {% for object in reply.good_comment_photo.all %}
-            {% include 'mobile/generic/comment_item/c_comment_photo.html' %}
-          {% endfor %}
-
-          {% for object in reply.good_comment_video.all %}
-            {% include 'mobile/generic/comment_item/c_comment_video.html' %}
-          {% endfor %}
-
-          {% for object in reply.good_comment_music.all %}
-            {% include 'mobile/generic/comment_item/c_comment_music.html' %}
-          {% endfor %}
-        </div>
+        {% if reply.attach %}
+          {% load comment %}
+          {{ reply|get_community_attach:request.user|safe }}
+        {% endif %}
 
         <div class="">
             <div class="row">
