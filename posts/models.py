@@ -540,7 +540,7 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent_comment, text):
-        _attach = str(attach)
+        _attach = str(attach) 
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PostComment.objects.create(commenter=commenter, attach=attach, parent_comment=parent_comment, post=post, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
