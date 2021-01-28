@@ -300,16 +300,17 @@ class VideoComment(models.Model):
         return dislikes.count()
 
     @classmethod
-    def create_comment(cls, commenter, video_comment=None, parent_comment=None, text=None, created=None ):
-        comment = VideoComment.objects.create(commenter=commenter, parent_comment=parent_comment, video_comment=video_comment, text=text)
+    def create_comment(cls, commenter, attach, video, parent_comment, text):
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        comment = VideoComment.objects.create(commenter=commenter, attach=attach, parent_comment=parent_comment, video=video, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
-                "type": "receive",
-                "key": "comment_video",
-                "actor_name": comment.commenter.get_full_name()
-            }
+            "type": "receive",
+            "key": "comment_item",
+            "actor_name": comment.commenter.get_full_name()
+        }
         async_to_sync(channel_layer.group_send)('notifications', payload)
-        comment.save()
         return comment
 
     def count_replies_ru(self):

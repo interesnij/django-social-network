@@ -300,16 +300,17 @@ class PhotoComment(models.Model):
             return ''
 
     @classmethod
-    def create_comment(cls, commenter, photo_comment, parent_comment, text):
-        comment = PhotoComment.objects.create(commenter=commenter, parent_comment=parent_comment, photo_comment=photo_comment, text=text, created=timezone.now())
+    def create_comment(cls, commenter, attach, photo, parent_comment, text):
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        comment = PhotoComment.objects.create(commenter=commenter, attach=attach, parent_comment=parent_comment, photo=photo, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
-                "type": "receive",
-                "key": "comment_photo",
-                "actor_name": comment.commenter.get_full_name()
-            }
+            "type": "receive",
+            "key": "comment_item",
+            "actor_name": comment.commenter.get_full_name()
+        }
         async_to_sync(channel_layer.group_send)('notifications', payload)
-        comment.save()
         return comment
 
     def get_u_attach(self, user):

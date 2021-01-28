@@ -71,11 +71,9 @@ class PostCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.attach.comment_attach import comment_attach
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
-                comment_attach(request.POST.getlist('attach_items'), new_comment, "item_comment")
+                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=None, post=post, text=comment.text)
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render_for_platform(request, 'posts/u_post_comment/my_parent.html', {'comment': new_comment})
@@ -96,11 +94,9 @@ class PostReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.attach.comment_attach import comment_attach
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, post=None, text=comment.text)
-                comment_attach(request.POST.getlist('attach_items'), new_comment, "item_comment")
+                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=parent, post=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:

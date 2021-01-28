@@ -74,8 +74,7 @@ class PostCommunityCommentCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.attach.comment_attach import comment_attach
 
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=None, post=post, text=comment.text)
-                comment_attach(request.POST.getlist('attach_items'), new_comment, "item_comment")
+                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=None, post=post, text=comment.text)
                 if request.user.pk != post.creator.pk:
                     new_comment.notification_community_comment(request.user, community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
@@ -97,10 +96,7 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.attach.comment_attach import comment_attach
-
-                new_comment = comment.create_comment(commenter=request.user, parent_comment=parent, text=comment.text, post=None)
-                comment_attach(request.POST.getlist('attach_items'), new_comment, "item_comment")
+                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=parent, text=comment.text, post=None)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})

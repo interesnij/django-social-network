@@ -356,17 +356,18 @@ class GoodComment(models.Model):
 			return ''
 
 	@classmethod
-	def create_comment(cls, commenter, good_comment=None, parent_comment=None, text=None, created=None ):
-		comment = GoodComment.objects.create(commenter=commenter, parent_comment=parent_comment, good_comment=good_comment, text=text)
-		channel_layer = get_channel_layer()
-		payload = {
-			"type": "receive",
-			"key": "comment_photo",
-			"actor_name": comment.commenter.get_full_name()
-			}
-		async_to_sync(channel_layer.group_send)('notifications', payload)
-		comment.save()
-		return comment
+    def create_comment(cls, commenter, attach, good, parent_comment, text):
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        comment = GoodComment.objects.create(commenter=commenter, attach=attach, parent_comment=parent_comment, good=good, text=text, created=timezone.now())
+        channel_layer = get_channel_layer()
+        payload = {
+            "type": "receive",
+            "key": "comment_item",
+            "actor_name": comment.commenter.get_full_name()
+        }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+        return comment
 
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
