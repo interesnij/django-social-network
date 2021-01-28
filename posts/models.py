@@ -444,6 +444,27 @@ class Post(models.Model):
         from stst.models import PostNumbers
         return PostNumbers.objects.filter(post=self.pk, created__year=year, device=PostNumbers.PHONE).values('pk').count()
 
+    def comp_post_visits_month(self, month):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__month=month, device=PostNumbers.DESCTOP).values('pk').count()
+    def mob_post_visits_month(self, month):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__month=month, device=PostNumbers.PHONE).values('pk').count()
+
+    def comp_post_visits_week(self, week):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__day__in=week, device=PostNumbers.DESCTOP).values('pk').count()
+    def mob_post_visits_week(self, week):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__day__in=week, device=PostNumbers.PHONE).values('pk').count()
+
+    def comp_post_visits_day(self, day):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__day=day, device=PostNumbers.DESCTOP).values('pk').count()
+    def mob_post_visits_day(self, day):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk, created__day=day, device=PostNumbers.PHONE).values('pk').count()
+
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()
 
