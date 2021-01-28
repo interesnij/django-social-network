@@ -540,9 +540,9 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent_comment, text):
-        _attach = str(attach) 
+        _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PostComment.objects.create(commenter=commenter, attach=attach, parent_comment=parent_comment, post=post, text=text, created=timezone.now())
+        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent_comment=parent_comment, post=post, text=text, created=timezone.now())
         channel_layer = get_channel_layer()
         payload = {
             "type": "receive",
@@ -563,9 +563,9 @@ class PostComment(models.Model):
             return ''.join([str(count), " ответов"])
 
     def get_u_attach(self, user):
-        from common.attach.post_attach import get_u_post_attach
-        return get_u_post_attach(self, user)
+        from common.attach.comment_attach import get_u_comment_attach
+        return get_c_comment_attach(self, user)
 
     def get_c_attach(self, user):
-        from common.attach.post_attach import get_c_post_attach
-        return get_c_post_attach(self, user)
+        from common.attach.comment_attach import get_c_comment_attach
+        return get_c_comment_attach(self, user)

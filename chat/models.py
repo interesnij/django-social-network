@@ -422,6 +422,22 @@ class Message(models.Model):
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
 
+    def get_u_message_parent(self, user):
+        from common.attach.message_attach import get_u_message_parent
+        return get_u_message_parent(self.parent, user)
+
+    def get_c_message_parent(self, user):
+        from common.attach.message_attach import get_c_message_parent
+        return get_c_message_parent(self.parent, user)
+
+    def get_u_attach(self, user):
+        from common.attach.message_attach import get_u_message_attach
+        return get_u_message_attach(self, user)
+
+    def get_c_attach(self, user):
+        from common.attach.message_attach import get_c_message_attach
+        return get_c_message_attach(self, user)
+
 
 class MessageFavorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
