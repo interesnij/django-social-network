@@ -257,10 +257,10 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        parent_comments = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
-        parents_count = parent_comments.count()
+        parents = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
+        parents_count = parents.count()
         i = 0
-        for comment in parent_comments:
+        for comment in parents:
             i = i + comment.count_replies()
         i = i + parents_count
         return i
@@ -270,7 +270,7 @@ class Post(models.Model):
 
     def get_comments(self):
         comments_query = Q(post_id=self.pk)
-        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        comments_query.add(Q(parent__isnull=True), Q.AND)
         return PostComment.objects.filter(comments_query)
 
     def is_fixed_in_community(self):
@@ -476,7 +476,7 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
@@ -497,7 +497,7 @@ class PostComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = PostComment.objects.filter(parent_comment=self).all()
+        get_comments = PostComment.objects.filter(parent=self).all()
         return get_comments
 
     def count_replies(self):

@@ -252,7 +252,7 @@ class Good(models.Model):
 
 	def get_comments(self):
 		comments_query = Q(good_comment_id=self.pk)
-		comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+		comments_query.add(Q(parent__isnull=True), Q.AND)
 		return GoodComment.objects.filter(comments_query)
 	def count_comments(self):
 		parent_comments = GoodComment.objects.filter(good_comment_id=self.pk, is_deleted=False).values("pk")
@@ -300,14 +300,14 @@ class GoodImage(models.Model):
 
 class GoodComment(models.Model):
 	id = models.BigAutoField(primary_key=True)
-	parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
+	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
 	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
 	text = models.TextField(blank=True,null=True)
 	is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
 	is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-	good_comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+	comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
 	class Meta:
@@ -319,7 +319,7 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def get_replies(self):
-		get_comments = GoodComment.objects.filter(parent_comment=self).all()
+		get_comments = GoodComment.objects.filter(parent=self).all()
 		return get_comments
 
 	def count_replies(self):

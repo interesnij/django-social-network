@@ -171,7 +171,7 @@ class Photo(models.Model):
 
     def get_comments(self):
         comments_query = Q(photo_comment_id=self.pk)
-        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        comments_query.add(Q(parent__isnull=True), Q.AND)
         return PhotoComment.objects.filter(comments_query)
 
     def count_comments(self):
@@ -225,14 +225,14 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    photo_comment = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     id = models.BigAutoField(primary_key=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
@@ -249,7 +249,7 @@ class PhotoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = PhotoComment.objects.filter(parent_comment=self).all()
+        get_comments = PhotoComment.objects.filter(parent=self).all()
         return get_comments
 
     def count_replies(self):

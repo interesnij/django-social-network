@@ -206,7 +206,7 @@ class Video(models.Model):
             return ''
 
     def count_comments(self):
-        parent_comments = VideoComment.objects.filter(video_comment_id=self.pk, is_deleted=False).values("pk").count()
+        parent_comments = VideoComment.objects.filter(video_comment__id=self.pk, is_deleted=False).values("pk").count()
         parents_count = parent_comments.count()
         i = 0
         for comment in parent_comments:
@@ -216,7 +216,7 @@ class Video(models.Model):
 
     def get_comments(self):
         comments_query = Q(video_comment_id=self.pk)
-        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        comments_query.add(Q(parent__isnull=True), Q.AND)
         return VideoComment.objects.filter(comments_query)
 
     def get_albums_for_video(self):
@@ -226,14 +226,14 @@ class Video(models.Model):
 
 
 class VideoComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True)
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-    video_comment = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     id = models.BigAutoField(primary_key=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
@@ -255,7 +255,7 @@ class VideoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = VideoComment.objects.filter(parent_comment=self).all()
+        get_comments = VideoComment.objects.filter(parent=self).all()
         return get_comments
 
     def count_replies(self):
