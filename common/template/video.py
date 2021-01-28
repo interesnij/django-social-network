@@ -88,6 +88,36 @@ def get_permission_community_video(album, folder, template, request_user, user_a
         template_name = "mobile/" + template_name
     return template_name
 
+def get_permission_community_video_2(community, folder, template, request_user, user_agent):
+    from common.check.community import check_can_get_lists, check_anon_can_get_list
+
+    if community.is_suspended():
+        raise PermissionDenied('Ошибка доступа')
+    elif community.is_blocked():
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated:
+        if request_user.is_staff_of_community(community.pk):
+            template_name = folder + "admin_" + template
+        elif request_user.is_video_manager():
+            template_name = folder + "staff_" + template
+        elif check_can_get_lists(request_user, community):
+            template_name = folder + template
+        elif community.is_public():
+            template_name = folder + template
+        else:
+            raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_anonymous:
+        if check_anon_can_get_list(community):
+            template_name = folder + "anon_" + template
+        else:
+            raise PermissionDenied('Ошибка доступа')
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "mobile/" + template_name
+    return template_name
+
+
 def get_template_user_video(album, folder, template, request_user, user_agent):
     user = album.creator
     if request_user.is_authenticated:
@@ -138,6 +168,32 @@ def get_template_user_video(album, folder, template, request_user, user_agent):
 def get_permission_user_video(album, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
     user = album.creator
+
+    if user.is_suspended():
+        raise PermissionDenied('Ошибка доступа')
+    elif user.is_blocked():
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated:
+        if request_user.is_no_phone_verified():
+            raise PermissionDenied('Ошибка доступа')
+        elif user.pk == request_user.pk:
+            template_name = folder + "my_" + template
+        elif request_user.is_video_manager():
+            template_name = folder + "staff_" + template
+        elif request_user.pk != user.pk:
+            if check_user_can_get_list(request_user, user):
+                template_name = folder + template
+    elif request_user.is_anonymous:
+        if check_anon_user_can_get_list(user):
+            template_name = folder + "anon_" + template
+    if MOBILE_AGENT_RE.match(user_agent):
+        template_name = "mobile/" + template_name
+    else:
+        template_name = "mobile/" + template_name
+    return template_name
+
+def get_permission_user_video_2(user, folder, template, request_user, user_agent):
+    from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
     if user.is_suspended():
         raise PermissionDenied('Ошибка доступа')
