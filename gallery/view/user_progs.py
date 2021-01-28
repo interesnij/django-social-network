@@ -110,7 +110,6 @@ class PhotoAttachUserCreate(View):
 
 
 class PhotoCommentUserCreate(View):
-
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))
@@ -121,7 +120,7 @@ class PhotoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=None, photo_comment=photo_comment, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=None, photo_comment=photo_comment, text=comment.text)
                 if request.user.pk != photo_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
@@ -143,7 +142,7 @@ class PhotoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=parent, photo_comment=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=parent, photo_comment=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:

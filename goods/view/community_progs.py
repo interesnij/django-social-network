@@ -48,7 +48,7 @@ class GoodCommentCommunityCreate(View):
 
             check_can_get_lists(request.user, c)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=None, good_comment=good, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=None, good_comment=good, text=comment.text)
                 if request.user.pk != good.creator.pk:
                     new_comment.notification_community_comment(request.user, c)
                 return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': c})
@@ -66,7 +66,6 @@ class GoodReplyCommunityCreate(View):
 
         if form_post.is_valid() and parent.good_comment.comments_enabled:
             comment = form_post.save(commit=False)
-
             check_can_get_lists(request.user, c)
 
             if not c.is_comment_good_send_all() and not request.user.is_member_of_community(c.pk):
@@ -74,7 +73,7 @@ class GoodReplyCommunityCreate(View):
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
             elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=parent, good_comment=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=parent, good_comment=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_community_reply_comment(request.user, c)
             else:

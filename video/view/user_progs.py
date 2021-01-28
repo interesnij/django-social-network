@@ -45,7 +45,7 @@ class VideoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=None, video_comment=video_comment, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=None, video_comment=video_comment, text=comment.text)
                 if request.user.pk != video_comment.creator.pk:
                     new_comment.notification_user_comment(request.user)
                 return render_for_platform(request, 'video/u_video_comment/my_parent.html',{'comment': new_comment})
@@ -67,7 +67,7 @@ class VideoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=attach, parent_comment=parent, video_comment=None, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent_comment=parent, video_comment=None, text=comment.text)
                 if request.user.pk != parent.commenter.pk:
                     new_comment.notification_user_reply_comment(request.user)
             else:
